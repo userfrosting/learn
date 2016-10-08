@@ -1,12 +1,9 @@
-absolute_urls: false
-
 home:
-  alias: '/home'
+  alias: '/basics'
 
 pages:
-  theme: antimatter
-  markdown:
-    extra: false
+  theme: learn2
+  markdown_extra: true
   process:
     markdown: true
     twig: false
@@ -20,20 +17,16 @@ cache:
 
 twig:
   cache: true
-  debug: true
+  debug: false
   auto_reload: true
   autoescape: false
 
 assets:
-  css_pipeline: false
+  css_pipeline: true
   css_minify: true
   css_rewrite: true
-  js_pipeline: false
+  js_pipeline: true
   js_minify: true
-
-errors:
-  display: true
-  log: true
 
 debugger:
   enabled: false
