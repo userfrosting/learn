@@ -2,19 +2,31 @@ git:
     problems:
         url: https://github.com/getgrav/grav-plugin-problems
         path: user/plugins/problems
-        branch: master
+        branch: develop
     error:
         url: https://github.com/getgrav/grav-plugin-error
         path: user/plugins/error
-        branch: master
-    markdown-notices:
-        url: https://github.com/getgrav/grav-plugin-markdown-notices
-        path: user/plugins/markdown-notices
-        branch: master
-    antimatter:
-        url: https://github.com/getgrav/grav-theme-antimatter
-        path: user/themes/antimatter
-        branch: master
+        branch: develop
+    breadcrumbs:
+        url: https://github.com/getgrav/grav-plugin-breadcrumbs
+        path: user/plugins/breadcrumbs
+        branch: develop    
+    anchors:
+        url: https://github.com/getgrav/grav-plugin-anchors
+        path: user/plugins/anchors
+        branch: develop
+    highlight:
+        url: https://github.com/getgrav/grav-plugin-highlight
+        path: user/plugins/highlight
+        branch: develop
+    simplesearch:
+        url: https://github.com/getgrav/grav-plugin-simplesearch
+        path: user/plugins/simplesearch
+        branch: develop
+    learn2:
+        url: https://github.com/getgrav/grav-theme-learn2
+        path: user/themes/learn2
+        branch: develop
 links:
     problems:
         src: grav-plugin-problems
@@ -24,11 +36,23 @@ links:
         src: grav-plugin-error
         path: user/plugins/error
         scm: github
-    markdown-notices:
-        src: grav-plugin-markdown-notices
-        path: user/plugins/markdown-notices
-        scm: github
-    antimatter:
-        src: grav-theme-antimatter
-        path: user/themes/antimatter
+    breadcrumbs:
+        src: grav-plugin-breadcrumbs
+        path: user/plugins/breadcrumbs
+        scm: github    
+    anchors:
+        src: grav-plugin-anchors
+        path: user/plugins/anchors
+        scm: github  
+    highlight:
+        src: grav-plugin-highlight
+        path: user/plugins/highlight
+        scm: github  
+    simplesearch:
+        src: grav-plugin-simplesearch
+        path: user/plugins/simplesearch
+        scm: github        
+    learn2:
+        src: grav-theme-learn2
+        path: user/themes/learn2
         scm: github
