@@ -2,7 +2,7 @@ home:
   alias: '/basics'
 
 pages:
-  theme: learn2
+  theme: sitetheme
   markdown_extra: true
   process:
     markdown: true

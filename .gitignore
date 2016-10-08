@@ -16,15 +16,6 @@ logs/*
 !logs/.*
 images/*
 !images/.*
-user/accounts/*
-!user/accounts/.*
-user/data/*
-!user/data/.*
-user/plugins/*
-!user/plugins/.*
-user/themes/*
-!user/themes/.*
-user/localhost/config/security.yaml
 
 # OS Generated
 .DS_Store*
@@ -35,7 +26,6 @@ Thumbs.db
 
 # phpstorm
 .idea/*
-user/config/security.yaml
 
 tests/_output/*
 tests/_support/_generated/*

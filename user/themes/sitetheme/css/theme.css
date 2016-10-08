@@ -1,0 +1,54 @@
+#header {
+    background-color: #f3f2e4;
+}
+
+#logo {
+    line-height: normal;
+    display: table;
+}
+
+.logo-title {
+    color: #444;
+    font-size: 30px;
+    font-variant: small-caps;
+    padding-top: 10px;
+    vertical-align: middle;
+}
+
+.logo-image {
+    vertical-align:middle;
+}
+
+.searchbox {
+    border-color: #f7e2e5;
+    background-color: #f3c8ce;  
+}
+
+.searchbox input {
+    color: #444;
+    height: 35px;
+}
+
+.searchbox input:focus {
+    border-color: #f3c8ce;
+    box-shadow: inset 0 1px 3px rgba(51, 51, 51, 0.06), 0 0 5px #ff66ff;
+}
+
+.searchbox input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #999;
+}
+
+.searchbox input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #999;
+    opacity:  1;
+}
+
+.searchbox input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #999;
+    opacity:  1;
+}
+
+.searchbox input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #999;
+}
+

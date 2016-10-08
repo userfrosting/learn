@@ -6,6 +6,6 @@ taxonomy:
 
 ### Chapter 1
 
-# Basics
+# Coming soon
 
-Discover the **basic** principals
+Documentation for UF version 4!

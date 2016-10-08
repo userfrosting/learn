@@ -1,8 +1,9 @@
-title: RTFM Documentation
+title: UserFrosting
 metadata:
-    description: 'RTFM Skeleton'
+    description: 'Learn how to get started with UserFrosting to build your user-centered web application in PHP.'
+    msapplication-config: 'https://learn.userfrosting.com/user/themes/sitetheme/images/browserconfig.xml'
+    theme-color: 'ffffff'
 
 taxonomies: [category,tag]
 summary:
   size: 300
-
