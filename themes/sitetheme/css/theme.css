@@ -35,20 +35,27 @@
 }
 
 .searchbox input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color:    #999;
+    color: #999;
 }
 
 .searchbox input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color:    #999;
-    opacity:  1;
+    color: #999;
+    opacity: 1;
 }
 
 .searchbox input::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color:    #999;
-    opacity:  1;
+    color: #999;
+    opacity: 1;
 }
 
 .searchbox input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color:    #999;
+   color: #999;
 }
 
+#sidebar ul li.visited > a .read-icon {
+    color: #f3c8ce;
+}
+
+a {
+    color: #f39ca1;
+}
