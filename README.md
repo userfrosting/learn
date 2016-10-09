@@ -1,5 +1,11 @@
 # RTFM Skeleton
 
+
+
+Favicons generated with https://realfavicongenerator.net/
+
+
+
 ![RTFM Screenshot](assets/rtfm-screenshot.png)
 
 This is a sample skeleton site that mimics the official Grav documentation: http://learn.getgrav.org.  This skeleton uses the [learn2 theme](https://github.com/getgrav/grav-theme-learn2)
