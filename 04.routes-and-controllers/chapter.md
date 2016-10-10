@@ -4,8 +4,6 @@ taxonomy:
     category: docs
 ---
 
-### Chapter 3
+### Chapter 4
 
-# Advanced
-
-Get into the **nitty gritty** with these advanced topics
+# Routes and Controllers

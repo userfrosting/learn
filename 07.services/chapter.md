@@ -4,8 +4,6 @@ taxonomy:
     category: docs
 ---
 
-### Chapter 3
+### Chapter 7
 
-# Advanced
-
-Get into the **nitty gritty** with these advanced topics
+# Services and the Dependency Injection (DI) Container

@@ -4,7 +4,9 @@ taxonomy:
     category: docs
 ---
 
-### Debugging Your Application
+### Chapter 3
 
-# Anatomy of an HTTP Request
+# Debugging Your Application
+
+## Anatomy of an HTTP Request
 
