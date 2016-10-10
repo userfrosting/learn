@@ -4,8 +4,6 @@ taxonomy:
     category: docs
 ---
 
-### Chapter 3
+### Chapter 10
 
-# Advanced
-
-Get into the **nitty gritty** with these advanced topics
+# Exceptions and Error Handling
