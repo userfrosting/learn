@@ -2,6 +2,8 @@
 title: Basic Stack Requirements
 taxonomy:
     category: docs
+process:
+    twig: true
 ---
 
 The basic requirements for running UserFrosting are pretty typical of any web framework or CMS.  You'll need:
@@ -18,7 +20,7 @@ Look, programming languages evolve, and PHP is no exception.  Actually, PHP (and
 
 Honestly, PHP 5.5 isn't exactly cutting edge - in fact, it's been considered "end of life" since [July 2016](http://php.net/eol.php).  And the truth is, we didn't make this decision directly.  UserFrosting depends on a lot of third-party components, and *those* components require a minimum version of 5.5.9.  Thus, UF does too, and the whole community moves forward.
 
-If your hosting service doesn't have PHP 5.5.9 or higher installed, call them and ask them to upgrade.  If they refuse, point out that even PHP 5.5 has been end-of-life for {{ date("now").diff(date("2016-07-21")).months }} months!  To be honest, there is little reason to use a shared hosting (e.g. cPanel)
+If your hosting service doesn't have PHP 5.5.9 or higher installed, call them and ask them to upgrade.  If they refuse, point out that even PHP 5.5 has been end-of-life for {{ date("now").diff(date("2016-07-21")).m }} months!  To be honest, there is little reason to use a shared hosting (e.g. cPanel)
 service these days, especially when VPS providers like DigitalOcean and Amazon EC2 are so inexpensive.  Unless you're stuck with shared hosting for some reason another (fussy boss), [there's no real reason not to switch to a VPS](https://www.hostt.com/still-use-shared-hosting-theres-vps/).
 
 As for your local development environment ([You _do_ have a local development environment, right](/basics/requirements/develop-locally-serve-globally)), if it's that much of a burden then...I don't know what to tell you.  So what are you waiting for?  Upgrade!
@@ -45,7 +47,7 @@ In a few months or years, you (and perhaps other people) will have to read the c
 
 Components that are sufficiently popular will likely have an active community in chat rooms, discussion forums, IRC, and Q&A sites.  As much fun as it is to solve everything ourselves, sometimes you really just need to ask for help.  Hopefully as you learn more about a particular package, you will also start to help others.  And as we all know, the best way to master a subject is to teach it to someone else.
 
-Ok, so maybe now you're thinking "but what I end up using a package that's missing a feature that I realize that I need later?"  That's where the beauty of the open-source community and the social coding movement come in.  You can always make your own copy of a package and modify it to suit your needs (this is Github's "fork" feature).
+Ok, so maybe now you're thinking "but what if I end up using a package that's missing a feature that I realize that I need later?"  That's where the beauty of the open-source community and the social coding movement come in.  You can always make your own copy of a package and modify it to suit your needs (this is Github's "fork" feature).
 
 Of course at this point, the package is no longer a black box.  You'll have to read through someone else's code in order to be able to modify it.  But keep in mind that reading your *own* code from a few months prior can be just as difficult as reading someone else's - perhaps even moreso if their code is carefully documented and yours isn't.  And of course, if you're the type that likes to give back, you can offer to merge your improvements into the main project repository (this is Github's "pull request" feature).
 
