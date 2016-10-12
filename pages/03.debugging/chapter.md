@@ -8,5 +8,4 @@ taxonomy:
 
 # Debugging Your Application
 
-## Anatomy of an HTTP Request
 
