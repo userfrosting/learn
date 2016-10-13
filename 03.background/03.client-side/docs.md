@@ -1,5 +1,5 @@
 ---
-title: Client Side
+title: Client-side Debugging
 taxonomy:
     category: docs
 ---
