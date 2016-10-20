@@ -8,7 +8,7 @@ Now that we understand how a modern web application actually works, we can talk 
 
 As we mentioned before, a web application is not a single piece of software.  It consists of the server running PHP code, the client (browser) running Javascript and rendering the web page, and the conversation between the two parties.  Things can go wrong in any of these three places.
 
-Unless you have a pretty good idea that the problem lies in your server-side code, it's not always obvious why your application "doesn't work".  Fortunately, modern web browsers come with a built-in tool for identifying problems in client-side code, as well as problems in the communication between your browser and the server.  This tool is called the **browser console.**
+When your application "doesn't work", it's not always obvious in which of these three places the problem lies.  In general, it's best to start debugging problems on the client side unless you already have a pretty good idea that the problem lies in your server-side code.  Fortunately, modern web browsers come with a built-in tool for identifying problems in client-side code, as well as problems in the communication between your browser and the server.  This tool is called the **browser console.**
 
 The browser console can show you error and debug output from the Javascript interpreter, as well as the specific requests that your browser makes and the responses that it gets from the server.  It also lets you explore the DOM (the Document Object Model, which is basically the HTML that is rendered in the browser at any given moment), and the specific sequence of CSS transformations that are being applied to each HTML element.
 
