@@ -92,19 +92,19 @@ Fortunately, modern browsers support something called AJAX, which allows Javascr
 
 Let's take a step back and talk about what's really going on here.
 
-*The client's browser...
+*The client's browser...*
 
-requests a dynamically generated resource from the server...
+*requests a dynamically generated resource from the server...*
 
-which contains some HTML and Javascript...
+*which contains some HTML and Javascript...*
 
-that Javascript contains instructions for the user's browser...
+*that Javascript contains instructions for the user's browser...*
 
-one of which is to automatically ask the server for some JSON data whenever the user presses a certain button...
+*one of which is to automatically ask the server for some JSON data whenever the user presses a certain button...*
 
-the browser waits until the user actually presses that button to make the request...
+*the browser waits until the user actually presses that button to make the request...*
 
-and then the browser displays the result that it got from the server's response.*
+*and then the browser displays the result that it got from the server's response.*
 
 This convoluted process is what ends up confusing a lot of new web developers, even those with significant programming experience in other domains.
 
