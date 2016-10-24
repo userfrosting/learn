@@ -4,7 +4,7 @@ taxonomy:
     category: docs
 ---
 
-One of the most common misconceptions is that web applications are coherent pieces of software that sit on a server somewhere, and that the client "runs" through their browser.  This is actually an illusion, carefully crafted to provide a smooth experience for the end user.
+One of the most common misconceptions is that web applications are coherent pieces of software that sit on a server somewhere, and that the client "runs" this application in their browser.  This is actually an illusion, carefully crafted to provide a smooth experience for the end user.
 
 In reality, web applications are *conversations* between two agents with very poor memory - the **server**, and the **client** - which may be a web browser, mobile app, or another application.  In modern web applications both the client *and* the server are typically going to need to run some code throughout their conversation.  What's more, in the case of a PHP application, the client and server don't even speak the same language!  The server runs only PHP, while the client runs only Javascript.  (Note that there *are* server-side Javascript stacks, but we do not use them.)
 
@@ -170,7 +170,7 @@ It might be easier to understand this whole process if we provide an example of 
 
 **Your browser:** "Excuse me, owlfancy.com?  Can I have **https://www.owlfancy.com/account**?  I also have this special code.  It's 'nabddsXGa4FK0JHCipeEnAVXy8'."
 
-**owlfancy.com:** "Sure thing.  Hey, I know you, you're VolesALaMode!  (erm, at least I hope it's you and not someone who stole your secret code!)  Let me go look up a few things for you...Hmm, I'm supposed to get a list of your next HootMeets from the database, whatever a HootMeet is...ok, found it.  I'll just lay them out in this nice HTML template and send it back.  Here, have this HTML!  The status code is 200.  Let me know if you need anything else.  Bye!"
+**owlfancy.com:** "Sure thing.  Let me see if I recognize that special code...hey, I know you, you're VolesALaMode!  (erm, at least I hope it's you and not someone who stole your code!)  Let me go look up a few things for you...Hmm, I'm supposed to get a list of your next HootMeets from the database, whatever a HootMeet is...ok, found it.  I'll just lay them out in this nice HTML template and send it back.  Here, have this HTML!  The status code is 200.  Let me know if you need anything else.  Bye!"
 
 **Your browser:** "Thanks!  I'll just show my user this..."
 
