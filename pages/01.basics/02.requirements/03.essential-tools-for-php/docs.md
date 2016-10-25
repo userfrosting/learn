@@ -27,14 +27,15 @@ Composer has a special installer that you can use for Windows - [Composer-Setup.
 
 ## Git
 
-
+Coming soon!
 
 ## PHPUnit
 
-
+Coming soon!
 
 ## Node.js
 
+Coming soon!
 
 ## Coding and style standards
 
