@@ -51,7 +51,7 @@ Once you have your VirtualBox set up, you can install a [LAMP](https://www.digit
 
 Even after you have a local development environment set up, you'll still need a way to collaborate with the rest of your team and, when you're ready to launch, push your code to a live server.
 
-It turns out that `git`, the popular version control software, can be used to do both!  For collaborating with your team, we suggest that you set up a free private repository on [Bitbucket](https://bitbucket.org/).  You should agree upon a proper [git flow](http://nvie.com/posts/a-successful-git-branching-model/), and each member of your teach should have their own local development environment.  For more information, see the next section, ["Essential Tools for Modern PHP"](/basics/requirements/essential-tools-for-php).
+It turns out that `git`, the popular version control software, can be used to do both!  For collaborating with your team, we suggest that you set up a free private repository on [Bitbucket](https://bitbucket.org/).  You should agree upon a proper [git flow](http://nvie.com/posts/a-successful-git-branching-model/), and each member of your team should have their own local development environment.  For more information, see the next section, ["Essential Tools for Modern PHP"](/basics/requirements/essential-tools-for-php).
 
 When it comes time to actually deploy your application, you can [set up a special git remote on your live server](https://www.digitalocean.com/community/tutorials/how-to-set-up-automatic-deployment-with-git-with-a-vps).  Then, deploying new changes will be as simple as:
 
