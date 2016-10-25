@@ -6,3 +6,4 @@ streams:
        '':
          - user/themes/sitetheme
          - user/themes/learn2
+google_analytics_code: UA-37689257-6
