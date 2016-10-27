@@ -16,7 +16,7 @@ Also, remember that UserFrosting builds on top of a number of very popular and w
 - Database design (See [Database Administrators Stack Exchange](http://dba.stackexchange.com/))
 - Templating and content ([`twig`](http://stackoverflow.com/questions/tagged/twig))
 - Client-side code ([`jquery`](http://stackoverflow.com/questions/tagged/jquery), [`bootstrap`](http://stackoverflow.com/questions/tagged/twitter-bootstrap))
-- Tools ([`composer-php`\(http://stackoverflow.com/questions/tagged/composer-php); [`git`](http://stackoverflow.com/questions/tagged/git))
+- Tools ([`composer-php`](http://stackoverflow.com/questions/tagged/composer-php); [`git`](http://stackoverflow.com/questions/tagged/git))
 
 If you have a **specific, well-researched question**, you may consider posting it to one of:
 
@@ -92,7 +92,7 @@ We also have a [wiki](https://github.com/userfrosting/UserFrosting/wiki), where 
 
 On Github, UserFrosting Chat, and Stack Overflow, please keep in mind the following:
 
-1. Remember that courtesy and proper grammar go a long way. Please take the time to craft a **precise, polite issue**. We will do our best to help, but remember that this is an open-source project - none of us are getting paid a salary to develop this project, or act as your personal support hotline :wink:
+1. Remember that courtesy and proper grammar go a long way. Please take the time to craft a **precise, polite issue**. We will do our best to help, but remember that this is an open-source project - none of us are getting paid a salary to develop this project, or act as your personal support hotline ;-)
 
 2. Report any errors in detail.  Vague issues like "it doesn't work when I do this" are not helpful.  Show that you have put some effort into identifying the cause of the error.  See [client-side debugging](background/client-side) and [server-side debugging](background/server-side) for information on how to get more details about errors and other problems.
 
