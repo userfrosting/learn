@@ -32,12 +32,12 @@ Each Sprinkle is located in its own subdirectory under the main `/app/sprinkles/
 Sprinkles (with the exception of `core`) must be explicitly loaded in the initialization code in your site's public directory (default `/public`), in `index.php`.  This is done through the `SprinkleManager` class, which takes as its second argument an array containing an ordered list of Sprinkles to load:
 
 ```php
-$sm = new SprinkleManager($container, [
-    "account",
-    "site"
-]);
-
-$sm->init();
+$container['sprinkleManager'] = function ($c) {
+    return new SprinkleManager($c, [
+        "account",
+        "site"
+    ]);
+};
 ```
 
 Notice that we don't have to explicitly list the `core` Sprinkle in this initialization list; since it is required for all projects, `SprinkleManager` will load it automatically.
@@ -46,7 +46,7 @@ Notice that we don't have to explicitly list the `core` Sprinkle in this initial
 
 ### Default Sprinkles
 
-A basic UserFrosting installation comes with six sprinkles, each of which can be found in its own subdirectory in `/app/sprinkles`:
+A basic UserFrosting installation comes with five sprinkles, each of which can be found in its own subdirectory in `/app/sprinkles`:
 
 ```
 app
@@ -55,8 +55,7 @@ app
    ├── admin
    ├── core
    ├── nyx
-   ├── root
-   └── site
+   └── root
 ```
 
 Of these, 3 comprise the bulk of UserFrosting's functionality: `core`, `account`, and `admin`.
@@ -72,5 +71,7 @@ The `account` sprinkle handles user modeling and authentication, user groups, ro
 #### Admin
 
 The `admin` sprinkle contains the routes, templates, and controllers to implement the administrative user and group management interface, as well as the site settings and role and permission management interfaces.
+
+The Sprinkles `nyx` and `root` are special theme Sprinkles, used to provide some cosmetic styling for different types of users.
 
 Now that we're familiar with the basic concept, let's dig into the [contents of a Sprinkle](/sprinkles/contents)!
