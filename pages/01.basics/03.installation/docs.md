@@ -129,7 +129,7 @@ The basic database settings for UserFrosting can be set through environment vari
 - `DB_USER`: The database user account
 - `DB_PASSWORD`: The database user password
 
-If you don't or can't configure environment variables directly in your development environment, UserFrosting uses the fantastic [phpdotenv](https://github.com/vlucas/phpdotenv) library to let you set these variables in a `.env` file.  Simply copy the same `.env` file in your `app/` directory:
+If you don't or can't configure environment variables directly in your development environment, UserFrosting uses the fantastic [phpdotenv](https://github.com/vlucas/phpdotenv) library to let you set these variables in a `.env` file.  Simply copy the sample file in your `app/` directory:
 
 ```bash
 $ cp app/.env.example app/.env
