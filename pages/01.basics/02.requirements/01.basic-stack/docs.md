@@ -9,7 +9,7 @@ process:
 The basic requirements for running UserFrosting are pretty typical of any web framework or CMS.  You'll need:
 
 - Web server software (Apache, Nginx, IIS, etc)
-- PHP 5.5.9 or higher
+- **PHP 5.5.9** or higher
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
 
 (By the way, MariaDB is just an open-source fork of MySQL.  The reason it exists is because of [numerous concerns](http://www.computerworld.com.au/article/457551/dead_database_walking_mysql_creator_why_future_belongs_mariadb/) that Oracle would not do a good job honoring the open-source nature of the MySQL community.  For all technical purposes, MariaDB and MySQL are more or less perfectly interoperable).

@@ -103,4 +103,7 @@ Now, when we do something that triggers this request, the `console.log` statemen
 ![Firefox developer tools - Debug print statement](/images/firefox-console-6.png)
 
 As you can see in the last line of the console output, `data` is an array containing Javascript objects.  If we click on "Object", a panel opens to the right that displays the contents of that object.
- 
+
+## Debugging AJAX Requests
+
+
