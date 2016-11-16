@@ -76,7 +76,7 @@ upstream	no-pushing (push)
 
 Now, if we were to try and push to `upstream` for some reason, we'll get a useful error instead of being prompted for credentials.
 
-With the `upstream` remote set up, we can pull any updates from the official UserFrosting repository into our project:
+For future reference (you don't have to do this right now) with the `upstream` remote set up, you will be able to pull any updates from the official UserFrosting repository into your project:
 
 ```bash
 $ git fetch upstream
