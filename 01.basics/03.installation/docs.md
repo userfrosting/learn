@@ -69,7 +69,7 @@ This renames the `origin` remote to `upstream`.  Let's also disable the `push` p
 
 ```bash
 $ git remote set-url --push upstream no-pushing
-$ git git remote -v
+$ git remote -v
 upstream	https://github.com/userfrosting/UserFrosting.git (fetch)
 upstream	no-pushing (push)
 ```
