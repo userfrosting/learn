@@ -47,7 +47,7 @@ $ git clone https://github.com/userfrosting/UserFrosting.git .
 
 >>>> Note the `.` at the end of the second command - if you omit it, `git` will try to create another subdirectory inside `myUserFrostingProject`!
 
-(((while UF4.0 is still being developed you will need to swap to the `dev` branch)))
+>>>>>>while UF4.0 is still being developed you will need to swap to the `dev` branch
  ```bash
  $ git checkout dev
  ```
