@@ -47,6 +47,11 @@ $ git clone https://github.com/userfrosting/UserFrosting.git .
 
 >>>> Note the `.` at the end of the second command - if you omit it, `git` will try to create another subdirectory inside `myUserFrostingProject`!
 
+(((while UF4.0 is still being developed you will need to swap to the `dev` branch)))
+ ```bash
+ $ git checkout dev
+ ```
+
 At this point, you should also change your **remotes**.  Since you are starting your own project at this point, rather than working on changes that would eventually be merged into the main UserFrosting repository on GitHub, we'll give the GitHub remote a different, more meaningful name.  First, use `git remote -v` to see the current remotes:
 
 ```bash
