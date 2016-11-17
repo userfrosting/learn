@@ -106,7 +106,7 @@ Taken together, this means we can define our services without needing to worry a
 
 ### Service Providers
 
-UserFrosting sets up its services through **service provider** classes.  Each Sprinkle can define one or more service provider classes in `src/ServicesProvider`.  A service provider class typically contains a single method, `register`, which takes a single argument, the Pimple DIC.  For example, the `CoreServicesProvider` class in the `core` Sprinkle starts like this:
+UserFrosting sets up its services through **service provider** classes.  Each Sprinkle can define one or more service provider classes in `src/ServicesProvider/`.  A service provider class typically contains a single method, `register`, which takes a single argument, the Pimple DIC.  For example, the `CoreServicesProvider` class in the `core` Sprinkle starts like this:
 
 ```
 class CoreServicesProvider
@@ -132,9 +132,9 @@ class CoreServicesProvider
     }
 ```
 
-The `alerts` service is defined by simply assigning a callback to `$container['alerts']` which returns our service object (in this case, an instance of `MessageStream`).  You'll notice that the callback itself takes a parameter `$c`, which is also a reference to the DIC.  This allows us to reference services inside other services.
+The `alerts` service is defined by simply assigning a callback to `$container['alerts']` which returns our service object (in this case, an instance of `MessageStream`).
 
-For example, you'll notice that `MessageStream` depends on `$c->session`, `$c->config`, and `$c->translator`.  These are other services that are defined further down in `CoreServicesProvider`.  Thus, the first time we reference `$container->alerts`, it will not only create our `MessageStream` object, but any dependencies that have not yet been created as well.
+You'll notice that the callback itself takes a parameter `$c`, which is also a reference to the DIC.  This allows us to reference services inside other services.  For example, you'll notice that `MessageStream` depends on `$c->session`, `$c->config`, and `$c->translator`.  These are other services that are defined further down in `CoreServicesProvider`.  Thus, the first time we reference `$container->alerts`, it will not only create our `MessageStream` object, but any dependencies that have not yet been created as well.
 
 The service provider classes themselves can be bootstrapped through your Sprinkle's [**initialization class**](/sprinkles/contents#initialization-class).
 
