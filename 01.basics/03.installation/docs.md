@@ -47,10 +47,10 @@ $ git clone https://github.com/userfrosting/UserFrosting.git .
 
 >>>> Note the `.` at the end of the second command - if you omit it, `git` will try to create another subdirectory inside `myUserFrostingProject`!
 
->>>>>>while UF4.0 is still being developed you will need to swap to the `dev` branch
- ```bash
- $ git checkout dev
- ```
+While UF 4.0 is still in development you will need to checkout the `dev` branch:
+```bash
+$ git checkout dev
+```
 
 At this point, you should also change your **remotes**.  Since you are starting your own project at this point, rather than working on changes that would eventually be merged into the main UserFrosting repository on GitHub, we'll give the GitHub remote a different, more meaningful name.  First, use `git remote -v` to see the current remotes:
 
@@ -134,7 +134,7 @@ The basic database settings for UserFrosting can be set through environment vari
 - `DB_USER`: The database user account
 - `DB_PASSWORD`: The database user password
 
-If you don't or can't configure environment variables directly in your development environment, UserFrosting uses the fantastic [phpdotenv](https://github.com/vlucas/phpdotenv) library to let you set these variables in a `.env` file.  Simply copy the sample file in your `app/` directory:
+If you don't want to (or can't) configure environment variables directly in your development environment, UserFrosting uses the fantastic [phpdotenv](https://github.com/vlucas/phpdotenv) library to let you set these variables in a `.env` file.  Simply copy the sample file in your `app/` directory:
 
 ```bash
 $ cp app/.env.example app/.env
