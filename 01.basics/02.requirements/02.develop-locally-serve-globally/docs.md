@@ -23,13 +23,9 @@ to run and test it on a computer in a data center.  In fact, there are several r
 
 2. Security.  There are all sorts of opportunities for PHP to inadvertently disclose sensitive data, like database passwords and API keys.  This is especially true if you are [developing with `display_errors` enabled](/background/server-side), which many PHP installations do by default!  Developing in a local environment that only you can access ensures that you'll have the opportunity to iron out these vulnerabilities before the application goes live.
 
-I think I understand why so many PHP developers seem to have acquired this bad habit, and I blame Wordpress.  
+Ultimately, you should not think of writing code as the only activity involved in building a website.  Making a website or web application really consists of two distinct phases: **development** and **deployment**, each of which should happen in their own separate environments and involve automated testing, managing dependencies, compiling assets, and a variety of other tasks.
 
-From the very start, Wordpress sets you up to think about developing a web application in fundamentally the wrong way.  In addition to WP's other problems, it frames the development process as an "installation" - you install Wordpress on a specific machine and then run your Wordpress site from that machine.
-
-However your web application is not, and should not be, a generic piece of ready-made software that you install, configure, and then assume will work correctly.  Rather, it is more like a collection of documents, which you carefully author and review before releasing to the public.  Wordpress's "what you see is what you get" (WYSIWYG) philosophy puts too much emphasis on immediate visual results, at the expense of a proper development, testing, and deployment process.
-
-Of course you *can* set up a proper deployment process with Wordpress, but this isn't something they emphasize in the brochure.  A Google search for "cowboy coder" will yield dozens of articles heeding Wordpress developers to set up a local development environment - clearly, it is far from standard practice in the WP community, and that is unfortunate.
+In this same vein, any framework or CMS that has you do a "one-click install" is fundamentally framing the problem in the wrong way.  There is no such thing as "installing" a web application.  Rather, a web application is _developed_ and then _deployed_.  By missing this crucial distinction, you lose out on the ability to maintain your application and roll out changes in an organized, controlled, and sane way.
 
 #### Setting up a local development environment
 
