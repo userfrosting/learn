@@ -1,5 +1,6 @@
 ---
 title: Contents
+description: Detailed breakdown of a Sprinkle's contents.
 taxonomy:
     category: docs
 ---

@@ -1,5 +1,6 @@
 ---
 title: Sprinkles
+description: Sprinkles are modular units of code and content that implement some feature or override some default behavior of UserFrosting.
 taxonomy:
     category: docs
 ---

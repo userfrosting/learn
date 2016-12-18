@@ -1,5 +1,6 @@
 ---
 title: The Client-Server Conversation
+description: Web applications can be thought of as a conversation between a client and a server.
 taxonomy:
     category: docs
 ---

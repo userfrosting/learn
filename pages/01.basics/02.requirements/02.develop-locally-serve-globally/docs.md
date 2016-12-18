@@ -1,5 +1,6 @@
 ---
 title: Develop Locally, Serve Globally
+description: The right way to approach development.
 taxonomy:
     category: docs
 ---

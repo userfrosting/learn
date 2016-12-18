@@ -1,5 +1,6 @@
 ---
 title: Overview
+description: UserFrosting is a free, open-source jumping-off point for building user-centered web applications with PHP and Javascript.
 taxonomy:
     category: docs
 ---

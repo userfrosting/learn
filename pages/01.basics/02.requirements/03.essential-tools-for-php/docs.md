@@ -1,5 +1,6 @@
 ---
 title: Essential Tools for Modern PHP
+description: A minimal set of tools that every PHP developer should have installed in their development environment.
 taxonomy:
     category: docs
 ---
