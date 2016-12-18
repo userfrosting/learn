@@ -1,5 +1,6 @@
 ---
 title: Server-side Debugging
+description: UserFrosting provides a number of tools for debugging issues that can be traced back to server-side code.
 taxonomy:
     category: docs
 ---

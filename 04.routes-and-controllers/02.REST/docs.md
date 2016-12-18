@@ -1,5 +1,6 @@
 ---
 title: RESTful Design
+description: Representational State Transfer (REST) is a design paradigm for efficient, scalable communication between clients and the server.
 taxonomy:
     category: docs
 ---

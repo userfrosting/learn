@@ -1,5 +1,6 @@
 ---
 title: Basics
+description: UserFrosting is a secure, modern user management system for PHP.  This documentation website is designed to explain the basic concepts behind UserFrosting, how it was built, and how it works.
 taxonomy:
     category: docs
 ---

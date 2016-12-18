@@ -1,5 +1,6 @@
 ---
 title: Introduction
+description: A Sprinkle can contain assets, configuration files, translations, routes, PHP classes, and Twig templates.
 taxonomy:
     category: docs
 ---

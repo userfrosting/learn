@@ -1,5 +1,6 @@
 ---
 title: Your First UserFrosting Site
+description: This guide walks you though the process of setting up your application by implementing a new Sprinkle.
 taxonomy:
     category: docs
 ---

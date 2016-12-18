@@ -1,5 +1,6 @@
 ---
 title: Supporting UserFrosting
+description: Donate your time, money, or expertise to furthering the development of UserFrosting.
 taxonomy:
     category: docs
 ---

@@ -1,6 +1,6 @@
 ---
 title: Getting Help
-taxonomy:
+description: Don't be afraid to ask for help!  Just, please be sure to read and understand our rules first.
     category: docs
 ---
 
