@@ -16,6 +16,10 @@ This service handles the [alert message stream](/routes-and-controllers/alert-st
 
 Constructs the `AssetManager` object (namespace `UserFrosting\Assets\AssetManager`), which is responsible for loading information about assets (Javascript, CSS, images, etc) required by each page and constructing the appropriate HTML tags.  See [Section 5.2](/building-pages/assets) for more information.
 
+#### assetLoader
+
+This service handles requests for [raw assets](/building-pages/assets#raw-assets) made to the application.  It locates the appropriate file for a given url, and builds the response containing the contents of the asset, along with setting headers for MIME type and length.
+
 #### cache
 
 Creates an instance of a Laravel [Cache](https://laravel.com/docs/5.3/cache).
@@ -111,6 +115,10 @@ See [Chapter 5](/building-pages/templating-with-twig) for more information about
 
 ### Account Services
 
+#### assets
+
+The Account Sprinkle extends the core `assets` service, to add search paths for any assets loaded in a user's custom theme.
+
 #### classMapper
 
 The Account Sprinkle extends the core `classMapper` service, and registers the following model identifiers:
@@ -133,6 +141,10 @@ The Account Sprinkle extends the core `errorHandler` service, to add the followi
 | --------------------------------------------------- | ----------------------------------------------------------------- |
 | `UserFrosting\Support\Exception\ForbiddenException` | `UserFrosting\Sprinkle\Account\Handler\ForbiddenExceptionHandler` |
 
+#### translator
+
+The Account Sprinkle extends the core `translator` service, to add search paths for any locale files loaded in a user's custom theme.
+
 #### view
 
 The Account Sprinkle extends the core `view` service, adding the `AccountExtension` Twig extension (`UserFrosting\Sprinkle\Account\Twig\AccountExtension`).  This extension adds the following:
@@ -144,6 +156,8 @@ The Account Sprinkle extends the core `view` service, adding the `AccountExtensi
 ##### Variables
 
 - `current_user`: Twig wrapper for the `currentUser` service.
+
+The extended `view` also adds search paths for any template files loaded in a user's custom theme.
 
 #### authenticator
 
@@ -181,3 +195,7 @@ Sets up a `PasswordResetRepository` object (`UserFrosting\Sprinkle\Account\Repos
 #### repoVerification
 
 Sets up a `VerificationRepository` object (`UserFrosting\Sprinkle\Account\Repository\VerificationRepository`), which handles token creation, verification, and expiration for new account verification requests.
+
+#### userActivityLogger
+
+Sets up a Monolog logger, which uses `UserFrosting\Sprinkle\Account\Log\UserActivityDatabaseHandler` and `UserFrosting\Sprinkle\Account\Log\UserActivityProcessor` to allow logging of user activities to the `activities` database table.  By using Monolog, it makes it easy to swap other storage solutions such as redis or Elastic Search.
