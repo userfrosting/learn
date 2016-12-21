@@ -1,5 +1,7 @@
 ---
 title: Controller Classes
+metadata:
+    description: Controller classes allow you to easily separate the logic for your routes from your endpoint definitions.
 taxonomy:
     category: docs
 ---

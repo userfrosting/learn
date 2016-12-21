@@ -1,6 +1,7 @@
 ---
 title: Default Services
-description: UserFrosting's default services provide most of the tools needed to build a basic web application.
+metadata:
+    description: UserFrosting's default services provide most of the tools needed to build a basic web application.
 taxonomy:
     category: docs
 ---

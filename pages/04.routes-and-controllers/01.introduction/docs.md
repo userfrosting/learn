@@ -1,6 +1,7 @@
 ---
 title: Introduction
-description: If you're new to object-oriented programming, you may not be familiar with the MVC pattern, a popular and very flexible design paradigm for scalable, easily maintained web applications.
+metadata:
+    description: If you're new to object-oriented programming, you may not be familiar with the MVC pattern, a popular and very flexible design paradigm for scalable, easily maintained web applications.
 taxonomy:
     category: docs
 ---

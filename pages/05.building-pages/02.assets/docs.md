@@ -1,6 +1,7 @@
 ---
 title: Assets
-descriptions: Assets consist of the Javascript files, CSS files, image files, fonts, and other resources used to create the client-side experience of your web application.  UserFrosting provides a framework for loading these resources easily and efficiently.
+metadata:
+    description: Assets consist of the Javascript files, CSS files, image files, fonts, and other resources used to create the client-side experience of your web application.  UserFrosting provides a framework for loading these resources easily and efficiently.
 taxonomy:
     category: docs
 ---
