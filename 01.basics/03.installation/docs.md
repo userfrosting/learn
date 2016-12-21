@@ -1,6 +1,7 @@
 ---
 title: Installation
-description: Getting UserFrosting up and running in your development environment.
+metadata:
+    description: Getting UserFrosting up and running in your development environment.
 taxonomy:
     category: docs
 ---
