@@ -1,5 +1,5 @@
 ---
-title: User Input
+title: Client Input
 taxonomy:
     category: docs
 ---
