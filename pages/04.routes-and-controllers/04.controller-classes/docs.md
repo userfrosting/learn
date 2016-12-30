@@ -57,7 +57,7 @@ Slim will automatically invoke the method and pass in the values of `$request`, 
 
 ## Decoupling Services
 
-The entire dependency injection container is passed to a SimpleController child class as a convenience, and is not necessarily the best design choice.  You may wish to implement controller classes that explicitly define their dependencies.  To do this, you would register these controllers themselves in your Sprinkle's [service provider]():
+The entire dependency injection container is passed to a SimpleController child class as a convenience, and is not necessarily the best design choice.  You may wish to implement controller classes that explicitly define their dependencies.  To do this, you would register these controllers themselves in your Sprinkle's [service provider](/services/the-di-container#service-providers):
 
 ```
 $container['UserFrosting\Sprinkles\Site\Controller\OwlController'] = function ($c) {

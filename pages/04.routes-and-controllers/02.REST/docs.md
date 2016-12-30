@@ -57,7 +57,7 @@ GET http://example.com/update-user?name=bob
 
 // Good
 GET http://example.com/users
-POST http://example.com/users/u/bob
+PUT http://example.com/users/u/bob
 ```
 
 Of course, a "resource" can just as easily be a more abstract concept, like a component of a web page:
@@ -94,7 +94,11 @@ UserFrosting uses a specific naming scheme for endpoints, which we would encoura
 
 **Update an existing user**
 
-`POST /api/users/u/bob`
+`PUT /api/users/u/bob`
+
+**Update specific field for an existing user**
+
+`PUT /api/users/u/bob/email`
 
 **Delete an existing user**
 
