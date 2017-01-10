@@ -8,17 +8,17 @@ taxonomy:
 
 The process of setting up UserFrosting so that you can begin work in your [local development environment](/basics/develop-locally-serve-globally) is known as **installation**.  This is a separate process from [deployment](/going-live/deployment), which is when you actually push your fully developed application to a live server.  Please be sure that you understand this distinction before proceeding further!  UserFrosting is not like, for example, Wordpress, where you can "install" directly to your production server.
 
-#### Set up a local development environment
+## Environment
+
+### Web Stack
 
 If you don't already have a local development environment set up, please [do so now](/basics/requirements/develop-locally-serve-globally#setting-up-a-local-development-environment).
 
-#### Check Requirements
-
 Make certain that your development environment meets the [minimum requirements](/basics/requirements/basic-stack).  In particular, make sure that you have PHP **5.5.9** or higher installed, as well as a webserver that supports URL rewriting (for example, Apache with `mod_rewrite` enabled).
 
-You will also need to [install Composer globally](/basics/requirements/essential-tools-for-php#composer).  **Composer** is the _de facto_ package manager for PHP, and it is needed to automatically fetch UserFrosting's dependencies and build the autoloader (so that you don't need to write a bunch of `require` statements in your code).
+### Git
 
-Finally, make sure that you have **git** [installed](/basics/requirements/essential-tools-for-php#git).  git is one of the most popular [version control systems](https://en.wikipedia.org/wiki/Version_control) in the world, and is important to use with UserFrosting for three reasons:
+You will also need to make sure that you have **git** [installed](/basics/requirements/essential-tools-for-php#git).  git is one of the most popular [version control systems](https://en.wikipedia.org/wiki/Version_control) in the world, and is important to use with UserFrosting for three reasons:
 
 1. It makes it easier to merge updates in UserFrosting into your project;
 2. It makes it easier for you and your team to keep track of changes in your code, and allows your team to work simultaneously on different features;
@@ -26,7 +26,33 @@ Finally, make sure that you have **git** [installed](/basics/requirements/essent
 
 **git is not the same as GitHub!**  GitHub is a "social coding" company, while git is the open-source software around which GitHub was built. Many open source projects choose to use GitHub to host their git repositories, because GitHub offers free hosting for public repositories.  However, you should be aware that there are other companies that offer free git hosting such as Atlassian (Bitbucket).  Unlike GitHub, Atlassian also offers free _private_ repositories.  You can also [set up your own server to host repositories](http://stackoverflow.com/a/5507556/2970321), or use a third-party package such as Gitlab, which has GitHub/Bitbucket-like features such as issue tracking, code review, etc.
 
-#### Clone the UserFrosting repository
+### Node.js
+
+Finally, you will need to install **Node.js**, an extremely popular Javascript runtime.  Although UserFrosting does not _run_ on server-side Javascript, it does use several Javascript-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
+
+The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems.  We recommend using the latest version of Node.js (7.x at the time of this writing).
+
+## Package Managers
+
+As [mentioned earlier](/basics/requirements/basic-stack#third-party-components-why-dont-you-write-all-your-own-code), UserFrosting depends on a lot of different third-party libraries.  Rather than try to manage all these dependencies manually (which would be a nightmare), UserFrosting uses **package managers**, which are tools that automatically download and install the dependencies for your application.
+
+UserFrosting is built around two extremely popular package managers: **Composer**, for managing PHP packages, and **npm**, which manages Node.js packages.
+
+### Install Composer
+
+**Composer** is the _de facto_ package manager for PHP, and it is needed to automatically fetch UserFrosting's dependencies and build the autoloader (so that you don't need to write a bunch of `require` statements in your code).
+
+The preferred way to work with Composer is to install it globally.  Instructions can be found on Composer's [website](https://getcomposer.org/doc/00-intro.md#globally).  
+
+### Update npm
+
+npm stands for **N**ode **P**ackage **M**anager.  It is used to grab the various Node packages that are required by UserFrosting's installation and build tools.  When you installed Node, it should have automatically installed npm as well.  However, we still recommend updating npm:
+
+```bash
+$ npm install npm@latest -g
+```
+
+## Clone the UserFrosting repository
 
 The best way to initially set up UserFrosting in your local environment is by using git to **clone** the main UserFrosting repository.  Create a new subdirectory in your webserver's document root.  For example, in Apache:
 
@@ -95,7 +121,13 @@ See GitHub's article on [syncing a fork](https://help.github.com/articles/syncin
 
 If you are developing as part of a team, you may wish to set up a _new_ `origin` remote, for example one that points to a private repo on Bitbucket.  When you are ready to deploy, you may also set up yet another `deploy` remote, which will allow you to push your code directly to the production server.  See [deployment](/going-live/deployment) for more information.
 
-#### Install PHP dependencies
+### Set directory permissions
+
+Make sure that `/app/cache`, `/app/logs`, and `/app/sessions` are writable by your webserver.  See [File System Permissions](/basics/requirements/basic-stack#file-system-permissions) for help with this.
+
+## Install dependencies
+
+### PHP dependencies
 
 Next, we will run Composer in the `app` subdirectory to fetch and install the PHP packages used by UserFrosting (note, if you are using the `dev` branch of UserFrosting, you will want to run `git checkout dev` first):
 
@@ -106,11 +138,29 @@ $ composer install
 
 This may take some time to complete.
 
-#### Set directory permissions
+### npm dependencies
 
-Make sure that `/app/cache`, `/app/logs`, and `/app/sessions` are writable by your webserver.  See [File System Permissions](/basics/requirements/basic-stack#file-system-permissions) for help with this.
+The `build` directory contains the scripts and configuration files required to download Javascript, CSS, and other assets used by UserFrosting.
 
-#### Visit your website
+Before we can run these scripts, we need to install some required npm packages:
+
+```bash
+$ npm install
+```
+
+This command will install Gulp, Bower, and several other required npm packages.
+
+### UserFrosting assets
+
+Now that we have npm set up with all of its required packages, we can use it to automatically download and install the assets in the correct directories:
+
+```bash
+$ npm run uf-assets-install
+```
+
+That's it!  Your project should now have all the required PHP and client-side dependencies that it needs to function.
+
+## Visit your website
 
 At this point, you should be able to access the basic pages for your application (without a signed-in user).  Visit:
 
@@ -120,11 +170,11 @@ You should see a basic page:
 
 ![Basic front page of a UserFrosting installation](/images/front-page.png)
 
-#### Set up the database and root user account
+## Set up the database and root user account
 
 You're almost done!  To actually make the **user** part of UserFrosting work, we'll need to set up the database tables and a root user account.
 
-##### Database configuration
+### Database configuration
 
 First thing's first, you'll need to create a database and database user account.  Consult your database documentation for more details.  If you use phpmyadmin or a similar tool, you can create your database and database user through their interface.  Otherwise, you can do it via the command line.
 
@@ -146,7 +196,7 @@ Now, you can set values in the `.env` file and UserFrosting will pick them up _a
 
 You may also want to configure your SMTP server settings as well at this point so that you can use features that require mail, such as password reset and email verification.  See [Chapter 11](/other-services/mail) for more information on the mail service.
 
-##### UserFrosting installer
+### UserFrosting installer
 
 To set up the database tables and create your first UserFrosting account, we will run the command-line installer:
 
