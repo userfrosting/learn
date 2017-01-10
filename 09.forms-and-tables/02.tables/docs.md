@@ -1,5 +1,5 @@
 ---
-title: Access Control
+title: Tables
 taxonomy:
     category: docs
 ---

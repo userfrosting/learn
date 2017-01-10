@@ -14,7 +14,7 @@ Data from the outside world is the Achilles' heel of modern interactive web serv
 
 ### Server-side
 
-Many new developers fail to realize that a malicious user could submit any type of request, with any content they like, to your server at any time.  This is possible regardless of the forms and widgets that your web application presents to the client - it is a trivial matter to change their behavior using the [browser console](/background/client-side), or bypass them completely using a command line tool such as [cURL](https://curl.haxx.se/docs/httpscripting.html).
+Many new developers [fail to realize](http://security.stackexchange.com/questions/147216/hacker-used-picture-upload-to-get-php-code-into-my-site) that a malicious user could submit any type of request, with any content they like, to your server at any time.  This is possible regardless of the forms and widgets that your web application presents to the client - it is a trivial matter to change their behavior using the [browser console](/background/client-side), or bypass them completely using a command line tool such as [cURL](https://curl.haxx.se/docs/httpscripting.html).
 
 For this reason, it is **imperative** to validate user input on the server side - *after* the request has left the control of the submitter.
 
