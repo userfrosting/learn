@@ -17,6 +17,7 @@ UserFrosting provides a base class, `UserFrosting\Sprinkles\Core\Controller\Simp
 
 namespace UserFrosting\Sprinkles\Site\Controller;
 
+use UserFrosting\Sprinkles\Core\Controller\SimpleController;
 use UserFrosting\Sprinkles\Site\Model\Owl;
 
 class OwlController extends SimpleController
