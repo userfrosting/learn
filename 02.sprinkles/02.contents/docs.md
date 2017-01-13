@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-Within each sprinkle, you will find any or all of the following directories:
+Within each sprinkle, you will find any or all of the following directories and files:
 
 ```
 ├── assets
@@ -15,14 +15,124 @@ Within each sprinkle, you will find any or all of the following directories:
 ├── routes
 ├── schema
 ├── src
-└── templates
+├── templates
+├── composer.json
+├── bundle.config.json
+└── bower.json
 ```
 
 Each of these directories corresponds to specific types of entities that make up your application.  UserFrosting has different rules for how each type of entity can extend the entities of the same type loaded in previous Sprinkles.
 
-A Sprinkle may also contain a `composer.json` file, which will be loaded by the master `composer.json` file in `/app`.
+### /composer.json
+
+The `composer.json` file is primarily used in UserFrosting to map a Sprinkles classes, but as this is Composer, it can also be used to reference additional PHP libraries. 
+
+The master `composer.json` file in `/app` will automatically merge the `composer.json` file for every Sprinkle when performing:
+
+```bash
+$ composer update
+```
 
 >>>> The master `composer.json` file will load **all** child `composer.json` files, even in Sprinkles that haven't been loaded in your site's `index.php`.  To change this behavior, you will need to modify the master `composer.json` file.
+
+### /bundle.config.json
+
+The `bundle.config.json` file is used for defining asset bundles, that can be referenced by templates. The advantage of using asset bundles (as compared to referencing the specific files) is that multiple files can be quickly referenced, and when it comes to deployment, the bundles have their individual files merged, reducing the number of individual asset requests, and thus reducing server load.
+
+To compliment the overriding behaviour of the Sprinkle system, you can redefine existing bundles.
+
+As an example, suppose we have this bundle defined in the core:
+
+```json
+{
+    "bundle": {
+        "css/main": {
+            "styles" : [
+                "vendor/font-awesome/css/font-awesome.css",
+                "vendor/bootstrap/dist/css/bootstrap.css",
+                "local/core/css/uf-jqueryvalidation.css",
+                "local/core/css/uf-alerts.css"
+            ],
+            "options": {
+                "result": {
+                    "type": {
+                        "styles": "plain"
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+And then in a Sprinkle later in the load order have:
+
+```json
+{
+    "bundle": {
+        "css/main": {
+            "styles" : [
+                "vendor/new-cool-styles/new-cool-styles.css"
+            ],
+            "options": {
+                "result": {
+                    "type": {
+                        "styles": "plain"
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+The second definition would replace bundle.
+
+But suppose you only wanted to add `new-cool-styles.css` to the bundle? You could redefine the bundle including earlier assets, or alternatively specify a collision rule.
+
+Continuing on from the previous example, suppose the second definition was instead the following:
+
+```json
+{
+    "bundle": {
+        "css/main": {
+            "styles" : [
+                "vendor/new-cool-styles/new-cool-styles.css"
+            ],
+            "options": {
+                "result": {
+                    "type": {
+                        "styles": "plain"
+                    }
+                },
+                "sprinkle": {
+                    "onCollision": "merge"
+                }
+            }
+        }
+    }
+}
+```
+
+The second definition would merge with the first, adding `vendor/new-cool-styles/new-cool-styles.css` to the list of styles.
+
+The complete list collision rules that exist is:
+- replace - Replaces any previous definition.
+- merge - Merges with the previous definition.
+- ignore - If there is a previous definition, leave it as is.
+- error - If there is a previous definition, show an error.
+
+>>>>> These collision rules will only affect bundles earlier in the Sprinkle load order. So for instance, if `error` where used as the collision rule for a bundle, it can still be affected by any bundle definitions loaded after it.
+
+### /bower.json
+
+The `bower.json` file is used for easily retrieving vendor assets from the package management system [Bower.io](https://bower.io/search/), like [Bootstrap](http://getbootstrap.com/). Vendor assets specified in `bower.json` will be downloaded to `/assets/vendor`.
+
+To download vendor assets, from the `/build` directory:
+
+```bash
+$ npm run uf-assets-install
+```
 
 ### /assets
 
@@ -35,8 +145,10 @@ For example, suppose we have:
 ```
 account
 └── assets
-    └── images
-        └── barn-owl.jpg
+    └── local
+        └── account
+            └── images
+                    └── barn-owl.jpg
 ```
 
 as well as:
@@ -44,13 +156,17 @@ as well as:
 ```
 site
 └── assets
-    └── images
-        └── barn-owl.jpg
+    └── local
+        └── account
+            └── images
+                └── barn-owl.jpg
 ```
 
-Assuming we've loaded the `account` and `site` Sprinkles (in that order), we can now use the uri `assets://images/barn-owl.jpg` in our code, and UserFrosting will correctly resolve it to `/site/assets/images/barn-owl.jpg`.
+Assuming we've loaded the `account` and `site` Sprinkles (in that order), we can now use the uri `assets://local/account/images/barn-owl.jpg` in our code, and UserFrosting will correctly resolve it to `/site/assets/local/account/images/barn-owl.jpg`.
 
->>>>> Custom stream uris like `assets://images/barn-owl.jpg` will be correctly interpreted in your server-side code, but cannot be understood by clients' browsers.  To serve an asset like this to the client, UserFrosting has a special route that maps these uris to public urls.  The Asset Manager can automatically generate the appropriate public urls for use in HTML (e.g. for `<img>`, `<link>`, `<script>`, and other tags).  See [section 5.2](/building-pages/assets) for more information about asset management.
+>>>>> Notice the directory pattern used to organise the assets. This pattern is used provide more control over asset overriding, such that assets aren't accidentally overridden, where `local` refers to non-vendor assets, and the use of the Sprinkle name to specify where the assets originally came from. While following this pattern is optional, it is recommended.
+
+>>>>> Custom stream uris like `assets://local/account/images/barn-owl.jpg` will be correctly interpreted in your server-side code, but cannot be understood by clients' browsers.  To serve an asset like this to the client, UserFrosting has a special route that maps these uris to public urls.  The Asset Manager can automatically generate the appropriate public urls for use in HTML (e.g. for `<img>`, `<link>`, `<script>`, and other tags).  See [section 5.2](/building-pages/assets) for more information about asset management.
 
 ### /config
 

@@ -30,6 +30,13 @@ You will also need to make sure that you have **git** [installed](/basics/requir
 
 Finally, you will need to install **Node.js**, an extremely popular Javascript runtime.  Although UserFrosting does not _run_ on server-side Javascript, it does use several Javascript-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
 
+To check if Node.js is installed:
+
+```bash
+$ node -v
+v7.4.0
+```
+
 The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems.  We recommend using the latest version of Node.js (7.x at the time of this writing).
 
 ## Package Managers
@@ -38,11 +45,20 @@ As [mentioned earlier](/basics/requirements/basic-stack#third-party-components-w
 
 UserFrosting is built around two extremely popular package managers: **Composer**, for managing PHP packages, and **npm**, which manages Node.js packages.
 
+**Bower**, a frontend package manager is also used.
+
 ### Install Composer
 
 **Composer** is the _de facto_ package manager for PHP, and it is needed to automatically fetch UserFrosting's dependencies and build the autoloader (so that you don't need to write a bunch of `require` statements in your code).
 
-The preferred way to work with Composer is to install it globally.  Instructions can be found on Composer's [website](https://getcomposer.org/doc/00-intro.md#globally).  
+The preferred way to work with Composer is to install it globally.  Instructions can be found on Composer's [website](https://getcomposer.org/doc/00-intro.md#globally). 
+
+To chcek if Composer is installed:
+
+```bash
+$ composer --version
+Composer version 1.3.1 2017-01-07 18:08:51
+```
 
 ### Update npm
 
@@ -159,6 +175,8 @@ $ npm run uf-assets-install
 ```
 
 That's it!  Your project should now have all the required PHP and client-side dependencies that it needs to function.
+
+>>>> If you have issues, ensure that **git** is installed.
 
 ## Visit your website
 

@@ -114,7 +114,7 @@ This convoluted process is what ends up confusing a lot of new web developers, e
 
 It might be easier to understand this whole process if we provide an example of a web application as a "conversation" between your browser and a webserver.  Suppose you type (or click a link from Google for) **http://www.owlfancy.com/health**.  Your browser starts by reaching out to the server **owlfancy.com**, introducing itself, and making a request:
 
-**Your browser:** "Hi, my name is 74.125.70.102.  I'm a Chrome browser, version 53.0.2785.116, running on OSX, and blah blah blah (insert a bunch of other stuff about me).  Can I please have whatever's at **http://www.owlfancy.com/health**?"
+**Your browser:** "Hi, my name is 74.125.70.102.  I'm a Chrome browser, version 53.0.2785.116, running on MacOS, and blah blah blah (insert a bunch of other stuff about me).  Can I please have whatever's at **http://www.owlfancy.com/health**?"
 
 **owlfancy.com:** "Sure.  Looks like for that resource, I'm supposed to run this bit of code over here.  Let's see what happens when I do that...Ok, it's done!  Looks like it returned some HTML.  Here you go.  The status code is 200.  Let me know if you need anything else.  Bye!"
 
