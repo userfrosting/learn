@@ -70,8 +70,8 @@ In `default.php`, add the following:
             'auth' => true
         ],
         'site' => [
-            'title'     =>      'Owl Fancy',
             'author'    =>      'David Attenborough',
+            'title'     =>      'Owl Fancy',
             // URLs
             'uri' => [
                 'author' => 'https://attenboroughsreef.com'
