@@ -14,14 +14,14 @@ If you've been out of the PHP world for a while, you might have missed this crit
 
 Composer also handles autoloading, which means that the days of needing long blocks of `include` or `require` statements in your code are over.  It fully implements the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/) for autoloading, which further helps the PHP community develop a consistent approach to releasing and consuming packages.
 
-The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).  We **strongly recommend that you install Composer globally** on your system.  This will let you run Composer using the `composer` command.  For convenience, we recap the global installation instructions here:
+The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-MacOS).  We **strongly recommend that you install Composer globally** on your system.  This will let you run Composer using the `composer` command.  For convenience, we recap the global installation instructions here:
 
-### OSX and *nix
+### MacOS and *nix
 
 1. Download and run the installer as per the instructions on the [downloads page](https://getcomposer.org/download/).
 2. Run `mv composer.phar /usr/local/bin/composer` to make `composer` available as a shell command.
 
->>>>>> You may need to run the above command(s) with `sudo`.<br><br>On some versions of OSX the `/usr` directory does not exist by default. If you receive the error "/usr/local/bin/composer: No such file or directory" then you must create the directory manually before proceeding: `mkdir -p /usr/local/bin`.
+>>>>>> You may need to run the above command(s) with `sudo`.<br><br>On some versions of MacOS the `/usr` directory does not exist by default. If you receive the error "/usr/local/bin/composer: No such file or directory" then you must create the directory manually before proceeding: `mkdir -p /usr/local/bin`.
 
 ### Windows
 
@@ -29,7 +29,15 @@ Composer has a special installer that you can use for Windows - [Composer-Setup.
 
 ## Git
 
+Git is one of the most popular [version control systems](https://en.wikipedia.org/wiki/Version_control), originally created for aiding development of the Linux kernal.
+
+### MacOS
+
 Coming soon!
+
+### Windows
+
+Git has an installer that you can use for Windows - [Git Download](https://git-scm.com/download/win).
 
 ## PHPUnit
 
@@ -37,7 +45,15 @@ Coming soon!
 
 ## Node.js
 
+**Node.js** is a JavaScript runtime built on Chrome's V8 JavaScript Engine. In recent years it has become extremely popular for creating multiplatform applications, and for its role in providing a means to run the platform independent build tools, like `gulp` and `grunt`, to name just a few. Node.js also includes `npm` (Node.js Package Manager).
+
+### MacOS
+
 Coming soon!
+
+### Windows
+
+Nods.js has an installer that you can use for Windows - [Node.js Download](https://nodejs.org/en/download/current/).
 
 ## Coding and style standards
 

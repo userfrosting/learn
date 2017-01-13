@@ -69,9 +69,9 @@ sudo apt-get install php5-gd
 sudo service apache2 restart
 ```
 
-##### OSX
+##### MacOS
 
-For OSX users (Yosemite and Capitan), you might have GD installed but `imagepng` isn't available.  In this case, you need to upgrade the default version of GD that ships with these versions of OSX.  See [this answer on Stack Overflow](http://stackoverflow.com/a/26505558/2970321) for a complete guide.
+For MacOS users (Yosemite and Capitan), you might have GD installed but `imagepng` isn't available.  In this case, you need to upgrade the default version of GD that ships with these versions of MacOS.  See [this answer on Stack Overflow](http://stackoverflow.com/a/26505558/2970321) for a complete guide.
 
 ### File System Permissions
 
