@@ -19,7 +19,7 @@ The browser console can show you error and debug output from the Javascript inte
 To open the console in Firefox, use the following shortcuts:
 
  - Windows: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd>
- - OSX: <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>K</kbd>
+ - MacOS: <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>K</kbd>
 
 ![Firefox developer tools](/images/firefox-console-1.png)
 
@@ -60,7 +60,7 @@ Other browsers have their own developer tools, which are similar to those found 
 To open Chrome's DevTools feature, press:
 
  - Windows: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd>
- - OSX: <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>J</kbd>
+ - MacOS: <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>J</kbd>
  
 #### Safari
 
