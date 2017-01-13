@@ -14,7 +14,7 @@ If you've been out of the PHP world for a while, you might have missed this crit
 
 Composer also handles autoloading, which means that the days of needing long blocks of `include` or `require` statements in your code are over.  It fully implements the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/) for autoloading, which further helps the PHP community develop a consistent approach to releasing and consuming packages.
 
-The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-MacOS).  We **strongly recommend that you install Composer globally** on your system.  This will let you run Composer using the `composer` command.  For convenience, we recap the global installation instructions here:
+The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).  We **strongly recommend that you install Composer globally** on your system.  This will let you run Composer using the `composer` command.  For convenience, we recap the global installation instructions here:
 
 ### MacOS and *nix
 
