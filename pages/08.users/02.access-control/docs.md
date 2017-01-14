@@ -28,7 +28,7 @@ A permission is a rule that associates an **action** with a set of **conditions*
 
 | id | slug | name | conditions | description |
 | -- | ---- | ---- | ---------- | ----------- |
-| 1  | uri_user | View user | always() | View the user page of any user. |
+| 1  | `uri_user` | View user | `always()` | View the user page of any user. |
 
 - **slug** is a string that you select to represent this permission in your code.  If you slug is `uri_user`, then in your code you can call `$authorizer->checkAccess($currentUser, 'uri_user')` to determine if the current user has this permission.  You can define multiple permissions on the same slug.  As long as a user passes at least one permission on that slug, they will be granted access.
 - **conditions** allows you to set constraints on this permission.  For example, you might want to create a permission that allows access on `uri_user`, but only for users in a particular group.  A boolean expression consisting of [**access condition callbacks**](#callbacks) can be used to construct your condition.
@@ -37,7 +37,9 @@ A permission is a rule that associates an **action** with a set of **conditions*
 
 ## Performing access checks
 
-In your code, access is controlled through the use of access checks on permission slugs.  Often times, you will want to perform these checks in your controller methods, and throw a `ForbiddenException` if the current user fails the check.  For example:
+In your code, access is controlled through the use of access checks on permission slugs.  Often times, you will want to perform these checks in your controller methods, and throw a `ForbiddenException` if the current user fails the check.
+
+This can be done by calling the `checkAccess` method of the `authorizer` service.  For example:
 
 ```php
 /** @var UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager */
@@ -53,6 +55,18 @@ if (!$authorizer->checkAccess($currentUser, 'uri_users')) {
 
 If the current user does not have any permissions for the slug `uri_users`, then the controller method will be aborted and a `ForbiddenException` will be thrown.  By default, the `ForbiddenExceptionHandler` will catch this exception and generate a "404 Not Found" response.
 
+You can, of course, use `checkAccess` to control the behavior of your controller methods in other ways.  For example, you might build a data API that is available to the public, but that returns more specialized information to authorized users:
+
+```php
+if ($authorizer->checkAccess($currentUser, 'uri_owls')) {
+    return $response->withJson($secretOwls);
+} else {
+    return $response->withJson($publicOwls);
+}
+```
+
+### Twig helper
+
 You can also perform permission checks in your Twig templates using the `checkAccess` helper function.  This is useful when you want to render a portion of a page's content conditioned on whether or not a user has a certain permission.  For example, this can be used to hide a navigation menu item for pages that the current user does not have access to:
 
 ```twig
@@ -65,11 +79,11 @@ You can also perform permission checks in your Twig templates using the `checkAc
 
 ## Access conditions
 
-Access conditions are PHP expressions composed of callbacks and boolean operators.  These expressions must return a boolean value when evaluated.  When UserFrosting checks a permission for a given user, it will attempt to evaluate the condition, using any additional data passed in through the final argument of `checkAccess`.  For example, suppose the current user has the permission:
+Access conditions are PHP expressions composed of callbacks and boolean operators.  These expressions must return a boolean value when evaluated.  When UserFrosting checks a permission for a given user, it will evaluate the condition expression, passing in any additional data from the final argument of `checkAccess`, and grant the permission only if the expression evaluates to `true`.  For example, suppose the current user has the permission:
 
 | id | slug | name | conditions | description |
 | -- | ---- | ---- | ---------- | ----------- |
-| 1  | uri_activity | View activity | equals_num(self.id,activity.user_id) | View one of your own activities. |
+| 1  | `uri_activity` | View activity | `equals_num(self.id,activity.user_id)` | View one of your own activities. |
 
 In your code, if you call:
 
@@ -83,11 +97,11 @@ if (!$authorizer->checkAccess($currentUser, 'uri_activity', [
 }
 ```
 
-Then, the `equals_num` condition will be used to compare the current user's `id` with the `user_id` associated with the requested activity.  If they match, then the user is granted access.  You can use boolean operators to built arbitarily complex conditions:
+Then, the `equals_num` condition will be used to compare the current user's `id` with the `user_id` associated with the requested activity (passed in as the `activity` key).  If they match, then the condition evaluates to `true` and the user is granted access.  You can use boolean operators to built arbitrarily complex conditions:
 
 `!has_role(user.id,2) && !is_master(user.id)`
 
-Notice that in access conditions, the special keyword `self` is used to refer to the current user.  This avoids the need to explicitly pass in the current user's object.
+>>> In access conditions, the special keyword `self` is used to refer to the current user.  This avoids the need to explicitly pass in the current user's object.
 
 ### Callbacks
 
