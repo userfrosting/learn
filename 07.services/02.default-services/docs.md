@@ -171,20 +171,7 @@ Monolog `Logger` object for logging detailed information about access control ch
 
 #### authorizer
 
-Creates an instance of `AuthorizationManager` (`UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager`), which handles access control checks via the `checkAccess` method.  This service also defines the following access condition callbacks:
-
-| Callback                          | Description                                                                                  |
-| --------------------------------- | -------------------------------------------------------------------------------------------- |
-| `always()`                        | Unconditionally grant permission - use carefully!                                            |
-| `equals($val1, $val2)`            | Check if the specified values are identical to one another (strict comparison).              |
-| `equals_num($val1, $val2)`        | Check if the specified values are numeric, and if so, if they are equal to each other.       |
-| `has_role($user_id, $role_id)`    | Check if the specified user (by `$user_id`) has a particular role.                           |
-| `in($needle, $haystack)`          | Check if the specified value `$needle` is in the values of `$haystack`.                      |
-| `in_group($user_id, $group_id)`   | Check if the specified user (by `$user_id`) is in a particular group.                        |
-| `subset($needle, $haystack)`      | Check if all **values** in the array `$needle` are present in the **values** of `$haystack`. |
-| `subset_keys($needle, $haystack)` | Check if all **keys** of the array `$needle` are present in the **values** of `$haystack`.   |
-
-To add your own access condition callbacks, simply extend the `authorizer` service in your Sprinkle.  See [Chapter 8](/users/access-control) for more information.
+Creates an instance of `AuthorizationManager` (`UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager`), which handles access control checks via the `checkAccess` method.  This service also defines several default access condition callbacks.  More information, and a complete list of default access condition callbacks, can be found in [Chapter 8](/users/access-control).
 
 #### currentUser
 
