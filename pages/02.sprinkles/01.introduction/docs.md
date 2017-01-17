@@ -31,16 +31,18 @@ Each Sprinkle is located in its own subdirectory under the main `/app/sprinkles/
 
 ## Loading Sprinkles
 
-Sprinkles (with the exception of `core`) must be explicitly loaded in the initialization code in your site's public directory (default `/public`), in `index.php`.  This is done through the `SprinkleManager` class, which takes as its second argument an array containing an ordered list of Sprinkles to load:
+Sprinkles (with the exception of `core`) must be explicitly loaded.  UserFrosting will look for a file called `sprinkles.json` within `app/sprinkles` to determine which Sprinkles to load.  The file `sprinkles.example.json` contains a valid Sprinkle order, and can be used as a template for the `sprinkles.json` file. The example file contains:
 
-```php
-$container['sprinkleManager'] = function ($c) {
-    return new SprinkleManager($c, [
+```json
+{
+    "base": [
         "account",
-        "site"
-    ]);
-};
+        "admin"
+    ]
+}
 ```
+
+The `base` key defines the Sprinkle load order.
 
 Notice that we don't have to explicitly list the `core` Sprinkle in this initialization list; since it is required for all projects, `SprinkleManager` will load it automatically.
 
@@ -56,7 +58,6 @@ app
    ├── account
    ├── admin
    ├── core
-   ├── nyx
    └── root
 ```
 
@@ -74,6 +75,6 @@ The `account` sprinkle handles user modeling and authentication, user groups, ro
 
 The `admin` sprinkle contains the routes, templates, and controllers to implement the administrative user and group management interface, as well as the site settings and role and permission management interfaces.
 
-The Sprinkles `nyx` and `root` are special theme Sprinkles, used to provide some cosmetic styling for different types of users.
+The Sprinkle `root` is a special theme Sprinkle, used to provide some cosmetic styling for different types of users.
 
 Now that we're familiar with the basic concept, let's dig into the [contents of a Sprinkle](/sprinkles/contents)!

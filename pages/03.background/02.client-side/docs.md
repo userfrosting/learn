@@ -70,7 +70,7 @@ Then, to open Safari's Web Inspector:
 
 <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>C</kbd>
 
-#### Internet Explorer
+#### Internet Explorer (and Edge)
 
 To open Internet Explorer's Developer Tools, simply press <kbd>F12</kbd>.
 
