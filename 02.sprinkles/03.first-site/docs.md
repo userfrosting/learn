@@ -20,21 +20,20 @@ app
     ├── account
     ├── admin
     ├── core
-    ├── nyx
     ├── root
     └── site
 ```
 
-To make sure that our new Sprinkle will actually get loaded, we need to add it to the Sprinkle Manager in `/public/index.php`.  Find the line that starts with `return new SprinkleManager($c, ...`.  At the end of the array, add the name of your new Sprinkle:
+To make sure that our new Sprinkle will actually get loaded, we need to add it to the Sprinkle Manager via `/app/sprinkles/sprinkles.json`.  Find the `base` key, at the end of the array, add the name of your new Sprinkle:
 
-```
-$container['sprinkleManager'] = function ($c) {
-    return new SprinkleManager($c, [
+```json
+{
+    "base": [
         "account",
         "admin",
         "site"
-    ]);
-};
+    ]
+}
 ```
 
 This tells your site the specific Sprinkles to load, and the order in which to load them.

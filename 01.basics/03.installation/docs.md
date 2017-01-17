@@ -26,6 +26,13 @@ You will also need to make sure that you have **git** [installed](/basics/requir
 
 **git is not the same as GitHub!**  GitHub is a "social coding" company, while git is the open-source software around which GitHub was built. Many open source projects choose to use GitHub to host their git repositories, because GitHub offers free hosting for public repositories.  However, you should be aware that there are other companies that offer free git hosting such as Atlassian (Bitbucket).  Unlike GitHub, Atlassian also offers free _private_ repositories.  You can also [set up your own server to host repositories](http://stackoverflow.com/a/5507556/2970321), or use a third-party package such as Gitlab, which has GitHub/Bitbucket-like features such as issue tracking, code review, etc.
 
+To check if Git is installed:
+
+```bash
+$ git --version
+git version 2.11.0
+```
+
 ### Node.js
 
 Finally, you will need to install **Node.js**, an extremely popular Javascript runtime.  Although UserFrosting does not _run_ on server-side Javascript, it does use several Javascript-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
@@ -227,4 +234,4 @@ You will be prompted to confirm your operating system, after which the tables an
 
 Once this has completed successfully, you can sign in with your root account at `http://localhost/myUserFrostingProject/public/account/sign-in-or-register`.
 
-Congratulations!  Now that this is complete, you're ready to start developing your application by [creating your first Sprinkle](https://learn.userfrosting.com/sprinkles).
+Congratulations!  Now that this is complete, you're ready to start developing your application by [creating your first Sprinkle](/sprinkles).

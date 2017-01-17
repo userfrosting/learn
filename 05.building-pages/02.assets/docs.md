@@ -189,8 +189,10 @@ To install Gulp, you can use `npm`:
 npm install --global gulp-cli
 ```
 
-#### Install Required Node Modules
+>>> Note that while UserFrosting uses Gulp for several build tasks, global installation is optional, as build tasks are run through npm which uses the packages installed via `npm install`. As such, global installation of Gulp is only needed to use it directly.
 
+#### Install Required Node Modules
+[//]: # (This needs to be updated to reflect changes)
 Once Node (npm) and Gulp are installed, we can install the packages necessary for the build script which is responsible for compiling our assets.
 
 npm is to Node what Composer is to PHP.  And, just like Composer has `composer.json`, npm has `package.json`.  You will notice a preconfigured `package.json` file in the `/build` directory.  To install the required packages for our build script, simply run `npm install` in `/build`.
@@ -198,7 +200,7 @@ npm is to Node what Composer is to PHP.  And, just like Composer has `composer.j
 You can safely exclude the `node_modules` directory from your repository, even if you plan to use git to push your project to production.  These node modules are only used for environment build tasks and are not used by the application itself.
 
 #### Running the Build Task
-
+[//]: # (This needs to be updated to reflect changes)
 All build tasks are defined in `build/gulpfile.js`.  UserFrosting ships with two preconfigured tasks, `build` and `copy`.
 
 The `build` task uses [`gulp-bundle-assets`](https://github.com/dowjones/gulp-bundle-assets) to minify and concatenate the assets referenced in each bundle in `bundle.config.json` into a single file per bundle.  These compiled bundles will be placed in the `public/assets/` directory by default.
