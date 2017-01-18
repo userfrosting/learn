@@ -29,7 +29,7 @@ Composer has a special installer that you can use for Windows - [Composer-Setup.
 
 ## Git
 
-Git is one of the most popular [version control systems](https://en.wikipedia.org/wiki/Version_control), originally created for aiding development of the Linux kernal.
+Git is one of the most popular [version control systems](https://en.wikipedia.org/wiki/Version_control), originally created for aiding development of the Linux kernel.
 
 ### MacOS
 
