@@ -192,22 +192,33 @@ npm install --global gulp-cli
 >>> Note that while UserFrosting uses Gulp for several build tasks, global installation is optional, as build tasks are run through npm which uses the packages installed via `npm install`. As such, global installation of Gulp is only needed to use it directly.
 
 #### Install Required Node Modules
-[//]: # (This needs to be updated to reflect changes)
+
 Once Node (npm) and Gulp are installed, we can install the packages necessary for the build script which is responsible for compiling our assets.
 
 npm is to Node what Composer is to PHP.  And, just like Composer has `composer.json`, npm has `package.json`.  You will notice a preconfigured `package.json` file in the `/build` directory.  To install the required packages for our build script, simply run `npm install` in `/build`.
 
-You can safely exclude the `node_modules` directory from your repository, even if you plan to use git to push your project to production.  These node modules are only used for environment build tasks and are not used by the application itself.
-
 #### Running the Build Task
-[//]: # (This needs to be updated to reflect changes)
+
 All build tasks are defined in `build/gulpfile.js`.  UserFrosting ships with two preconfigured tasks, `build` and `copy`.
 
-The `build` task uses [`gulp-bundle-assets`](https://github.com/dowjones/gulp-bundle-assets) to minify and concatenate the assets referenced in each bundle in `bundle.config.json` into a single file per bundle.  These compiled bundles will be placed in the `public/assets/` directory by default.
+The `bundle-build`, `bundle` tasks work together to minify and concatenate assets referenced by the asset bundles in the `bundle.config.json` file in Sprinkles root (for all Sprinkles listed in `app/sprinkles/sprinkles.json`) using [`gulp-bundle-assets`](https://github.com/dowjones/gulp-bundle-assets). These compiled bundles will be placed in the `public/assets/` directory by default.
 
-The `copy` task copies fonts, images, and other files from your Sprinkles to the `public/assets/` directory, so that your web server can directly serve these files as well.  At the moment, you will need to set up a separate command to copy each Sprinkle's images and fonts.  The `copy` task is configured to automatically run when `build` is run.
+The `copy` task copies fonts, images, and other files from your Sprinkles to the `public/assets/` directory, so that your web server can directly serve these files as well.
 
-To run the build task, simply run `gulp build` from the command line, in the `build/` directory.
+>>>>> At the time of writing, assets are not copying as expected, resulting in referneces to assets not matching their true location while the `UF_MODE` set to `production`. The current work around is to manually copy the assets for every Sprinkle in the load order.
+
+To run the build tasks, run the following from the command line, the the `build/` directory.
+
+```bash
+$ npm run uf-bundle-build
+...
+$ npm run uf-bundle
+...
+$ npm run uf-copy
+...
+```
+
+>>> Each of those commands can be directly run from *gulp* by replacing `npm run` with `gulp`, provided gulp is installed globally. The UserFrosting team recommends using the pre-mapped `npm run` commands to ensure build tasks use the correct versions of required build dependencies.
   
 #### Using Compiled Assets
 
