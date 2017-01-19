@@ -175,7 +175,7 @@ Creates an instance of `AuthorizationManager` (`UserFrosting\Sprinkle\Account\Au
 
 #### currentUser
 
-Sets up the `User` object (`UserFrosting\Sprinkle\Account\Model\User`) for the currently logged-in user.  If there is no logged-in user, it returns a new `User` object to represent a "guest" user.  It also loads the locale and theme for the current user, if set.
+Sets up the `User` object (`UserFrosting\Sprinkle\Account\Model\User`) for the currently logged-in user.  If there is no logged-in user, it returns `null`.  It also loads the locale and theme for the current user, if set.
 
 #### repoPasswordReset
 
