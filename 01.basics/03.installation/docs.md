@@ -91,11 +91,6 @@ $ git clone https://github.com/userfrosting/UserFrosting.git .
 
 >>>> Note the `.` at the end of the second command - if you omit it, `git` will try to create another subdirectory inside `myUserFrostingProject`!
 
-While UF 4.0 is still in development you will need to checkout the `dev` branch:
-```bash
-$ git checkout dev
-```
-
 At this point, you should also change your **remotes**.  Since you are starting your own project at this point, rather than working on changes that would eventually be merged into the main UserFrosting repository on GitHub, we'll give the GitHub remote a different, more meaningful name.  First, use `git remote -v` to see the current remotes:
 
 ```bash
@@ -145,7 +140,7 @@ Make sure that `/app/cache`, `/app/logs`, and `/app/sessions` are writable by yo
 
 ### PHP dependencies
 
-Next, we will run Composer in the `app` subdirectory to fetch and install the PHP packages used by UserFrosting (note, if you are using the `dev` branch of UserFrosting, you will want to run `git checkout dev` first):
+Next, we will run Composer in the `app` subdirectory to fetch and install the PHP packages used by UserFrosting:
 
 ```bash
 $ cd app
