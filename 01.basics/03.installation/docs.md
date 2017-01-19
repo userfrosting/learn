@@ -132,6 +132,23 @@ See GitHub's article on [syncing a fork](https://help.github.com/articles/syncin
 
 If you are developing as part of a team, you may wish to set up a _new_ `origin` remote, for example one that points to a private repo on Bitbucket.  When you are ready to deploy, you may also set up yet another `deploy` remote, which will allow you to push your code directly to the production server.  See [deployment](/going-live/deployment) for more information.
 
+### Set up `sprinkles.json`
+
+The `sprinkles.json` file tells UserFrosting which [Sprinkles](/sprinkles) to load, and in what order.  It is also used by Node to determine which client-side dependencies to download from the Bower repository.
+
+An example `sprinkles.json.example` file is provided in the `app/sprinkles/` directory.  To start, simply copy this to a new file, `sprinkles.json`.  The file should look like this:
+
+```json
+{
+    "base": [
+        "account",
+        "admin"
+    ]
+}
+```
+
+To learn more about Sprinkles, see [Chapter 2](/sprinkles/introduction).
+
 ### Set directory permissions
 
 Make sure that `/app/cache`, `/app/logs`, and `/app/sessions` are writable by your webserver.  See [File System Permissions](/basics/requirements/basic-stack#file-system-permissions) for help with this.
