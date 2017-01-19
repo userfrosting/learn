@@ -27,28 +27,40 @@ Each Sprinkle can contain any or all of the following entities:
 
 Sprinkles are loaded in a specific order, and entities of each type in one sprinkle can extend entities of the same type in other sprinkles.  We'll explain exactly what we mean by "extend" in a minute.
 
-Each Sprinkle is located in its own subdirectory under the main `/app/sprinkles/` directory.  To create a new Sprinkle, simply create a new subdirectory in `/app/sprinkles/`.
+Each Sprinkle is located in its own subdirectory under the main `app/sprinkles/` directory.  To create a new Sprinkle, simply create a new subdirectory in `app/sprinkles/`.
 
 ## Loading Sprinkles
 
-Sprinkles (with the exception of `core`) must be explicitly loaded in the initialization code in your site's public directory (default `/public`), in `index.php`.  This is done through the `SprinkleManager` class, which takes as its second argument an array containing an ordered list of Sprinkles to load:
+Sprinkles are automatically loaded via the `sprinkles.json` file in your `app/sprinkles/` directory.  During the installation process, we had you create a basic `sprinkles.json` file:
 
-```php
-$container['sprinkleManager'] = function ($c) {
-    return new SprinkleManager($c, [
+```json
+{
+    "base": [
         "account",
-        "site"
-    ]);
-};
+        "admin"
+    ]
+}
 ```
 
-Notice that we don't have to explicitly list the `core` Sprinkle in this initialization list; since it is required for all projects, `SprinkleManager` will load it automatically.
+The `base` key contains an array of Sprinkles that UserFrosting will load after it loads the `core` Sprinkle (The `core` Sprinkle is automatically loaded for every project).  To have UserFrosting load another Sprinkle, simply add it to this array.  For example, if you have a `site` Sprinkle:
+
+```json
+{
+    "base": [
+        "account",
+        "admin",
+        "site"
+    ]
+}
+```
+
+By default, the UserFrosting repository is set to ignore the `sprinkles.json` file.  You may wish to commit this to your own personal repository, though.  In this case, simply remove it from your `.gitignore` file.
 
 >>>> The order in which we load our Sprinkles is important.  Files in one Sprinkle may override files with the same name and path in previously loaded Sprinkles.  For example, if we created `site/templates/pages/about.html.twig`, this would override `core/templates/pages/about.html.twig` because we load the `site` Sprinkle *after* the `core` Sprinkle.
 
 ### Default Sprinkles
 
-A basic UserFrosting installation comes with five sprinkles, each of which can be found in its own subdirectory in `/app/sprinkles`:
+A basic UserFrosting installation comes with four sprinkles, each of which can be found in its own subdirectory in `/app/sprinkles`:
 
 ```
 app
@@ -56,7 +68,6 @@ app
    ├── account
    ├── admin
    ├── core
-   ├── nyx
    └── root
 ```
 
@@ -74,6 +85,6 @@ The `account` sprinkle handles user modeling and authentication, user groups, ro
 
 The `admin` sprinkle contains the routes, templates, and controllers to implement the administrative user and group management interface, as well as the site settings and role and permission management interfaces.
 
-The Sprinkles `nyx` and `root` are special theme Sprinkles, used to provide some cosmetic styling for different types of users.
+`root` is a special theme Sprinkle, used to provide some cosmetic styling for the root user account.
 
 Now that we're familiar with the basic concept, let's dig into the [contents of a Sprinkle](/sprinkles/contents)!
