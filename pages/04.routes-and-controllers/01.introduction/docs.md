@@ -19,7 +19,7 @@ if (isset($_POST)) {
 } else {
     echo "<table><tr><th>Username</th><th>Email</th></tr>";
     
-    $stmt = $db->prepare("SELECT * FROM users);
+    $stmt = $db->prepare("SELECT * FROM users");
     $stmt->execute();
     
     while ($r = $stmt->fetch(PDO::FETCH_ASSOC)) {
