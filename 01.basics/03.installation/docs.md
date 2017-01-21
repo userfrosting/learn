@@ -10,63 +10,19 @@ The process of setting up UserFrosting so that you can begin work in your [local
 
 ## Environment
 
-### Web Stack
+### Web stack
 
 If you don't already have a local development environment set up, please [do so now](/basics/requirements/develop-locally-serve-globally#setting-up-a-local-development-environment).
 
 Make certain that your development environment meets the [minimum requirements](/basics/requirements/basic-stack).  In particular, make sure that you have PHP **5.5.9** or higher installed, as well as a webserver that supports URL rewriting (for example, Apache with `mod_rewrite` enabled).
 
-### Git
+### Other required software
 
-You will also need to make sure that you have **git** [installed](/basics/requirements/essential-tools-for-php#git).  git is one of the most popular [version control systems](https://en.wikipedia.org/wiki/Version_control) in the world, and is important to use with UserFrosting for three reasons:
+Please make sure that you have the following installed before attempting to install UserFrosting:
 
-1. It makes it easier to merge updates in UserFrosting into your project;
-2. It makes it easier for you and your team to keep track of changes in your code, and allows your team to work simultaneously on different features;
-3. It makes it easy to deploy and update your code on your production server (if you're using a VPS or dedicated hosting).
-
-**git is not the same as GitHub!**  GitHub is a "social coding" company, while git is the open-source software around which GitHub was built. Many open source projects choose to use GitHub to host their git repositories, because GitHub offers free hosting for public repositories.  However, you should be aware that there are other companies that offer free git hosting such as Atlassian (Bitbucket).  Unlike GitHub, Atlassian also offers free _private_ repositories.  You can also [set up your own server to host repositories](http://stackoverflow.com/a/5507556/2970321), or use a third-party package such as Gitlab, which has GitHub/Bitbucket-like features such as issue tracking, code review, etc.
-
-### Node.js
-
-Finally, you will need to install **Node.js**, an extremely popular Javascript runtime.  Although UserFrosting does not _run_ on server-side Javascript, it does use several Javascript-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
-
-To check if Node.js is installed:
-
-```bash
-$ node -v
-v7.4.0
-```
-
-The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems.  We recommend using the latest version of Node.js (7.x at the time of this writing).
-
-## Package Managers
-
-As [mentioned earlier](/basics/requirements/basic-stack#third-party-components-why-dont-you-write-all-your-own-code), UserFrosting depends on a lot of different third-party libraries.  Rather than try to manage all these dependencies manually (which would be a nightmare), UserFrosting uses **package managers**, which are tools that automatically download and install the dependencies for your application.
-
-UserFrosting is built around two extremely popular package managers: **Composer**, for managing PHP packages, and **npm**, which manages Node.js packages.
-
-**Bower**, a frontend package manager is also used.
-
-### Install Composer
-
-**Composer** is the _de facto_ package manager for PHP, and it is needed to automatically fetch UserFrosting's dependencies and build the autoloader (so that you don't need to write a bunch of `require` statements in your code).
-
-The preferred way to work with Composer is to install it globally.  Instructions can be found on Composer's [website](https://getcomposer.org/doc/00-intro.md#globally). 
-
-To chcek if Composer is installed:
-
-```bash
-$ composer --version
-Composer version 1.3.1 2017-01-07 18:08:51
-```
-
-### Update npm
-
-npm stands for **N**ode **P**ackage **M**anager.  It is used to grab the various Node packages that are required by UserFrosting's installation and build tools.  When you installed Node, it should have automatically installed npm as well.  However, we still recommend updating npm:
-
-```bash
-$ npm install npm@latest -g
-```
+- [Git](/basics/requirements/essential-tools-for-php#git)
+- [Composer](/basics/requirements/essential-tools-for-php#composer)
+- [Node.js](/basics/requirements/essential-tools-for-php#nodejs)
 
 ## Clone the UserFrosting repository
 

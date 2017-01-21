@@ -6,6 +6,27 @@ taxonomy:
     category: docs
 ---
 
+## Git
+
+Git is one of the most popular [version control systems](https://en.wikipedia.org/wiki/Version_control), originally created for aiding development of the Linux kernel.
+
+To start working with Userfrosting, you will need to install **git** [installed](/basics/requirements/essential-tools-for-php#git).  Git is important to use with UserFrosting for four reasons:
+
+1. Many of the [asset management tools](/basics/installation#npm-dependencies) that UserFrosting depends on, use git;
+2. It makes it easier to merge updates in UserFrosting into your project;
+3. It makes it easier for you and your team to keep track of changes in your code, and allows your team to work simultaneously on different features;
+4. It makes it easy to deploy and update your code on your production server (if you're using a VPS or dedicated hosting).
+
+**git is not the same as GitHub!**  GitHub is a "social coding" company, while git is the open-source software around which GitHub was built. Many open source projects choose to use GitHub to host their git repositories, because GitHub offers free hosting for public repositories.  However, you should be aware that there are other companies that offer free git hosting such as Atlassian (Bitbucket).  Unlike GitHub, Atlassian also offers free _private_ repositories.  You can also [set up your own server to host repositories](http://stackoverflow.com/a/5507556/2970321), or use a third-party package such as Gitlab, which has GitHub/Bitbucket-like features such as issue tracking, code review, etc.
+
+### MacOS
+
+By default, MacOS and other *nix operating systems should come with git preinstalled.  If you would like to update your version of git, you can do so with their [installer](https://git-scm.com/download/mac).
+
+### Windows
+
+Git has an installer that you can use for Windows - [Git Download](https://git-scm.com/download/win).
+
 ## Composer
 
 Up until March of 2012, PHP didn't really have a good project-level package manager.  There was PEAR, but it [failed to keep up with the evolution of the PHP community](https://benramsey.com/blog/2013/11/the-fall-of-pear-and-the-rise-of-composer/).  In March of 2012, on the heels of the [PHP Standard Recommendations (PSR)](http://www.php-fig.org/psr/) project, Composer was released and a new era of PHP began.
@@ -13,6 +34,13 @@ Up until March of 2012, PHP didn't really have a good project-level package mana
 If you've been out of the PHP world for a while, you might have missed this critical shift.  Over the past few years, Composer has risen to become the *de facto* package manager for PHP, with [Packagist](https://packagist.org/) as its main public package repository.  This means that the best way to incorporate third-party code (which you [definitely should do](/basics/requirements/basic-stack#third-party-components-why-dont-you-write-all-your-own-code)) is by installing and using Composer - at the very least, in your development environment.
 
 Composer also handles autoloading, which means that the days of needing long blocks of `include` or `require` statements in your code are over.  It fully implements the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/) for autoloading, which further helps the PHP community develop a consistent approach to releasing and consuming packages.
+
+To check if Composer is already installed:
+
+```bash
+$ composer --version
+Composer version 1.3.1 2017-01-07 18:08:51
+```
 
 The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).  We **strongly recommend that you install Composer globally** on your system.  This will let you run Composer using the `composer` command.  For convenience, we recap the global installation instructions here:
 
@@ -27,33 +55,40 @@ The full instructions for installing Composer can be found at their [website](ht
 
 Composer has a special installer that you can use for Windows - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe).  If this gives you trouble, you can try the [manual installation instructions](https://getcomposer.org/doc/00-intro.md#manual-installation).
 
-## Git
+## Node.js
 
-Git is one of the most popular [version control systems](https://en.wikipedia.org/wiki/Version_control), originally created for aiding development of the Linux kernel.
+**Node.js** is an an extremely popular JavaScript runtime built on Chrome's V8 JavaScript Engine. In recent years it has become extremely popular for creating multiplatform applications, and for its role in providing a means to run the platform independent build tools, like `gulp` and `grunt`, to name just a few. Node.js also includes `npm` (Node.js Package Manager).
+
+Finally, you will need to install **Node.js**,  Javascript runtime.  Although UserFrosting does not _run_ on Node.js, it does use several Node-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
+
+The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems.  We recommend using the latest version of Node.js (7.x at the time of this writing).
 
 ### MacOS
 
-Coming soon!
+To check if Node.js is installed:
+
+```bash
+$ node -v
+v7.4.0
+```
 
 ### Windows
 
-Git has an installer that you can use for Windows - [Git Download](https://git-scm.com/download/win).
+Node.js has an installer that you can use for Windows - [Node.js Download](https://nodejs.org/en/download/current/).
+
+## npm
+
+npm stands for **N**ode **P**ackage **M**anager.  npm is to Node.js as Composer is to PHP - it is used to grab the various Node packages that are required by UserFrosting's installation and build tools.  When you installed Node, it should have automatically installed npm as well.  However, we still recommend updating npm:
+
+```bash
+$ npm install npm@latest -g
+```
+
+UserFrosting also uses **Bower**, a frontend package manager.  If you do not have this installed, don't worry!  UserFrosting's build scripts will automatically install it for you.
 
 ## PHPUnit
 
 Coming soon!
-
-## Node.js
-
-**Node.js** is a JavaScript runtime built on Chrome's V8 JavaScript Engine. In recent years it has become extremely popular for creating multiplatform applications, and for its role in providing a means to run the platform independent build tools, like `gulp` and `grunt`, to name just a few. Node.js also includes `npm` (Node.js Package Manager).
-
-### MacOS
-
-Coming soon!
-
-### Windows
-
-Nods.js has an installer that you can use for Windows - [Node.js Download](https://nodejs.org/en/download/current/).
 
 ## Coding and style standards
 
