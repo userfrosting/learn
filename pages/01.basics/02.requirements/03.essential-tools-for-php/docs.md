@@ -19,11 +19,11 @@ To start working with Userfrosting, you will need to install **git** [installed]
 
 **git is not the same as GitHub!**  GitHub is a "social coding" company, while git is the open-source software around which GitHub was built. Many open source projects choose to use GitHub to host their git repositories, because GitHub offers free hosting for public repositories.  However, you should be aware that there are other companies that offer free git hosting such as Atlassian (Bitbucket).  Unlike GitHub, Atlassian also offers free _private_ repositories.  You can also [set up your own server to host repositories](http://stackoverflow.com/a/5507556/2970321), or use a third-party package such as Gitlab, which has GitHub/Bitbucket-like features such as issue tracking, code review, etc.
 
-### MacOS
+### Installing git (MacOS)
 
 By default, MacOS and other *nix operating systems should come with git preinstalled.  If you would like to update your version of git, you can do so with their [installer](https://git-scm.com/download/mac).
 
-### Windows
+### Installing git (Windows)
 
 Git has an installer that you can use for Windows - [Git Download](https://git-scm.com/download/win).
 
@@ -44,14 +44,14 @@ Composer version 1.3.1 2017-01-07 18:08:51
 
 The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).  We **strongly recommend that you install Composer globally** on your system.  This will let you run Composer using the `composer` command.  For convenience, we recap the global installation instructions here:
 
-### MacOS and *nix
+### Installing Composer (MacOS and *nix)
 
 1. Download and run the installer as per the instructions on the [downloads page](https://getcomposer.org/download/).
 2. Run `mv composer.phar /usr/local/bin/composer` to make `composer` available as a shell command.
 
 >>>>>> You may need to run the above command(s) with `sudo`.<br><br>On some versions of MacOS the `/usr` directory does not exist by default. If you receive the error "/usr/local/bin/composer: No such file or directory" then you must create the directory manually before proceeding: `mkdir -p /usr/local/bin`.
 
-### Windows
+### Installing Composer (Windows)
 
 Composer has a special installer that you can use for Windows - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe).  If this gives you trouble, you can try the [manual installation instructions](https://getcomposer.org/doc/00-intro.md#manual-installation).
 
@@ -63,7 +63,7 @@ Finally, you will need to install **Node.js**,  Javascript runtime.  Although Us
 
 The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems.  We recommend using the latest version of Node.js (7.x at the time of this writing).
 
-### MacOS
+### Installing Node.js (MacOS)
 
 To check if Node.js is installed:
 
@@ -72,7 +72,7 @@ $ node -v
 v7.4.0
 ```
 
-### Windows
+### Installing Node.js (Windows)
 
 Node.js has an installer that you can use for Windows - [Node.js Download](https://nodejs.org/en/download/current/).
 
