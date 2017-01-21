@@ -86,3 +86,49 @@ This is because the template for this page is dynamically pulling that particula
 
 >>>>>> You can [override configuration values](/sprinkles/contents#config) from any previously loaded Sprinkles, including the default Sprinkles that ship with UserFrosting.  Check `/app/sprinkles/core/config/default.php` and `/app/sprinkles/account/config/default.php` for a complete list.
 
+### composer.json
+
+Chances are, you'll be adding some classes to your Sprinkle - at the very least, you will probably have some new models and controllers. You will want these to be autoloaded by Composer.  For this to happen, we need to create a `composer.json` file in the base directory of our Sprinkle.  This file will tell Composer where to look for source code in your Sprinkle:
+
+**composer.json**
+
+```json
+{
+    "name": "owlfancy/site",
+    "type": "sprinkle",
+    "description": "Site sprinkle for owlfancy.com.",
+    "license" : "MIT",
+    "authors" : [
+        {
+            "name": "Alexander Weissman",
+            "homepage": "https://alexanderweissman.com"
+        }
+    ],
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "UserFrosting\\Sprinkle\\Site\\": "src/"
+        }
+    }
+}
+```
+
+The important part here is the `autoload.psr-4` key.  This tells Composer to map the root `src/` directory of your Sprinkle to the root **namespace** `UserFrosting\Sprinkle\Site\`.
+
+Go ahead and actually create a `src/` directory in your Sprinkle now.  At this point, your Sprinkle should look like:
+
+```bash
+site/
+├── config/
+    └── default.php
+├── src/
+└── composer.json
+```
+
+The last step is to run Composer from your main `app/` directory, so that it can detect the new `composer.json` file and create the appropriate mappings.  You only need to run this once - any new classes that you add to `src/` will be automatically picked up in the future.
+
+```bash
+$ composer update
+```
+
+>>>>> If after running these steps, UserFrosting fails to find new classes that you add to `src/`, make sure that that the user running Composer had read permissions for your Sprinkle.  You can check that the path to your Sprinkle's `src/` directory was actually added in `app/vendor/composer/autoload_psr4.php`  You can also try running Composer with the `-vvv` flag for more detailed reporting.
