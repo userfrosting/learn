@@ -108,4 +108,4 @@ As you can see in the last line of the console output, `data` is an array contai
 
 ## Debugging AJAX Requests
 
-
+Coming soon!
