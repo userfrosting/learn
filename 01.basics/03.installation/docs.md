@@ -14,7 +14,7 @@ The process of setting up UserFrosting so that you can begin work in your [local
 
 If you don't already have a local development environment set up, please [do so now](/basics/requirements/develop-locally-serve-globally#setting-up-a-local-development-environment).
 
-Make certain that your development environment meets the [minimum requirements](/basics/requirements/basic-stack).  In particular, make sure that you have PHP **5.5.9** or higher installed, as well as a webserver that supports URL rewriting (for example, Apache with `mod_rewrite` enabled).
+Make certain that your development environment meets the [minimum requirements](/basics/requirements/basic-stack).  In particular, make sure that you have PHP **5.6** or higher installed, as well as a webserver that supports URL rewriting (for example, Apache with `mod_rewrite` enabled).
 
 ### Other required software
 
@@ -122,6 +122,10 @@ $ composer install
 
 This may take some time to complete.
 
+>>>> If you're using a distribution like XAMPP or WAMP, the version of PHP that your webserver runs might not be the same version that Composer will run.  This can lead to problems if Composer ends up running a version of PHP below 5.6.  You may need to set your path variable to point to the newer version of PHP.
+
+If Composer has completed successfully, you should see that a `vendor/` directory has been created under `app/`.  This `vendor/` directory contains all of UserFrosting's PHP dependencies - there should be nearly 30 subdirectories in here!
+
 ### npm dependencies
 
 The `build` directory contains the scripts and configuration files required to download Javascript, CSS, and other assets used by UserFrosting.
@@ -129,6 +133,7 @@ The `build` directory contains the scripts and configuration files required to d
 Before we can run these scripts, we need to install some required npm packages:
 
 ```bash
+$ cd /path/to/myUserFrostingProject/build
 $ npm install
 ```
 
@@ -139,6 +144,7 @@ This command will install Gulp, Bower, and several other required npm packages.
 Now that we have npm set up with all of its required packages, we can use it to automatically download and install the assets in the correct directories:
 
 ```bash
+$ cd /path/to/myUserFrostingProject/build
 $ npm run uf-assets-install
 ```
 
@@ -146,21 +152,9 @@ That's it!  Your project should now have all the required PHP and client-side de
 
 >>>> If you have issues, ensure that **git** is installed.
 
-## Visit your website
-
-At this point, you should be able to access the basic pages for your application (without a signed-in user).  Visit:
-
-`http://localhost/myUserFrostingProject/public/`
-
-You should see a basic page:
-
-![Basic front page of a UserFrosting installation](/images/front-page.png)
-
-## Set up the database and root user account
+## Set up the database
 
 You're almost done!  To actually make the **user** part of UserFrosting work, we'll need to set up the database tables and a root user account.
-
-### Database configuration
 
 First thing's first, you'll need to create a database and database user account.  Consult your database documentation for more details.  If you use phpmyadmin or a similar tool, you can create your database and database user through their interface.  Otherwise, you can do it via the command line.
 
@@ -182,7 +176,17 @@ Now, you can set values in the `.env` file and UserFrosting will pick them up _a
 
 You may also want to configure your SMTP server settings as well at this point so that you can use features that require mail, such as password reset and email verification.  See [Chapter 11](/other-services/mail) for more information on the mail service.
 
-### UserFrosting installer
+## Visit your website
+
+At this point, you should be able to access the basic pages for your application (without a signed-in user).  Visit:
+
+`http://localhost/myUserFrostingProject/public/`
+
+You should see a basic page:
+
+![Basic front page of a UserFrosting installation](/images/front-page.png)
+
+## UserFrosting installer
 
 To set up the database tables and create your first UserFrosting account, we will run the command-line installer:
 
