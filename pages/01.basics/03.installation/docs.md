@@ -113,7 +113,42 @@ Make sure that `/app/cache`, `/app/logs`, and `/app/sessions` are writable by yo
 
 ### PHP dependencies
 
-Next, we will run Composer in the `app` subdirectory to fetch and install the PHP packages used by UserFrosting:
+Next, we will run Composer in the `app` subdirectory to fetch and install the PHP packages used by UserFrosting.  Before you do this though, you should check which version of PHP will be run **in the command line**.
+
+#### Preflight check
+
+It is very common for a single environment to have multiple different versions of PHP installed.  If you've never run PHP from the command line before, you may not realize that the version of PHP run by the *webserver* (Apache, nginx, etc) can be different from the one that would get run in the *command line*.
+
+To check the "command line" version, use the command:
+
+```bash
+$ php -v
+```
+
+You should then see a message like:
+
+```bash
+PHP 5.6.15 (cli) (built: Dec  4 2015 12:52:38) 
+Copyright (c) 1997-2015 The PHP Group
+Zend Engine v2.6.0, Copyright (c) 1998-2015 Zend Technologies
+```
+
+This is the version of PHP which will be used by Composer.  Make sure it meets the minimum required version for UserFrosting!
+
+If it's a lower version than the version that you **know** your webserver uses, then chances are that your terminal is incorrectly resolving the `php` command.  This happens because there is an older version of PHP (often preinstalled with your operating system) in one of the paths specified in your path variable (`$PATH` in *nix systems, `PATH` environment variable in Windows).
+
+If you're using a distribution like XAMPP or WAMP, you'll want to update your `PATH` variable so that your _terminal_ finds the same version of PHP that your webserver uses.  This process depends heavily on the distribution you're using and your operating system (Google it!)  However, the general steps are:
+
+1. Determine the path to the version of PHP that your webserver uses.  For example, the XAMPP distribution has PHP installed in its own directory, e.g. `/Applications/XAMPP/xamppfiles/bin/`.
+2. Append that path to your `PATH` variable.  In `*nix` systems, this can be set in your shell config file, for example `~/.bash_profile`.  The command should look something like `export PATH="/path/to/newer/version/of/php:$PATH"`.  See [this answer](http://superuser.com/a/284351/378833) on Superuser for information on modifying `PATH` in your operating system.
+3. Restart your terminal.
+4. Run the command `which php` to ensure that the `php` command is now resolving to the correct directory.  If not, double-check steps 1-3.
+
+>>>>>> To check the value of your `PATH` variable in *nix environments, simply run `echo $PATH`.
+
+#### Running Composer
+
+Once you've got the right version of PHP running from your command line, it's time to run Composer:
 
 ```bash
 $ cd app
@@ -123,8 +158,6 @@ $ composer install
 This may take some time to complete.  If Composer has completed successfully, you should see that a `vendor/` directory has been created under `app/`.  This `vendor/` directory contains all of UserFrosting's PHP dependencies - there should be nearly 30 subdirectories in here!
 
 If you only see `composer` and `wikimedia` subdirectories after running `composer install`, then you may need to run `composer update` afterwards.
-
-If you're using a distribution like XAMPP or WAMP, the version of PHP that your webserver runs might not be the same version that Composer will run.  This can lead to problems if Composer ends up running a version of PHP below 5.6.  You may need to set your path variable to point to the newer version of PHP.
 
 ### npm dependencies
 
@@ -150,7 +183,7 @@ $ npm run uf-assets-install
 
 That's it!  Your project should now have all the required PHP and client-side dependencies that it needs to function.
 
->>>> If you have issues, ensure that **git** is installed.
+>>>>> If this script fails, ensure that **git** is installed.  Additionally, in some operating systems you may need to run this command as an administrator (`sudo` in *nix platforms, right-click your terminal icon and choose "run as administrator" in Windows).
 
 ## Set up the database
 
