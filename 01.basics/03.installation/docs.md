@@ -120,11 +120,11 @@ $ cd app
 $ composer install
 ```
 
-This may take some time to complete.
+This may take some time to complete.  If Composer has completed successfully, you should see that a `vendor/` directory has been created under `app/`.  This `vendor/` directory contains all of UserFrosting's PHP dependencies - there should be nearly 30 subdirectories in here!
 
->>>> If you're using a distribution like XAMPP or WAMP, the version of PHP that your webserver runs might not be the same version that Composer will run.  This can lead to problems if Composer ends up running a version of PHP below 5.6.  You may need to set your path variable to point to the newer version of PHP.
+If you only see `composer` and `wikimedia` subdirectories after running `composer install`, then you may need to run `composer update` afterwards.
 
-If Composer has completed successfully, you should see that a `vendor/` directory has been created under `app/`.  This `vendor/` directory contains all of UserFrosting's PHP dependencies - there should be nearly 30 subdirectories in here!
+If you're using a distribution like XAMPP or WAMP, the version of PHP that your webserver runs might not be the same version that Composer will run.  This can lead to problems if Composer ends up running a version of PHP below 5.6.  You may need to set your path variable to point to the newer version of PHP.
 
 ### npm dependencies
 
