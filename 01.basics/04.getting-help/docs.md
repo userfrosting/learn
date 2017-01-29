@@ -76,7 +76,7 @@ Markdown is the _de facto_ standard for basic text formatting on the web.  If yo
 
 In particular, please make sure you understand how to use **single backticks** (`) to format inline code, and **triple backticks** (```) to format code blocks.  **For larger blocks of code**, please paste into a [Gist](https://gist.github.com) and then link to your Gist in chat.
 
-![Location of backtick key](https://cdn.discourse.org/sitepoint/uploads/default/20419/6985204d413d5195.png)
+![Location of backtick key](/images/backtick.png)
 
 The easiest way to share images with us, such as screenshots, is to simply drag them into the chat window.  Please do not upload anything that contains sensitive or private content.
 
