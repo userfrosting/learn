@@ -177,6 +177,10 @@ Creates an instance of `AuthorizationManager` (`UserFrosting\Sprinkle\Account\Au
 
 Sets up the `User` object (`UserFrosting\Sprinkle\Account\Model\User`) for the currently logged-in user.  If there is no logged-in user, it returns `null`.  It also loads the locale and theme for the current user, if set.
 
+#### determineRedirectOnLogin
+
+Returns a callback that sets the `UF-Redirect` header in the response.  This callback is automatically invoked in the `AccountController::login` method.  The `UF-Redirect` header is used by client-side code to determine where to redirect a given user after they log in.
+
 #### repoPasswordReset
 
 Sets up a `PasswordResetRepository` object (`UserFrosting\Sprinkle\Account\Repository\PasswordResetRepository`), which handles token creation, verification, and expiration for password reset requests.
