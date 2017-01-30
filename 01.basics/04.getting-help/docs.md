@@ -74,9 +74,17 @@ Check [Stack Overflow](http://stackoverflow.com/tags/userfrosting), the [issue t
 
 Markdown is the _de facto_ standard for basic text formatting on the web.  If you are unfamiliar with Markdown, please [take a few minutes to learn](https://guides.github.com/features/mastering-markdown/#what).  It will help you not just here, but all over the web!
 
-In particular, please make sure you understand how to use **single backticks** (`) to format inline code, and **triple backticks** (```) to format code blocks.  **For larger blocks of code**, please paste into a [Gist](https://gist.github.com) and then link to your Gist in chat.
+In particular, please make sure you understand how to use **single backticks** (`) to format inline code, and **triple backticks** (```) to format code blocks:
 
 ![Location of backtick key](/images/backtick.png)
+
+<pre>
+```
+public function foo();
+```
+</pre>
+
+**For larger blocks of code**, please paste into a [Gist](https://gist.github.com) and then link to your Gist in chat.
 
 The easiest way to share images with us, such as screenshots, is to simply drag them into the chat window.  Please do not upload anything that contains sensitive or private content.
 
