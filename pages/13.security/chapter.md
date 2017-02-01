@@ -1,9 +1,11 @@
 ---
-title: Going Live
+title: Security
 taxonomy:
     category: docs
 ---
 
 ### Chapter 13
 
-# Deploying Your Application
+# Security Features
+
+Coming soon!
