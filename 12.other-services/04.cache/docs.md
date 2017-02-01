@@ -1,5 +1,5 @@
 ---
-title: Mail
+title: Cache
 taxonomy:
     category: docs
 ---
