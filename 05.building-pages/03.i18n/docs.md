@@ -19,7 +19,7 @@ Just as with configuration files, UserFrosting will recursively merge translatio
 Translation files can be found in each Sprinkle's `locale/` directory and accessed using the `locale://` **stream wrapper**, just like the `assets://` one. Here's an example of a translation file for both Spanish and English languages:
 
 
-**locale/es_ES.php**
+**locale/es_ES/example.php**
 
 ```
 return array(
@@ -28,7 +28,7 @@ return array(
 );
 ```
 
-**locale/en_US.php**
+**locale/en_US/example.php**
 
 ```
 return array(
@@ -36,6 +36,8 @@ return array(
 	"ACCOUNT_SPECIFY_DISPLAY_NAME" => "Please enter your display name.",
 );
 ```
+
+>>>>> Locale files are grouped into folders named after the locale code, as pictured above. This means `locale/en_US/` can contain multiple locale files allowing you to split your translation keys accross multiple files for easier maintenance.
 
 Messages may optionally have placeholders. The placeholders allows you to insert variables in a message, avoiding the need for a unique message for every possible solution. For example:
 
