@@ -12,6 +12,7 @@ Within each sprinkle, you will find any or all of the following directories and 
 ├── assets
 ├── config
 ├── locale
+├── migrations
 ├── routes
 ├── schema
 ├── src
@@ -238,6 +239,10 @@ The `locale` directory contains [translation files](/building-pages/i18n) for yo
 Just as with configuration files, UserFrosting will recursively merge translation files for the currently selected language(s) from each loaded Sprinkle.  This means that each subsequently loaded Sprinkle can override translations from previous Sprinkles, or define new ones entirely.
 
 See [Section 5.3](/building-pages/i18n) for more information on UserFrosting's internationalization and localization system.
+
+### /migrations
+
+The `migrations` directory contains database migration scripts for your Sprinkle.  See [Chapter 6](/database/extending-the-database) for more information on using migrations.
 
 ### /routes
 
