@@ -10,15 +10,15 @@ To keep your code organized, it is highly recommended to use controller classes.
 
 ## Defining Controller Classes
 
-UserFrosting provides a base class, `UserFrosting\Sprinkles\Core\Controller\SimpleController`, that can be extended with methods that implement your controller logic.  An easy way to define a new controller class is to extend this class in your Sprinkle, under `src/Controller/`:
+UserFrosting provides a base class, `UserFrosting\Sprinkle\Core\Controller\SimpleController`, that can be extended with methods that implement your controller logic.  An easy way to define a new controller class is to extend this class in your Sprinkle, under `src/Controller/`:
 
 ```
 <?php
 
-namespace UserFrosting\Sprinkles\Site\Controller;
+namespace UserFrosting\Sprinkle\Site\Controller;
 
-use UserFrosting\Sprinkles\Core\Controller\SimpleController;
-use UserFrosting\Sprinkles\Site\Model\Owl;
+use UserFrosting\Sprinkle\Core\Controller\SimpleController;
+use UserFrosting\Sprinkle\Site\Model\Owl;
 
 class OwlController extends SimpleController
 {
@@ -49,7 +49,7 @@ The basic idea is to have one method per route.  The naming convention is for an
 You'll notice that `$request`, `$response`, and `$args`, the same parameters that were required when using a closure, are now the parameters for our route method.  In our front controller, we can tell our routes to use a controller class method as follows:
 
 ```
-$app->get('/api/owls', 'UserFrosting\Sprinkles\Site\Controller\OwlController:getOwls');
+$app->get('/api/owls', 'UserFrosting\Sprinkle\Site\Controller\OwlController:getOwls');
 ```
 
 Slim will automatically invoke the method and pass in the values of `$request`, `$response`, and `$args`.
@@ -61,8 +61,8 @@ Slim will automatically invoke the method and pass in the values of `$request`, 
 The entire dependency injection container is passed to a SimpleController child class as a convenience, and is not necessarily the best design choice.  You may wish to implement controller classes that explicitly define their dependencies.  To do this, you would register these controllers themselves in your Sprinkle's [service provider](/services/the-di-container#service-providers):
 
 ```
-$container['UserFrosting\Sprinkles\Site\Controller\OwlController'] = function ($c) {
-    return new UserFrosting\Sprinkles\Site\Controller\OwlController($c['view'], $c['voleFinder']);
+$container['UserFrosting\Sprinkle\Site\Controller\OwlController'] = function ($c) {
+    return new UserFrosting\Sprinkle\Site\Controller\OwlController($c['view'], $c['voleFinder']);
 };
 ```
 
@@ -71,10 +71,10 @@ Then your class definition would look like:
 ```
 <?php
 
-namespace UserFrosting\Sprinkles\Site\Controller;
+namespace UserFrosting\Sprinkle\Site\Controller;
 
 use Slim\Views\Twig;
-use UserFrosting\Sprinkles\Site\Finder\VoleFinder;
+use UserFrosting\Sprinkle\Site\Finder\VoleFinder;
 
 final class OwlController
 {
