@@ -172,6 +172,8 @@ $ npm install
 
 This command will install Gulp, Bower, and several other required npm packages.
 
+>>> You can safely exclude the `node_modules` directory from your repository, even if you plan to use git to push your project to production.  These node modules are only used for environment installation build tasks and are not used by the application itself.
+
 ### UserFrosting assets
 
 Now that we have npm set up with all of its required packages, we can use it to automatically download and install the assets in the correct directories:
