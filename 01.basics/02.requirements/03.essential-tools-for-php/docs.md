@@ -61,9 +61,7 @@ Composer has a special installer that you can use for Windows - [Composer-Setup.
 
 Finally, you will need to install **Node.js**,  Javascript runtime.  Although UserFrosting does not _run_ on Node.js, it does use several Node-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
 
-The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems.  We recommend using the latest version of Node.js (7.x at the time of this writing).
-
-### Installing Node.js (MacOS)
+The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems.  We recommend using the latest version of Node.js (7.x at the time of this writing), however any version later than 4.x will suffice.
 
 To check if Node.js is installed:
 
@@ -74,13 +72,13 @@ v7.4.0
 
 >>> Even though we'll be using these tools to get our application ready for deployment, you don't actually need to install Node.js on your live server.  You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.
 
-### Installing Node.js (Windows)
+### Installing Node.js (MacOS and Windows)
 
-Node.js has an installer that you can use for Windows - [Node.js Download](https://nodejs.org/en/download/current/).
+Node.js has an installer that you can use for MacOS and Windows - [Node.js Download](https://nodejs.org/en/download/current/).
 
 ## npm
 
-npm stands for **N**ode **P**ackage **M**anager.  npm is to Node.js as Composer is to PHP - it is used to grab the various Node packages that are required by UserFrosting's installation and build tools.  When you installed Node, it should have automatically installed npm as well.  However, we still recommend updating npm:
+npm stands for **N**ode **P**ackage **M**anager.  npm is to Node.js as Composer is to PHP - it is used to grab the various Node packages that are required by UserFrosting's installation and build tools.  When you installed Node, it should have automatically installed npm as well.  However, we still recommend updating npm (if unable to update, any version later than 3.x will suffice):
 
 ```bash
 $ npm install npm@latest -g
