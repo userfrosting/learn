@@ -274,7 +274,7 @@ When we render this template, Twig will use `basic.html.twig`, but then replace 
 
 ### mail/
 
-`mail/` contains email templates - see [Chapter 11](/other-services/mail) for more information.
+`mail/` contains email templates - see [Chapter 11](/mail) for more information.
 
 ### pages/
 
