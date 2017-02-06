@@ -327,6 +327,6 @@ In general, the `templates` directory for a Sprinkle is structured as follows:
 └── pages
 ```
 
-`components` contains partial HTML and Javascript templates, such as forms, tables, navigation bars, and other commonly reused components.  `layouts` contains parent templates meant to be extended (using Twig's [extend](http://twig.sensiolabs.org/doc/tags/extends.html) feature).  These layouts can be used within the same Sprinkle in which they were defined, or in another loaded Sprinkle.  `mail` contains email templates - see [Chapter 11.1](/other-services/mail) for more information.
+`components` contains partial HTML and Javascript templates, such as forms, tables, navigation bars, and other commonly reused components.  `layouts` contains parent templates meant to be extended (using Twig's [extend](http://twig.sensiolabs.org/doc/tags/extends.html) feature).  These layouts can be used within the same Sprinkle in which they were defined, or in another loaded Sprinkle.  `mail` contains email templates - see [Chapter 11.1](/mail) for more information.
 
 `pages` should contain templates that correspond to specific pages in your application.  For example, the main content template for `http://owlfancy.com/supplies/preening` might be located at `pages/supplies/preening.html.twig`.
