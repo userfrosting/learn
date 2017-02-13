@@ -155,3 +155,7 @@ $user = User::where('user_name', 'chuck703')->first();
 $user->delete();
 
 ```
+
+### Advanced usage
+
+We've only touched on the very basics of how Eloquent and the query builder work.  You will likely want to learn how to [define relationships between models](https://laravel.com/docs/5.3/eloquent-relationships), [encapsulate longer queries](https://laravel.com/docs/5.3/eloquent#local-scopes), and perform more [advanced queries](https://laravel.com/docs/5.3/queries), for example.  For this, we urge you to spend some time reading through Laravel's excellent documentation.
