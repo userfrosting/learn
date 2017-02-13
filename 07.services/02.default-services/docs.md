@@ -42,7 +42,7 @@ The `config` service also builds the `site.uri.public` config variable from the 
 
 #### csrf
 
-Constructs the [CSRF Guard](https://github.com/slimphp/Slim-Csrf) middleware, which mitigates cross-site request forgery attacks on your users.  See Chapter 12 for more information on security features.
+Constructs the [CSRF Guard](https://github.com/slimphp/Slim-Csrf) middleware, which mitigates cross-site request forgery attacks on your users.  See Chapter 15 for more information on security features.
 
 #### db
 
