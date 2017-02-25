@@ -38,24 +38,21 @@ Gulp should have been automatically installed for you during the [installation p
 
 #### Running the Build Task
 
-All build tasks are defined in `build/gulpfile.js`.  UserFrosting ships with four preconfigured tasks for building assets:
+All build tasks are defined in `build/gulpfile.js`.  UserFrosting ships with three preconfigured tasks for building assets:
     
 1. `uf-bundle-build`
 2. `uf-bundle`
-3. `uf-assets-copy`
 4. `uf-bundle-clean`
 
 The `uf-bundle-build` task combines the `bundle.config.json` files in each loaded Sprinkle (as per your `sprinkles.json` file), respecting the collision rules defined in each bundle.  This combined bundle file is written to `build/bundle.config.json`.
 
-The `uf-bundle` task uses [`gulp-bundle-assets`](https://github.com/dowjones/gulp-bundle-assets) to minify and concatenate the assets referenced in each bundle in `build/bundle.config.json` into a single file per bundle.  These compiled bundles will be placed in the `public/assets/` directory by default.
-
-The `uf-assets-copy` task copies fonts, images, and other files from your Sprinkles to the `public/assets/` directory, so that your web server can directly serve these files as well. 
+The `uf-bundle` task uses [`gulp-bundle-assets`](https://github.com/dowjones/gulp-bundle-assets) to minify and concatenate the assets referenced in each bundle in `build/bundle.config.json` into a single file per bundle.  These compiled bundles will be placed in the `public/assets/` directory by default.  It also copies fonts, images, and other files from your Sprinkles to the `public/assets/` directory, so that your web server can directly serve these files as well. 
 
 To run these commands, simply run `npm run <command name>` in your `build/` directory.
   
 #### Using Compiled Assets
 
-Once the compiled asset files have been generated, we can easily configure the asset manager to substitute the urls for raw assets in our pages with urls for compiled assets.  Simply set the configuration value for `assets.use_raw` to `false`.
+Once the compiled asset files have been generated, we can easily configure the asset manager to substitute the urls for raw assets in our pages with urls for compiled assets.  Simply set the configuration value for `assets.use_raw` to `false`.  The default production config file has this already configured for you.
 
 If you reload your page and view the source, you'll see that references to the compiled assets are now being used instead:
 
