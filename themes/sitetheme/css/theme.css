@@ -1,5 +1,5 @@
 #header {
-    background-color: #f3f2e4;
+    background-color: #ee6e73;
 }
 
 #logo {
@@ -8,9 +8,9 @@
 }
 
 .logo-title {
-    color: #444;
+    color: #fff;
     font-size: 30px;
-    font-variant: small-caps;
+    text-transform: uppercase;
     padding-top: 10px;
     vertical-align: middle;
 }
@@ -21,7 +21,12 @@
 
 .searchbox {
     border-color: #f7e2e5;
-    background-color: #f3c8ce;  
+    background-color: #fff;
+}
+
+.searchbox label,
+.searchbox span {
+    color: #444;
 }
 
 .searchbox input {
@@ -30,8 +35,8 @@
 }
 
 .searchbox input:focus {
-    border-color: #f3c8ce;
-    box-shadow: inset 0 1px 3px rgba(51, 51, 51, 0.06), 0 0 5px #ff66ff;
+    border-color: #444;
+    box-shadow: inset 0 1px 3px rgba(51, 51, 51, 0.06), 0 0 5px #31ddcf;
 }
 
 .searchbox input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
@@ -53,9 +58,9 @@
 }
 
 #sidebar ul li.visited > a .read-icon {
-    color: #f3c8ce;
+    color: #ee6e73;
 }
 
 a {
-    color: #f39ca1;
+    color: #26a69a;
 }
