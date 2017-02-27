@@ -258,9 +258,9 @@ The validation message will be recorded during the call to `ServerSideValidator:
 
 The following validators are available:
 
-##### `required`
+##### `email`
 
-Specifies that the field is a required field.  If the field is not present in the HTTP request, validation will fail unless a default value has been specified for the field.
+Specifies that the value of the field must represent a valid email address.
 
 ##### `equals`
 
@@ -277,36 +277,11 @@ Specifies that the value of the field must be equivalent to `value`.
 }
 ```
 
-##### `not_equals`
+By default, this is case-insensitive.  It can be made case-sensitive by setting `caseSensitive` to `true`.
 
-Specifies that the value of the field must **not** be equivalent to `value`.
+##### `integer`
 
-##### `email`
-
-Specifies that the value of the field must represent a valid email address.
-
-##### `telephone`
-
-Specifies that the value of the field must represent a valid telephone number.
-
-##### `uri`
-
-Specifies that the value of the field must represent a valid Uniform Resource Identifier (URI).
-
-##### `regex`
-
-Specifies that the value of the field must match a specified Javascript- and PCRE-compliant regular expression.
-
-```json
-"screech" : {
-    "validators" : {
-        "regex" : {
-            "regex" : "/^who(o*)$/",
-            "message" : "You did not provide a valid screech."
-        }
-    }
-}
-```
+Specifies that the value of the field must represent an integer value.
 
 ##### `length`
 
@@ -324,9 +299,55 @@ Specifies `min` and `max` bounds on the length, in characters, of the field's va
 }
 ```
 
-##### `integer`
+##### `matches`
 
-Specifies that the value of the field must represent an integer value.
+Specifies that the value of the field must be equivalent to the value of `field`.
+
+```json
+"passwordc" : {
+    "validators" : {
+        "matches" : {
+            "field" : "password",
+            "message" : "The value of this field does not match the value of the 'password' field."
+        }
+    }
+}
+```
+
+##### `member_of`
+
+Specifies that the value of the field must appear in the specified `values` array.
+
+```json
+"genus" : {
+    "validators" : {
+        "member_of" : {
+            "values" : ["Megascops", "Bubo", "Glaucidium", "Tyto", "Athene"],
+            "message" : "Sorry, that is not one of the permitted genuses."
+        }
+    }
+}
+```
+
+##### `no_leading_whitespace`
+
+Specifies that the value of the field must not have any leading whitespace characters.
+
+##### `no_trailing_whitespace`
+
+Specifies that the value of the field must not have any trailing whitespace characters.
+
+##### `not_equals`
+
+Specifies that the value of the field must **not** be equivalent to `value`.  By default, this is case-insensitive.  It can be made case-sensitive by setting `caseSensitive` to `true`.
+
+##### `not_matches`
+
+Specifies that the value of the field must **not** be equivalent to the value of `field`. 
+
+##### `not_member_of`
+
+Specifies that the value of the field must **not** appear in the specified `values` array.
 
 ##### `numeric`
 
@@ -350,48 +371,33 @@ Specifies a numeric interval bound on the field's value.  The `range` validator 
 
 You can use `min_exclusive` instead of `min`, and `max_exclusive` instead of `max` to create open intervals.
 
-##### `member_of`
+##### `regex`
 
-Specifies that the value of the field must appear in the specified `values` array.
+Specifies that the value of the field must match a specified Javascript- and PCRE-compliant regular expression.
 
 ```json
-"genus" : {
+"screech" : {
     "validators" : {
-        "member_of" : {
-            "values" : ["Megascops", "Bubo", "Glaucidium", "Tyto", "Athene"],
-            "message" : "Sorry, that is not one of the permitted genuses."
+        "regex" : {
+            "regex" : "/^who(o*)$/",
+            "message" : "You did not provide a valid screech."
         }
     }
 }
 ```
 
-##### `not_member_of`
+##### `required`
 
-Specifies that the value of the field must **not** appear in the specified `values` array.
+Specifies that the field is a required field.  If the field is not present in the HTTP request, validation will fail unless a default value has been specified for the field.
 
-##### `matches`
+##### `telephone`
 
-Specifies that the value of the field must be equivalent to the value of `field`.
+Specifies that the value of the field must represent a valid telephone number.
 
-```json
-"passwordc" : {
-    "validators" : {
-        "matches" : {
-            "field" : "password",
-            "message" : "The value of this field does not match the value of the 'password' field."
-        }
-    }
-}
-```
+##### `uri`
 
-##### `not_matches`
+Specifies that the value of the field must represent a valid Uniform Resource Identifier (URI).
 
-Specifies that the value of the field must **not** be equivalent to the value of `field`. 
+##### `username`
 
-##### `no_leading_whitespace`
-
-Specifies that the value of the field must not have any leading whitespace characters.
-
-##### `no_trailing_whitespace`
-
-Specifies that the value of the field must not have any trailing whitespace characters.
+Specifies that the value of the field must be a valid username (lowercase letters, numbers, `.`, `-`, and `_`).
