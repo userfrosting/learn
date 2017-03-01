@@ -172,9 +172,11 @@ $ npm install
 
 This command will install Gulp, Bower, and several other required npm packages.
 
->>> You can safely exclude the `node_modules` directory from your repository, even if you plan to use git to push your project to production.  These node modules are only used for environment installation build tasks and are not used by the application itself.
-
 >>>>> If this command fails, see [npm](/requirements/essential-tools-for-php#npm) to ensure npm is correctly installed and updated. 
+
+Check that all of your Node dependencies have been successfully installed by looking in the `build/node-modules/` directory.
+
+>>> You can safely exclude the `node_modules` directory from your repository, even if you plan to use git to push your project to production.  These node modules are only used for environment installation build tasks and are not used by the application itself.
 
 ### UserFrosting assets
 
