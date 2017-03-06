@@ -379,12 +379,14 @@ Specifies that the value of the field must match a specified Javascript- and PCR
 "screech" : {
     "validators" : {
         "regex" : {
-            "regex" : "/^who(o*)$/",
+            "regex" : "^who(o*)$",
             "message" : "You did not provide a valid screech."
         }
     }
 }
 ```
+
+>>>> The jQuery Validation plugin, for some unholy reason, wraps regular expressions on the client side with `^...$`.  Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).
 
 ##### `required`
 
@@ -401,3 +403,11 @@ Specifies that the value of the field must represent a valid Uniform Resource Id
 ##### `username`
 
 Specifies that the value of the field must be a valid username (lowercase letters, numbers, `.`, `-`, and `_`).
+
+#### Limit rules to server or client only
+
+Sometimes, you only want a validation rule to be applied server-side but not in Javascript on the client side, or vice versa.  For example, there may be forms that contain hidden data that needs to be validated on the server-side, but is not directly manipulated by the user in the browser. Thus, these fields would not need client-side validation rules.
+
+Alternatively, there might be fields that appear in the form that should be validated for the sake of user experience, but are not actually used by (or even sent to) the server.
+
+To accomplish this, each validation rule can accept a `domain` property.  Setting to "server" will have it only applied server-side.  Setting to "client" will have it only appear in the client-side rules.  If not specified, rules will be applied both server- and client-side by default.  You can also set this explicitly with the value "both".
