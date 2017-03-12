@@ -151,21 +151,72 @@ As a security measure, users are required to verify their current password befor
 
 The settings and profile forms are posted to the `/account/settings` or `/account/settings/profile` endpoints (`AccountController::settings` and `AccountController::profile` methods).
 
-### Account gravatar
+### Account avatar
 
 Account avatars are currently handled via Gravatar.  To set this up, users need to create an account with Gravatar and associate 
 their account email address with an avatar of their choice.  UserFrosting will automatically generate a URL for the registered Gravatar image, which can be accessed via the `$user->avatar` property.
 
 Built-in avatar uploading is not yet implemented.
 
+## Activity logging
+
+User activities are automatically logged via the `userActivityLogger` service.  By default, they are logged to the `activities` table.
+
+Many of UserFrosting's built-in routes already log activities like sign-in/sign-out, registration, account settings updates, and administrative activities for you.  For example, the "update profile" event is logged via:
+
+```
+$this->ci->userActivityLogger->info("User {$currentUser->user_name} updated their profile settings.", [
+    'type' => 'update_profile_settings'
+]);
+```
+
+Every logged event includes the user's id, IP address, timestamp, an event type (e.g., `update_profile_settings`), and a description of the event.  You may add additional logging directly in your controllers, or you can attach them to Laravel [model events](https://laravel.com/docs/5.4/eloquent#events) so that they occur automatically when the model is created/saved/updated/deleted.
+
 ## Account administration
 
 Depending on the permissions you have assigned, users with the "Administrator" role may also be able to:
 
-- View a list of users
-- View a list of user activities
-- Edit user accounts
-- Set user roles
-- Reset a user's password
-- Enable/disable accounts
-- Delete accounts
+### View a list of users
+
+The user listing page is available at `/admin/users` (`UserController::pageList`).  The actual table of users is implemented through a combination of the page itself, which generates the "skeleton" of the table, and AJAX calls to the `/api/users` route, which fetches the actual data as a JSON object (`UserController::getList`).  This allows the page to efficiently retrieve paginated, filtered, sorted results without needing to reload the page.
+
+See [Data Sprunjing](/database/data-sprunjing) for more details on how this works.
+
+### View a list of user activities
+
+Just like the table of users, the table of user activities is generated through a combination of a table "skeleton" embedded in the page itself (`/admin` or `/admin/activities`), and AJAX requests to the `/api/activities` route.
+
+### Edit user accounts
+
+Basic user details (name, email, locale, group) can be modified via the "Edit user" option in the dropdown menu in the user table.
+
+### Set user roles
+
+Roles can be added to or removed from a user account via the `Manage roles` button on the user's profile page, or in the dropdown menu in the user table.  
+
+![User role management](/images/uf-collection.png)
+
+By default, only the root account can change users' roles.  You may want to modify this to allow site admins to grant a **subset** of the available roles to other users - but be careful!  You may not want site administrators to be allowed to elevate other users to site administrator, for example.  See the section on [access control](/users/access-control) for more information.
+
+### Reset a user's password
+
+Administrators may be able to perform a password reset on behalf of users.  This is useful, for example, when you have users who have difficulty with the self-service password reset tool.  Password resets can be performed via the "Password" button in the user's profile page, or the "change password" option in the dropdown menu of the user table.
+
+![User password management](/images/change-password.png)
+
+You may send a password reset link to the user so that they can change it themselves, or even set a password directly when dealing with particularly technology-adverse users over the phone.
+
+### Disable/enable accounts
+
+Sometimes, you need to disable a user's account.  For example, if the user's account has been compromised, or if they are causing some sort of problem on your site.  When you choose the "disable user" option from the user's profile page, or from the user table dropdown menu, the `flag_enabled` value for the user will be set to `false` and the user will no longer be able to sign in.  Any current sessions the user has will expire on their next request.
+
+The administrator can later re-enable the account, if desired.
+
+### Delete accounts
+
+User accounts can be deleted from the user profile page, or the user dropdown menu in the users table.
+
+Deleting user accounts presents a problem because the user may have related data in the database that would become orphaned, potentially breaking other functionality in your site.  For this reason, UserFrosting performs [soft deletes](https://laravel.com/docs/5.4/eloquent#soft-deleting) by default.  The user record is not actually deleted, but instead a `deleted_at` timestamp is added to the record and the user is no longer able to sign in.  Deleted users are also excluded from all queries unless the `withTrashed` method is added to the Eloquent query.  Related entities (activities, roles, etc) are left alone.
+
+If you really want to completely remove the user from the database, you can call `User::delete` method in your controller and set
+the `$hardDelete` parameter to `true`.  This will detach the user from all of their roles, and delete the user's activity records.
