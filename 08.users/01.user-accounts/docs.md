@@ -86,7 +86,7 @@ Of course, neither of these will protect you from malevolent targeted attacks.  
 
 #### Account verification
 
-By default, new accounts must be **verified** through email before they can be used.  This ensures that new accounts are associated with a reachable email address, and helps to limit the number of fake accounts that are created on your site.  A token is sent to the registered email address in the form of a link, and the account is activated when the user clicks the link.
+By default, new accounts must be **verified** through email before they can be used.  This ensures that new accounts are associated with a reachable email address, and helps to limit the number of fake accounts that are created on your site.  A token is sent to the registered email address in the form of a link (`/account/verify`, which invokes `AccountController::verify`), and the account is activated when the user clicks the link.
 
 To disable this behavior, set the `site.registration.require_email_verification` configuration setting to `false`.
 
@@ -100,11 +100,46 @@ You can then fill out details for the user.  After you create the user, an email
 
 ![User creation](/images/create-user.png)
 
+## Login form
+
+By default, the login form is available at `/account/sign-in-or-register`.  The user provides their email or username as their identity, along with their password.  The form is submitted to `/account/login`, which invokes `AccountController::login`.  This processes the authentication request.
+
+![User sign-in](/images/login.png)
+
+The `/account/login` route is throttled via the `throttles.sign_in_attempt` throttle rule.  This mitigates against the possibility of brute-force attempts to guess your users' passwords.
+
+The sign-in form can automatically redirect users to a specific landing page after authentication via two different mechanisms:
+
+1. By setting a `redirect` query parameter in the URL of the page that the form appears on, or;
+2. By setting a `UF-Redirect` header in the response from the login submission route (`/account/login`).
+
+The first method is typically used with users whose sessions have expired, to automatically redirect them to the last page they were on after they re-authenticate.  For example, if a user was on `/admin/users` when their session expired, the `AuthExpiredExceptionHandler` will take them to the URL `/account/sign-in-or-register?redirect=admin/users`.  This gives them the opportunity to sign in again, but this time it tells UF to automatically redirect to the `/admin/users` page after successfully re-authenticating.
+
+The second method is for "regular" sign-ins, to determine how to redirect the user based on some server-side criteria.  This is used when you want different users to have different landing pages, depending on their roles and/or permissions.  The `AccountController::login` method will invoke the [`determineRedirectOnLogin` service](/services/default-services#determineredirectonlogin) after the user has been successfully authenticated, which sets the `UF-Redirect` header in the response.
+
+After the page containing the sign-in form receives a response from the server that authentication has succeeded, it will attempt to perform the redirect.  The `redirectOnLogin` Javascript function in `sprinkles/account/assets/local/pages/js/sign-in-or-register.js` will first check for a `redirect` query string parameter.  If none is present, it will check for the `UF-Redirect` header in the login response.  It will then perform a redirect to the appropriate URL by using the `window.location.replace` Javascript function.
+
 ## Other self-service account features
 
 ### Password reset requests
 
+Users can reset their passwords by visiting `/account/forgot-password`.  They will be asked for their account email address:
+
+![Password reset](/images/password-reset.png)
+
+Upon submitting a password reset request, a secret token will be issued for the user's account (stored in `password_resets` table), and emailed to them in the form of a link (`/account/set-password/confirm`).  The link will take them to a form with the secret token embedded in the page, where they can set their new password.  The form is then submitted to `/account/set-password`, which updates the user's password and signs them in.
+
+Password reset tokens expire after a period of time.  This time can be specified, in seconds, in the `password_reset.timeouts.reset` config setting.  It defaults to 10800 seconds (3 hours).
+
+Password reset requests are throttled to prevent abuse.  This throttle is specified in the `throttles.password_reset_request` configuration setting.
+
 ### Resend account verification email
+
+Sometimes, a user registers but then loses the verification email or fails to verify their account before the token expires.  A new verification email can be requested at `/account/resend-verification`.  This sends a fresh verification token to the specified address, if it is associated with an unverified account.
+
+Verification requests expire after a period of time specified in `verification.timeout`.  The default is 10800 seconds (3 hours).
+
+For the precise implementation of the password reset and account verification resend features, see `sprinkles/account/src/Repository/TokenRepository`.
 
 ### Account settings and profile page
 
