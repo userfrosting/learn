@@ -143,7 +143,20 @@ For the precise implementation of the password reset and account verification re
 
 ### Account settings and profile page
 
+Users can update certain attributes of their accounts through the account settings/profile page.  By default, this is available at `/account/settings`:
+
+![Account settings page](/images/account-settings.png)
+
+As a security measure, users are required to verify their current password before they can update their email address or password.  Other fields, like name and locale, do not require the authenticated user to re-enter their password.
+
+The settings and profile forms are posted to the `/account/settings` or `/account/settings/profile` endpoints (`AccountController::settings` and `AccountController::profile` methods).
+
 ### Account gravatar
+
+Account avatars are currently handled via Gravatar.  To set this up, users need to create an account with Gravatar and associate 
+their account email address with an avatar of their choice.  UserFrosting will automatically generate a URL for the registered Gravatar image, which can be accessed via the `$user->avatar` property.
+
+Built-in avatar uploading is not yet implemented.
 
 ## Account administration
 
