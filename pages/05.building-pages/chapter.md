@@ -9,3 +9,5 @@ taxonomy:
 ### Chapter 5
 
 # Building Pages
+
+In this chapter, we discuss how to use the powerful Twig templating engine to cleanly separate the content of your web pages from the logic.  We also discuss UserFrosting's powerful asset management system, and its detailed internationalization (multi-language) capabilities.

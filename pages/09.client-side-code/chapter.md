@@ -9,3 +9,5 @@ taxonomy:
 ### Chapter 9
 
 # Client-side Code
+
+UserFrosting ships with client-side plugins and code that allow the backend to seamlessly interface with popular Javascript libraries and offer a rich, modern user experience.
