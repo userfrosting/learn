@@ -1,5 +1,7 @@
 ---
 title: Error Handling
+metadata:
+    description: UserFrosting provides a rich set of features for catching errors and exceptions, logging detailed error information, and providing appropriate responses to the client.
 taxonomy:
     category: docs
 ---
@@ -7,3 +9,5 @@ taxonomy:
 ### Chapter 10
 
 # Exceptions and Error Handling
+
+UserFrosting provides a rich set of features for catching errors and exceptions, logging detailed error information, and providing appropriate responses to the client.

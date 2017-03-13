@@ -9,3 +9,5 @@ taxonomy:
 ### Chapter 11
 
 # Mail
+
+This chapter discusses various options for connecting UserFrosting to a mail service provider, as well as how to use the `Mailer` service to let UserFrosting send customized emails to users.
