@@ -64,6 +64,38 @@ class OwlSprunje extends Sprunje
 
 `baseQuery` should return an instance of the Eloquent `Builder` class.  If you want your Sprunje to automatically join other tables or load related objects, `baseQuery` is a good place to do this.
 
+### Sorts and filters
+
+By default, `Sprunje` will try to match the field names in the `sorts` and `filters` query parameters to column names in your Eloquent query.  Sorts are automatically transformed into `orderBy('fieldName', 'sortDirection')` clauses, and filters are transformed into `where('fieldName', 'like', '%$value%')` clauses.
+
+However, before you can sort or filter on a particular column name, you must add it to the `$sortable` and `$filterable` members of your Sprunje class first:
+
+```php
+<?php
+namespace UserFrosting\Sprinkle\Site\Sprunje;
+
+use UserFrosting\Sprinkle\Core\Facades\Debug;
+use UserFrosting\Sprinkle\Core\Sprunje\Sprunje;
+
+class OwlSprunje extends Sprunje
+{
+    protected $sortable = [
+        'name',
+        'species'
+    ];
+
+    protected $filterable = [
+        'name',
+        'species'
+    ];
+    ...
+} 
+```
+
+This whitelisting is done to prevent consumers of your API from sorting/filtering on arbitrary columns, which could reveal potentially sensitive information.  For example, even if you don't return the actual **value** of a column in your result set (e.g., `is_admin`), one could still determine which users are admins, for example, by filtering based on `is_admin=1`.  Whitelisting ensures that this cannot happen.
+
+>>> Both `sorts` and `filters` can accept multiple values separated by `||`, which will cause your Sprunje to return rows that match *any* of the values.
+
 ## Using your Sprunje
 
 With your Sprunje defined, you can use the `toResponse` method in your controller to automatically append the query results to the response:
@@ -141,9 +173,9 @@ Supposing that we make a request like `GET http://localhost/userfrosting/public/
 
 Notice that when retrieving data in JSON format (default), the response is an array containing three keys: `count`, `count_filtered`, and `rows`.  `count` contains the total number of results before any filters or pagination were applied.  `count_filtered` contains the number of results found after filtering, but _before_ pagination was applied.  Finally, `rows` contains the array of results itself, with all constraints applied.
 
-## Defining custom sorts and filters
+## Custom sorts and filters
 
-By default, `Sprunje` will try to match the field names in the `sorts` and `filters` parameters to column names in your query.  Sorts are automatically transformed into `orderBy('fieldName', 'sortDirection')` clauses, and filters are transformed into `where('fieldName', 'like', '%$value%')` clauses.  However, you may want to customize the behavior for certain columns, or even define constraints that don't map directly to a column name.
+The default sorting/filtering capabilities are great, but in some cases you may want to customize the behavior for certain columns, or even define constraints that don't map directly to a column name.
 
 To do this, you can define custom methods in your Sprunje:
 
