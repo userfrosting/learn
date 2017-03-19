@@ -65,7 +65,7 @@ upstream	https://github.com/userfrosting/UserFrosting.git (fetch)
 upstream	https://github.com/userfrosting/UserFrosting.git (push)
 ```
 
-This renames the `origin` remote to `upstream`.  Let's also disable the `push` part of this remote (don't worry, you won't have push rights for the official repo anyway, but this will help us stay organized): 
+This renames the `origin` remote to `upstream`.  Let's also disable the `push` part of this remote (don't worry, you won't have push rights for the official repo anyway, but this will help us stay organized):
 
 ```bash
 $ git remote set-url --push upstream no-pushing
@@ -128,7 +128,7 @@ $ php -v
 You should then see a message like:
 
 ```bash
-PHP 5.6.15 (cli) (built: Dec  4 2015 12:52:38) 
+PHP 5.6.15 (cli) (built: Dec  4 2015 12:52:38)
 Copyright (c) 1997-2015 The PHP Group
 Zend Engine v2.6.0, Copyright (c) 1998-2015 Zend Technologies
 ```
@@ -172,9 +172,9 @@ $ npm install
 
 This command will install Gulp, Bower, and several other required npm packages.
 
->>>>> If this command fails, see [npm](/basics/requirements/essential-tools-for-php#npm) to ensure npm is correctly installed and updated. 
+>>>>> If this command fails, see [npm](/basics/requirements/essential-tools-for-php#npm) to ensure npm is correctly installed and updated.
 
-Check that all of your Node dependencies have been successfully installed by looking in the `build/node-modules/` directory.
+Check that all of your Node dependencies have been successfully installed by looking in the `build/node_modules/` directory. Note that those are not the assets themselves, but the tools used to compile the assets.
 
 >>> You can safely exclude the `node_modules` directory from your repository, even if you plan to use git to push your project to production.  These node modules are only used for environment installation build tasks and are not used by the application itself.
 
@@ -187,9 +187,11 @@ $ cd /path/to/myUserFrostingProject/build
 $ npm run uf-assets-install
 ```
 
+Some warning can be displayed by this command, but it doesn't means the whole command failed. To make sure it executed properly, you can look for the `vendor/` directory inside `app/sprinkles/core/assets`
+
 That's it!  Your project should now have all the required PHP and client-side dependencies that it needs to function.
 
->>>>> If this script fails, ensure that **git** is installed.  Additionally, in some operating systems you may need to run this command as an administrator (`sudo` in *nix platforms, right-click your terminal icon and choose "run as administrator" in Windows).
+>>>>> If this script fails, ensure that **git** is installed.  Additionally, in some operating systems you *may* need to run this command as an administrator. This is true for most Windows version (right-click your terminal icon and choose "run as administrator" in Windows), but not the case with some *nix platforms where running things as sudo will fail.
 
 ## Set up the database
 
