@@ -174,9 +174,9 @@ This command will install Gulp, Bower, and several other required npm packages.
 
 >>>>> If this command fails, see [npm](/basics/requirements/essential-tools-for-php#npm) to ensure npm is correctly installed and updated.
 
-Check that all of your Node dependencies have been successfully installed by looking in the `build/node_modules/` directory. Note that those are not the assets themselves, but the tools used to compile the assets.
+Check that all of your Node dependencies have been successfully installed by looking in the `build/node_modules/` directory.  You should see lots of subdirectories with names like `accord`, `align-text`, `amdefine`, etc.  These are the npm packages used by our asset tools.
 
->>> You can safely exclude the `node_modules` directory from your repository, even if you plan to use git to push your project to production.  These node modules are only used for environment installation build tasks and are not used by the application itself.
+>>> You can safely exclude the `node_modules` directory from your repository, even if you plan to use git to push your project to production.  These packages are only used for environment installation build tasks and are not used by the application itself.
 
 ### UserFrosting assets
 
@@ -239,5 +239,15 @@ $ php install.php
 You will be prompted to confirm your operating system, after which the tables and some default rows will be created.  Next, you will be prompted for some information to set up the master account.
 
 Once this has completed successfully, you can sign in with your root account at `http://localhost/myUserFrostingProject/public/account/sign-in-or-register`.
+
+## Star the project and follow us on Twitter
+
+It will help us a lot if you could star [the UserFrosting project on GitHub](https://github.com/userfrosting/UserFrosting).  Just look for the button in the upper right-hand corner!
+
+[![How to star](/images/how-to-star.png)](https://github.com/userfrosting/UserFrosting)
+
+You should also follow us on Twitter for real-time news and updates:
+
+<a class="twitter-follow-button" href="https://twitter.com/userfrosting" data-size="large">Follow @userfrosting</a>
 
 Congratulations!  Now that this is complete, you're ready to start developing your application by [creating your first Sprinkle](/sprinkles).
