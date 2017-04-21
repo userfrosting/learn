@@ -8,7 +8,7 @@ taxonomy:
 
 Before we begin this tutorial, it is important that you understand what a web page really is.  Unfortunately, many "classic" approaches to building a website give developers the mistaken impression that a web page "is" either a static `.html` page or a scripted `.php` page.  Neither of these approaches are conceptually correct.
 
-In reality, a web page is simply an HTTP `GET` request to which the server responds with an HTML body.  For a more detailed explanation of this, please see Section 3.1, ["The Client-Server Conversation](/background/the-client-server-conversation).
+In reality, a web page is simply an HTTP `GET` request to which the server responds with an HTML body.  For a more detailed explanation of this, please see Section 3.1, [The Client-Server Conversation](/background/the-client-server-conversation).
 
 It is true that with more primitive approaches to building a website or web application, there might be a one-to-one correspondence between pages and `.html` or `.php` files.  Indeed, most web servers are configured by default to look for a web page or PHP script with the same name and relative path as the request URL (for example, `http://example.com/admin/user.php` and `/var/www/admin/user.php`).  But, there is no law that says that we _must_ use this approach.
 
