@@ -53,7 +53,7 @@ These same rules also apply to other "header" information on your page such as t
 
 ## Page speed
 
-If "content is king," speed is the queen.  Pages that are slow to load will rarely rank well.  This is especially critical in ranking on mobile devices, where bandwidth is limited and users have less patience.
+If "content is king," speed is the queen.  Pages that are slow to load will rarely rank well.  This is especially critical in ranking on mobile devices, where bandwidth is limited and users have less patience.  You can see what Google thinks about the relative speed of a page using their [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) tool.
 
 While lots of factors influence page loading speeds, we'll go over the biggest problems that we see over and over in sites that are struggling to rank.
 
