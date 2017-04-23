@@ -42,12 +42,14 @@ Not all requests that require CSRF protection originate from HTML forms.  To inj
 var url = site.uri.public + '/api/users/u/bob';
 
 var data = {
-    site.csrf.keys.name  : site.csrf.name,
-    site.csrf.keys.value : site.csrf.value
+    // Put whatever data you are submitting here
 };
 
+data[site.csrf.keys.name] = site.csrf.name;
+data[site.csrf.keys.value] = site.csrf.value;
+
 $.ajax({
-    type: "PUT",
+    type: 'PUT',
     url: url,
     data: data
 });
