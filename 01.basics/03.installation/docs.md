@@ -238,7 +238,7 @@ $ php install.php
 
 You will be prompted to confirm your operating system, after which the tables and some default rows will be created.  Next, you will be prompted for some information to set up the master account.
 
-Once this has completed successfully, you can sign in with your root account at `http://localhost/myUserFrostingProject/public/account/sign-in-or-register`.
+Once this has completed successfully, you can sign in with your root account at `http://localhost/myUserFrostingProject/public/account/sign-in`.
 
 ## Star the project and follow us on Twitter
 
