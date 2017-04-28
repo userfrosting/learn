@@ -133,7 +133,7 @@ return $this->ci->view->render($response, 'pages/contact.html.twig', [
 
 If your page includes the `components/page.js.twig` partial template, then the validation rules will become available via the Javascript variable `page.validators.contact`.
 
->>>>>> For an example of how this all fits together, see the controller method `AccountController::pageSignInOrRegister`, and the template `pages/sign-in-or-register.html.twig`.  At the bottom of the template you will see the include for `components/page.js.twig`.  If you visit the page `/account/sign-in-or-register` and use "View Source", you can see how the validation rules have been injected into the page.
+>>>>>> For an example of how this all fits together, see the controller method `AccountController::pageRegister`, and the template `pages/register.html.twig`.  At the bottom of the template you will see the include for `components/page.js.twig`.  If you visit the page `/account/register` and use "View Source", you can see how the validation rules have been injected into the page.
 
 ### Server-side Validation
 
