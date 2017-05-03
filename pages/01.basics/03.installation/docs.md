@@ -227,6 +227,8 @@ You should see a basic page:
 
 ![Basic front page of a UserFrosting installation](/images/front-page.png)
 
+>>>>>> If you encounter an error saying something similar to `The asset 'vendor/font-awesome/css/font-awesome.css' could not be found`, something went wrong at the [UserFrosting assets](#userfrosting-assets) step.
+
 ## UserFrosting installer
 
 To set up the database tables and create your first UserFrosting account, we will run the command-line installer:
