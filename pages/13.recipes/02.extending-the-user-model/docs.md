@@ -294,7 +294,11 @@ class ServicesProvider
         });
     }
 }
+```
 
+ `ExtendUser.php`:
+
+```
 <?php
 
 // In /app/sprinkles/site/src/ExtendUser.php
