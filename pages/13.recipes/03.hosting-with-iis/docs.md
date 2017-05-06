@@ -33,5 +33,4 @@ Out of the box, IIS can be rather slow when it comes to hosting PHP sites vs. Ap
     * StaticCompressionModule (improves performance)
     * StaticFileCache
 * Enable static file compression. (by default compression is triggered by how frequently a file is hit, this can be overriden)
-
-More coming soon!
+* Install and enable [WinCache](https://www.iis.net/downloads/microsoft/wincache-extension). Even under PHP 7, which is already capable of caching the PHP byte code, WinCache helps. Just make sure you grab the right version.
