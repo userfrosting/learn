@@ -72,11 +72,21 @@ Check [Stack Overflow](http://stackoverflow.com/tags/userfrosting), the [issue t
 
 #### Use Markdown to format blocks of code.
 
-Markdown is the _de facto_ standard for basic text formatting on the web.  If you are unfamiliar with Markdown, please [take a few minutes to learn](https://guides.github.com/features/mastering-markdown/#what).  It will help you not just here, but all over the web!
-
-In particular, please make sure you understand how to use **single backticks** (`) to format inline code, and **triple backticks** (```) to format code blocks:
+Markdown is the _de facto_ standard for basic text formatting on the web.  If you are unfamiliar with Markdown, please [take a few minutes to learn](https://guides.github.com/features/mastering-markdown/#what).  It will help you not just here, but all over the web!  In particular, please make sure you know where the **backtick** key (`) is located on your keyboard:
 
 ![Location of backtick key](/images/backtick.png)
+
+##### Inline code
+
+Use **single backticks** (`) to format inline code:
+
+<pre>
+So you're telling me that `$user->owls()->count()` should work?
+</pre>
+
+##### Short blocks of code
+
+Use **triple backticks** (```) to format code blocks:
 
 <pre>
 ```
@@ -84,9 +94,15 @@ public function foo();
 ```
 </pre>
 
+Note that for code blocks, each set of backticks must be on its **own line**.  Use Shift+Enter to insert new lines into your message.
+
+##### Longer blocks of code
+
 **For larger blocks of code**, please paste into a [Gist](https://gist.github.com) and then link to your Gist in chat.
 
-The easiest way to share images with us, such as screenshots, is to simply drag them into the chat window.  Please do not upload anything that contains sensitive or private content.
+##### Images
+
+The easiest way to share images with us, such as screenshots, is to simply **drag them into the chat window**.  Please do not upload anything that contains sensitive or private content.
 
 #### Set an avatar for yourself.
 
