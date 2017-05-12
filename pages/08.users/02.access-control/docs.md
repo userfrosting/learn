@@ -35,6 +35,8 @@ A permission is a rule that associates an **action** with a set of **conditions*
 - **name** is a human-readable label for the permission, which can be used to easily identify it in the role management interface.
 - **description** is a text description for the permission, allowing you to describe the purpose of the permission in human-readable terms.
 
+>>> Roles can be created and modified through the administrative interface, but permissions cannot.  This is because permissions are intimately tied to your code and should **not** be modified during the course of daily site operation.  You should think of permissions as hardcoded parts of your application that just happen to be stored in the database.  When you need to **add, remove, or modify** permissions, this should be done by a developer or sysadmin using a [database migration](/database/extending-the-database).
+
 ## Performing access checks
 
 In your code, access is controlled through the use of access checks on permission slugs.  Often times, you will want to perform these checks in your controller methods, and throw a `ForbiddenException` if the current user fails the check.
