@@ -12,6 +12,10 @@ The `ufCollection` widget provides a convenient interface for associating relate
 
 ## Basic usage
 
+To use `ufCollection`, you need to have `local/core/js/uf-collection.js` and `local/core/css/uf-collection.css` included in your page assets.  The easiest way to do this is by including the `js/form-widgets` and `css/form-widgets` [asset bundles](/building-pages/assets/asset-bundles) in your page.  Most of the default administrative pages include these bundles by default in their `stylesheets_page` and `scripts_page` Twig blocks.
+
+Of course, feel free to include the required JS and CSS files in your page-specific asset bundles instead, if you prefer.
+
 The basic markup for a collection widget consists of a table "skeleton" and, optionally, a `select` control for adding preexisting items to the collection.  These are wrapped together inside some sort of container element.  For example:
 
 ```
@@ -81,24 +85,7 @@ This parameter contains the options that should be passed in when `ufCollection`
 }
 ```
 
-If you would like to use an alternative format for your source data, you can override the `dropdown.ajax.processResults` callback option:
-
-```
-processResults: function (data, params) {
-    var suggestions = [];
-    // Process the data into dropdown options
-    if (data && data.rows) {
-        jQuery.each(data.rows, function(idx, row) {
-            suggestions.push(row);
-        });
-    }
-    return {
-        results: suggestions
-    };
-}
-```
-
-Notice that this callback must always return a JSON object with a `results` key.
+If you would like to use an alternative format for your source data, you can override the `dropdown.ajax.processResults` [callback option](#dropdown-1).
 
 ### `dropdownTemplate`
 
@@ -238,5 +225,182 @@ In free-text mode, a new empty row will automatically be added below the last ro
 ![ufCollection widget as used for a collection of user's phone numbers.](/images/uf-collection-free-text.png)
 
 ## Methods, events, and options
+
+This section covers the methods, events, and options that you can use to programmatically control your `ufCollection` widget.
+
+### Methods
+
+Methods are called via the standard jQuery practice of invoking the plugin name with the method name as the first argument:
+
+`$('#myCollection').ufCollection('methodName', methodOptions);`
+
+#### addRow
+
+_Adds a new row to an existing `ufCollection` widget, optionally prepopulated with some data._
+
+**Example usage:**
+
+```
+// Get current phones from an AJAX source, and add to member phones
+var memberId = 12;
+$.getJSON(site.uri.public + '/api/members/m/' + memberId)
+.done(function (data) {
+    $.each(data.phones, function (idx, phone) {
+        phoneCollection.ufCollection('addRow', phone);
+    });
+});
+```
+
+This pattern is especially useful when you want to provide an "update" feature for a collection.  In the example above, we preload the collection with the member's current phone numbers (from an AJAX source), so that the user can add new phone numbers or remove current numbers.  In this case, we expect the data source to have a `phones` key, which contains an array of phone number objects:
+
+```json
+{
+    // Maybe some other member information here
+    
+    ...
+
+    "phones": [
+        {
+            "id": 17,
+            "label": "primary",
+            "number": "5555551212"
+        },
+        {
+            "id": 23,
+            "label": "mobile",
+            "number": "1233219999"
+        }
+    ]
+}
+```
+
+Each phone number object is used to construct a row in the widget.
+
+#### addVirginRow
+
+_Adds a "virgin" row to an existing `ufCollection` widget, optionally prepopulated with some data._
+
+A virgin row is typically used in free-text mode, providing an intutitive way for users to create a new row in the collection without needing to explicitly click an "add" button.  In free-text mode, when a virgin row is first touched by the user, it loses its "virgin" status and a new virgin row is added to the bottom of the collection.  Thus, the last row in the collection will always be a virgin row.
+
+Generally speaking, since `ufCollection` handles all of this automatically for you, you won't need to call this method explicitly.
+
+#### deleteRow
+
+_Delete a row_.
+
+This method takes a jQuery selector containing the target row, and calls jQuery's `remove` method.  Note that this method is automatically bound to a row's `js-delete-row` button when the row is added.
+
+#### touchRow
+
+_Remove a row's "virgin" status, shows the delete button (hidden for virgin rows), and add a new virgin row to the collection (if `useDropdown` is set to false)._
+
+`ufCollection` automatically binds this method to the `focus` event for all controls in a virgin row.  However, we have exposed this method in case you wish to manually invoke it or bind it to other events.
+
+### Events
+
+#### rowAdd.ufCollection
+
+_Triggered when a new row is added to the collection._
+
+This event returns the newly added row, so you can access it in your handler:
+
+```
+$('#myCollection').on('rowAdd.ufCollection', function (event, row) {
+    var phoneInput = $(row).find(".js-input-phone");
+    // Apply the inputmask plugin to the phone control in the new row
+    phoneInput.inputmask();
+});
+```
+
+#### rowDelete.ufCollection
+
+_Triggered when a row is removed from the collection._
+
+#### rowTouch.ufCollection
+
+_Triggered when any controls in a row are brought into focus._
+
+This event returns the touched row, so you can access it in your handler.
+
+### Options
+
+#### useDropdown
+
+_Set to `true` for a collection where rows are added from a dropdown (default), or `false` for free-text input mode._
+
+#### dropdown
+
+_An object containing options to pass to the `select2` initialization._  Unfortunately, these options are only [partially documented](http://select2.github.io/options.html) in `select2`'s documentation website.  For the purposes of `ufCollection`, the salient options are:
+
+- `ajax`: option for the AJAX request that fetches data to be loaded into the select options.  The most important option is `url` but other useful options include:
+    - `url`: The url to submit the AJAX GET request.
+    - `cache`: Defaults to `true`, to cache AJAX results on the client side.
+    - `dataType`: The type of data returned by the AJAX request.  Defaults to `json`.
+    - `delay`: Delay, in milliseconds, before resending the AJAX request when refreshing the select2 options during search.  Defaults to `250`.
+    - `data`: The callback that `select2` uses to parse the current search query (`params.term`) before submitting the AJAX request.  Defaults to:
+    
+    ```
+    function (params) {
+        return {
+            filters: {
+                info : params.term
+            }
+        };
+    }
+    ```
+    
+    With the default callback, the resulting AJAX query URL will look something like `http://example.com/api/member/12/phones?filters[info]=something`, which is the standard format expected by data Sprunjers.
+    
+    - `processResults`: The callback used to parse the data received in the response from the AJAX request.  Defaults to:
+    
+    ```
+    function (data, params) {
+        var suggestions = [];
+        // Process the data into dropdown options
+        if (data && data.rows) {
+            jQuery.each(data.rows, function(idx, row) {
+                suggestions.push(row);
+            });
+        }
+        return {
+            results: suggestions
+        };
+    }
+    ```
+
+    Notice that this callback must always return a JSON object with a `results` key.
+
+- `placeholder`: The placeholder to display in the dropdown before a selection is made.  Note that you need to have an empty `<option>` element in your `select` control for this to work.  You may alternatively use the `data-placeholder` attribute on the `select` control itself.  Defaults to "Item".
+- `selectOnClose`: Make a selection when the dropdown is closed for any reason (for example, even if the user clicks out of the box).  Useful if your users are dumb and don't understand how select controls work.  Defaults to `false`. 
+- `theme`: A select2 [theme](http://select2.github.io/examples.html#themes-templating-responsive-design) to apply to the dropdown.  Defaults to "default".
+- `width`: The width of the dropdown control relative to the parent element.  Defaults to "100%".
+
+#### dropdownControl
+
+_A jQuery selector that indicates which element should be used as the dropdown for adding new items to the collection._
+
+Defaults to elements with the class `.js-select-new`.
+
+#### dropdownTemplate
+
+See the description [above](#dropdowntemplate).
+
+#### rowContainer
+
+_A jQuery selector that indicates the container element to which new rows should be added._
+
+Defaults to the first `tbody` element found in the widget container.
+
+#### rowTemplate
+
+See the description [above](#rowtemplate).
+
+#### DEBUG:
+
+_Dump debugging information to the browser console._
+
+Defaults to `false`.
+
+## Server-side processing
 
 Coming soon!
