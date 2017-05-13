@@ -28,11 +28,13 @@ Fetches and renders alerts from the [alert stream](/routes-and-controllers/alert
 
 ### ufCollection
 
-A client-side widget that allows you to easily attach/detach related entities in a one-to-many relationship by selecting them from a dropdown menu.
+A client-side widget that allows you to easily associate related entities in a one-to-many or many-to-many relationship by selecting them from a dropdown menu.
 
 For example, both the "user roles" and "role permissions" interfaces use this plugin:
 
 ![ufCollection widget as used for the "user role" management interface.](/images/uf-collection.png)
+
+See the documentation on [collections](/client-side-code/components/collections) for more information on using this plugin.
 
 ### ufCopy
 
