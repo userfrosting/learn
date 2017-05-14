@@ -395,7 +395,7 @@ Defaults to the first `tbody` element found in the widget container.
 
 See the description [above](#rowtemplate).
 
-#### DEBUG:
+#### DEBUG
 
 _Dump debugging information to the browser console._
 
@@ -403,4 +403,84 @@ Defaults to `false`.
 
 ## Server-side processing
 
-Coming soon!
+Let's assume that your `ufCollection` widget is part of a form that you will submit to the server for processing, and that you want to update .  If you used the naming scheme for your row controls as suggested in the [section on `rowTemplate`](#rowtemplate), the collection table might end up looking something like:
+
+```
+<tr class="uf-collection-row">
+    <td>
+        Megascops asio
+        <input type="hidden" name="owls[1][species_id]" value="2">
+    </td>
+    <td>
+        <input type="text" name="owls[1][name]" value="Slasher">
+    </td>
+    <td>
+        <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
+    </td>
+</tr>
+<tr class="uf-collection-row">
+    <td>
+        Megascops asio
+        <input type="hidden" name="owls[2][species_id]" value="5">
+    </td>
+    <td>
+        <input type="text" name="owls[2][name]" value="Fluffers">
+    </td>
+    <td>
+        <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
+    </td>
+</tr>
+```
+
+The data submitted to the server will then end up looking like:
+
+```
+owls[1][species_id]: "2"
+owls[1][name]: "Slasher"
+owls[2][species_id]: "5"
+owls[2][name]: "Fluffers"
+```
+
+This is an easy format for the server to process, because PHP will automatically convert this into a multidimensional array:
+
+```
+$owls = $request->getParsedBody()['owls'];
+error_log(print_r($owls, true));
+```
+
+**Output:**
+
+```
+Array
+(
+    [1] => Array
+        (
+            [species_id] => 2,
+            [name] => "Slasher"
+        )
+
+    [2] => Array
+        (
+            [species_id] => 5,
+            [name]: =>"Fluffers"
+        )
+
+)
+```
+
+### Updating a many-to-many relationship
+
+If the submitted data represents a [many-to-many relationship](https://laravel.com/docs/5.4/eloquent-relationships#many-to-many), Laravel provides some convenient tools to update the relationships with the parent object:
+
+```
+$owlsCollection = collect($owls)->pluck(['species_id', 'name'])->all();
+$member->owls()->sync($owlsCollection);
+```
+
+Laravel's `collect` function will convert the raw multidimensional array into a collection of objects.  `pluck` will then make sure that we only grab the values we're interested in.  This is useful as a validation tool, to reject any fields that we don't want to allow the client to modify).
+
+Finally, calling the [`sync` method](https://laravel.com/docs/5.4/eloquent-relationships#updating-many-to-many-relationships) on a member's `owls` relationship will update the entire relationship, so that the owls associated with the member match exactly the submitted data.
+
+### Updating a one-to-many relationship
+
+If the submitted data represents a [one-to-many relationship](https://laravel.com/docs/5.4/eloquent-relationships#one-to-many), synchronizing the database becomes a little trickier.  One approach that you might try is described [here](https://laracasts.com/discuss/channels/general-discussion/syncing-one-to-many-relationships).
