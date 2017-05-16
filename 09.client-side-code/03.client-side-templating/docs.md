@@ -27,6 +27,10 @@ var counterRendered = counterTemplate({
 var counterDOM = $(counterRendered).appendTo($("#parentDiv"));
 ```
 
+Of course, the JSON object is optional and can be omitted if your template does not contain any dynamically generated content.
+
+### Template blocks
+
 Since writing long HTML snippets as strings can become unwieldy and difficult to read, we can place our templates in `script` tags with the `text/x-handlebars-template` type attribute.  The entire `script` block can then be rendered in our page's Twig template:
 
 ```html
@@ -58,7 +62,7 @@ var owlTemplate = Handlebars.compile($("#owl-description-item").html());
 
 Note that since Handlebars and Twig have similar syntax, we wrap our Handlebars templates in Twig's `verbatim` tag so that Twig won't try to parse the Handlebars template when it renders the page.
 
-## Syntax
+## Template syntax
 
 Handlebars.js and Twig use a similar syntax.  As with Twig, placeholders are represented using the `{{double-mustache}}` notation.  However, compared to Twig, Handlebars.js is fairly sparse in terms of control structures and other features.
 
