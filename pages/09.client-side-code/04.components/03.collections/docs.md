@@ -94,13 +94,6 @@ If you would like to use an alternative format for your source data, you can ove
 Best practices are to define your Handlebars template somewhere else in your DOM, rather than directly passing in the template as a string.  For example, in your page's Twig template, you might have a `script` tag:
 
 ```
-{# This contains a series of <script> blocks, each of which is a client-side Handlebars template.
- # Note that these are NOT Twig templates, although the syntax is similar.  We wrap them in the `verbatim` tag,
- # so that Twig will output them directly into the DOM instead of trying to treat them like Twig templates.
- #
- # These templates require handlebars-helpers.js, moment.js
-#}
-
 {% verbatim %}
 <script id="member-owls-select-option" type="text/x-handlebars-template">
     <div>
@@ -114,9 +107,7 @@ Best practices are to define your Handlebars template somewhere else in your DOM
 {% endverbatim %}
 ```
 
-Notice that we use the `type="text/x-handlebars-template"` attribute, which tells the browser that the `script` tag contains a Handlebars template rather than executable Javascript.  The syntax of the Handlebars template is very similar to Twig's, but don't be fooled!  The syntax for control structures (e.g. `if`, `for`) is very different in Handlebars.  You should consult their documentation for more help with this.
-
-We then retrieve the contents of the `script` tag using `$('#member-owls-select-option').html()` and pass this to our `ufCollection`.
+We then retrieve this template using `$('#member-owls-select-option').html()` and pass this to our `ufCollection`.  For more information on defining Handlebars templates, see the section on [client-side templating](/client-side-code/client-side-templating).
 
 ### `rowTemplate`
 
