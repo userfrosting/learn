@@ -197,11 +197,12 @@ Notice that we no longer need to add a `select` control.  This also means that w
         <td>
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+                <input type="hidden" name="phones[{{ rownum }}][id]" value="{{id}}">
                 <input type="text" class="form-control" name="phones[{{ rownum }}][label]" value="{{label}}" placeholder="Label">
             </div>
         </td>
         <td>
-            <input type="text" class="form-control" name="phones[{{ rownum }}][number]" value="{{phone}}" placeholder="Number">
+            <input type="text" class="form-control" name="phones[{{ rownum }}][number]" value="{{number}}" placeholder="Number">
         </td>
         <td>
             <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
