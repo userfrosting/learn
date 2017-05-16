@@ -8,7 +8,7 @@ taxonomy:
 
 UserFrosting uses jQuery and Bootstrap to provide a rich, intuitive, and modern user interface.  It also uses the following components by default (of course, you can replace any of these as you see fit in your own Sprinkles):
 
-- [Handlebars.js](http://handlebarsjs.com/) - [client-side templating engine](/client-side-code/variables-and-templating)
+- [Handlebars.js](http://handlebarsjs.com/) - [client-side templating engine](/client-side-code/client-side-templating)
 - [FontAwesome](http://fontawesome.io/) - Wildly popular icon library
 - [Ionicons](http://ionicons.com/) - More icons
 - [Tablesorter](https://mottie.github.io/tablesorter/docs/) - Flexible client-side table sorting
