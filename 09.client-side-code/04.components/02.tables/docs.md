@@ -1,5 +1,7 @@
 ---
 title: Tables
+metadata:
+    description: ufTable is a wrapper for Mottie's tablesorter plugin that automatically fetches JSON data from a specified API endpoint, and dynamically builds paginated, sorted, filtered views on the fly.
 taxonomy:
     category: docs
 ---
