@@ -10,16 +10,207 @@ The `ufCollection` widget provides a convenient interface for associating relate
 
 ![ufCollection widget as used for the "user role" management interface.](/images/uf-collection.png)
 
-## Basic usage
+## Basic setup
 
-To use `ufCollection`, you need to have `local/core/js/uf-collection.js` and `local/core/css/uf-collection.css` included in your page assets.  The easiest way to do this is by including the `js/form-widgets` and `css/form-widgets` [asset bundles](/building-pages/assets/asset-bundles) in your page.  Most of the default administrative pages include these bundles by default in their `stylesheets_page` and `scripts_page` Twig blocks.
+To use `ufCollection`, you need to have `local/core/js/uf-collection.js` and `local/core/css/uf-collection.css` included in your page assets.  The easiest way to do this is by including the `js/form-widgets` and `css/form-widgets` [asset bundles](/building-pages/assets/asset-bundles) in your page.  Most of the default administrative pages include these bundles by default in their `stylesheets_page` and `scripts_page` Twig blocks.  Of course, feel free to include the required JS and CSS files in your page-specific asset bundles instead, if you prefer.
 
-Of course, feel free to include the required JS and CSS files in your page-specific asset bundles instead, if you prefer.
-
-The basic markup for a collection widget consists of a table "skeleton" and, optionally, a `select` control for adding preexisting items to the collection.  These are wrapped together inside some sort of container element.  For example:
+The basic markup for a collection widget consists of a table "skeleton" wrapped inside some sort of container element.  For example:
 
 ```
-<div id="myOwls">
+<div id="member-phones">
+    <label>Phone numbers</label>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Label</th>
+                <th>Number</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+```
+
+### Table rows
+
+You'll notice that the table skeleton contains an empty `tbody` element.  By default, when a new row is added (by the client or programmatically), `ufCollection` will insert the new row inside this `tbody`.
+
+The markup for the rows themselves is dynamically generated using a [Handlebars template](/client-side-code/client-side-templating).  The row template can be embedded inside your page's Twig template using the `{% verbatim %}` tag.  It might look something like:
+
+```
+{% verbatim %}
+<script id="member-phones-row" type="text/x-handlebars-template">
+    <tr class="uf-collection-row">
+        <td>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+                <input type="hidden" name="phones[{{ rownum }}][id]" value="{{id}}">
+                <input type="text" class="form-control" name="phones[{{ rownum }}][label]" value="{{label}}" placeholder="Label">
+            </div>
+        </td>
+        <td>
+            <input type="text" class="form-control" name="phones[{{ rownum }}][number]" value="{{number}}" placeholder="Number">
+        </td>
+        <td>
+            <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
+        </td>
+    </tr>
+</script>
+{% endverbatim %}
+```
+
+Some important features of the row template:
+
+- The template should contain a single `tr` element with the `uf-collection-row` class.
+- The last column of your row should be a "delete" button, allowing the user to remove associations.  You may style this button however you like, but it needs to have the `js-delete-row` class for `ufCollection` to bind the delete event.
+- The user can add additional information to each row via additional controls (`input`, `select`, etc).
+- You should have a hidden `input` control in each row, that contains the `id` for the element associated with that row.
+- We recommend submitting the entire collection under a single top-level `name` attribute.  You can then use the `rownum` placeholder to index the elements of this key, and under that, the individual properties of the row.
+
+For example, the submitted data from this collection might end up looking something like:
+
+```json
+    "phones": [
+        {
+            "id": 17,
+            "label": "primary",
+            "number": "5555551212"
+        },
+        {
+            "id": "",
+            "label": "mobile",
+            "number": "1233219999"
+        }
+    ]
+```
+
+## Usage
+
+`ufCollection` can be used to provide an interface for manipulating two types of relationships - one-to-many, and many-to-many.
+
+For **one-to-many** relationships, the client can directly create, modify, and delete entities that should be associated with exactly one parent entity.  For example, a user can have multiple phone numbers, but they only belong to that one user - users do not "share" the same phone number.
+
+In a **many-to-many** relationship, the client selects pre-existing entities to match up to the parent entity.  These entities might be shared with other parent entities as well - thus the "many to many".  There might be some additional data associated with the relationship (so called "pivot data") that the client can add, but the related entity itself is shared.  For example, a member can have the same model of car as other members, but the specific VIN of their particular car would be unique to them.  Thus, they might preselect their model ("Mazda 3") from a dropdown, and then enter in their VIN as pivot data.
+
+### One-to-many
+
+In one-to-many mode, users directly enter data into controls in each row.  For this reason, we sometimes refer to this as "free text" mode.
+
+To initialize a one-to-many collection widget, call the `ufCollection` method on your container element:
+
+```
+$('#member-phones').ufCollection({
+    useDropdown: false,
+    rowTemplate: $('#member-phones-row').html()
+});
+```
+
+Notice that we have set `useDropdown` to `false`.  When this is set to false, `ufCollection` will automatically add a new empty row below the last row that has been "touched".  A row is "touched" whenever it is brought into focus, or when it is programmatically added using the `addRow` method.  Thus, this ensures that the user can always add another row of information without needing to click an "add" button.
+
+![ufCollection widget as used for a collection of user's phone numbers.](/images/uf-collection-free-text.png)
+
+#### Server-side processing
+
+Let's assume that your `ufCollection` widget is part of a form that you will submit to the server for processing, and that you want to update the related entities in the database.  If you used the naming scheme for your row controls as suggested in the [setup section](#table-rows), the rendered collection table might end up looking something like:
+
+```
+<tr class="uf-collection-row">
+    <td>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+            <input type="hidden" name="phones[0][id]" value="17">
+            <input type="text" class="form-control" name="phones[0][label]" value="primary" placeholder="Label">
+        </div>
+    </td>
+    <td>
+        <input type="text" class="form-control" name="phones[0][number]" value="5555551212" placeholder="Number">
+    </td>
+    <td>
+        <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
+    </td>
+</tr>
+<tr class="uf-collection-row">
+    <td>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+            <input type="hidden" name="phones[1][id]" value="">
+            <input type="text" class="form-control" name="phones[1][label]" value="mobile" placeholder="Label">
+        </div>
+    </td>
+    <td>
+        <input type="text" class="form-control" name="phones[1][number]" value="1233219999" placeholder="Number">
+    </td>
+    <td>
+        <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
+    </td>
+</tr>
+```
+
+The data submitted to the server will then end up looking like:
+
+```
+phones[0][id]: "17"
+phones[0][label]: "primary"
+phones[0][number]: "5555551212"
+phones[1][id]: ""
+phones[1][label]: "mobile"
+phones[1][number]: "1233219999"
+```
+
+This is an easy format for the server to process, because PHP will automatically convert this into a multidimensional array:
+
+```
+$phones = $request->getParsedBody()['phones'];
+error_log(print_r($phones, true));
+```
+
+**Output:**
+
+```
+Array
+(
+    [0] => Array
+        (
+            [id] => 17,
+            [label] => "primary",
+            [number] => "5555551212"
+        )
+
+    [1] => Array
+        (
+            [id] => ,
+            [label] => "mobile",
+            [number] => "1233219999"
+        )
+
+)
+```
+
+Notice that one of our phone numbers has a set `id` value (17), while the other number has an empty/unset `id`.  This is how we tell the server that the first number is an existing entity that should be updated, while the second is a completely new entity that should be created and associated with the parent entity.
+
+UserFrosting implements a custom version of Laravel's [`hasMany` relationship](https://laravel.com/docs/5.4/eloquent-relationships#one-to-many), which allows you to synchronize the related entities for a parent entity:
+
+`$member->phones()->sync($phones);`
+
+Entities in `$phones` that have an `id` that matches one of the related entities for the parent entity in the database will be updated.  Entities with an empty `id`, or an `id` that does not match one of the parent's related entities, will be considered a new entry, and a record will be added to the database.  Entities in the _database_ that do not match the _input_, on the other hand, will be considered "deleted" and removed from the database.
+
+| Entity in submitted data | Entity in database     | Operation |
+| ------------------------ | ---------------------- | --------- |
+| Yes                      | Yes (matching id)      | Updated   |
+| Yes                      | No                     | Created   |
+| No                       | Yes (matching parent)  | Deleted   |
+
+If you want to prevent entities from being deleted, even if they are not present in the input, you can set the second argument of `sync` to `false`.
+
+### Many-to-many
+
+Many-to-many collections require some additional markup in the skeleton - we need to add a `select` control for selecting preexisting items to add to the collection.  For example, let's say we want to allow members to choose species of owls from a prepopulated list, and then give each selected owl a name:
+
+```
+<div id="member-owls">
+    <label>My owls</label>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -40,14 +231,12 @@ The basic markup for a collection widget consists of a table "skeleton" and, opt
 </div>
 ```
 
-The `select` control should have the class `js-select-new`, which tells `ufCollection` that we should add a new row to the collection whenever a selection is made.  Internally `ufCollection` uses the [select2](http://select2.github.io/) library to create a beautiful, searchable dropdown menu.
+The `select` control should have the class `js-select-new`, which tells `ufCollection` that we should add a new row to the collection **whenever a selection is made**.  Internally `ufCollection` uses the [select2](http://select2.github.io/) library to create a beautiful, searchable dropdown menu.
 
-You'll notice that the table contains an empty `tbody` element.  By default, `ufCollection` will add new rows to the table inside this `tbody`.  This can be overridden by setting the `rowContainer` option to some other DOM element.
-
-To initialize the widget, simply call the `ufCollection` method on your container element:
+To initialize the widget, we leave out the `useDropdown` argument (which defaults to true), and instead add the `dropdown` and `dropdownTemplate` options:
 
 ```
-$('#myOwls').ufCollection({
+$('#member-owls').ufCollection({
     dropdown: {
         ajax: {
             url: site.uri.public + '/api/owls'
@@ -58,11 +247,59 @@ $('#myOwls').ufCollection({
 });
 ```
 
-A typical use case will involve the following parameters:
+Our row template looks similar to that for one-to-many, except we name our hidden `id` input with the foreign key for the relationship.  For example, we use `species_id` to refer to the `id` of the selected species for that row:
 
-### `dropdown`
+```
+{% verbatim %}
+<script id="member-owls-row" type="text/x-handlebars-template">
+    <tr class="uf-collection-row">
+        <td>
+            {{species}}
+            <input type="hidden" name="owls[{{ rownum }}][species_id]" value="{{id}}">
+        </td>
+        <td>
+            <input type="text" name="owls[{{ rownum }}][name]" value="{{name}}">
+            
+        </td>
+        <td>
+            <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
+        </td>
+    </tr>
+</script>
+{% endverbatim %}
+```
 
-This parameter contains the options that should be passed in when `ufCollection` initializes the `select2` control.  For large, dynamic collections of options, you will probably want to provide an AJAX data source with the `ajax` subkey.
+The additional options we need to set for many-to-many are:
+
+#### `dropdownTemplate`
+
+The `dropdownTemplate` parameter should contain a valid Handlebars template that `ufCollection` can render using the data returned by the AJAX request.
+
+As with the row template, we can define our dropdown template in our page's main Twig template:
+
+```
+{% verbatim %}
+<script id="member-owls-select-option" type="text/x-handlebars-template">
+    <div>
+        <strong>
+            {{species}}
+        </strong>
+        <br>
+        {{description}}
+    </div>
+</script>
+{% endverbatim %}
+```
+
+As with the `rowTemplate` option, we can retrieve reference this template using a jQuery selector and the `.html()` method.
+
+#### `dropdown`
+
+This parameter contains the [Select2 options](http://select2.github.io/options.html) that should be passed in when `ufCollection` initializes the control.  Other than the `ajax` key, you probably won't need to customize most of the `dropdown` options.
+
+##### AJAX data source
+
+For large, dynamic collections of options, you will probably want to provide an AJAX data source with the `ajax` subkey.
 
 `ufCollection` will expect JSON data from an AJAX source, in the same format as that returned by the [Data Sprunjer](/database/data-sprunjing).  In particular, it should have a `rows` key that contains the collection of selectable options:
 
@@ -87,134 +324,83 @@ This parameter contains the options that should be passed in when `ufCollection`
 
 If you would like to use an alternative format for your source data, you can override the `dropdown.ajax.processResults` [callback option](#dropdown-1).
 
-### `dropdownTemplate`
+#### Server-side processing
 
-`ufCollection` uses [Handlebars](http://handlebarsjs.com/), a Javascript templating engine, to render the options that will be displayed in the dropdown menu.  The `dropdownTemplate` parameter should contain a valid Handlebars template that `ufCollection` can render using the data returned by the AJAX request.
-
-Best practices are to define your Handlebars template somewhere else in your DOM, rather than directly passing in the template as a string.  For example, in your page's Twig template, you might have a `script` tag:
+With the example many-to-many row template, the rendered table might end up looking something like:
 
 ```
-{% verbatim %}
-<script id="member-owls-select-option" type="text/x-handlebars-template">
-    <div>
-        <strong>
-            {{species}}
-        </strong>
-        <br>
-        {{description}}
-    </div>
-</script>
-{% endverbatim %}
+<tr class="uf-collection-row">
+    <td>
+        Megascops asio
+        <input type="hidden" name="owls[1][species_id]" value="2">
+    </td>
+    <td>
+        <input type="text" name="owls[1][name]" value="Slasher">
+    </td>
+    <td>
+        <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
+    </td>
+</tr>
+<tr class="uf-collection-row">
+    <td>
+        Megascops asio
+        <input type="hidden" name="owls[2][species_id]" value="5">
+    </td>
+    <td>
+        <input type="text" name="owls[2][name]" value="Fluffers">
+    </td>
+    <td>
+        <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
+    </td>
+</tr>
 ```
 
-We then retrieve this template using `$('#member-owls-select-option').html()` and pass this to our `ufCollection`.  For more information on defining Handlebars templates, see the section on [client-side templating](/client-side-code/client-side-templating).
-
-### `rowTemplate`
-
-The `rowTemplate` parameter is similar to `dropdownTemplate` but is used to render the rows for items that have been added to the collection.  For example, the Handlebars template might look like this:
+The data submitted to the server will then end up looking like:
 
 ```
-{% verbatim %}
-<script id="member-owls-row" type="text/x-handlebars-template">
-    <tr class="uf-collection-row">
-        <td>
-            {{species}}
-            <input type="hidden" name="owls[{{ rownum }}][species_id]" value="{{id}}">
-        </td>
-        <td>
-            <input type="text" name="owls[{{ rownum }}][name]" value="{{name}}">
-            
-        </td>
-        <td>
-            <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
-        </td>
-    </tr>
-</script>
-{% endverbatim %}
+owls[1][species_id]: "2"
+owls[1][name]: "Slasher"
+owls[2][species_id]: "5"
+owls[2][name]: "Fluffers"
 ```
 
-Some important features of the row template:
-
-- The template should contain a single `tr` element with the `uf-collection-row` class.
-- The last column of your row should be a "delete" button, allowing the user to remove associations.  You may style this button however you like, but it needs to have the `js-delete-row` class for `ufCollection` to bind the delete event.
-- You should have a hidden `input` control in each row, that contains the `id` for the element associated with that row.
-- The user can add additional information to each row via additional controls (`input`, `select`, etc).
-- We recommend submitting the entire collection under a single top-level `name` attribute.  You can then use the `rownum` placeholder to index the elements of this key, and under that, the individual properties of the row.
-
-For example, the submitted data from this collection might end up looking something like:
+Again, PHP will automatically convert this into a multidimensional array:
 
 ```
-owls: {
-  1: {
-    species_id: 5,
-    name: "Fluffers"
-  },
-  2: {
-    species_id: 2,
-    name: "Slasher"
-  },
-  ...
-}
+$owls = $request->getParsedBody()['owls'];
+error_log(print_r($owls, true));
 ```
 
-This will make it easy to parse the submitted data in PHP on the server side.
-
-## Free-text mode
-
-If you want to allow the client to add arbitrary rows of data, rather than preselecting them from a dropdown, you can set the `useDropdown` property of `ufCollection` to `false`.  In this case, your collection markup will look much simpler:
+**Output:**
 
 ```
-<div id="#memberPhones">
-    <table class="table table-condensed">
-        <thead>
-            <tr>
-                <th>Label</th>
-                <th>Number</th>
-                <th>Remove</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
+Array
+(
+    [1] => Array
+        (
+            [species_id] => 2,
+            [name] => "Slasher"
+        )
+
+    [2] => Array
+        (
+            [species_id] => 5,
+            [name]: =>"Fluffers"
+        )
+
+)
 ```
 
-Notice that we no longer need to add a `select` control.  This also means that we don't need a `dropdownTemplate`.  However, we will need a `rowTemplate`:
+Laravel's `sync` method can synchronize our input data with the database for [many-to-many relationships](https://laravel.com/docs/5.4/eloquent-relationships#many-to-many):
 
 ```
-{% verbatim %}
-<script id="member-phones-row" type="text/x-handlebars-template">
-    <tr class="uf-collection-row">
-        <td>
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
-                <input type="hidden" name="phones[{{ rownum }}][id]" value="{{id}}">
-                <input type="text" class="form-control" name="phones[{{ rownum }}][label]" value="{{label}}" placeholder="Label">
-            </div>
-        </td>
-        <td>
-            <input type="text" class="form-control" name="phones[{{ rownum }}][number]" value="{{number}}" placeholder="Number">
-        </td>
-        <td>
-            <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
-        </td>
-    </tr>
-</script>
-{% endverbatim %}
+$owlsCollection = collect($owls)->pluck(['species_id', 'name'])->all();
+$member->owls()->sync($owlsCollection);
 ```
 
-Initialization would then look something like:
+The `collect` function will convert the raw multidimensional array into a collection of objects.  `pluck` will then make sure that we only grab the values we're interested in.  This is useful as a validation tool, to reject any fields that we don't want to allow the client to modify).
 
-```
-$('#memberPhones').ufCollection({
-    useDropdown: false,
-    rowTemplate: $('#member-phones-row').html()
-});
-```
-
-In free-text mode, a new empty row will automatically be added below the last row that has been "touched".  A row is "touched" whenever it is brought into focus, or when it is programmatically added using the `addRow` method.  Thus, this ensures that the user can always add another row of information without needing to click an "add" button.
-
-![ufCollection widget as used for a collection of user's phone numbers.](/images/uf-collection-free-text.png)
+Finally, calling the [`sync` method](https://laravel.com/docs/5.4/eloquent-relationships#updating-many-to-many-relationships) on a member's `owls` relationship will update the entire relationship, so that the owls associated with the member match exactly the submitted data.
 
 ## Methods, events, and options
 
@@ -392,87 +578,3 @@ See the description [above](#rowtemplate).
 _Dump debugging information to the browser console._
 
 Defaults to `false`.
-
-## Server-side processing
-
-Let's assume that your `ufCollection` widget is part of a form that you will submit to the server for processing, and that you want to update .  If you used the naming scheme for your row controls as suggested in the [section on `rowTemplate`](#rowtemplate), the collection table might end up looking something like:
-
-```
-<tr class="uf-collection-row">
-    <td>
-        Megascops asio
-        <input type="hidden" name="owls[1][species_id]" value="2">
-    </td>
-    <td>
-        <input type="text" name="owls[1][name]" value="Slasher">
-    </td>
-    <td>
-        <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
-    </td>
-</tr>
-<tr class="uf-collection-row">
-    <td>
-        Megascops asio
-        <input type="hidden" name="owls[2][species_id]" value="5">
-    </td>
-    <td>
-        <input type="text" name="owls[2][name]" value="Fluffers">
-    </td>
-    <td>
-        <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
-    </td>
-</tr>
-```
-
-The data submitted to the server will then end up looking like:
-
-```
-owls[1][species_id]: "2"
-owls[1][name]: "Slasher"
-owls[2][species_id]: "5"
-owls[2][name]: "Fluffers"
-```
-
-This is an easy format for the server to process, because PHP will automatically convert this into a multidimensional array:
-
-```
-$owls = $request->getParsedBody()['owls'];
-error_log(print_r($owls, true));
-```
-
-**Output:**
-
-```
-Array
-(
-    [1] => Array
-        (
-            [species_id] => 2,
-            [name] => "Slasher"
-        )
-
-    [2] => Array
-        (
-            [species_id] => 5,
-            [name]: =>"Fluffers"
-        )
-
-)
-```
-
-### Updating a many-to-many relationship
-
-If the submitted data represents a [many-to-many relationship](https://laravel.com/docs/5.4/eloquent-relationships#many-to-many), Laravel provides some convenient tools to update the relationships with the parent object:
-
-```
-$owlsCollection = collect($owls)->pluck(['species_id', 'name'])->all();
-$member->owls()->sync($owlsCollection);
-```
-
-Laravel's `collect` function will convert the raw multidimensional array into a collection of objects.  `pluck` will then make sure that we only grab the values we're interested in.  This is useful as a validation tool, to reject any fields that we don't want to allow the client to modify).
-
-Finally, calling the [`sync` method](https://laravel.com/docs/5.4/eloquent-relationships#updating-many-to-many-relationships) on a member's `owls` relationship will update the entire relationship, so that the owls associated with the member match exactly the submitted data.
-
-### Updating a one-to-many relationship
-
-If the submitted data represents a [one-to-many relationship](https://laravel.com/docs/5.4/eloquent-relationships#one-to-many), synchronizing the database becomes a little trickier.  One approach that you might try is described [here](https://laracasts.com/discuss/channels/general-discussion/syncing-one-to-many-relationships).
