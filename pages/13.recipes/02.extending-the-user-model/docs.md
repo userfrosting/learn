@@ -13,7 +13,7 @@ Since every aspect of UF is extendable, there are a number of ways to go about t
 Our general constraints are:
 
 1. We will avoid modifying the `users` table directly.  This will make it easier to integrate any future updates to UF that affect the `users` table.  It will also help prevent collisions with any community Sprinkles that modify the `users` table.  Instead, we will create a separate table, that has a one-to-one relationship with the `users` model.
-2. We will avoid overriding controller methods as much as possible.  Controller methods tend to be longer and more complex than methods in our models, so again, it will be more work to integrate changes to controllers in future updates to UserFrosting.  It will be much easier if instead we extend the data models whenever possible, implementing new methods that enhance the base models.  We can also take advantage of Eloquent's [event handlers](https://laravel.com/docs/5.3/eloquent#events) for model classes to hook in additional functionality.
+2. We will avoid overriding controller methods as much as possible.  Controller methods tend to be longer and more complex than methods in our models, so again, it will be more work to integrate changes to controllers in future updates to UserFrosting.  It will be much easier if instead we extend the data models whenever possible, implementing new methods that enhance the base models.  We can also take advantage of Eloquent's [event handlers](https://laravel.com/docs/5.4/eloquent#events) for model classes to hook in additional functionality.
 
 ## Set up your site Sprinkle
 
@@ -28,10 +28,10 @@ Follow the directions in [Chapter 6](/database/extending-the-database) for creat
     use Illuminate\Database\Capsule\Manager as Capsule;
     use Illuminate\Database\Schema\Blueprint;
     /**
-     * Owler table
+     * Member table
      */
-    if (!$schema->hasTable('owlers')) {
-        $schema->create('owlers', function (Blueprint $table) {
+    if (!$schema->hasTable('members')) {
+        $schema->create('members', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->unique();
             $table->string('city', 255)->nullable();
@@ -44,15 +44,15 @@ Follow the directions in [Chapter 6](/database/extending-the-database) for creat
             $table->foreign('user_id')->references('id')->on('users');
             $table->index('user_id');
         });
-        echo "Created table 'owlers'..." . PHP_EOL;
+        echo "Created table 'members'..." . PHP_EOL;
     } else {
-        echo "Table 'owlers' already exists.  Skipping..." . PHP_EOL;
+        echo "Table 'members' already exists.  Skipping..." . PHP_EOL;
     }
 ```
 
 ## Create your data models
 
-First thing's first, we'll create a data model that corresponds to our new `owlers` table:
+First thing's first, we'll create a data model that corresponds to our new `members` table:
 
 ```php
 <?php
@@ -60,14 +60,14 @@ namespace UserFrosting\Sprinkle\ExtendUser\Model;
 
 use UserFrosting\Sprinkle\Core\Model\UFModel;
 
-class Owler extends UFModel {
+class Member extends UFModel {
 
     public $timestamps = true;
 
     /**
      * @var string The name of the table for the current model.
      */
-    protected $table = "owlers";
+    protected $table = "members";
 
     protected $fillable = [
         "user_id",
@@ -80,15 +80,20 @@ class Owler extends UFModel {
      */
     public function scopeJoinUser($query)
     {
-        $query = $query->select('owlers.*');
+        /** @var UserFrosting\Sprinkle\Core\Util\ClassMapper $classMapper */
+        $classMapper = static::$ci->classMapper;
+        $membersTable = $classMapper->createInstance('member')->getTable();
+        $usersTable = $classMapper->createInstance('user')->getTable();
 
-        $query = $query->leftJoin('users', 'owlers.user_id', '=', 'users.id');
+        $query = $query->select("$membersTable.*");
+
+        $query = $query->leftJoin($usersTable, "$membersTable.user_id", '=', "$usersTable.id");
 
         return $query;
     }
 
     /**
-     * Get the user associated with this owler.
+     * Get the user associated with this member.
      */
     public function user()
     {
@@ -102,26 +107,26 @@ class Owler extends UFModel {
 
 This should be placed in the `src/Model/` directory in your own Sprinkle.  Notice that we set three properties: `$timestamps`, which enables automatic `created_at` and `updated_at` timestamps for our model, `$table`, which should contain the name of your table, and `$fillable`, which should be an array of column names that you want to allow to be [mass assignable](https://laravel.com/docs/5.3/eloquent#mass-assignment) when creating new instances of the model.
 
-We also define two methods.  `scopeJoinUser` allows us to automatically join the columns in the `users` table when we use Laravel's query builder to retrieve `owlers`.  For example:
+We also define two methods.  `scopeJoinUser` allows us to automatically join the columns in the `users` table when we use Laravel's query builder to retrieve `members`.  For example:
 
 ```php
-$owlers = Owler::where('city', 'London')->joinUser()->get();
+$members = Member::where('city', 'London')->joinUser()->get();
 ```
 
-The second method, `user()`, defines a [one-to-one relationship](https://laravel.com/docs/5.3/eloquent-relationships#one-to-one) between `Owler` and `User`.  This is similar to what `scopeJoinUser()` does, except that it actually creates a completely separate `User` object that you can access as a property of an `Owler`:
+The second method, `user()`, defines a [one-to-one relationship](https://laravel.com/docs/5.3/eloquent-relationships#one-to-one) between `Member` and `User`.  This is similar to what `scopeJoinUser()` does, except that it actually creates a completely separate `User` object that you can access as a property of an `Member`:
 
 ```php
-$owler = Owler::where('city', 'London')->first();
+$member = Member::where('city', 'London')->first();
 
 // Get the associated user object
-$user = $owler->user;
+$user = $member->user;
 ```
 
 ## Create a virtual model
 
-Ok, so now we have our `Owler` model, which stores the additional fields for each user and is related to the `User` model via its `user_id` column.  But, how do we represent this relationship in our Eloquent models?  After all, the default `User` model that ships with UserFrosting has no idea that `Owler` even exists.
+Ok, so now we have our `Member` model, which stores the additional fields for each user and is related to the `User` model via its `user_id` column.  But, how do we represent this relationship in our Eloquent models?  After all, the default `User` model that ships with UserFrosting has no idea that `Member` even exists.
 
-To bring the two entities together we'll create a third model, `OwlerUser`, which extends the base `User` model to make it aware of the `Owler`.  This **virtual model** will enable us to interact with columns in both tables as if they were part of a single record.
+To bring the two entities together we'll create a third model, `MemberUser`, which extends the base `User` model to make it aware of the `Member`.  This **virtual model** will enable us to interact with columns in both tables as if they were part of a single record.
 
 ```php
 <?php
@@ -129,35 +134,35 @@ namespace UserFrosting\Sprinkle\ExtendUser\Model;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use UserFrosting\Sprinkle\Account\Model\User;
-use UserFrosting\Sprinkle\ExtendUser\Model\Owler;
+use UserFrosting\Sprinkle\ExtendUser\Model\Member;
 
-trait LinkOwler {
+trait LinkMember {
     /**
      * The "booting" method of the model.
      *
      * @return void
      */
-    protected static function bootLinkOwler()
+    protected static function bootLinkMember()
     {
         /**
-         * Create a new Owler if necessary, and save the associated owler every time.
+         * Create a new Member if necessary, and save the associated member every time.
          */
-        static::saved(function ($owlerUser) {
-            $owlerUser->createRelatedOwlerIfNotExists();
+        static::saved(function ($memberUser) {
+            $memberUser->createRelatedMemberIfNotExists();
 
-            // When creating a new OwlerUser, it might not have had a `user_id` when the `owler`
-            // relationship was created.  So, we should set it on the Owler if it hasn't been set yet.
-            if (!$owlerUser->owler->user_id) {
-                $owlerUser->owler->user_id = $owlerUser->id;
+            // When creating a new MemberUser, it might not have had a `user_id` when the `member`
+            // relationship was created.  So, we should set it on the Member if it hasn't been set yet.
+            if (!$memberUser->member->user_id) {
+                $memberUser->member->user_id = $memberUser->id;
             }
 
-            $owlerUser->owler->save();
+            $memberUser->member->save();
         });
     }
 }
     
-class OwlerUser extends User {
-    use LinkOwler;
+class MemberUser extends User {
+    use LinkMember;
 
     protected $fillable = [
         "user_name",
@@ -177,75 +182,81 @@ class OwlerUser extends User {
     ];
 
     /**
-     * Required to be able to access the `owler` relationship in Twig without needing to do eager loading.
+     * Required to be able to access the `member` relationship in Twig without needing to do eager loading.
      * @see http://stackoverflow.com/questions/29514081/cannot-access-eloquent-attributes-on-twig/35908957#35908957
      */
     public function __isset($name)
     {
         if (in_array($name, [
-            'owler'
+            'member'
         ])) {
-            return isset($this->owler);
+            return true;
         } else {
             return parent::__isset($name);
         }
     }
 
     /**
-     * Custom accessor for Owler property
+     * Custom accessor for Member property
      */
     public function getCityAttribute($value)
     {
-        return (count($this->owler) ? $this->owler->city : '');
+        return (count($this->member) ? $this->member->city : '');
     }
 
     /**
-     * Custom accessor for Owler property
+     * Custom accessor for Member property
      */
     public function getCountryAttribute($value)
     {
-        return (count($this->owler) ? $this->owler->country : '');
+        return (count($this->member) ? $this->member->country : '');
     }
 
     /**
-     * Get the owler associated with this user.
+     * Get the member associated with this user.
      */
-    public function owler()
+    public function member()
     {
-        return $this->hasOne('\UserFrosting\Sprinkle\ExtendUser\Model\Owler', 'user_id');
+        /** @var UserFrosting\Sprinkle\Core\Util\ClassMapper $classMapper */
+        $classMapper = static::$ci->classMapper;
+
+        return $this->hasOne($classMapper->getClassMapping('member'), 'user_id');
     }
 
     /**
-     * Custom mutator for Owler property
+     * Custom mutator for Member property
      */
     public function setCityAttribute($value)
     {
-        $this->createRelatedOwlerIfNotExists();
+        $this->createRelatedMemberIfNotExists();
 
-        $this->owler->city = $value;
+        $this->member->city = $value;
     }
 
     /**
-     * Custom mutator for Owler property
+     * Custom mutator for Member property
      */
     public function setCountryAttribute($value)
     {
-        $this->createRelatedOwlerIfNotExists();
+        $this->createRelatedMemberIfNotExists();
 
-        $this->owler->country = $value;
+        $this->member->country = $value;
     }
 
     /**
-     * If this instance doesn't already have a related Owler (either in the db on in the current object), then create one
+     * If this instance doesn't already have a related Member (either in the db on in the current object), then create one
      */
-    protected function createRelatedOwlerIfNotExists()
+    protected function createRelatedMemberIfNotExists()
     {
-        if (!count($this->owler)) {
-            $owler = new Owler([
+        /** @var UserFrosting\Sprinkle\Core\Util\ClassMapper $classMapper */
+        $classMapper = static::$ci->classMapper;
+
+        if (!count($this->member)) {
+            $member = $classMapper->createInstance('member', [
                 'user_id' => $this->id
             ]);
 
-            $this->setRelation('owler', $owler);
+            $this->setRelation('member', $member);
         }
     }
 }
@@ -253,17 +264,17 @@ class OwlerUser extends User {
 
 There's a lot going on here, so just a quick tour:
 
-- `LinkOwler` is a [trait](http://php.net/manual/en/language.oop5.traits.php) used to attach handlers to events for our model.  In this case, we use the `saved` event to tell Laravel to save the related `Owler` model any time the `OwlerUser` is saved.  It will also call `createRelatedOwlerIfNotExists` which...well, does exactly what the name says it does.
-- We add `city` and `country` to the model's `fillable` attributes, so that they can be directly passed in to the `OwlerUser` model's constructor.
-- The `__isset` method is overridden to allow Twig to automatically fetch the related `owler` object (e.g., `current_user.owler`).  See [this answer](http://stackoverflow.com/questions/29514081/cannot-access-eloquent-attributes-on-twig/35908957#35908957) for an explanation of why this is needed.
-- We have two [custom accessor methods](https://laravel.com/docs/5.3/eloquent-mutators), `getCityAttribute` and `getCountryAttribute`, and two custom mutator methods, `setCityAttribute` and `setCountryAttribute`.  These allow us to interact with the new fields directly through the `OwlerUser` object (e.g., `$owlerUser->city` and `$owlerUser->country`), passing them through to the related `Owler` model.
-- The `owler()` method defines the relationship with the underlying `Owler` object.
+- `LinkMember` is a [trait](http://php.net/manual/en/language.oop5.traits.php) used to attach handlers to events for our model.  In this case, we use the `saved` event to tell Laravel to save the related `Member` model any time the `MemberUser` is saved.  It will also call `createRelatedMemberIfNotExists` which...well, does exactly what the name says it does.
+- We add `city` and `country` to the model's `fillable` attributes, so that they can be directly passed in to the `MemberUser` model's constructor.
+- The `__isset` method is overridden to allow Twig to automatically fetch the related `member` object (e.g., `current_user.member`).  See [this answer](http://stackoverflow.com/questions/29514081/cannot-access-eloquent-attributes-on-twig/35908957#35908957) for an explanation of why this is needed.
+- We have two [custom accessor methods](https://laravel.com/docs/5.3/eloquent-mutators), `getCityAttribute` and `getCountryAttribute`, and two custom mutator methods, `setCityAttribute` and `setCountryAttribute`.  These allow us to interact with the new fields directly through the `MemberUser` object (e.g., `$memberUser->city` and `$memberUser->country`), passing them through to the related `Member` model.
+- The `member()` method defines the relationship with the underlying `Member` object.
 
 ## Map your virtual model
 
 The problem, of course, is that all of the controllers in the Sprinkle that _defined_ the `User` model, are still _using_ the `User` model (this is simply how inheritance works).
 
-Fortunately, the default Sprinkles never directly reference the `User` class.  Instead, they use the [class mapper](/sprinkles/contents#dynamic-class-mapper).  All we need to do, then, is remap the class mapper's `user` identifier to our new class, `OwlerUser`.  This can be done by extending the `classMapper` service in a custom [service provider](/services/extending-services).
+Fortunately, the default Sprinkles never directly reference the `User` class.  Instead, they use the [class mapper](/sprinkles/contents#dynamic-class-mapper).  All we need to do, then, is remap the class mapper's `user` identifier to our new class, `MemberUser`.  While we're at it, we can map an identifier for `Member` as well.  This can be done by extending the `classMapper` service in a custom [service provider](/services/extending-services).
 
 Create a class `ServicesProvider/ServicesProvider`, and a Sprinkle initializer class, `ExtendUser.php`:
 
@@ -286,10 +297,11 @@ class ServicesProvider
         /**
          * Extend the 'classMapper' service to register model classes.
          *
-         * Mappings added: OwlerUser
+         * Mappings added: MemberUser
          */
         $container->extend('classMapper', function ($classMapper, $c) {
-            $classMapper->setClassMapping('user', 'UserFrosting\Sprinkle\ExtendUser\Model\OwlerUser');
+            $classMapper->setClassMapping('member', 'UserFrosting\Sprinkle\ExtendUser\Model\Member');
+            $classMapper->setClassMapping('user', 'UserFrosting\Sprinkle\ExtendUser\Model\MemberUser');
             return $classMapper;
         });
     }
@@ -329,10 +341,10 @@ Now, **anywhere** that the `user` identifier is used with the class mapper, for 
 
 ```
 $user = $classMapper->staticMethod('user', 'where', 'email', 'admin@example.com')->first();
-$owler = $user->owler;
+$member = $user->member;
 ```
 
-The class mapper will call the method on the `OwlerUser` class instead. 
+The class mapper will call the method on the `MemberUser` class instead. 
 
 >>>>> You might want your _own_ references to be overrideable by other Sprinkles that might be loaded later on.  In this case, you should use the class mapper in your own controllers as well.
 
@@ -367,7 +379,7 @@ Notice that we wrap them in a single `if` block.  By doing this, we are grouping
 
 ## Override (just a few) controllers
 
-I know that we said that we didn't want to modify controllers, but in some cases it is unavoidable.  For example, the `UserController::pageInfo` method explicitly states the fields that should be displayed in the form.  So, we will need to copy and modify it to display the `city` and `country` fields.  Create a new `Controller/OwlerController.php` class:
+I know that we said that we didn't want to modify controllers, but in some cases it is unavoidable.  For example, the `UserController::pageInfo` method explicitly states the fields that should be displayed in the form.  So, we will need to copy and modify it to display the `city` and `country` fields.  Create a new `Controller/MemberController.php` class:
 
 ```php
 <?php
@@ -380,7 +392,7 @@ use UserFrosting\Sprinkle\Admin\Controller\UserController;
 use UserFrosting\Sprinkle\Core\Facades\Debug;
 use UserFrosting\Support\Exception\ForbiddenException;
 
-class OwlerController extends UserController
+class MemberController extends UserController
 {
 
 }
@@ -395,7 +407,7 @@ $fieldNames = ['name', 'email', 'locale'];
 
 and add the `address` field.
 
-We'll also need to link our endpoints up to this new controller method.  To do this, we'll create a new route file, `owlers.php`, in our Sprinkle's `routes/` directory:
+We'll also need to link our endpoints up to this new controller method.  To do this, we'll create a new route file, `members.php`, in our Sprinkle's `routes/` directory:
 
 ```php
 <?php
@@ -403,7 +415,7 @@ We'll also need to link our endpoints up to this new controller method.  To do t
  * Routes for administrative user management.  Overrides routes defined in routes://admin/users.php
  */
 $app->group('/admin/users', function () {
-    $this->get('/u/{user_name}', 'UserFrosting\Sprinkle\ExtendUser\Controller\OwlerController:pageInfo');
+    $this->get('/u/{user_name}', 'UserFrosting\Sprinkle\ExtendUser\Controller\MemberController:pageInfo');
 })->add('authGuard');
 ```
 
