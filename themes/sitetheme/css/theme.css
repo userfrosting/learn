@@ -1,3 +1,17 @@
+
+
+/* Global Styles
+=====================*/
+
+a {
+    color: #0e9a8d;
+}
+
+
+
+/* Sidebar Styles
+=====================*/
+
 #header {
     background-color: #ee6e73;
 }
@@ -5,6 +19,10 @@
 #logo {
     line-height: normal;
     display: table;
+}
+
+#sidebar ul li.visited > a .read-icon {
+    color: #ee6e73;
 }
 
 .logo-title {
@@ -18,6 +36,11 @@
 .logo-image {
     vertical-align:middle;
 }
+
+
+
+/* Search box
+=====================*/
 
 .searchbox {
     border-color: #f7e2e5;
@@ -57,10 +80,122 @@
    color: #999;
 }
 
-#sidebar ul li.visited > a .read-icon {
-    color: #ee6e73;
+
+
+/* Typography
+=====================*/
+
+h1 {
+    font-size: 3rem;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
-a {
-    color: #26a69a;
+#chapter h1 {
+    font-size: 4rem;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.23);
 }
+
+h2 {
+    font-size: 2.25rem;
+    background-color: #dcf2f5;
+    padding-left: 20px;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+#chapter h3 {
+    font-size: 2rem;
+}
+
+h3:before {
+    content: "#";
+    padding-right: .5rem;
+    /*display: inline-block;
+    background: url("../images/dot.svg") no-repeat;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin: 0 6px 0 0;*/
+}
+
+#chapter h3:before {
+    content: none;
+}
+
+h4 {
+    font-size: 1rem;
+    color: #e0696d;
+    letter-spacing: 1.25px;
+}
+
+h4:before {
+    content: '_';
+    padding-right: .5rem;
+}
+
+h5 {
+    font-size: 1rem;
+    color: #7b7d80;
+    margin-left: 2.5rem;
+}
+
+pre {
+    border-color: #f6f6f6;
+    box-shadow: 1px 1px 1px 1px #b5b5b5;
+}
+
+code {
+    background-color: rgba(176, 212, 236, .18);
+    color: #062938;
+    border-radius: 0px;
+}
+
+pre code {
+    color: #3a3e3d;
+}
+
+.copy-to-clipboard {
+    background-color: #e7f2f9;
+    margin-left: 0;
+    top: -1.25px;
+    width: 22px;
+    height: 23px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+blockquote code, blockquote .copy-to-clipboard {
+    background-color: rgba(129, 136, 142, 0.16);
+}
+
+blockquote p {
+    color: #555;
+    background-color:#eaeff3;
+    padding-left: .5rem;
+}
+
+blockquote>blockquote>p,
+blockquote>blockquote>blockquote>p,
+blockquote>blockquote>blockquote>blockquote>p,
+blockquote>blockquote>blockquote>blockquote>blockquote>p,
+blockquote>blockquote>blockquote>blockquote>blockquote>blockquote>p {
+    border-top-color: #d4d4d4;
+    background-color: #fbf1f1;
+}
+
+blockquote>blockquote>blockquote p:first-child:after {
+    color: #676666;
+    font-weight: inherit;
+}
+
+blockquote>blockquote>blockquote p:first-child:before {
+    color: #8c8b8b;
+}
+
+h3 .copy-to-clipboard {
+    height: 32px;
+}
+
+
