@@ -166,6 +166,10 @@ pre code {
     padding-bottom: 0px;
 }
 
+.copy-to-clipboard:hover {
+    background-color: #cce3ec;
+}
+
 blockquote code, blockquote .copy-to-clipboard {
     background-color: rgba(129, 136, 142, 0.16);
 }
