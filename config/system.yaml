@@ -22,9 +22,9 @@ twig:
   autoescape: false
 
 assets:
-  css_pipeline: true
-  css_minify: true
-  css_rewrite: true
+  css_pipeline: false
+  css_minify: false
+  css_rewrite: false
   js_pipeline: true
   js_minify: true
 
