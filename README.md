@@ -37,6 +37,11 @@ Add default webserver user `daemon` to OSX's `staff` group (which already has th
 
 `sudo dseditgroup -o edit -a daemon -t user staff`
 
+### Step 3
+
+Install plugins and base theme. The base theme is learn2. The plugins each have empty directories in the plugins directory.
+
 ## Credits
 
 Favicons were generated with https://realfavicongenerator.net/
+
