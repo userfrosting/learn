@@ -4,7 +4,19 @@
 =====================*/
 
 a {
-    color: #0e9a8d;
+    color: #d45d61;
+}
+
+a:hover {
+    color: #f56c68;
+}
+
+a.nav-next, a.nav-prev {
+    color: #f77e83;
+}
+
+a.nav-next:hover, a.nav-prev:hover {
+    color: #ff8b8e;
 }
 
 
@@ -90,12 +102,14 @@ a {
 .toc h1 {
     margin-bottom: 1rem;
     text-align: left;
+    font-size: 2rem;
+    border-bottom: 2px solid #38424d;
 }
 
 .toc ol {
     list-style-type: none;
     padding-left: 0px;
-    line-height: 1.5rem;
+    line-height: 1.5;
     margin-top: 0px;
     margin-bottom: 0px;
     margin-left: .5rem;
@@ -105,6 +119,7 @@ a {
 .toc ol ol {
     margin-left: 2rem;
     font-size: 16px;
+    font-weight: 100;
 }
 
 .toc li a:before {
@@ -115,25 +130,22 @@ a {
 /* Typography
 =====================*/
 
-h1 {
-    font-size: 3rem;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-}
-
 #chapter h1 {
     font-size: 4rem;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.23);
 }
 
 h2 {
-    font-size: 2.25rem;
+    font-size: 2rem;
     /*background-color: #dcf2f5;
     padding-left: 20px;*/
+    border-bottom: 1px solid #ee6e73;
 }
 
 h3 {
     font-size: 1.5rem;
     color: #555;
+    border-bottom: 1px dashed #999;
 }
 
 #chapter h3 {
@@ -158,8 +170,6 @@ h3:before {
 
 h4 {
     font-size: 1.2rem;
-    color: #7d7d7d;
-    letter-spacing: 1.25px;
 }
 
 /*h4:before {
@@ -169,14 +179,15 @@ h4 {
 
 h5 {
     font-size: 1rem;
-    color: #7b7d80;
-    margin-left: 2.5rem;
+    font-style: italic;
 }
-/*
+
 h5:before {
-    content: '#';
-    padding-right: .5rem;
-}*/
+    content: '----';
+    margin-right: .5rem;
+    font-weight: 700;
+    font-size: 20px;
+}
 
 pre {
     border-color: #f6f6f6;
@@ -184,7 +195,7 @@ pre {
 }
 
 code {
-    background-color: rgba(176, 212, 236, .18);
+    background-color: rgba(206, 239, 239, 0.44);
     color: #062938;
     border-radius: 0px;
 }
@@ -192,6 +203,7 @@ code {
 pre code {
     color: #3a3e3d;
     background: none;
+    font-size: 16.5px;
 }
 
 .copy-to-clipboard {
@@ -209,12 +221,12 @@ pre code {
 }
 
 blockquote code, blockquote .copy-to-clipboard {
-    background-color: rgba(129, 136, 142, 0.16);
+    background-color: rgba(129, 136, 142, 0.13);
 }
 
 blockquote p {
     color: #555;
-    background-color:#e7f4ff;
+    background-color: rgba(0, 128, 128, 0.13);
     padding-left: .5rem;
 }
 
@@ -223,18 +235,29 @@ blockquote>blockquote>blockquote>p,
 blockquote>blockquote>blockquote>blockquote>p,
 blockquote>blockquote>blockquote>blockquote>blockquote>p,
 blockquote>blockquote>blockquote>blockquote>blockquote>blockquote>p {
-    border-top-color: #d4d4d4;
+    border-top-color: rgb(239, 224, 228);
     background-color: #fbf1f1;
+    color: #555;
 }
 
-blockquote>blockquote>blockquote p:first-child:after {
-    color: #676666;
+blockquote>blockquote>blockquote>blockquote>p {
+    border-top-color: rgb(224, 234, 239);
+}
+
+blockquote p:first-child:after,
+blockquote > blockquote p:first-child:after,
+blockquote > blockquote > blockquote p:first-child:after,
+blockquote > blockquote > blockquote > blockquote p:first-child:after,
+blockquote > blockquote > blockquote > blockquote > blockquote p:first-child:after,
+blockquote p:first-child:before,
+blockquote > blockquote p:first-child:before,
+blockquote > blockquote > blockquote p:first-child:before,
+blockquote > blockquote > blockquote > blockquote p:first-child:before,
+blockquote > blockquote > blockquote > blockquote > blockquote p:first-child:before {
+    color: #555;
     font-weight: inherit;
 }
 
-blockquote>blockquote>blockquote p:first-child:before {
-    color: #8c8b8b;
-}
 
 h3 .copy-to-clipboard {
     height: 32px;
