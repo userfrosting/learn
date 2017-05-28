@@ -80,6 +80,7 @@ a {
    color: #999;
 }
 
+
 /* TOC Styles
 =====================*/
 
@@ -98,10 +99,12 @@ a {
     margin-top: 0px;
     margin-bottom: 0px;
     margin-left: .5rem;
+    font-size: 18px;
 }
 
 .toc ol ol {
     margin-left: 2rem;
+    font-size: 16px;
 }
 
 .toc li a:before {
