@@ -80,7 +80,49 @@ a {
    color: #999;
 }
 
+/* TOC Styles
+=====================*/
 
+.toc {
+    inset 1px 1px 2px 1PX rgba(0, 0, 0, 0.05);
+}
+
+.toc h1 {
+    margin-bottom: 1rem;
+}
+
+.toc ol {
+    list-style-type: none;
+    padding-left: 0px;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.toc ol ol {
+    margin-bottom: 8px;
+}
+.toc ol ol a {
+    color: #d26065;
+}
+
+.toc ol ol a:hover {
+    color: #7f3a3d;
+}
+
+
+/*
+.toc li a {
+    background-color: rgba(220, 242, 245, 0.41);
+    color: #666b6b;
+}
+*/
+.toc li a:before {
+    content: '#';
+    padding-right: 5px;
+}
 
 /* Typography
 =====================*/
@@ -101,12 +143,19 @@ h2 {
     padding-left: 20px;
 }
 
+h2:before {
+    content: '#';
+    padding-right: .5rem;
+}
+
 h3 {
     font-size: 1.5rem;
+    color: #d26065;
 }
 
 #chapter h3 {
     font-size: 2rem;
+    color: inherit;
 }
 
 h3:before {
@@ -125,13 +174,13 @@ h3:before {
 }
 
 h4 {
-    font-size: 1rem;
-    color: #e0696d;
+    font-size: 1.2rem;
+    color: #638594;
     letter-spacing: 1.25px;
 }
 
 h4:before {
-    content: '_';
+    content: '#';
     padding-right: .5rem;
 }
 
@@ -141,6 +190,10 @@ h5 {
     margin-left: 2.5rem;
 }
 
+h5:before {
+    content: '#';
+    padding-right: .5rem;
+}
 pre {
     border-color: #f6f6f6;
     box-shadow: 1px 1px 1px 1px #b5b5b5;
