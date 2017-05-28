@@ -1,3 +1,5 @@
+// This has been modified from the original code on line 61 to remove all special characters and spaces from hashes.
+
 /*
  * Table of Contents jQuery Plugin - jquery.toc
  *
@@ -55,8 +57,8 @@
                     if (text.length === 0) {
                         text = "?";
                     }
-
-                    var baseId = text.replace(/\s+/g, "_"), suffix = "", count = 1;
+                    
+                    var baseId = text.replace(/[_\W]+/g, ''), suffix = "", count = 1;
 
                     while (document.getElementById(baseId + suffix) !== null) {
                         suffix = "_" + count++;

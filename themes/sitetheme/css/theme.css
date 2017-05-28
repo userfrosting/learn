@@ -84,7 +84,6 @@ a {
 =====================*/
 
 .toc {
-    margin-left: 2rem;
 }
 
 .toc h1 {
@@ -188,6 +187,7 @@ code {
 
 pre code {
     color: #3a3e3d;
+    background: none;
 }
 
 .copy-to-clipboard {
