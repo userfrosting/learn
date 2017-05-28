@@ -84,41 +84,27 @@ a {
 =====================*/
 
 .toc {
-    inset 1px 1px 2px 1PX rgba(0, 0, 0, 0.05);
+    margin-left: 2rem;
 }
 
 .toc h1 {
     margin-bottom: 1rem;
+    text-align: left;
 }
 
 .toc ol {
     list-style-type: none;
     padding-left: 0px;
-    font-size: 16px;
-    line-height: 20px;
-    text-align: center;
+    line-height: 1.5rem;
     margin-top: 0px;
     margin-bottom: 0px;
+    margin-left: .5rem;
 }
 
 .toc ol ol {
-    margin-bottom: 8px;
-}
-.toc ol ol a {
-    color: #d26065;
+    margin-left: 2rem;
 }
 
-.toc ol ol a:hover {
-    color: #7f3a3d;
-}
-
-
-/*
-.toc li a {
-    background-color: rgba(220, 242, 245, 0.41);
-    color: #666b6b;
-}
-*/
 .toc li a:before {
     content: '#';
     padding-right: 5px;
@@ -143,11 +129,6 @@ h2 {
     padding-left: 20px;
 }
 
-h2:before {
-    content: '#';
-    padding-right: .5rem;
-}
-
 h3 {
     font-size: 1.5rem;
     color: #555;
@@ -159,9 +140,9 @@ h3 {
 }
 
 h3:before {
-    content: "#";
+    /*content: "";
     padding-right: .5rem;
-    /*display: inline-block;
+    display: inline-block;
     background: url("../images/dot.svg") no-repeat;
     width: 20px;
     height: 20px;
@@ -180,7 +161,7 @@ h4 {
 }
 
 h4:before {
-    content: '#';
+    content: '_';
     padding-right: .5rem;
 }
 
