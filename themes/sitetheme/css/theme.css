@@ -235,13 +235,20 @@ blockquote>blockquote>blockquote>p,
 blockquote>blockquote>blockquote>blockquote>p,
 blockquote>blockquote>blockquote>blockquote>blockquote>p,
 blockquote>blockquote>blockquote>blockquote>blockquote>blockquote>p {
-    border-top-color: rgb(239, 224, 228);
+    /*border-top-color: rgba(247, 196, 198, 0.42);
     background-color: #fbf1f1;
     color: #555;
+    border-top-color: rgba(0, 128, 128, 0.74);
+    background: #e7f5f5;*/
+    border-top: 30px solid #6AB0DE;
+    background: #E7F2FA;
 }
 
 blockquote>blockquote>blockquote>blockquote>p {
-    border-top-color: rgb(224, 234, 239);
+    /*border-top-color: rgba(238, 110, 115, 0.99);
+    background-color: rgb(253, 242, 243);*/
+    border-top: 30px solid #F0B37E;
+    background: #FFF2DB;
 }
 
 blockquote p:first-child:after,
@@ -254,7 +261,7 @@ blockquote > blockquote p:first-child:before,
 blockquote > blockquote > blockquote p:first-child:before,
 blockquote > blockquote > blockquote > blockquote p:first-child:before,
 blockquote > blockquote > blockquote > blockquote > blockquote p:first-child:before {
-    color: #555;
+    color: white;
     font-weight: inherit;
 }
 
@@ -264,7 +271,7 @@ h3 .copy-to-clipboard {
 }
 
 .hljs {
-  color: #444;
+  color: #3e3d3d;
 }
 
 .hljs-comment,
@@ -289,14 +296,14 @@ h3 .copy-to-clipboard {
 .hljs-params,
 .hljs-constant,
 .hljs-emphasis {
-  color: #540f5f;
+  color: #c14a40;
 }
 
 .hljs-string,
 .hljs-value,
 .hljs-inheritance,
 .hljs-header {
-  color: #106c93;;
+  color: #4b5d01;
 }
 
 .hljs-symbol,
@@ -310,7 +317,7 @@ h3 .copy-to-clipboard {
 
 .hljs-keyword,
 .hljs-link_url  {
-    color: #6f4e36;
+    color: #07a;
 }
 
 
