@@ -151,6 +151,7 @@ h3 {
 #chapter h3 {
     font-size: 2rem;
     color: inherit;
+    border-bottom: none;
 }
 
 h3:before {
