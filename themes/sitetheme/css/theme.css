@@ -190,6 +190,19 @@ h5:before {
     font-size: 20px;
 }
 
+
+h6 {
+    font-size: 1rem;
+    font-style: italic;
+}
+
+h6:before {
+    content: '------';
+    margin-right: .5rem;
+    font-weight: 700;
+    font-size: 20px;
+}
+
 pre {
     border-color: #f6f6f6;
     box-shadow: 1px 1px 1px 1px #b5b5b5;
@@ -227,8 +240,11 @@ blockquote code, blockquote .copy-to-clipboard {
 
 blockquote p {
     color: #555;
-    background-color: rgba(0, 128, 128, 0.13);
     padding-left: .5rem;
+}
+
+blockquote {
+    border-left: 10px solid #e5e6e6;
 }
 
 blockquote>blockquote>p,
