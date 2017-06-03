@@ -10,7 +10,32 @@ taxonomy:
 !TODO
 
 ## New features
-!TODO
+
+### CLI tools
+
+New tools for setting up UF, checking requirements, installing, and asset management.  They're great!
+
+### Hooking into the main UF application lifecycle
+
+The main lifecycle logic (Sprinkle loading) has been moved out of the `core` Sprinkle and into `app/system`.  Sprinkles can hook into the main UF application lifecycle via their bootstrap class.  Available methods so far:
+
+- onAppInitialize
+- onAddGlobalMiddleware
+- onSprinklesInitialized
+- onSprinklesAddResources
+- onSprinklesRegisterServices
+
+### Support for unit testing!
+
+### Custom error rendering
+
+With a new WhoopsRenderer for attractive, informative debugging pages!
+
+### Listable sprunjing
+
+Sprunjes can now generate enumerations of unique values for a specific field.  Very useful in generating lists of options, for example, in tablesorter selection menus.
+
+### Sprunje now supports `_all` filter, which will search all filterable fields by default.
 
 ## Breaking changes
 
