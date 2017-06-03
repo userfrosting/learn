@@ -4,7 +4,7 @@ taxonomy:
     category: docs
 ---
 
-UserFrosting's CLI, or [*Command-line Interface*](https://en.wikipedia.org/wiki/Command-line_interface), is called **The Bakery**. It provides a number of helpful commands that can assist you while you build, manage and install your application. To view a list of all available Bakery commands, you may use the `list` command from your UserFrosting root directory :
+UserFrosting's CLI, or [*Command-line Interface*](https://en.wikipedia.org/wiki/Command-line_interface), is called the **Bakery**. It provides a number of helpful commands that can assist you while you build, manage and install your application. To view a list of all available Bakery commands, you may use the `list` command from your UserFrosting root directory :
 
 ```bash
 $ php bakery list
@@ -23,6 +23,15 @@ $ php bakery help
 ``` 
 
 ## Available commands
+
+### bake
+Bake is the general installation command. It combines `setup`, `debug`, `migrate` and `build-assets` into a single command : 
+
+```bash
+$ php bakery bake
+``` 
+
+>>>>>> This command should be executed every time you run `composer update`, change assets, create a new sprinkle or install a [community sprinkle](/sprinkles/community).
 
 ### debug
 
@@ -119,11 +128,4 @@ The `test` command is used to execute PhpUnit tests. See the [Unit Testing](/oth
 
 ```bash
 $ php bakery test
-``` 
-
-### bake
-Bake is the general installation command. It combines `setup`, `debug`, `migrate` and `build-assets` into a single command : 
-
-```bash
-$ php bakery bake
 ``` 
