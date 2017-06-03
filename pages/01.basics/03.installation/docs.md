@@ -172,7 +172,7 @@ $ npm install
 
 This command will install Gulp, Bower, and several other required npm packages.
 
->>>>> If this command fails, see [npm](/basics/requirements/essential-tools-for-php#npm) to ensure npm is correctly installed and updated.
+>>>>> If this command fails, see [npm](/basics/requirements/essential-tools-for-php#npm) to ensure npm is correctly installed and updated. You may need to [change npm permissions] (https://docs.npmjs.com/getting-started/fixing-npm-permissions)
 
 Check that all of your Node dependencies have been successfully installed by looking in the `build/node_modules/` directory.  You should see lots of subdirectories with names like `accord`, `align-text`, `amdefine`, etc.  These are the npm packages used by our asset tools.
 
