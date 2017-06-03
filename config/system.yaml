@@ -1,5 +1,5 @@
 home:
-  alias: '/basics'
+  alias: '/quick-start'
 
 pages:
   theme: sitetheme
