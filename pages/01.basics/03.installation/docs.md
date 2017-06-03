@@ -242,6 +242,13 @@ You will be prompted to confirm your operating system, after which the tables an
 
 Once this has completed successfully, you can sign in with your root account at `http://localhost/myUserFrostingProject/public/account/sign-in`.
 
+## Choose your own adventure: What's next? well now you have two options
+Congratulations, you now you have a working userfrosting instance in your local development enviorment you can now chose to continue to learn how userfrosting works (and build your project on your local enviorement) or you can learn how to go live with your userfrosting instance.
+
+Go here to [learn about sprinkles](https://learn.userfrosting.com/sprinkles)
+or
+Go here to [learn how to go live with your working instance](https://learn.userfrosting.com/going-live)
+
 ## Star the project and follow us on Twitter
 
 It will help us a lot if you could star [the UserFrosting project on GitHub](https://github.com/userfrosting/UserFrosting).  Just look for the button in the upper right-hand corner!
