@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-This guide assumes that you've already completed the [installation guide](/basics/installation) and successfully managed to get UserFrosting working in your [local development environment](/basics/requirements/develop-locally-serve-globally).  If not, please do that now - feel free to [ask for help](/basics/getting-help) if you're running into trouble!
+This guide assumes that you've already completed the [installation guide](/installation) and successfully managed to get UserFrosting working in your [local development environment](/installation/requirements/develop-locally-serve-globally).  If not, please do that now - feel free to [ask for help](/installation/getting-help) if you're running into trouble!
 
 ## Create a Sprinkle
 
@@ -24,11 +24,12 @@ app
     └── site
 ```
 
-To make sure that our new Sprinkle will actually get loaded, we need to modify our `app/sprinkles/sprinkles.json` file:
+To make sure that our new Sprinkle will actually get loaded, we need to modify our `app/sprinkles.json` file:
 
 ```json
 {
     "base": [
+        "core",
         "account",
         "admin",
         "site"
@@ -84,7 +85,7 @@ This customizes some basic properties for our application - set your site title,
 
 This is because the template for this page is dynamically pulling that particular piece of text from your new configuration file.  Note that your value for `site.title` overrides the value of `site.title` in the core Sprinkle's configuration file.
 
->>>>>> You can [override configuration values](/sprinkles/contents#config) from any previously loaded Sprinkles, including the default Sprinkles that ship with UserFrosting.  Check `/app/sprinkles/core/config/default.php` and `/app/sprinkles/account/config/default.php` for a complete list.
+>>>>>> You can [override configuration values](/configuration/config-files) from any previously loaded Sprinkles, including the default Sprinkles that ship with UserFrosting.  Check `/app/sprinkles/core/config/default.php` and `/app/sprinkles/account/config/default.php` for a complete list.
 
 ### composer.json
 
@@ -129,7 +130,7 @@ site/
 └── composer.json
 ```
 
-The last step is to run Composer from your main `app/` directory, so that it can detect the new `composer.json` file and create the appropriate mappings.  You only need to run this once - any new classes that you add to `src/` will be automatically picked up in the future.
+The last step is to run Composer from your root project directory, so that it can detect the new `composer.json` file and create the appropriate mappings.  You only need to run this once when you create a new Sprinkle - any new classes that you add to `src/` will be automatically picked up in the future.
 
 ```bash
 $ composer update
