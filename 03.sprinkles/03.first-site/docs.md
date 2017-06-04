@@ -115,6 +115,10 @@ Chances are, you'll be adding some classes to your Sprinkle - at the very least,
 
 The important part here is the `autoload.psr-4` key.  This tells Composer to map the root `src/` directory of your Sprinkle to the root **namespace** `UserFrosting\Sprinkle\Site\`.
 
+If you're not familiar with PSR-4, it is a standard that says we should map a base directory to a base namespace, and then the relative namespaces of classes in that directory should correspond to the relative paths of their class files.  For example, the directory `/app/sprinkles/mysprinkle/src/Controller/OwlController.php` would be mapped to the fully qualified class name `\UserFrosting\Sprinkle\MySprinkle\Controller\OwlController`.
+
+>>> As mentioned in [Sprinkle Contents](/sprinkles/contents), UserFrosting uses a master `composer.json` file to automatically merge the `composer.json` files in each Sprinkle.  If you define additional third-party package dependencies in your Sprinkle's `composer.json`, these will be installed to the shared `app/vendor` directory when you run `composer update`.
+
 Go ahead and actually create a `src/` directory in your Sprinkle now.  At this point, your Sprinkle should look like:
 
 ```bash
