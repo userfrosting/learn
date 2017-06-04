@@ -10,7 +10,7 @@ In a more minimalistic setup, asset retrieval is fairly straightforward.  We mig
 
 In UserFrosting, the Sprinkle system makes this a little more complicated.  Each Sprinkle can contribute its own assets to the application (under its `assets/` subdirectory), and it should be possible for a Sprinkle to override assets in another Sprinkle that was loaded earlier in the stack.
 
-Configuring the web server to handle all of the extra logic would be tedious, error-prone, and could easily introduce security risks.  For these reasons, UserFrosting has the ability to [serve assets through the application](/building-pages/assets/basic-usage#public-asset-urls), rather than relying on the web server to handle these requests directly.
+Configuring the web server to handle all of the extra logic would be tedious, error-prone, and could easily introduce security risks.  For these reasons, UserFrosting has the ability to [serve assets through the application](/asset-management/asset-bundles/basic-usage#public-asset-urls), rather than relying on the web server to handle these requests directly.
 
 ## Compiled Assets
 
