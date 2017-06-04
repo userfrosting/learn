@@ -107,7 +107,7 @@ $ php bakery bake
 
 You will first be prompted for your database credentials. This is the information PHP needs to connect to your database. If PHP can't connect to your database using theses credential, make sure you have entered the right informations and run the `bake` command to try again. 
 
-If the database connexion is successful, the installer will then check that basic dependencies are met. If so, the installer will run the _migrations_ to populate your database with new tables. During this process, you will be prompted for some information to set up the master account. Finally, thge installer will run the `build-assets` command to fetch javascript dependencies and build the [assets bundles](/building-pages/assets).
+If the database connexion is successful, the installer will then check that basic dependencies are met. If so, the installer will run the _migrations_ to populate your database with new tables. During this process, you will be prompted for some information to set up the master account. Finally, thge installer will run the `build-assets` command to fetch javascript dependencies and build the [assets bundles](/asset-management/asset-bundles).
 
 ## Visit your website
 

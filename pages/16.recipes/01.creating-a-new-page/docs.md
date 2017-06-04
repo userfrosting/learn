@@ -12,7 +12,7 @@ In reality, a web page is simply an HTTP `GET` request to which the server respo
 
 It is true that with more primitive approaches to building a website or web application, there might be a one-to-one correspondence between pages and `.html` or `.php` files.  Indeed, most web servers are configured by default to look for a web page or PHP script with the same name and relative path as the request URL (for example, `http://example.com/admin/user.php` and `/var/www/admin/user.php`).  But, there is no law that says that we _must_ use this approach.
 
-In fact, UserFrosting adds several layers of abstraction between the request URL and the content and functionality of a page.  Most notably, UserFrosting uses the [front controller pattern](/routes-and-controllers) and [templating](/building-pages/templating-with-twig) to isolate the URL of a page from its content and functionality.
+In fact, UserFrosting adds several layers of abstraction between the request URL and the content and functionality of a page.  Most notably, UserFrosting uses the [front controller pattern](/routes-and-controllers) and [templating](/templating-with-twig) to isolate the URL of a page from its content and functionality.
 
 In this tutorial, you will learn how to set up the components required to implement a basic web page:
 
@@ -138,7 +138,7 @@ Your `members.html.twig` template should look something like this:
 {% endblock %}
 ```
 
-Notice that we extend the `default.html.twig` layout, which is the same [layout template](/building-pages/templating-with-twig#layouts) used by the "home" and "about" pages.  If we wanted to create a "dashboard" page, we would extend the `layouts/dashboard.html.twig` template instead.
+Notice that we extend the `default.html.twig` layout, which is the same [layout template](/templating-with-twig#layouts) used by the "home" and "about" pages.  If we wanted to create a "dashboard" page, we would extend the `layouts/dashboard.html.twig` template instead.
 
 Then, we simply have to fill in some of the [blocks](https://twig.sensiolabs.org/doc/2.x/tags/extends.html) defined in the layout template with our page content.  As a simple example of using Twig to produce dynamic content, we reference the `current_user` global Twig variable to get and display the user's first name.
 
