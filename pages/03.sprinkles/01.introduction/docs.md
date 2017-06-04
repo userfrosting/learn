@@ -23,7 +23,7 @@ Each Sprinkle can contain any or all of the following entities:
 - validation schema
 - PHP code (typically classes)
 - templates (Twig files)
-- installation scripts (migrations)
+- "extra" content that does not fit into any of these categories
 
 Sprinkles are loaded in a specific order, and entities of each type in one sprinkle can extend entities of the same type in other sprinkles.  We'll explain exactly what we mean by "extend" in a minute.
 
@@ -31,22 +31,24 @@ Each Sprinkle is located in its own subdirectory under the main `app/sprinkles/`
 
 ## Loading Sprinkles
 
-Sprinkles are automatically loaded via the `sprinkles.json` file in your `app/sprinkles/` directory.  During the installation process, we had you create a basic `sprinkles.json` file:
+Sprinkles are automatically loaded via the `sprinkles.json` file in your `app/` directory.  If you used Bakery to install UserFrosting, this file will have been automatically created for you:
 
 ```json
 {
     "base": [
+        "core",
         "account",
         "admin"
     ]
 }
 ```
 
-The `base` key contains an array of Sprinkles that UserFrosting will load after it loads the `core` Sprinkle (The `core` Sprinkle is automatically loaded for every project).  To have UserFrosting load another Sprinkle, simply add it to this array.  For example, if you have a `site` Sprinkle:
+UserFrosting will load the Sprinkles specified under the `base` key during the application lifecycle.  To have UserFrosting load another Sprinkle, simply add it to this array.  For example, if you have a `site` Sprinkle:
 
 ```json
 {
     "base": [
+        "core",
         "account",
         "admin",
         "site"
@@ -75,7 +77,7 @@ Of these, 3 comprise the bulk of UserFrosting's functionality: `core`, `account`
 
 #### Core
 
-`core` contains most of the "heavy lifting" PHP code, and is required for every project.  For example, it loads most of UserFrosting's Composer requirements, and contains classes for features like [mail](/other-services/mail), [request throttling](/routes-and-controllers/user-input/throttle), and the code that actually manages the Sprinkle system itself!
+`core` contains most of the "heavy lifting" PHP code, and provides a basic, public website.  It loads most of UserFrosting's PHP and asset dependencies, and contains classes for features like [mail](/other-services/mail), [request throttling](/routes-and-controllers/client-input/throttle), [error handling](/error-handling), and much more!
 
 #### Account
 
@@ -83,7 +85,7 @@ The `account` sprinkle handles user modeling and authentication, user groups, ro
 
 #### Admin
 
-The `admin` sprinkle contains the routes, templates, and controllers to implement the administrative user and group management interface, as well as the site settings and role and permission management interfaces.
+The `admin` sprinkle contains the routes, templates, and controllers to implement the administrative user management interface, as well as the group, role, and permission management interfaces.
 
 `root` is a special theme Sprinkle, used to provide some cosmetic styling for the root user account.
 
