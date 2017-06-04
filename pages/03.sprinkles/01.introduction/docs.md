@@ -77,7 +77,7 @@ Of these, 3 comprise the bulk of UserFrosting's functionality: `core`, `account`
 
 #### Core
 
-`core` contains most of the "heavy lifting" PHP code, and provides a basic, public website.  It loads most of UserFrosting's PHP and asset dependencies, and contains classes for features like [mail](/other-services/mail), [request throttling](/routes-and-controllers/client-input/throttle), [error handling](/error-handling), and much more!
+`core` contains most of the "heavy lifting" PHP code, and provides a basic, public website.  It loads most of UserFrosting's PHP and asset dependencies, and contains classes for features like [mail](/mail), [request throttling](/routes-and-controllers/client-input/throttle), [error handling](/advanced/error-handling), and much more!
 
 #### Account
 
