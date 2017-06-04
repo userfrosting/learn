@@ -1,5 +1,5 @@
 ---
-title: "Not Invented Here" Syndrome
+title: Don't Reinvent the Wheel
 metadata:
     description: Using third-party components reduces the amount of software maintenance you have to do and documentation you have to write, and lets you draw on the wider community of other developers who use those packages for troubleshooting and support.
 taxonomy:
