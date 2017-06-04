@@ -37,7 +37,7 @@ $ composer update
 
 ### /bundle.config.json
 
-The `bundle.config.json` file is used for defining asset bundles, that can be referenced by templates. The advantage of using asset bundles (as compared to referencing the specific files) is that multiple files can be quickly referenced by the name of their bundles.  In production the individual files in each bundle are merged, reducing the number of HTTP requests that need to be made and thus reducing client latency and server load.  See [chapter 7](/building-pages/assets) for more information about asset bundles.
+The `bundle.config.json` file is used for defining asset bundles, that can be referenced by templates. The advantage of using asset bundles (as compared to referencing the specific files) is that multiple files can be quickly referenced by the name of their bundles.  In production the individual files in each bundle are merged, reducing the number of HTTP requests that need to be made and thus reducing client latency and server load.  See [chapter 7](/asset-management/asset-bundles) for more information about asset bundles.
 
 ### /bower.json
 
@@ -51,7 +51,7 @@ $ npm run uf-assets-install
 
 ### /assets
 
-The `assets` directory contains all of the Javascript, CSS, images, and other static content for your site.  See [chapter 7](/building-pages/assets) for more information about asset management and usage.
+The `assets` directory contains all of the Javascript, CSS, images, and other static content for your site.  See [chapter 7](/asset-management/asset-bundles) for more information about asset management and usage.
 
 ### /config
 
@@ -59,11 +59,11 @@ The `assets` directory contains all of the Javascript, CSS, images, and other st
 
 ### /locale
 
-The `locale` directory contains [translation files](/building-pages/i18n) for your Sprinkle.  Like configuration files, translation files simply return an associative array.
+The `locale` directory contains [translation files](/advanced/i18n) for your Sprinkle.  Like configuration files, translation files simply return an associative array.
 
 Just as with configuration files, UserFrosting will recursively merge translation files for the currently selected language(s) from each loaded Sprinkle.  This means that each subsequently loaded Sprinkle can override translations from previous Sprinkles, or define new ones entirely.
 
-See [Chapter 7](/building-pages/i18n) for more information on UserFrosting's internationalization and localization system.
+See [Chapter 7](/advanced/i18n) for more information on UserFrosting's internationalization and localization system.
 
 ### /routes
 

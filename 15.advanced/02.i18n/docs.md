@@ -73,7 +73,7 @@ echo $this->ci->translator->translate("ACCOUNT_USER_CHAR_LIMIT", [
 // Returns "Tu nombre de usuario debe estar entre 4 y 200 caracteres de longitud."
 ```
 
-The translator service is also available as a [Twig function](/building-pages/templating-with-twig). Placeholder can be passed to the Twig function too:
+The translator service is also available as a [Twig function](/templating-with-twig). Placeholder can be passed to the Twig function too:
 
 ```
 {{ translate("ACCOUNT_SPECIFY_USERNAME") }}
