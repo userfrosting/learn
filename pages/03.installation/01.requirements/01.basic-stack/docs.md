@@ -115,4 +115,4 @@ As for your local development environment ([You _do_ have a local development en
 
 ## Third-party components?  Why don't you write all your own code?
 
-Before you run away because you are against dependencies as a matter of principle, read [this section](/background/not-invented-here-syndrome).
+Before you run away because you are against dependencies as a matter of principle, read [this section](/background/dont-reinvent-the-wheel).
