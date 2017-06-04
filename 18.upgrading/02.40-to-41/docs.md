@@ -54,6 +54,18 @@ Sprunjes can now generate enumerations of unique values for a specific field.  V
 - `src/Facades/Facade` moved to `system/Facade`.
 - `ufTable` now uses the pagination widget instead of the plugin, which changes the naming of their options if you happened to override any of the defaults.
 
+## Upgrading to 4.1.x
+
+Upgrading UserFrosting to `4.1.x` is as simple as getting the new files and updating dependencies, migrations and assets! If you first installed UserFrosting using git, a simple `git pull` or `git pull upstream/master`. Once you have the new files, simply use composer and the new cli tool to get up to date with everything else:
+
+```bash
+$ composer update
+$ php bakery bake
+```
+
+### Migrating your sprinkles
+!TODO
+
 ## Change Log
 
 See the [Changelog](https://github.com/userfrosting/UserFrosting/blob/master/CHANGELOG.md#v410-alpha) for the complete list of changes included in this release. 
