@@ -1,7 +1,7 @@
 ---
 title: Quick Start Guide
 metadata:
-    description: Getting UserFrosting up and running in your development environment.
+    description: UserFrosting is a free, open-source jumping-off point for building user-centered web applications with PHP and Javascript.
 taxonomy:
     category: docs
 ---
@@ -77,4 +77,5 @@ At this point, you should be able to access your application. You should see a b
 ![Basic front page of a UserFrosting installation](/images/front-page.png)
 
 ## What's next...
-To find more information about installing UserFrosting or help complete the installation, check out the [Installation Chapter](/installation). Otherwise, head over to the [Sprinkle Chapter](/sprinkles).
+
+For more detailed information about installing UserFrosting, or if you need help with the basic setup requirements, check out the [Installation Chapter](/installation). Otherwise, head over to the [Sprinkles Chapter](/sprinkles).
