@@ -254,7 +254,7 @@ Remove any leading and trailing whitespace.
 
 A validator consists of a **validator name**, and a set of validator attributes.  In addition to the rule-specific attributes described below, each validator may contain a **validation message** assigned to a `message` attribute.
 
-The validation message will be recorded during the call to `ServerSideValidator::validate` in the event that the field fails the validation rule.  This can be a simple text message, or you may [reference a translatable string key](/building-pages/i18n#the-placeholder) using the `&` prefix.
+The validation message will be recorded during the call to `ServerSideValidator::validate` in the event that the field fails the validation rule.  This can be a simple text message, or you may [reference a translatable string key](/advanced/i18n#the-placeholder) using the `&` prefix.
 
 The following validators are available:
 

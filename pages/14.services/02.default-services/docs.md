@@ -16,11 +16,11 @@ This service handles the [alert message stream](/routes-and-controllers/alert-st
 
 #### assets
 
-Constructs the `AssetManager` object (namespace `UserFrosting\Assets\AssetManager`), which is responsible for loading information about assets (Javascript, CSS, images, etc) required by each page and constructing the appropriate HTML tags.  See [Section 5.2](/building-pages/assets) for more information.
+Constructs the `AssetManager` object (namespace `UserFrosting\Assets\AssetManager`), which is responsible for loading information about assets (Javascript, CSS, images, etc) required by each page and constructing the appropriate HTML tags.  See [Section 5.2](/asset-management/asset-bundles) for more information.
 
 #### assetLoader
 
-This service handles requests for [raw assets](/building-pages/assets#raw-assets) made to the application.  It locates the appropriate file for a given url, and builds the response containing the contents of the asset, along with setting headers for MIME type and length.
+This service handles requests for [raw assets](/asset-management/asset-bundles#raw-assets) made to the application.  It locates the appropriate file for a given url, and builds the response containing the contents of the asset, along with setting headers for MIME type and length.
 
 #### cache
 
@@ -106,14 +106,14 @@ Creates a `Throttler` object, which handles [request throttling](/routes-and-con
 
 #### translator
 
-Sets up the `MessageTranslator` object (`UserFrosting\I18n\MessageTranslator`) for translation, localization, and internationalization of your site's contents.  See [Chapter 5](/building-pages/i18n) for more information.
+Sets up the `MessageTranslator` object (`UserFrosting\I18n\MessageTranslator`) for translation, localization, and internationalization of your site's contents.  See [Chapter 5](/advanced/i18n) for more information.
 
 #### view
 
 Sets up the Twig View object, which is implemented by the [Slim Twig-View](https://github.com/slimphp/Twig-View) project.  Turns on caching and/or debugging depending on the settings for `cache.twig` and `debug.twig`, respectively.  Also registers the UserFrosting's `CoreExtension`
 extension (`UserFrosting\Sprinkle\Core\Twig\CoreExtension`), which provides some additional functions, filters, and global variables for UserFrosting.
 
-See [Chapter 5](/building-pages/templating-with-twig) for more information about Twig and the custom functions, filters, and variables that UserFrosting defines.
+See [Chapter 5](/templating-with-twig) for more information about Twig and the custom functions, filters, and variables that UserFrosting defines.
 
 ### Account Services
 
