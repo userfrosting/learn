@@ -59,7 +59,7 @@ $ php bakery setup
 
 The `build-assets` command is an alias for the node.js and npm scripts used for assets management. The `/build` directory contains thoses scripts and configuration files required to download Javascript, CSS, and other assets used by UserFrosting. This command will install Gulp, Bower, and several other required npm packages locally. With npm set up with all of its required packages, it can be use it to automatically download and install the assets in the correct directories.
 
-See the [Pages and Assets](/asset-management) chapter for more info about assets bundles.
+See the [Pages and Assets](/asset-management) chapter for more info about assets bundles and the `compile` option.
 
 ```bash
 $ php bakery build-assets
