@@ -65,7 +65,7 @@ Make your image files exactly the size at which you intend to display them (in s
 
 ### Use compiled assets in production
 
-[As discussed in Chapter 5](/asset-management/asset-bundles/compiled-assets), the way UserFrosting serves raw assets is great for development and debugging, but not so much for production.  Each asset comes with the usual [round trip overhead](https://en.wikipedia.org/wiki/Handshaking#TCP_three-way_handshake) of an HTTP request.  On top of that, raw assets are served through the underlying Slim application, which adds a considerable amount of overhead with each request.  Finally, the asset files themselves (Javascript and CSS) are larger than they need to be to perform their function.
+The way UserFrosting [serves raw assets](/asset-management/basic-usage) is great for development and debugging, but not so much for production.  Each asset comes with the usual [round trip overhead](https://en.wikipedia.org/wiki/Handshaking#TCP_three-way_handshake) of an HTTP request.  On top of that, raw assets are served through the underlying Slim application, which adds a considerable amount of overhead with each request.  Finally, the asset files themselves (Javascript and CSS) are larger than they need to be to perform their function.
 
 Using UserFrosting's `uf-bundle-build` and `uf-bundle` commands solves all three of these problems:
 
