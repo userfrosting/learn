@@ -24,7 +24,7 @@ For example, consider the Users table.  First, we create a partial template that
 {% extends "components/tables/table-paginated.html.twig" %}
 
 {% block table %}
-    <table id="{{table.id}}" class="tablesorter table table-bordered table-hover table-striped" data-sortlist="[[0, 0]]">
+    <table id="{{table.id}}" class="tablesorter table table-bordered table-hover table-striped" data-sortlist="{{table.sortlist}}">
         <thead>
             <tr>
                 <th class="sorter-metatext" data-column-name="name" data-column-template="#user-table-column-info">User info <i class="fa fa-sort"></i></th>
@@ -47,7 +47,7 @@ Each `th` element has a `data-column-name` attribute and a `data-column-template
 
 ![Searching a table](/images/uf-table-search.png)
 
-`ufTable` will add a query parameter `filters[name]=userfrost` in the next AJAX request it makes.  See [Chapter 6](/database/data-sprunjing) for information on setting up a Sprunjed data source in your server-side code.
+`ufTable` will add a query parameter `filters[name]=userfrost` in the next AJAX request it makes.  See [Data Sprunjing](/database/data-sprunjing) for information on setting up a Sprunjed data source in your server-side code.
 
 `data-column-template` is an identifier used to find the [Handlebars template](/client-side-code/client-side-templating) to use when rendering the cells for that particular column.  For this example, we will define two Handlebars templates in the `table_cell_templates` block of our Twig template:
 
@@ -92,12 +92,12 @@ To use your table, simply `include` your table partial template in your page ins
 
 ```twig
 <div id="myUserTable">
-    <button class="btn btn-sm btn-default js-download-table"><i class="fa fa-table"></i> Download CSV</button>
+    <button class="btn btn-sm btn-default js-uf-table-download"><i class="fa fa-table"></i> Download CSV</button>
     {% include "components/tables/users-custom.html.twig" %}
 </div>
 ```
 
-If you create a button with the `.js-download-table` class in your wrapper as well, it will be automatically bound to trigger an AJAX request for downloading the table in CSV format.
+If you create a button with the `.js-uf-table-download` class in your wrapper as well, it will be automatically bound to trigger an AJAX request for downloading the table in CSV format.
 
 In your page Javascript, initialize `ufTable` on your wrapper element:
 
@@ -149,17 +149,60 @@ An object containing tablesorter's [configuration options](https://mottie.github
     debug: false,
     theme     : 'bootstrap',
     widthFixed: true,
-    // Set up pagination of data via an AJAX source
-    // See http://jsfiddle.net/Mottie/uwZc2/
-    // Also see https://mottie.github.io/tablesorter/docs/example-pager-ajax.html
-    widgets: ['saveSort','sort2Hash','filter'],
+    // See https://mottie.github.io/tablesorter/docs/example-pager-ajax.html
+    widgets: ['saveSort', 'sort2Hash', 'filter', 'pager', 'columnSelector', 'reflow2'],
     widgetOptions : {
+        columnSelector_layout : '<label><input type="checkbox"> <span>{name}</span></label>',
         filter_cssFilter: 'form-control',
         filter_saveFilters : true,
         filter_serversideFiltering : true,
-        filter_selectSource: {
-            ".filter-metaselect": base._buildFilterSelect
+        filter_selectSource : {
+            '.filter-select' : function() { return null; }
         },
+
+        // apply disabled classname to the pager arrows when the rows at either extreme is visible
+        pager_updateArrows: true,
+
+        // starting page of the pager (zero based index)
+        pager_startPage: 0,
+
+        // Number of visible rows
+        pager_size: 10,
+
+        // Save pager page & size if the storage script is loaded (requires $.tablesorter.storage in jquery.tablesorter.widgets.js)
+        pager_savePages: true,
+
+        // if true, the table will remain the same height no matter how many records are displayed. The space is made up by an empty
+        // table row set to a height to compensate; default is false
+        pager_fixedHeight: false,
+
+        // remove rows from the table to speed up the sort of large tables.
+        // setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+        pager_removeRows: false, // removing rows in larger tables speeds up the sort
+
+        // target the pager markup - see the HTML block below
+        pager_css: {
+            errorRow    : 'uf-table-error-row', // error information row
+            disabled    : 'disabled' // Note there is no period "." in front of this class name
+        },
+
+        // Must be initialized with a 'data' key
+        pager_ajaxObject: {
+            data: {},
+            dataType: 'json'
+        },
+        // jQuery selectors
+        pager_selectors: {
+          container   : '.pager',       // target the pager markup (wrapper)
+          first       : '.first',       // go to first page arrow
+          prev        : '.prev',        // previous page arrow
+          next        : '.next',        // next page arrow
+          last        : '.last',        // go to last page arrow
+          gotoPage    : '.gotoPage',    // go to page selector - select dropdown that sets the current page
+          pageDisplay : '.pagedisplay', // location of where the "output" is displayed
+          pageSize    : '.pagesize'     // page size selector - select dropdown that sets the "size" option
+        },
+
         // hash prefix
         sort2Hash_hash              : '#',
         // don't '#' or '=' here
@@ -168,76 +211,11 @@ An object containing tablesorter's [configuration options](https://mottie.github
         sort2Hash_tableId           : null,
         // if true, show header cell text instead of a zero-based column index
         sort2Hash_headerTextAttr    : 'data-column-name',
-        sort2Hash_encodeHash : base._encodeHash,
-        sort2Hash_decodeHash : base._decodeHash,
-        sort2Hash_cleanHash : base._cleanHash,
         // direction text shown in the URL e.g. [ 'asc', 'desc' ]
-        sort2Hash_directionText     : [ 'asc', 'desc' ]
+        sort2Hash_directionText     : [ 'asc', 'desc' ], // default values
         // if true, override saveSort widget sort, if used & stored sort is available
-        sort2Hash_overrideSaveSort  : true
+        sort2Hash_overrideSaveSort  : true, // default = false
     }
-}
-```
-
-### pager
-
-An object containing tablesorter's [paging widget](https://mottie.github.io/tablesorter/docs/#pager) options.  The default values for this object are:
-
-```json
-{
-    // target the pager markup - see the HTML block below
-    container: this.$T.find(".tablesorter-pager"),
-
-    // Must be initialized with a 'data' key
-    ajaxObject: {
-        data: {}
-    },
-
-    // Saves the current pager page size and number (requires storage widget)
-    savePages: true,
-
-    output: '{startRow} to {endRow} of {filteredRows} ({totalRows})',
-
-    // apply disabled classname (cssDisabled option) to the pager arrows when the rows
-    // are at either extreme is visible; default is true
-    updateArrows: true,
-
-    // starting page of the pager (zero based index)
-    page: 0,
-
-    // Number of visible rows - default is 10
-    size: 10,
-
-    // Reset pager to this page after filtering; set to desired page number (zero-based index),
-    // or false to not change page at filter start
-    pageReset: 0,
-
-    // if true, the table will remain the same height no matter how many records are displayed.
-    // The space is made up by an empty table row set to a height to compensate; default is false
-    fixedHeight: false,
-
-    // remove rows from the table to speed up the sort of large tables.
-    // setting this to false, only hides the non-visible rows; needed if you plan to
-    // add/remove rows with the pager enabled.
-    removeRows: false,
-
-    // If true, child rows will be counted towards the pager set size
-    countChildRows: false,
-
-    // css class names of pager arrows
-    cssNext        : '.next',  // next page arrow
-    cssPrev        : '.prev',  // previous page arrow
-    cssFirst       : '.first', // go to first page arrow
-    cssLast        : '.last',  // go to last page arrow
-    cssGoto        : '.gotoPage', // page select dropdown - select dropdown that set the "page" option
-
-    cssPageDisplay : '.pagedisplay', // location of where the "output" is displayed
-    cssPageSize    : '.pagesize', // page size selector - select dropdown that sets the "size" option
-
-    // class added to arrows when at the extremes; see the "updateArrows" option
-    // (i.e. prev/first arrows are "disabled" when on the first page)
-    cssDisabled    : 'disabled', // Note there is no period "." in front of this class name
-    cssErrorRow    : 'tablesorter-errorRow' // error information row
 }
 ```
 
@@ -267,7 +245,8 @@ If you don't want to use the default `table-paginated.html.twig` base template f
 
 - `{% block table %}`: This is the Twig block where the table skeleton will go.
 - `{% block table_cell_templates %}`: This is the Twig block where cell templates will be placed.
-- A pagination block with the `tablesorter-pager` class.  This should contain controls for navigating your table's pagination.
+- `{% block table_info %}`: This is a container for displaying alternative messages, such as "no records found".  The container element should have the `js-uf-table-info` class.
+- `{% block table_pager_controls %}`: A container for navigation controls for your table's pagination.  The container element should have the `js-uf-table-pager` class.
 
 Your base template might end up looking something like:
 
@@ -280,18 +259,25 @@ Your base template might end up looking something like:
     {# Define your Handlebars cell templates in this block in your child template #}
 {% endblock %}
 
-<div class="pager pager-lg tablesorter-pager">
-    <span class="pager-control first" title="First page"><i class="fa fa-angle-double-left"></i></span>
-    <span class="pager-control prev" title="Previous page"><i class="fa fa-angle-left"></i></span>
-    <span class="pagedisplay"></span> {# this can be any element, including an input #}
-    <span class="pager-control next" title="Next page"><i class="fa fa-angle-right"></i></span>
-    <span class="pager-control last" title= "Last page"><i class="fa fa-angle-double-right"></i></span>
-    <br><br>
-    {{translate("PAGINATION.GOTO")}}: <select class="gotoPage"></select> &bull; {{translate("PAGINATION.SHOW")}}:
-    <select class="pagesize">
-    {% for count in pager.take|default([5, 10, 50, 100]) %}
-        <option value="{{count}}">{{count}}</option>
-    {% endfor %}
-    </select>
-</div>
+{% block table_info %}
+    <div class="uf-table-info js-uf-table-info" data-message-empty-rows="{{translate('NO_RESULTS')}}">
+    </div>
+{% endblock %}
+
+{% block table_pager_controls %}
+    <div class="pager pager-lg tablesorter-pager js-uf-table-pager">
+        <span class="pager-control first" title="First page"><i class="fa fa-angle-double-left"></i></span>
+        <span class="pager-control prev" title="Previous page"><i class="fa fa-angle-left"></i></span>
+        <span class="pagedisplay"></span> {# this can be any element, including an input #}
+        <span class="pager-control next" title="Next page"><i class="fa fa-angle-right"></i></span>
+        <span class="pager-control last" title= "Last page"><i class="fa fa-angle-double-right"></i></span>
+        <br><br>
+        {{translate("PAGINATION.GOTO")}}: <select class="gotoPage"></select> &bull; {{translate("PAGINATION.SHOW")}}:
+        <select class="pagesize">
+        {% for count in pager.take|default([5, 10, 50, 100]) %}
+            <option value="{{count}}">{{count}}</option>
+        {% endfor %}
+        </select>
+    </div>
+{% endblock %}
 ```
