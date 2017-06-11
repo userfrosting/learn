@@ -63,6 +63,7 @@ Sprunjes can now generate enumerations of unique values for a specific field.  V
   - `tablesorter-pager` -> `tablesorter-pager` (styling) and `js-uf-table-pager` (functional)
   - `menu-table-column-selector-*` -> `uf-table-cs-*` (styling) and `js-uf-table-cs-*` (functional)
   - `table-search` -> `uf-table-search` (styling)
+- Refactor groups and user routes. See [Issue #721](https://github.com/userfrosting/UserFrosting/issues/721). The `admin/` part of all routes in the `admin` sprinkle was removed. 
 
 ### Deprecations (still available but may be removed at any time)
 
