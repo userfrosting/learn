@@ -58,8 +58,7 @@ origin	https://github.com/userfrosting/UserFrosting.git (push)
 This basically means that `origin` is a shortcut for pushing and pulling to the official UserFrosting repository on GitHub.  Let's change that:
 
 ```bash
-$ git remote rm origin
-$ git remote add upstream https://github.com/userfrosting/UserFrosting.git
+$ git remote rename origin upstream
 $ git remote -v
 upstream	https://github.com/userfrosting/UserFrosting.git (fetch)
 upstream	https://github.com/userfrosting/UserFrosting.git (push)
