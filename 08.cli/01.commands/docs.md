@@ -136,6 +136,14 @@ $ php bakery migrate:refresh
 | --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]   |
 | -p, --pretend       | Run migrations in "dry run" mode         |
 
+### clear-cache
+
+The `clear-cache` command takes care of deleting all the cached data. See [Chapter 16](/advanced/cache) for more information.
+
+```bash
+$ php bakery clear-cache
+``` 
+
 ### test
 
 The `test` command is used to execute PhpUnit tests. See the [Unit Testing](/other-services/unit-tests) chapter for more information.

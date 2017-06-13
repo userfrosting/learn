@@ -37,6 +37,10 @@ Sprunjes can now generate enumerations of unique values for a specific field.  V
 
 ### Sprunje now supports `_all` filter, which will search all filterable fields by default.
 
+### Per user cache instance & Redis cache driver
+
+See [Cache](http://learn.local/advanced/cache/usage) for more info.
+
 ## Breaking changes
 
 ### Major (likely to break your project)
@@ -64,6 +68,7 @@ Sprunjes can now generate enumerations of unique values for a specific field.  V
   - `menu-table-column-selector-*` -> `uf-table-cs-*` (styling) and `js-uf-table-cs-*` (functional)
   - `table-search` -> `uf-table-search` (styling)
 - Refactor groups and user routes. See [Issue #721](https://github.com/userfrosting/UserFrosting/issues/721). The `admin/` part of all routes in the `admin` sprinkle was removed. 
+- Refactored the cache config values.
 
 ### Deprecations (still available but may be removed at any time)
 
