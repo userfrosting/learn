@@ -4,4 +4,4 @@ taxonomy:
     category: docs
 ---
 
-Coming soon!
+# Cache
