@@ -39,7 +39,7 @@ Any migrations related to the `4.0.0` version of the sprinkle should be located 
 
 ### Up and down we go
 
-Each migration class needs to extend the base `UserFrosting\System\Bakery\Migrations\Migration` class. A migration class contains two methods: `up` and `down`. The `up` method is used to add new tables, columns, or indexes to your database, while the `down` method should simply reverse the operations performed by the `up` method.
+Each migration class needs to extend the base `UserFrosting\System\Bakery\Migration` class. A migration class contains two methods: `up` and `down`. The `up` method is used to add new tables, columns, or indexes to your database, while the `down` method should simply reverse the operations performed by the `up` method.
 
 Within both of these methods you may use the [Laravel schema builder](https://laravel.com/docs/5.4/migrations) to expressively create and modify tables. To learn about all of the methods available on the Schema builder, [check out its documentation](https://laravel.com/docs/5.4/migrations#creating-tables).
 
@@ -52,7 +52,7 @@ namespace UserFrosting\Sprinkle\MySprinkle\Model\Migrations\v400;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
-use UserFrosting\System\Bakery\Migrations\Migration;
+use UserFrosting\System\Bakery\Migration;
 
 class MembersTable extends Migration
 {
@@ -110,7 +110,7 @@ namespace UserFrosting\Sprinkle\MySprinkle\Model\Migrations\v400;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
-use UserFrosting\System\Bakery\Migrations\Migration;
+use UserFrosting\System\Bakery\Migration;
 
 class MembersTable extends Migration
 {
