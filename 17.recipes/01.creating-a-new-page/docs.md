@@ -142,6 +142,8 @@ Notice that we extend the `default.html.twig` layout, which is the same [layout 
 
 Then, we simply have to fill in some of the [blocks](https://twig.sensiolabs.org/doc/2.x/tags/extends.html) defined in the layout template with our page content.  As a simple example of using Twig to produce dynamic content, we reference the `current_user` global Twig variable to get and display the user's first name.
 
+>>>>>> The default UserFrosting theme is based on [AdminLTE](https://adminlte.io). Check it out while building your pages. It comes with pretty cool features and widgets you can use in your own pages !
+
 ## Next steps
 
 This recipe only covers the basics of setting up a new page.  From here, you might want to try:
