@@ -43,11 +43,13 @@ UserFrosting provide access and configuration out of the box for 3 cache drivers
 
 The driver used by UserFrosting can be defined in the configuration files under the `cache.driver` key. To change drivers, simply overwrite this key in your sprinkle for one of the drivers below.
 
+>>>> In production envrionement, Memcached or Redis should be used for better performance.
+
 ### File
 
 The file driver is the one enabled by default. Cached data is stored in text files located in `app/cache/`. While slower and less efficient than memory based drivers, the file driver is ideal for development environment.   
 
->>>>> In production envrionement, Memcached or Redis should be used for better performance.
+>>>>> The default Laravel File Driver doesn't support `tags`. UserFrosing uses a custom version of this driver that enabled tagging. Still, Memecached and Redis are more optimized for this and should be used in a production envrionement for better performance.
 
 ### Memcached
 
