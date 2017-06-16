@@ -7,7 +7,10 @@ taxonomy:
 ---
 
 ## Overview
-!TODO
+
+UserFrosting 4.1 brings improved organization of the codebase, factoring out the Sprinkle management system from the `core` Sprinkle itself.  The **Bakery** makes it easier than ever to get UserFrosting up and running, as well as handling other command-line tasks from a unified interface.
+
+We've also switched to an event-driven application lifecycle that uses [Symfony's event dispatcher](http://symfony.com/doc/current/components/event_dispatcher.html) to allow each Sprinkle to hook into critical points in the UserFrosting lifecycle.
 
 ## New features
 
@@ -47,6 +50,7 @@ See [Cache](http://learn.local/advanced/cache/usage) for more info.
 
 - `composer.json` moved to top-level directory
 - `sprinkles.json` moved to `app/` directory
+- `bundle.config.json` renamed to `asset-bundles.json`
 - `core` sprinkle must be explicitly listed in `sprinkles.json`
 - New CLI tools for installing.  Removed `migrations/install.php`.
 - Models moved from `src/Model` to `src/Database/Models`
@@ -56,10 +60,12 @@ See [Cache](http://learn.local/advanced/cache/usage) for more info.
 
 ### Minor (should only break heavily customized projects)
 
+- Refactor groups and user routes. See [Issue #721](https://github.com/userfrosting/UserFrosting/issues/721). The `admin/` part of all routes in the `admin` sprinkle was removed. 
 - Middleware should be loaded in Sprinkle bootstrap classes in `onAddGlobalMiddleware`, instead of `index.php`.
 - Exception handlers moved from `src/Handler` to `src/Error/Handler`.
 - Interface for `ExceptionHandler` has changed.  There is no longer `ajaxHandler` and `standardHandler` - everything is handled via `handle` now.  Decisions about request type (ajax, standard) and error display mode (settings.displayErrorDetails, site.debug.ajax) are now delegated to the handlers.  Error rendering is delegated to `src/Error/Renderer` classes.
 - `src/Facades/Facade` moved to `system/Facade`.
+- All loggers log to a common `userfrosting.log` now
 - `ufTable` now uses the pagination widget instead of the plugin, which changes the naming of their options if you happened to override any of the defaults.
 - Renamed the following CSS classes:
   - `js-download-table` -> `js-uf-table-download`
@@ -67,12 +73,13 @@ See [Cache](http://learn.local/advanced/cache/usage) for more info.
   - `tablesorter-pager` -> `tablesorter-pager` (styling) and `js-uf-table-pager` (functional)
   - `menu-table-column-selector-*` -> `uf-table-cs-*` (styling) and `js-uf-table-cs-*` (functional)
   - `table-search` -> `uf-table-search` (styling)
-- Refactor groups and user routes. See [Issue #721](https://github.com/userfrosting/UserFrosting/issues/721). The `admin/` part of all routes in the `admin` sprinkle was removed. 
+- `ufForm` now sets a `dataType` in the call to `.ajax` - we've customized it to handle malformed JSON responses, but it could still cause problems for some people
 - Refactored the cache config values.
 
 ### Deprecations (still available but may be removed at any time)
 
 - `src/Model/UFModel` deprecated; use `src/Database/Models/Model` now
+- `ifCond` Handlebars helper deprecated; use `ifx` instead
   
 ## Upgrading to 4.1.x
 
@@ -83,8 +90,16 @@ $ composer update
 $ php bakery bake
 ```
 
-### Migrating your sprinkles
-!TODO
+### Migrating your Sprinkles
+
+1. Rename your Sprinkle's `bundle.config.json` to `asset-bundles.json`.
+2. Rename your service provider class (if you have one) to `src/ServicesProvider/ServicesProvider.php`.  This will let UserFrosting load it automatically.
+3. Change your Sprinkle's bootstrapper class (if you have one) - for example, `src/Site.php`.  This should now extend `UserFrosting\System\Sprinkle\Sprinkle`.  Get rid of the `init` method.  Instead, you should create methods to [hook into the UserFrosting lifecycle](/advanced/application-lifecycle), if necessary.  Otherwise, you can leave this class empty, or delete it entirely.
+4. Move your models from `src/Model` to `src/Database/Models`, and change them to extend the base 'UserFrosting\Sprinkle\Core\Database\Models\Model' class.
+5. For each database table you create in your `migrations/*` file, create a new class in `src/Database/Migrations` instead.  This should extend the base `UserFrosting\System\Bakery\Migration` class to implement `up` and `down` methods.  See [Migrations](database/migrations) for more information.
+6. Check the "minor breaking changes" section above, to see if there are any other changes that might affect your Sprinkle.
+
+The database schema have not changed from UF 4.0 - there is no need to upgrade your database.
 
 ## Change Log
 

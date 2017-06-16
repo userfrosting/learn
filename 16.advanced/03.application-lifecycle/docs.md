@@ -10,6 +10,8 @@ taxonomy:
 
 At the base level of each Sprinkle, you may optionally define a bootstrapper class.  The name of the class must be the same as the name of the Sprinkle directory, but in [StudlyCaps](https://laravel.com/api/5.2/Illuminate/Support/Str.html#method_studly).
 
+They are now basically implementations of Symfony's `EventSubscriberInterface`, allowing the class to hook into the UF application lifecycle.
+
 The initialization class must implement the `\UserFrosting\Sprinkle\Core\Initialize\Sprinkle` abstract class, in particular, the `init` method.  UserFrosting's Sprinkle Manager will automatically run the code in `init` when it loads the Sprinkle.   For example, the `Account` Sprinkle's initialization class looks like this:
 
 ```
@@ -31,4 +33,3 @@ class Account extends Sprinkle
 }
 ```
 
-In general, a Sprinkle's initialization class should not need to do much more beyond registering your Sprinkle's [service provider class](/services).
