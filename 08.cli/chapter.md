@@ -1,7 +1,7 @@
 ---
 title: Bakery CLI
 metadata:
-    description: UserFrosting is a secure, modern user management system for PHP.  This documentation website is designed to explain the basic concepts behind UserFrosting, how it was built, and how it works.
+    description: New in UserFrosting 4.1, Bakery is UserFrosting's very own command line interface (CLI) tool.
 taxonomy:
     category: docs
 ---

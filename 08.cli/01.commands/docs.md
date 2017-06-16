@@ -1,5 +1,7 @@
 ---
-title: Overview
+title: Bakery Overview
+metadata:
+    description: An overview of the commands available in Bakery.
 taxonomy:
     category: docs
 ---
@@ -146,8 +148,8 @@ $ php bakery clear-cache
 
 ### test
 
-The `test` command is used to execute PhpUnit tests. See the [Unit Testing](/other-services/unit-tests) chapter for more information.
+The `test` command is used to execute PhpUnit tests. See the [Unit Testing](/advanced/unit-tests) section for more information.
 
 ```bash
 $ php bakery test
-``` 
+```
