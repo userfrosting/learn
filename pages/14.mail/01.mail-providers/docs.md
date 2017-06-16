@@ -48,7 +48,7 @@ If you choose this option, your SMTP host will be `smtp.gmail.com`, and your cre
 
 #### Paid services
 
-Coming soon!
+To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
 #### Running your own mail server
 
