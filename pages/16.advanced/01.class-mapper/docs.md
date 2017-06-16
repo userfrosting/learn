@@ -69,7 +69,7 @@ $user = \UserFrosting\Sprinkle\Account\Model\User::where('email', 'admin@example
 Dynamic class mappings are typically defined by extending the `classMapper` service in your Sprinkle's **service provider**:
 
 ```
-    /* /app/sprinkles/account/src/ServicesProvider/AccountServicesProvider.php */
+    /* /app/sprinkles/account/src/ServicesProvider/ServicesProvider.php */
 
     $container->extend('classMapper', function ($classMapper, $c) {
         $classMapper->setClassMapping('user', 'UserFrosting\Sprinkle\Account\Model\User');

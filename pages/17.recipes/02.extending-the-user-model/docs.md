@@ -21,7 +21,7 @@ If you haven't already, set up your site Sprinkle, as per the instructions in ["
 
 ## Create a migration
 
-Follow the directions in [Chapter 6](/database/extending-the-database) for creating a new migration in your Sprinkle.  For our example, let's assume we want to add the fields `city` and `country`:
+Follow the directions in [Chapter 6](/database/migrations) for creating a new migration in your Sprinkle.  For our example, let's assume we want to add the fields `city` and `country`:
 
 ```php
 <?php

@@ -6,11 +6,11 @@ taxonomy:
     category: docs
 ---
 
-Most CSS and Javascript resources should be integrated into your pages through **asset bundles**.  Asset bundles are groups of assets for which UserFrosting can automatically render `<link>` or `<script>` tags in your pages, using the `assets` Twig helper.  Each Sprinkle can define asset bundles in its `bundle.config.json` file.
+Most CSS and Javascript resources should be integrated into your pages through **asset bundles**.  Asset bundles are groups of assets for which UserFrosting can automatically render `<link>` or `<script>` tags in your pages, using the `assets` Twig helper.  Each Sprinkle can define asset bundles in its `asset-bundles.json` file.
 
 ## Defining asset bundles
 
-UserFrosting ships with a number of predefined bundles.  If you look the `core` Sprinkle's `bundle.config.json` file, you will see, for example:
+UserFrosting ships with a number of predefined bundles.  If you look the `core` Sprinkle's `asset-bundles.json` file, you will see, for example:
 
 ```
 {

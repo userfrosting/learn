@@ -62,18 +62,17 @@ By default, the UserFrosting repository is set to ignore the `sprinkles.json` fi
 
 ### Default Sprinkles
 
-A basic UserFrosting installation comes with four sprinkles, each of which can be found in its own subdirectory in `/app/sprinkles`:
+A basic UserFrosting installation comes with three sprinkles, each of which can be found in its own subdirectory in `/app/sprinkles`:
 
 ```
 app
 ├──sprinkles
    ├── account
    ├── admin
-   ├── core
-   └── root
+   └── core
 ```
 
-Of these, 3 comprise the bulk of UserFrosting's functionality: `core`, `account`, and `admin`.
+When you begin to implement your own project, you will do so in a new Sprinkle, separate from these three.
 
 #### Core
 
@@ -86,7 +85,5 @@ The `account` sprinkle handles user modeling and authentication, user groups, ro
 #### Admin
 
 The `admin` sprinkle contains the routes, templates, and controllers to implement the administrative user management interface, as well as the group, role, and permission management interfaces.
-
-`root` is a special theme Sprinkle, used to provide some cosmetic styling for the root user account.
 
 Now that we're familiar with the basic concept, let's dig into the [contents of a Sprinkle](/sprinkles/contents)!
