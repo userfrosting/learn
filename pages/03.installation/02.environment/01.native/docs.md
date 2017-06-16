@@ -6,29 +6,39 @@ taxonomy:
     category: docs
 ---
 
-If you already have a local environment and you're already familiar with tools like **composer**, this page will guide you in installing UserFrosting on your existing local environment. If this is you're not already familiar with setting up a local environment, the [Homestead Environment](/installation/environment/homestead) guide is for you.
+If you already have a local environment and you're familiar with tools like **composer**, this page will guide you in installing UserFrosting on your existing local environment. If you're don't already have a local environment set up, or you don't want to install the required software natively, you may instead want to consider setting up [Homestead](/installation/environment/homestead) as a pre-configured virtual environment.
 
 ## Environment
 
 ### Web stack
 
-If you don't already have a local development environment set up, please [do so now](/basics/requirements/develop-locally-serve-globally#setting-up-a-local-development-environment).
+If your local development environment doesn't already have the [required stack and tools](/installation/requirements), please set these up.  You'll need the following:
 
-Make certain that your development environment meets the [minimum requirements](/basics/requirements/basic-stack). In particular, make sure that you have PHP **5.6** or higher installed, as well as a webserver that supports URL rewriting (for example, Apache with `mod_rewrite` enabled).
+- Web server software (Apache, Nginx, IIS, etc)
+- **PHP 5.6** or higher
+- Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
+
+One very simple solution is to install a complete web server stack.  Some of the more popular packages include:
+
+- [XAMPP](https://www.apachefriends.org/index.html) - a bundle that includes Apache, MariaDB, and PHP
+- [MAMP/MAMP Pro](http://mamp.info)
+- [WampServer](http://www.wampserver.com/en/)
+
+Make certain that you have [properly configured](/installation/requirements/basic-stack) your web server (for example, Apache needs `mod_rewrite` enabled), PHP, and the file system permissions.
 
 ### Other required software
 
 Please make sure that you have the following installed before attempting to install UserFrosting:
 
-- [Git](/basics/requirements/essential-tools-for-php#git)
-- [Composer](/basics/requirements/essential-tools-for-php#composer)
-- [Node.js](/basics/requirements/essential-tools-for-php#nodejs)
+- [Git](/installation/requirements/essential-tools-for-php#git)
+- [Composer](/installation/requirements/essential-tools-for-php#composer)
+- [Node.js](/installation/requirements/essential-tools-for-php#nodejs)
 
 ## Get UserFrosting
 
 ### Clone the UserFrosting repository
 
-The best way to initially set up UserFrosting in your local environment is by using git to **clone** the main UserFrosting repository. 
+The best way to initially set up UserFrosting in your local environment is by using git to **clone** the main UserFrosting repository.  In your development directory:
 
 ```bash
 $ git clone https://github.com/userfrosting/UserFrosting.git userfrosting
@@ -38,7 +48,7 @@ $ git clone https://github.com/userfrosting/UserFrosting.git userfrosting
 
 ### Set directory permissions
 
-Make sure that `/app/cache`, `/app/logs`, and `/app/sessions` are writable by your webserver. See [File System Permissions](/basics/requirements/basic-stack#file-system-permissions) for help with this.
+Make sure that `/app/cache`, `/app/logs`, and `/app/sessions` are writable by your webserver. See [File System Permissions](/installation/requirements/basic-stack#file-system-permissions) for help with this.
 
 ## Install PHP dependencies
 
@@ -89,7 +99,7 @@ If you only see `composer` and `wikimedia` subdirectories after running `compose
 
 ## Run the installer 
 
-You're almost done! We now have the base code and the php dependencies. Last thing left to do is setup the database, create the first user and repare the assets. Luckily, at this point, UserFrosting _bakery_ is here to help ! 
+You're almost done! We now have the base code and the php dependencies. The remaining steps are to set up the **database**, create the first **user** and install the third-party **assets**. Luckily, at this point, **Bakery** is here to help! 
 
 ### Set up the database
 
@@ -105,13 +115,13 @@ To finish the installation and create your first UserFrosting account, we will r
 $ php bakery bake
 ```
 
-You will first be prompted for your database credentials. This is the information PHP needs to connect to your database. If PHP can't connect to your database using theses credential, make sure you have entered the right informations and run the `bake` command to try again. 
+You will first be prompted for your database credentials. This is the information PHP needs to connect to your database. If PHP can't connect to your database using these credentials, make sure you have entered the right information and re-run the `bake` command. 
 
-If the database connexion is successful, the installer will then check that basic dependencies are met. If so, the installer will run the _migrations_ to populate your database with new tables. During this process, you will be prompted for some information to set up the master account. Finally, thge installer will run the `build-assets` command to fetch javascript dependencies and build the [assets bundles](/asset-management/asset-bundles).
+If the database connection is successful, the installer will then check that the basic dependencies are met. If so, the installer will run the _migrations_ to populate your database with new tables. During this process, you will be prompted for some information to set up the master account (first user). Finally, the installer will run the `build-assets` command to fetch javascript dependencies and build the [assets bundles](/asset-management/asset-bundles).
 
 ## Visit your website
 
-At this point, you should be able to access the basic pages for your application and login with the newly created amster account. Visit:
+At this point, you should be able to access the basic pages for your application and login with the newly created master account. Visit:
 
 `http://localhost/userfrosting/public/`
 

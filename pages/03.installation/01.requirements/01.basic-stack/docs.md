@@ -100,7 +100,7 @@ During development, and before you're ready to deploy, you'll also want to have 
 - [Composer](https://getcomposer.org) - PHP package manager
 - [Node.js](https://nodejs.org/en/) - Javascript runtime environment and package manager
 
-See the [next section](/basics/requirements/essential-tools-for-php) for more information on these tools.
+See the [next section](/installation/requirements/essential-tools-for-php) for more information on these tools.
 
 ## But my host only supports PHP 5.x!  Why do I need PHP 5.6?
 
@@ -111,7 +111,7 @@ Honestly, PHP 5.6 isn't exactly cutting edge - in fact, it's no longer in active
 If your hosting service doesn't have PHP 5.6 or higher installed, call them and ask them to upgrade.  If they refuse, point out that PHP 5.6 has been out of support for {{ date("now").diff(date("2017-01-19")).m }} months!  To be honest, there is little reason to use a shared hosting (e.g. cPanel)
 service these days, especially when VPS providers like DigitalOcean and Amazon EC2 are so inexpensive.  Unless you're stuck with shared hosting for some reason another (fussy boss), [there's no real reason not to switch to a VPS](https://www.hostt.com/still-use-shared-hosting-theres-vps/).
 
-As for your local development environment ([You _do_ have a local development environment, right](/basics/requirements/develop-locally-serve-globally)), if it's that much of a burden then...I don't know what to tell you.  So what are you waiting for?  Upgrade!
+As for your local development environment ([You _do_ have a local development environment, right](/background/develop-locally-serve-globally)), if it's that much of a burden then...I don't know what to tell you.  So what are you waiting for?  Upgrade!
 
 ## Third-party components?  Why don't you write all your own code?
 
