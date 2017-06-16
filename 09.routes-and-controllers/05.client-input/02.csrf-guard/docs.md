@@ -57,22 +57,26 @@ $.ajax({
 
 >>>>> The Javascript `site` variable is declared in the `components/config.js.twig` template.
 
-### Whitelisting Routes
+### Blacklisting Routes
 
-Sometimes, you need to bypass CSRF protection for certain POST, PUT, or DELETE requests.  For example, if you are creating an API that is not meant for consumption by a user via a browser, but rather by some other application.
+Sometimes, you need to bypass CSRF protection for certain requests.  For example, if you want to avoid opening the session to retrieve the CSRF token, or if you are creating an API that is not meant for consumption by a user via a browser, but rather by some other application.
 
-Currently, the CSRF middleware does not offer a native option to whitelist specific routes.  For now, you can modify your `index.php` to ignore the CSRF middleware for certain requests based on a matching pattern.  For example:
+To bypass CSRF protection, you can map regular expressions to arrays of HTTP methods in the `csrf.blacklist` configuration setting:
 
 ```php
-...
-
-$request = $container->request;
-$path = $request->getUri()->getPath();
-
-if (!$path || !starts_with($path, [
-    'api/hoots',
-    'api/screeches'
-])) {
-    $app->add($container->csrf);
-}
+'csrf' => [
+    'blacklist' => [
+        '^api/hoots' => [
+            'POST'
+        ],
+        '^api/screeches' => [
+            'POST',
+            'PUT'
+        ]
+    ]
+],
 ```
+
+Any requests whose URL matches one of these regular expressions, and whose method matches one of the mapped methods, will be automatically exempted from loading the CSRF middleware.  This means that the CSRF token will not be retrieved (for `GET` requests) or checked (for `POST`, `PUT`, `DELETE`, and `PATCH` requests).
+
+Requests for [raw assets](/asset-management/basic-usage#PublicassetURLs) are automatically exempted from CSRF protection in the `config` [service](/services/default-services#config).
