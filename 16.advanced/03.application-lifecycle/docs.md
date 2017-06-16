@@ -17,7 +17,7 @@ The initialization class must implement the `\UserFrosting\Sprinkle\Core\Initial
 ```
 namespace UserFrosting\Sprinkle\Account;
 
-use UserFrosting\Sprinkle\Account\ServicesProvider\AccountServicesProvider;
+use UserFrosting\Sprinkle\Account\ServicesProvider\ServicesProvider;
 use UserFrosting\Sprinkle\Core\Initialize\Sprinkle;
 
 class Account extends Sprinkle
@@ -27,7 +27,7 @@ class Account extends Sprinkle
      */
     public function init()
     {
-        $serviceProvider = new AccountServicesProvider();
+        $serviceProvider = new ServicesProvider();
         $serviceProvider->register($this->ci);
     }
 }

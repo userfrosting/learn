@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-As mentioned in the last section, each Sprinkle can set up its own services through a **service provider** class.  The default `core` and `account` Sprinkles set up their services through `CoreServicesProvider` and `AccountServicesProvider`, respectively.  These classes can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory.
+As mentioned in the last section, each Sprinkle can set up its own services through a **service provider** class.  The default `core` and `account` Sprinkles set up their services through `CoreServicesProvider` and `ServicesProvider`, respectively.  These classes can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory.
 
 ### Core Services
 
@@ -54,7 +54,7 @@ Monolog `Logger` object for sending debug print statements and data to `logs/deb
 
 #### errorHandler
 
-Sets up a `CoreErrorHandler` object, which is used as a [custom error handler](http://www.slimframework.com/docs/handlers/error.html#custom-error-handler) for UF's Slim application.  It then registers the custom handlers for `HttpException`, `PDOException`, and `phpmailerException`.  See [Chapter 10](/error-handling/overview) for more information on custom exceptions and exception error handlers.
+Sets up a `CoreErrorHandler` object, which is used as a [custom error handler](http://www.slimframework.com/docs/handlers/error.html#custom-error-handler) for UF's Slim application.  It then registers the custom handlers for `HttpException`, `PDOException`, and `phpmailerException`.  See [Chapter 10](/advanced/error-handling) for more information on custom exceptions and exception error handlers.
 
 #### errorLogger
 

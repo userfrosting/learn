@@ -23,7 +23,7 @@ $app->get('/account/settings', 'UserFrosting\Sprinkle\Account\Controller\Account
     ->add('authGuard');
 ```
 
-UserFrosting will throw an `AuthExpiredException` if the client is not authenticated, or if their account has been disabled or deleted in the time since they were authenticated.  This exception can then be caught by an [exception handler](/error-handling/overview) to display an error page or perform some other appropriate action.
+UserFrosting will throw an `AuthExpiredException` if the client is not authenticated, or if their account has been disabled or deleted in the time since they were authenticated.  This exception can then be caught by an [exception handler](/advanced/error-handling) to display an error page or perform some other appropriate action.
 
 Of course, not all authenticated users should have the same permissions on your site.  Determining whether a given authenticated user has permission to access a particular resource or perform a specific action is called **authorization**.  Together with **roles**, **permissions**, and **conditions**, authorization constitutes UserFrosting's **access control** system. To learn more about UserFrosting's powerful access control features, see the [next section](/users/access-control).
 
@@ -55,7 +55,7 @@ User passwords are salted and hashed using PHP's [`password_hash`](http://php.ne
 
 ### Theme
 
-**Partially implemented**.  You may specify the name of a Sprinkle to be dynamically loaded for this user on each request.  This can effectively be used to provide per-user theming options.  See, for example, the `root` Sprinkle, which is used to provide some custom styling for the root user account.
+**Partially implemented**.  You may specify the name of a Sprinkle to be dynamically loaded for this user on each request.  This can effectively be used to provide per-user theming options.
 
 >>>>>> The preferred way to add additional user fields is by creating a separate table that is linked to the `users` table as a one-to-one relationship.  See the recipe ["extending the user model"](/recipes/extending-the-user-model) for a guide on how to do this in your Sprinkle.
 
@@ -178,13 +178,13 @@ Depending on the permissions you have assigned, users with the "Administrator" r
 
 ### View a list of users
 
-The user listing page is available at `/admin/users` (`UserController::pageList`).  The actual table of users is implemented through a combination of the page itself, which generates the "skeleton" of the table, and AJAX calls to the `/api/users` route, which fetches the actual data as a JSON object (`UserController::getList`).  This allows the page to efficiently retrieve paginated, filtered, sorted results without needing to reload the page.
+The user listing page is available at `/users` (`UserController::pageList`).  The actual table of users is implemented through a combination of the page itself, which generates the "skeleton" of the table, and AJAX calls to the `/api/users` route, which fetches the actual data as a JSON object (`UserController::getList`).  This allows the page to efficiently retrieve paginated, filtered, sorted results without needing to reload the page.
 
 See [Data Sprunjing](/database/data-sprunjing) for more details on how this works.
 
 ### View a list of user activities
 
-Just like the table of users, the table of user activities is generated through a combination of a table "skeleton" embedded in the page itself (`/admin` or `/admin/activities`), and AJAX requests to the `/api/activities` route.
+Just like the table of users, the table of user activities is generated through a combination of a table "skeleton" embedded in the page itself (`/dashboard` or `/activities`), and AJAX requests to the `/api/activities` route.
 
 ### Edit user accounts
 

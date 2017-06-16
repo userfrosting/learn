@@ -151,4 +151,4 @@ $this->ci->mailer->sendDistinct($message);
 
 ## Error handling
 
-If a problem arises while attempting to send a message, a `phpmailerException` will be thrown.  By default, this exception is caught by the `PhpMailerExceptionHandler`.  Of course, you can [define your own exception handler](/error-handling/overview) instead.
+If a problem arises while attempting to send a message, a `phpmailerException` will be thrown.  By default, this exception is caught by the `PhpMailerExceptionHandler`.  Of course, you can [define your own exception handler](/advanced/error-handling) instead.

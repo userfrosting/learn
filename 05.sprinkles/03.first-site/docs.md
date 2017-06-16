@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-This guide assumes that you've already completed the [installation guide](/installation) and successfully managed to get UserFrosting working in your [local development environment](/installation/requirements/develop-locally-serve-globally).  If not, please do that now - feel free to [ask for help](/installation/getting-help) if you're running into trouble!
+This guide assumes that you've already completed the [installation guide](/installation) and successfully managed to get UserFrosting working in your [local development environment](/background/develop-locally-serve-globally).  If not, please do that now - feel free to [ask for help](/troubleshooting/getting-help) if you're running into trouble!
 
 ## Create a Sprinkle
 
@@ -20,7 +20,6 @@ app
     ├── account
     ├── admin
     ├── core
-    ├── root
     └── site
 ```
 

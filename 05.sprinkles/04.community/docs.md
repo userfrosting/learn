@@ -1,7 +1,7 @@
 ---
 title: Community Sprinkles
 metadata:
-    description: Sprinkles shared between projects are called Community Sprinkle.
+    description: Sprinkles shared between projects are called Community Sprinkles.
 taxonomy:
     category: docs
 ---
@@ -36,7 +36,7 @@ When sharing a community sprinkle, we highly recommend publishing it on GitHub a
 }
 ```
 
-When executing `composer update` with the above example, composer will automatically load `foo/bar` (version 1.0.2 or above) into your `/app/sprinkles` directory, as long as `foo/bar` is defined as `userfrosting-sprinkle` type in it's own `composer.json` file. That's where the magic happens! This works just like any normal Composer dependencies. You can also add non Packagist sprinkles the same way you would do with any Composer dependencies, as long as the type is set to `userfrosting-sprinkle` in the repo `composer.json`. Otherwise, composer will load the package to `app/vendor` as usual. And don't forget to add `bar` to the list of sprinkle after!
+When executing `composer update` with the above example, composer will automatically load `foo/bar` (version 1.0.2 or above) into your `/app/sprinkles` directory, as long as `foo/bar` is defined as `userfrosting-sprinkle` type in its own `composer.json` file. That's where the magic happens! This works just like any normal Composer dependency. You can also add non-Packagist sprinkles the same way you would do with any Composer dependencies, as long as the type is set to `userfrosting-sprinkle` in the repo `composer.json`. Otherwise, composer will load the package to `app/vendor` as usual. And don't forget to add `bar` to the list of sprinkle after!
 
 >>>>>> Other sprinkles can also be defined as your sprinkle's dependencies in your own `composer.json`. 
 

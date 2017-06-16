@@ -44,9 +44,9 @@ All build tasks are defined in `build/gulpfile.js`. UserFrosting ships with thre
 2. `uf-bundle`
 4. `uf-bundle-clean`
 
-The `uf-bundle-build` task combines the `bundle.config.json` files in each loaded Sprinkle (as per your `sprinkles.json` file), respecting the collision rules defined in each bundle. This combined bundle file is written to `build/bundle.config.json`.
+The `uf-bundle-build` task combines the `asset-bundles.json` files in each loaded Sprinkle (as per your `sprinkles.json` file), respecting the collision rules defined in each bundle. This combined bundle file is written to `build/asset-bundles.json`.
 
-The `uf-bundle` task uses [`gulp-bundle-assets`](https://github.com/dowjones/gulp-bundle-assets) to minify and concatenate the assets referenced in each bundle in `build/bundle.config.json` into a single file per bundle. These compiled bundles will be placed in the `public/assets/` directory by default. It also copies fonts, images, and other files from your Sprinkles to the `public/assets/` directory, so that your web server can directly serve these files as well. 
+The `uf-bundle` task uses [`gulp-bundle-assets`](https://github.com/dowjones/gulp-bundle-assets) to minify and concatenate the assets referenced in each bundle in `build/asset-bundles.json` into a single file per bundle. These compiled bundles will be placed in the `public/assets/` directory by default. It also copies fonts, images, and other files from your Sprinkles to the `public/assets/` directory, so that your web server can directly serve these files as well. 
 
 Running theses commands is handle by the [bakery cli](/cli/commands#build-assets) :
 

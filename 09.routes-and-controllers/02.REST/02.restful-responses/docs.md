@@ -103,7 +103,7 @@ use Slim\Exception\NotFoundException;
     }
 ```
 
-UserFrosting **also** returns a 404 code in the `ForbiddenExceptionHandler` by default.  This is because, for many use cases, you may not want to disclose to unauthorized users that the resource even _exists_.  If you wish to change this behavior, simply [override](/error-handling/overview) the `ForbiddenExceptionHandler` with your own handler.
+UserFrosting **also** returns a 404 code in the `ForbiddenExceptionHandler` by default.  This is because, for many use cases, you may not want to disclose to unauthorized users that the resource even _exists_.  If you wish to change this behavior, simply [override](/advanced/error-handling) the `ForbiddenExceptionHandler` with your own handler.
 
 ### 405 (Method Not Allowed)
 
