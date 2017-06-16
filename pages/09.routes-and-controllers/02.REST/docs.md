@@ -46,4 +46,4 @@ UserFrosting, and most other modern frameworks and content management systems, u
 
 Having done this, we are now free to choose any url and method for any request - whether it's a page, form submission, API request, or whatever.  This allows us to design our endpoints according to the principles of REST.  The next section explains how we should think when we're choosing the urls and methods that our application exposes to the client.
 
-In [section 4.3](/routes-and-controllers/front-controller), we'll talk about how and where routes are defined in UserFrosting, so you can start implementing your endpoints.
+In the [next section](/routes-and-controllers/front-controller), we'll talk about how and where routes are defined in UserFrosting, so you can start implementing your endpoints.

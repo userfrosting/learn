@@ -34,11 +34,11 @@ UserFrosting uses a specific naming scheme for endpoints, which we would encoura
 
 **Load an admin page that contains a list of users**
 
-`GET /admin/users`
+`GET /users`
 
 **Load an admin page that contains a single user**
 
-`GET /admin/users/u/bob`
+`GET /users/u/bob`
 
 **Get a list of users and their information, as a JSON object**
 

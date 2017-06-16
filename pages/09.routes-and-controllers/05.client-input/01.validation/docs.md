@@ -14,7 +14,7 @@ Data from the outside world is the Achilles' heel of modern interactive web serv
 
 ### Server-side
 
-Many new developers [fail to realize](http://security.stackexchange.com/questions/147216/hacker-used-picture-upload-to-get-php-code-into-my-site) that a malicious user could submit any type of request, with any content they like, to your server at any time.  This is possible regardless of the forms and widgets that your web application presents to the client - it is a trivial matter to change their behavior using the [browser console](/background/client-side), or bypass them completely using a command line tool such as [cURL](https://curl.haxx.se/docs/httpscripting.html).
+Many new developers [fail to realize](http://security.stackexchange.com/questions/147216/hacker-used-picture-upload-to-get-php-code-into-my-site) that a malicious user could submit any type of request, with any content they like, to your server at any time.  This is possible regardless of the forms and widgets that your web application presents to the client - it is a trivial matter to change their behavior using the [browser console](/troubleshooting/debugging), or bypass them completely using a command line tool such as [cURL](https://curl.haxx.se/docs/httpscripting.html).
 
 For this reason, it is **imperative** to validate user input on the server side - *after* the request has left the control of the submitter.
 
@@ -28,7 +28,7 @@ However, they *do* improve the experience of your everyday, non-malicious user. 
 
 In summary, to build an application that is both secure **and** offers a smooth user experience, we need to perform both client- and server-side validation.  Unfortunately, this creates a lot of duplicate logic.
 
-Fortress solves this problem by providing a uniform interface for validating raw user input on both the client side (in Javascript) and on the server side (in PHP) using a single unified set of rules.  It does this with a **request schema**, which defines what fields you're expecting the user to submit, and [rules](https://github.com/userfrosting/wdvss) for how to handle the contents of those fields.  The request schema, which is simply a JSON document, makes it easy to manipulate these rules in one place.
+Fortress solves this problem by providing a uniform interface for validating raw user input on both the client side (in Javascript) and on the server side (in PHP) using a single unified set of rules.  It does this with a **request schema**, which defines what fields you're expecting the user to submit, and [rules](https://github.com/userfrosting/wdvss) for how to handle the contents of those fields.  The request schema, which is a simple [YAML](http://symfony.com/doc/current/components/yaml/yaml_format.html) or JSON file, makes it easy to manipulate these rules in one place.
 
 This process is summarized in the following flowchart:
 
@@ -36,59 +36,50 @@ This process is summarized in the following flowchart:
 
 ### Creating a Schema
 
-Request schema are simple JSON files which live in your Sprinkle's `schema/` subdirectory.  Simply create a new `.json` file:
+Request schema are simple YAML or JSON files which live in your Sprinkle's `schema/` subdirectory.  Simply create a new `.yaml` file:
 
-**schema/contact.json**
+**schema/contact.yaml**
 
-```json
-    "name" : {
-        "validators" : {
-            "required" : {
-                "label" : "Name",
-                "message" : "Please tell us your name."
-            },
-            "length" : {
-                "label" : "Name",
-                "min" : 1,
-                "max" : 50,
-                "message" : "Name must be between {{min}} and {{max}} characters."
-            }
-        },
-        "transformations" : ["trim"]
-    },
-    "email" : {
-        "validators" : {
-            "required" : {
-                "label" : "Email",
-                "message" : "Please provide an email address."
-            },
-            "length" : {
-                "label" : "Email",
-                "min" : 1,
-                "max" : 150,
-                "message" : "Your email address must be between {{min}} and {{max}} characters."
-            },
-            "email" : {
-                "message" : "Please provide a valid email address."
-            }
-        }
-    },
-    "phone" : {
-        "validators" : {
-            "telephone" : {
-                "label" : "Phone",
-                "message" : "The phone number you provided is not valid."
-            }
-        }
-    },
-    "message" : {
-        "validators" : {
-            "required" : {
-                "label" : "Message",
-                "message" : "Surely you must have something to say!"
-            }
-        }
-    }
+```yaml
+# Request schema for the contact form
+
+name:
+  validators:
+    required:
+      label: Name
+      message: Please tell us your name.
+    length:
+      label: Name
+      min: 1
+      max: 50
+      message: "Name must be between {{min}} and {{max}} characters."
+  transformations:
+  - trim
+
+email:
+  validators:
+    required:
+      label: Email
+      message: Please provide an email address.
+    length:
+      label: Email
+      min: 1
+      max: 150
+      message: "Your email address must be between {{min}} and {{max}} characters."
+    email:
+      message: Please provide a valid email address.
+
+phone:
+  validators:
+    telephone:
+      label: Phone
+      message: The phone number you provided is not valid.
+
+message:
+  validators:
+    required:
+      label: Message
+      message: Surely you must have something to say!
 ```
 
 Notice that the schema consists of a number of field names, which should correspond to the `name` attributes of the fields in your form.  These map to objects containing `validators` and `transformations`.  See [below](#schema-specifications) for complete specifications for the validation schema.
@@ -101,10 +92,10 @@ To load a schema in your route callbacks and controller methods, simply pass the
 // This line goes at the top of your file
 use UserFrosting\Fortress\RequestSchema;
 
-$schema = new RequestSchema('schema://contact.json');
+$schema = new RequestSchema('schema://contact.yaml');
 ```
 
-Notice that we've used the `schema://` stream wrapper, rather than having to hardcode an absolute file path.  This allows UserFrosting to automatically scan the `schema/` subdirectories of each loaded Sprinkle for `contact.json`, and using the version found in the most recently loaded Sprinkle.
+Notice that we've used the `schema://` stream wrapper, rather than having to hardcode an absolute file path.  This allows UserFrosting to automatically scan the `schema/` subdirectories of each loaded Sprinkle for `contact.yaml`, and using the version found in the most recently loaded Sprinkle.
 
 ### Generating Client-side Rules
 
@@ -120,7 +111,7 @@ $validator = new JqueryValidationAdapter($schema, $this->ci->translator);
 The rules can then be retrieved via the `rules()` method, and the resulting array can be passed to a Twig template to be rendered as a Javascript variable:
 
 ```php
-$rules = $validator->rules('json', false);
+$rules = $validator->rules();
 
 return $this->ci->view->render($response, 'pages/contact.html.twig', [
     'page' => [
@@ -151,7 +142,7 @@ use UserFrosting\Fortress\ServerSideValidator;
 $params = $request->getParsedBody();
 
 // Load the request schema
-$schema = new RequestSchema('schema://contact.json');
+$schema = new RequestSchema('schema://contact.yaml');
 
 // Whitelist and set parameter defaults
 $transformer = new RequestDataTransformer($schema);
@@ -208,16 +199,15 @@ The `default` attribute specifies a default value to be used if the field has no
 
 **Example:**
 
-```json
-"owls" : {
-    "validators" : {
-        ...
-    },
-    "transformations" : [
-        ...
-    ],
-    "default" : ...
-}
+```yaml
+owls:
+  validators:
+    ...
+
+  transformations:
+    ...
+
+  default: ...
 ```
 
 #### Transformations
@@ -230,12 +220,10 @@ Remove all HTML entities (`'"<>&` and characters with ASCII value less than 32) 
 
 **Example:**
 
-```json
-"comment" : {
-    "transformations" : [
-        "purge"
-    ]
-}
+```yaml
+comment:
+  transformations:
+  - purge
 ```
 
 ##### `escape`
@@ -266,15 +254,12 @@ Specifies that the value of the field must represent a valid email address.
 
 Specifies that the value of the field must be equivalent to `value`.
 
-```json
-"owls" : {
-    "validators" : {
-        "equals" : {
-            "value" : 5,
-            "message" : "Number of owls must be equal to {{value}}."
-        }
-    }
-}
+```yaml
+owls:
+  validators:
+    equals:
+      value: 5
+      message: "Number of owls must be equal to {{value}}."
 ```
 
 By default, this is case-insensitive.  It can be made case-sensitive by setting `caseSensitive` to `true`.
@@ -287,46 +272,42 @@ Specifies that the value of the field must represent an integer value.
 
 Specifies `min` and `max` bounds on the length, in characters, of the field's value.
 
-```json
-"screech" : {
-    "validators" : {
-        "length" : {
-            "min" : 1,
-            "max" : 10,
-            "message" : "Your screech must be between {{min}} and {{max}} characters long."
-        }
-    }
-}
+```yaml
+screech:
+  validators:
+    length:
+      min: 1
+      max: 10
+      message: "Your screech must be between {{min}} and {{max}} characters long."
 ```
 
 ##### `matches`
 
 Specifies that the value of the field must be equivalent to the value of `field`.
 
-```json
-"passwordc" : {
-    "validators" : {
-        "matches" : {
-            "field" : "password",
-            "message" : "The value of this field does not match the value of the 'password' field."
-        }
-    }
-}
+```yaml
+passwordc:
+  validators:
+    matches:
+      field: password
+      message: "The value of this field does not match the value of the 'password' field."
 ```
 
 ##### `member_of`
 
 Specifies that the value of the field must appear in the specified `values` array.
 
-```json
-"genus" : {
-    "validators" : {
-        "member_of" : {
-            "values" : ["Megascops", "Bubo", "Glaucidium", "Tyto", "Athene"],
-            "message" : "Sorry, that is not one of the permitted genuses."
-        }
-    }
-}
+```yaml
+genus:
+  validators:
+    member_of:
+      values:
+      - Megascops
+      - Bubo
+      - Glaucidium
+      - Tyto
+      - Athene
+      message: Sorry, that is not one of the permitted genuses.
 ```
 
 ##### `no_leading_whitespace`
@@ -357,16 +338,13 @@ Specifies that the value of the field must represent a numeric (floating-point o
 
 Specifies a numeric interval bound on the field's value.  The `range` validator supports the following attributes:
 
-```json
-"owls" : {
-    "validators" : {
-        "range" : {
-            "min" : 5,
-            "max" : 10,
-            "message" : "Please provide {{min}} - {{max}} owls."
-        }
-    }
-}
+```yaml
+owls:
+  validators:
+    range:
+      min: 5
+      max: 10
+      message: "Please provide {{min}} - {{max}} owls."
 ```
 
 You can use `min_exclusive` instead of `min`, and `max_exclusive` instead of `max` to create open intervals.
@@ -375,15 +353,12 @@ You can use `min_exclusive` instead of `min`, and `max_exclusive` instead of `ma
 
 Specifies that the value of the field must match a specified Javascript- and PCRE-compliant regular expression.
 
-```json
-"screech" : {
-    "validators" : {
-        "regex" : {
-            "regex" : "^who(o*)$",
-            "message" : "You did not provide a valid screech."
-        }
-    }
-}
+```yaml
+screech:
+  validators:
+    regex:
+      regex: "^who(o*)$"
+      message: You did not provide a valid screech.
 ```
 
 >>>> The jQuery Validation plugin, for some unholy reason, wraps regular expressions on the client side with `^...$`.  Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).

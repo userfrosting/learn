@@ -51,7 +51,7 @@ This is typically used for temporary redirects; for example, to redirect your us
     }
 ```
 
-Note that most major browsers perform the redirect automatically.
+Note that most major browsers perform the redirect automatically when they receive a 302 response.
 
 ### 400 (Bad Request)
 
@@ -74,11 +74,14 @@ For non-AJAX requests (i.e., when visiting a page), if a request fails because t
 This code is almost always returned because a user has failed a `checkAccess` call.  Controller methods will commonly have a check like:
 
 ```php
-if (!$classMapper->staticMethod('user', 'find', $config['reserved_user_ids.master'])) {
-    $ms->addMessageTranslated("danger", "ACCOUNT.MASTER_NOT_EXISTS");
-    return $response->withStatus(403);
+if (!$authorizer->checkAccess($currentUser, 'uri_users')) {
+    throw new ForbiddenException();
 }
 ```
+
+The default `ForbiddenExceptionHandler` that handles `ForbiddenException`s will automatically generate an error message/page response with a 403 response code.
+
+In some cases, you may not want to disclose to unauthorized users that the resource even _exists_.  In this case, you can [override](/advanced/error-handling) the `ForbiddenExceptionHandler` with your own handler and have it return a 404 error instead.
 
 ### 404 (Not Found)
 
@@ -103,8 +106,6 @@ use Slim\Exception\NotFoundException;
     }
 ```
 
-UserFrosting **also** returns a 404 code in the `ForbiddenExceptionHandler` by default.  This is because, for many use cases, you may not want to disclose to unauthorized users that the resource even _exists_.  If you wish to change this behavior, simply [override](/advanced/error-handling) the `ForbiddenExceptionHandler` with your own handler.
-
 ### 405 (Method Not Allowed)
 
 This code is [automatically returned by Slim](https://www.slimframework.com/docs/handlers/not-allowed.html), when a route exists for a given URL, but not for the requested method.  For example, if someone tries to `POST` to a URL, but there is only a `GET` route defined.
@@ -119,9 +120,7 @@ This code is a generic "something didn't work right, but it's not your fault" er
 
 For example, the client probably doesn't care whether your database is down, your mail server stopped working, or there is a missing semicolon in your last commit.
 
-By default when an exception is thrown and no registered exception handler is found, UserFrosting invokes the base `ExceptionHandler`.   This handler returns a 500 status code and a generic error message.  Meanwhile, the specifics of the error are logged to the error log, so that a developer or system administrator can examine them.
-
-A 500 error code is also used for all exceptions thrown when `settings.displayErrorDetails` is set to `true`.
+By default when an exception is thrown and no registered exception handler is found, UserFrosting invokes the base `ExceptionHandler`.   This handler returns a 500 status code.
 
 ### 503 (Service Unavailable)
 
