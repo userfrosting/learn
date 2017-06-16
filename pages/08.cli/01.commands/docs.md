@@ -71,6 +71,8 @@ $ php bakery build-assets
 |---------------|-----------------------------------------------------------------|
 | -c, --compile | Compile the assets and asset bundles for production environment |
 
+>>>>> The compile option is automatically added when the [environment mode](/configuration/config-files#EnvironmentModes) is set to `production`.
+
 ### migrate
 
 The `migrate` command runs all the pending [database migrations](/database/migrations). Migrations consist of special PHP classes used to manipulate the database structure and data, creating new tables or modifying existing one. UserFrosting comes with a handful of migrations to create all of the bases tables and even creating the master user. Those build-in migrations also handle the changes in the database between versions. See the [Migrations](/database/migrations) section for more information about migrations.
