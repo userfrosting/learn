@@ -116,7 +116,7 @@ With your Sprunje defined, you can use the `toResponse` method in your controlle
         /** @var UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager */
         $authorizer = $this->ci->authorizer;
 
-        /** @var UserFrosting\Sprinkle\Account\Model\User $currentUser */
+        /** @var UserFrosting\Sprinkle\Account\Database\Models\User $currentUser */
         $currentUser = $this->ci->currentUser;
 
         // Access-controlled page
@@ -228,4 +228,81 @@ $sprunje = new OwlSprunje($classMapper, $params);
 $sprunje->extendQuery(function ($query) {
     return $query->with('owner');
 });
+```
+
+## Sprunje lists
+
+Sprunjes can also be used to enumerate a unique list of values for fields in the target model.  This is useful, for example, when you want to present a dropdown list of values for the user to choose among.  To make a field listable, simply add it to a `listable` member variable in your Sprunje class:
+
+```php
+<?php
+namespace UserFrosting\Sprinkle\Site\Sprunje;
+
+use UserFrosting\Sprinkle\Core\Facades\Debug;
+use UserFrosting\Sprinkle\Core\Sprunje\Sprunje;
+
+class OwlSprunje extends Sprunje
+{
+    protected $listable = [
+        'species'
+    ];
+    
+    ...
+    
+```
+
+An array mapping each listable field to a list of possible values can be obtained by calling the `getListable` method on your Sprunje.  For each listable field, by default `getListable` will look for a corresponding table column of the same name, and generate sub-arrays containing `value` and `text` fields, each of which will contain the given value:
+
+```
+"listable": {
+    "species": [
+        {
+            "value": "Athene",
+            "text": "Athene"
+        },
+        {
+            "value": "Bubo",
+            "text": "Bubo"
+        },
+        {
+            "value": "Glaucidium",
+            "text": "Glaucidium"
+        },
+        {
+            "value": "Megascops",
+            "text": "Megascops"
+        },
+        {
+            "value": "Tyto",
+            "text": "Tyto"
+        }
+    ]
+}
+```
+
+Of course you can override the default listing behavior for a field by defining a custom method.  This method must consist of the field name (converted to StudlyCase) prefixed with `list`:
+
+```
+/**
+ * Return a list of possible user statuses.
+ *
+ * @return array
+ */
+protected function listStatus()
+{
+    return [
+        [
+            'value' => 'active',
+            'text' => Translator::translate('ACTIVE')
+        ],
+        [
+            'value' => 'unactivated',
+            'text' => Translator::translate('UNACTIVATED')
+        ],
+        [
+            'value' => 'disabled',
+            'text' => Translator::translate('DISABLED')
+        ]
+    ];
+}
 ```
