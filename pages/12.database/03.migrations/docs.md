@@ -28,14 +28,14 @@ While multiple operations _can_ be done in the same migration class, it is recom
 *Semantic versioning*, on the other hand, is a basic way to make sure migrations are run in the correct order between your script versions. It also helps organize migrations so it's easier to find them. This is achieved by grouping migrations by the sprinkle version number. For example:
 
 ```bash
-src/Database/Models/Migrations/v400/
-src/Database/Models/Migrations/v410/
-src/Database/Models/Migrations/v412/
+src/Database/Migrations/v400/
+src/Database/Migrations/v410/
+src/Database/Migrations/v412/
 ```
 
 Any migrations related to the `4.0.0` version of the sprinkle should be located in the `v400` directory and namespace. Same goes for migrations related to version `4.1.0` and `4.1.2` of your sprinkle. Note here that dots (`.`) and dashes (`-`) are not included in the directories (and namespace) as per PSR-4 rules. 
 
->>>>> Not every sprinkle requires a migration. If nothing changed in the database structure between two versions, there's simply nothing to migrate !
+>>>>> Not every sprinkle requires a migration. If nothing changed in the database structure between two versions, there's simply nothing to migrate!
 
 ### Up and down we go
 
@@ -48,7 +48,7 @@ For a simple example, suppose that you want to create a `members` table, which w
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\MySprinkle\Model\Migrations\v400;
+namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations\v400;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
@@ -99,14 +99,14 @@ As for the `down` method, it simply tells the database structure to delete the t
 
 An important aspect of migrations is **data consistency**. Since migrations are like recipes used to create and populate a database, the order in which theses migrations are executed is very important. You don't want to drop those cupcakes in the oven before mixing the flour and eggs the same way you don't want to insert data into a table before that table is created! UserFrosting uses two methods to make sure migrations are run in the correct order. The first one is **semantic versioning** described above. The other one is **dependencies**.
 
-While semantic versioning is great for basic stuff, some situations require a more complex way to make sure migrations are run the correct order. This is the case when a sprinkle requires that a migration from another sprinkle is executed before its own migration. It can also be the case when two tables inside the same version are dependent one another. 
+While semantic versioning is great for basic stuff, some situations require a more complex way to make sure migrations are run the correct order. This is the case when a Sprinkle requires that a migration from another Sprinkle is executed before its own migration. It can also be the case when two tables inside the same version are dependent one another. 
 
-To define which migrations are required to be executed before your own migration, you can specify the fully qualified class name of the dependent migration as an array in the `$dependencie` attribute. For example :
+To define which migrations are required to be executed before your own migration, you can specify the fully qualified class name of the dependent migration as an array in the `$dependencies` attribute. For example :
 
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\MySprinkle\Model\Migrations\v400;
+namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations\v400;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
@@ -115,9 +115,9 @@ use UserFrosting\System\Bakery\Migration;
 class MembersTable extends Migration
 {
     public $dependencies = [
-        '\UserFrosting\Sprinkle\Account\Model\Migrations\v400\UsersTable',
-        '\UserFrosting\Sprinkle\Account\Model\Migrations\v400\RolesTable',
-        '\UserFrosting\Sprinkle\Account\Model\Migrations\v400\RoleUsersTable'
+        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\UsersTable',
+        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable',
+        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RoleUsersTable'
     ];
     
     public function up()
@@ -125,7 +125,7 @@ class MembersTable extends Migration
 }
 ```
 
-The above example tells the bakery `migrate` command the `UsersTable`, `RolesTable` and `RoleUsersTable` migration from the `Account` sprinkle needs to be already executed (and at least at version `4.0.0`) before executing the `MembersTable` migration. If those migrations are not yet executed and are pending execution, `migrate` command will take care of the order automatically. If a migration’s dependencies cannot be met, the `migrate` command will abort.
+The above example tells the bakery `migrate` command that the `UsersTable`, `RolesTable` and `RoleUsersTable` migrations from the `Account` Sprinkle need to be already executed (and at least at version `4.0.0`) before executing the `MembersTable` migration. If those migrations are not yet executed and are pending execution, the `migrate` command will take care of the order automatically. If a migration's dependencies cannot be met, the `migrate` command will abort.
 
 >>>>> Dependencies can also target previous version of your own migrations, but semantic versioning should already have taken care of this.
 
@@ -133,7 +133,7 @@ The above example tells the bakery `migrate` command the `UsersTable`, `RolesTab
 
 Migrations can also seed data into the database. Seeding should be used when creating new rows, editing existing data or anything else not related to the table structure. Seeding is done in the `seed` method. 
 
-You can also interact with the user by displaying information, confirming actions or asking questions to populate the database. Such an example is how migration is used to create the master user. Since migrations are run using UserFrosting **bakery** cli tool, which is itself using [Symfony Console Component](http://symfony.com/doc/current/components/console.html) as a core component, you can use the IO methods exposed in the `$this->io` variable. For example:
+You can also interact with the user by displaying information, confirming actions or asking questions to populate the database. Such an example is how migration is used to create the master user. Since migrations are run using UserFrosting's **Bakery** cli tool, which is itself using [Symfony Console Component](http://symfony.com/doc/current/components/console.html) as a core component, you can use the IO methods exposed in the `$this->io` variable. For example:
 
 ```php
 public function seed()
@@ -158,7 +158,7 @@ For a complete list of available io methods, check out the [Symfony documentatio
 
 ## Running your migration
 
-To run your migrations simply re-run the bakery `migrate` from your command line, in UserFrosting's root directory:
+To run your migrations simply re-run the Bakery `migrate` from your command line, in UserFrosting's root directory:
 
 ```bash
 $ php bakery migrate
