@@ -12,7 +12,7 @@ You'll probably want to create your own services to modularize certain aspects o
 
 If you want to use a single instance of `MapBuilder` throughout your application, you'll probably end up defining it as a service.  To do this, you'll need to create a new service provider class in your site Sprinkle.
 
-First, create a class `src/ServicesProvider/SiteServicesProvider.php` in your Sprinkle:
+First, create a class `src/ServicesProvider/ServicesProvider.php` in your Sprinkle:
 
 ```
 app
@@ -20,7 +20,7 @@ app
     └── site
         └── src
             └── ServicesProvider
-                └── SiteServicesProvider.php
+                └── ServicesProvider.php
 ```
 
 The skeleton of this file should look like:
@@ -30,8 +30,7 @@ The skeleton of this file should look like:
 /**
  * Owl Fancy (https://owlfancy.com)
  *
- * @copyright Copyright (c) 2016 David Attenborough
- * @license   proprietary
+ * @license   All rights reserved.
  */
 namespace UserFrosting\Sprinkle\Site\ServicesProvider;
 
@@ -42,7 +41,7 @@ use UserFrosting\Sprinkle\Core\Facades\Debug;
  *
  * @author David Attenborough
  */
-class SiteServicesProvider
+class ServicesProvider
 {
     /**
      * Register my site services.
@@ -64,8 +63,7 @@ Notice that we have one method, `register`, which takes the Pimple DIC as its lo
 /**
  * Owl Fancy (https://owlfancy.com)
  *
- * @copyright Copyright (c) 2016 David Attenborough
- * @license   proprietary
+ * @license   All rights reserved.
  */
 namespace UserFrosting\Sprinkle\Site\ServicesProvider;
 
@@ -77,7 +75,7 @@ use UserFrosting\Sprinkle\Site\GoogleMaps\MapBuilder;
  *
  * @author David Attenborough
  */
-class SiteServicesProvider
+class ServicesProvider
 {
     /**
      * Register my site services.
@@ -125,19 +123,20 @@ public function getOwlCoordinates($request, $response, $args)
 }
 ```
 
+>>>> It is very important that your class be named `ServicesProvider`, and be in the `ServicesProvider` namespace of your Sprinkle.  Otherwise, UserFrosting will be unable to find and automatically register your services!
+
 ## Extending Existing Services
 
-Pimple also allows us to extend services that were defined previously, for example in another Sprinkle.  The `view` service loads UserFrosting's [Twig extensions]() to expose additional functions, filters, and variables in our templates.  If we want to define more global Twig variables in our site Sprinkle, we can create a new Twig extension and then add it to our `view` service by extending it in our service provider class.
+Pimple also allows us to extend services that were defined previously, for example in another Sprinkle.  The `view` service loads UserFrosting's [Twig extensions](/templating-with-twig/filters-and-functions) to expose additional functions, filters, and variables in our templates.  If we want to define more global Twig variables in our site Sprinkle, we can create a new Twig extension and then add it to our `view` service by extending it in our service provider class.
 
-First, create your new Twig extension class in `src/Twig/SiteExtension.php`:
+First, create your new Twig extension class in `src/Twig/Extension.php`:
 
 ```php
 <?php
 /**
  * Owl Fancy (https://owlfancy.com)
  *
- * @copyright Copyright (c) 2016 David Attenborough
- * @license   proprietary
+ * @license   All rights reserved.
  */
 namespace UserFrosting\Sprinkle\Site\Twig;
 
@@ -148,7 +147,7 @@ use Interop\Container\ContainerInterface;
  *
  * @author David Attenborough
  */
-class SiteExtension extends \Twig_Extension
+class Extension extends \Twig_Extension
 {
 
     /**
@@ -191,28 +190,27 @@ class SiteExtension extends \Twig_Extension
 
 ```
 
-Now, back in `SiteServicesProvider.php`, we can extend the `view` service to load this extension:
+Now, back in `ServicesProvider.php`, we can extend the `view` service to load this extension:
 
 ```php
 <?php
 /**
  * Owl Fancy (https://owlfancy.com)
  *
- * @copyright Copyright (c) 2016 David Attenborough
- * @license   proprietary
+ * @license   All rights reserved.
  */
 namespace UserFrosting\Sprinkle\Site\ServicesProvider;
 
 use UserFrosting\Sprinkle\Core\Facades\Debug;
 use UserFrosting\Sprinkle\Site\GoogleMaps\MapBuilder;
-use UserFrosting\Sprinkle\Site\Twig\SiteExtension;
+use UserFrosting\Sprinkle\Site\Twig\Extension;
 
 /**
  * Registers services for my site Sprinkle
  *
  * @author David Attenborough
  */
-class SiteServicesProvider
+class ServicesProvider
 {
     /**
      * Register my site services.
@@ -228,7 +226,7 @@ class SiteServicesProvider
          */
         $container->extend('view', function ($view, $c) {
             $twig = $view->getEnvironment(); 
-            $extension = new SiteExtension($c);
+            $extension = new Extension($c);
             $twig->addExtension($extension);
 
             return $view;
@@ -258,9 +256,9 @@ When our Sprinkle is loaded, Pimple will use the callback defined in `$container
 
 ## Overriding Existing Services
 
-Most of the default services that UserFrosting defines can be completely overridden in your Sprinkle, simply by redefining them as if they were a new service.  The exception is for services that have already been invoked before the SprinkleManager has finished loading all of the Sprinkles.  These services are:
+Most of the default services that UserFrosting defines can be completely overridden in your Sprinkle, simply by redefining them as if they were a new service.  The exception is for system services, which have already been invoked before the SprinkleManager can load the Sprinkles.  These services are:
 
-- `config`
+- `eventDispatcher`
 - `locator`
-- `shutdownHandler`
 - `sprinkleManager`
+- `streamBuilder`

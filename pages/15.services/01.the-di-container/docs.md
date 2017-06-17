@@ -8,7 +8,7 @@ taxonomy:
 
 ### Dependency Injection
 
-[Dependency Injection](http://www.phptherightway.com/#dependency_injection) is one of the fundamental pillars of modern object-oriented software design - it is a prime example of the **D** in [**SOLID**](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)).  The idea is that instead of creating objects _inside_ other objects, you create your "inner objects" (dependencies) separately and then _inject_ (by passing as an argument to the constructor or a setter method) them into the "outer object" (dependent).  For example,if you have class `Owl`:
+[Dependency Injection](http://www.phptherightway.com/#dependency_injection) is one of the fundamental pillars of modern object-oriented software design - it is a prime example of the **D** in [**SOLID**](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)).  The idea is that instead of creating objects _inside_ other objects, you create your "inner objects" (dependencies) separately and then _inject_ (by passing as an argument to the constructor or a setter method) them into the "outer object" (dependent).  For example, if you have class `Owl`:
 
 ```php
 class Owl
@@ -73,7 +73,7 @@ The obvious issue with dependency injection, of course, is that it becomes harde
 ```
 $logger = new Logger('debug');
 
-$logFile = $c->locator->findResource('log://debug.log', true, true);
+$logFile = $c->locator->findResource('log://userfrosting.log', true, true);
 
 $handler = new StreamHandler($logFile);
 
@@ -108,10 +108,10 @@ Taken together, this means we can define our services without needing to worry a
 
 ### Service Providers
 
-UserFrosting sets up its services through **service provider** classes.  Each Sprinkle can define one or more service provider classes in `src/ServicesProvider/`.  A service provider class typically contains a single method, `register`, which takes a single argument, the Pimple DIC.  For example, the `CoreServicesProvider` class in the `core` Sprinkle starts like this:
+UserFrosting sets up its services through **service provider** classes.  Each Sprinkle can define a service provider class in `src/ServicesProvider/ServicesProvider.php`.  A service provider class typically contains a single method, `register`, which takes a single argument, the Pimple DIC.  For example, the `ServicesProvider` class in the `core` Sprinkle starts like this:
 
 ```
-class CoreServicesProvider
+class ServicesProvider
 {
     /**
      * Register UserFrosting's core services.
@@ -136,8 +136,8 @@ class CoreServicesProvider
 
 The `alerts` service is defined by simply assigning a callback to `$container['alerts']` which returns our service object (in this case, an instance of `MessageStream`).
 
-You'll notice that the callback itself takes a parameter `$c`, which is also a reference to the DIC.  This allows us to reference services inside other services.  For example, you'll notice that `MessageStream` depends on `$c->session`, `$c->config`, and `$c->translator`.  These are other services that are defined further down in `CoreServicesProvider`.  Thus, the first time we reference `$container->alerts`, it will not only create our `MessageStream` object, but any dependencies that have not yet been created as well.
+You'll notice that the callback itself takes a parameter `$c`, which is also a reference to the DIC.  This allows us to reference services inside other services.  For example, you'll notice that `MessageStream` depends on `$c->session`, `$c->config`, and `$c->translator`.  These are other services that are defined further down in `ServicesProvider`.  Thus, the first time we reference `$c->alerts`, it will not only create our `MessageStream` object, but any dependencies that have not yet been created as well.
 
-The service provider classes themselves can be bootstrapped through your Sprinkle's [**initialization class**](/sprinkles/contents#initialization-class).
+The service provider class itself is registered during the [application lifecycle](/advanced/application-lifecycle), when each Sprinkle is set up.
 
 Next, we list the **default services** that ship with UserFrosting.  After that, we talk about how you can **add** your own services, **extend** existing services, or completely **replace** certain services in your own Sprinkle.
