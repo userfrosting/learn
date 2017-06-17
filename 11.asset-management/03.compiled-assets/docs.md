@@ -10,7 +10,7 @@ In a more minimalistic setup, asset retrieval is fairly straightforward. We migh
 
 In UserFrosting, the Sprinkle system makes this a little more complicated. Each Sprinkle can contribute its own assets to the application (under its `assets/` subdirectory), and it should be possible for a Sprinkle to override assets in another Sprinkle that was loaded earlier in the stack.
 
-Configuring the web server to handle all of the extra logic would be tedious, error-prone, and could easily introduce security risks. For these reasons, UserFrosting has the ability to [serve assets through the application](/asset-management/basic-usage#public-asset-urls), rather than relying on the web server to handle these requests directly.
+Configuring the web server to handle all of the extra logic would be tedious, error-prone, and could easily introduce security risks. For these reasons, UserFrosting has the ability to [serve assets through the application](/asset-management/basic-usage#PublicassetURLs), rather than relying on the web server to handle these requests directly.
 
 ## Compiled Assets
 
@@ -34,7 +34,7 @@ Fortunately for you, you should already have Node.js installed if you completed 
 
 Gulp is a tool used to automate Javascript tasks. The basic idea is that you pass your file(s) through a number of plugins, each of which can perform some kind of transformation on your data. Thus, the output from one plugin becomes the input to the next.
 
-Gulp should have been automatically installed for you during the [installation process](//installation/requirements/essential-tools-for-php#npm).
+Gulp should have been automatically installed for you during the [installation process](/installation/requirements/essential-tools-for-php#npm).
 
 #### Running the Build Task
 
@@ -48,7 +48,7 @@ The `uf-bundle-build` task combines the `asset-bundles.json` files in each loade
 
 The `uf-bundle` task uses [`gulp-bundle-assets`](https://github.com/dowjones/gulp-bundle-assets) to minify and concatenate the assets referenced in each bundle in `build/asset-bundles.json` into a single file per bundle. These compiled bundles will be placed in the `public/assets/` directory by default. It also copies fonts, images, and other files from your Sprinkles to the `public/assets/` directory, so that your web server can directly serve these files as well. 
 
-Running theses commands is handle by the [bakery cli](/cli/commands#build-assets) :
+Running theses commands is handle by the [Bakery CLI](/cli/commands#build-assets) :
 
 ```bash
 $ php bakery build-assets --compile

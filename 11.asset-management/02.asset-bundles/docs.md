@@ -21,20 +21,21 @@ UserFrosting ships with a number of predefined bundles.  If you look the `core` 
             "vendor/handlebars/handlebars.js",
             "vendor/jquery-validation/dist/jquery.validate.js",
             "vendor/jquery-validation/dist/additional-methods.js",
-            "vendor/jquery-slimscroll/jquery.slimscroll.min.js",
+            "vendor/jquery-slimscroll/jquery.slimscroll.js",
             "vendor/icheck/icheck.min.js",
             "vendor/fastclick/lib/fastclick.js",
             "vendor/select2/dist/js/select2.full.js",
             "vendor/clipboard/dist/clipboard.js",
-            "local/core/js/AdminLTE.js",
-            "local/core/js/AdminLTE-custom.js",
-            "local/core/js/fortress-jqueryvalidation-methods.js",
-            "local/core/js/uf-jqueryvalidation-config.js",
-            "local/core/js/uf-alerts.js",
-            "local/core/js/uf-form.js",
-            "local/core/js/uf-modal.js",
-            "local/core/js/uf-copy.js",
-            "local/core/js/uf-init.js"
+            "userfrosting/js/attrchange.js",
+            "userfrosting/js/AdminLTE.js",
+            "userfrosting/js/AdminLTE-custom.js",
+            "userfrosting/js/fortress-jqueryvalidation-methods.js",
+            "userfrosting/js/uf-jqueryvalidation-config.js",
+            "userfrosting/js/uf-alerts.js",
+            "userfrosting/js/uf-form.js",
+            "userfrosting/js/uf-modal.js",
+            "userfrosting/js/uf-copy.js",
+            "userfrosting/js/uf-init.js"
         ],
         "options": {
             "result": {
@@ -60,7 +61,7 @@ By convention, Javascript bundles should be named with the `js/` prefix.  The as
  
 By convention, CSS bundles should be named with the `css/` prefix.  The assets for a Javascript bundle must be defined under the `styles` key in your bundle.
 
->>>> Generally speaking, it is a good idea to define your Javascript and CSS resources in separate bundles.  The `options` key in both types of bundles is required, and it tells [gulp-bundle-assets](https://github.com/dowjones/gulp-bundle-assets) how to construct the `build/bundle.result.json` file for linking to [compiled assets](/asset-management/compiled-assets).
+>>>> Generally speaking, it is a good idea to define your Javascript and CSS resources in separate bundles.  The `options` key in both types of bundles is required, and it tells [gulp-bundle-assets](https://github.com/dowjones/gulp-bundle-assets) how to construct the schema file for linking to [compiled assets](/asset-management/compiled-assets).
 
 ## Rendering bundles
 
@@ -77,11 +78,11 @@ UserFrosting will automatically generate the `<script>` tags for Javascript bund
 <script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/vendor/handlebars-1.2.0/handlebars.js" ></script>
 <script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/vendor/jqueryValidation-1.14.0/jquery.validate.js" ></script>
 <script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/vendor/jqueryValidation-1.14.0/additional-methods.js" ></script>
-<script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/js/fortress-jqueryvalidation-methods.js" ></script>
-<script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/js/uf-jqueryvalidation-config.js" ></script>
-<script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/js/uf-alerts.js" ></script>
-<script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/js/uf-form.js" ></script>
-<script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/js/uf-modal.js" ></script>
+<script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/userfrosting/js/fortress-jqueryvalidation-methods.js" ></script>
+<script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/userfrosting/js/uf-jqueryvalidation-config.js" ></script>
+<script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/userfrosting/js/uf-alerts.js" ></script>
+<script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/userfrosting/js/uf-form.js" ></script>
+<script src="http://localhost/myUserFrostingProject/public/assets-raw/core/assets/userfrosting/js/uf-modal.js" ></script>
 ```
 
 ## Extending and overriding bundles
@@ -97,8 +98,8 @@ As an example, suppose we have this bundle defined in the core:
             "styles" : [
                 "vendor/font-awesome/css/font-awesome.css",
                 "vendor/bootstrap/dist/css/bootstrap.css",
-                "local/core/css/uf-jqueryvalidation.css",
-                "local/core/css/uf-alerts.css"
+                "userfrosting/css/uf-jqueryvalidation.css",
+                "userfrosting/css/uf-alerts.css"
             ],
             "options": {
                 "result": {
