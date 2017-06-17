@@ -33,7 +33,7 @@ By default, UserFrosting will create a global `site` Javascript variable on ever
 
 Notice that all of these variables are nested under a single, top-level `site` object which is constructed in the `core/templates/components/config.js.twig` template.  By formatting these as keys in a JSON object, rather than making each one an individual variable, we avoid polluting Javascript's global namespace with too many identifiers.
 
-To add, remove, or modify the contents of the `site` object, simply override `config.js.twig` in your Sprinkle.  `config.js.twig` itself pulls its values from Twig's global variables (`site`, `current_user`, etc).  Keep in mind that you can add global variables to Twig by [creating a Twig extension](https://twig.sensiolabs.org/doc/2.x/advanced.html#creating-an-extension) and then loading your extension by [extending the `view` service](http://localhost/userfrosting-learn/services/extending-services#extending-existing-services).  This process is summarized in this diagram:
+To add, remove, or modify the contents of the `site` object, simply override `config.js.twig` in your Sprinkle.  `config.js.twig` itself pulls its values from Twig's global variables (`site`, `current_user`, etc).  Keep in mind that you can add global variables to Twig by [creating a Twig extension](https://twig.sensiolabs.org/doc/2.x/advanced.html#creating-an-extension) and then loading your extension by [extending the `view` service](services/extending-services#extending-existing-services).  This process is summarized in this diagram:
 
 ![Extending UserFrosting's client-side site variable](/images/extending-site-variable.png)
 
@@ -51,14 +51,14 @@ public function pageRegister($request, $response, $args)
     // ...
 
     // Load validation rules
-    $schema = new RequestSchema("schema://register.json");
+    $schema = new RequestSchema("schema://register.yaml");
     $validatorRegister = new JqueryValidationAdapter($schema, $this->ci->translator);
 
     // Pass them to the `page` key of the template placeholders
     return $this->ci->view->render($response, 'pages/register.html.twig', [
         "page" => [
             "validators" => [
-                "register" => $validatorRegister->rules('json', false)
+                "register" => $validatorRegister->rules()
             ]
         ]
     ]);

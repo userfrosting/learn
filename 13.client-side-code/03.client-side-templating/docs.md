@@ -92,12 +92,12 @@ It's also important to note that the `if` helper in Handlebars doesn't support l
 To compare two values in an if/else block, use our custom Handlebars helper instead:
 
 ```
-{{#ifCond author "David Attenborough" }}
+{{#ifx author '==' 'David Attenborough' }}
   <h1>{{firstName}} {{lastName}}</h1>
-{{/if}}
+{{/ifx}}
 ```
 
->>> `#ifCond` does not currently support more advanced logical expressions.  You may need to create your own custom helper.  For more information, see [this Stack Overflow question](http://stackoverflow.com/questions/8853396/logical-operator-in-a-handlebars-js-if-conditional).
+>>> `#ifx` supports the basic logical operators (`==`, `!=`, `>`, `<`, etc), but does not support compound expressions.  You can instead nest your expressions, or create your own custom helper.  For more information, see [this Stack Overflow question](http://stackoverflow.com/questions/8853396/logical-operator-in-a-handlebars-js-if-conditional).
 
 ### Loops
 
@@ -177,3 +177,10 @@ Format an ISO date using [Moment.js](http://momentjs.com).
 
 `format` should be a valid Moment.js [format string](https://momentjs.com/docs/#/displaying/format/).
 
+### phoneUSFormat
+
+Format a string as a US phone number (`(xxx) xxx-xxxx`)
+
+### currencyUsdFormat
+
+Format a floating-point value as US currency.

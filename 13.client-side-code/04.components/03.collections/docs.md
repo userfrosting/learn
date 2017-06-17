@@ -12,7 +12,7 @@ The `ufCollection` widget provides a convenient interface for associating relate
 
 ## Basic setup
 
-To use `ufCollection`, you need to have `local/core/js/uf-collection.js` and `local/core/css/uf-collection.css` included in your page assets.  The easiest way to do this is by including the `js/form-widgets` and `css/form-widgets` [asset bundles](/asset-management/asset-bundles/asset-bundles) in your page.  Most of the default administrative pages include these bundles by default in their `stylesheets_page` and `scripts_page` Twig blocks.  Of course, feel free to include the required JS and CSS files in your page-specific asset bundles instead, if you prefer.
+To use `ufCollection`, you need to have `userfrosting/js/uf-collection.js` and `userfrosting/css/uf-collection.css` included in your page assets.  The easiest way to do this is by including the `js/form-widgets` and `css/form-widgets` [asset bundles](/asset-management/asset-bundles) in your page.  Most of the default administrative pages include these bundles by default in their `stylesheets_page` and `scripts_page` Twig blocks.  Of course, feel free to include the required JS and CSS files in your page-specific asset bundles instead, if you prefer.
 
 The basic markup for a collection widget consists of a table "skeleton" wrapped inside some sort of container element.  For example:
 
