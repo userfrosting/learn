@@ -21,6 +21,7 @@ It also uses the following components by default (of course, you can replace any
 - [SpeakingURL](https://pid.github.io/speakingurl/) - URL slug generation
 - [iCheck](http://icheck.fronteed.com/) - Attractive checkboxes
 - [clipboard.js](https://clipboardjs.com/) - A modern approach to copy text to clipboard
-
+- [jquery-slimscroll](http://rocha.la/jQuery-slimScroll) - required by AdminLTE theme
+- [fastclick](https://github.com/ftlabs/fastclick) - required by AdminLTE theme
 
 This chapter fills in some of the gaps in communication between the client and server-side code bases, and explains how UserFrosting uses Handlebars.js and custom jQuery plugins to build dynamic, fully interactive features in your client's browser. 

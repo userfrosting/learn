@@ -57,6 +57,7 @@ See [Cache](http://learn.local/advanced/cache/usage) for more info.
 - Migrations moved from `migrations/` to `src/Database/Migrations`, and must extend the base `Migration` class to implement `up` and `down` methods.
 - Sprinkle bootstrap classes completely redesigned.  They are now basically implementations of Symfony's `EventSubscriberInterface`, allowing the class to hook into the UF application lifecycle.
 - Service providers are now automatically loaded, but they MUST be named `src/ServicesProvider/ServicesProvider.php`.
+- Default assets have been reorganized.  `assets/local` has been renamed `assets/userfrosting`, and subdirectories in this directory have been rearranged as well.
 
 ### Minor (should only break heavily customized projects)
 
@@ -95,9 +96,10 @@ $ php bakery bake
 1. Rename your Sprinkle's `bundle.config.json` to `asset-bundles.json`.
 2. Rename your service provider class (if you have one) to `src/ServicesProvider/ServicesProvider.php`.  This will let UserFrosting load it automatically.
 3. Change your Sprinkle's bootstrapper class (if you have one) - for example, `src/Site.php`.  This should now extend `UserFrosting\System\Sprinkle\Sprinkle`.  Get rid of the `init` method.  Instead, you should create methods to [hook into the UserFrosting lifecycle](/advanced/application-lifecycle), if necessary.  Otherwise, you can leave this class empty, or delete it entirely.
-4. Move your models from `src/Model` to `src/Database/Models`, and change them to extend the base 'UserFrosting\Sprinkle\Core\Database\Models\Model' class.
+4. Move your models from `src/Model` to `src/Database/Models`, and change them to extend the base 'UserFrosting\Sprinkle\Core\Database\Models\Model' class.  Keep in mind that when you move your classes to a different directory, you need to change their `namespace` as well to comply with PSR-4 autoloading rules.
 5. For each database table you create in your `migrations/*` file, create a new class in `src/Database/Migrations` instead.  This should extend the base `UserFrosting\System\Bakery\Migration` class to implement `up` and `down` methods.  See [Migrations](database/migrations) for more information.
-6. Check the "minor breaking changes" section above, to see if there are any other changes that might affect your Sprinkle.
+6. If you reference any default UserFrosting assets in your templates or asset bundles, you will need to update their paths (see Major Changes above).
+7. Check the "minor breaking changes" section above, to see if there are any other changes that might affect your Sprinkle.
 
 The database schema have not changed from UF 4.0 - there is no need to upgrade your database.
 
