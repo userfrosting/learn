@@ -51,7 +51,7 @@ public function pageRegister($request, $response, $args)
     // ...
 
     // Load validation rules
-    $schema = new RequestSchema("schema://register.yaml");
+    $schema = new RequestSchema("schema://requests/register.yaml");
     $validatorRegister = new JqueryValidationAdapter($schema, $this->ci->translator);
 
     // Pass them to the `page` key of the template placeholders

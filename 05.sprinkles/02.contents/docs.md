@@ -80,7 +80,7 @@ Learn more about routes and controllers in [Chapter 9](/routes-and-controllers).
 
 ### /schema
 
-`schema` contains the [validation schema](/routes-and-controllers/client-input/validation) for your Sprinkle.  Schema files must be overridden in their entirety; to extend a schema file in a previously loaded Sprinkle, you must redefine the entire schema.
+`schema` contains the [request schema](/routes-and-controllers/client-input/validation) for your Sprinkle.  Schema files in other Sprinkles can be extended by using a custom loader.
 
 ### /src
 

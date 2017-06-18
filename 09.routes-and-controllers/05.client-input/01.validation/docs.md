@@ -38,7 +38,7 @@ This process is summarized in the following flowchart:
 
 Request schema are simple YAML or JSON files which live in your Sprinkle's `schema/` subdirectory.  Simply create a new `.yaml` file:
 
-**schema/contact.yaml**
+**schema/requests/contact.yaml**
 
 ```yaml
 # Request schema for the contact form
@@ -92,7 +92,7 @@ To load a schema in your route callbacks and controller methods, simply pass the
 // This line goes at the top of your file
 use UserFrosting\Fortress\RequestSchema;
 
-$schema = new RequestSchema('schema://contact.yaml');
+$schema = new RequestSchema('schema://requests/contact.yaml');
 ```
 
 Notice that we've used the `schema://` stream wrapper, rather than having to hardcode an absolute file path.  This allows UserFrosting to automatically scan the `schema/` subdirectories of each loaded Sprinkle for `contact.yaml`, and using the version found in the most recently loaded Sprinkle.
@@ -142,7 +142,7 @@ use UserFrosting\Fortress\ServerSideValidator;
 $params = $request->getParsedBody();
 
 // Load the request schema
-$schema = new RequestSchema('schema://contact.yaml');
+$schema = new RequestSchema('schema://requests/contact.yaml');
 
 // Whitelist and set parameter defaults
 $transformer = new RequestDataTransformer($schema);

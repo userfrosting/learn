@@ -37,7 +37,7 @@ The user's email address is their primary identifier in your application.  It ca
 
 ### First and last name
 
-By default, we require that the user at least specify their first name, but this can be overridden in your Sprinkle's validation schema.
+By default, we require that the user at least specify their first name, but this can be overridden in your Sprinkle's request schema.
 
 ### Username
 
