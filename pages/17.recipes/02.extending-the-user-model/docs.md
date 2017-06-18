@@ -405,7 +405,7 @@ $app->group('/admin/users', function () {
 
 ## Override schemas
 
-Finally, we need to override our request schemas, `user/create.yaml` and `user/edit-info.yaml`, to allow the new `city` and `country` fields to be submitted during user creation and update requests.  Copy both of these from the `admin` Sprinkle's `schema/user/` directory to your own Sprinkle's `schema/user/` directory.  Add validation rules for the new fields to both schema:
+Finally, we need to override our request schemas, `requests/user/create.yaml` and `requests/user/edit-info.yaml`, to allow the new `city` and `country` fields to be submitted during user creation and update requests.  Copy both of these from the `admin` Sprinkle's `schema/requests/user/` directory to your own Sprinkle's `schema/requests/user/` directory.  Add validation rules for the new fields to both schema:
 
 ```json
 city:

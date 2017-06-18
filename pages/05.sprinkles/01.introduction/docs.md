@@ -20,7 +20,7 @@ Each Sprinkle can contain any or all of the following entities:
 - configuration files
 - translations (i18n)
 - route endpoints (URL definitions)
-- validation schema
+- request schema
 - PHP code (typically classes)
 - templates (Twig files)
 - "extra" content that does not fit into any of these categories
