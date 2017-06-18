@@ -22,11 +22,11 @@ UserFrosting uses the [Slim CSRF Guard](https://github.com/slimphp/Slim-Csrf) mi
 
 ### Injecting the Tokens Into Forms
 
-The easiest way to add the CSRF tokens to a form is by including the partial Twig template `components/csrf.html.twig`.  Simply add this after the opening `<form>` tag:
+The easiest way to add the CSRF tokens to a form is by including the partial Twig template `pages/partials/csrf.html.twig`.  Simply add this after the opening `<form>` tag:
 
 ```twig
 <form id="sign-in" role="form" action="{{site.uri.public}}/account/login" method="post">
-    {% include "components/csrf.html.twig" %}
+    {% include "pages/partials/csrf.html.twig" %}
     
     ...
 </form>
@@ -55,7 +55,7 @@ $.ajax({
 });
 ```
 
->>>>> The Javascript `site` variable is declared in the `components/config.js.twig` template.
+>>>>> The Javascript `site` variable is declared in the `pages/partials/config.js.twig` template.
 
 ### Blacklisting Routes
 

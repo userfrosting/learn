@@ -126,7 +126,7 @@ app
 Your `members.html.twig` template should look something like this:
 
 ```twig
-{% extends "layouts/default.html.twig" %}
+{% extends "pages/abstract/default.html.twig" %}
 
 {# Overrides blocks in head of base template #}
 {% block page_title %}Members{% endblock %}
@@ -138,9 +138,9 @@ Your `members.html.twig` template should look something like this:
 {% endblock %}
 ```
 
-Notice that we extend the `default.html.twig` layout, which is the same [layout template](/templating-with-twig#layouts) used by the "home" and "about" pages.  If we wanted to create a "dashboard" page, we would extend the `layouts/dashboard.html.twig` template instead.
+Notice that we extend the `default.html.twig` abstract template, which is the same [abstract template](/templating-with-twig/sprinkle-templates#Abstracttemplates) used by the "home" and "about" pages.  If we wanted to create a "dashboard" style page, we would extend the `pages/abstract/dashboard.html.twig` template instead.
 
-Then, we simply have to fill in some of the [blocks](https://twig.sensiolabs.org/doc/2.x/tags/extends.html) defined in the layout template with our page content.  As a simple example of using Twig to produce dynamic content, we reference the `current_user` global Twig variable to get and display the user's first name.
+Then, we simply have to fill in some of the [blocks](https://twig.sensiolabs.org/doc/2.x/tags/extends.html) defined in the abstract template with our page content.  As a simple example of using Twig to produce dynamic content, we reference the `current_user` global Twig variable to get and display the user's first name.
 
 >>>>>> The default UserFrosting theme is based on [AdminLTE](https://adminlte.io). Check it out while building your pages. It comes with pretty cool features and widgets you can use in your own pages !
 

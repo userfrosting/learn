@@ -12,63 +12,30 @@ Any Sprinkle that works with Twig templates will contain a `templates/` director
 
 ```
 templates/
-├── components/
-├── layouts/
+├── forms/
 ├── mail/
-└── pages/
+├── modals/
+├── navigation/
+├── pages/
+└── tables/
 ```
 
 By replicating this structure in your own Sprinkle, it is possible to completely override a core template with your own.  When a template is rendered, Twig will search for the specified path relative to the most recently loaded Sprinkle, falling back to previously loaded Sprinkles until it finds a match.
 
-### components/
+### Page templates
 
-The `components/` directory contains partial HTML and Javascript templates, such as forms, tables, navigation bars, and other commonly reused components.
+The `pages/` directory contains templates that correspond to specific pages in your application.  For example, the main content template for `http://owlfancy.com/supplies/preening` might be located at `pages/supplies/preening.html.twig`.
 
-Templates in `components/` are typically used via Twig's [`include` tag](http://twig.sensiolabs.org/doc/2.x/tags/include.html).  Suppose, for example, we have a page template:
-
-```twig
-<!DOCTYPE html>
-<html lang="en-US">
-    <head>
-        <meta charset="utf-8">
-        <meta name="generator" content="UserFrosting" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="description" content="{% block page_description %}This page has not yet been configured.{% endblock %}">
-        <meta name="author" content="{% block page_author %}{{ site.author }}{% endblock %}">
-
-        <title>{{ site.title }} | {% block page_title %}New Page{% endblock %}</title>
-
-        {% include "components/favicons.html.twig" %}
-
-        ...
-```
-
-The last line `{% include "components/favicons.html.twig" %}` tells Twig to insert the contents of the `components/favicons.html.twig` template.  Additional parameters can be passed to `include`, which will override any variables of the same name that were passed to the main template:
-
-```twig
-<div class="box-body">
-    {% include "components/tables/users.html.twig" with {
-            "table" : {
-                "id" : "table-users",
-                "columns" : ["last_activity"]
-            }
-        }
-    %}
-</div>
-```
-
-This sets custom values for the `table` variable used in `components/tables/users.html.twig`.
-
-In some Sprinkles, the `components/` directory is further divided into directories containing common types of components.  For example, the `admin/` Sprinkle contains subdirectories for `forms/`, `modals/`, and `tables/`.
-
-### layouts/
+### Abstract templates
 
 One particularly powerful feature of Twig is the ability to **extend** templates.  The concept is similar to class inheritance in object-oriented programming.  We can define a **base template**, and then override parts of the base template in a **child template**.  Thus, we can have many child templates that inherit from the same base template.  If we want to modify some common feature in all of those pages, all we need to do is modify the base template.
 
-UserFrosting's base templates are generally kept in the `layouts/` directory.  Every UserFrosting page inherits from the base layout template `layouts/basic.html.twig`, found in the `core` Sprinkle.  The main purpose of this template is to define the basic structure of an HTML page.  Let's take a look:
+UserFrosting comes with a set of "abstract" templates - templates that are not meant to be used directly as pages, tables, modals, etc., but rather to be extended by other templates.
+
+For example, The base template `pages/abstract/base.html.twig`, found in the `core` Sprinkle, serves as an abstract page template from which all other pages ultimately derive.  The main purpose of this template is to define the basic structure of an HTML page.  Let's take a look:
 
 ```twig
-{# basic.html.twig: This is the base layout template for all pages.  #}
+{# base.html.twig: This is the base abstract template for all pages.  #}
 
 {% block page %}
 <!DOCTYPE html>
@@ -85,23 +52,23 @@ UserFrosting's base templates are generally kept in the `layouts/` directory.  E
 
             <title>{{ site.title }} | {% block page_title %}New Page{% endblock %}</title>
 
-            {% include "components/favicons.html.twig" %}
+            {% include "pages/partials/favicons.html.twig" %}
 
             {# Use this block to add extra content in page head without having to override the entire base layout #}
             {% block head_extra %}{% endblock %}
 
             {% block stylesheets %}
-                {# Override this block in a child layout template or page template to override site-level stylesheets. #}
+                {# Override this block in a child abstract template or page template to override site-level stylesheets. #}
                 {% block stylesheets_site %}
                     <!-- Include main CSS asset bundle -->
                     {{ assets.css() | raw }}
                 {% endblock %}
 
-                {# Override this block in a child layout template or page template to specify or override stylesheets for groups of similar pages. #}
+                {# Override this block in a child abstract template or page template to specify or override stylesheets for groups of similar pages. #}
                 {% block stylesheets_page_group %}
                 {% endblock %}
 
-                {# Override this block in a child layout template or page template to specify or override page-level stylesheets. #}
+                {# Override this block in a child abstract template or page template to specify or override page-level stylesheets. #}
                 {% block stylesheets_page %}
                 {% endblock %}
             {% endblock %}
@@ -128,7 +95,7 @@ UserFrosting's base templates are generally kept in the `layouts/` directory.  E
                 <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
             <![endif]-->
 
-            {% include "components/analytics.html.twig" %}
+            {% include "pages/partials/analytics.html.twig" %}
         </head>
     {% endblock %}
 
@@ -139,11 +106,11 @@ UserFrosting's base templates are generally kept in the `layouts/` directory.  E
 
             <!-- Javascript configuration -->
             <script>
-            {% include "components/config.js.twig" %}
+            {% include "pages/partials/config.js.twig" %}
             </script>
 
             {% block scripts %}
-                {# Override this block in a child layout template or page template to override site-level scripts. #}
+                {# Override this block in a child abstract template or page template to override site-level scripts. #}
                 {% block scripts_site %}
                     <!-- Load jQuery -->
                     <script src="//code.jquery.com/jquery-2.2.4.min.js" ></script>
@@ -153,11 +120,11 @@ UserFrosting's base templates are generally kept in the `layouts/` directory.  E
                     {{ assets.js() | raw }}
                 {% endblock %}
 
-                {# Override this block in a child layout template or page template to specify or override scripts for groups of similar pages. #}
+                {# Override this block in a child abstract template or page template to specify or override scripts for groups of similar pages. #}
                 {% block scripts_page_group %}
                 {% endblock %}
 
-                {# Override this block in a child layout template or page template to specify or override page-level scripts. #}
+                {# Override this block in a child abstract template or page template to specify or override page-level scripts. #}
                 {% block scripts_page %}
                 {% endblock %}
 
@@ -181,27 +148,70 @@ You'll notice that this template is composed almost entirely of `block` blocks. 
 To define a child template, we use the [`extends` tag](http://twig.sensiolabs.org/doc/tags/extends.html) at the top of a new file, and then define the blocks we wish to override:
 
 ```twig
-{# This is a child template, which inherits from basic.html.twig. #}
+{# This is a child template, which inherits from base.html.twig. #}
 
-{% extends "layouts/basic.html.twig" %}
+{% extends "pages/abstract/base.html.twig" %}
 
 {% block content %}
     Hello World!
 {% endblock %}
 ```
 
-When we render this template, Twig will use `basic.html.twig`, but then replace any instances of the `content` block with the contents of the `content` block we've defined in the child template.
+When we render this template, Twig will use `base.html.twig`, but then replace any instances of the `content` block with the contents of the `content` block we've defined in the child template.
 
->>> Like with OOP, child templates can themselves be extended, creating a hierarchy of template inheritance.  For example, in the `core` sprinkle, `layouts/default.html.twig` extends `layouts/basic.html.twig`, and `pages/index.html.twig` extends `layouts/default.html.twig`.
+>>> Like with OOP, child templates can themselves be extended, creating a hierarchy of template inheritance.  For example, in the `core` sprinkle, `pages/abstract/default.html.twig` extends `pages/abstract/base.html.twig`, and `pages/index.html.twig` extends `pages/abstract/default.html.twig`.
 
+### Partial templates
 
-### mail/
+Sometimes, we want to reuse a snippet across multiple different templates - for example, a footer or a message box that needs to appear in multiple different types of pages.  We refer to these types of templates as **partial templates**.   Partial templates can be included in another template via Twig's [`include` tag](http://twig.sensiolabs.org/doc/2.x/tags/include.html).  Suppose, for example, we have a page template:
 
-`mail/` contains email templates - see [Chapter 11](/mail) for more information.
+```twig
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="generator" content="UserFrosting" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="description" content="{% block page_description %}This page has not yet been configured.{% endblock %}">
+        <meta name="author" content="{% block page_author %}{{ site.author }}{% endblock %}">
 
-### pages/
+        <title>{{ site.title }} | {% block page_title %}New Page{% endblock %}</title>
 
-You can think of the `layouts/` directory as a place to put your "abstract" templates - templates that are meant to be extended by other templates rather than being used directly.  `pages/` on the other hand, contains the concrete templates that correspond to specific pages in your application.  For example, the main content template for `http://owlfancy.com/supplies/preening` might be located at `pages/supplies/preening.html.twig`.
+        {% include "pages/partials/favicons.html.twig" %}
+
+        ...
+```
+
+The last line `{% include "pages/partials/favicons.html.twig" %}` tells Twig to insert the contents of the `pages/partials/favicons.html.twig` template.  Additional parameters can be passed to `include`, which will override any variables of the same name that were passed to the main template:
+
+```twig
+<div class="box-body">
+    {% include "tables/users.html.twig" with {
+            "table" : {
+                "id" : "table-users",
+                "columns" : ["last_activity"]
+            }
+        }
+    %}
+</div>
+```
+
+This sets custom values for the `table` variable used in `tables/users.html.twig`.
+
+Templates in the following directories are all "partial" templates:
+
+```
+templates/
+├── forms/
+├── navigation/
+├── pages/
+    └── partials/
+└── tables/
+```
+
+### Mail templates
+
+`mail/` contains email templates - see [Mail](/mail) for more information.
 
 ## Overriding Sprinkle templates
 
@@ -211,7 +221,7 @@ To completely override a template in a Sprinkle, simply redefine it with the sam
 
 ```twig
 
-{% extends "layouts/guest.html.twig" %}
+{% extends "pages/abstract/default.html.twig" %}
 
 {% set page_active = "about" %}
 
@@ -233,7 +243,7 @@ To completely override a template in a Sprinkle, simply redefine it with the sam
 
 ```twig
 
-{% extends "layouts/guest.html.twig" %}
+{% extends "pages/abstract/default.html.twig" %}
 
 {% set page_active = "about" %}
 

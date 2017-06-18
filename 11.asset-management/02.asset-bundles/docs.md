@@ -176,21 +176,21 @@ The complete list collision rules that exist is:
 
 You can use the `assets.css()` and `assets.js()` helpers anywhere in a Twig template, of course, but best practice dictates that CSS links should go in the `<head>` element of your page, and Javascript tags should go just at the end of your `<body>` element.
 
-To facilitate placement of CSS and Javascript tags, the base layout template `layouts/basics.html.twig` defines a number of template blocks.  For CSS, these blocks are:
+To facilitate placement of CSS and Javascript tags, the base abstract template `pages/abstract/base.html.twig` defines a number of template blocks.  For CSS, these blocks are:
 
 ```
 {% block stylesheets %}
-    {# Override this block in a child layout template or page template to override site-level stylesheets. #}
+    {# Override this block in a child abstract template or page template to override site-level stylesheets. #}
     {% block stylesheets_site %}
         <!-- Include main CSS asset bundle -->
         {{ assets.css() | raw }}
     {% endblock %}
 
-    {# Override this block in a child layout template or page template to specify or override stylesheets for groups of similar pages. #}
+    {# Override this block in a child abstract template or page template to specify or override stylesheets for groups of similar pages. #}
     {% block stylesheets_page_group %}
     {% endblock %}
 
-    {# Override this block in a child layout template or page template to specify or override page-level stylesheets. #}
+    {# Override this block in a child abstract template or page template to specify or override page-level stylesheets. #}
     {% block stylesheets_page %}
     {% endblock %}
 {% endblock %}
@@ -200,7 +200,7 @@ Similarly, for Javascript assets, we have:
 
 ```
 {% block scripts %}
-    {# Override this block in a child layout template or page template to override site-level scripts. #}
+    {# Override this block in a child abstract template or page template to override site-level scripts. #}
     {% block scripts_site %}
         <!-- Load jQuery -->
         <script src="//code.jquery.com/jquery-2.2.4.min.js" ></script>
@@ -210,11 +210,11 @@ Similarly, for Javascript assets, we have:
         {{ assets.js() | raw }}
     {% endblock %}
 
-    {# Override this block in a child layout template or page template to specify or override scripts for groups of similar pages. #}
+    {# Override this block in a child abstract template or page template to specify or override scripts for groups of similar pages. #}
     {% block scripts_page_group %}
     {% endblock %}
 
-    {# Override this block in a child layout template or page template to specify or override page-level scripts. #}
+    {# Override this block in a child abstract template or page template to specify or override page-level scripts. #}
     {% block scripts_page %}
     {% endblock %}
 {% endblock %}
@@ -222,4 +222,4 @@ Similarly, for Javascript assets, we have:
 
 The main idea is for each page to include no more than three different bundles of each type - a **sitewide bundle**, containing assets that every page on your site uses; a **page group bundle**, to share assets among sets of similar pages; and a **page-specific bundle**, for assets that are specific enough to only be needed on one page.
 
->>>>>> You may want to create a child layout that extends `layouts/basic.html.twig` for pages that share a common asset bundle.  In your child layout, you can inject page group asset bundles by defining the `stylesheets_page_group` and `scripts_page_group` bundles.
+>>>>>> You may want to create a child abstract that extends `pages/abstract/base.html.twig` for pages that share a common asset bundle.  In your child template, you can inject page group asset bundles by defining the `stylesheets_page_group` and `scripts_page_group` bundles.
