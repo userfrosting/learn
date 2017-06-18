@@ -73,7 +73,7 @@ echo $this->ci->translator->translate("ACCOUNT_USER_CHAR_LIMIT", [
 // Returns "Tu nombre de usuario debe estar entre 4 y 200 caracteres de longitud."
 ```
 
-The translator service is also available as a [Twig function](/templating-with-twig). Placeholder can be passed to the Twig function too:
+The translator service is also available as a [Twig function](/templating-with-twig). Placeholders can be passed to the Twig function too:
 
 ```
 {{ translate("ACCOUNT_SPECIFY_USERNAME") }}
@@ -84,7 +84,7 @@ The translator service is also available as a [Twig function](/templating-with-t
 
 ## Setting up the site language
 
-The site default languages can be set in the [config](/sprinkles/contents#config) parameters. The `site.locales` contains the locale to use for global, guest users. Multiple locales can be listed, separated by commas, to indicate the locale precedence order. For example, `'locales' => 'en_US, fr_FR'` means that the _French_ language will be loaded first and if the requested key doesn't exist in French, it will try to use the _English_ one instead. 
+The site default languages can be set in the [config](/configuration/config-files) parameters. The `site.locales` contains the locale to use for global, guest users. Multiple locales can be listed, separated by commas, to indicate the locale precedence order. For example, `'locales' => 'en_US, fr_FR'` means that the _French_ language will be loaded first and if the requested key doesn't exist in French, it will try to use the _English_ one instead. 
 
 >>>>>> A user can also use its own language. This is defined in the user's profile.
 
