@@ -14,7 +14,7 @@ UserFrosting is a free, open-source jumping-off point for building user-centered
 
 ## Server Requirements
 
-UserFrosting has a few system requirements. Of course, all of these requirements are satisfied by the [UserFrosting Homestead](/installation/environment/homestead) virtual machine, so it's highly recommended that you use Homestead as your local UserFrosting development environment.
+UserFrosting has a few system requirements. Of course, all of these requirements are satisfied by the [Homestead](/installation/environment/homestead) virtual machine, so it's highly recommended that you use Homestead as your local UserFrosting development environment.
 
 However, if you are not using Homestead, you will need to make sure your local UserFrosting development environment meets the following requirements:
 
@@ -66,13 +66,16 @@ UserFrosting needs to be able to write to the file system for a few directories:
 ## Web Server Configuration
 
 ### Apache
+
 UserFrosting includes a `public/.htaccess` file that is used to provide URLs without the index.php front controller in the path. Before serving UserFrosting with Apache, be sure to enable the `mod_rewrite` module so the `.htaccess` file will be honored by the server.
 
 ### Nginx
-!TODO
+
+Use the configuration file provided in `webserver-configs/nginx.conf`.
 
 ### IIS
-!TODO
+
+Please see the recipe [Hosting with IIS](/recipes/hosting-with-iis).
 
 ## Visit your website
 

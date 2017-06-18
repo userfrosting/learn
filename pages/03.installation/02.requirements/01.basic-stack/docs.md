@@ -18,7 +18,7 @@ The basic requirements for running UserFrosting are pretty typical of any web fr
 
 ### Web Server Requirements
 
-#### Apache
+#### Special requirements for Apache users
 
 If you are using Apache (the default web server that comes installed with XAMPP, WampServer, and most shared web hosting services), check that you have the Rewrite Engine module (`mod_rewrite.c`) installed and enabled.
 
