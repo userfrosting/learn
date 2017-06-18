@@ -17,37 +17,50 @@ Our general constraints are:
 
 ## Set up your site Sprinkle
 
-If you haven't already, set up your site Sprinkle, as per the instructions in ["Your First UserFrosting Site"](/sprinkles/first-site).  For the purposes of this tutorial, we will call our Sprinkle `extend-user`.
+If you haven't already, set up your site Sprinkle, as per the instructions in [Your First UserFrosting Site](/sprinkles/first-site).  For the purposes of this tutorial, we will call our Sprinkle `extend-user`.
 
 ## Create a migration
 
-Follow the directions in [Chapter 6](/database/migrations) for creating a new migration in your Sprinkle.  For our example, let's assume we want to add the fields `city` and `country`:
+Follow the directions in [Database Migrations](/database/migrations) for creating a new migration in your Sprinkle.  For our example, let's assume we want to add the fields `city` and `country`:
 
 ```php
 <?php
-    use Illuminate\Database\Capsule\Manager as Capsule;
-    use Illuminate\Database\Schema\Blueprint;
-    /**
-     * Member table
-     */
-    if (!$schema->hasTable('members')) {
-        $schema->create('members', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->unsigned()->unique();
-            $table->string('city', 255)->nullable();
-            $table->string('country', 255)->nullable();
-            $table->timestamps();
+namespace UserFrosting\Sprinkle\Site\Database\Migrations\v400;
 
-            $table->engine = 'InnoDB';
-            $table->collation = 'utf8_unicode_ci';
-            $table->charset = 'utf8';
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->index('user_id');
-        });
-        echo "Created table 'members'..." . PHP_EOL;
-    } else {
-        echo "Table 'members' already exists.  Skipping..." . PHP_EOL;
+use UserFrosting\System\Bakery\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Builder;
+
+class MembersTable extends Migration
+{
+    public $dependencies = [
+        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\UsersTable'
+    ];
+
+    public function up()
+    {
+        if (!$this->schema->hasTable('members')) {
+            $this->schema->create('members', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id')->unsigned()->unique();
+                $table->string('city', 255)->nullable();
+                $table->string('country', 255)->nullable();
+                $table->timestamps();
+    
+                $table->engine = 'InnoDB';
+                $table->collation = 'utf8_unicode_ci';
+                $table->charset = 'utf8';
+                $table->foreign('user_id')->references('id')->on('users');
+                $table->index('user_id');
+            });
+        }
     }
+
+    public function down()
+    {
+        $this->schema->drop('members');
+    }
+}
 ```
 
 ## Create your data models
@@ -56,12 +69,12 @@ First thing's first, we'll create a data model that corresponds to our new `memb
 
 ```php
 <?php
-namespace UserFrosting\Sprinkle\ExtendUser\Model;
+namespace UserFrosting\Sprinkle\ExtendUser\Database\Models;
 
-use UserFrosting\Sprinkle\Core\Model\UFModel;
+use UserFrosting\Sprinkle\Core\Database\Models\Model;
 
-class Member extends UFModel {
-
+class Member extends Model
+{
     public $timestamps = true;
 
     /**
@@ -105,7 +118,7 @@ class Member extends UFModel {
 }
 ```
 
-This should be placed in the `src/Model/` directory in your own Sprinkle.  Notice that we set three properties: `$timestamps`, which enables automatic `created_at` and `updated_at` timestamps for our model, `$table`, which should contain the name of your table, and `$fillable`, which should be an array of column names that you want to allow to be [mass assignable](https://laravel.com/docs/5.3/eloquent#mass-assignment) when creating new instances of the model.
+This should be placed in the `src/Database/Models/` directory in your own Sprinkle.  Notice that we set three properties: `$timestamps`, which enables automatic `created_at` and `updated_at` timestamps for our model, `$table`, which should contain the name of your table, and `$fillable`, which should be an array of column names that you want to allow to be [mass assignable](https://laravel.com/docs/5.4/eloquent#mass-assignment) when creating new instances of the model.
 
 We also define two methods.  `scopeJoinUser` allows us to automatically join the columns in the `users` table when we use Laravel's query builder to retrieve `members`.  For example:
 
@@ -113,7 +126,7 @@ We also define two methods.  `scopeJoinUser` allows us to automatically join the
 $members = Member::where('city', 'London')->joinUser()->get();
 ```
 
-The second method, `user()`, defines a [one-to-one relationship](https://laravel.com/docs/5.3/eloquent-relationships#one-to-one) between `Member` and `User`.  This is similar to what `scopeJoinUser()` does, except that it actually creates a completely separate `User` object that you can access as a property of an `Member`:
+The second method, `user()`, defines a [one-to-one relationship](https://laravel.com/docs/5.4/eloquent-relationships#one-to-one) between `Member` and `User`.  This is similar to what `scopeJoinUser()` does, except that it actually creates a completely separate `User` object that you can access as a property of an `Member`:
 
 ```php
 $member = Member::where('city', 'London')->first();
@@ -130,11 +143,11 @@ To bring the two entities together we'll create a third model, `MemberUser`, whi
 
 ```php
 <?php
-namespace UserFrosting\Sprinkle\ExtendUser\Model;
+namespace UserFrosting\Sprinkle\ExtendUser\Database\Models;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use UserFrosting\Sprinkle\Account\Model\User;
-use UserFrosting\Sprinkle\ExtendUser\Model\Member;
+use UserFrosting\Sprinkle\Account\Database\Models\User;
+use UserFrosting\Sprinkle\ExtendUser\Database\Models\Member;
 
 trait LinkMember {
     /**
@@ -267,16 +280,16 @@ There's a lot going on here, so just a quick tour:
 - `LinkMember` is a [trait](http://php.net/manual/en/language.oop5.traits.php) used to attach handlers to events for our model.  In this case, we use the `saved` event to tell Laravel to save the related `Member` model any time the `MemberUser` is saved.  It will also call `createRelatedMemberIfNotExists` which...well, does exactly what the name says it does.
 - We add `city` and `country` to the model's `fillable` attributes, so that they can be directly passed in to the `MemberUser` model's constructor.
 - The `__isset` method is overridden to allow Twig to automatically fetch the related `member` object (e.g., `current_user.member`).  See [this answer](http://stackoverflow.com/questions/29514081/cannot-access-eloquent-attributes-on-twig/35908957#35908957) for an explanation of why this is needed.
-- We have two [custom accessor methods](https://laravel.com/docs/5.3/eloquent-mutators), `getCityAttribute` and `getCountryAttribute`, and two custom mutator methods, `setCityAttribute` and `setCountryAttribute`.  These allow us to interact with the new fields directly through the `MemberUser` object (e.g., `$memberUser->city` and `$memberUser->country`), passing them through to the related `Member` model.
+- We have two [custom accessor methods](https://laravel.com/docs/5.4/eloquent-mutators), `getCityAttribute` and `getCountryAttribute`, and two custom mutator methods, `setCityAttribute` and `setCountryAttribute`.  These allow us to interact with the new fields directly through the `MemberUser` object (e.g., `$memberUser->city` and `$memberUser->country`), passing them through to the related `Member` model.
 - The `member()` method defines the relationship with the underlying `Member` object.
 
 ## Map your virtual model
 
 The problem, of course, is that all of the controllers in the Sprinkle that _defined_ the `User` model, are still _using_ the `User` model (this is simply how inheritance works).
 
-Fortunately, the default Sprinkles never directly reference the `User` class.  Instead, they use the [class mapper](/sprinkles/contents#dynamic-class-mapper).  All we need to do, then, is remap the class mapper's `user` identifier to our new class, `MemberUser`.  While we're at it, we can map an identifier for `Member` as well.  This can be done by extending the `classMapper` service in a custom [service provider](/services/extending-services).
+Fortunately, the default Sprinkles never directly reference the `User` class.  Instead, they use the [class mapper](/advanced/class-mapper).  All we need to do, then, is remap the class mapper's `user` identifier to our new class, `MemberUser`.  While we're at it, we can map an identifier for `Member` as well.  This can be done by extending the `classMapper` service in a custom [service provider](/services/extending-services).
 
-Create a class `ServicesProvider/ServicesProvider`, and a Sprinkle initializer class, `ExtendUser.php`:
+Create a class `ServicesProvider/ServicesProvider`, if you don't already have one:
 
 ```php
 <?php
@@ -300,39 +313,10 @@ class ServicesProvider
          * Mappings added: MemberUser
          */
         $container->extend('classMapper', function ($classMapper, $c) {
-            $classMapper->setClassMapping('member', 'UserFrosting\Sprinkle\ExtendUser\Model\Member');
-            $classMapper->setClassMapping('user', 'UserFrosting\Sprinkle\ExtendUser\Model\MemberUser');
+            $classMapper->setClassMapping('member', 'UserFrosting\Sprinkle\ExtendUser\Database\Models\Member');
+            $classMapper->setClassMapping('user', 'UserFrosting\Sprinkle\ExtendUser\Database\Models\MemberUser');
             return $classMapper;
         });
-    }
-}
-```
-
- `ExtendUser.php`:
-
-```
-<?php
-
-// In /app/sprinkles/site/src/ExtendUser.php
-
-namespace UserFrosting\Sprinkle\ExtendUser;
-
-use UserFrosting\Sprinkle\ExtendUser\ServicesProvider\ServicesProvider;
-use UserFrosting\Sprinkle\Core\Initialize\Sprinkle;
-
-/**
- * Bootstrapper class for the 'extend-user' sprinkle.
- *
- */
-class ExtendUser extends Sprinkle
-{
-    /**
-     * Register services.
-     */
-    public function init()
-    {
-        $serviceProvider = new ServicesProvider();
-        $serviceProvider->register($this->ci);
     }
 }
 ```
@@ -421,29 +405,23 @@ $app->group('/admin/users', function () {
 
 ## Override schemas
 
-Finally, we need to override our request schemas, `user/create.json` and `user/edit-info.json`, to allow the new `city` and `country` fields to be submitted during user creation and update requests.  Copy both of these from the `admin` Sprinkle's `schema/user/` directory to your own Sprinkle's `schema/user/` directory.  Add validation rules for the new fields to both schema:
+Finally, we need to override our request schemas, `user/create.yaml` and `user/edit-info.yaml`, to allow the new `city` and `country` fields to be submitted during user creation and update requests.  Copy both of these from the `admin` Sprinkle's `schema/user/` directory to your own Sprinkle's `schema/user/` directory.  Add validation rules for the new fields to both schema:
 
 ```json
-    "city" : {
-        "validators" : {
-            "length" : {
-                "label" : "City",
-                "min" : 1,
-                "max" : 255,
-                "message" : "VALIDATE.LENGTH_RANGE"
-            }
-        }
-    },
-    "country" : {
-        "validators" : {
-            "length" : {
-                "label" : "Country",
-                "min" : 1,
-                "max" : 255,
-                "message" : "VALIDATE.LENGTH_RANGE"
-            }
-        }
-    }
+city:
+  validators:
+    length:
+      label: City
+      min: 1
+      max: 255
+      message: VALIDATE.LENGTH_RANGE
+country:
+  validators:
+    length:
+      label: Country
+      min: 1
+      max: 255
+      message: VALIDATE.LENGTH_RANGE
 ```
 
 That's it!  A full implementation of this can be found in the [`extend-user`](https://github.com/userfrosting/extend-user) repository.  Check it out!
