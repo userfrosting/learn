@@ -52,6 +52,7 @@ See [Cache](http://learn.local/advanced/cache/usage) for more info.
 - `sprinkles.json` moved to `app/` directory
 - `bundle.config.json` renamed to `asset-bundles.json`
 - `core` sprinkle must be explicitly listed in `sprinkles.json`
+- Major reorganization of templates.  The base page template is now one of `pages/abstract/base.html.twig`, `pages/abstract/default.html.twig`, or `pages/abstract/dashboard.html.twig`.  Modals, forms, and tables have been moved out of `components/`.  Navigation components now have their own top-level `navigation/` directory.
 - New CLI tools for installing.  Removed `migrations/install.php`.
 - Models moved from `src/Model` to `src/Database/Models`
 - Migrations moved from `migrations/` to `src/Database/Migrations`, and must extend the base `Migration` class to implement `up` and `down` methods.
@@ -100,7 +101,8 @@ $ php bakery bake
 4. Move your models from `src/Model` to `src/Database/Models`, and change them to extend the base 'UserFrosting\Sprinkle\Core\Database\Models\Model' class.  Keep in mind that when you move your classes to a different directory, you need to change their `namespace` as well to comply with PSR-4 autoloading rules.
 5. For each database table you create in your `migrations/*` file, create a new class in `src/Database/Migrations` instead.  This should extend the base `UserFrosting\System\Bakery\Migration` class to implement `up` and `down` methods.  See [Migrations](/database/migrations) for more information.
 6. If you reference any default UserFrosting assets in your templates or asset bundles, you will need to update their paths (see Major Changes above).
-7. Check the "minor breaking changes" section above, to see if there are any other changes that might affect your Sprinkle.
+7. Update your template structure to reflect the new [template organization](/templating-with-twig/sprinkle-templates#Templateorganization).  You will need to change the `extends` path to point to the new location of various layout/abstract templates that have moved.  In particular, page base templates have moved to `pages/abstract/`, the modal base template is now `modals/modal.html.twig`, and the table base template is `tables/table-paginated.html.twig`.  Various other page components have been moved to `forms/`, `navigation/`, or `pages/partials/`.
+8. Check the "minor breaking changes" section above, to see if there are any other changes that might affect your Sprinkle.
 
 The database schema have not changed from UF 4.0 - there is no need to upgrade your database.
 
