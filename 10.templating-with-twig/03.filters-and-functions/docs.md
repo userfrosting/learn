@@ -17,3 +17,13 @@ You can perform permission checks in your Twig templates using the `checkAccess`
 </li>
 {% endif %}
 ```
+
+### translate
+
+```
+{{ translate("ACCOUNT_SPECIFY_USERNAME") }}
+
+{{ translate("ACCOUNT_USER_CHAR_LIMIT", {min: 4, max: 200}) }}
+```
+
+To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
