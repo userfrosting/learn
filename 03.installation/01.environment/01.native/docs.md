@@ -28,7 +28,7 @@ Make certain that you have [properly configured](/installation/requirements/basi
 
 ### Other required software
 
-Please make sure that you have the following installed before attempting to install UserFrosting:
+Please **make sure** that you have the following installed **before** attempting to install UserFrosting:
 
 - [Git](/installation/requirements/essential-tools-for-php#git)
 - [Composer](/installation/requirements/essential-tools-for-php#composer)
