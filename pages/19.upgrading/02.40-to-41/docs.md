@@ -97,7 +97,7 @@ $ php bakery bake
 2. Rename your service provider class (if you have one) to `src/ServicesProvider/ServicesProvider.php`.  This will let UserFrosting load it automatically.
 3. Change your Sprinkle's bootstrapper class (if you have one) - for example, `src/Site.php`.  This should now extend `UserFrosting\System\Sprinkle\Sprinkle`.  Get rid of the `init` method.  Instead, you should create methods to [hook into the UserFrosting lifecycle](/advanced/application-lifecycle), if necessary.  Otherwise, you can leave this class empty, or delete it entirely.
 4. Move your models from `src/Model` to `src/Database/Models`, and change them to extend the base 'UserFrosting\Sprinkle\Core\Database\Models\Model' class.  Keep in mind that when you move your classes to a different directory, you need to change their `namespace` as well to comply with PSR-4 autoloading rules.
-5. For each database table you create in your `migrations/*` file, create a new class in `src/Database/Migrations` instead.  This should extend the base `UserFrosting\System\Bakery\Migration` class to implement `up` and `down` methods.  See [Migrations](database/migrations) for more information.
+5. For each database table you create in your `migrations/*` file, create a new class in `src/Database/Migrations` instead.  This should extend the base `UserFrosting\System\Bakery\Migration` class to implement `up` and `down` methods.  See [Migrations](/database/migrations) for more information.
 6. If you reference any default UserFrosting assets in your templates or asset bundles, you will need to update their paths (see Major Changes above).
 7. Check the "minor breaking changes" section above, to see if there are any other changes that might affect your Sprinkle.
 
