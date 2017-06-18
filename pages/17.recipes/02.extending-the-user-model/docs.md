@@ -334,7 +334,7 @@ The class mapper will call the method on the `MemberUser` class instead.
 
 ## Override the `user.html.twig` template to display the new fields
 
-If we want these new fields to actually show up in our application, we need to add them to our templates.  For example, if we add them to `components/forms/user.html.twig`, they will be available in user creation, editing, and viewing contexts.  So, let's do that by **copying** the default `components/forms/user.html.twig` from the `admin` Sprinkle to our own, and then adding `city` and `country`:
+If we want these new fields to actually show up in our application, we need to add them to our templates.  For example, if we add them to `forms/user.html.twig`, they will be available in user creation and editing forms.  So, let's do that by **copying** the default `forms/user.html.twig` from the `admin` Sprinkle to our own, and then adding `city` and `country`:
 
 ```twig
 {% if 'address' not in form.fields.hidden %}

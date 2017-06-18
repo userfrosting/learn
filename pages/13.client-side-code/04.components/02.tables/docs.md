@@ -16,12 +16,12 @@ A typical application feature is to display a table of entities from a server-si
 
 A typical use case is to create a "skeleton" `<table>` in your Twig template, and then use `ufTable` to dynamically retrieve data from a JSON data source and construct the rows.  As the user sorts columns, inputs filter queries, and pages through the data, `ufTable` will submit new AJAX requests to the server and refresh the `<table>` with the results of the updated queries.
 
-For example, consider the Users table.  First, we create a partial template that extends the base `components/tables/table-paginated.html.twig` template (we can include this partial template in a page template using the `include` tag later):
+For example, consider the Users table.  First, we create a partial template that extends the base `tables/table-paginated.html.twig` template (we can include this partial template in a page template using the `include` tag later):
 
-**components/tables/users-custom.html.twig**:
+**tables/users-custom.html.twig**:
 
 ```twig
-{% extends "components/tables/table-paginated.html.twig" %}
+{% extends "tables/table-paginated.html.twig" %}
 
 {% block table %}
     <table id="{{table.id}}" class="tablesorter table table-bordered table-hover table-striped" data-sortlist="{{table.sortlist}}">
@@ -93,7 +93,7 @@ To use your table, simply `include` your table partial template in your page ins
 ```twig
 <div id="myUserTable">
     <button class="btn btn-sm btn-default js-uf-table-download"><i class="fa fa-table"></i> Download CSV</button>
-    {% include "components/tables/users-custom.html.twig" %}
+    {% include "tables/users-custom.html.twig" %}
 </div>
 ```
 

@@ -31,7 +31,7 @@ By default, UserFrosting will create a global `site` Javascript variable on ever
 - `site.csrf.name`: The value of the CSRF `name` attribute.
 - `site.csrf.value`: The value of the CSRF `value` attribute.
 
-Notice that all of these variables are nested under a single, top-level `site` object which is constructed in the `core/templates/components/config.js.twig` template.  By formatting these as keys in a JSON object, rather than making each one an individual variable, we avoid polluting Javascript's global namespace with too many identifiers.
+Notice that all of these variables are nested under a single, top-level `site` object which is constructed in the `core/templates/pages/partials/config.js.twig` template.  By formatting these as keys in a JSON object, rather than making each one an individual variable, we avoid polluting Javascript's global namespace with too many identifiers.
 
 To add, remove, or modify the contents of the `site` object, simply override `config.js.twig` in your Sprinkle.  `config.js.twig` itself pulls its values from Twig's global variables (`site`, `current_user`, etc).  Keep in mind that you can add global variables to Twig by [creating a Twig extension](https://twig.sensiolabs.org/doc/2.x/advanced.html#creating-an-extension) and then loading your extension by [extending the `view` service](services/extending-services#extending-existing-services).  This process is summarized in this diagram:
 
@@ -41,7 +41,7 @@ To add, remove, or modify the contents of the `site` object, simply override `co
 
 ## Page-specific variables
 
-For your convenience, the `core/templates/components/page.js.twig` template will generate a `page` JSON object.  This is similar to `site`, but is populated by passing an array of data to the `page` key when rendering a template:
+For your convenience, the `core/templates/pages/partials/page.js.twig` template will generate a `page` JSON object.  This is similar to `site`, but is populated by passing an array of data to the `page` key when rendering a template:
 
 ```php
 // In account/src/Controller/AccountController.php
@@ -73,7 +73,7 @@ You can then include the `page.js.twig` component in your page template's `scrip
 {% block scripts_page %}
     <!-- Include page-specific variables -->
     <script>
-        {% include "components/page.js.twig" %}
+        {% include "pages/partials/page.js.twig" %}
     </script>
 
     <!-- Include page-specific asset bundles -->

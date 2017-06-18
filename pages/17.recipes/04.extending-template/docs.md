@@ -10,10 +10,10 @@ taxonomy:
 
 While sprinkles are able to [overwrite an entire Twig template](/templating-with-twig/sprinkle-templates#OverridingSprinkletemplates) defined in another sprinkle, they can also replace part of a template instead of overwriting everything in them.
 
-This is achieved by referencing another sprinkle directly in the `extends` Twig tag. Typically, templates files will extend a base layout. For example:
+This is achieved by referencing another sprinkle directly in the `extends` Twig tag. Typically, page templates files will extend a base template. For example:
 
 ```html
-{% extends "layouts/dashboard.html.twig" %}
+{% extends "pages/abstract/dashboard.html.twig" %}
 ```
 
 You can instead extend the same file you're in by adding the sprinkle name in front of the name. For example, for the `pages/user.html.twig` file in the `admin` sprinkle, you can do :
@@ -22,15 +22,15 @@ You can instead extend the same file you're in by adding the sprinkle name in fr
 {% extends "@admin/user.html.twig" %}
 ```
 
-This will allow you to replace any Twig `block` definition contained from the `admin` version of the `pages/user.html.twig` template.
+This will allow you to replace any Twig `block` definition contained from the `admin` version of the `pages/user.html.twig` template.
 
 
 ## Adding custom menu entries
 
-Adding new link to the built-in menus can be done using the technique above. For example, to add a link to the sidebar menu, all you have to do is create a `components/dashboard/sidebar-menu.html.twig` template in your sprinkle and extending the admin sprinkle version of the same file. You can then add content to the `navigation` block :
+Adding new link to the built-in menus can be done using the technique above. For example, to add a link to the sidebar menu, all you have to do is create a `navigation/sidebar-menu.html.twig` template in your sprinkle and extending the admin sprinkle version of the same file. You can then add content to the `navigation` block :
 
 ```html
-{% extends "@admin/components/dashboard/sidebar-menu.html.twig" %}
+{% extends "@admin/navigation/sidebar-menu.html.twig" %}
 
 {% block navigation %}
     
