@@ -65,6 +65,7 @@ See [Cache](http://learn.local/advanced/cache/usage) for more info.
 - Middleware should be loaded in Sprinkle bootstrap classes in `onAddGlobalMiddleware`, instead of `index.php`.
 - Exception handlers moved from `src/Handler` to `src/Error/Handler`.
 - Interface for `ExceptionHandler` has changed.  There is no longer `ajaxHandler` and `standardHandler` - everything is handled via `handle` now.  Decisions about request type (ajax, standard) and error display mode (settings.displayErrorDetails, site.debug.ajax) are now delegated to the handlers.  Error rendering is delegated to `src/Error/Renderer` classes.
+- The member variables in `HttpException` have been renamed.  `http_error_code => httpErrorCode`, and `default_message => defaultMessage`.  If you have any custom child exceptions that extend `HttpException`, you'll need to update these variable names to work properly with the `HttpExceptionHandler`.
 - `src/Facades/Facade` moved to `system/Facade`.
 - All loggers log to a common `userfrosting.log` now
 - `ufTable` now uses the pagination widget instead of the plugin, which changes the naming of their options if you happened to override any of the defaults.
