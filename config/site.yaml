@@ -24,4 +24,7 @@ redirects:
     /building-pages/assets/basic-usage: /asset-management
     /building-pages/assets/asset-bundles: /asset-management/asset-bundles
     /building-pages/assets/compiled-assets: /asset-management/compiled-assets
+    /error-handling: /advanced/error-handling
+    /other-services/cache: /advanced/cache
+    /going-live/seo: /background/seo
     
