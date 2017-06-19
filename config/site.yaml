@@ -25,6 +25,10 @@ redirects:
     /building-pages/assets/asset-bundles: /asset-management/asset-bundles
     /building-pages/assets/compiled-assets: /asset-management/compiled-assets
     /error-handling: /advanced/error-handling
-    /other-services/cache: /advanced/cache
+    /other-services: /advanced
+    /other-services/cache: /advanced/caching
+    /other-services/locator: /advanced/locator
+    /other-services/sessions: /advanced/sessions
+    /other-services/logging: /advanced/logging
     /going-live/seo: /background/seo
     
