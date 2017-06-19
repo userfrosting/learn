@@ -9,6 +9,7 @@ summary:
   size: 300
 
 redirects:
+    /basics/develop-locally-serve-globally: /background/develop-locally-serve-globally
     /basics/overview: /installation
     /basics/installation: /installation
     /basics/requirements: /installation/requirements
@@ -18,6 +19,12 @@ redirects:
     /basics/getting-help: /troubleshooting/getting-help
     /background/client-side: /troubleshooting/debugging
     /background/server-side: /troubleshooting/debugging
+    /routes-and-controllers/client-input/overview: /routes-and-controllers/client-input
+    /routes-and-controllers/user-input: /routes-and-controllers/client-input
+    /routes-and-controllers/user-input/validation: /routes-and-controllers/client-input/validation
+    /routes-and-controllers/user-input/csrf-guard: /routes-and-controllers/client-input/csrf-guard
+    /routes-and-controllers/user-input/throttle: /routes-and-controllers/client-input/throttle
+    /routes-and-controllers/user-input/ajax: /routes-and-controllers/client-input/ajax
     /building-pages: /recipes/creating-a-new-page
     /building-pages/templating-with-twig: /templating-with-twig
     /building-pages/assets: /asset-management
@@ -30,5 +37,10 @@ redirects:
     /other-services/locator: /advanced/locator
     /other-services/sessions: /advanced/sessions
     /other-services/logging: /advanced/logging
+    /other-services/mail: /mail
+    /client-side-code/variables-and-templating: client-side-code/exporting-variables
+    /forms-and-tables: /client-side-code/components
+    /forms-and-tables/forms: /client-side-code/components/forms
+    /forms-and-tables/tables: /client-side-code/components/tables
     /going-live/seo: /background/seo
     
