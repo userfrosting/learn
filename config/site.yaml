@@ -9,8 +9,19 @@ summary:
   size: 300
 
 redirects:
+    /basics/overview: /installation
     /basics/installation: /installation
+    /basics/requirements: /installation/requirements
     /basics/requirements/basic-stack: /installation/requirements/basic-stack
     /basics/requirements/essential-tools-for-php: /installation/requirements/essential-tools-for-php
     /basics/requirements/develop-locally-serve-globally: /background/develop-locally-serve-globally
     /basics/getting-help: /troubleshooting/getting-help
+    /background/client-side: /troubleshooting/debugging
+    /background/server-side: /troubleshooting/debugging
+    /building-pages: /recipes/creating-a-new-page
+    /building-pages/templating-with-twig: /templating-with-twig
+    /building-pages/assets: /asset-management
+    /building-pages/assets/basic-usage: /asset-management
+    /building-pages/assets/asset-bundles: /asset-management/asset-bundles
+    /building-pages/assets/compiled-assets: /asset-management/compiled-assets
+    
