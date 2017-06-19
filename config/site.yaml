@@ -7,3 +7,10 @@ metadata:
 taxonomies: [category,tag]
 summary:
   size: 300
+
+redirects:
+    /basics/installation: /installation
+    /basics/requirements/basic-stack: /installation/requirements/basic-stack
+    /basics/requirements/essential-tools-for-php: /installation/requirements/essential-tools-for-php
+    /basics/requirements/develop-locally-serve-globally: /background/develop-locally-serve-globally
+    /basics/getting-help: /troubleshooting/getting-help
