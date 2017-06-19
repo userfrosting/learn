@@ -42,7 +42,7 @@ Sprunjes can now generate enumerations of unique values for a specific field.  V
 
 ### Per user cache instance & Redis cache driver
 
-See [Cache](http://learn.local/advanced/cache/usage) for more info.
+See [Cache](/advanced/caching/usage) for more info.
 
 ## Breaking changes
 
