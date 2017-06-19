@@ -39,7 +39,7 @@ $ php bakery bake
 
 The `debug` command will run a series of tests to make sure everything is ready to run UserFrosting on your system. If you have trouble accessing your UserFrosting installation, you should run this command first to make sure basic requirements are met. 
 
-The information displayed by this command can also be useful to other people when [asking for help](/installation/getting-help) and submitting new issues on Github. 
+The information displayed by this command can also be useful to other people when [asking for help](/troubleshooting/getting-help) and submitting new issues on Github. 
 
 ```bash
 $ php bakery debug
@@ -47,7 +47,7 @@ $ php bakery debug
 
 ### setup
 
-The `setup` command can be used to setup the database and email configuration. This can also be done manually by editing the `app/.env` file or using global server environment variables. See [The .env file](/installation/env-file) chapter for more information about that file.
+The `setup` command can be used to setup the database and email configuration. This can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about that file.
 
 ```bash
 $ php bakery setup 
@@ -61,7 +61,7 @@ $ php bakery setup
 
 The `build-assets` command is an alias for the node.js and npm scripts used for asset management. The `/build` directory contains thoses scripts and configuration files required to download Javascript, CSS, and other assets used by UserFrosting. This command will install Gulp, Bower and other required npm packages locally. With npm set up with all of its required packages, it can be used to automatically download and install the assets in the correct directories.
 
-See the [Pages and Assets](/asset-management) chapter for more info about asset bundles and the `compile` option.
+See the [Asset Management](/asset-management) chapter for more info about asset bundles and the `compile` option.
 
 ```bash
 $ php bakery build-assets
@@ -143,7 +143,7 @@ $ php bakery migrate:refresh
 
 ### clear-cache
 
-The `clear-cache` command takes care of deleting all the cached data. See [Chapter 16](/advanced/cache) for more information.
+The `clear-cache` command takes care of deleting all the cached data. See [Chapter 16](/advanced/caching) for more information.
 
 ```bash
 $ php bakery clear-cache

@@ -24,7 +24,7 @@ This service handles requests for [raw assets](/asset-management/asset-bundles#r
 
 #### cache
 
-Creates an instance of a Laravel [Cache](https://laravel.com/docs/5.4/cache). See [Chapter 16](/advanced/cache) for more information.
+Creates an instance of a Laravel [Cache](https://laravel.com/docs/5.4/cache). See [Chapter 16](/advanced/caching) for more information.
 
 #### checkEnvironment
 
