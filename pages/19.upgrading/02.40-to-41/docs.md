@@ -96,15 +96,47 @@ $ php bakery bake
 
 ### Migrating your Sprinkles
 
+#### Templates
+
+First, you'll need to update your template structure to reflect the new [template organization](/templating-with-twig/sprinkle-templates#Templateorganization):
+
+```bash
+layouts/basic.html.twig => pages/abstract/base.html.twig
+layouts/default.html.twig => pages/abstract/default.html.twig
+layouts/error.html.twig => pages/abstract/error.html.twig
+layouts/dashboard.html.twig => pages/abstract/dashboard.html.twig
+layouts/modal.html.twig => modals/modal.html.twig
+
+components/forms/* => forms/*
+components/tables/* => tables/*
+components/default/* => navigation/*
+components/dashboard/* => navigation/*
+
+components/user-card.html.twig => navigation/user-card.html.twig
+components/breadcrumb.html.twig => navigation/breadcrumb.html.twig
+components/alerts.html.twig => pages/partials/alerts.html.twig
+components/analytics.html.twig => pages/partials/analytics.html.twig
+components/config.js.twig => pages/partials/config.js.twig
+components/csrf.html.twig => forms/csrf.html.twig
+components/favicons.html.twig => pages/partials/favicons.html.twig
+components/footer.html.twig => pages/partials/footer.html.twig
+components/legal.html.twig => pages/partials/legal.html.twig
+components/page.js.twig => pages/partials/page.js.twig
+components/privacy.html.twig => pages/partials/privacy.html.twig
+```
+
+You will need to change references to the new locations of the templates that have moved  - in particular, in `extends` and `include` tags within the templates themselves, as well as references within controllers (in calls to `render`).
+
+#### Additional tasks
+
 1. Rename your Sprinkle's `bundle.config.json` to `asset-bundles.json`.
 2. Rename your service provider class (if you have one) to `src/ServicesProvider/ServicesProvider.php`.  This will let UserFrosting load it automatically.
 3. Change your Sprinkle's bootstrapper class (if you have one) - for example, `src/Site.php`.  This should now extend `UserFrosting\System\Sprinkle\Sprinkle`.  Get rid of the `init` method.  Instead, you should create methods to [hook into the UserFrosting lifecycle](/advanced/application-lifecycle), if necessary.  Otherwise, you can leave this class empty, or delete it entirely.
-4. Move your models from `src/Model` to `src/Database/Models`, and change them to extend the base 'UserFrosting\Sprinkle\Core\Database\Models\Model' class.  Keep in mind that when you move your classes to a different directory, you need to change their `namespace` as well to comply with PSR-4 autoloading rules.
+4. Move your models from `src/Model` to `src/Database/Models`, and change them to extend the base `UserFrosting\Sprinkle\Core\Database\Models\Model` class.  Keep in mind that when you move your classes to a different directory, you need to change their `namespace` as well to comply with PSR-4 autoloading rules.
 5. For each database table you create in your `migrations/*` file, create a new class in `src/Database/Migrations` instead.  This should extend the base `UserFrosting\System\Bakery\Migration` class to implement `up` and `down` methods.  See [Migrations](/database/migrations) for more information.
 6. If you reference any default UserFrosting assets in your templates or asset bundles, you will need to update their paths (see Major Changes above).
-7. Update your template structure to reflect the new [template organization](/templating-with-twig/sprinkle-templates#Templateorganization).  You will need to change the `extends` path to point to the new location of various layout/abstract templates that have moved.  In particular, page `layout/` templates have moved to `pages/abstract/`, the modal base template is now `modals/modal.html.twig`, and the table base template is `tables/table-paginated.html.twig`.  Various other page components have been moved to `forms/`, `navigation/`, or `pages/partials/`.
-8. Move your request schema from `schema/` to `schema/requests/`, and update the paths in your controllers.
-9. Check the "minor breaking changes" section above, to see if there are any other changes that might affect your Sprinkle.
+7. Move your request schema from `schema/` to `schema/requests/`, and update the paths in your controllers.
+8. Check the "minor breaking changes" section above, to see if there are any other changes that might affect your Sprinkle.
 
 The database schema have not changed from UF 4.0 - there is no need to upgrade your database.
 
