@@ -109,6 +109,8 @@ Before installing, you'll need to create a database and database user account. C
 
 ### Bake installer
 
+>>>>> We are currently getting reports of problems when running `bakery bake` on Windows due to a [problem with the target path](https://github.com/userfrosting/UserFrosting/issues/742) in npm.  If you run into a node/npm error when running `bake`, try running `npm install` directly from within the `build/` directory and then rerunning `bake`.
+
 To finish the installation and create your first UserFrosting account, we will run the command-line installer:
 
 ```bash
