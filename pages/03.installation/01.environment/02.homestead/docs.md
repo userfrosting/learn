@@ -8,17 +8,13 @@ taxonomy:
 
 >>> If this is your first time installing UserFrosting or if you're not already familiar with setting up a local environment, this page will guide you in setting up your first local environment using Homestead. If you already have a local environment (e.g., LAMP or LEMP) and you're already familiar with **composer**, the [Native Installation](/installation/environment/native) guide is for you.
 
-## Motivation
+## Why you need a development environment
 
 We get it - you just want to get UserFrosting up and running as quickly as possible.  Don't worry!  We'll get you there.
 
-But before we do, it's very important that we clear up some common misconceptions first.
+If you're uploading your code to a live site while you're still writing it, this section is for you. If you are already developing in a local environment, please skip this section.
 
-**"I need a web hosting service to run a web server"**
-
-I think that part of the reason so many developers take the "code-upload-refresh" approach to web development, is because they don't actually know any better (apologies if you do - in that case, feel free to skip this section).
-
-I often encounter developers who are under the mistaken impression that you need to _upload_ your code to a hosting company's server (often, via FTP) in order for it to work.  Somehow, magically, the hosting service is what makes it possible to run and test PHP code.  The concept of "web hosting" and "web server" have been conflated in their minds.
+### Web hosting vs. web server
 
 In actuality, "web server" and "web hosting" are not the same thing. A web server is nothing more than a piece of software that runs on a computer and listens for **HTTP requests**.  The most common web servers - Apache and Nginx - are completely free and open-source.  You can download and run them on your personal computer.  
 
@@ -31,11 +27,11 @@ When you sign up with a web hosting company, you're not paying for the web serve
 
 These are important concerns - and part of the reason that most people don't run their web applications off of a home/office server - but they have nothing to do with the _development_ of your application.
 
-**"It's easier to upload my code to the live server and test it there, instead of setting up a web server on my own computer."**
+### Using a local server to view and test your code
 
-No.  In the long run, the amount of time you'll spend uploading your code after each change you make will **easily dwarf** the amount of time it takes to set up a working test server on your own computer.  If you don't like the idea of [installing a stack natively](/installation/environment/native), this guide gives you an alternative option that is easy and highly reliable.
+In the long run, the amount of time you'll spend uploading your code after each change you make will **easily dwarf** the amount of time it takes to set up a working test server on your own computer.  Examples of test server software are Apache and Nginx. If you don't like the idea of setting up a local test server, there's an alternative option that is a little easier and very reliable, called a virtual environment. Vagrant and Homestead (using them together) is an example of setting up a virtual environment.  
 
-Incidentally, when you run your code in a place that is only accessible to you, is exclusively for testing your work, and where it's ok (and expected) when something breaks, this is referred to as a **development environment.**  In contrast, when you put your code somewhere so that it is running live and interacting with real visitors to your site, this is called a **production environment.**
+When you run your code in a place that is accessible only to you and where it's ok when something breaks, this is referred to as a **development environment.**  When you upload your so that it is running live and interacting with real visitors to your site, this is called a **production environment.**
 
 ## Virtualbox, Vagrant and Homestead
 
