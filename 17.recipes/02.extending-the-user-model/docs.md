@@ -25,7 +25,7 @@ Follow the directions in [Database Migrations](/database/migrations) for creatin
 
 ```php
 <?php
-namespace UserFrosting\Sprinkle\Site\Database\Migrations\v400;
+namespace UserFrosting\Sprinkle\ExtendUser\Database\Migrations\v400;
 
 use UserFrosting\System\Bakery\Migration;
 use Illuminate\Database\Schema\Blueprint;
