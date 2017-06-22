@@ -309,6 +309,62 @@ Ok, that should be it!  If you head over to `http://userfrosting.app` in your br
 
 ### Next steps
 
+#### Change your git remote
+
 We highly recommend that you [change your git remote](/installation/environment/native#Changinggitremote) to make it easier to pull future updates to UserFrosting.
 
-Then, head over to the chapter on [Sprinkles](/sprinkles) to get oriented and find your way around the UserFrosting codebase.
+#### Install phpmyadmin
+
+You can install phpmyadmin on your virtual machine to make it easier to interact with the `userfrosting` database.  If you're SSH'ed into your virtual machine, do the following:
+
+```bash
+sudo apt-get install phpmyadmin 
+```
+
+Do **not** select apache2 nor lighttpd when prompted. Just hit tab and enter.  Choose the defaults for any prompts that appear.
+
+Next, create a symlink to the phpmyadmin installation:
+
+```bash
+sudo ln -s /usr/share/phpmyadmin/ /home/vagrant/phpmyadmin
+```
+
+`exit` from your virtual machine, and then add `phpmyadmin` to your `sites` in `Homestead.yaml`:
+
+```bash
+sites:
+    - map: userfrosting.app
+      to: /home/vagrant/userfrosting/public
+
+    - map: phpmyadmin.app
+      to: /home/vagrant/phpmyadmin
+```
+
+Don't forget to add `phpmyadmin.app` to your `hosts` file as well:
+
+```
+# Vagrant projects
+192.168.10.10  userfrosting.app
+192.168.10.10  phpmyadmin.app
+```
+
+Finally, reload your virtual machine and log back in:
+
+```bash
+vagrant reload --provision
+vagrant ssh
+```
+
+You should be able to access phpmyadmin in your browser at `http://phpmyadmin.app`.  Remember, your database credentials are `homestead/secret`.  You may see some errors the first time you sign in - these can be ignored.
+
+#### Start developing!
+
+Head over to the chapter on [Sprinkles](/sprinkles) to get oriented and find your way around the UserFrosting codebase.  Come see us in [chat](https://chat.userfrosting.com) if you're having trouble.
+
+It will help us a lot if you could star [the UserFrosting project on GitHub](https://github.com/userfrosting/UserFrosting). Just look for the button in the upper right-hand corner!
+
+[![How to star](/images/how-to-star.png)](https://github.com/userfrosting/UserFrosting)
+
+You should also follow us on Twitter for real-time news and updates:
+
+<a class="twitter-follow-button" href="https://twitter.com/userfrosting" data-size="large">Follow @userfrosting</a>
