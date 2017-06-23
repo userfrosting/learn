@@ -390,7 +390,7 @@ Reload the virtual machine:
 vagrant reload --provision
 ```
 
-If you get any errors about `vboxsf`, then it is possible that your host operating system does not have NFS natively available.  In this case, you may need to install special NFS server software for your operating system.
+If you get errors about a missing `vboxsf` filesystem, then it is possible that your host operating system does not have NFS natively available.  In this case, you may need to install special NFS server software for your operating system.
 
 #### Start developing!
 
