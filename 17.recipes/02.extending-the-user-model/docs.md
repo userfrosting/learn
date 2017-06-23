@@ -294,7 +294,7 @@ Create a class `ServicesProvider/ServicesProvider`, if you don't already have on
 ```php
 <?php
 
-// In /app/sprinkles/site/src/ServicesProvider/ServicesProvider.php
+// In /app/sprinkles/extend-user/src/ServicesProvider/ServicesProvider.php
 
 namespace UserFrosting\Sprinkle\ExtendUser\ServicesProvider;
 
@@ -389,7 +389,7 @@ and copy into it the `pageInfo` method from `Controller/UserController.php` in t
 $fieldNames = ['name', 'email', 'locale'];
 ```
 
-and add the `address` field.
+and add the `address` field in your copied method.
 
 We'll also need to link our endpoints up to this new controller method.  To do this, we'll create a new route file, `members.php`, in our Sprinkle's `routes/` directory:
 
