@@ -29,13 +29,11 @@ However, if you are not using Homestead, you will need to make sure your local U
 
 ## Installing UserFrosting
 
-Installing UserFrosting is done by issuing the Composer create-project command in your terminal. For more installation options, see the [Installation](/installation) chapter.
+Use git to clone the latest version of UserFrosting into a new `userfrosting` folder:
 
 ```bash
 $ git clone https://github.com/userfrosting/UserFrosting.git userfrosting
 ```
-
-This will clone the latest version of UserFrosting in a new `userfrosting` folder.
 
 Once the project is created using composer, `cd` into the newly created `userfrosting` folder and run the following command to fetch the composer dependencies:
 
@@ -49,7 +47,14 @@ Now run the final setup by calling the [Bakery CLI](/cli):
 $ php bakery bake
 ``` 
 
-This will run installation process, which consists of setting up your database credential in `app/.env`, checkching for missing dependencies, run the database migration and build the raw assets. If any dependencies are not met, an error will occur. Simply run the command again after fixing said error. For more information about the `bake` command, heads to the [Bakery CLI](/cli) chapter.
+This will run the installation process:
+
+- Setting up your database credential in `app/.env`
+- Checking for missing dependencies
+- Running the database migration
+- Building the raw assets
+
+If any dependencies are not met, an error will occur. Simply run the command again after fixing said error. For more information about the `bake` command, head to the [Bakery CLI](/cli) chapter.
 
 ## Public Directory
 
