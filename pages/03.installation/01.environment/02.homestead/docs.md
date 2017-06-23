@@ -355,7 +355,42 @@ vagrant reload --provision
 vagrant ssh
 ```
 
-You should be able to access phpmyadmin in your browser at `http://phpmyadmin.app`.  Remember, your database credentials are `homestead/secret`.  You may see some errors the first time you sign in - these can be ignored.
+You should be able to access phpmyadmin in your browser at `http://phpmyadmin.app`.  Remember, your database credentials are `homestead`/`secret`.  You may see some errors the first time you sign in - these can be ignored.
+
+#### Configure NFS if pages load slowly
+
+By default, the way that VirtualBox shares directories between your native operating system and the virtual machine can be very slow.  If you are experiencing slow page loads because of this, you can configure Homestead to use the `nfs` filesystem.
+
+First, log in to the virtual machine:
+
+```bash
+vagrant ssh
+```
+
+Then install the `nfs-common` package in your virtual machine:
+
+```bash
+sudo apt-get install nfs-common portmap
+```
+
+When this is done, `exit` from your virtual machine.
+
+In your `Homestead.yaml`, modify the `folders` mappings to use `nfs`:
+
+```yaml
+folders:
+    — map: ~/userfrosting
+      to: /home/vagrant/userfrosting
+      type: "nfs"
+```
+
+Reload the virtual machine:
+
+```bash
+vagrant reload --provision
+```
+
+If you get any errors about `vboxsf`, then it is possible that your host operating system does not have NFS natively available.  In this case, you may need to install special NFS server software for your operating system.
 
 #### Start developing!
 
