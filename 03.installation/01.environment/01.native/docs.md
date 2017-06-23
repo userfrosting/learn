@@ -10,7 +10,7 @@ If you already have a local environment and you're familiar with tools like **co
 
 ## Environment
 
-### Web stack
+### Configure your web stack
 
 If your local development environment doesn't already have the [required stack and tools](/installation/requirements), please set these up.  You'll need the following:
 
@@ -38,17 +38,23 @@ Please **make sure** that you have the following installed **before** attempting
 
 ### Clone the UserFrosting repository
 
-The best way to initially set up UserFrosting in your local environment is by using git to **clone** the main UserFrosting repository.  In your development directory:
+Use git to clone the userfrosting repo into a new folder.  (If you're already using Homestead, you're in the right place, start here.) In your development directory:
 
 ```bash
 $ git clone https://github.com/userfrosting/UserFrosting.git userfrosting
 ```
 
->>>>>> Note the `userfrosting` at the end of the command. This means `git` will create new `userfrosting` subdirectory inside the current lcoation. You can change `userfrosting` to whatever you like. 
+>>>>>> Note the `userfrosting` at the end of the command. This means `git` will create new `userfrosting` subdirectory inside the current location. You can change `userfrosting` to whatever you like. 
 
 ### Set directory permissions
 
-Make sure that `/app/cache`, `/app/logs`, and `/app/sessions` are writable by your webserver. See [File System Permissions](/installation/requirements/basic-stack#file-system-permissions) for help with this.
+UserFrosting needs to be able to write to the following directories:
+
+- `/app/cache`
+- `/app/logs`
+- `/app/sessions`
+
+Set your system permissions so that the group under which your webserver runs has read and write permissions for these directories. See [File System Permissions](/installation/requirements/basic-stack#FileSystemPermissions) for help with this.
 
 ## Install PHP dependencies
 
@@ -87,7 +93,7 @@ If you're using a distribution like XAMPP or WAMP, you'll want to update your `P
 
 ### Running Composer
 
-Once you've got the right version of PHP running from your command line, it's time to run Composer:
+Once you've got the right version of PHP running from your command line, it's time to run Composer from the directory where you cloned the UserFrosting repo:
 
 ```bash
 $ composer install
@@ -111,7 +117,7 @@ Before installing, you'll need to create a database and database user account. C
 
 >>>>> We are currently getting reports of problems when running `bakery bake` on Windows due to a [problem with the target path](https://github.com/userfrosting/UserFrosting/issues/742) in npm.  If you run into a node/npm error when running `bake`, try running `npm install` directly from within the `build/` directory and then rerunning `bake`.
 
-To finish the installation and create your first UserFrosting account, we will run the command-line installer:
+This step will finish the installation and create your first UserFrosting account.  Again, in the main project directory where you cloned UserFrosting, run:
 
 ```bash
 $ php bakery bake
