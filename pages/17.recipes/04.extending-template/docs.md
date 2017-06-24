@@ -19,7 +19,7 @@ This is achieved by referencing another sprinkle directly in the `extends` Twig 
 You can instead extend the same file you're in by adding the sprinkle name in front of the name. For example, for the `pages/user.html.twig` file in the `admin` sprinkle, you can do :
 
 ```html
-{% extends "@admin/user.html.twig" %}
+{% extends "@admin/pages/user.html.twig" %}
 ```
 
 This will allow you to replace any Twig `block` definition contained from the `admin` version of the `pages/user.html.twig` template.
