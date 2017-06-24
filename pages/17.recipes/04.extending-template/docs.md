@@ -1,5 +1,5 @@
 ---
-title: Adding content to templates and menus
+title: Extending Templates and Menus
 metadata:
     description: Steps to extend a template defined in another sprinkle.
 taxonomy:
