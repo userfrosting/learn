@@ -113,7 +113,7 @@ The sign-in form can automatically redirect users to a specific landing page aft
 1. By setting a `redirect` query parameter in the URL of the page that the form appears on, or;
 2. By setting a `UF-Redirect` header in the response from the login submission route (`/account/login`).
 
-The first method is typically used with users whose sessions have expired, to automatically redirect them to the last page they were on after they re-authenticate.  For example, if a user was on `/admin/users` when their session expired, the `AuthExpiredExceptionHandler` will take them to the URL `/account/sign-in?redirect=admin/users`.  This gives them the opportunity to sign in again, but this time it tells UF to automatically redirect to the `/admin/users` page after successfully re-authenticating.
+The first method is typically used with users whose sessions have expired, to automatically redirect them to the last page they were on after they re-authenticate.  For example, if a user was on `/users` when their session expired, the `AuthExpiredExceptionHandler` will take them to the URL `/account/sign-in?redirect=users`.  This gives them the opportunity to sign in again, but this time it tells UF to automatically redirect to the `/users` page after successfully re-authenticating.
 
 The second method is for "regular" sign-ins, to determine how to redirect the user based on some server-side criteria.  This is used when you want different users to have different landing pages, depending on their roles and/or permissions.  The `AccountController::login` method will invoke the [`determineRedirectOnLogin` service](/services/default-services#determineredirectonlogin) after the user has been successfully authenticated, which sets the `UF-Redirect` header in the response.
 

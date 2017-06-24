@@ -58,7 +58,7 @@ Each `th` element has a `data-column-name` attribute and a `data-column-template
     <script id="user-table-column-info" type="text/x-handlebars-template">
         <td data-text="{{row.last_name}}">
             <strong>
-                <a href="{{site.uri.public}}/admin/users/u/{{row.user_name}}">{{row.first_name}} {{row.last_name}} ({{row.user_name}})</a>
+                <a href="{{site.uri.public}}/users/u/{{row.user_name}}">{{row.first_name}} {{row.last_name}} ({{row.user_name}})</a>
             </strong>
             {{row.email}}
         </td>

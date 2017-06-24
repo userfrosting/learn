@@ -13,7 +13,7 @@ You can perform permission checks in your Twig templates using the `checkAccess`
 ```twig
 {% if checkAccess('uri_users') %}
 <li>
-    <a href="{{site.uri.public}}/admin/users"><i class="fa fa-user fa-fw"></i> {{ translate("USER", 2) }}</a>
+    <a href="{{site.uri.public}}/users"><i class="fa fa-user fa-fw"></i> {{ translate("USER", 2) }}</a>
 </li>
 {% endif %}
 ```
