@@ -43,5 +43,6 @@ redirects:
     /forms-and-tables: /client-side-code/components
     /forms-and-tables/forms: /client-side-code/components/forms
     /forms-and-tables/tables: /client-side-code/components/tables
+    /security: /background/security
     /going-live/seo: /background/seo
     
