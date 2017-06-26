@@ -110,7 +110,7 @@ $usersWithActivities = User::joinLastActivity()->get();
 
 By default, UserFrosting implements a [custom Monolog handler](https://github.com/Seldaek/monolog/blob/master/doc/04-extending.md),  `UserFrosting\Sprinkles\Account\Log\UserActivityDatabaseHandler`, that sends user activity logs to the `activities` database table.
 
-This is all assembled in the `userActivityLogger` service.  If you'd prefer, you can [extend or override](/advanced/extending-services) the `userActivityLogger` service to add additional handlers, or even completely replace the custom handler altogether.
+This is all assembled in the `userActivityLogger` service.  If you'd prefer, you can [extend or override](/services/extending-services) the `userActivityLogger` service to add additional handlers, or even completely replace the custom handler altogether.
 
 ```php
 $container->extend('userActivityLogger', function ($logger, $c) {
