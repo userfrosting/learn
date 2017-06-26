@@ -47,6 +47,7 @@ Eloquent works by having you define [model classes](https://laravel.com/docs/5.4
 
 UserFrosting has already implemented all of the models needed for interacting with its [default tables](/database/default-tables).  These can be found in the `src/Database/Models/` subdirectories of your sprinkles.  Among the three default Sprinkles (`core`, `account`, and `admin`), UserFrosting implements:
 
+- Migration
 - Throttle
 - Activity
 - Group
@@ -55,7 +56,6 @@ UserFrosting has already implemented all of the models needed for interacting wi
 - Role
 - User
 - Verification
-- Version
 
 ### Using models
 
