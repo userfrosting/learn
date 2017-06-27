@@ -78,3 +78,9 @@ Some notes:
 Some notes:
 
 1. You won't actually be able to set up a new SSL certificate until you have deployed your application for the first time.  Just follow the first few steps for now to install the `certbot` client.
+
+#### [Install phpMyAdmin](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-an-ubuntu-14-04-server)
+
+Notes:
+
+1. This guide is for Ubuntu 14.04, but the process should be basically the same in Ubuntu 16.04.
