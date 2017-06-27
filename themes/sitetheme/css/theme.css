@@ -203,6 +203,10 @@ h6:before {
     font-size: 20px;
 }
 
+#chapter p {
+    text-align: left !important;
+}
+
 pre {
     border-color: #f6f6f6;
     box-shadow: 1px 1px 1px 1px #b5b5b5;
