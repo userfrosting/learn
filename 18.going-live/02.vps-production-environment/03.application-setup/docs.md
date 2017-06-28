@@ -101,4 +101,18 @@ ln -s /etc/nginx/sites-available/<repo name>.conf /etc/nginx/sites-enabled/<repo
 sudo service nginx reload
 ```
 
-The next step is to [install an SSL certificate](/going-live/vps-production-environment/ssl).
+We also need to make sure that **nginx can read the `public/` directory**:
+
+```bash
+sudo chown <your username>:www-data /var/www/<repo name>/public
+```
+
+## Compile assets for production
+
+We can use Bakery again to compile our asset bundles for production, and copy all assets from our Sprinkles to the `public/` directory so they may be served more efficiently by the webserver:
+
+```bash
+php bakery build-assets -c
+```
+
+If everything worked out successfully, you should now be able to access the `http` version of your live site in your browser!  The next step is to [install an SSL certificate](/going-live/vps-production-environment/ssl).
