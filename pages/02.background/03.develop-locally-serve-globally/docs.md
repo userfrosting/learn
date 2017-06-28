@@ -59,4 +59,4 @@ When it comes time to actually deploy your application, you can [set up a specia
 git push deploy master
 ```
 
-For more about deployment, see the chapter on [Going Live](/going-live/deployment).
+For more about deployment, see the chapter on [Going Live](/going-live).
