@@ -1,0 +1,104 @@
+---
+title: Application Setup
+metadata:
+    description: This section covers installing and using Composer, running Bakery, and configuring the webserver in the production environment.
+taxonomy:
+    category: docs
+---
+
+>>> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
+
+To actually get our application up and running, we need to do a few more things on the remote server:
+
+1. Run Composer to install PHP dependencies;
+2. Run Bakery to set up our environment variables, create `sprinkles.json`, run our migrations, and install Bower assets;
+3. Configure the webserver to use `/var/www/<repo name>/public/` as the document root;
+4. Compile assets for production.
+5. Use `certbot` to install an SSL certificate for your site.
+
+## Run Composer on the remote server
+
+The tricky thing about Composer is that it will try to pull the latest version of a dependency (subject to the version constraints in `composer.json`) every time you run `composer update`.  This means that you could end up with latest version of dependencies in production every time you update your code - even if you don't want them!
+
+To get around this, commit the `composer.lock` file to your repository.  Then, when you run `composer install` on the remote machine, it will pull the _exact_ same versions of your dependencies as those that were last pulled when you ran `composer update` locally.
+
+A few more caveats:
+
+- On a 512MB Droplet, there may not be enough physical memory to run Composer.  What a pig!  [Create a swapfile](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04) first to avoid Composer failing due to insufficient memory.
+- Composer needs to be able to write to the `~/.composer` directory, but it doesn't like when you try to run Composer as `sudo`.  To address this set proper ownership and permissions on the `~/.composer` directory:
+
+```bash
+sudo chown <your username>:<your username> ~/.composer
+sudo chmod u+rwx,g+rwx ~/.composer
+```
+
+Now, to run Composer:
+
+```bash
+cd /var/www/<repo name>
+composer install
+```
+
+If you get errors related to the `php-zip` package, you may need to install it:
+
+```bash
+sudo apt-get install zip unzip php7.0-zip
+sudo service nginx restart
+```
+
+We can add the following line to our `post-receive` hook to automatically rerun `composer install` each time we push changes:
+
+```bash
+# Install or update packages specified in the lock file
+composer install --working-dir=/var/www/<repo name> >> /var/log/deploy.log 2>&1
+```
+
+## Run Bakery on the remote server
+
+Just like we did in development, we'll run Bakery in the production environment to configure our DB and mail credentials, setup `sprinkles.json`, and install assets.  Again, do this in the `/var/www/<repo name>` directory:
+
+```bash
+php bakery bake
+```
+
+When Bakery finishes, modify the `.env` file and set `UF_MODE` to `production`.
+
+## Configure the webserver (nginx)
+
+UserFrosting ships with a default nginx configuration file, in `webserver-configs/nginx.conf`.  Copy this file to a new filename.  You can name the copy anything you like, but the convention is to use the same name as that of your repository, followed by `.conf`.
+
+We'll start by setting the `root` and `server_name` directives.  `root` is the application's document root directory, and `server_name` is the hostname (domain or subdomain) that should be served from this directory.  Find the `Server Info` block.  Change it to look like this:
+
+```
+## Begin - Server Info
+## Document root directory for your project.  Should be set to the directory that contains your index.php.
+root /var/www/<repo name>/public;
+server_name owlfancy.com;
+## End - Server Info
+```
+
+Again, `<repo name>` should be replaced with your project repo name, and `owlfancy.com` should be changed to your site's planned domain or subdomain.
+
+Next, we'll tell nginx to run our application with PHP 7.  Why?  Because it's super fast!  Find the lines that say "For FPM".  Comment out the line for PHP 5, and _uncomment_ the line for PHP 7:
+
+```
+# For FPM (PHP 5.x)
+#fastcgi_pass unix:/var/run/php5-fpm.sock;
+# For FPM (PHP 7)
+fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+```
+
+Save your changes.  We can now use `scp` to copy this file from your local machine to nginx's configuration directory on the remote repository.  In your local development environment:
+
+```bash
+scp /<path to local project directory>/webserver-configs/<repo name>.conf <your username>@<hostname>:/etc/nginx/sites-available/<repo name>.conf
+```
+
+If this succeeded, then you can go back to your remote environment and "enable" this configuration file by creating a symlink and reloading the webserver:
+
+```bash
+ln -s /etc/nginx/sites-available/<repo name>.conf /etc/nginx/sites-enabled/<repo name>.conf
+sudo service nginx reload
+```
+
+The next step is to [install an SSL certificate](/going-live/vps-production-environment/ssl).
