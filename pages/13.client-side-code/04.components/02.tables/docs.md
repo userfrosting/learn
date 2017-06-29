@@ -12,7 +12,7 @@ A typical application feature is to display a table of entities from a server-si
 
 `ufTable` provides a convenient way to generate sortable, searchable, paginated tables of data from an AJAX source using Mottie's [tablesorter](https://mottie.github.io/tablesorter/docs/) jQuery plugin.
 
-## Usage
+## Table skeleton
 
 A typical use case is to create a "skeleton" `<table>` in your Twig template, and then use `ufTable` to dynamically retrieve data from a JSON data source and construct the rows.  As the user sorts columns, inputs filter queries, and pages through the data, `ufTable` will submit new AJAX requests to the server and refresh the `<table>` with the results of the updated queries.
 
@@ -27,8 +27,8 @@ For example, consider the Users table.  First, we create a partial template that
     <table id="{{table.id}}" class="tablesorter table table-bordered table-hover table-striped" data-sortlist="{{table.sortlist}}">
         <thead>
             <tr>
-                <th class="sorter-metatext" data-column-name="name" data-column-template="#user-table-column-info">User info <i class="fa fa-sort"></i></th>
-                <th class="sorter-metanum" data-column-name="last_activity" data-column-template="#user-table-column-last-activity">Last activity <i class="fa fa-sort"></i></th>
+                <th class="sorter-metatext" data-column-name="name" data-column-template="#user-table-column-info" data-priority="1">User info <i class="fa fa-sort"></i></th>
+                <th class="sorter-metanum" data-column-name="last_activity" data-column-template="#user-table-column-last-activity" data-priority="1">Last activity <i class="fa fa-sort"></i></th>
             </tr>
         </thead>
         <tbody>
@@ -41,15 +41,27 @@ Your table skeleton should be defined in the `table` block as a `<table>` elemen
 
 You'll notice that we populated the table with all of its column headers, but an empty `tbody` element.  This empty `tbody` is where `ufTable` will automatically render the rows using data from the AJAX source.
 
-Each `th` element has a `data-column-name` attribute and a `data-column-template` attribute.
+### Column headers
 
-`data-column-name` is used to determine the [Sprunje filter](/database/data-sprunjing#custom-sorts-and-filters) name to use when the user types a query into the filter box for that column.  For example, if we type "userfrost" into the filter box in the "User info" column:
+Each column header (`th` element) has several required `data-*` attributes that `ufTable` and Tablesorter use to make the table work correctly.
+
+```
+<th class="sorter-metanum" data-column-name="last_activity" data-column-template="#user-table-column-last-activity" data-priority="1">Last activity <i class="fa fa-sort"></i></th>
+```
+
+#### Required attributes
+
+##### `data-column-name`
+
+This is used to determine the [Sprunje filter](/database/data-sprunjing#custom-sorts-and-filters) name to use when the user types a query into the filter box for that column.  For example, if we type "userfrost" into the filter box in the "User info" column:
 
 ![Searching a table](/images/uf-table-search.png)
 
 `ufTable` will add a query parameter `filters[name]=userfrost` in the next AJAX request it makes.  See [Data Sprunjing](/database/data-sprunjing) for information on setting up a Sprunjed data source in your server-side code.
 
-`data-column-template` is an identifier used to find the [Handlebars template](/client-side-code/client-side-templating) to use when rendering the cells for that particular column.  For this example, we will define two Handlebars templates in the `table_cell_templates` block of our Twig template:
+##### `data-column-template`
+
+An identifier used to find the [Handlebars template](/client-side-code/client-side-templating) to use when rendering the cells for that particular column.  For this example, we will define two Handlebars templates in the `table_cell_templates` block of our Twig template:
 
 ```twig
 {% block table_cell_templates %}
@@ -88,26 +100,117 @@ Notice that the `ids` in these template `<script>` tags match the `data-column-t
 
 You'll also notice that we have custom `data-*` attributes in the `<td>` tags of each of these templates.  These refer to tablesorter's [custom sort parsers](https://mottie.github.io/tablesorter/docs/example-parsers-advanced.html), which lets us define a custom parameter for tablesorter to use when sorting the table by the corresponding column.  We will discuss this more later.
 
+##### `data-priority`
+
+This attribute is used by Tablesorter's [column selector widget](https://mottie.github.io/tablesorter/docs/example-widget-column-selector.html#column-selector-priority) to determine which columns can be hidden in tablet and mobile views to make the table more usable.  
+
+| Priority | Hide when browser width is less than... | Comment |
+| -------- | --------------------------------------- | ------- |
+| "critical" | Never | Highest priority - never hide this column |
+| 1 | 320px |  |
+| 2 | 480px |  |
+| 3 | 640px |  |
+| 4 | 800px |  |
+| 5 | 960px |  |
+| 6 | 1120px | Lowest priority |
+
+Note that while normally you can hide/show columns by using the selectors generated in the table tool menu, you cannot hide any columns with a priority of `critical`.
+
+#### Optional attributes/classes
+
+You can further control the behavior of a column with the following attributes/classes:
+
+##### `data-sorter`
+
+Set to `false` to disable sorting for this column.
+
+##### `data-filter`
+
+Set to `false` to disable filtering for this column.
+
+##### `class="filter-select"`
+
+When you add this CSS class to your table, Tablesorter will generate a dropdown instead of a free text input for searching this column.  Values for this dropdown will be populated from the corresponding `listable` array returned by your table's [Sprunje](/database/data-sprunjing#Sprunjelists).
+
+## Table wrapper
+
 To use your table, simply `include` your table partial template in your page inside a wrapper `<div>`:
 
 ```twig
-<div id="myUserTable">
-    <button class="btn btn-sm btn-default js-uf-table-download"><i class="fa fa-table"></i> Download CSV</button>
-    {% include "tables/users-custom.html.twig" %}
+<div id="myUserTable" class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title pull-left"><i class="fa fa-fw fa-user"></i> Members</h3>
+        {% include "tables/table-tool-menu.html.twig" %}
+    </div>
+    <div class="box-body">
+        {% include "tables/users-custom.html.twig" with {
+                "table" : {
+                    "id" : "table-members"
+                }
+            }
+        %}
+    </div>
+    <div class="box-footer">
+        <button type="button" class="btn btn-success js-member-create">
+            <i class="fa fa-plus-square"></i>  Create member
+        </button>
+    </div>
 </div>
 ```
 
-If you create a button with the `.js-uf-table-download` class in your wrapper as well, it will be automatically bound to trigger an AJAX request for downloading the table in CSV format.
+This example shows an AdminLTE "box" component being used to display our table, but you don't have to use the box component to use `ufTable`.  The important thing is that we've wrapped our table and all related controls (table tool menu, buttons, etc) inside a single wrapper element (the `myUserTable` div).
 
-In your page Javascript, initialize `ufTable` on your wrapper element:
+In your page Javascript, initialize `ufTable` **on your wrapper element**:
 
 ```js
-$("#myUserTable").ufTable(options);
+$("#myUserTable").ufTable({
+    dataUrl: site.uri.public + "/api/owls"
+});
 ```
 
-Where `options` is a JSON object containing the configuration options for your table.
+Where the only parameter is a JSON object containing the configuration options for your table.  **Most importantly, be sure to specify the `dataUrl` option so that `ufTable` knows where to get the table data from!**
+
+### Additional table controls
+
+All of these controls come pre-implemented in UserFrosting, but you are welcome to override and customize them in your own table templates if necessary.
+
+#### Download button
+
+Any button with the `.js-uf-table-download` class inside your wrapper is bound to trigger an AJAX request for downloading the table in CSV format.
+
+This is implemented by default in the table tool menu, in `tables/table-tool-menu.html.twig`. 
+
+![Table tool menu](/images/table-tools.png)
+
+#### Column selectors
+
+`ufTable` will generate a list of checkboxes for manually hiding/showing table columns in any container element with the `js-uf-table-cs-options` class.  This is implemented by default in the table tool menu, in `tables/table-tool-menu.html.twig`. 
+
+#### Global search
+
+In mobile views, `ufTable` will hide the per-column filters and display a global search field instead.  This field should be inside a container with the `js-uf-table-search` class.
+
+When a global search is performed, `ufTable` will send the search query to your data API for a field with the name `_all`.  By default, Sprunjes implement a `filterAll` method which searches all filterable fields, but of course you may override this method in your own Sprunje.
+
+This global search field is implemented by default for you in `tables/table-paginated.html.twig`.
+
+#### Table info
+
+When `ufTable` can't find any rows for the table (subject to the filter constraints), it will display a "No results" message in a container with the `js-uf-table-info` class.  This container is implemented by default for you in `tables/table-paginated.html.twig`.
+
+#### Pager controls
+
+The table page controls (next page, previous page, jump to page, etc) are implemented inside a container with the `js-uf-table-pager` class.  This container is implemented by default for you in `tables/table-paginated.html.twig`.
 
 ## Options
+
+The following options can be used when you initialize `ufTable` on the wrapper element.
+
+```js
+$("#myUserTable").ufTable({
+    ...
+});
+```
 
 ### dataUrl
 
@@ -241,8 +344,9 @@ Fetches the current page size, page number, sort order, sort field, and column f
 
 ## Customizing the base template for your table
 
-If you don't want to use the default `table-paginated.html.twig` base template for your tables, you can create your own base template.  Your template needs to have three things:
+If you don't want to use the default `table-paginated.html.twig` base template for your tables, you can create your own base template.  Your template needs to have five things:
 
+- `{% block table_search %}`: Global search field for the table.  By default, only shown in mobile sizes. To customize this behavior, see the media queries in `core/assets/userfrosting/css/userfrosting.css`.
 - `{% block table %}`: This is the Twig block where the table skeleton will go.
 - `{% block table_cell_templates %}`: This is the Twig block where cell templates will be placed.
 - `{% block table_info %}`: This is a container for displaying alternative messages, such as "no records found".  The container element should have the `js-uf-table-info` class.
