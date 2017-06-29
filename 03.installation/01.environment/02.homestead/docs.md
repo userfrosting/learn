@@ -111,7 +111,7 @@ This will create a `Homestead.yaml` file in the `homestead/` directory.  Open up
 The default `Homestead.yaml` configuration file looks like this:
 
 ```yaml
- — -
+---
 ip: "192.168.10.10"
 memory: 2048
 cpus: 1
@@ -120,29 +120,29 @@ provider: virtualbox
 authorize: ~/.ssh/id_rsa.pub
 
 keys:
- — ~/.ssh/id_rsa
+ - ~/.ssh/id_rsa
 
 folders:
- — map: ~/Code
+ - map: ~/Code
  to: /home/vagrant/Code
 
 sites:
- — map: homestead.app
+ - map: homestead.app
  to: /home/vagrant/Code/Laravel/public
 
 databases:
- — homestead
+ - homestead
 
 # blackfire:
-# — id: foo
+# - id: foo
 # token: bar
 # client-id: foo
 # client-token: bar
 
 # ports:
-# — send: 50000
+# - send: 50000
 # to: 5000
-# — send: 7777
+# - send: 7777
 # to: 777
 # protocol: udp
 ```
@@ -240,6 +240,8 @@ vagrant up
 ```
 
 from inside your `homestead/` directory.  This will take a little bit of time to provision the virtual machine.
+
+If you get an error like "did not find expected key while parsing a block mapping", this means that Vagrant could not properly parse your `Homestead.yaml` file.  To find syntax errors in YAML files, try pasting them into [YAML Lint](http://www.yamllint.com/).
 
 >>>>>> Make sure that the directories you map in `Homestead.yaml` exist _before_ you run `vagrant up`.  Otherwise, you will need to reload your virtual machine using `vagrant reload --provision` so that Homestead has a chance to find your directories.
 
