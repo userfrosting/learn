@@ -25,8 +25,8 @@ Some notes:
 Some notes:
 
 1. This guide has you install MySQL instead of MariaDB.  In general they are completely interchangeable, but MariaDB is more reliable as an  open-source option going forward.  See [Switching to MariaDB](https://www.digitalocean.com/community/tutorials/switching-to-mariadb-from-mysql) for help with this.
-2. Be sure to create a non-root database user account.  You should give this user limited permissions on your production database.
-3. To use `gzip` (which is important for site speed and SEO!), you may need to install it first.  See [this guide](https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04).
+2. Be sure to [log into MySQL from the command line](https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial) and [create a non-root database user account](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql).  You should give this user limited permissions on your production database.
+3. The `gzip` module (which is important for site speed and SEO!), may require some additional configuration.  See [this guide](https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04).
 4. If the `php-gd` package is not installed, you may need to install it manually:
 
 ```bash
