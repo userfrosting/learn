@@ -186,7 +186,7 @@ You should now have files `homestead_rsa` and `homestead_rsa.pub`.  Change the `
 authorize: ~/.ssh/homestead_rsa.pub
 
 keys:
- — ~/.ssh/homestead_rsa
+ - ~/.ssh/homestead_rsa
 ```
 
 #### Customize `folders`, `sites`, and `database`
@@ -195,7 +195,7 @@ Homestead lets us share directories between our native operating system and the 
 
 ```yaml
 folders:
-    — map: ~/userfrosting            # This is the directory on your "real" computer; should point to the userfrosting repo directory we made earlier
+    - map: ~/userfrosting            # This is the directory on your "real" computer; should point to the userfrosting repo directory we made earlier
       to: /home/vagrant/userfrosting   # This is the corresponding directory in the virtual machine
 ```
 
@@ -213,7 +213,7 @@ Finally, we need to tell Homestead to create a database for us.  Change the `dat
 
 ```yaml
 databases:
-    — userfrosting
+    - userfrosting
 ```
 
 Homestead will automatically create a `userfrosting` database, along with a `homestead` database user account.  The password will be `secret`.
@@ -381,7 +381,7 @@ In your `Homestead.yaml`, modify the `folders` mappings to use `nfs`:
 
 ```yaml
 folders:
-    — map: ~/userfrosting
+    - map: ~/userfrosting
       to: /home/vagrant/userfrosting
       type: "nfs"
 ```
