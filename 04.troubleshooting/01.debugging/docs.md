@@ -78,7 +78,7 @@ To open Internet Explorer's Developer Tools, simply press <kbd>F12</kbd>.
 
 Each browser's implementation of the features that we described for Firefox earlier is slightly different, but the information should all be there.
 
-## Using Debug Print Statements
+### Client-side debug print statements
  
 The most basic debugging tool, and probably the first thing you learned when you started programming, is the print statement.  Modern browsers provide their own version of the print statement, `console.log()`.  This can be used to output string literals as well as the values of variables (including structured data like arrays and objects) to the browser console.
 
@@ -105,23 +105,6 @@ Now, when we do something that triggers this request, the `console.log` statemen
 ![Firefox developer tools - Debug print statement](/images/firefox-console-6.png)
 
 As you can see in the last line of the console output, `data` is an array containing Javascript objects.  If we click on "Object", a panel opens to the right that displays the contents of that object.
-
-## Debugging AJAX Requests
-
-For traditional `GET` and `POST` requests, such as navigating to a page or submitting a form using your browser's default submission handling, the default behavior of most browsers is to directly display the response it receives in the main viewport.  This is done automatically, so we don't even really think of it as a request-response transaction.
-
-However with the rise of "Web 2.0" and more complex web applications, we've seen the widespread adoption of AJAX for submitting requests and working with response data, all without refreshing the page.  Often times, the user doesn't even know that a request has been issued!
-
-In these cases, any error messages we receive from PHP via the server's response will get held up inside the XHR object that Javascript uses to process the request.  We'll never see these error messages unless we either:
-
-1. Explicitly tell our AJAX handler to dump them into the DOM, or;
-2. Manually inspect the contents of the response using the browser console tools.
-
-This is hardly a convenient and predictable way to get at debugging and error messages!
-
-To solve this problem, UserFrosting's [client-side components](/client-side-code/components) can automatically replace the current window's contents with the contents of the response body when an error (4xx or 5xx) code is returned during an AJAX request.
-
-To enable this behavior, set `site.debug.ajax` to `true` in your Sprinkle's [configuration file](/configuration/config-files).
 
 ## Server-side Debugging
 
@@ -252,3 +235,48 @@ error_log(print_r($owls, true));
 ```
 
 Some developers may find this simpler and more flexible than invoking the `Debug` facade.
+
+## Data APIs and AJAX Requests
+
+For traditional `GET` and `POST` requests, such as navigating to a page or submitting a form using your browser's default submission handling, the default behavior of most browsers is to directly display the response it receives in the main viewport.  This is done automatically, so we don't even really think of it as a request-response transaction.
+
+However with the rise of "Web 2.0" and more complex web applications, we've seen the widespread adoption of AJAX for submitting requests and working with response data, all without refreshing the page.  Often times, the user doesn't even know that a request has been issued!
+
+As an example, consider the "Users" page, which grabs chunks of user records via the `/api/users` route and renders them in a paginated table.  This data source that we've set up returns a JSON object containing the current chunk of users.  The main "Users" page uses an AJAX request to make requests to `/api/users`, and then it uses the response to dynamically render the table rows.
+
+### Handling errors
+
+When an error is generated during an AJAX request, any error messages we receive from PHP via the server's response will get held up inside the XHR object that Javascript uses to process the request.  We'll never see these error messages unless we either:
+
+1. Explicitly tell our AJAX handler to dump them into the DOM, or;
+2. Manually inspect the contents of the response using the browser console tools.
+
+This is hardly a convenient and predictable way to get at debugging and error messages!
+
+To solve this problem, UserFrosting's [client-side components](/client-side-code/components) can automatically replace the current window's contents with the contents of the response body when an error (4xx or 5xx) code is returned during an AJAX request.
+
+To enable this behavior, set `site.debug.ajax` to `true` in your Sprinkle's [configuration file](/configuration/config-files).
+
+### Debugging APIs
+
+What about when your API doesn't produce an _error_, but it **doesn't produce the correct response or behavior** either?
+
+The best approach is to develop your API in isolation from the page or widget that is consuming the API.  For example, if you have a page `/members` that consumes a `/api/members` data source, don't try to debug the results generated by the data source _through_ the page that is consuming it.  
+
+### GET APIs
+
+As it turns out, you can visit `/api/members` _directly in your browser_, and it will show you the output of the data source!  Since **visiting a page in your browser is equivalent to making a GET request**, you can append query strings as well:
+
+![Directly viewing the output of a JSON API](/images/debug-api.png)
+
+Make sure you get the data API itself working properly and producing the kind of output you expect, before you fiddle with the page and/or Javascript that is consuming the API.
+
+### POST, PUT, and DELETE APIs
+
+Your browser is a great way to make and check the response of `GET` requests, but what about other HTTP methods like `POST`, `PUT`, and `DELETE`?  For this, you'll need some extra software that allows you to make these types of requests and view their responses.
+
+Here are some popular options:
+
+- [Fiddler](https://www.telerik.com/download/fiddler), the free web debugging proxy (desktop app)
+- [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop), a plugin for Chrome
+- [RESTClient](http://restclient.net/), a plugin for Firefox
