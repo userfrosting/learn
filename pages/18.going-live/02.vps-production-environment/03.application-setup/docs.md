@@ -88,16 +88,19 @@ Next, we'll tell nginx to run our application with PHP 7.  Why?  Because it's su
 fastcgi_pass unix:/run/php/php7.0-fpm.sock;
 ```
 
-Save your changes.  We can now use `scp` to copy this file from your local machine to nginx's configuration directory on the remote repository.  In your local development environment:
+Save your changes.  We can now use `scp` to copy this file from your local machine to nginx's configuration directory on the remote repository.  Since we disabled remote root login, and only the root user can write to `/etc/nginx/sites-available` by default, we'll first copy to our home directory on the remote server, and then use `sudo` on the remote server to move it into nginx's directory.
+
+In your local development environment:
 
 ```bash
-scp /<path to local project directory>/webserver-configs/<repo name>.conf <your username>@<hostname>:/etc/nginx/sites-available/<repo name>.conf
+scp /<path to local project directory>/webserver-configs/<repo name>.conf <your username>@<hostname>:~
 ```
 
-If this succeeded, then you can go back to your remote environment and "enable" this configuration file by creating a symlink and reloading the webserver:
+If this succeeded, then you can go back to your remote environment, move the config file to `/etc/nginx/sites-available`, and "enable" it by creating a symlink and reloading the webserver:
 
 ```bash
-ln -s /etc/nginx/sites-available/<repo name>.conf /etc/nginx/sites-enabled/<repo name>.conf
+sudo mv ~/<repo name>.conf /etc/nginx/sites-available/<repo name>.conf
+sudo ln -s /etc/nginx/sites-available/<repo name>.conf /etc/nginx/sites-enabled/<repo name>.conf
 sudo service nginx reload
 ```
 

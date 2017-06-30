@@ -27,6 +27,7 @@ If we used a non-bare repository, we wouldn't be able to "push to production" be
 By default, we'll create a directory `repo` in Ubuntu's `var/` directory that will contain all of our bare repositories on this server.
 
 ```bash
+sudo mkdir /var/repo
 sudo mkdir /var/repo/<repo name>.git
 sudo chown <your username>:<your username> /var/repo/<repo name>.git
 
@@ -37,6 +38,12 @@ git init --bare
 Replace `<your username>` with the name of the non-root user account you created earlier.  You will use this account to push changes from your development environment, so it is important that this account have read and execute permissions on the repo directory.
 
 Replace `<repo name>` with the name of your project.  For example, `owlfancy`.
+
+If successful, you should see a message like:
+
+```
+Initialized empty Git repository in /var/repo/<repo name>.git
+```
 
 ## Set up the working directory
 
@@ -71,7 +78,7 @@ rm -rf /var/www/<repo name>/app/cache/*
 
 Press `Control-X` to exit.  When prompted to save, press `Enter` to confirm.
 
-Make sure that your user account has ownership of the `post-receive` file, and the proper permissions to execute the script.
+Make sure that your user account has ownership of the `post-receive` file, and the proper permissions to **execute** the script.  We'll briefly talk about file permissions here, so you can handle this on your own in the future:
 
 ## Viewing file permissions
 
@@ -114,7 +121,7 @@ Then we have the following permissions:
 If your permissions for the `post-receive` script don't seem to match these permissions, you can use `chmod` to change them.  For example, to give the user owner and group owner "execute" permissions , you can use the following:
 
 ```bash
-sudo chmod u+x,g+x /var/repo/<repo name>.git/hooks/post-receive`
+sudo chmod u+x,g+x /var/repo/<repo name>.git/hooks/post-receive
 ```
 
 The arguments `u`, `g`, and `o` refer to the owning **u**ser, owning **g**roup, and **o**ther users, respectively.  The `+` symbol means that we are **adding** permissions (use `-` instead to remove permissions).  The symbols afterwards are the permissions we are adding/removing.  They can be any combination of `r` (read), `w` (write), and `x` (execute).
