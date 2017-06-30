@@ -35,7 +35,7 @@ sudo service nginx reload
 
 ## Run certbot
 
-To run certbot, we'll use the `certbot` command:
+To run certbot, we'll use the `certbot` command.  Keep in mind that this won't work unless Let's Encrypt is able to connect to _all_ of the requested domains over http.  In other words, you need to have your DNS configured for these domains/subdomains first.
 
 ```bash
 sudo certbot certonly --webroot --webroot-path=/var/www/<repo name>/public -d owlfancy.com,www.owlfancy.com
