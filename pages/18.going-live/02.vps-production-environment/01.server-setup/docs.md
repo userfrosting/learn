@@ -34,10 +34,14 @@ Some notes:
 1. This guide has you install MySQL instead of MariaDB.  In general they are completely interchangeable, but MariaDB is more reliable as an  open-source option going forward.  See [Switching to MariaDB](https://www.digitalocean.com/community/tutorials/switching-to-mariadb-from-mysql) for help with this.
 2. Be sure to [log into MySQL from the command line](https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial) and [create a non-root database user account](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql).  You should give this user limited permissions on your production database.
 3. The `gzip` module (which is important for site speed and SEO!), may require some additional configuration.  See [this guide](https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04).
-4. If the `php-gd` package is not installed, you may need to install it manually:
+
+### Additional php modules to install:
+
+Install gd and curl:
 
 ```bash
 sudo apt-get install php7.0-gd
+sudo apt-get install php-curl
 sudo service nginx restart
 ```
 
@@ -46,6 +50,14 @@ sudo service nginx restart
 - [Installing Composer](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-ubuntu-16-04) (Steps 1 and 2 only)
 - [Installing Node.js and npm](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04) (Distro-stable version)
 - Git comes preinstalled on Ubuntu, but you may want to [update and configure](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-16-04) it as well.
+
+### Node.js compatibility package
+
+On Ubuntu, the `node` package has been changed to `nodejs` to avoid a naming collision with another package called `node`.  Unfortunately, this breaks `npm`, which is expecting the `node` command to refer to Node.js.  To fix this, install the compatibility package:
+
+```
+sudo apt-get install nodejs-legacy
+```
 
 ## [Install Certbot (Let's Encrypt)](https://certbot.eff.org/#ubuntuxenial-nginx)
 

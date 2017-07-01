@@ -104,10 +104,12 @@ sudo ln -s /etc/nginx/sites-available/<repo name>.conf /etc/nginx/sites-enabled/
 sudo service nginx reload
 ```
 
-We also need to make sure that **nginx can read the `public/` directory**:
+We also need to make sure that **nginx can read the `public/` directory, and write to the cache, logs, and sessions directories**:
 
 ```bash
-sudo chown <your username>:www-data /var/www/<repo name>/public
+cd /var/www/<repo name>/
+sudo chown <your username>:www-data public
+sudo chown <your username>:www-data cache logs sessions
 ```
 
 ## Compile assets for production
