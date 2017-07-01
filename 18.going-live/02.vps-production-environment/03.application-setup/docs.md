@@ -112,6 +112,12 @@ sudo chown <your username>:www-data public
 sudo chown <your username>:www-data cache logs sessions
 ```
 
+After your first `git push`, you'll want to set up the `cache/` directory so that it is owned by the `www-data` **group**.  Since both your user account and webserver are part of this group, they'll both be able to write to it.  This is important, so that in your `post-receive` script, you'll have the necessary permissions to clear the cache when you push.  To do this, we'll use the `setfacl` command:
+
+```bash
+sudo setfacl -d -m g::rwx /var/www/<repo name>/app/cache
+```
+
 ## Compile assets for production
 
 We can use Bakery again to compile our asset bundles for production, and copy all assets from our Sprinkles to the `public/` directory so they may be served more efficiently by the webserver:

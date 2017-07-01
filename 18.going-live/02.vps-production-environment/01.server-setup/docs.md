@@ -21,6 +21,29 @@ Some notes:
 3. Their instructions for the `ufw` firewall only have you open up the `ssh` port by default.  Obviously for a web server, you will also need to open up ports 80 and 443.  See [this guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-14-04#allow-other-connections) for help opening up additional ports.
 4. For additional security, you may also want to disable root login via SSH by setting `PermitRootLogin` to `no` in your `/etc/ssh/sshd_config` file.
 
+**Configure the `nano` command-line editor to convert tabs to spaces:**
+
+Because spaces rule.
+
+```bash
+nano ~/.nanorc
+```
+
+Add the following:
+
+```
+set tabsize 4
+set tabstospaces
+```
+
+Save and exit (Ctrl-X).
+
+You'll probably want to do this same thing in the root `.nanorc` file, for when you are editing files as the root user:
+
+```bash
+sudo nano /root/.nanorc
+```
+
 ## [Add Swap Space](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04)
 
 Some notes:
