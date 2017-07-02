@@ -21,7 +21,11 @@ Some notes:
 3. Their instructions for the `ufw` firewall only have you open up the `ssh` port by default.  Obviously for a web server, you will also need to open up ports 80 and 443.  See [this guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-14-04#allow-other-connections) for help opening up additional ports.
 4. For additional security, you may also want to disable root login via SSH by setting `PermitRootLogin` to `no` in your `/etc/ssh/sshd_config` file.
 
-**Configure the `nano` command-line editor to convert tabs to spaces:**
+## Additional server configuration
+
+### [Set your server's **timezone**](https://www.digitalocean.com/community/tutorials/how-to-set-up-time-synchronization-on-ubuntu-16-04)
+
+### Configure the `nano` command-line editor to convert tabs to spaces
 
 Because spaces rule.
 
