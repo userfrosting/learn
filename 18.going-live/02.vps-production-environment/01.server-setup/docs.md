@@ -72,6 +72,36 @@ sudo apt-get install php-curl
 sudo service nginx restart
 ```
 
+### `browscap.ini`
+
+PHP's [get_browser()](http://php.net/manual/en/function.get-browser.php) function uses the `User-Agent` header to guess information about your visitors such as browser, OS, etc.  For it to work properly, you need to download a copy of `browscap.ini` from the [Browscap Project](https://browscap.org) and configure your `php.ini` to find the file.
+
+Assuming that your PHP installation is in `/etc/php/7.0`, do the following:
+
+```bash
+cd /etc/php/7.0/fpm
+sudo mkdir extra
+sudo curl -o /etc/php/7.0/fpm/extra/browscap.ini https://browscap.org/stream?q=Lite_PHP_BrowsCapINI
+```
+
+This will download the "lite" browscap database, which is supposed to be adequate for most websites.  Visit [Browscap Project](https://browscap.org) for other options.
+
+Now, we need to edit our `php.ini` to tell PHP where this file is located:
+
+```bash
+sudo nano /etc/php/7.0/fpm/php.ini
+```
+
+Use Ctrl+W to search for the `browscap` section.  Uncomment the `browscap = ` line.  When you're done, it should look like this:
+
+```
+[browscap]
+; http://php.net/browscap
+browscap = extra/browscap.ini
+```
+
+Save and exit.
+
 ## Other Tools
 
 - [Installing Composer](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-ubuntu-16-04) (Steps 1 and 2 only)
