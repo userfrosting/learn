@@ -78,53 +78,13 @@ rm -rf /var/www/<repo name>/app/cache/*
 
 Press `Control-X` to exit.  When prompted to save, press `Enter` to confirm.
 
-Make sure that your user account has ownership of the `post-receive` file, and the proper permissions to **execute** the script.  We'll briefly talk about file permissions here, so you can handle this on your own in the future:
-
-## Viewing file permissions
-
-To see the current owner and permissions for all files in a directory, use the `ls -l` command.
-
-```bash
-total 44
--rwxrwxr-x 1 alex alex  478 Feb 16 02:04 applypatch-msg.sample
--rwxrwxr-x 1 alex alex  896 Feb 16 02:04 commit-msg.sample
--rwxr-xr-- 1 alex alex  138 Feb 22 02:18 post-receive
--rwxrwxr-x 1 alex alex  189 Feb 16 02:04 post-update.sample
--rwxrwxr-x 1 alex alex  424 Feb 16 02:04 pre-applypatch.sample
--rwxrwxr-x 1 alex alex 1642 Feb 16 02:04 pre-commit.sample
--rwxrwxr-x 1 alex alex 1239 Feb 16 02:04 prepare-commit-msg.sample
--rwxrwxr-x 1 alex alex 1348 Feb 16 02:04 pre-push.sample
--rwxrwxr-x 1 alex alex 4898 Feb 16 02:04 pre-rebase.sample
--rwxrwxr-x 1 alex alex 3610 Feb 16 02:04 update.sample
-```
-
-The first part of each line contains a `-`, followed by three sets of three characters each.  The first set of three tells you the owning user's permissions, the second set tells you the owning group's permissions, and the last set tells you the permissions for "other" users.  "Other" users means any other Ubuntu user account on your server.
-
-The next pieces of significant information are the name of the owning user and owning group.  This is important, because Linux permissions are always defined relative to the owning user and owning group.
-
-For example, let's look at this entry:
-
-```bash
--rwxr-xr-- 1 alex alex  138 Feb 22 02:18 post-receive
-```
-
-We can see that the owning user is `alex`, and the owning group is also `alex` (Whenever you create a user in Linux, it automatically creates a group of the same name).
-
-Then we have the following permissions:
-
-- **User**: `rwx`.  The owning user (`alex`) has full read, write, and execute permissions for this file.
-- **Group**: `r-x`.  The owning group (`alex`) has read and execute permissions for this file.
-- **Other**: `r--`.  Other users only have read permissions for this file.
-
->>> "User" in this context refers to the _operating system's_ users.  User accounts in your UserFrosting application are **not** users on the operating system.  Visitors to your website can only interact with the files on your machine through the webserver and your application.
-
-If your permissions for the `post-receive` script don't seem to match these permissions, you can use `chmod` to change them.  For example, to give the user owner and group owner "execute" permissions , you can use the following:
+Make sure that your user account has ownership of the `post-receive` file, and the proper permissions to **execute** the script.  Specifically, give the user owner and group owner "execute" permissions:
 
 ```bash
 sudo chmod u+x,g+x /var/repo/<repo name>.git/hooks/post-receive
 ```
 
-The arguments `u`, `g`, and `o` refer to the owning **u**ser, owning **g**roup, and **o**ther users, respectively.  The `+` symbol means that we are **adding** permissions (use `-` instead to remove permissions).  The symbols afterwards are the permissions we are adding/removing.  They can be any combination of `r` (read), `w` (write), and `x` (execute).
+>>> For more information on file permissions, see the [Unix primer](/going-live/unix-primer-ubuntu#viewing-and-basic-concepts).
 
 ## Push your project for the first time
 
