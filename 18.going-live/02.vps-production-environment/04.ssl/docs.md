@@ -146,6 +146,12 @@ First, we need some extra tools.  `ts` is a tool that lets you add a timestamp t
 sudo apt install moreutils
 ```
 
+Also, create a new logging subdirectory:
+
+```
+sudo mkdir /var/log/certbot
+```
+
 Now, open up your system `crontab`:
 
 ```
@@ -155,7 +161,7 @@ sudo crontab -e
 Add the following lines at the bottom:
 
 ```
-31 6,15 * * * export PATH=$PATH:/usr/sbin && /usr/bin/certbot renew --non-interactive --renew-hook "/bin/systemctl reload nginx" 2>&1 | ts "\%F \%T" >> /var/log/certbot-autorenew.log
+31 6,15 * * * export PATH=$PATH:/usr/sbin && /usr/bin/certbot renew --non-interactive --renew-hook "/bin/systemctl reload nginx" 2>&1 | ts "\%F \%T" >> /var/log/certbot/autorenew.log
 ```
 
 - `31 6,15 * * *` tells `cron` to run this job at 6:31 and 15:31, every day;
@@ -171,3 +177,31 @@ Add the following lines at the bottom:
 Don't wait for a customer to call you and tell you that they "think your site was hacked" because your certificate expired and they got the "Your connection is not secure" message.  Sign up for free with a service like [Certificate Monitor](https://certificatemonitor.org) to automatically email you when your certificates are getting ready to expire.
 
 With Let's Encrypt, 60-day warnings are normal, but 30-day or 14-day warnings likely mean that something has gone wrong with the autorenewal process.  In this case, check the `/var/log/certbot-autorenew.log` file to see what went wrong.  There is a Let's Encrypt IRC channel on Freenode (`#letsencrypt`) where you can get additional support for certificate renewal errors.
+
+## Additional useful `certbot` commands
+
+These aren't needed during initial setup, but may come in handy in the future:
+
+### Show a list of all certificates installed on your server:
+
+```bash
+sudo certbot certificates
+```
+
+### Delete a certificate without revoking (let it expire naturally)
+
+```bash
+sudo certbot delete --cert-name example.com
+```
+
+>>>>> The **certificate name** is not necessarily the same as the **domain name**.  Use the `certificates` command above to see the names of each certificate and the domains that they point to.
+
+### Expand an existing certificate
+
+```bash
+sudo certbot certonly --cert-name example.com -d example.com,www.example.com,test.example.com
+```
+
+This will take the certificate named `example.com`, and set its domains as `example.com,www.example.com,test.example.com`.  Note that this replaces the entire certificate, so you will have to re-validate the acme challenge for _all_ listed domains.
+
+>>>> Even when using `--cert-name`, you need to specify **all** the domains/subdomains that you would ultimately like to have registered on this certificate (not just the new ones).  Certbot cannot "add" additional domains/subdomains to an existing certificate - it must reissue a completely new cert.
