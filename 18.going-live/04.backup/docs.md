@@ -71,82 +71,50 @@ You'll be prompted for your `sudo` password first, followed by your root MySQL u
 
 We don't want to make ourselves vulnerable by [giving any more permissions than we absolutely have to](https://en.wikipedia.org/wiki/Principle_of_least_privilege).  Thus, we will create a new database user account with read-only privileges.  To stay consistent, I'm also calling this _database_ user `backup`.  Pick a very strong password for `<db_password>`.
 
-`CREATE USER 'backup'@'localhost' IDENTIFIED BY '<db_password>'`
+`CREATE USER backup@localhost IDENTIFIED BY '<db_password>';`
 
 #### Grant read-only privileges
 
-`GRANT SELECT,EVENT,TRIGGER,SHOW DATABASES ON *.* TO 'backup'@'localhost';`
+`GRANT SELECT,EVENT,TRIGGER,SHOW DATABASES ON *.* TO backup@localhost;`
+
+To quit the database shell, use the command `quit;`.
 
 ### Set up the DB backup command
 
 Test out the dump command (replace `<db_password>` with the password you set earlier for the new MySQL user):
 
-    `mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert -u backup -h 127.0.0.1 -p<db_password> --all-databases | gzip -9 > /var/backups/<repo name>/sql/all_$(date +"%Y_week_%U").sql.gz`
+```
+mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert --max-allowed-packet=1000000000 -u backup -h 127.0.0.1 -p<db_password> --all-databases | gzip -9 | sudo tee /var/backups/<repo name>/sql/all_$(date +"%Y_week_%U").sql.gz > /dev/null
+```
 
+>>>> Note that there is no space between the `-p` flag and your password.
 
 This command will dump all databases to a single file, labeled with the year and current week number.  Each time we run this, it will update the current dump file.  However when a new week commences, it will end up creating a new file instead.  Thus, we maintain a history of weekly snapshots of our databases.  You can adjust the [date portion](http://www.computerhope.com/unix/udate.htm) to make these snapshots more or less frequent, depending on the size of your database and the space you're willing to allocate for these snapshots.
 
-## Install dependencies for Duplicity
+We use `sudo tee` here to write the output to a directory for which `mysql` would otherwise not have the proper permissions under our shell.
 
-We need the latest versions of the following libraries to be able to use the latest version of Duplicity:
-
-- `popt`
-- `libbz2`
-- `librsync`
-
-Run the following commands:
-
-```bash
-sudo apt-get install libpopt-dev libpopt0
-sudo apt-get install libbz2-dev
-
-cd ~
-wget https://github.com/librsync/librsync/archive/v2.0.0.tar.gz
-tar xzvf v2.0.0.tar.gz -C librsync
-cd librsync
-sudo cmake .
-sudo make all check
-sudo make && sudo make install
-```
-
-### Update Duplicity
+## Install Duplicity
 
 The current stable version as of June 2017 is 0.7.13.1.
 
 ```
-cd ~
-wget https://code.launchpad.net/duplicity/0.7-series/0.7.13.1/+download/duplicity-0.7.13.1.tar.gz
-tar xzvf duplicity*
-cd duplicity*
-sudo python setup.py install
+sudo add-apt-repository ppa:duplicity-team/ppa
+sudo apt-get update
+sudo apt-get install duplicity
 ```
 
-#### Set up a definition for `LD_LIBRARY_PATH` ([Reference](https://serverfault.com/questions/201709/how-to-set-ld-library-path-in-ubuntu))
+## Install PyDrive
 
-Duplicity needs this environment variable so that it can find the `librsync` shared library objects that were installed earlier.  We'll do this by creating a  `/librsync.so.2.conf` file:
+PyDrive is a library that handles the OAuth2 negotiation between Duplicity and the Google Drive API.  We'll install it with the `pip` package manager for Python, which we need to install first:
 
-```
-sudo nano /etc/ld.so.conf.d/librsync.so.2.conf
-```
-
-Add the following to this file:
-
-```
-/usr/local/lib
+```bash
+sudo apt-get install python-pip
 ```
 
-You must now reload Ubuntu's `ldconfig` cache:
+Now we can install pydrive:
 
-```
-sudo ldconfig
-```
-
-### Install PyDrive
-
-PyDrive is a library that handles the OAuth2 negotiation between Duplicity and the Google Drive API.  We'll install it with the `pip` package manager for Python, which should already be installed on Ubuntu.
-
-```
-pip install pydrive
+```bash
+sudo -H pip install pydrive
 ```
 
 ## Set up Google Drive authentication via OAuth2
@@ -163,6 +131,7 @@ Do this through Google's [Developer Console](https://console.developers.google.c
 PyDrive [uses this file to store credentials and configuration settings for the Google API](http://pythonhosted.org/PyDrive/oauth.html). 
 
 ```
+mkdir ~/.duplicity
 nano ~/.duplicity/credentials
 ```
 
@@ -196,7 +165,62 @@ sudo visudo
 Add the following line at the end:
 
 ```
+# PyDrive settings
 Defaults env_keep += "GOOGLE_DRIVE_SETTINGS"
+```
+
+## Create GPG Key
+
+You will need a [GPG](https://www.gnupg.org/) key to encrypt your backup data before it is sent to Google Drive.  To generate the key, simply run the command:
+
+```
+gpg --gen-key
+```
+
+Follow the instructions it provides, choosing the defaults for key type, size, and expiration.  Make sure you choose a good **passphrase**.  If it gets stuck with a message about "not enough entropy", you can try running `sudo apt-get install rng-tools` (log into a separate terminal to do this).  The installation itself should generate enough entropy that GPG can generate a truly random key.  See [this article](https://stackoverflow.com/a/12716881/2970321).
+
+The GPG "fingerprint" will be displayed after this completes.  You will need the **primary public key id** from this fingerprint.  This is simply the 8-digit hex code after the `/` on the line that begins with `pub`.  See [this explanation](https://security.stackexchange.com/a/110146/74909).
+
+### Add the passphrase that you set for your GPG key to a secret file
+
+```
+sudo nano /root/.passphrase
+sudo chmod 700 /root/.passphrase
+```
+
+In this file, simply add:
+
+```
+PASSPHRASE="<my passphrase>"
+```
+
+### Backup your GPG key
+
+**If you lose your GPG key, your encrypted backups will become useless.**  So, you should back up your GPG key to some place besides your VPS.  
+
+For example, to backup to your local machine:
+
+```
+gpg --list-keys
+gpg -ao ~/gpg-public.key --export <gpg_public_key_id>
+
+gpg --list-secret-keys
+gpg -ao ~/gpg-private.key --export-secret-keys <gpg_private_key_id>
+```
+    
+Then on your local machine:
+
+```
+scp <username>@<hostname>:~/gpg-public.key ~/gpg-public.key
+scp <username>@<hostname>:~/gpg-private.key ~/gpg-private.key
+```
+
+See [this article](https://help.ubuntu.com/community/GnuPrivacyGuardHowto#Backing_up_and_restoring_your_keypair) for more information on backing up your GPG key.  Depending on the nature of your data, you may want to consider putting the *private* portion of your GPG key on a piece of paper, and then [storing that piece of paper in a safe](https://security.stackexchange.com/a/51776/74909).
+
+Remove these backups from your home directory on the **remote** machine:
+
+```
+rm ~/gpg-private.key ~/gpg-public.key
 ```
 
 ## Test unencrypted fake backup
@@ -221,58 +245,22 @@ duplicity ~/test gdocs://<google_account_name>@gmail.com/backup
 
 Follow the verification link it creates, and copy-paste the verification code you receive back into the prompt.  Duplicity *should* store the auth token it creates in `/home/<username>/.duplicity/gdrive.cache` so that we don't have to do the verification step again (and so our system can automatically do this every night without our input).
 
-## Create GPG Key
+>>>> Make sure the target directory on the remote (Google Drive) does not contain any duplicity backups made with old/other GPG keys.  Otherwise, Duplicity will try to synchronize with these backups and fail because the public keys do not match.
 
-You will need a [GPG](https://www.gnupg.org/) key to encrypt your backup data before it is sent to Google Drive.  To generate the key, simply run the command:
-
-```
-gpg --gen-key
-```
-
-Follow the instructions it provides, and make sure you choose a good **passphrase**.  If it gets stuck with a message about "not enough entropy", you can try running `sudo apt-get install rng-tools`.  The installation itself should generate enough entropy that GPG can generate a truly random key.  See [this article](https://stackoverflow.com/a/12716881/2970321).
-
-The GPG "fingerprint" will be displayed after this completes.  You will need the **primary public key id** from this fingerprint.  This is simply the 8-digit hex code after the `/` on the line that begins with `pub`.  See [this explanation](https://security.stackexchange.com/a/110146/74909).
-
-### Add the passphrase that you set for your GPG key to a secret file
+You should see three files show up in your Google Drive backup directory:
 
 ```
-sudo nano /root/.passphrase
-sudo chmod 700 /root/.passphrase
+duplicity-full.<time>.manifest.gpg
+duplicity-full-signatures.<time>.sigtar.gpg
+duplicity-full.<time>.vol1.difftar.gpg
 ```
 
-In this file, simply add:
-
-```
-PASSPHRASE=<my passphrase>
-```
-
-### Backup your GPG key
-
-If you lose your GPG key, your encrypted backups will become useless.  So, you should back up your GPG key to some place besides your VPS.  
-
-For example, to backup to your local machine:
-
-```
-gpg --list-keys
-gpg -ao ~/gpg-public.key --export <gpg_public_key_id>
-
-gpg --list-secret-keys
-gpg -ao ~/gpg-private.key --export-secret-keys <gpg_private_key_id>
-```
-    
-Then on your local machine:
-
-```
-scp <username>@<hostname>:~/gpg-public.key ~/gpg-public.key
-scp <username>@<hostname>:~/gpg-private.key ~/gpg-private.key
-```
-
-See [this article](https://help.ubuntu.com/community/GnuPrivacyGuardHowto#Backing_up_and_restoring_your_keypair) for more information on backing up your GPG key.  Depending on the nature of your data, you may want to consider putting the *private* portion of your GPG key on a piece of paper, and then [storing that piece of paper in a safe](https://security.stackexchange.com/a/51776/74909).
+Delete these files, so that Duplicity won't try to synchronize them when we change our target path for the real data.
 
 ## Test encrypted backup of SQL dumps
 
 ```
-duplicity --encrypt-key <gpg_public_key_id> --exclude="**" --include="/var/backups/<repo name>/sql" / gdocs://<google_account_name>@gmail.com/backup
+duplicity --encrypt-key <gpg_public_key_id> /var/backups/<repo name>/sql gdocs://<google_account_name>@gmail.com/backup
 ```
 
 ## Put the database dump and Duplicity command together into a `cron` script
@@ -281,15 +269,17 @@ We'll use a `cron` script to automatically perform the database dumps and run Du
 
 ### Set up daily incremental backup
 
-This will run every night, creating incremental backups.  Duplicity by default tries to back up ALL files on disk, which we probably don't want on a VPS.  So, we use the `--exclude` parameter so that it ignores everything except the directories we include via `--include`.  You can use multiple `--include` parameters to include multiple directories.
+This will run every night, creating incremental backups of everything in our target path.  Duplicity by default tries to back up ALL files in the target path.
+
+>>>>> Use the `--exclude` parameter so that Duplicity ignores everything except the directories we include via `--include`.  You can use multiple `--include` parameters to include multiple directories.
 
 Instead of adding to our normal `crontab`, we'll create a dedicated cron script in the `cron.daily` directory:
 
 ```
-sudo nano /etc/cron.daily/duplicity.inc
+sudo nano /etc/cron.daily/duplicity-inc
 ```
 
-The `.inc` file extension stands for "incremental". Add the following:
+The `-inc` stands for "incremental". Add the following:
 
 ```
 #!/bin/sh
@@ -304,11 +294,11 @@ export GOOGLE_DRIVE_SETTINGS=/home/<username>/.duplicity/credentials
 export GNUPGHOME=/home/<username>/.gnupg
 
 # Run MySQL dump.  This will create a weekly file, and then update the file every additional time this script is run
-mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert -u backup -h 127.0.0.1 -p<password> --all-databases | gzip -9 > /var/backups/<repo name>/sql/all_$(date +"%Y_week_%U").sql.gz
+mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert --max-allowed-packet=1000000000 -u backup -h 127.0.0.1 -p<password> --all-databases | gzip -9 > /var/backups/<repo name>/sql/all_$(date +"%Y_week_%U").sql.gz
 
 # Performs an incremental backup by default.  Since we create a new dump file every week, we have a history
 # of weekly snapshots, and the current week is incrementally updated each day.
-duplicity --encrypt-key <gpg_public_key_id> --include="/var/backups/<repo name>/sql" --exclude="**" / gdocs://<google_account_name>@gmail.com/backup
+duplicity --encrypt-key <gpg_public_key_id> /var/backups/<repo name>/sql gdocs://<google_account_name>@gmail.com/backup
 ```
 
 Again, be sure to replace things in `<>` placeholders with their actual values.
@@ -316,7 +306,7 @@ Again, be sure to replace things in `<>` placeholders with their actual values.
 #### Set permissions on the cron script
 
 ```
-chmod 755 /etc/cron.daily/duplicity.inc
+sudo chmod 755 /etc/cron.daily/duplicity-inc
 ```
 
 ### Set up a weekly full backup
@@ -324,7 +314,7 @@ chmod 755 /etc/cron.daily/duplicity.inc
 This will run once a week, creating a full backup and clearing out all but the last three full backups to save space.  Again, you can adjust this frequency and number of backups to retain, to your situation.
 
 ```
-sudo nano /etc/cron.weekly/duplicity.full
+sudo nano /etc/cron.weekly/duplicity-full
 ```
 
 In this file, write:
@@ -341,10 +331,10 @@ export GOOGLE_DRIVE_SETTINGS=/home/<username>/.duplicity/credentials
 export GNUPGHOME=/home/<username>/.gnupg
 
 # Run MySQL dump.  This will create a weekly file, and then update the file every additional time this script is run
-mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert -u backup -h 127.0.0.1 -p<password> --all-databases | gzip -9 > /var/backups/<repo name>/sql/all_$(date +"%Y_week_%U").sql.gz
+mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert --max-allowed-packet=1000000000 -u backup -h 127.0.0.1 -p<password> --all-databases | gzip -9 > /var/backups/<repo name>/sql/all_$(date +"%Y_week_%U").sql.gz
 
 # Create a brand new full backup, which contains all the weekly dumps located in /var/backups/sql
-duplicity full --encrypt-key <gpg_public_key_id> --include="/var/backups/<repo name>/sql" --exclude="**" / gdocs://<google_account_name>@gmail.com/backup
+duplicity full --encrypt-key <gpg_public_key_id> /var/backups/<repo name>/sql gdocs://<google_account_name>@gmail.com/backup
 
 # Clean out old full backups
 duplicity remove-all-but-n-full 3 --force gdocs://<google_account_name>@gmail.com/backup
@@ -353,7 +343,7 @@ duplicity remove-all-but-n-full 3 --force gdocs://<google_account_name>@gmail.co
 #### Set permissions on the cron script
 
 ```
-chmod 755 /etc/cron.weekly/duplicity.full
+chmod 755 /etc/cron.weekly/duplicity-full
 ```
 
 If your tasks in these `cron.*` directories aren't being run automatically for some reason (often times, due to problems with permissions), you can add these tasks to the root cron file:
@@ -366,9 +356,9 @@ Add the lines (replace MM and HH with the minute and hour of the day you want to
 
 ```
 # Incremental backup every day at HH:MM
-MM HH * * * /etc/cron.daily/duplicity.inc >> /var/log/backups.log 2>&1
+MM HH * * * /etc/cron.daily/duplicity-inc >> /var/log/duplicity.log 2>&1
 # Full backup every Saturday at HH:MM
-MM HH * * 6 /etc/cron.weekly/duplicity.full >> /var/log/backups.log 2>&1
+MM HH * * 6 /etc/cron.weekly/duplicity-full >> /var/log/duplicity.log 2>&1
 ```
 
 Save and exit.
@@ -379,4 +369,15 @@ You can try downloading your backup from Google Drive back into `~/test`:
 
 `sudo duplicity gdocs://<google_account_name>@gmail.com/backup ~/test`
 
-Duplicity should fetch and decrypt your latest backup into `~/test`.
+Duplicity should fetch and decrypt your latest backup into `~/test`.  Unzip it using `gzip`:
+
+```
+ls ~/test
+gzip -d <filename>.sql.gz
+```
+
+And check to make sure it looks ok:
+
+```
+head -n 100 <filename>.sql
+```
