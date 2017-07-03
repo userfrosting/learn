@@ -379,6 +379,26 @@ Specifies that the value of the field must represent a valid Uniform Resource Id
 
 Specifies that the value of the field must be a valid username (lowercase letters, numbers, `.`, `-`, and `_`).
 
+#### Use Translation within Schema
+
+When writing messages and labels to be returned as part of the client-side validation it is possible to use the UF Translation functionality, by prefixing translatable values with `&`. For example:
+
+**Example:**
+
+```yaml
+talons:
+  validators:
+    required:
+      label: "&CLAWS.TALONS"
+      message: VALIDATE.REQUIRED
+    length:
+      label: "&CLAWS.TALONS"
+      max: 120
+      message: "&CLAWS.TALONLENGTH.CUSTOM-MESSAGE"
+```
+
+Remember `&` is a special character in YAML, so using double-quotes in neccessary.
+
 #### Limit rules to server or client only
 
 Sometimes, you only want a validation rule to be applied server-side but not in Javascript on the client side, or vice versa.  For example, there may be forms that contain hidden data that needs to be validated on the server-side, but is not directly manipulated by the user in the browser. Thus, these fields would not need client-side validation rules.
