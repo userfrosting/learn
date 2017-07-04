@@ -10,13 +10,13 @@ taxonomy:
 
 Let's Encrypt has put an enormous amount of effort into making `certbot` very user-friendly.  Most problems that come up when installing an SSL certificate with `certbot` can be traced back to file permissions issues.  Make sure that you understand how Linux file permissions work before attempting this task.
 
-## Configure the webserver to serve acme challenges
+## Confirm that the webserver can serve acme challenges
 
 When you run `certbot` on your server, it needs to verify that you actually control the domain for which you are requesting the SSL certificate.  Typically, this is done using an **acme challenge**.  `certbot` will place a file with a randomly generated name in `.well-known/acme-challenge/` in your project's document root (in our case, `/var/www/<repo name>/public`.  The Let's Encrypt certificate authority will attempt to access this file and verify that its name matches the one submitted by `certbot`.
 
 This means that your webserver needs to be able to serve the challenge file.  For example, it should be possible to reach a URL like `http://owlfancy.com/.well-known/acme-challenge/0xGVf2dWppZhgTbk4_PlQQmJiNlJ5noHEK3oBy9W7Y` on your site.
 
-To allow `nginx` to serve the acme challenge, add this to the `server` block in your `/etc/nginx/sites-available/<repo name>.conf` file:
+To allow `nginx` to serve the acme challenge, you must have the following `location` block in the `server` block in your `/etc/nginx/sites-available/<repo name>.conf` file:
 
 ```
 # Route ACME challenges for LetsEncrypt/Certbot
@@ -25,13 +25,7 @@ location ~ /.well-known {
 }
 ```
 
-You can do this using `nano` or another command-line text editor.
-
-Then, reload the webserver:
-
-```bash
-sudo service nginx reload
-```
+This block is **already included** in the default nginx config file that ships with UserFrosting (as of 4.1.3).  If you are using a different configuration file, make sure that it is present.
 
 ## Run certbot
 
