@@ -21,19 +21,29 @@ When you run the main UserFrosting install script (`php bakery migrate`), it wil
 
 ### Class namespace and semantic versioning
 
-Migrations are required to be located in the `UserFrosting\Sprinkle\{sprinkleName}\Database\Migrations\{version}` namespace to be picked up by the `migrate` bakery command, where `{sprinkleName}` is the name of your sprinkle and `{version}` the _semantic version_ of your migration. From that namespace, multiple class can be defined to perform different operations. 
+To be picked up by the `migrate` bakery command, migration class files must be located in the `src/Database/Migrations/v{version}` directory of your Sprinkle, where `{sprinkleName}` is the name of your sprinkle and `{version}` the _semantic version_ of your migration.
 
-While multiple operations _can_ be done in the same migration class, it is recommended to use **one class per table or operation**. This way, if something goes wrong while creating one of the tables for example, the table previously created won't be created again when running the migrate command again. Plus, every change made before the error occur can even be reverted using the `migrate:rollback` command.
-
-*Semantic versioning*, on the other hand, is a basic way to make sure migrations are run in the correct order between your script versions. It also helps organize migrations so it's easier to find them. This is achieved by grouping migrations by the sprinkle version number. For example:
+*Semantic versioning* is a basic way to make sure that migrations are run in the correct order between your Sprinkle versions. It also helps organize migrations so it's easier to find them. This is achieved by grouping migrations by the sprinkle version number. For example:
 
 ```bash
 src/Database/Migrations/v400/
+    ├── MembersTable.php
+    └── OwlsTable.php
 src/Database/Migrations/v410/
+    ├── OwlsTable.php
+    ├── SneksTable.php
+    └── VolesTable.php
 src/Database/Migrations/v412/
+    └── MembersTable.php
 ```
 
-Any migrations related to the `4.0.0` version of the sprinkle should be located in the `v400` directory and namespace. Same goes for migrations related to version `4.1.0` and `4.1.2` of your sprinkle. Note here that dots (`.`) and dashes (`-`) are not included in the directories (and namespace) as per PSR-4 rules. 
+The class names must correspond to these file names; e.g. `MembersTable.php` must contain a single `MembersTable` migration class.
+
+Recall that [PSR-4](http://www.php-fig.org/psr/psr-4/#examples) requires that classes have a namespace that corresponds to their file path, i.e. `UserFrosting\Sprinkle\{sprinkleName}\Database\Migrations\v{version}`.  **Crucially**, namespaces are case-sensitive and **must** match the case of the corresponding directories.  Also note that dots (`.`) and dashes (`-`) are not included in the directories (and namespace) as per PSR-4 rules. 
+
+Any migrations related to the `4.0.0` version of the sprinkle should be located in the `v400` directory and namespace. The same goes for migrations related to version `4.1.0` and `4.1.2` of your sprinkle. 
+
+While multiple operations _can_ be done in the same migration class, it is recommended to use **one class per table or operation**. This way, if something goes wrong while creating one of the tables for example, the table previously created won't be created again when running the migrate command again. Plus, every change made before the error occurred can even be reverted using the `migrate:rollback` command.
 
 >>>>> Not every sprinkle requires a migration. If nothing changed in the database structure between two versions, there's simply nothing to migrate!
 
