@@ -357,11 +357,11 @@ Specifies that the value of the field must match a specified Javascript- and PCR
 screech:
   validators:
     regex:
-      regex: "^who(o*)$"
+      regex: ^who(o*)$
       message: You did not provide a valid screech.
 ```
 
->>>> The jQuery Validation plugin, for some unholy reason, wraps regular expressions on the client side with `^...$`.  Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).
+>>>> Regular expressions should _not_ be wrapped in quotes in YAML.  Also the jQuery Validation plugin, for some unholy reason, wraps regular expressions on the client side with `^...$`.  Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).
 
 ##### `required`
 
