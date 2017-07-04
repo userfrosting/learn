@@ -20,7 +20,7 @@ taxonomy:
 
 #### List all files in a directory with permissions and include hidden files
 
-`ls -l -a path/`
+`ls -la path/`
 
 #### Change into a directory
 
@@ -42,13 +42,33 @@ taxonomy:
 
 `nano file.txt`
 
+Use Ctrl+X to exit `nano`.
+
 #### Create a directory
 
 `mkdir path/`
 
+#### Remove a file
+
+`rm file`
+
+#### Remove a directory and its contents
+
+`rm -r path/`
+
 #### Create a symbolic link to a file
 
 `sudo ln -s <file-name> <link-name>`
+
+#### Compress and archive one or more files (tar.gz)
+
+`tar -czvf archive.tar.gz /path`
+
+#### Decompress and extract an archive to a specified directory
+
+`tar -xzvf archive.tar.gz -C /path`
+
+For this command, you can use the `--strip-components=n` flag to strip `n` subdirectory paths from the files in the original archive.
 
 ### File permissions
 
