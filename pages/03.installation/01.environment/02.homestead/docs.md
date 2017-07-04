@@ -1,7 +1,7 @@
 ---
 title: Homestead
 metadata:
-    description: 
+    description: Homestead is a virtual environment, managed by Vagrant, that comes with everything you need to run UserFrosting preinstalled.  It's a great way to develop in a Ubuntu environment, if you'll be running your production site in a similar environment.
 taxonomy:
     category: docs
 ---
@@ -61,7 +61,7 @@ The first thing we need to do is **create a virtual machine**.  To do this, open
 vagrant box add laravel/homestead
 ```
 
-This will hit Vagrant's public catalog of preconfigured boxes and install the `laravel/homestead` box.
+This will hit Vagrant's public catalog of preconfigured boxes and install the `laravel/homestead` box.  You will be prompted to choose which virtual machine manager to use.  Choose the `virtualbox` option.
 
 Homestead will automatically give us the following components that we need to run UserFrosting:
 
@@ -151,7 +151,7 @@ The first section we'll focus on is the `authorize` and `keys` section.  This is
 
 #### Create an SSH keypair
 
-You can generate a new SSH keypair using the `ssh-keygen` tool.  Before doing this, make sure you have a `.ssh` directory in your home directory.  If not, you can do `mkdir $HOME/.ssh`.
+You can generate a new SSH keypair using the `ssh-keygen` tool.  Before doing this, make sure you have a `.ssh` directory in your user's home directory (e.g. `C:/Users/<username>` in Windows, or `/Users/<username>` in Mac/Linux).  If not, you can do `mkdir $HOME/.ssh`.
 
 Then, run the following command:
 
@@ -191,15 +191,17 @@ keys:
 
 #### Customize `folders`, `sites`, and `database`
 
-Homestead lets us share directories between our native operating system and the virtual machine.  For this to work, we need to map each directory in our native operating system, to a corresponding directory on the virtual machine.  To do this, we use the `folders` setting in `Homestead.yaml`:
+Homestead lets us share directories between our native operating system and the virtual machine.  For this to work, we need to map each directory in our native operating system, to a corresponding directory on the virtual machine.  To do this, we use the `folders` setting in `Homestead.yaml`.  Replace the default `map` with the directory where you cloned UserFrosting on your host machine:
 
 ```yaml
 folders:
-    - map: ~/userfrosting            # This is the directory on your "real" computer; should point to the userfrosting repo directory we made earlier
+    - map: ~/dev/userfrosting            # This is the directory on your "real" computer; should point to the userfrosting repo directory we made earlier
       to: /home/vagrant/userfrosting   # This is the corresponding directory in the virtual machine
 ```
 
-If `folders` maps directories to directories, then `sites` maps URLs to our **document root** (similar to what VirtualHosts do in Apache).  In the case of UserFrosting, we want our document root on the virtual machine to be `/home/vagrant/userfrosting/public`.  We'll map this to a `userfrosting.app` URL, which we'll use to access our website in the browser:
+>>> For Windows users, you should use the use the full, absolute path including the drive letter in your `map` value.  For example, `C:/Users/alexweissman/dev/userfrosting`.
+
+If `folders` maps directories to directories, then `sites` maps URLs to our **document root** (similar to what VirtualHosts do in Apache).  In the case of UserFrosting, we want our document root on the virtual machine to be `/home/vagrant/userfrosting/public`.  We'll map this to a `userfrosting.app` URL, which we'll use to access our website in the browser.  Change the defaults to look like:
 
 ```yaml
 sites:
@@ -233,13 +235,13 @@ Notice that we're mapping the IP address from our `Homestead.yaml` file to our d
 
 ### Running the virtual machine
 
-Congratulations!  We're ready to start up our virtual machine and get to work.  First, run:
+Congratulations!  We're ready to start up our virtual machine and get to work.  First, from inside your `homestead/` directory, run:
 
 ```bash
 vagrant up
 ```
 
-from inside your `homestead/` directory.  This will take a little bit of time to provision the virtual machine.
+This will take a little bit of time to provision the virtual machine.
 
 If you get an error like "did not find expected key while parsing a block mapping", this means that Vagrant could not properly parse your `Homestead.yaml` file.  To find syntax errors in YAML files, try pasting them into [YAML Lint](http://www.yamllint.com/).
 
@@ -251,7 +253,9 @@ Once it's done, you'll be able to log into your virtual machine:
 vagrant ssh
 ```
 
-This will give you a welcome message for Ubuntu:
+>>>> It would appear that Git-Bash functions poorly as an SSH client in Windows.  For Windows users, you may want to use the native "command prompt" application instead.
+
+If it connects successfully, you will see a welcome message for Ubuntu:
 
 ```bash
 Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-66-generic x86_64)
