@@ -1,10 +1,13 @@
 ---
-title: Configuring for CentOS
+title: Configuring for CentOS 7
 metadata:
-    description: Notes for configuring UserFrosting to work with CentOS and Apache.
+    description: Notes for configuring UserFrosting to work with CentOS 7 and Apache.
 taxonomy:
     category: docs
 ---
+
+>>>>> If you are experiencing errors or unexpected behaviour, temporarily disable SELinux using `sudo setenforce 0` and see if the problem persists. If the error is fixed, you have an SELinux permissions error and will need to add an exception. If the error persists, this is likely not SELinux, so make sure you re-enable with `sudo setenforce 1`.
+<<<<<
 
 ## Install prerequisites
 
@@ -61,7 +64,7 @@ chmod 775 userfrosting/app/cache userfrosting/app/logs userfrosting/app/sessions
 Allow the Apache user to write files on the server:
 
 ```bash
-chcon -t public_content_rw_t userfrosting/app/cache userfrosting/app/logs userfrosting/app/sessions
+chcon -t httpd_sys_rw_content_t userfrosting/app/cache userfrosting/app/logs userfrosting/app/sessions
 ```
 
 ## Configure SELinux
