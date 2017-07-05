@@ -28,9 +28,9 @@ On the first run you need to init the database (your container name may be diffe
 
     $ docker exec -it -u www-data userfrosting_php_1 bash -c 'php bakery migrate'
 
-Now visit http://localhost:8570/ to see your UserFrosting homepage!
+Now visit `http://localhost:8570/` to see your UserFrosting homepage!
 
-**This is not (yet) meant for production!!**
+**This is not (yet) meant for production!**
 
 You may be tempted to run with this in production but this setup has not been security-hardened. For example:
 
