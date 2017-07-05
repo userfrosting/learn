@@ -22,6 +22,8 @@ The easiest way to contribute financially is through our [Pledgie campaign](http
 
 We can also accept donations via bitcoin: `18Ew1xGy1E3kjH1UyPEgJ3nnDN3ZWUY1N1`
 
+You can also help pay for our web and chat server costs by signing up with DigitalOcean using our [referral link](https://m.do.co/c/833058cf3824).  Once you've spent $25 with them, we'll earn $25 towards our own DigitalOcean account.
+
 ## Contributing time
 
 Our chat room can get very busy!  We have users from all over the world, looking for help 24/7.  Although Alex tends to spend *nearly* every waking minute on his computer, he (and the majority of the other main developers, who mostly live in the UTC-4 timezone) do need to sleep, eat, and work from time to time.
