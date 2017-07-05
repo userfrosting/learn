@@ -80,7 +80,7 @@ Use the configuration file provided in `webserver-configs/nginx.conf`.
 
 ### IIS
 
-Please see the recipe [Hosting with IIS](/recipes/hosting-with-iis).
+Please see the section on [Configuring for IIS](/installation/other-situations/iis).
 
 ## Visit your website
 
