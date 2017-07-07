@@ -31,7 +31,7 @@ These are important concerns - and part of the reason that most people don't run
 
 In the long run, the amount of time you'll spend uploading your code after each change you make will **easily dwarf** the amount of time it takes to set up a working test server on your own computer.  Examples of test server software are Apache and Nginx. If you don't like the idea of setting up a local test server, there's an alternative option that is a little easier and very reliable, called a virtual environment. Vagrant and Homestead (using them together) is an example of setting up a virtual environment.  
 
-When you run your code in a place that is accessible only to you and where it's ok when something breaks, this is referred to as a **development environment.**  When you upload your so that it is running live and interacting with real visitors to your site, this is called a **production environment.**
+When you run your code in a place that is accessible only to you and where it's ok when something breaks, this is referred to as a **development environment.**  When you upload your code so that it is running live and interacting with real visitors to your site, this is called a **production environment.**
 
 ## VirtualBox, Vagrant and Homestead
 
