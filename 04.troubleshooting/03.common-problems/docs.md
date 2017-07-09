@@ -12,3 +12,7 @@ taxonomy:
 **I get a Node/npm error when running `php bakery bake`.**
 
 If installation of npm dependencies fails, see [npm](/basics/requirements/essential-tools-for-php#npm) to ensure npm is correctly installed and updated. You may need to [change npm permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions).
+
+**My routes don't seem to work when I switch to `UF_MODE='production'`.**
+
+The `production` mode, by default, enables [FastRoute's route caching](https://www.slimframework.com/docs/objects/application.html#slim-default-settings).  This can result in route definitions not being updated in the cache during production.  To resolve this, you should clear the route cache in `app/cache/routes.cache`.
