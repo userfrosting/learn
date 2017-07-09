@@ -93,6 +93,8 @@ Once you know the user, you can determine the group(s) to which the web server u
 
 For all other directories, you should make sure that they are *not* writable by the webserver.  We also recommend keeping the `/app` directory out of your web server's document root entirely, to prevent it from inadvertently serving any files in that directory.  Only the contents of `/public` need to be in the document root.
 
+>>>>>> For detailed help with file permissions in Unix/Linux environments, please see our [Unix Primer for Ubuntu](https://learn.userfrosting.com/going-live/unix-primer-ubuntu#Filepermissions).
+
 ### Other software (local development environment only)
 
 During development, and before you're ready to deploy, you'll also want to have the following tools installed:
