@@ -50,7 +50,7 @@ Sets up the [database](/database).
 
 #### debugLogger
 
-Monolog `Logger` object for sending debug print statements and data to `logs/debug.log`.  Can also be accessed via the [`Debug` facade](/troubleshooting/debugging#debug-facade).
+Monolog `Logger` object for sending debug print statements and data to `logs/debug.log`.  Can also be accessed via the [`Debug` facade](/troubleshooting/debugging#debug-statements).
 
 #### errorHandler
 
