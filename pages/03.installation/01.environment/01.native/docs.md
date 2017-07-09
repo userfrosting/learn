@@ -125,6 +125,8 @@ $ php bakery bake
 
 You will first be prompted for your database credentials. This is the information PHP needs to connect to your database. If PHP can't connect to your database using these credentials, make sure you have entered the right information and re-run the `bake` command. 
 
+>>>>> for the bake prompts when you are using phpmyadmin via some configurations like MAMP you will need to enter the port twice: when you are asked for the hostname you would enter something like >localhost:8889 and again when you are asked for the port enter >8889
+
 If the database connection is successful, the installer will then check that the basic dependencies are met. If so, the installer will run the _migrations_ to populate your database with new tables. During this process, you will be prompted for some information to set up the master account (first user). Finally, the installer will run the `build-assets` command to fetch javascript dependencies and build the [assets bundles](/asset-management/asset-bundles).
 
 ## Visit your website
