@@ -30,9 +30,9 @@ Make certain that you have [properly configured](/installation/requirements/basi
 
 Please **make sure** that you have the following installed **before** attempting to install UserFrosting:
 
-- [Git](/installation/requirements/essential-tools-for-php#git)
-- [Composer](/installation/requirements/essential-tools-for-php#composer)
-- [Node.js](/installation/requirements/essential-tools-for-php#nodejs)
+- [Git](/installation/requirements/essential-tools-for-php#Git)
+- [Composer](/installation/requirements/essential-tools-for-php#Composer)
+- [Node.js](/installation/requirements/essential-tools-for-php#Nodejs)
 
 ## Get UserFrosting
 

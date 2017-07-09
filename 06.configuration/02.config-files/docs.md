@@ -74,3 +74,28 @@ To summarize, Sprinkle configuration files are loaded using the following algori
 If `UF_MODE` is empty or not set, UserFrosting will only load the `default.php` configuration files in each Sprinkle.
 
 >>>>>> Use environment variables to easily set the appropriate configuration parameters for different environments.  In addition to setting the `UF_MODE` environment variable to select different configuration files, you can assign sensitive information like database passwords and API keys directly to environment variables, and then reference them in your configuration files using `getenv()`.<br><br>See [the Twelve-Factor App](https://12factor.net/config) for more information on why this is a good idea.
+
+## Accessing Config Values
+
+To access values from the final, merged configuration array during runtime, use the `config` service.  Subkeys can be accessed using [array dot notation](https://medium.com/@assertchris/dot-notation-3fd3e42edc61).  For example, if your configuration array ends up looking like:
+
+```php
+    [
+        'timezone' => 'America/New_York',
+        'site' => [
+            'title'     =>      'Save the Kakapo',
+            'author'    =>      'David Attenborough',
+            'twitter'   =>      '@savethekakapo'            
+        ]
+    ]
+```
+
+then you can access the `twitter` value in a controller using `$this->ci->config['site.twitter']`.  Of course, you may place additional custom configuration values/subarrays in your Sprinkle's configuration files and they will get merged into the final configuration array as well.
+
+### In Twig Templates
+
+Any configuration values under the `site` subarray are automatically passed to Twig as the `site` global variable.  This means you can easily access them in Twig:
+
+```twig
+<a href="https://twitter.com/{{site.twitter}}">Follow me on Twitter!</a>
+```
