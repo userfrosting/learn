@@ -22,31 +22,20 @@ The basic requirements for running UserFrosting are pretty typical of any web fr
 
 If you are using Apache (the default web server that comes installed with XAMPP, WampServer, and most shared web hosting services), check that you have the Rewrite Engine module (`mod_rewrite.c`) installed and enabled.
 
-Some distributions, like WampServer, may not have this module automatically enabled, and you will need to do so manually.
+Some distributions, like WampServer, may not have this module automatically enabled, and you will need to do so manually.  In a shared hosting environment, you may need to have your hosting service do this for you.
 
-In a shared hosting environment, you may need to have your hosting service do this for you.
+**In addition**, make sure that the `Directory` block in your `VirtualHost` configuration is set up to allow `.htaccess` files.  For example:
 
-##### Enabling `mod_rewrite`
+```
+# Allow .htaccess override
+<Directory /var/www/userfrosting/public/>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Order allow,deny
+</Directory>
+```
 
-If you have shell access to your server, please take the following steps (from [Stack Overflow](http://stackoverflow.com/questions/869092/how-to-enable-mod-rewrite-for-apache-2-2/21658877#21658877)):
-
-- Open up your console and type into it: `sudo a2enmod rewrite`
-- Restart your apache server: `sudo service apache2 restart`
-
-If this still does not work, you may need to change the override rule in your Apache configuration to allow Apache to use UserFrosting's `.htaccess` file.
-
-1. Locate either your site-specific virtualhost file (preferred) or your master Apache configuration file (typically called `apache2.conf`, `http.conf`, or `000-default.conf`).  In XAMPP, for example, this file is located at `XAMPP/etc/httpd.conf`.
-2. Locate the line `Directory /var/www/`
-3. Change `Override None` to `Override All`
-
-Again, you may need a server admin to do this if you are using shared hosting.
-
-If you get an error stating rewrite module is not found, then probably your `userdir` module is not enabled. For this reason you need to enable it.
-
-1. Type this into the console: `sudo a2enmod userdir`
-2. Enable the rewrite module (per the instructions above).
-
-For more information, see http://seventhsoulmountain.blogspot.com/2014/02/wordpress-permalink-ubuntu-problem-solutions.html.
+For more information, see [this troubleshooting page](/troubleshooting/common-problems#InstallationwentfineexceptIdontseeanystylingonmyhomepageIamusingApache).
 
 ### PHP Requirements
 
