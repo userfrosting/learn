@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-### Chapter 6
+#### Chapter 6
 
 # Configuration
 

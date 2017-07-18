@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-### Chapter 4
+#### Chapter 4
 
 # Troubleshooting
 

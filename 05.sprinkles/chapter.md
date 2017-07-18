@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-### Chapter 5
+#### Chapter 5
 
 # Sprinkles
 

@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-### Chapter 13
+#### Chapter 13
 
 # Client-side Code
 
