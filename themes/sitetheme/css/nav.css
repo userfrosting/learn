@@ -1,3 +1,21 @@
+
+
+
+#nav-social i {
+    color: black;
+    text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.13);
+}
+
+#nav-social nav li a { text-shadow: none; }
+
+nav li a {
+    text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.23);
+}
+
+.dropdown-content li a {
+    text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.1);
+}
+
 #nav-main {
     transition: top 0.2s ease 0s;
     -webkit-transition: top 0.9s ease 0s;
@@ -210,6 +228,56 @@ nav.custom .z-depth-1, nav.custom, nav.custom .btn, nav.custom .btn-large, nav.c
 }
 
 
+
+
+nav.custom .dropdown-content {
+  background-color: #fff !important;
+  margin: 0 !important;
+  display: none;
+  min-width: 100px;
+  max-height: 650px !important;
+  overflow-y: auto !important;
+  opacity: 0;
+  position: absolute;
+  z-index: 999;
+  will-change: width, height;  
+}
+
+nav.custom .dropdown-content li {
+    clear: both;
+    color: rgba(0, 0, 0, 0.87);
+    cursor: pointer;
+    min-height: 50px;
+    line-height: 1.5rem;
+    width: 100%;
+    text-align: left !important;
+    text-transform: none;
+}
+
+nav.custom  .dropdown-content li:hover, nav.custom  .dropdown-content li.active, nav.custom  .dropdown-content li.selected {
+      background-color: #eee !important;
+}
+
+nav.custom  .dropdown-content li.active.selected {
+    background-color: #e1e1e1 !important;
+}
+
+nav.custom  .dropdown-content li > a, .dropdown-content li > span {
+  color: #26a69a !important;
+  display: block;
+  line-height: 22px;
+  padding: 14px 16px !important;
+}
+
+nav.custom  .dropdown-content li > a > i {
+    height: inherit;
+    line-height: inherit;
+    float: left !important;
+    margin: 0 24px 0 0 !important;
+    width: 24px !important;
+}
+
+#dropdown1 {padding: 0px !important;}
 
 
 
