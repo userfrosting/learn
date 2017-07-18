@@ -19,19 +19,32 @@
     position: relative;
 }
 
-@media (max-width: 1085px) {
+#mobile-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 6px 0px;
+}
+
+#mobile-nav a {
+    color: #222;
+}
+
+#mobile-nav a:hover { color: white;}
+
+@media (max-width: 1018px) {
     .navbar-fixed {
         display: none;
     }
 }
 
-@media (min-width: 1085px) {
+@media (min-width: 1018px) {
     #sidebar {
         margin-top: 18px;
     }
     #header {
          background-color: #38424d !important;
     }
+    #mobile-nav { display: none;}
 }
 
 nav.custom {
@@ -195,6 +208,8 @@ nav.custom .z-depth-1, nav.custom, nav.custom .btn, nav.custom .btn-large, nav.c
         font-size: 15px;
     }
 }
+
+
 
 
 

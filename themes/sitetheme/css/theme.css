@@ -392,4 +392,44 @@ h3 .copy-to-clipboard {
     color: #07a;
 }
 
+@media (max-width: 959px) {
+    .logo-title {
+        font-size: 26px;
+    }
+    .searchbox input {
+        font-size: 12px;
+    }
+    
+    #sidebar ul li a span {
+        font-size: 14px;
+    }
+}
 
+@media (max-width: 768px) {
+    #top-bar {
+    padding: 42px 16px 24px 16px;
+    }
+    
+    h1 {}
+    h2 {font-size: 1.5rem;}
+    h3 {font-size: 1.25rem;}
+    h4 {font-size: 1.15rem;}
+    h5 {font-size: 1rem;}
+    h6 {font-size: 1rem;}
+    
+    code, pre, pre code {
+        max-width: 94vw;
+        white-space: pre-wrap;
+    }
+    
+    #chapter h1 {font-size: 2rem;}
+    #chapter h3 {font-size: 1.5rem;}
+    
+    #chapter #body-inner {
+        height: 30vh;
+    }
+    
+    body {font-size: 15px;}
+    p {margin: 1.33rem 0;}
+    pre, code, pre code {font-size: 14px;}
+}
