@@ -21,6 +21,7 @@
         {% do assets.addCss('theme://css-compiled/nucleus.css',102) %}
         {% do assets.addCss('theme://css-compiled/theme.css',101) %}
         {% do assets.addCss('theme://css/custom.css',100) %}
+		{% do assets.addCss('theme://css/nav.css',100) %}
         {% do assets.addCss('theme://css/font-awesome.min.css',100) %}
         {% do assets.addCss('theme://css/featherlight.min.css') %}
         {% do assets.addCss('theme://css/theme.css') %}
@@ -35,7 +36,7 @@
     {% endblock %}
 
     <!-- Custom fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet" type="text/css">
     
     {% block javascripts %}
         {% do assets.addJs('jquery',101) %}
@@ -69,11 +70,12 @@ RocketChat(function() {
 <!-- End of Rocket.Chat Livechat Script -->
 
 <body class="searchbox-hidden {{ page.header.body_classes }}" data-url="{{ page.route }}">
+	{% include 'partials/navigation.html.twig' %}
     {% block sidebar %}
     <nav id="sidebar">
         <div id="header-wrapper">
             <div id="header">
-                <a id="logo" href="{{ theme_config.home_url ?: base_url_absolute }}">{% include 'partials/logo.html.twig' %}</a>
+                <a id="logo" href="https://www.userfrosting.com">{% include 'partials/logo.html.twig' %}</a>
                 <div class="searchbox">
                     <label for="search-by"><i class="fa fa-search"></i></label>
                     <input id="search-by" type="text" placeholder="{{ 'THEME_LEARN2_SEARCH_DOCUMENTATION'|t }}"
@@ -104,7 +106,10 @@ RocketChat(function() {
                 {% if config.plugins.breadcrumbs.enabled %}
                 {% include 'partials/breadcrumbs.html.twig' %}
                 {% endif %}
-            </div>
+				<div class="toc">
+					<ol data-toc="body" data-toc-headings="h2, h3"></ol>
+				</div>
+			</div>
             {% endif %}{% endblock %}
 
             {% block content %}{% endblock %}
