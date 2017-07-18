@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-### Chapter 9
+#### Chapter 9
 
 # Routes and Controllers
 

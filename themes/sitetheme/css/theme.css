@@ -175,18 +175,6 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: -1px;
 }
 
-#chapter h1 {
-    font-size: 3rem;
-    text-align: center;
-}
-
-#chapter h3 {
-    margin: auto;
-    font-size: 2rem;
-    color: inherit;
-    border-bottom: none;
-}
-
 h1, h2, h3 {
     color: #222;
     padding-left: 1.375rem;
@@ -252,6 +240,19 @@ h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
 p + h1, p + h2, p + h3, p + h4, p + h5, p+ h6 {
     margin-top: 3rem;
     display: table;
+}
+
+#chapter h1 {
+    font-size: 3rem;
+    text-align: center;
+}
+
+#chapter h4 {
+    margin: auto;
+    font-size: 2rem;
+    color: inherit;
+    border-bottom: none;
+    padding-left: 0px;
 }
 
 #chapter p {
@@ -423,7 +424,7 @@ h3 .copy-to-clipboard {
     }
     
     #chapter h1 {font-size: 2rem;}
-    #chapter h3 {font-size: 1.5rem;}
+    #chapter h4 {font-size: 1.5rem;}
     
     #chapter #body-inner {
         height: 30vh;

@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-### Chapter 2
+#### Chapter 2
 
 # Web Dev, the Right Way
 
