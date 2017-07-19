@@ -147,6 +147,9 @@ a.nav-next:hover, a.nav-prev:hover {
 
 /* TOC Styles
 =====================*/
+#top-bar {
+    background: inherit;
+}
 
 .toc {
 }
@@ -277,7 +280,7 @@ p + h1, p + h2, p + h3, p + h4, p + h5, p+ h6 {
 
 pre {
     border-color: #f6f6f6;
-    box-shadow: 0px 0px 11px 0px hsla(0, 0%, 71%, 0.43);
+    box-shadow: 0px 0px 11px 0px hsla(0, 0%, 71%, 0.04);
 }
 
 code {

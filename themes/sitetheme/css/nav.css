@@ -70,6 +70,8 @@ nav.custom ul {
 }
 
 nav.custom ul li {
+    -webkit-transition: background-color .3s;
+    -o-transition: background-color .3s;
     transition: background-color .3s;
     float: left;
     padding: 0;
@@ -84,6 +86,8 @@ nav.custom ul li a {
 }
 
 nav.custom ul a {
+    -webkit-transition: background-color .3s;
+    -o-transition: background-color .3s;
     transition: background-color .3s;
     color: #fff;
     display: block;
@@ -103,6 +107,8 @@ nav.custom .btn, nav.custom .btn-large {
     background-color: #26a69a;
     text-align: center;
     letter-spacing: .5px;
+    -webkit-transition: .2s ease-out;
+    -o-transition: .2s ease-out;
     transition: .2s ease-out;
     cursor: pointer;
 }
@@ -121,6 +127,8 @@ nav.custom .btn, nav.custom .btn-large, nav.custom .btn-flat {
 }
 
 nav.custom a.btn {
+    -webkit-transition: all 0.5s ease!important;
+    -o-transition: all 0.5s ease!important;
     transition: all 0.5s ease!important;
 }
 
@@ -129,6 +137,7 @@ nav.custom .right {
 }
 
 nav.custom .z-depth-1, nav.custom, nav.custom .btn, nav.custom .btn-large, nav.custom .dropdown-content, nav.custom .collapsible {
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
 }
 
@@ -152,7 +161,6 @@ html {
 /* Dropdown menu
 ===============================================*/
 
-
 #dropdown1 {
     padding: 0px !important;
     width: 128px;
@@ -163,14 +171,14 @@ html {
 }
 
 nav.custom .dropdown-content {
-  background-color: white;
-  margin: 0 !important;
-  display: none;
-  min-width: 100px;
-  max-height: 650px !important;
-  overflow-y: auto !important;
-  position: absolute;
-  z-index: 999;
+    background-color: white;
+    margin: 0 !important;
+    display: none;
+    min-width: 100px;
+    max-height: 650px !important;
+    overflow-y: auto !important;
+    position: absolute;
+    z-index: 999;
 }
 
 nav.custom .dropdown-content li {
@@ -225,10 +233,12 @@ nav.custom  .dropdown-content li > a > i {
 ===============================================*/
 
 #nav-main {
-    transition: top 0.2s ease 0s;
+    -webkit-transition: top 0.2s ease 0s;
+    -o-transition: top 0.2s ease 0s;
     -webkit-transition: top 0.9s ease 0s;
     -moz-transition: top 0.9s ease 0s;
     -o-transition: top 0.9s ease 0s;
+    transition: top 0.2s ease 0s;
 }
 
 
@@ -236,16 +246,31 @@ nav.custom  .dropdown-content li > a > i {
 ===============================================*/
 
 #mobile-nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     display: flex;
+    -ms-flex-pack: distribute;
+    -webkit-justify-content: space-around;
     justify-content: space-around;
     padding: 6px 0px;
 }
 
 #mobile-nav a {
     color: #222;
+    font-weight: 100;
 }
 
-#mobile-nav a:hover { color: white;}
+#mobile-nav a:hover {
+    color: white;
+    font-weight: 700;
+    -webkit-transition: color .25s;
+    -o-transition: color .25s;
+    transition: color .25s;
+    -webkit-transition: font-weight .25s;
+    -o-transition: font-weight .25s;
+    transition: font-weight .25s;
+}
 
 @media (max-width: 1018px) {
     .navbar-fixed {
@@ -294,7 +319,9 @@ nav.custom .dropdown-content a:hover {
     color: white;
     text-shadow: 0px 0px 20px rgba(231, 129, 133, 0.62);
     font-size: 1.85em;
-    -webkit-transition: font-size 1s; /* Safari */
+    -webkit-transition: font-size .5s; /* Safari */
+    -webkit-transition: font-size .5s;
+    -o-transition: font-size .5s;
     transition: font-size .5s;
 }
 
