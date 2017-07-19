@@ -85,6 +85,15 @@ a.nav-next:hover, a.nav-prev:hover {
     text-transform: uppercase;
     padding-top: 10px;
     vertical-align: middle;
+    font-weight: 700;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    border-bottom: 2px solid #f56c68;
+    position: relative;
+    top: -10px;
+}
+
+.highlightable {
+    padding-top: 0px;
 }
 
 .logo-image {
@@ -391,6 +400,11 @@ h3 .copy-to-clipboard {
 .hljs-keyword,
 .hljs-link_url  {
     color: #07a;
+}
+
+mark {
+    background-color: rgba(38, 166, 154, 0.55);
+    color: inherit;
 }
 
 @media (max-width: 959px) {

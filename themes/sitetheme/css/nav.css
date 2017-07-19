@@ -255,7 +255,7 @@ nav.custom  .dropdown-content li > a > i {
 
 @media (min-width: 1018px) {
     #sidebar {
-        margin-top: 18px;
+        padding-top: 18px;
     }
     #header {
          background-color: #38424d !important;
