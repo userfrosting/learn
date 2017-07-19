@@ -318,11 +318,7 @@ nav.custom .dropdown-content a:hover {
 #nav-social li:hover i.fa-stack-2x {
     color: white;
     text-shadow: 0px 0px 20px rgba(231, 129, 133, 0.62);
-    font-size: 1.85em;
-    -webkit-transition: font-size .5s; /* Safari */
-    -webkit-transition: font-size .5s;
-    -o-transition: font-size .5s;
-    transition: font-size .5s;
+    font-size: 1.757em;
 }
 
 #nav-social li:hover i.fa-stack-1x {
