@@ -9,7 +9,7 @@ pages:
     twig: false
 
 cache:
-  enabled: true
+  enabled: false
   check:
     method: file
   driver: auto
@@ -25,8 +25,8 @@ assets:
   css_pipeline: false
   css_minify: false
   css_rewrite: false
-  js_pipeline: true
-  js_minify: true
+  js_pipeline: false
+  js_minify: false
 
 debugger:
   enabled: false

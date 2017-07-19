@@ -41,6 +41,7 @@
     {% block javascripts %}
         {% do assets.addJs('jquery',101) %}
         {% do assets.addJs('theme://js/modernizr.custom.71422.js',100) %}
+		{% do assets.addJs('theme://js/nav.js',100) %}
         {% do assets.addJs('theme://js/featherlight.min.js') %}
         {% do assets.addJs('theme://js/clipboard.min.js') %}
         {% do assets.addJs('theme://js/jquery.scrollbar.min.js') %}
@@ -55,7 +56,7 @@
 </head>
 
 <!-- Start of Rocket.Chat Livechat Script -->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 (function(w, d, s, u) {
 	w.RocketChat = function(c) { w.RocketChat._.push(c) }; w.RocketChat._ = []; w.RocketChat.url = u;
 	var h = d.getElementsByTagName(s)[0], j = d.createElement(s);
@@ -67,7 +68,7 @@ RocketChat(function() {
     this.setCustomField('origin', 'learn.userfrosting.com');
 });
 </script>
-<!-- End of Rocket.Chat Livechat Script -->
+End of Rocket.Chat Livechat Script -->
 
 <body class="searchbox-hidden {{ page.header.body_classes }}" data-url="{{ page.route }}">
 	{% include 'partials/navigation.html.twig' %}

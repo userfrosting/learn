@@ -1,70 +1,8 @@
 
 
 
-#nav-social i {
-    color: black;
-    text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.13);
-}
-
-#nav-social nav li a { text-shadow: none; }
-
-nav li a {
-    text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.23);
-}
-
-.dropdown-content li a {
-    text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.1);
-}
-
-#nav-main {
-    transition: top 0.2s ease 0s;
-    -webkit-transition: top 0.9s ease 0s;
-    -moz-transition: top 0.9s ease 0s;
-    -o-transition: top 0.9s ease 0s;
-}
-
-#nav-nav {
-    width: 100%;
-    z-index: 100;
-}
-
-.fixed {
-    position: fixed;
-    top: 0;
-}
-
-#nav-wrap {
-    position: relative;
-}
-
-#mobile-nav {
-    display: flex;
-    justify-content: space-around;
-    padding: 6px 0px;
-}
-
-#mobile-nav a {
-    color: #222;
-}
-
-#mobile-nav a:hover { color: white;}
-
-@media (max-width: 1018px) {
-    .navbar-fixed {
-        display: none;
-    }
-}
-
-@media (min-width: 1018px) {
-    #sidebar {
-        margin-top: 18px;
-    }
-    #header {
-         background-color: #38424d !important;
-    }
-    #mobile-nav { display: none;}
-}
-
+/* Materialize style nav, renamed nav.custom
+===============================================*/
 nav.custom {
     line-height: 1.5;
     font-family: "Roboto", sans-serif;
@@ -103,17 +41,16 @@ nav.custom .brand-logo {
     white-space: nowrap;
 }
 
-.brand-logo {
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 700;
-}
-
 nav.custom a {
     color: #fff;
 }
 
 nav.custom a.button-collapse {
         display: none;
+}
+
+nav li a {
+    text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.04);
 }
 
 @media only screen and (min-width: 601px) {
@@ -156,11 +93,6 @@ nav.custom ul a {
     cursor: pointer;
 }
 
-nav.custom ul a:hover {
-    background-color: rgba(0,0,0,0.1);
-}
-
-
 nav.custom ul a.btn, nav ul a.btn-large, nav ul a.btn-large, nav ul a.btn-flat, nav ul a.btn-floating {
     margin-top: -2px;
     margin-left: 15px;
@@ -194,18 +126,6 @@ nav.custom a.btn {
     transition: all 0.5s ease!important;
 }
 
-nav.custom a:hover {
-    cursor: pointer;
-}
-
-nav.custom a:active, nav.custom a:hover {
-    outline: 0;
-}
-
-nav.custom .btn:hover, nav.custom .btn-large:hover {
-    background-color: #2bbbad;
-}
-
 nav.custom .right {
     float: right !important;
 }
@@ -214,6 +134,10 @@ nav.custom .z-depth-1, nav.custom, nav.custom .btn, nav.custom .btn-large, nav.c
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
 }
 
+.brand-logo {
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+}
 
 @media only screen and (min-width: 992px) {
     nav.custom ul li a, nav.custom a, nav.custom ul a {
@@ -229,18 +153,28 @@ nav.custom .z-depth-1, nav.custom, nav.custom .btn, nav.custom .btn-large, nav.c
 
 
 
+/* Dropdown menu
+===============================================*/
+
+
+#dropdown1 {
+    padding: 0px !important;
+    width: 128px;
+}
+
+.dropdown-content li a {
+    text-shadow: none;
+}
 
 nav.custom .dropdown-content {
-  background-color: #fff !important;
+  background-color: white;
   margin: 0 !important;
   display: none;
   min-width: 100px;
   max-height: 650px !important;
   overflow-y: auto !important;
-  opacity: 0;
   position: absolute;
   z-index: 999;
-  will-change: width, height;  
 }
 
 nav.custom .dropdown-content li {
@@ -254,17 +188,12 @@ nav.custom .dropdown-content li {
     text-transform: none;
 }
 
-nav.custom  .dropdown-content li:hover, nav.custom  .dropdown-content li.active, nav.custom  .dropdown-content li.selected {
-      background-color: #eee !important;
-}
-
 nav.custom  .dropdown-content li.active.selected {
-    background-color: #e1e1e1 !important;
+    background-color: white;
 }
 
 nav.custom  .dropdown-content li > a, .dropdown-content li > span {
-  color: #26a69a !important;
-  display: block;
+  color: #26a69a;
   line-height: 22px;
   padding: 14px 16px !important;
 }
@@ -277,8 +206,110 @@ nav.custom  .dropdown-content li > a > i {
     width: 24px !important;
 }
 
-#dropdown1 {padding: 0px !important;}
+
+/* Social Icons
+===============================================*/
+#nav-social i:first-child {
+    color: #fdfdfd;
+    text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.05);
+    font-size: 1.7em;
+}
+
+#nav-social i:last-child {
+    color: #26a69a;
+    text-shadow: none;
+    font-size: .9em
+}
+
+#nav-social li  {
+    display: table-cell;
+    margin-top: -1px;
+}
+
+#nav-social li:first-child {
+    margin-right: 6px;
+}
+
+#nav-social nav li a { text-shadow: none; }
 
 
+/* Nav slides in and out 
+===============================================*/
+
+#nav-main {
+    transition: top 0.2s ease 0s;
+    -webkit-transition: top 0.9s ease 0s;
+    -moz-transition: top 0.9s ease 0s;
+    -o-transition: top 0.9s ease 0s;
+}
 
 
+/* Mobile nav (inside of existing sidebar)
+===============================================*/
+
+#mobile-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 6px 0px;
+}
+
+#mobile-nav a {
+    color: #222;
+}
+
+#mobile-nav a:hover { color: white;}
+
+@media (max-width: 1018px) {
+    .navbar-fixed {
+        display: none;
+    }
+}
+
+@media (min-width: 1018px) {
+    #sidebar {
+        margin-top: 18px;
+    }
+    #header {
+         background-color: #38424d !important;
+    }
+    #mobile-nav { display: none;}
+}
+
+/* Hover styles
+===============================================*/
+
+nav.custom a:hover {
+    cursor: pointer;
+}
+
+nav.custom a:active, nav.custom a:hover {
+    outline: 0;
+}
+
+nav.custom ul a:hover {
+    background-color: rgb(239, 139, 140);
+}
+
+nav.custom .btn:hover, nav.custom .btn-large:hover {
+    background-color: #33c1b3;
+}
+
+nav.custom ul.dropdown-content  a:hover, nav.custom  ul.dropdown-content li.active, nav.custom ul.dropdown-content li.selected {
+    background-color: #E2E2E2;
+}
+
+nav.custom .dropdown-content a:hover {
+    color: #2bbbad;
+}
+
+#nav-social li:hover i.fa-stack-2x {
+    color: white;
+    text-shadow: 0px 0px 20px rgba(231, 129, 133, 0.62);
+    font-size: 1.85em;
+    -webkit-transition: font-size 1s; /* Safari */
+    transition: font-size .5s;
+}
+
+#nav-social li:hover i.fa-stack-1x {
+    color: #2bbbad;
+}
