@@ -8,11 +8,7 @@ nav.custom {
     font-family: "Roboto", sans-serif;
     font-weight: normal;
     color: rgba(0,0,0,0.87);
-    font-size: 14px;
     background-color: #ee6e73;
-    /*background-color: #26a69a;
-    background-color: #2695a6;
-    background-color: #106c93;*/
     width: 100%;
     height: 56px;
     line-height: 56px;
@@ -39,6 +35,9 @@ nav.custom .brand-logo {
     font-size: 2.1rem;
     padding: 0;
     white-space: nowrap;
+    display: inline-block;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
 }
 
 nav.custom a {
@@ -81,12 +80,11 @@ nav.custom ul li a {
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 500;
     text-transform: uppercase;
-    font-size: 14.5px;
+    font-size: 1rem;
 }
 
 nav.custom ul a {
     transition: background-color .3s;
-    font-size: 14.5px;
     color: #fff;
     display: block;
     padding: 0 15px;
@@ -134,24 +132,22 @@ nav.custom .z-depth-1, nav.custom, nav.custom .btn, nav.custom .btn-large, nav.c
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
 }
 
-.brand-logo {
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 700;
+
+html {
+    font-size: 14px;
 }
 
 @media only screen and (min-width: 992px) {
-    nav.custom ul li a, nav.custom a, nav.custom ul a {
+    html {
         font-size: 14.5px;
     }
 }
 
 @media only screen and (min-width: 1200px) {
-    nav.custom ul li a, nav.custom a, nav.custom ul a {
+   html {
         font-size: 15px;
     }
 }
-
-
 
 /* Dropdown menu
 ===============================================*/
@@ -221,14 +217,6 @@ nav.custom  .dropdown-content li > a > i {
     font-size: .9em
 }
 
-#nav-social li  {
-    display: table-cell;
-    margin-top: -1px;
-}
-
-#nav-social li:first-child {
-    margin-right: 6px;
-}
 
 #nav-social nav li a { text-shadow: none; }
 
