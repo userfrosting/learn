@@ -46,8 +46,9 @@ a {
     padding-bottom: 1px;
 }
 
-#body-inner a:hover {
-    color: #106c93;
+#body-inner a:hover, #body-inner a:hover code {
+    color: #1d625c;
+    border-bottom: 2px solid #28cdbf;
 }
 
 a:hover {
@@ -192,19 +193,19 @@ h1, h2, h3 {
 h1 {
     font-size: 2rem;
     text-align: left;
-    border-bottom: 1px solid #444;
+    border-bottom: 2px solid #444;
     padding-bottom: 3px;
 }
 
 h2 {
     font-size: 2rem;
-    border-bottom: 1px solid #ee6e73; 
+    border-bottom: 2px solid #ee6e73; 
     display: table;
 }
 
 h3 {
     font-size: 1.5rem;
-    border-bottom: 1px solid #f77e83;
+    border-bottom: 2px solid #f77e83;
     display: table-cell;
 }
 
@@ -254,6 +255,8 @@ p + h1, p + h2, p + h3, p + h4, p + h5, p+ h6 {
 #chapter h1 {
     font-size: 3rem;
     text-align: center;
+    padding-left: 0px;
+    border-bottom: 4px solid #d1d1d1;
 }
 
 #chapter h4 {
@@ -262,6 +265,10 @@ p + h1, p + h2, p + h3, p + h4, p + h5, p+ h6 {
     color: inherit;
     border-bottom: none;
     padding-left: 0px;
+}
+
+#chapter .anchorjs-link {
+    display: none;
 }
 
 #chapter p {
