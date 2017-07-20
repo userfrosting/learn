@@ -26,7 +26,7 @@ $( document ).ready(function() {
         }
     });
 });
-
+/*
 function toggleNav(element, on) {
     if (on) {
         element.css('top', '0px');
@@ -35,20 +35,18 @@ function toggleNav(element, on) {
     }
     console.log("Yup");
 }
+*/
 
-/*
 function toggleNav(element, on) {
     if (on) {
         element.css({
-            'display': 'block',
-            'opacity': '1'
+            'transform': 'translateY(200px)'
         });
     } else {
         element.css({
-            'display': 'none',
-            'opacity': '0'
+            'transform': 'translateY(-200px)'
         });
     }
     console.log("Yup");
-};*/
+};
 

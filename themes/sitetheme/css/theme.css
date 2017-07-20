@@ -101,6 +101,14 @@ a.nav-next:hover, a.nav-prev:hover {
     vertical-align:middle;
 }
 
+#sidebar ul li.active > a {
+    background: rgba(255, 255, 255, 0.89) !important;
+    color: #0e0e0e !important;
+}
+
+#sidebar ul.topics {
+    margin: 0 2.1rem;
+}
 
 
 /* Search box
@@ -458,3 +466,5 @@ mark {
     p {margin: 1.33rem 0;}
     pre, code, pre code {font-size: 14px;}
 }
+
+

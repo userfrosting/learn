@@ -343,4 +343,8 @@ nav.custom ul li a {
 }
 
 
-
+#nav-main {
+    transition: transform .5s cubic-bezier(0.06, 0.67, 0.24, 0.96);
+    top: -200px;
+    transform: translateY(200px);
+}
