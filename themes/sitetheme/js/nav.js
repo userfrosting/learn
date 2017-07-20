@@ -8,33 +8,30 @@ $( document ).ready(function() {
       .mouseleave(function() {
         $(".dropdown-content").css("display", "none");
     });
-});
 
-function hideynav() {
-    var $document = $(document),
-        $element = $('#nav-main');
-    if ($document.scrollTop() <= 200) {
-        $element.stop().css({
-            top: '0px'
-        });
-    } else {
-        $element.stop().css({
-            top: '-200px'
-        });
-    }
-    console.log("Yup");
-}
+    // Hide the navbar when scrolled down
+    var isHidden = false;
 
-var scrollTimeout;
-var throttle = 2000;
-
-$( document ).ready(function() {
     $(window).on('scroll', function () {
-        scrollTimeout = setTimeout(function () {
-            hideynav();
-            scrollTimeout = null;
-        }, throttle);
-
+        if (($(document).scrollTop() <= 200)) {
+            if (isHidden) {
+                toggleNav($("#nav-main"), true);
+                isHidden = false;
+            }
+        } else {
+            if (!isHidden) {
+                toggleNav($("#nav-main"), false);
+                isHidden = true;
+            }
+        }
     });
 });
 
+function toggleNav(element, on) {
+    if (on) {
+        element.css('display', 'block');
+    } else {
+        element.css('display', 'none');
+    }
+    console.log("Yup");
+}
