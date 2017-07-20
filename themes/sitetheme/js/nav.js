@@ -10,21 +10,31 @@ $( document ).ready(function() {
     });
 });
 
+function hideynav() {
+    var $document = $(document),
+        $element = $('#nav-main');
+    if ($document.scrollTop() <= 200) {
+        $element.stop().css({
+            top: '0px'
+        });
+    } else {
+        $element.stop().css({
+            top: '-200px'
+        });
+    }
+    console.log("Yup");
+}
 
+var scrollTimeout;
+var throttle = 2000;
 
 $( document ).ready(function() {
-var $document = $(document),
-       $element = $('#nav-main');
-       
-   $document.scroll(function() {
-       if ($document.scrollTop() <= 200) {
-           $element.stop().css({
-               top: '0px'
-           });
-       } else {
-           $element.stop().css({
-               top: '-200px'
-           });
-       }
-   });
+    $(window).on('scroll', function () {
+        scrollTimeout = setTimeout(function () {
+            hideynav();
+            scrollTimeout = null;
+        }, throttle);
+
+    });
 });
+
