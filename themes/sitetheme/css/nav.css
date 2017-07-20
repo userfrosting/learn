@@ -339,7 +339,7 @@ nav.custom ul li a {
     font-size: 1rem;
     letter-spacing: normal;
     -webkit-font-smoothing: auto;
-    -moz-osx-font-smoothing: grayscale;
+    -moz-osx-font-smoothing: auto;
 }
 
 

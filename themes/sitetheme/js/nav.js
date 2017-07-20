@@ -29,9 +29,26 @@ $( document ).ready(function() {
 
 function toggleNav(element, on) {
     if (on) {
-        element.css('display', 'block');
+        element.css('top', '0px');
     } else {
-        element.css('display', 'none');
+        element.css('top', '-200px');
     }
     console.log("Yup");
 }
+
+/*
+function toggleNav(element, on) {
+    if (on) {
+        element.css({
+            'display': 'block',
+            'opacity': '1'
+        });
+    } else {
+        element.css({
+            'display': 'none',
+            'opacity': '0'
+        });
+    }
+    console.log("Yup");
+};*/
+
