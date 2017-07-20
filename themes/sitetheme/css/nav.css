@@ -225,9 +225,11 @@ nav.custom  .dropdown-content li > a > i {
     font-size: .9em
 }
 
-
 #nav-social nav li a { text-shadow: none; }
 
+#nav-social li {
+    width: 52px;
+}
 
 /* Nav slides in and out 
 ===============================================*/
