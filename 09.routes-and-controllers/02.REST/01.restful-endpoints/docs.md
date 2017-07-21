@@ -6,8 +6,6 @@ taxonomy:
     category: docs
 ---
 
-## RESTful Endpoints
-
 A RESTful url should represent a _thing_, not an _action_.  We want to avoid putting any verbs in the name of the url - instead, the action should be defined by the HTTP method.  For example:
 
 ```
@@ -28,7 +26,7 @@ GET http://example.com/modals/users/create
 
 This might seem to contradict what we just said, which is not to use verbs in our urls.  However in this case, "create" isn't referring to the client's action, but to the _resource itself_.  We're **getting** the "create user" modal, so `modals/users/create` is the resource name, and our action is `GET`.
 
-### Naming Scheme
+## Naming Scheme
 
 UserFrosting uses a specific naming scheme for endpoints, which we would encourage you to stick with when you start to develop your own endpoints.
 

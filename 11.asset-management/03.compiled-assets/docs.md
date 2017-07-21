@@ -12,8 +12,6 @@ In UserFrosting, the Sprinkle system makes this a little more complicated. Each 
 
 Configuring the web server to handle all of the extra logic would be tedious, error-prone, and could easily introduce security risks. For these reasons, UserFrosting has the ability to [serve assets through the application](/asset-management/basic-usage#PublicassetURLs), rather than relying on the web server to handle these requests directly.
 
-## Compiled Assets
-
 You may be thinking "won't raw assets add a lot of overhead and slow down my application?" If so, you would be absolutely, 100% correct. This is why raw assets are only meant to be used in **development**. When you're ready to deploy your application to the live server, one of the tasks that must be done is to **compile** your assets and asset bundles.
 
 Compiling assets basically does three main things:
@@ -22,39 +20,15 @@ Compiling assets basically does three main things:
 2. It [minifies](https://en.wikipedia.org/wiki/Minification_(programming)) CSS and Javascript assets, so that they are smaller and can be loaded more quickly by the client;
 3. It concatenates assets within each asset bundle into a single file, reducing the number of requests that the client needs to make. Again, this makes the page load more quickly for the client.
 
-To accomplish this, we will use a suite of Javascript-based tools which help automate the process.
-
-### Node.js
-
-All of the tools we use are based on [Node.js](https://nodejs.org/en/). Why? Since every web application needs to minify and process assets, it makes sense to develop the tools for these tasks in a common language. No matter which server-side technology a developer uses, they all have to deal with Javascript sooner or later. Thus, Javascript-based tools are the most popular and actively developed and maintained options.
-
-Fortunately for you, you should already have Node.js installed if you completed the UserFrosting installation process successfully!
-
-### Gulp
-
-Gulp is a tool used to automate Javascript tasks. The basic idea is that you pass your file(s) through a number of plugins, each of which can perform some kind of transformation on your data. Thus, the output from one plugin becomes the input to the next.
-
-Gulp should have been automatically installed for you during the [installation process](/installation/requirements/essential-tools-for-php#npm).
-
-#### Running the Build Task
-
-All build tasks are defined in `build/gulpfile.js`. UserFrosting ships with three preconfigured tasks for building assets:
-
-1. `uf-bundle-build`
-2. `uf-bundle`
-4. `uf-bundle-clean`
-
-The `uf-bundle-build` task combines the `asset-bundles.json` files in each loaded Sprinkle (as per your `sprinkles.json` file), respecting the collision rules defined in each bundle. This combined bundle file is written to `build/asset-bundles.json`.
-
-The `uf-bundle` task uses [`gulp-bundle-assets`](https://github.com/dowjones/gulp-bundle-assets) to minify and concatenate the assets referenced in each bundle in `build/asset-bundles.json` into a single file per bundle. These compiled bundles will be placed in the `public/assets/` directory by default. It also copies fonts, images, and other files from your Sprinkles to the `public/assets/` directory, so that your web server can directly serve these files as well. 
-
-Running theses commands is handle by the [Bakery CLI](/cli/commands#build-assets) :
+To compile assets for a production environment, simply use the [Bakery CLI tool](/cli/commands#build-assets):
 
 ```bash
 $ php bakery build-assets --compile
 ```
- 
-#### Using Compiled Assets
+
+If you have shell access (for example, [using a VPS](/going-live/vps-production-environment)), you can run this directly on your host server as part of your deployment process.  Otherwise, you can run Bakery locally before transferring your application to the host server.
+
+## Configuration
 
 Once the compiled asset files have been generated, we can easily configure the asset manager to substitute the urls for raw assets in our pages with urls for compiled assets. Simply set the configuration value for `assets.use_raw` to `false`. The default production config file has this already configured for you.
 
@@ -68,4 +42,28 @@ If you reload your page and view the source, you'll see that references to the c
 <link rel="stylesheet" type="text/css" href="http://localhost/myUserFrostingProject/public/assets/css/guest-5a16771b5a.css" >
 ```
 
-The `AssetManager` pulls the names of these compiled assets from `build/bundle.result.json`, which was generated when we ran the `build-assets` command.
+The `AssetManager` service pulls the names of these compiled assets from `build/bundle.result.json`, which was generated when we ran the `build-assets` command.
+
+## Under the hood
+
+Bakery uses a suite of tools based on [Node.js](https://nodejs.org/en/) to build and compile assets. Fortunately for you, you should already have Node.js installed if you completed the UserFrosting installation process successfully!
+
+Why do we use Node.js, anyway, instead of a PHP-based asset management tools?
+
+Honestly, it's because the Node.js tools are better.  Since every web application needs to minify and process assets, it makes sense to develop the tools for these tasks in a common language. No matter which server-side technology a developer uses, they all have to deal with Javascript sooner or later. Thus, Javascript-based tools are the most popular and actively developed and maintained options.
+
+### Gulp
+
+Gulp is a tool used to automate Javascript tasks. The basic idea is that you pass your file(s) through a number of plugins, each of which can perform some kind of transformation on your data. Thus, the output from one plugin becomes the input to the next.
+
+Gulp should have been automatically installed for you during the [installation process](/installation/requirements/essential-tools-for-php#npm).
+
+All build tasks are defined in `build/gulpfile.js`. UserFrosting ships with three preconfigured tasks for building assets:
+
+1. `uf-bundle-build`
+2. `uf-bundle`
+4. `uf-bundle-clean`
+
+The `uf-bundle-build` task combines the `asset-bundles.json` files in each loaded Sprinkle (as per your `sprinkles.json` file), respecting the collision rules defined in each bundle. This combined bundle file is written to `build/asset-bundles.json`.
+
+The `uf-bundle` task uses [`gulp-bundle-assets`](https://github.com/dowjones/gulp-bundle-assets) to minify and concatenate the assets referenced in each bundle in `build/asset-bundles.json` into a single file per bundle. These compiled bundles will be placed in the `public/assets/` directory by default. It also copies fonts, images, and other files from your Sprinkles to the `public/assets/` directory, so that your web server can directly serve these files as well. 
