@@ -12,7 +12,7 @@ UserFrosting's `ufForm` widget makes it easy to handle many form-submission task
 
 ```twig
 <form id="sign-in" action="{{site.uri.public}}/account/login" method="post">
-  {% include "pages/partials/csrf.html.twig" %}
+  {% include "forms/csrf.html.twig" %}
   <div class="form-group has-feedback">
     <label>Username</label>
     <input type="text" class="form-control" name="user_name">
