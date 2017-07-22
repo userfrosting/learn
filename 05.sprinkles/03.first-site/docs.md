@@ -129,7 +129,7 @@ site/
 └── composer.json
 ```
 
-The last step is to run Composer from your root project directory, so that it can detect the new `composer.json` file and create the appropriate mappings.  You only need to run this once when you create a new Sprinkle - any new classes that you add to `src/` will be automatically picked up in the future.
+The last step is to run Composer from your **root project directory**, so that it can detect the new `composer.json` file and create the appropriate mappings.  You only need to run this once when you create a new Sprinkle - any new classes that you add to `src/` will be automatically picked up in the future.
 
 ```bash
 $ composer update
