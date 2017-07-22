@@ -66,16 +66,17 @@ To bypass CSRF protection, you can map regular expressions to arrays of HTTP met
 ```php
 'csrf' => [
     'blacklist' => [
-        '^api/hoots' => [
+        '^api\/hoots' => [
             'POST'
         ],
-        '^api/screeches' => [
+        '^api\/screeches' => [
             'POST',
             'PUT'
         ]
     ]
 ],
 ```
+>>>>> Note slashes need to be escaped.
 
 Any requests whose URL matches one of these regular expressions, and whose method matches one of the mapped methods, will be automatically exempted from loading the CSRF middleware.  This means that the CSRF token will not be retrieved (for `GET` requests) or checked (for `POST`, `PUT`, `DELETE`, and `PATCH` requests).
 
