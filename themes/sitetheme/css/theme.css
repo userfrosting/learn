@@ -1,38 +1,4 @@
 
-#body img, #body .video-container {
-    margin: 1.5rem auto !important;
-}
-
-#top-bar {
-    height: auto;
-    padding: 22px 16px 12px 16px;
-}
-
-#body #breadcrumbs span {
-    padding: 0px .1rem 0px 0px;
-}
-
-#breadcrumbs {
-    border-bottom: 1px solid #444;
-    padding-bottom: 3px;
-}
-
-#toc a:hover {
-    color: #f56c68;
-    border-bottom: 1px solid #f56c68;
-}
-
-.anchorjs-link {
-    border-bottom: none !important;
-    padding-bottom: 0 !important;
-}
-
-.anchorjs-link: hover {
-    border-bottom: none !important;
-    padding-bottom: 0 !important;
-    color: inherit !important;
-}
-
 /* Global Styles
 =====================*/
 
@@ -63,8 +29,90 @@ a.nav-next:hover, a.nav-prev:hover {
     color: #ff8b8e;
 }
 
+#body img, #body .video-container {
+    margin: 1.5rem auto !important;
+}
 
-/* Sidebar Styles
+
+/* Top bar 
+=====================*/
+
+#top-bar {
+    background: inherit;
+}
+
+#top-bar {
+    height: auto;
+    padding: 22px 16px 12px 16px;
+}
+
+
+/* TOC 
+=====================*/
+.toc h1 {
+    margin-bottom: 1rem;
+    text-align: left;
+    font-size: 2rem;
+    border-bottom: 2px solid #38424d;
+}
+
+.toc ol {
+    list-style-type: none;
+    padding-left: 0px;
+    line-height: 1.5;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0em;
+    font-size: inherit;
+}
+
+.toc ol ol {
+    margin-left: 2rem;
+    font-weight: 100;
+}
+
+.toc li a:before {
+    content: '#';
+    padding-right: 5px;
+}
+
+#toc a:hover {
+    color: #f56c68;
+    border-bottom: 1px solid #f56c68;
+}
+
+
+/* Breadcrumbs
+=====================*/
+#body #breadcrumbs span {
+    padding: 0px .1rem 0px 0px;
+}
+
+#breadcrumbs {
+    border-bottom: 1px solid #444;
+    padding-bottom: 3px;
+}
+
+
+/* Github link 
+=====================*/
+
+#top-github-link a {
+    color: #26a69a;
+}
+
+#top-github-link a:hover {
+    color: #33c1b3;
+}
+
+.github-link i {
+    position: relative;
+    left: -2px;
+    top: 1px;
+}
+
+
+/* Sidebar
 =====================*/
 
 #header {
@@ -89,15 +137,6 @@ a.nav-next:hover, a.nav-prev:hover {
     font-weight: 700;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     border-bottom: 2px solid #f56c68;
-}
-@media(min-width: 1018px) {
-    .logo-title {
-        position: relative;
-        top: -10px;
-    }
-    .highlightable {
-        padding-top: 0px;
-    }
 }
 
 .logo-image {
@@ -155,43 +194,6 @@ a.nav-next:hover, a.nav-prev:hover {
    color: #999;
 }
 
-
-/* TOC Styles
-=====================*/
-#top-bar {
-    background: inherit;
-}
-
-.toc {
-}
-
-.toc h1 {
-    margin-bottom: 1rem;
-    text-align: left;
-    font-size: 2rem;
-    border-bottom: 2px solid #38424d;
-}
-
-.toc ol {
-    list-style-type: none;
-    padding-left: 0px;
-    line-height: 1.5;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    margin-left: 0em;
-    font-size: 16px;
-}
-
-.toc ol ol {
-    margin-left: 2rem;
-    font-size: 16px;
-    font-weight: 100;
-}
-
-.toc li a:before {
-    content: '#';
-    padding-right: 5px;
-}
 
 /* Typography
 =====================*/
@@ -264,29 +266,6 @@ h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
 p + h1, p + h2, p + h3, p + h4, p + h5, p+ h6 {
     margin-top: 3rem;
     display: table;
-}
-
-#chapter h1 {
-    font-size: 3rem;
-    text-align: center;
-    padding-left: 0px;
-    border-bottom: 4px solid #d1d1d1;
-}
-
-#chapter h4 {
-    margin: auto;
-    font-size: 2rem;
-    color: inherit;
-    border-bottom: none;
-    padding-left: 0px;
-}
-
-#chapter .anchorjs-link {
-    display: none;
-}
-
-#chapter p {
-    text-align: left !important;
 }
 
 pre {
@@ -423,10 +402,51 @@ h3 .copy-to-clipboard {
     color: #07a;
 }
 
+.anchorjs-link {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+}
+
+.anchorjs-link: hover {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    color: inherit !important;
+}
+
 mark {
     background-color: rgba(38, 166, 154, 0.55);
     color: inherit;
 }
+
+
+/* Chapter page
+=====================*/
+#chapter h1 {
+    font-size: 3rem;
+    text-align: center;
+    padding-left: 0px;
+    border-bottom: 4px solid #d1d1d1;
+}
+
+#chapter h4 {
+    margin: auto;
+    font-size: 2rem;
+    color: inherit;
+    border-bottom: none;
+    padding-left: 0px;
+}
+
+#chapter .anchorjs-link {
+    display: none;
+}
+
+#chapter p {
+    text-align: left !important;
+}
+
+
+/* Media queries
+=====================*/
 
 @media (max-width: 959px) {
     .logo-title {
@@ -469,5 +489,16 @@ mark {
     p {margin: 1.33rem 0;}
     pre, code, pre code {font-size: 14px;}
 }
+
+@media(min-width: 1018px) {
+    .logo-title {
+        position: relative;
+        top: -10px;
+    }
+    .highlightable {
+        padding-top: 0px;
+    }
+}
+
 
 
