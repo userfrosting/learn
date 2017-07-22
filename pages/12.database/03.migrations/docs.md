@@ -107,11 +107,11 @@ As for the `down` method, it simply tells the database structure to delete the t
 
 ## Dependencies
 
-An important aspect of migrations is **data consistency**. Since migrations are like recipes used to create and populate a database, the order in which theses migrations are executed is very important. You don't want to drop those cupcakes in the oven before mixing the flour and eggs the same way you don't want to insert data into a table before that table is created! UserFrosting uses two methods to make sure migrations are run in the correct order. The first one is **semantic versioning** described above. The other one is **dependencies**.
+An important aspect of migrations is **data consistency**. Since migrations are like recipes used to create and populate a database, the order in which theses migrations are executed is very important. You don't want to drop those cupcakes in the oven before mixing the flour and eggs, the same way you don't want to insert data into a table before that table is created! UserFrosting uses two methods to make sure migrations are run in the correct order. The first one is **semantic versioning** described above. The other one is **dependencies**.
 
-While semantic versioning is great for basic stuff, some situations require a more complex way to make sure migrations are run the correct order. This is the case when a Sprinkle requires that a migration from another Sprinkle is executed before its own migration. It can also be the case when two tables inside the same version are dependent one another. 
+While semantic versioning is great for basic stuff, some situations require a more complex way to make sure migrations are run in the correct order. This is the case when a Sprinkle requires that a migration from another Sprinkle is executed before its own migration. It can also be the case when two tables inside the same version are dependent on one another. 
 
-To define which migrations are required to be executed before your own migration, you can specify the fully qualified class name of the dependent migration as an array in the `$dependencies` attribute. For example :
+To define which migrations are required to be executed before your own migration, you can specify the fully qualified class name of the dependent migration as an array in the `$dependencies` attribute. For example:
 
 ```php
 <?php
@@ -137,13 +137,13 @@ class MembersTable extends Migration
 
 The above example tells the bakery `migrate` command that the `UsersTable`, `RolesTable` and `RoleUsersTable` migrations from the `Account` Sprinkle need to be already executed (and at least at version `4.0.0`) before executing the `MembersTable` migration. If those migrations are not yet executed and are pending execution, the `migrate` command will take care of the order automatically. If a migration's dependencies cannot be met, the `migrate` command will abort.
 
->>>>> Dependencies can also target previous version of your own migrations, but semantic versioning should already have taken care of this.
+>>>>> Dependencies can also target previous versions of your own migrations, but semantic versioning should already have taken care of this.
 
 ## Seeding
 
 Migrations can also seed data into the database. Seeding should be used when creating new rows, editing existing data or anything else not related to the table structure. Seeding is done in the `seed` method. 
 
-You can also interact with the user by displaying information, confirming actions or asking questions to populate the database. Such an example is how migration is used to create the master user. Since migrations are run using UserFrosting's **Bakery** cli tool, which is itself using [Symfony Console Component](http://symfony.com/doc/current/components/console.html) as a core component, you can use the IO methods exposed in the `$this->io` variable. For example:
+You can also interact with the person who is running the migration by displaying information, confirming actions or asking questions to populate the database. One example is the `CreateAdminUser` migration in the `account` Sprinkle, which is used to set up the master user account. Since migrations are run using UserFrosting's **Bakery** cli tool, which itself uses [Symfony Console](http://symfony.com/doc/current/components/console.html) as a core component, you can invoke I/O methods on the `$this->io` variable. For example:
 
 ```php
 public function seed()
@@ -162,9 +162,9 @@ public function seed()
 }        
 ```
 
-The above `seed` method will display the `Foo creation` title before asking the user to enter the new Foo name and saving it to the database.
+The above `seed` method will display the `Foo creation` title before asking the user to enter the new `Foo` name and saving it to the database.
 
-For a complete list of available io methods, check out the [Symfony documentation](http://symfony.com/doc/current/console/style.html#helper-methods).
+For a complete list of available I/O methods, check out the [Symfony documentation](http://symfony.com/doc/current/console/style.html#helper-methods).
 
 ## Running your migration
 
@@ -174,4 +174,4 @@ To run your migrations simply re-run the Bakery `migrate` from your command line
 $ php bakery migrate
 ```
 
-If you want to do a "fresh install" of your migration or cancel the changes made, you can **rollback** previous migration. You can also test your migrations using the `pretend` option. See [Chapter 8](/cli/commands) for more details.
+If you want to do a "fresh install" of your migration or cancel the changes made, you can **rollback** the previous migration. You can also do a dry run of your migrations using the `pretend` option. See [Chapter 8](/cli/commands) for more details.

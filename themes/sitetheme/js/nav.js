@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+    // Dropdown nav menu
     $( ".dropdown-button, .dropdown-content" )
     .mouseenter(function() {
         $(".dropdown-content").css("display", "block");
@@ -26,16 +27,6 @@ $( document ).ready(function() {
         }
     });
 });
-/*
-function toggleNav(element, on) {
-    if (on) {
-        element.css('top', '0px');
-    } else {
-        element.css('top', '-200px');
-    }
-    console.log("Yup");
-}
-*/
 
 function toggleNav(element, on) {
     if (on) {
@@ -47,6 +38,4 @@ function toggleNav(element, on) {
             'transform': 'translateY(-200px)'
         });
     }
-    console.log("Yup");
 };
-

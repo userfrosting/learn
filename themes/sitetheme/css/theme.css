@@ -371,12 +371,12 @@ h3 .copy-to-clipboard {
 }
 
 .hljs {
-  color: #3e3d3d;
+    color: #3e3d3d;
 }
 
 .hljs-comment,
 .hljs-title {
-  color: #7b7b7b;
+    color: #7b7b7b;
 }
 
 .hljs-variable,
@@ -403,16 +403,16 @@ h3 .copy-to-clipboard {
 .hljs-value,
 .hljs-inheritance,
 .hljs-header {
-  color: #4b5d01;
+    color: #4b5d01;
 }
 
 .hljs-symbol,
 .hljs-link_label  {
-  color: #286469;
+    color: #286469;
 }
 
 .hljs-function {
-  color: #0d6084;
+    color: #0d6084;
 }
 
 .hljs-keyword,
