@@ -89,12 +89,15 @@ a.nav-next:hover, a.nav-prev:hover {
     font-weight: 700;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     border-bottom: 2px solid #f56c68;
-    position: relative;
-    top: -10px;
 }
-
-.highlightable {
-    padding-top: 0px;
+@media(min-width: 1018px) {
+    .logo-title {
+        position: relative;
+        top: -10px;
+    }
+    .highlightable {
+        padding-top: 0px;
+    }
 }
 
 .logo-image {
