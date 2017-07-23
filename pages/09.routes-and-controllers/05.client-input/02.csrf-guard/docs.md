@@ -26,7 +26,7 @@ The easiest way to add the CSRF tokens to a form is by including the partial Twi
 
 ```twig
 <form id="sign-in" role="form" action="{{site.uri.public}}/account/login" method="post">
-    {% include "pages/partials/csrf.html.twig" %}
+    {% include "forms/csrf.html.twig" %}
     
     ...
 </form>
