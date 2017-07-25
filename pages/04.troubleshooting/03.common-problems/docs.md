@@ -43,6 +43,38 @@ If you get an error stating rewrite module is not found, then your `userdir` mod
 
 For more information, see [this blog article](http://seventhsoulmountain.blogspot.com/2014/02/wordpress-permalink-ubuntu-problem-solutions.html).
 
+## Sprinkles
+
+### I get an error like "There is no class mapped" or "class not found" when using the class mapper or running my migrations.
+
+The "There is no class mapped" error occurs when you attempt to use the [dynamic class mapper](/advanced/class-mapper) with an identifier that has not been successfully mapped to a class name.  If you are sure that you defined the mapping in your Sprinkle's `ServicesProvider` class, it is likely that UserFrosting is simply not even finding your `ServicesProvider` class itself.  This is usually due to using an incorrect namespace for your Sprinkle.
+
+It's important to understand that UserFrosting uses a very strict, **case-sensitive** naming convention for Sprinkle namespaces.  UserFrosting will convert your Sprinkle's directory name to [studly caps](https://laravel.com/docs/5.4/helpers#method-studly-case) when it builds the fully qualified namespace where it expects your `ServicesProvider` and `Migration` classes to be found.  If your Sprinkle's namespace does not match what UserFrosting is expecting, it will not find and load these classes.  This will not cause an error directly, but will manifest in other parts of your code that depend on these classes to be located successfully.
+
+Studly caps uses the following code to convert your Sprinkle directory name to an expected namespace:
+
+```
+$value = str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $value)));
+```
+
+As you can see, all `-` and `_` characters are first converted to spaces.  Then, PHP's [`ucwords`](http://php.net/manual/en/function.ucwords.php) function is used to capitalize each word.  Finally, the spaces are removed.
+
+Some examples:
+
+| Sprinkle directory | Sprinkle namespace |
+| --- | --- |
+| `site` | `Site` |
+| `pokemon-master` | `PokemonMaster` |
+| `pokemonmaster` | `Pokemonmaster` |
+| `pokemonMaster` | `PokemonMaster` |
+| `Pokemonmaster` | `Pokemonmaster` |
+| `PokemonMaster` | `PokemonMaster` |
+| `Pokemon-Master` | `PokemonMaster` |
+
+We **strongly recommend** using only lowercase words separated with `-` for Sprinkle directory names.
+
+>>>>> You may need to re-run Composer if you change your Sprinkle directory path or namespace.  On certain operating systems with case-insensitive filesystems, Composer may not update the directory -> namespace mappings correctly.  You may need to completely erase your `app/vendor` directory and re-run `composer install` in these cases.
+
 ## Deployment/Production
 
 ### My routes don't seem to work when I switch to `UF_MODE='production'`.
