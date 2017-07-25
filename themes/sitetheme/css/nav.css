@@ -252,7 +252,7 @@ nav.custom  .dropdown-content li > a > i {
     -ms-flex-pack: distribute;
     -webkit-justify-content: space-around;
     justify-content: space-around;
-    padding: 6px 0px;
+    padding: 16px 0px 0px;
 }
 
 #mobile-nav a {
@@ -271,7 +271,7 @@ nav.custom  .dropdown-content li > a > i {
     transition: font-weight .25s;
 }
 
-@media (max-width: 1018px) {
+@media (max-width: 1017px) {
     .navbar-fixed {
         display: none;
     }
