@@ -306,3 +306,9 @@ protected function listStatus()
     ];
 }
 ```
+
+## Etymology
+
+If you're wondering where the term "Sprunje" comes from:
+
+![Futurama - Sprunjer](/images/sprunje.mp4)
