@@ -454,6 +454,25 @@ This pattern is especially useful when you want to provide an "update" feature f
 
 Each phone number object is used to construct a row in the widget.
 
+#### getLastRow
+
+When adding items to a collection programmatically using `addRow` (for example, in an "update" interface), you may wish to perform additional operations on each row as it is added.  To do this you may call the `getLastRow` method on your collection, and it will return the jQuery selector object for the row that was just added.
+
+For example, suppose you wish to instantiate a an input mask on each row in the above example:
+
+```
+// Get current phones from an AJAX source, and add to member phones
+var memberId = 12;
+$.getJSON(site.uri.public + '/api/members/m/' + memberId)
+.done(function (data) {
+    $.each(data.phones, function (idx, phone) {
+        phoneCollection.ufCollection('addRow', phone);
+        // Set up an input mask on the 'js-input-phone' field in the row
+        phoneCollection.ufCollection('getLastRow').find('.js-input-phone').inputmask();
+    });
+});
+```
+
 #### addVirginRow
 
 _Adds a "virgin" row to an existing `ufCollection` widget, optionally prepopulated with some data._
@@ -572,6 +591,23 @@ Defaults to the first `tbody` element found in the widget container.
 #### rowTemplate
 
 See the description [above](#rowtemplate).
+
+#### transformDropdownSelection
+
+_A callback that transforms data from a selected dropdown item before it is passed to the Handlebars row template._
+
+This is useful when the format of the data API that feeds your dropdown control does not match the format required by your collection row template.  Simply assign to this option a callback that takes the selected item object, clones it, and returns a transformed object:
+
+```js
+transformDropdownSelection: function (item) {
+    var transformed = $.extend(true, {}, item);
+    transformed['project_id'] = item.id;
+    transformed['id'] = null;
+    return transformed;
+}
+```
+
+>>>> Notice that we use `$.extend(true, {}, item)` to [clone the object](https://stackoverflow.com/a/122704/2970321).  If you instead were to manipulate the `item` object directly, it will change the actual object as it exists in the dropdown control, and likely break the dropdown in the process.
 
 #### DEBUG
 
