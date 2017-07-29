@@ -115,4 +115,60 @@ You may notice that while roles can be created and modified through the administ
 
 Think about it this way - for a permission to have any effect on your application at all, you must reference its slug somewhere in one of your controllers.  This means that even if a user were to create a new permission through the web interface, it **wouldn't make any difference** until a developer were to implement some code that makes use of it.
 
-Instead, you should think of permissions as hardcoded parts of your application that just happen to be stored in the database.  Permissions should be **added, removed, or modified**  using a [database migration](/database/migrations).
+Instead, you should think of permissions as hardcoded parts of your application that just happen to be stored in the database.  Permissions can be **added, removed, or modified**  using a [database migration](/database/migrations).
+
+For example, you might add a `CustomPermissions` migration to your project:
+
+```php
+<?php
+namespace UserFrosting\Sprinkle\Site\Database\Migrations\v100;
+
+use UserFrosting\Sprinkle\Account\Database\Models\Permission;
+use UserFrosting\Sprinkle\Account\Database\Models\Role;
+use UserFrosting\System\Bakery\Migration;
+
+class CustomPermissions extends Migration
+{
+    public $dependencies = [
+        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\PermissionsTable',
+        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable'
+    ];
+
+    public function seed()
+    {
+        // Add default permissions
+        $permissions = [
+            'uri_members' => new Permission([
+                'slug' => 'uri_members',
+                'name' => 'Member management page',
+                'conditions' => 'always()',
+                'description' => 'View a page containing a list of members.'
+            ]),
+            'uri_owls' => new Permission([
+                'slug' => 'uri_owls',
+                'name' => 'View owls',
+                'conditions' => 'always()',
+                'description' => 'View a full list of owls in the system.'
+            ])
+        ];
+
+        foreach ($permissions as $id => $permission) {
+            $slug = $permission->slug;
+            $conditions = $permission->conditions;
+            // Skip if a permission with the same slug and conditions has already been added
+            if (!Permission::where('slug', $slug)->where('conditions', $conditions)->first()) {
+                $permission->save();
+            }
+        }
+
+        // Automatically add permissions to particular roles
+        $roleAdmin = Role::where('slug', 'site-admin')->first();
+        if ($roleAdmin) {
+            $roleAdmin->permissions()->syncWithoutDetaching([
+                $permissions['uri_members']->id,
+                $permissions['uri_owls']->id
+            ]);
+        }
+    }
+}
+```
