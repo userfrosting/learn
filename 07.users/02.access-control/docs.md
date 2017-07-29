@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-## Overview
+## Roles
 
 UserFrosting implements an extended version of [role-based access control](https://en.wikipedia.org/wiki/Role-based_access_control), which allows for very fine-grained control over user permissions.  Every user can have zero or more **roles**, and every role can have zero or more **permissions**.  Users' effective permissions are determined through their roles.
 
@@ -22,7 +22,7 @@ For example, consider the following roles, and their associated permissions:
   
 If Alice has the **Member** role, she will be able to update her account info, post new messages, and delete her own messages.  If she had the **Site Administrator** role as well, she would gain the ability to update other users' accounts and delete their messages, in addition to the permissions that she has from her **Member** role.
 
-## Defining permissions
+## Permissions
 
 A permission is a rule that associates an **action** with a set of **conditions** under which that action can be performed.  These are defined in the `permissions` database table.  For example:
 
@@ -34,8 +34,6 @@ A permission is a rule that associates an **action** with a set of **conditions*
 - **conditions** allows you to set constraints on this permission.  For example, you might want to create a permission that allows access on `uri_user`, but only for users in a particular group.  A boolean expression consisting of [**access condition callbacks**](#callbacks) can be used to construct your condition.
 - **name** is a human-readable label for the permission, which can be used to easily identify it in the role management interface.
 - **description** is a text description for the permission, allowing you to describe the purpose of the permission in human-readable terms.
-
->>> Roles can be created and modified through the administrative interface, but permissions cannot.  This is because permissions are intimately tied to your code and should **not** be modified during the course of daily site operation.  You should think of permissions as hardcoded parts of your application that just happen to be stored in the database.  When you need to **add, remove, or modify** permissions, this should be done by a developer or sysadmin using a [database migration](/database/migrations).
 
 ## Performing access checks
 
@@ -110,3 +108,11 @@ UserFrosting ships with a number of predefined access condition callbacks, which
 | `subset_keys($needle, $haystack)` | Check if all **keys** of the array `$needle` are present in the **values** of `$haystack`.   |
 
 To add your own access condition callbacks, simply [extend](/services/extending-services#extending-existing-services) the `authorizer` service in your Sprinkle. 
+
+## Creating new permissions
+
+You may notice that while roles can be created and modified through the administrative interface, permissions cannot.  This is because permissions are intimately tied to your code and should **not** be modified during the course of daily site operation.
+
+Think about it this way - for a permission to have any effect on your application at all, you must reference its slug somewhere in one of your controllers.  This means that even if a user were to create a new permission through the web interface, it **wouldn't make any difference** until a developer were to implement some code that makes use of it.
+
+Instead, you should think of permissions as hardcoded parts of your application that just happen to be stored in the database.  Permissions should be **added, removed, or modified**  using a [database migration](/database/migrations).
