@@ -1,4 +1,4 @@
-// This has been modified from the original code on line 61 to remove all special characters and spaces from hashes.
+// This has been modified from the original code on line 61 to remove all special characters from hashes and convert to lowercase.
 
 /*
  * Table of Contents jQuery Plugin - jquery.toc
@@ -58,7 +58,7 @@
                         text = "?";
                     }
                     
-                    var baseId = text.replace(/[_\W]+/g, ''), suffix = "", count = 1;
+                    var baseId = text.replace(/[_\W]+/g, '-').toLowerCase(), suffix = "", count = 1;
 
                     while (document.getElementById(baseId + suffix) !== null) {
                         suffix = "_" + count++;
