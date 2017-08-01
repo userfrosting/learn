@@ -43,6 +43,8 @@ namespace UserFrosting\Sprinkle\Site\Sprunje;
 use UserFrosting\Sprinkle\Core\Facades\Debug;
 use UserFrosting\Sprinkle\Core\Sprunje\Sprunje;
 
+use UserFrosting\Sprinkle\Site\Database\Models\Owl;
+
 class OwlSprunje extends Sprunje
 {
     protected $name = 'owls';
@@ -52,17 +54,17 @@ class OwlSprunje extends Sprunje
      */
     protected function baseQuery()
     {
-        $query = new Owl();
+        $instance = new Owl();
 
         // Alternatively, if you have defined a class mapping, you can use the classMapper:
-        // $query = $this->classMapper->createInstance('owl');
+        // $instance = $this->classMapper->createInstance('owl');
 
-        return $query;
+        return $instance->newQuery();
     }
 }
 ```   
 
-`baseQuery` should return an instance of the Eloquent `Builder` class.  If you want your Sprunje to automatically join other tables or load related objects, `baseQuery` is a good place to do this.
+`baseQuery` should return an instance of a "queriable" class.  Queriable classes include 'Illuminate\Database\Eloquent\Builder`, 'Illuminate\Database\Query\Builder`, and `Illuminate\Database\Eloquent\Relations\Relation` (and child classes of these).  If you want your Sprunje to automatically join other tables or load related objects, `baseQuery` is a good place to do this.
 
 ### Sorts and filters
 
@@ -185,12 +187,13 @@ To do this, you can define custom methods in your Sprunje:
      *
      * @param Builder $query
      * @param mixed $value
-     * @return Builder
+     * @return $this
      */
     protected function filterScientificName($query, $value)
     {
-        return $query->like('genus', $value)
-                     ->orLike('species', $value);
+        $query->like('genus', $value)
+                ->orLike('species', $value);
+        return $this;
     }
 ```
 
