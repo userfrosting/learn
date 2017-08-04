@@ -1,0 +1,35 @@
+home:
+  alias: '/quick-start'
+
+pages:
+  theme: sitetheme
+  markdown_extra: true
+  process:
+    markdown: true
+    twig: false
+
+cache:
+  enabled: true
+  check:
+    method: file
+  driver: auto
+  prefix: 'g'
+
+twig:
+  cache: true
+  debug: false
+  auto_reload: true
+  autoescape: false
+
+assets:
+  css_pipeline: false
+  css_minify: false
+  css_rewrite: false
+  js_pipeline: false
+  js_minify: false
+
+debugger:
+  enabled: false
+  twig: true
+  shutdown:
+    close_connection: true

@@ -15,8 +15,3 @@ Icon?
 Thumbs.db
 *.swp
 
-# Custom
-_meta
-config/system.yaml
-
-config/system.yaml
