@@ -135,7 +135,7 @@ a.nav-next:hover, a.nav-prev:hover {
     padding-top: 10px;
     vertical-align: middle;
     font-weight: 700;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Montserrat", "Helvetica Neue", "Helvetica" , "Arial" ,sans-serif;
     border-bottom: 2px solid #f56c68;
 }
 
