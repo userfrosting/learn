@@ -1,3 +1,5 @@
+@charset "UTF-8";
+@import url(//fonts.googleapis.com/css?family=Montserrat:400,700|Muli:300,400|Inconsolata);
 
 /* Global Styles
 =====================*/
@@ -197,6 +199,11 @@ a.nav-next:hover, a.nav-prev:hover {
 
 /* Typography
 =====================*/
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Muli", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; */
+}
+
 h1, h2, h3, h4, h5, h6 {
     letter-spacing: -1px;
 }
@@ -426,6 +433,7 @@ mark {
     text-align: center;
     padding-left: 0px;
     border-bottom: 4px solid #d1d1d1;
+    display: block;
 }
 
 #chapter h4 {
