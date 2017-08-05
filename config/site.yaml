@@ -1,6 +1,6 @@
-title: UserFrosting
+title: UserFrosting Documentation
 metadata:
-    description: 'Learn how to get started with UserFrosting to build your user-centered web application in PHP.'
+    description: 'The official documentation for UserFrosting, a PHP framework and full-featured user management application.'
     msapplication-config: 'https://learn.userfrosting.com/user/themes/sitetheme/images/browserconfig.xml'
     theme-color: 'ffffff'
 
