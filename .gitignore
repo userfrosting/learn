@@ -15,3 +15,5 @@ Icon?
 Thumbs.db
 *.swp
 
+# Custom
+_meta
