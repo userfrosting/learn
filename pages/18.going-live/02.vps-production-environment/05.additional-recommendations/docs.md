@@ -73,7 +73,7 @@ And then:
 Build nginx? [Y/n] 
 ```
 
-At this point, you have successfully built a new binary of nginx, located at ~/nginx-<version>/objs/nginx` (replace `<version>` with whatever version the Pagespeed script used.  At the time of writing this article, the current version was `1.13.3`).
+At this point, you have successfully built a new binary of nginx, located at `~/nginx-<version>/objs/nginx` (replace `<version>` with whatever version the Pagespeed script used.  At the time of writing this article, the current version was `1.13.3`).
 
 ### Replace the current nginx binary in `/usr/sbin`
 
