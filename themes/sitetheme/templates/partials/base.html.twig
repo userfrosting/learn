@@ -18,6 +18,7 @@
     <link rel="shortcut icon" href="{{ url('theme://images/favicon.ico') }}">    
 
     {% block stylesheets %}
+		{% do assets.addCss('theme://css/featherlight.min.css', 103) %}
         {% do assets.addCss('theme://css-compiled/nucleus.css',102) %}
         {% do assets.addCss('theme://css-compiled/theme.css',101) %}
 		{% do assets.addCss('theme://css/nav.css',100) %}
@@ -102,13 +103,14 @@
     {% endblock %}
 
     {% block javascripts %}
-        {% do assets.addJs('jquery',101) %}
-        {% do assets.addJs('theme://js/modernizr.custom.71422.js',100) %}
-		{% do assets.addJs('theme://js/nav.js',100) %}
-        {% do assets.addJs('theme://js/clipboard.min.js') %}
-        {% do assets.addJs('theme://js/jquery.scrollbar.min.js') %}
-        {% do assets.addJs('theme://js/learn.js') %}
-        {% do assets.addJs('theme://js/jquery.toc.js') %}
+        {% do assets.addJs('jquery', 101) %}
+        {% do assets.addJs('theme://js/modernizr.custom.71422.js', 100) %}
+		{% do assets.addJs('theme://js/featherlight.min.js', 99) %}
+		{% do assets.addJs('theme://js/nav.js',98) %}
+        {% do assets.addJs('theme://js/clipboard.min.js', 97) %}
+        {% do assets.addJs('theme://js/jquery.scrollbar.min.js', 96) %}
+        {% do assets.addJs('theme://js/learn.js', 95) %}
+        {% do assets.addJs('theme://js/jquery.toc.js', 94) %}
     {% endblock %}
 
     {{ assets.js() }}
