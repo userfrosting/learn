@@ -59,6 +59,8 @@ $.ajax({
 
 ### Blacklisting Routes
 
+>>>> Please note that this has changed slightly as of v4.1.8.  We now require that you explicitly add the leading `/` to your blacklisted routes, to be consistent with the way the route definitions themselves are declared.
+
 Sometimes, you need to bypass CSRF protection for certain requests.  For example, if you want to avoid opening the session to retrieve the CSRF token, or if you are creating an API that is not meant for consumption by a user via a browser, but rather by some other application.
 
 To bypass CSRF protection, you can map regular expressions to arrays of HTTP methods in the `csrf.blacklist` configuration setting:
@@ -66,10 +68,10 @@ To bypass CSRF protection, you can map regular expressions to arrays of HTTP met
 ```php
 'csrf' => [
     'blacklist' => [
-        '^api/hoots' => [
+        '^/api/hoots' => [
             'POST'
         ],
-        '^api/screeches' => [
+        '^/api/screeches' => [
             'POST',
             'PUT'
         ]
