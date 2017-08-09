@@ -62,9 +62,9 @@ In `default.php`, add the following:
             'admin' => [
                 'name'  => 'Squawkbot'
             ]
-        ],    
+        ],
         'debug' => [
-            'auth' => true
+            'smtp' => true
         ],
         'site' => [
             'author'    =>      'David Attenborough',
@@ -73,8 +73,10 @@ In `default.php`, add the following:
             'uri' => [
                 'author' => 'https://attenboroughsreef.com'
             ]
-        ],   
-        'timezone' => 'Europe/London'        
+        ],
+        'php' => [
+            'timezone' => 'Europe/London'
+        ]
     ];
 ```
 

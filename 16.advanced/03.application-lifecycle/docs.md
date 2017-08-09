@@ -21,11 +21,11 @@ The overall lifecycle is managed in the `UserFrosting/System/UserFrosting` class
 5. Add each Sprinkle's resources (assets, config, templates, routes, etc) to the locator service.
 6. Fire the `onSprinklesAddResources` event.
 7. Register each Sprinkle's service provider (if it exists).
-8. Fire the `onSprinklesRegisterServices` event.
+8. Fire the `onSprinklesRegisterServices` event.  Note that this is the point where the `core` Sprinkle sets values for PHP settings such as `log_errors`, `display_errors`, `error_reporting`, and `timezone` from the UF configuration files, and where the custom `ShutdownHandler` is set up.
 9. Load the Slim application settings from the `config` service, and create the Slim application instance.
 10. Fire the `onAppInitialize` event.
 11. Load the route definitions in each Sprinkle's `routes/` directory.
-12. Fire the `onAddGlobalMiddleware` event.
+12. Fire the `onAddGlobalMiddleware` event.  This is where the `core` Sprinkle sets up the global CSRF middleware.
 13. Invoke the `run` method on the Slim application.
 
 ## Bootstrapper classes
