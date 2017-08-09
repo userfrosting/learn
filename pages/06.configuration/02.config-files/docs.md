@@ -20,10 +20,12 @@ A UserFrosting configuration file is nothing more than a PHP script that returns
     // mysite/config/default.php
 
     return [
-        'timezone' => 'America/New_York',
         'site' => [
             'title'     =>      'Owl Fancy',
             'author'    =>      'David Attenborough'
+        ],
+        'php' => [
+            'timezone' => 'America/New_York'
         ]
     ];
 ```

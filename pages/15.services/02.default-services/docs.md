@@ -38,7 +38,7 @@ Constructs the `ClassMapper` object (namespace `UserFrosting\Sprinkle\Core\Util\
 
 Constructs a `Repository` object (namespace `UserFrosting\Support\Repository\Repository`), which [processes and provides a merged repository for the configuration files](/configuration/config-files) across all loaded Sprinkles.  Additionally, it imports the [Dotenv](https://github.com/vlucas/phpdotenv) to allow automagically loading environment variables from `.env` file.
 
-The `config` service also builds the `site.uri.public` config variable from the component values specified in the configuration, and sets values for the PHP settings `display_errors`, `error_reporting`, and `timezone`.
+The `config` service also builds the `site.uri.public` config variable from the component values specified in the configuration.
 
 #### csrf
 

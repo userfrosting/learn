@@ -97,7 +97,7 @@ sudo service nginx restart
 
 ### Configure `server` blocks to use Pagespeed
 
-Now that you have Pagespeed compiled into nginx, you can add the following to the `server` block for each of your sites' configuration files (in `/etc/nginx/sites-available`):
+Now that you have Pagespeed compiled into nginx, you can uncomment the Pagespeed configuration settings (note that we have already added these commented-out in your configuration file) in the `server` block for each of your sites' configuration files (in `/etc/nginx/sites-available`):
 
 ```
 ## Begin - Pagespeed
