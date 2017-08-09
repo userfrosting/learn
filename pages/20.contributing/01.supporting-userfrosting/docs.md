@@ -19,6 +19,7 @@ The easiest way to contribute financially is through our [Pledgie campaign](http
 - Personal use: $10
 - Local nonprofit use (e.g. local chapters of Scouts, Elk Lodge, etc): $30
 - National nonprofit, municipal, and business use: $100
+- Super donor: $500
 
 We can also accept donations via bitcoin: `18Ew1xGy1E3kjH1UyPEgJ3nnDN3ZWUY1N1`
 
