@@ -32,7 +32,7 @@ class OwlController extends SimpleController
         $this->ci->db;
         $result = Owl::where('genus', $genus)->get();
         
-        if ($getParams['format'] == 'json') {
+        if ($params['format'] == 'json') {
             return $response->withJson($result, 200, JSON_PRETTY_PRINT);
         } else {
             return $response->write("No format specified");
