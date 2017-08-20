@@ -156,7 +156,22 @@ The settings and profile forms are posted to the `/account/settings` or `/accoun
 Account avatars are currently handled via Gravatar.  To set this up, users need to create an account with Gravatar and associate 
 their account email address with an avatar of their choice.  UserFrosting will automatically generate a URL for the registered Gravatar image, which can be accessed via the `$user->avatar` property.
 
-Built-in avatar uploading is not yet implemented.
+Built-in avatar uploading is not yet implemented by default, however this is something that could be included with an extended user model like in [This Recipe](https://learn.userfrosting.com/recipes/extending-the-user-model)
+
+By default, the user model (located in `sprinkles/account/src/Database/Models/user.php` around line 130) has a specific `__get` function for telling the class to use gravatars URIs, instead of looking in the users table in the database.  If you extend the user model, and create a new field also called `avatar`, you will need to remember to override this function to stop pulling gravatar images. To override, you will need code such as the following in your extended user model:
+
+```
+    public function __get($name)
+    {
+        if ($name == 'avatar') {
+            return $this->getAvatarAttribute();
+        } else {
+            return parent::__get($name);
+        }
+    }
+```
+where `getAvatarAttribute()` is the custom mutator you assign for retrieving your avatar from the database.
+
 
 ## Activity logging
 
