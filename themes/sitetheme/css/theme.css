@@ -509,5 +509,43 @@ mark {
     }
 }
 
+/* UF Collection
+=====================*/
 
+.table-striped {
+    width: auto;
+    border: none;
+}
 
+.table-striped > thead > tr > th,
+.table-striped > tbody > tr > th,
+.table-striped > tfoot > tr > th,
+.table-striped > thead > tr > td,
+.table-striped > tbody > tr > td,
+.table-striped > tfoot > tr > td {
+    border: none;
+    border-top: 1px solid #eaeaea;
+}
+
+input.form-control {
+    margin-bottom: 0px;
+}
+
+.btn {
+    background-color: transparent;
+    border-top-width: 0;
+}
+
+.btn-trash {
+    padding: 0 10px;
+    color: #777;
+}
+
+.example-output {
+    float: left;
+    padding-left: 20px;
+}
+
+.example-output pre {
+    margin: 0;
+}
