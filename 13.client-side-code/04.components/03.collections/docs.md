@@ -4,11 +4,27 @@ metadata:
     description: The ufCollection widget provides a convenient interface for associating related or child entities with a single parent entity.
 taxonomy:
     category: docs
+process:
+    twig: true
+never_cache_twig: true
 ---
+
+{% do assets.addCss('theme://css/uf-collection.css') %}
+{% do assets.addJs('theme://handlebars/handlebars.js') %}
+
+{% do assets.addJs('theme://jquery.inputmask/dist/inputmask/inputmask.js') %}
+{% do assets.addJs('theme://jquery.inputmask/dist/inputmask/inputmask.extensions.js') %}
+{% do assets.addJs('theme://jquery.inputmask/dist/inputmask/jquery.inputmask.js') %}
+{% do assets.addJs('theme://jquery.inputmask/dist/inputmask/bindings/inputmask.binding.js') %}
+
+{% do assets.addJs('theme://js/attrchange.js') %}
+{% do assets.addJs('theme://js/uf-collection.js') %}
+{% do assets.addJs('theme://js/serialize-controls.js') %}
+{% do assets.addJs('theme://js/example-collection.js') %}
 
 The `ufCollection` widget provides a convenient interface for associating related or child entities with a single parent entity.  For example, you might want to associate a user account with one or more roles, or add multiple phone numbers or addresses to an employee.
 
-![ufCollection widget as used for the "user role" management interface.](/images/uf-collection.png)
+![ufCollection widget as used for the 'user role' management interface.](/images/uf-collection.png)
 
 ## Basic setup
 
@@ -20,13 +36,6 @@ The basic markup for a collection widget consists of a table "skeleton" wrapped 
 <div id="member-phones">
     <label>Phone numbers</label>
     <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Label</th>
-                <th>Number</th>
-                <th>Remove</th>
-            </tr>
-        </thead>
         <tbody>
         </tbody>
     </table>
@@ -107,9 +116,44 @@ $('#member-phones').ufCollection({
 });
 ```
 
-Notice that we have set `useDropdown` to `false`.  When this is set to false, `ufCollection` will automatically add a new empty row below the last row that has been "touched".  A row is "touched" whenever it is brought into focus, or when it is programmatically added using the `addRow` method.  Thus, this ensures that the user can always add another row of information without needing to click an "add" button.
+Notice that we have set `useDropdown` to `false`.  When this is set to false, `ufCollection` will automatically add a new empty row below the last row that has been "touched".  A row is "touched" whenever it is brought into focus, or when it is programmatically added using the `addRow` method.  Thus, this ensures that the user can always add another row of information without needing to click an "add" button.  Try the live demo below:
 
-![ufCollection widget as used for a collection of user's phone numbers.](/images/uf-collection-free-text.png)
+<div style="float: left;">
+    <label>Phone numbers</label>
+    <div class="js-form-phones">
+        <table class="table-striped">
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="example-output">
+    <label>Data received by server:</label>
+    <pre>
+        <code class="js-form-phones-output">
+        </code>
+    </pre>
+</div>
+<div style="clear: both;"></div>
+
+{% verbatim %}
+<script id="collection-phones-row" type="text/x-handlebars-template">
+    <tr class="uf-collection-row">
+        <td>
+            <div class="input-group">
+                <input type="hidden" name="phones[{{ rownum }}][id]" value="{{id}}">
+                <input type="text" class="form-control" name="phones[{{ rownum }}][label]" value="{{label}}" placeholder="Label">
+            </div>
+        </td>
+        <td>
+            <input type="text" class="form-control js-input-phone" name="phones[{{ rownum }}][number]" data-inputmask="'mask': '(999) 999-9999', 'autoUnmask': true" data-mask autocomplete="off" value="{{number}}" placeholder="Number">
+        </td>
+        <td>
+            <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
+        </td>
+    </tr>
+</script>
+{% endverbatim %}
 
 #### Server-side processing
 
