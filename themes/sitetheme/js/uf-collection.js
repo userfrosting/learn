@@ -76,7 +76,7 @@
             rowContainer    : null,
             rowTemplate     : "",
             DEBUG           : false
-            };
+        };
 
     // Constructor
     function Plugin (element, options) {
