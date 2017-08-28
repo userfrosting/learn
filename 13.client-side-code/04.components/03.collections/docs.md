@@ -9,9 +9,11 @@ process:
 never_cache_twig: true
 ---
 
+{% do assets.addCss('theme://css/select2.min.css') %}
 {% do assets.addCss('theme://css/uf-collection.css') %}
-{% do assets.addJs('theme://handlebars/handlebars.js') %}
 
+{% do assets.addJs('theme://handlebars/handlebars.js') %}
+{% do assets.addJs('theme://js/select2.full.min.js') %}
 {% do assets.addJs('theme://jquery.inputmask/dist/inputmask/inputmask.js') %}
 {% do assets.addJs('theme://jquery.inputmask/dist/inputmask/inputmask.extensions.js') %}
 {% do assets.addJs('theme://jquery.inputmask/dist/inputmask/jquery.inputmask.js') %}
@@ -118,23 +120,25 @@ $('#member-phones').ufCollection({
 
 Notice that we have set `useDropdown` to `false`.  When this is set to false, `ufCollection` will automatically add a new empty row below the last row that has been "touched".  A row is "touched" whenever it is brought into focus, or when it is programmatically added using the `addRow` method.  Thus, this ensures that the user can always add another row of information without needing to click an "add" button.  Try the live demo below:
 
-<div style="float: left;">
-    <label>Phone numbers</label>
-    <div class="js-form-phones">
-        <table class="table-striped">
-            <tbody>
-            </tbody>
-        </table>
+<div id="example-phones">
+    <div style="float: left;">
+        <label>Phone numbers</label>
+        <div>
+            <table class="table-striped">
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
+    <div class="example-output">
+        <label>Data received by server:</label>
+        <pre>
+            <code>
+            </code>
+        </pre>
+    </div>
+    <div style="clear: both;"></div>
 </div>
-<div class="example-output">
-    <label>Data received by server:</label>
-    <pre>
-        <code class="js-form-phones-output">
-        </code>
-    </pre>
-</div>
-<div style="clear: both;"></div>
 
 {% verbatim %}
 <script id="collection-phones-row" type="text/x-handlebars-template">
@@ -252,6 +256,65 @@ If you want to prevent entities from being deleted, even if they are not present
 
 Many-to-many collections require some additional markup in the skeleton - we need to add a `select` control for selecting preexisting items to add to the collection.  For example, let's say we want to allow members to choose species of owls from a prepopulated list, and then give each selected owl a name:
 
+<div id="example-member-owls">
+    <div style="float: left;">
+        <label>My owls</label>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Species</th>
+                    <th>Name</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="padding-bottom">
+            <label>Adopt an owl:</label>
+            <select class="form-control js-select-new" type="text" data-placeholder="Select an owl">
+                <option></option>
+            </select>
+        </div>
+    </div>
+    <div class="example-output">
+        <label>Data received by server:</label>
+        <pre>
+            <code>
+            </code>
+        </pre>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+
+{% verbatim %}
+<script id="example-member-owls-row" type="text/x-handlebars-template">
+    <tr class="uf-collection-row">
+        <td>
+            {{species}}
+            <input type="hidden" name="owls[{{ rownum }}][species_id]" value="{{id}}">
+        </td>
+        <td>
+            <input type="text" name="owls[{{ rownum }}][name]" value="{{name}}">
+
+        </td>
+        <td>
+            <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
+        </td>
+    </tr>
+</script>
+
+<script id="example-member-owls-select-option" type="text/x-handlebars-template">
+    <div>
+        <strong>
+            {{species}}
+        </strong>
+        <br>
+        {{description}}
+    </div>
+</script>
+{% endverbatim %}
+
 ```
 <div id="member-owls">
     <label>My owls</label>
@@ -269,7 +332,7 @@ Many-to-many collections require some additional markup in the skeleton - we nee
     <div class="padding-bottom">
         <label>Adopt an owl:</label>
         <select class="form-control js-select-new" type="text" data-placeholder="Select an owl">
-        <option></option>
+            <option></option>
         </select>
     </div>
 </div>
