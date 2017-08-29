@@ -12,7 +12,7 @@ As mentioned in the last section, each Sprinkle can set up its own services thro
 
 #### alerts
 
-This service handles the [alert message stream](/routes-and-controllers/alert-stream), sometimes known as "flash messages".  See Section 4.6 for more information.
+This service handles the [alert message stream](/routes-and-controllers/alert-stream), sometimes known as "flash messages".  See Section 9.6 for more information.
 
 #### assets
 
