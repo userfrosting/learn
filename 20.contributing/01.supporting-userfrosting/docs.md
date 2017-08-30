@@ -8,7 +8,7 @@ taxonomy:
 
 ## Financial support
 
-UserFrosting is completely free and open source, and licensed under the [MIT License](https://github.com/userfrosting/UserFrosting/blob/master/licenses/UserFrosting.md).
+UserFrosting is completely free and open source, and licensed under the [MIT License](https://github.com/userfrosting/UserFrosting/blob/master/LICENSE.md).
 
 That being said, yes, we'll take your money!
 
