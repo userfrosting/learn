@@ -29,7 +29,7 @@ This template can be used to create new command. Substitute `SprinkleName` in th
 ```php
 <?php
 
-namespace UserFrosting\SprinkleName\Bakery\CommandName;
+namespace UserFrosting\Sprinkle\SprinkleName\Bakery;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
