@@ -109,7 +109,7 @@ We also need to make sure that **nginx can read the `public/` directory, and wri
 ```bash
 cd /var/www/<repo name>/
 sudo chown <your username>:www-data public
-sudo chown <your username>:www-data cache logs sessions
+sudo chown <your username>:www-data app/cache app/logs app/sessions
 ```
 
 After your first `git push`, you'll want to set up the `cache/` directory so that it is owned by the `www-data` **group**.  Since both your user account and webserver are part of this group, they'll both be able to write to it.  This is important, so that in your `post-receive` script, you'll have the necessary permissions to clear the cache when you push.  To do this, we'll use the `setfacl` command:
