@@ -62,7 +62,7 @@ Monolog `Logger` object for sending non-fatal error information from custom erro
 
 #### factory
 
-Provide access to factories for the rapid creation of [test](/advanced/unit-tests) objects.
+Provide access to factories for the rapid creation of [test](/advanced/automated-tests) objects.
 
 #### localePathBuilder
 

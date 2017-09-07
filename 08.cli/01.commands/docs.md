@@ -154,7 +154,7 @@ $ php bakery clear-cache
 
 ### test
 
-The `test` command is used to execute [PHPUnit](https://phpunit.de/) tests. See the [Unit Testing](/advanced/unit-tests) section for more information.
+The `test` command is used to execute [PHPUnit](https://phpunit.de/) tests. See the [Automated Testing](/advanced/automated-tests) section for more information.
 
 ```bash
 $ php bakery test

@@ -1,5 +1,5 @@
 ---
-title: Unit Testing
+title: Automated Testing
 taxonomy:
     category: docs
 ---
