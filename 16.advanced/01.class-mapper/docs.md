@@ -1,7 +1,7 @@
 ---
 title: Dynamic Class Mapper
 metadata:
-    description: 
+    description: The class mapper resolves generic class identifiers to specific class names at runtime. This makes it easy to override entire classes in your Sprinkle.
 taxonomy:
     category: docs
 ---
