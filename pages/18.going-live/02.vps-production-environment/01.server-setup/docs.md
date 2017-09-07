@@ -12,7 +12,9 @@ When you go to create your Droplet, DigitalOcean will ask you some initial confi
 
 From here, you can follow DigitalOcean's tutorials to set up your server:
 
-## [Initial Server Setup with Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)
+## Initial Server Setup with Ubuntu 16.04
+
+First, follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04).
 
 Some notes:
 
@@ -23,7 +25,9 @@ Some notes:
 
 ## Additional server configuration
 
-### [Set your server's **timezone**](https://www.digitalocean.com/community/tutorials/how-to-set-up-time-synchronization-on-ubuntu-16-04)
+### Set your server's **timezone**
+
+See [**this guide from DigitalOcean**](https://www.digitalocean.com/community/tutorials/how-to-set-up-time-synchronization-on-ubuntu-16-04).
 
 ### Configure the `nano` command-line editor to convert tabs to spaces
 
@@ -48,13 +52,17 @@ You'll probably want to do this same thing in the root `.nanorc` file, for when 
 sudo nano /root/.nanorc
 ```
 
-## [Add Swap Space](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04)
+## Add Swap Space
+
+Follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04).  Swap space is a part of virtual memory, which allows your server to temporarily move data to the hard drive when there is not enough physical memory available for whatever it is doing.  This is essentially the same thing as the `pagefile.sys` in a Windows environment.
 
 Some notes:
 
 1. This is just a failsafe in the event that your server experiences occasional spikes in memory usage, for example when installing new software or running a backup.  If your server seems to be routinely using more than 70% of its allocated memory, you should consider upgrading to a Droplet with more memory.
 
-## [Installing the LEMP Stack](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04)
+## Install the LEMP Stack
+
+See [**this guide**](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04).
 
 Some notes:
 
@@ -74,7 +82,7 @@ sudo service nginx restart
 
 ### `browscap.ini`
 
-PHP's [get_browser()](http://php.net/manual/en/function.get-browser.php) function uses the `User-Agent` header to guess information about your visitors such as browser, OS, etc.  For it to work properly, you need to download a copy of `browscap.ini` from the [Browscap Project](https://browscap.org) and configure your `php.ini` to find the file.
+PHP's [`get_browser()`](http://php.net/manual/en/function.get-browser.php) function uses the `User-Agent` header to guess information about your visitors such as browser, OS, etc.  For it to work properly, you need to download a copy of `browscap.ini` from the [Browscap Project](https://browscap.org) and configure your `php.ini` to find the file.
 
 Assuming that your PHP installation is in `/etc/php/7.0`, do the following:
 
@@ -116,13 +124,17 @@ On Ubuntu, the `node` package has been changed to `nodejs` to avoid a naming col
 sudo apt-get install nodejs-legacy
 ```
 
-## [Install Certbot (Let's Encrypt)](https://certbot.eff.org/#ubuntuxenial-nginx)
+## Install Certbot (Let's Encrypt)
+
+See the [**certbot tutorial**](https://certbot.eff.org/#ubuntuxenial-nginx).
 
 Some notes:
 
 1. You won't actually be able to set up a new SSL certificate until you have deployed your application for the first time.  Just install the `certbot` client for now.
 
-## [Install phpMyAdmin](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-an-ubuntu-14-04-server)
+## Install phpMyAdmin
+
+See this [**DigitalOcean tutorial**](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-an-ubuntu-14-04-server).
 
 Notes:
 
