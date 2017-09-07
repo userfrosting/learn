@@ -1,10 +1,12 @@
 ---
 title: Custom Bakery Commands
+metadata:
+    description: You may extend the UserFrosting\System\Bakery\BaseCommand class to implement your own CLI commands that can be run through Bakery.
 taxonomy:
     category: docs
 ---
 
-While the Bakery CLI tool comes with great build in commands, your Sprinkles can also take advantage of the Bakery by adding their own cli commands. 
+While the Bakery CLI tool comes with great built-in commands, your Sprinkles can also take advantage of the Bakery by adding their own cli commands. 
 
 ## Writing custom commands
 
@@ -24,7 +26,7 @@ The UserFrosting service providers can be accessed by using `$this->ci` which ho
 
 ## Command Class Template 
 
-This template can be used to create new command. Substitute `SprinkleName` in the namespace with your sprinkle name and `CommandName` with your command name in the namespace and class name.
+This template can be used to create new commands. Substitute `SprinkleName` in the namespace with your sprinkle name and `CommandName` with your command name in the class name.
 
 ```php
 <?php
@@ -45,7 +47,7 @@ class CommandName extends BaseCommand
         $this->setName("my-command")
         
         // the short description shown while running "php bakery list"
-        ->setDescription("My command description");
+        $this->setDescription("My command description");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
