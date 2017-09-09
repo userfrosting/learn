@@ -107,7 +107,29 @@ UserFrosting ships with a number of predefined access condition callbacks, which
 | `subset($needle, $haystack)`      | Check if all **values** in the array `$needle` are present in the **values** of `$haystack`. |
 | `subset_keys($needle, $haystack)` | Check if all **keys** of the array `$needle` are present in the **values** of `$haystack`.   |
 
-To add your own access condition callbacks, simply [extend](/services/extending-services#extending-existing-services) the `authorizer` service in your Sprinkle. 
+### Custom callbacks
+
+To add your own access condition callbacks, simply [extend](/services/extending-services#extending-existing-services) the `authorizer` service in your Sprinkle's `ServicesProvider`: 
+
+```
+$container->extend('authorizer', function ($authorizer, $c) {
+    $authorizer->addCallback('in_organization',
+        /**
+         * Check if the specified user (by id) is in a particular organization.
+         *
+         * @param int $user_id the id of the user.
+         * @param int $organization_id the id of the organization.
+         * @return bool true if the user is in the organization, false otherwise.
+         */
+        function ($user_id, $organization_id) use ($c) {
+           $user = $c->staticMethod('user', 'find', $user_id);
+           return ($user->organization_id == $organization_id);
+        }
+    );
+
+    return $authorizer;
+});
+```
 
 ## Creating new permissions
 
