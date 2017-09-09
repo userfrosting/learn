@@ -107,6 +107,7 @@
         {% block navigation %}{% endblock %}
     </section>
     {% endblock %}
+    {% include 'partials/rocket.html.twig' %}
 
     {% block analytics %}
         {% if theme_config.google_analytics_code %}
@@ -115,6 +116,5 @@
     {% endblock %}
 
     {% include 'partials/twitter.html.twig' %}
-    {% include 'partials/rocket.html.twig' %}
 </body>
 </html>
