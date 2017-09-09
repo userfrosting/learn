@@ -122,7 +122,7 @@ $container->extend('authorizer', function ($authorizer, $c) {
          * @return bool true if the user is in the organization, false otherwise.
          */
         function ($user_id, $organization_id) use ($c) {
-           $user = $c->staticMethod('user', 'find', $user_id);
+           $user = $c->classMapper->staticMethod('user', 'find', $user_id);
            return ($user->organization_id == $organization_id);
         }
     );
