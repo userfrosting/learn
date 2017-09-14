@@ -128,6 +128,10 @@ Set to `false` to disable sorting for this column.
 
 Set to `false` to disable filtering for this column.
 
+##### `data-placeholder`
+
+Use this to set placeholder text for the column filter input (search field).
+
 ##### `class="filter-select"`
 
 When you add this CSS class to your table, Tablesorter will generate a dropdown instead of a free text input for searching this column.  Values for this dropdown will be populated from the corresponding `listable` array returned by your table's [Sprunje](/database/data-sprunjing#Sprunjelists).
