@@ -97,7 +97,7 @@ class MembersTable extends Migration
 
 We then call a series of methods on the `$table` variable in `create`'s closure, to set up the columns and other table properties.
 
-You'll also notice that we've created a `user_id` column, which associates each record in `members` with a corresponding record in `users`. By adding a `unique` constraint to this column as well, we effectively set up a one-to-one relationship between `members` and `users`.
+You'll also notice that we've created a `user_id` column, which associates each record in `members` with a corresponding record in `users`. By adding a `unique` constraint to this column as well, we effectively set up a one-to-one relationship between `members` and `users`.  Since we've also added a foreign key from `user_id` to the `id` column in `users`, it's **very important** that the two columns have the exact same type.  Since `id` is an unsigned integer, `user_id` must also be defined as an unsigned integer.
 
 For a complete explanation of the available methods for working with tables, see Laravel's [Migrations](https://laravel.com/docs/5.4/migrations) chapter. They have a nice table with all the available options.
 
