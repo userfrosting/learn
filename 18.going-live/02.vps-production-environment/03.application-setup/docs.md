@@ -6,8 +6,6 @@ taxonomy:
     category: docs
 ---
 
->>> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
-
 To actually get our application up and running, we need to do a few more things on the remote server:
 
 1. Run Composer to install PHP dependencies;
@@ -117,6 +115,8 @@ After your first `git push`, you'll want to set up the `cache/` directory so tha
 ```bash
 sudo setfacl -d -m g::rwx /var/www/<repo name>/app/cache
 ```
+
+>>>>> **A note about debugging server configuration:** Browsers and operating systems tend to aggressively cache DNS resolutions and redirects.  This means that if you misconfigured your server initially and it returned an error due to DNS or webserver configuration issues, your browser might still have the error response cached even after you've fixed the problem.  You may need to clear your browser's cache or even [your operating system's DNS cache](https://help.dreamhost.com/hc/en-us/articles/214981288-Flushing-your-DNS-cache-in-Mac-OS-X-and-Linux).  When configuring your server, you might have better luck using `curl` to check whether a particular URL is working, rather than going through your browser.
 
 ## Compile assets for production
 
