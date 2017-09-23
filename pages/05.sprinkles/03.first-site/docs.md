@@ -97,7 +97,7 @@ Chances are, you'll be adding some classes to your Sprinkle - at the very least,
 ```json
 {
     "name": "owlfancy/site",
-    "type": "sprinkle",
+    "type": "userfrosting-sprinkle",
     "description": "Site sprinkle for owlfancy.com.",
     "license" : "MIT",
     "authors" : [
@@ -106,7 +106,6 @@ Chances are, you'll be adding some classes to your Sprinkle - at the very least,
             "homepage": "https://alexanderweissman.com"
         }
     ],
-    "version": "1.0.0",
     "autoload": {
         "psr-4": {
             "UserFrosting\\Sprinkle\\Site\\": "src/"
