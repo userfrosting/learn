@@ -15,6 +15,8 @@ Our general constraints are:
 1. We will avoid modifying the `users` table directly.  This will make it easier to integrate any future updates to UF that affect the `users` table.  It will also help prevent collisions with any community Sprinkles that modify the `users` table.  Instead, we will create a separate table, that has a one-to-one relationship with the `users` model.
 2. We will avoid overriding controller methods as much as possible.  Controller methods tend to be longer and more complex than methods in our models, so again, it will be more work to integrate changes to controllers in future updates to UserFrosting.  It will be much easier if instead we extend the data models whenever possible, implementing new methods that enhance the base models.  We can also take advantage of Eloquent's [event handlers](https://laravel.com/docs/5.4/eloquent#events) for model classes to hook in additional functionality.
 
+>>>>>> Don't forget to checkout the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). Some may provide easy ways to add custom profile fields to your users and groups.   
+
 ## Set up your site Sprinkle
 
 If you haven't already, set up your site Sprinkle, as per the instructions in [Your First UserFrosting Site](/sprinkles/first-site).  For the purposes of this tutorial, we will call our Sprinkle `extend-user`.
