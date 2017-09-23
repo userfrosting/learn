@@ -59,7 +59,7 @@ By convention, Javascript bundles should be named with the `js/` prefix.  The as
 
 ### CSS bundles
  
-By convention, CSS bundles should be named with the `css/` prefix.  The assets for a Javascript bundle must be defined under the `styles` key in your bundle.
+By convention, CSS bundles should be named with the `css/` prefix.  The assets for a CSS bundle must be defined under the `styles` key in your bundle.
 
 >>>> Generally speaking, it is a good idea to define your Javascript and CSS resources in separate bundles.  The `options` key in both types of bundles is required, and it tells [gulp-bundle-assets](https://github.com/dowjones/gulp-bundle-assets) how to construct the schema file for linking to [compiled assets](/asset-management/compiled-assets).
 
