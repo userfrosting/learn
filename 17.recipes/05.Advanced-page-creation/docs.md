@@ -98,7 +98,7 @@ Finally, we need to create the template file. We use the same file as the one de
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title"><i class="fa fa-cutlery fa-fw"></i> List of pastries</h3>
+                    <h3 class="box-title"><i class="fa fa-cutlery fa-fw"></i> List of Pastries</h3>
                 </div>
                 <div class="box-body">
 
@@ -384,7 +384,7 @@ Back in our Twig templating file, we can now. Let's look at the complete code an
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title"><i class="fa fa-cutlery fa-fw"></i> List of pastries</h3>
+                    <h3 class="box-title"><i class="fa fa-cutlery fa-fw"></i> List of Pastries</h3>
                 </div>
                 <div class="box-body">
                     <table class="table table-bordered">
@@ -423,7 +423,37 @@ This is the same as using `foreach` in PHP to loop all the items available in an
 
 ![Pastries page](/images/pastries/02.png)
 
+## Adding the page to the menu
+
+Now that we have our page, it's time to add it to the sidebar menu. Do to so, we will [extend the default menu template](/recipes/extending-template#adding-custom-menu-entries). 
+
+Create a new template file located in `templates/navigation/` and call it `sidebar-menu.html.twig` so it can replace the original sidebar menu template file:
+
+`app/sprinkles/pastries/templates/navigation/sidebar-menu.html.twig`
+```html
+{% extends "@admin/navigation/sidebar-menu.html.twig" %}
+
+{% block navigation %}
+    {{ parent() }}
+    <li>
+        <a href="/pastries"><i class="fa fa-cutlery fa-fw"></i> <span>List of Pastries</span></a>
+    </li>
+{% endblock %}
+``` 
+
+The key here is the `{% extends "@admin/navigation/sidebar-menu.html.twig" %}` part. While our new file overwrite the same one from the `admin` sprinkle, we tell **our** file to use the one from the admin sprinkle as a base. We ccan then use Twig inheritance to add our new link to the navigation block. See the [Extending Templates and Menus](/recipes/extending-template) receipe for more informations about this.
+
+You should now see the new link in the menu :
+
+![Pastries menu link](/images/pastries/03.png)
+
+## Adding localisations
+
 ## Adding custom permissions
+
+Now it's time to add custom permissions to our page. At this point, we will add two sets of permissions: Permision to see the page and permission to see the origin column.  
+
+Before we continue, you'll have to login as a non root user. If the top navigation bar is red and tells you _you are signed in as the root user_, well, guess what... It's important you use a different user at this point since the root user has all the permissions and you won't be able to see the permissions in action otherwise. 
 
 ### Creating the permission in the database
 
@@ -432,10 +462,6 @@ This is the same as using `foreach` in PHP to loop all the items available in an
 ### Adding permission check in the controller
 
 ### Adding permission check in the template
-
-## Adding the page to the menu
-
-## Adding localisations
 
 ## Going further
 
