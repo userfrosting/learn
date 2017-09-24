@@ -48,8 +48,6 @@ In `routes.php`, we define our route as follows:
 ```
 <?php
 
-global $app;
-
 $app->get('/members', 'UserFrosting\Sprinkle\Site\Controller\PageController:pageMembers')
     ->add('authGuard');
 ```
