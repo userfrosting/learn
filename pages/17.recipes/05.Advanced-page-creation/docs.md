@@ -568,10 +568,10 @@ At this point, you can go in your user prefrences and change the site language t
 
 ## Going further
 
-- Use the Sprunjing to paginate the results
-- use ufForm to create, edit and delete entries
-- Create some tests
-- Create a custom Bakery command
+- [Use the Sprunjing to paginate the results](/database/data-sprunjing)
+- [use ufForm to create, edit and delete entries](/client-side-code/components/forms)
+- [Create some tests](/advanced/automated-tests)
+- [Create a custom Bakery command](/advanced/custom-cli)
 
 ## Source
 
