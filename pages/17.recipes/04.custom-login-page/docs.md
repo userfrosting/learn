@@ -252,7 +252,7 @@ First, let's create a new `assets/css/login-page.css` file and add the following
 }
 ```
 
-We now need to add our new `login-page.css` file to the `css/main` bundle. At the base of your sprinkle, create a `asset-bundle.json` file and add the following code:
+We now need to add our new `login-page.css` file to the `css/main` bundle. At the base of your sprinkle, create a `asset-bundles.json` file and add the following code:
 
 ```json
 {
