@@ -43,7 +43,7 @@ $app->group('/pastries', function () {
 })->add('authGuard');
 ```
 
-We now have a `/pastries` route setup. We also define a group for later use. As you can see, this route have the `pastries` name and will invoke the `authGuard` middleware requiring a user to be logged in to see this page. 
+We now have a `/pastries` route setup. We also define a group for later use. As you can see, this route has the `pastries` name and will invoke the `authGuard` middleware requiring a user to be logged in to see this page. 
 
 ## The controller
 
