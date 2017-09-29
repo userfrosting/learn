@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-Now that we have a sprinkle with an empty page to work with, it's time to get started with our database integration. Our data structure for the database table will be strait forward: We'll store pastries in a `pastries` table using the following columns:
+Now that we have a sprinkle with an empty page to work with, it's time to get started with our database integration. Our data structures for the database table will be straight forward: We'll store pastries in a `pastries` table using the following columns:
 - id
 - name
 - description
@@ -16,6 +16,7 @@ Now that we have a sprinkle with an empty page to work with, it's time to get st
 
 First, we create the [data model](database/overview#data-models). In this model, we define the table name, list the column we want to be fillable and enable the automatic timestamp creation.
 
+`app/sprinkles/pastries/src/Database/Models/Pastries.php`
 ```php
 <?php
 
@@ -178,7 +179,7 @@ $pastries = Pastries::all();
 
 >>>>> Fetching all the available rows is not an ideal solution since it can involves an infinite numbers of rows. This can cluter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server ressource usage). It is recommended to use **Sprunging** in this situation.
 
-The `$pastries` variable should now contains an [eloquent collection]() of pastries. At this point, it's a good idea to use **Debugging** to make sure everything works as it should. We'll use the `Debug` facade to do so. Start by adding the facade class to the usage delacration of your class:
+The `$pastries` variable should now contains an [eloquent collection]() of pastries. At this point, it's a good idea to use **Debugging** to make sure everything works as it should. We'll use the `Debug` facade to do so. Start by adding the facade class to the usage declaration of your class:
 
 ```php
 use UserFrosting\Sprinkle\Core\Facades\Debug;
@@ -191,7 +192,7 @@ Debug::debug($pastries);
 ```
 
 
-This file should contains something similar to this:
+This file should contain something similar to this:
 ```
 debug.DEBUG: [{
 	"id": 1,
@@ -217,9 +218,9 @@ debug.DEBUG: [{
 }]
 ```
 
-As you can see, it successfully listed our three default pastries along with their description and origin. You can now comment out the Debug line as we don't required it anymore, but might need it later.
+As you can see, it successfully listed our three default pastries along with their description and origin. You can now comment out the Debug line as we don't require it anymore, but might need it later.
 
-The only thing left to to is to send the collection to Twig. To do so, we simply add the `$pastries` variable to render arguments:
+The only thing left to do is to send the collection to Twig. To do so, we simply add the `$pastries` variable to render arguments:
 
 ```php
 return $this->ci->view->render($response, 'pages/pastries.html.twig', [
@@ -297,7 +298,7 @@ Back in our Twig templating file, we can now. Let's look at the complete code an
 {% endblock %}
 ```
 
-What we are intered in here is what's inside the `box-body` div, especially the `{% for pastry in pastries %}` loop. In the controller, we passed the rows from the database, contained in an eloquent collection, to the `pastries` key in the render arguments array. Those rows from the database, the same one displayed in our debug output, are now available in our Twig template as an array. This means we can use [Twig's tags, filters and functions](https://twig.symfony.com/doc/2.x/) to manipulate that array, or any data passed to the Twig template. Let's get a closer look this [for](https://twig.symfony.com/doc/2.x/tags/for.html) block:
+What we are interested in here is what's inside the `box-body` div, especially the `{% for pastry in pastries %}` loop. In the controller, we passed the rows from the database, contained in an eloquent collection, to the `pastries` key in the render arguments array. Those rows from the database, the same one displayed in our debug output, are now available in our Twig template as an array. This means we can use [Twig's tags, filters and functions](https://twig.symfony.com/doc/2.x/) to manipulate that array, or any data passed to the Twig template. Let's get a closer look this [for](https://twig.symfony.com/doc/2.x/tags/for.html) block:
 
 ```html
 {% for pastry in pastries %}

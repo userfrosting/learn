@@ -1,16 +1,16 @@
 ---
-title: Adding localisations
+title: Adding localizations
 metadata:
-    description: Adding localisation to the page, making the page available in multiples languages.
+    description: Adding localization to the page, making the page available in multiples languages.
 taxonomy:
     category: docs
 ---
 
-While we are using our non root user, it's the perfect opportunity to test localization for our page. We will first need to change the hardcoded English string to localisation keys and afterwards we'll add the French translations. 
+While we are using our non root user, it's the perfect opportunity to test localization for our page. We will first need to change the hardcoded English string to localization keys and afterwards we'll add the French translations. 
 
-Even if you don't need (or want) to translate your page, it's a good idea to use translations key and the translator when you first build your pages. You never know when or why you'll need to add another language in the future and it's harder to add localization later than do it while you're building your page, even if it take a little more time.
+Even if you don't need (or want) to translate your page, it's a good idea to use translations keys and the translator when you first build your pages. You never know when or why you'll need to add another language in the future and it's harder to add localization later than do it while you're building your page, even if it takes a little more time.
 
-First thing is to switch the hardcoded string for the English translation. At this point theres a couple of templates and place to change: The page title, the sidebar menu entry, the box title and the table header.
+First thing is to switch the hard-coded string for the English translation. At this point there’s a couple of templates and place to change: The page title, the sidebar menu entry, the box title and the table header.
 
 Let's start with the sidebar menu. Here we change the `List of Pastries` to `{{translate('PASTRIES.LIST')}}` (We'll add the `PASTRIES.LIST` locale key later).
 
@@ -69,7 +69,7 @@ The page template should now look like this
 {% endblock %}
 ```
 
-Next we need to add the English association for those key. We now create a new `locale/en_US` directory and a `pastries.php` file to old our new translations:
+Next we need to add the English association for those keys. We now create a new `locale/en_US` directory and a `pastries.php` file to old our new translations:
 
 `app/sprinkles/pastries/locale/en_US/pastries.php`
 ```php
@@ -105,6 +105,6 @@ return [
 ];
 ```
 
-At this point, you can go in your user prefrences and change the site language to French. Once this is done, go back to the pastries page and _voilà, tout en français_ !
+At this point, you can go to your user preferences and change the site language to French. Once this is done, go back to the pastries page and _voilà, tout en français_ !
 
 ![Pastries in French](/images/pastries/04.png)
