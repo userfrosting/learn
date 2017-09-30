@@ -30,7 +30,7 @@ A permission is a rule that associates an **action** with a set of **conditions*
 | -- | ---- | ---- | ---------- | ----------- |
 | 1  | `uri_user` | View user | `always()` | View the user page of any user. |
 
-- **slug** is a string that you select to represent this permission in your code.  If you slug is `uri_user`, then in your code you can call `$authorizer->checkAccess($currentUser, 'uri_user')` to determine if the current user has this permission.  You can define multiple permissions on the same slug.  As long as a user passes at least one permission on that slug, they will be granted access.
+- **slug** is a string that you select to represent this permission in your code.  If your slug is `uri_user`, then in your code you can call `$authorizer->checkAccess($currentUser, 'uri_user')` to determine if the current user has this permission.  You can define multiple permissions on the same slug.  As long as a user passes at least one permission on that slug, they will be granted access.
 - **conditions** allows you to set constraints on this permission.  For example, you might want to create a permission that allows access on `uri_user`, but only for users in a particular group.  A boolean expression consisting of [**access condition callbacks**](#callbacks) can be used to construct your condition.
 - **name** is a human-readable label for the permission, which can be used to easily identify it in the role management interface.
 - **description** is a text description for the permission, allowing you to describe the purpose of the permission in human-readable terms.
