@@ -14,4 +14,4 @@ This tutorial will guide you to create a fully featured page including custom da
 
 For this exercise, we'll create a simple page which will display a list of pastries from a new database table. This page will be accessible at the `/pastries` route, have its own database table, basic permission and entry in the sidebar menu. And all of this will be stored in its own sprinkle. At this point, we assume you already have a clean instance of Userfrosting installed and running. Shall we begin?
 
->>> This recipe was spronsored by @neurone. Get in touch with the UserFrosting team if you want to sponsor own receipe !
+>>> This recipe was spronsored by [adm.ninja](https://adm.ninja). Get in touch with the UserFrosting team if you want to sponsor own receipe !
