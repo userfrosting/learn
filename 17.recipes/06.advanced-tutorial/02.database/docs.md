@@ -160,6 +160,9 @@ class DefaultPastries extends Migration
 
 The `$dependencies` array here is important. By referencing our `PastriesTable` here, this will make sure the migrator doesn't try to insert rows in the `pastries` table before said table is created.
 
+Also notice how we are using a new method called `pastries` which returns an array of pastries. This helps us remove redundancy in our code since the `up` and `down` methods can both use the same list. Bad typo in one of the permission? Changed it once instead of twice (or more).
+
+
 We are now ready to run our migrations. From the command line, use the [Bakery migrate command](/cli/commands#migrate) to run the migration up : `php bakery migrate`. You should now see the newly created table with the default rows if you look at the database using _phpMyAdmin_ for instance.
 
 
@@ -230,6 +233,7 @@ return $this->ci->view->render($response, 'pages/pastries.html.twig', [
 
 Our controller should now look like this:
 
+`app/sprinkles/pastries/src/Controller/PastriesController.php`
 ```php
 <?php
 
