@@ -28,7 +28,7 @@ $ php bakery help
 
 ### bake
 
-Bake is the general installation command. It combines `setup`, `debug`, `migrate` and `build-assets` into a single command : 
+Bake is the general installation command. It combines `setup`, `debug`, `migrate`, `create-admin` and `build-assets` into a single command : 
 
 ```bash
 $ php bakery bake
@@ -58,6 +58,10 @@ $ php bakery setup
 |-------------|------------------------------------------------|
 | -f, --force | If `.env` file exist, force setup to run again |
 
+### create-admin
+
+The `create-admin` command is used to create the root user. Abort if the root user already exist.
+
 ### build-assets
 
 The `build-assets` command is an alias for the node.js and npm scripts used for asset management. The `/build` directory contains the scripts and configuration files required to download Javascript, CSS, and other assets used by UserFrosting. This command will install Gulp, Bower and other required npm packages locally. With npm set up with all of its required packages, it can be used to automatically download and install the assets in the correct directories.
@@ -79,7 +83,7 @@ $ php bakery build-assets
 
 >>>> Database migrations have the potential to destroy data.  **Always** back up production databases, and databases with important data, before running migrations on them.
 
-The `migrate` command runs all the pending [database migrations](/database/migrations). Migrations consist of special PHP classes used to manipulate the database structure and data, creating new tables or modifying existing ones. UserFrosting comes with a handful of migrations to create the [default tables](/database/default-tables) and the master user. The built-in migrations also handle the changes in the database between versions. See the [Migrations](/database/migrations) section for more information about migrations.
+The `migrate` command runs all the pending [database migrations](/database/migrations). Migrations consist of special PHP classes used to manipulate the database structure and data, creating new tables or modifying existing ones. UserFrosting comes with a handful of migrations to create the [default tables](/database/default-tables). The built-in migrations also handle the changes in the database between versions. See the [Migrations](/database/migrations) section for more information about migrations.
 
 ```bash
 $ php bakery migrate
@@ -151,6 +155,8 @@ The `clear-cache` command takes care of deleting all the cached data. See [Chapt
 ```bash
 $ php bakery clear-cache
 ``` 
+
+>>>>> You might need to run this command as administrator or using `sudo` to avoid file permission issues when using the `file` cache store.
 
 ### test
 
