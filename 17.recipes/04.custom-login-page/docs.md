@@ -16,7 +16,7 @@ This recipe will guide you to customize the UserFrosting login screen, mainly on
 
 If you haven't already, set up your site Sprinkle, as per the instructions in ["Your First UserFrosting Site"](/sprinkles/first-site). For the purposes of this tutorial, we will call our Sprinkle `site`.
 
->>> This recipe was spronsored by @neurone. Get in touch with the UserFrosting team if you want to sponsor own receipe !
+>>> This recipe was spronsored by [adm.ninja](https://adm.ninja). Get in touch with the UserFrosting team if you want to sponsor own receipe !
 
 ## Disabling registration 
 

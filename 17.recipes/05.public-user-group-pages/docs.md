@@ -11,4 +11,4 @@ taxonomy:
 
 
 
->>> This recipe was spronsored by @neurone. Get in touch with the UserFrosting team if you want to sponsor own receipe !
+>>> This recipe was spronsored by [adm.ninja](https://adm.ninja). Get in touch with the UserFrosting team if you want to sponsor own receipe !
