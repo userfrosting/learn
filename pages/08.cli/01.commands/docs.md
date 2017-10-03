@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-UserFrosting's CLI, or [*Command-line Interface*](https://en.wikipedia.org/wiki/Command-line_interface), is called the **Bakery**. It provides a number of helpful commands that can assist you while you build, manage and install your application. To view a list of all available Bakery commands, you may use the `list` command from your UserFrosting root directory :
+UserFrosting's CLI, or [*Command-line Interface*](https://en.wikipedia.org/wiki/Command-line_interface), is called the **Bakery**. It provides a number of helpful commands that can assist you while you build, manage and install your application. To view a list of all available Bakery commands, you may use the `list` command from your UserFrosting root directory:
 
 ```bash
 $ php bakery list
@@ -28,7 +28,7 @@ $ php bakery help
 
 ### bake
 
-Bake is the general installation command. It combines `setup`, `debug`, `migrate`, `create-admin` and `build-assets` into a single command : 
+Bake is the general installation command. It combines `setup`, `debug`, `migrate`, `create-admin` and `build-assets` into a single command: 
 
 ```bash
 $ php bakery bake
@@ -60,7 +60,7 @@ $ php bakery setup
 
 ### create-admin
 
-The `create-admin` command is used to create the root user. Abort if the root user already exist.
+The `create-admin` command is used to create the root user. This command will self-abort if the root user already exists.
 
 ### build-assets
 
