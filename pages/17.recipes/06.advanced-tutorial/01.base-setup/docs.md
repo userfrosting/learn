@@ -8,7 +8,7 @@ taxonomy:
 
 ## The sprinkle
 
-First thing to do is to create an empty sprinkle for our code to live in. We'll call this sprinkle `Pastries`. As describes in the [Sprinkles](http://learn.local/sprinkles/first-site) chapter, starts by creating an empty `pastries/` directory under `app/sprinkles`. We now have to create the `composer.json` file for our sprinkle:
+First thing to do is to create an empty sprinkle for our code to live in. We'll call this sprinkle `Pastries`. As described in the [Sprinkles](/sprinkles/first-site) chapter, start by creating an empty `pastries/` directory under `app/sprinkles`. We now have to create the `composer.json` file for our sprinkle:
 
 `app/sprinkles/pastries/composer.json`
 ```json
@@ -24,18 +24,18 @@ First thing to do is to create an empty sprinkle for our code to live in. We'll 
 }
 ```
 
-Next we need to add our `Pastries` sprinkle to the `sprinkles.json` list and update **Composer** so our new PSR4 definition is picked up. From the command line, run `composer update` at the root of your Userfrosting project.
+Next we need to add our `Pastries` sprinkle to the `sprinkles.json` list and update **Composer** so our new [PSR4 mapping](http://www.php-fig.org/psr/psr-4/#3-examples) is picked up. From the command line, run `composer update` in the root directory of your UserFrosting project.
 
 ## The route
 
-We now create the [route](/routes-and-controllers) for the pastries page. Create the empty `routes/` directory inside your sprinkle directory structure and create the `pastries.php` file:
+We now create the [route](/routes-and-controllers) for the "pastries" page. Create the empty `routes/` directory inside your sprinkle directory structure and create the `pastries.php` file:
 
 `app/sprinkles/pastries/routes/pastries.php`
 ```php
 <?php
 
 /**
- * Routes for pastries related pages.
+ * Routes for pastry-related pages.
  */
 $app->group('/pastries', function () {
     $this->get('', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:displayPage')
@@ -43,9 +43,9 @@ $app->group('/pastries', function () {
 })->add('authGuard');
 ```
 
-We now have a `/pastries` route setup. We also define a group for later use. As you can see, this route has the `pastries` name and will invoke the `authGuard` middleware requiring a user to be logged in to see this page. 
+We now have a `/pastries` route set up. We also define a route group for later use, if we wish to add additional routes whose URLs also begin with `/pastries/`. As you can see this route has the `pastries` name and will invoke the `authGuard` middleware, which requires a user to be logged in to see this page. 
 
-## The controller
+## The controller class
 
 Now that we have a route, we need to create the `PastriesController` controller with the `displayPage` method:
 
@@ -71,6 +71,8 @@ class PastriesController extends SimpleController
     }
 }
 ``` 
+
+>>>>>> Later on, we can add methods for other pastry-related pages to this same class as a way to logically organize our code.
 
 ## The template file
 
@@ -100,8 +102,10 @@ Finally, we need to create the template file. We use the same file as the one de
 {% endblock %}
 ```
 
-## Testing your page
+## Testing the page skeleton
 
 You should now be able to manually go to the `/pastries` page in your browser and see the result:
 
 ![Pastries page](/images/pastries/01.png)
+
+You'll notice that at this point, we're not actually displaying any useful content on the page.  In the next section, we'll discuss how to display content dynamically retrieved from the database.
