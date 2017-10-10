@@ -1,5 +1,5 @@
 ---
-title: Extending the User Model
+title: Extending the User model
 metadata:
     description: Extend the user model, adding custom fields and views.
 taxonomy:

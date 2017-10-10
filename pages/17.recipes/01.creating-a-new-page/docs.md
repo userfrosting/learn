@@ -1,5 +1,5 @@
 ---
-title: Creating a New Page
+title: Creating a new page
 metadata:
     description: A very basic walkthrough for setting up a new page in your application.  The purpose of this recipe is to get you familiar with adding routes, controller classes, and Twig templates to your Sprinkle.
 taxonomy:
