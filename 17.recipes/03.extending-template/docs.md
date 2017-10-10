@@ -1,16 +1,16 @@
 ---
-title: Extending Templates and Menus
+title: Extending templates and menus
 metadata:
     description: Steps to extend a template defined in another sprinkle.
 taxonomy:
     category: docs
 ---
 
->NOTE: This recipe assumes that the reader is familiar with Twig Templating
+>>> This recipe assumes that the reader is familiar with [Twig templating](/templating-with-twig).
 
-While sprinkles are able to [overwrite an entire Twig template](/templating-with-twig/sprinkle-templates#OverridingSprinkletemplates) defined in another sprinkle, they can also replace part of a template instead of overwriting everything in them.
+While sprinkles are able to [overwrite an entire Twig template](/templating-with-twig/sprinkle-templates#overriding-sprinkle-templates) defined in another sprinkle, they can also replace part of a template instead of overwriting everything in them.
 
-This is achieved by referencing another sprinkle directly in the `extends` Twig tag. Typically, page templates files will extend a base template. For example:
+This is achieved by referencing another sprinkle directly in the `extends` Twig tag. Typically, page template files will extend a base template. For example:
 
 ```html
 {% extends "pages/abstract/dashboard.html.twig" %}
@@ -46,4 +46,4 @@ This will add a `To the moon!` link under the built in links in the dashboard la
 
 The `{{ parent() }}` tag will load the content defined in the `navigation` of the parent template. The above example will add the custom link to the bottom of the list. To add the new link to the top of the list, simply put the parent tag under your own link. Unfortunately, there's no way at the moment to add a link in the middle of the other links.
 
->>>>>> When using multiple sprinkles, each one might want to add stuff to the menus. Since they probably each reference the `admin` sprinkle as the base, only the top sprinkle will have the privilege to add links to the sidebar menu. Since the top sprinkle is usually the one tying your site together, it is expected that he should be in charge of assembling the final menu.
+>>>>>> When using multiple sprinkles, each one might want to add content to the menus. Since they probably each reference the `admin` sprinkle as the base, only the top sprinkle will have the privilege to add links to the sidebar menu. Since the top sprinkle is usually the one tying your site together, it is expected that it should be in charge of assembling the final menu.
