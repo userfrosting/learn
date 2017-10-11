@@ -1,24 +1,24 @@
 ---
 title: Adding custom authorization
 metadata:
-    description: Adding custom authorization rules to control access to our page
+    description: Adding custom authorization rules to control access to our Pastries page.
 taxonomy:
     category: docs
 ---
 
-Now it's time to add custom authorization rules to our page. At this point, we will control two things: Authorization to see the page and authorization to see the `origin` column. Each one will require a new [permission](/users/access-control#permissions). We will also assign those permission to the existing [roles](/users/access-control#roles). 
+Now it's time to add custom authorization rules to our page. We will use these rules to control two things: visibility of the page itself, and visibility of the `origin` column in the table. Each one will require a new [permission](/users/access-control#permissions). We will also assign those permissions to the existing [roles](/users/access-control#roles). 
 
 ## Creating the permission in the database
 
 ### The migration class
 
-UserFrosting doesn't have an UI to create new [Permissions](/users/access-control#permissions). This is done on purpose because, as you'll see, permission slugs are tightly coupled with the code and it doesn't make sense for any admin user to create new permission in the UI if he's not going to use them in the code.
+UserFrosting doesn't have a UI to create new [Permissions](/users/access-control#permissions). This is done on purpose because, as you'll see, permission slugs are tightly coupled with the code and it doesn't make sense for an admin user to create new permissions through the UI when they'll need to modify the code to actually use them.
 
-To [create a new permission](/users/access-control#creating-new-permissions), we instead have to create a new row in the database table named `permissions`. To do this, we'll use a **migration**. Since we don't want to (and we already run that one), we will create a new migration whose role will be solely to create that new permission. We will also use that migration to assign  our new permission to existing roles, even if this could be done in the UI.
+To [create a new permission](/users/access-control#creating-new-permissions), we instead have to create a new row in the `permissions` database table. To do this, we'll use a **migration**. We've already explained how to create migrations earlier, but we will create a new migration now whose role will be solely to create the new permissions. We will also use that migration to assign our new permission to existing roles, even though this _can_ be done in the admin interface.
 
-Let's start by creating our base migration class. That class will be located at the same place as our other class and will be named `PastriesPermissions`.
+Let's start by creating our base migration class. That class will be located in the same place as our other class and will be named `PastriesPermissions`.
 
-`app/sprinkles/pastries/src/Database/Migrations/V100/PastriesPermissions.php`
+`app/sprinkles/pastries/src/Database/Migrations/v100/PastriesPermissions.php`
 ```php
 <?php
 
@@ -57,11 +57,11 @@ class PastriesPermissions extends Migration
 
 ### The Dependencies 
 
-Note that we won't define our other pastries related migrations here. While logically our permission migration should be run after our main one, there's no actual requirement to do so. Unlike the default pastry migration, we don't need to use the `Pastries` model here. We will, however, use the `Permissions` and `Role` model from the `Account` Sprinkle. 
+Unlike the `DefaultPastries` migration, this migration doesn't depend on the `Pastry` model. We do, however, have a dependency on the `Permission` and `Role` models from the `Account` Sprinkle. 
 
-Also, one could assume at this point the migrations for the `Account` sprinkle might have already been run. While this true in our case here (since we already have a working UserFrosting install), this might not be the case if someone is running **all** migrations at one (new deployment for instance) or if someone is not using the `account` sprinkle for some reason. So it's always safer to declare the core sprinkles migrations as dependencies if you are going to interact with the table they define.
+One could reasonably assume at this point that the migrations for the `Account` sprinkle might have already been run. While this is true in our case (since we already have a working UserFrosting installation), this might not be the case if someone is running **all** migrations at once (a new deployment for instance) or if someone is not using the `account` sprinkle for some reason. So, it's always safer to declare the corresponding migrations as dependencies if you are going to interact with the table they correspond to.
 
-With that cleared up, let's add the dependencies for the `Permissions` and `Role` tables. You can find the appropriates migrations by looking at the list of available migrations for that sprinkle:
+With that cleared up, let's add the dependencies for the `Permission` and `Role` models. You can find the appropriate migrations by looking at the list of available migrations for that sprinkle:
 
 ```php
     public $dependencies = [
@@ -76,13 +76,13 @@ The clever reader may ask about the [`PermissionRolesTable` migration](https://g
 
 Next is the `up` method. We'll use the same trick as for the pastries migration and use an independent method which will return an array of permission. This means we will be able to use the same generic list for the `down` method.
 
-First, since we'll manipulate the permission, we need to `use` the `Permission` model. Add its namespace in the header of the migration class:
+First, we need to `use` the `Permission` model. Add a namespace alias in the header of the migration class:
 
 ```php
 use UserFrosting\Sprinkle\Account\Database\Models\Permission;
 ```
 
-Next, let's write the method that returns the list of permission :
+Next, let's write the method that generates the new permissions:
 
 ```php
 protected function pastryPermissions()
@@ -116,11 +116,11 @@ public function up()
 }
 ```
 
-As you can see, the `up` method will simply loop all the permission defined in the `pastryPermissions` method's returned array and create a new one in the database using the `Permission` model.
+As you can see, the `up` method will simply loop through the permissions defined in the `pastryPermissions` method's returned array and create a new record in the database using the `Permission` model.
 
 ### The `down` method
 
-Now for the `down` method. As any migration, this will contain the instructions on how to revert the changes made by the `up` method. We simply loop the same list of permission and do `delete` instead of `save`.
+Now for the `down` method. As with any migration, this will contain the instructions on how to revert the changes made by the `up` method. We simply loop through the same list of permissions and call `delete` instead of `save`.
 
 ```php
 public function down()
@@ -133,6 +133,7 @@ public function down()
 ```
 
 ### Final migration
+
 Our finalized migration should now look like this:
 
 ```php
@@ -197,26 +198,26 @@ class PastriesPermissions extends Migration
 }
 ```
 
-You can now run the migration using `php bakery migrate`. You can then make sure the migration is successful by logging in as the root user and going to the permission page:
+You can now run the migration using `php bakery migrate`. You can make sure the migration was successful by logging in as the root user and going to the permissions page:
 
 ![Pastries permission list](/images/pastries/permission-list.png)
 
 
-Let's also test the `down` method. From the CLI, use the rollback command from Bakery: `php bakery migrate:rollback`. This will revert the last run migrations. The permission page should back to normal :
+Let's also test the `down` method. From the CLI, use the `rollback` command from Bakery: `php bakery migrate:rollback`. This will revert the most recently run set of migrations. The permissions page should reflect this change.
 
->>>>> Don't forget to run `php bakery migrate` again at this point to redo the migration !
+>>>>> Don't forget to run `php bakery migrate` again at this point to redo the migration!
 
 ## Adding permission to the page
 
-Before we continue, you'll have to login as a non-root user to test the permission. If the top navigation bar is red and tells you _you are signed in as the root user_, well, guess what... It's important you use a different user at this point since the root user has all the permission and you won't be able to see the permission in action otherwise. 
+Before we continue, you'll have to login as a non-root user to test permissions. If the top navigation bar is red and says _you are signed in as the root user_, the authorization system will be completely bypassed. It's important that you use a different user to make sure that the new permissions are actually working properly. 
 
-### Implementing `see_pastries` permission
+### Implementing the `see_pastries` permission
 
-#### Controller part
+#### Controller
 
-First we'll add a permission check in the `displayPage` of the `PastriesController`. Users without our `see_pastries` permission will not be able to see the page. In that case, a `ForbiddenException` will be thrown. That exception namespace should already be added to the class : `use UserFrosting\Support\Exception\ForbiddenException;` 
+First we'll add a permission check in the `displayPage` of the `PastriesController`. Users without our `see_pastries` permission will not be able to see the page. In that case, a `ForbiddenException` will be thrown. The namespace alias for this exception should already be added: `use UserFrosting\Support\Exception\ForbiddenException;`.
 
-Next, we need a reference to `authorizer` service and the current user to perform the check. Add this code before loading the pastry from the database:
+Next, we need a reference to the `authorizer` service and the current user to perform the check. Add this code before loading the pastries from the database:
 
 ```php
 /** @var UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager */
@@ -226,7 +227,7 @@ $authorizer = $this->ci->authorizer;
 $currentUser = $this->ci->currentUser;
 ```
 
-And now we add directly under the above the check itself:
+Finally we add the check:
 
 ```php
 // Access-controlled page
@@ -252,7 +253,7 @@ public function displayPage(Request $request, Response $response, $args)
         throw new ForbiddenException();
     }
 
-    $pastries = Pastries::all();
+    $pastries = Pastry::all();
 
     //Debug::debug($pastries);
 
@@ -262,17 +263,17 @@ public function displayPage(Request $request, Response $response, $args)
 }
 ```
 
-At this point, we didn't add the `see_pastries` permission to any role. This means if you navigate to the page (with a non-root user), you should see the exception. 
+At this point, we haven't yet added the `see_pastries` permission to any role. This means if you navigate to the page (with a non-root user), you'll get an error. 
 
->>>>> If you see the detailled error page, don't worry. In a **production** envrionement, this will be automatically replaced by the appropriate page.
+>>>>> If you see a detailed debugging page, don't worry. In a **production** environment, this will automatically be replaced by a generic "access denied" page.
 
-#### Removing Link From the Menu
+#### Removing the link From the menu
 
-Now that our non-root users don't have access to the page, it would be nice to remove the link to the page from the sidebar menu. Let's dive back into our implementation of that link and add the permission verification using the `checkAccess`  Twig function provided by UserFrosting.
+Now that non-root users don't have access to the page, it would be nice to hide the link to the page in the sidebar menu. Let's dive back into our implementation of that link and add the permission verification using the `checkAccess`  Twig function provided by UserFrosting:
 
 `app/sprinkles/pastries/templates/navigation/sidebar-menu.html.twig`
 ```html
-{% extends "@admin/navigation/sidebar-menu.html.twig" %}
+{% extends '@admin/navigation/sidebar-menu.html.twig' %}
 
 {% block navigation %}
     {{ parent() }}
@@ -290,7 +291,7 @@ The link should now be hidden from the menu when you refresh the page.
 
 #### Adding the permission to a role
 
-Now to make sure everything works correctly, let's add that `see_pastries` permission to the user role. Once this is done, a normal user should regain access to the page. Using a root account, navigate to the **Roles** page and select **Manage permissions** from the Actions dropdown menu of the **User** role. 
+Now to make sure everything works correctly, let's add that `see_pastries` permission to the **User** role. Once this is done, a normal user will regain access to the page. Using a root account, navigate to the **Roles** page and select **Manage permissions** from the Actions dropdown menu of the **User** role. 
 
 ![Role page](/images/pastries/role-page.png)
 
@@ -298,11 +299,11 @@ Select the `see_pastries` permission from the bottom dropdown (use the search fi
 
 ![Adding permission](/images/pastries/adding-permission.png)
 
-Your non-root user should now have access to the pastry page again (assuming they have the user role).
+Your non-root user should now have access to the pastry page again (assuming they have the User role).
 
-### Implementing `see_pastry_origin` permission
+### Implementing the `see_pastry_origin` permission
 
-For this permission, we won't need to add anything to the controller. We will simply remove the `origin` column in the Twig template. The `checkAccess` needs to be added twice so it can control the table header and the rows in the loop. 
+For this permission, we won't need to add anything to the controller. We will simply hide the `origin` column in the Twig template if the user doesn't have the permission. The `checkAccess` function needs to be used twice so it can control the table header as well as the rows in the loop:
 
 `app/sprinkles/pastries/templates/pages/pastries.html.twig`
 ```html
@@ -341,8 +342,8 @@ For this permission, we won't need to add anything to the controller. We will si
 {% endblock %}
 ```
 
-The non-root user shouldn't be able to see the origin column now. You can now add that permission to the **Site administrator** role if you want experiments adding that permission to various roles and adding said role to various users.
+The non-root user should no longer be able to see the origin column. You can now add that permission to the **Site Administrator** role if you want users with the "Site Administrator" role to be able to see the origin column.
 
 ## Going further
 
-In this example we used `always()` as the [callback](/users/access-control#callbacks) for our permission. If you want to further learn about the **Authorization System**, you could try adding [conditions](/users/access-control#performing-access-checks) to a new `see_pastry_details` permission to control which columns can be viewed using the same slug, and passing the column name to the callback.
+In this example we used `always()` as the [callback](/users/access-control#callbacks) for our permission. If you want to learn more about the **Authorization System**, you could try adding [conditions](/users/access-control#performing-access-checks) to a new `see_pastry_details` permission to control which columns can be viewed using the same slug, and passing the column name to the callback.
