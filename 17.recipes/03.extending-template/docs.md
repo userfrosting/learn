@@ -12,25 +12,24 @@ While sprinkles are able to [overwrite an entire Twig template](/templating-with
 
 This is achieved by referencing another sprinkle directly in the `extends` Twig tag. Typically, page template files will extend a base template. For example:
 
-```html
+```twig
 {% extends "pages/abstract/dashboard.html.twig" %}
 ```
 
 You can instead extend the same file you're in by adding the sprinkle name in front of the name. For example, for the `pages/user.html.twig` file in the `admin` sprinkle, you can do :
 
-```html
+```twig
 {% extends "@admin/pages/user.html.twig" %}
 ```
 
 This will allow you to replace any Twig `block` definition contained from the `admin` version of the `pages/user.html.twig` template.
 
-
 ## Adding custom menu entries
 
 Adding new link to the built-in menus can be done using the technique above. For example, to add a link to the sidebar menu, all you have to do is create a `navigation/sidebar-menu.html.twig` template in your sprinkle and extending the admin sprinkle version of the same file. You can then add content to the `navigation` block :
 
-```html
-{% extends "@admin/navigation/sidebar-menu.html.twig" %}
+```twig
+{% extends '@admin/navigation/sidebar-menu.html.twig' %}
 
 {% block navigation %}
     
