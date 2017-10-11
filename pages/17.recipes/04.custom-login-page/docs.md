@@ -203,7 +203,7 @@ Let's start by overriding the base template for the login page. First, copy the 
 
 For this example, let's change the site title position:
 
-```html
+```twig
 <div class="login-box">
     <div class="login-box-body login-form">
         <div class="login-logo">
