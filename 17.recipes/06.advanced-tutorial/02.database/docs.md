@@ -263,10 +263,10 @@ class PastriesController extends SimpleController
 
 ## Displaying the data in Twig
 
-Back in our Twig templating file, we'll use Twig's [`for`](https://twig.symfony.com/doc/2.x/tags/for.html) construct to loop through the `pastries` variable and render a new HTML table row for each pastry:
+Back in our template file, we'll use Twig's [`for`](https://twig.symfony.com/doc/2.x/tags/for.html) construct to loop through the `pastries` variable and render a new HTML table row for each pastry:
 
-```html
-{% extends "pages/abstract/dashboard.html.twig" %}
+```twig
+{% extends 'pages/abstract/dashboard.html.twig' %}
 
 {# Overrides blocks in head of base template #}
 {% block page_title %}Pastries{% endblock %}
@@ -305,7 +305,7 @@ What we are interested in here is what's inside the `box-body` div, especially t
 
 Let's get a closer look at our `for` block:
 
-```html
+```twig
 {% for pastry in pastries %}
     <tr>
         <td>{{pastry.name}}</td>
