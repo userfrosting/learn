@@ -79,8 +79,8 @@ class PastriesController extends SimpleController
 Finally, we need to create the template file. We use the same file as the one defined in your controller:
 
 `app/sprinkles/pastries/templates/pages/pastries.html.twig`
-```html
-{% extends "pages/abstract/dashboard.html.twig" %}
+```twig
+{% extends 'pages/abstract/dashboard.html.twig' %}
 
 {# Overrides blocks in head of base template #}
 {% block page_title %}Pastries{% endblock %}

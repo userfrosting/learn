@@ -272,7 +272,7 @@ At this point, we haven't yet added the `see_pastries` permission to any role. T
 Now that non-root users don't have access to the page, it would be nice to hide the link to the page in the sidebar menu. Let's dive back into our implementation of that link and add the permission verification using the `checkAccess`  Twig function provided by UserFrosting:
 
 `app/sprinkles/pastries/templates/navigation/sidebar-menu.html.twig`
-```html
+```twig
 {% extends '@admin/navigation/sidebar-menu.html.twig' %}
 
 {% block navigation %}
@@ -306,8 +306,8 @@ Your non-root user should now have access to the pastry page again (assuming the
 For this permission, we won't need to add anything to the controller. We will simply hide the `origin` column in the Twig template if the user doesn't have the permission. The `checkAccess` function needs to be used twice so it can control the table header as well as the rows in the loop:
 
 `app/sprinkles/pastries/templates/pages/pastries.html.twig`
-```html
-{% extends "pages/abstract/dashboard.html.twig" %}
+```twig
+{% extends 'pages/abstract/dashboard.html.twig' %}
 
 {# Overrides blocks in head of base template #}
 {% block page_title %}{{translate('PASTRIES')}}{% endblock %}
