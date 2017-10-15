@@ -100,6 +100,24 @@ Notice that the `ids` in these template `<script>` tags match the `data-column-t
 
 You'll also notice that we have custom `data-*` attributes in the `<td>` tags of each of these templates.  These refer to tablesorter's [custom sort parsers](https://mottie.github.io/tablesorter/docs/example-parsers-advanced.html), which lets us define a custom parameter for tablesorter to use when sorting the table by the corresponding column.  We will discuss this more later.
 
+As an alternative to the `data-column-template` attribute, you may map column names to template identifiers, **or even callback functions**, in `ufTable`'s initialization using the `columnTemplates` option.  For example:
+
+```js
+$('#widget-users').ufTable({
+    dataUrl: site.uri.public + '/api/users',
+    columnTemplates: {
+        name: function (params) {
+            return "<td>" + params.row.full_name + "</td>";
+        },
+        last_activity: '#user-table-column-last-activity'
+    }
+});
+```
+
+These will override any template identifiers specified in the table headers' `data-column-template` attributes.  If you map a column name to a string, it will work the same way as `data-column-template`, using it as a selector to find a corresponding `<script>` element that contains a Handlebars template.  However if you map a column name to a _callback_, the callback will be used directly to render the corresponding cells for that column.  An object containing the `row` object, the `rownum` row number, and the `site` object will be passed into the callback during table rendering.
+
+>>>>>> Using a callback for rendering a column is useful for example, when the logic needed to properly render the cell is too complex to delegate to Handlebars.
+
 ##### `data-priority`
 
 This attribute is used by Tablesorter's [column selector widget](https://mottie.github.io/tablesorter/docs/example-widget-column-selector.html#column-selector-priority) to determine which columns can be hidden in tablet and mobile views to make the table more usable.  
@@ -330,6 +348,83 @@ An object containing tablesorter's [configuration options](https://mottie.github
 
 An object containing any additional key-value pairs that you want appended to the AJAX requests made by the table.  Useful when implementing, for example, site-wide filters or using data sources that require additional context.
 
+### filterAllField
+
+The special filter name that should be sent in AJAX requests when a global search (as opposed to column-specific searches) is performed.  Defaults to `_all`.
+
+### useLoadingTransition
+
+Specify whether to display a loading transition overlay on the table while waiting for rows to be retrieved and rendered.  Defaults to `true`.
+
+### columnTemplates
+
+Specify the templates used to render the cells of each column, by mapping each column name to either a reference to a `<script>` tag that contains a Handlebars template, or a or callback function.  Defaults to using the references in the `data-column-template` attributes of each table column header.  See the [column headers section](#data-column-template) for more information on how this works.
+
+>>> Every column must have a corresponding template, defined either in `columnTemplates` or in your table headers' `data-column-template` attributes.
+
+### rowTemplate
+
+Specify a custom template for rendering the opening `<tr>` tag of each row.  If set to `null` (default), `ufTable` will simply render a plain `<tr>` tag.  If passed a string, it will attempt to resolve a reference to a `<script>` tag containing a Handlebars template.  If passed a callback, it will simply use that callback to render your `<tr>` tag.
+
+For example:
+
+```js
+$('#widget-users').ufTable({
+    dataUrl: site.uri.public + '/api/users',
+    rowTemplate: function (params) {
+        if ((params.rownum % 2) == 0) {
+            return "<tr style='color: red'>";
+        }
+        return "<tr>";
+    }
+});
+```
+
+Or alternatively, using a Handlebars template:
+
+```js
+$('#widget-users').ufTable({
+    dataUrl: site.uri.public + '/api/users',
+    rowTemplate: '#user-table-row'
+});
+```
+
+with a corresponding template:
+
+```
+<script id="user-table-row" type="text/x-handlebars-template">
+    {{#ifx (calc rownum '%' 2) '==' 0}}
+        <tr style="background-color: red">
+    {{ else }}
+        <tr>
+    {{/ifx}}
+</script>
+```
+
+### download.button
+
+A jQuery selector that corresponds to the "download table" button.  Defaults to any matching `$('.js-uf-table-download')` elements in the table container.
+
+### download.callback
+
+Specify a custom callback function to perform the table download.
+
+### info.container
+
+A jQuery selector that corresponds to the [table info](#table-info) container.  Defaults to any matching `$('.js-uf-table-info')` elements in the table container.
+
+### info.callback
+
+Specify a custom callback function to render table info messages.
+
+### info.messageEmptyRows
+
+Specify the message to be displayed in the info container when no matching records were found.  Defaults to the `data-message-empty-rows` atttribute of the info container.  If `data-message-empty-rows` is not specified, defaults to "Sorry, we've got nothing here."
+
+### overlay.container
+
+A jQuery selector that corresponds to the table overlay container, which will be displayed while the table is retrieving and rendering rows.  Defaults to any matching `$('.js-uf-table-overlay')` elements in the table container.
+
 ## Events
 
 `ufTable` triggers the following events:
@@ -346,46 +441,67 @@ Of course, you can always bind handlers directly to [tablesorter's events](https
 
 Fetches the current page size, page number, sort order, sort field, and column filters.
 
+### getSavedFilters(table)
+
+Get saved filters from the browser's local storage.
+
 ## Customizing the base template for your table
 
-If you don't want to use the default `table-paginated.html.twig` base template for your tables, you can create your own base template.  Your template needs to have five things:
+If you don't want to use the default `table-paginated.html.twig` base template for your tables, you can create your own base template.  Your template needs to have six things:
 
 - `{% block table_search %}`: Global search field for the table.  By default, only shown in mobile sizes. To customize this behavior, see the media queries in `core/assets/userfrosting/css/userfrosting.css`.
 - `{% block table %}`: This is the Twig block where the table skeleton will go.
 - `{% block table_cell_templates %}`: This is the Twig block where cell templates will be placed.
 - `{% block table_info %}`: This is a container for displaying alternative messages, such as "no records found".  The container element should have the `js-uf-table-info` class.
 - `{% block table_pager_controls %}`: A container for navigation controls for your table's pagination.  The container element should have the `js-uf-table-pager` class.
+- `{% block table_overlay %}`: A container that implements the 'loading' overlay for tables.  The overlay element should have the `js-uf-table-overlay` class.
 
 Your base template might end up looking something like:
 
 ```
-{% block table %}
-    {# Define your table skeleton in this block in your child template #}
-{% endblock %}
-
-{% block table_cell_templates %}
-    {# Define your Handlebars cell templates in this block in your child template #}
-{% endblock %}
-
-{% block table_info %}
-    <div class="uf-table-info js-uf-table-info" data-message-empty-rows="{{translate('NO_RESULTS')}}">
+{% block table_search %}
+    <div class="form-group has-feedback uf-table-search js-uf-table-search">
+        <input type="search" class="form-control" data-column="all">
+        <i class="fa fa-search form-control-icon" aria-hidden="true"></i>
     </div>
 {% endblock %}
+<div class="table overlay-wrapper">
+    {% block table %}
+        {# Define your table skeleton in this block in your child template #}
+    {% endblock %}
 
-{% block table_pager_controls %}
-    <div class="pager pager-lg tablesorter-pager js-uf-table-pager">
-        <span class="pager-control first" title="First page"><i class="fa fa-angle-double-left"></i></span>
-        <span class="pager-control prev" title="Previous page"><i class="fa fa-angle-left"></i></span>
-        <span class="pagedisplay"></span> {# this can be any element, including an input #}
-        <span class="pager-control next" title="Next page"><i class="fa fa-angle-right"></i></span>
-        <span class="pager-control last" title= "Last page"><i class="fa fa-angle-double-right"></i></span>
-        <br><br>
-        {{translate("PAGINATION.GOTO")}}: <select class="gotoPage"></select> &bull; {{translate("PAGINATION.SHOW")}}:
-        <select class="pagesize">
-        {% for count in pager.take|default([5, 10, 50, 100]) %}
-            <option value="{{count}}">{{count}}</option>
-        {% endfor %}
-        </select>
-    </div>
-{% endblock %}
+    {% block table_cell_templates %}
+        {# Define your Handlebars cell templates in this block in your child template #}
+    {% endblock %}
+
+    {% block table_info %}
+        <div class="uf-table-info js-uf-table-info" data-message-empty-rows="{{translate('NO_RESULTS')}}">
+        </div>
+    {% endblock %}
+
+    {% block table_pager_controls %}
+        <div class="pager pager-lg tablesorter-pager js-uf-table-pager" data-output-template="{{translate('PAGINATION.OUTPUT')}}">
+            <span class="pager-control first" title="{{translate("PAGINATION.FIRST")}}"><i class="fa fa-angle-double-left"></i></span>
+            <span class="pager-control prev" title="{{translate("PAGINATION.PREVIOUS")}}"><i class="fa fa-angle-left"></i></span>
+            <span class="pagedisplay"></span> {# this can be any element, including an input #}
+            <span class="pager-control next" title="{{translate("PAGINATION.NEXT")}}"><i class="fa fa-angle-right"></i></span>
+            <span class="pager-control last" title= "{{translate("PAGINATION.LAST")}}"><i class="fa fa-angle-double-right"></i></span>
+            <br><br>
+            {{translate("PAGINATION.GOTO")}}: <select class="gotoPage"></select> &bull; {{translate("PAGINATION.SHOW")}}:
+            <select class="pagesize">
+            {% for count in pager.take|default([5, 10, 50, 100]) %}
+                <option value="{{count}}">{{count}}</option>
+            {% endfor %}
+            </select>
+        </div>
+    {% endblock %}
+
+    {% block table_overlay %}
+        {% if site.uf_table.use_loading_transition %}
+            <div class="overlay js-uf-table-overlay hidden">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        {% endif %}
+    {% endblock %}
+</div>
 ```
