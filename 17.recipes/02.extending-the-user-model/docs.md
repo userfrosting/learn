@@ -282,7 +282,7 @@ class MemberAuxScope implements Scope
 }
 ```
 
-This method only has one method, `apply`, which takes the base query builder object (`$builder`) for the model and applies additional fluent constraints. In our case, we'll use `leftJoin` to join the `members` table, as well as `addSelect` to specify the additional columns that we want to retrieve from `members`.  Notice that we now need to explicitly tell the query builder to retrieve all columns from `users`. Otherwise, `addSelect` will actually end up telling Laravel to replace its default `select *` query, and we'd get _only_ the `city` and `country` columns. 
+This class only has one method, `apply`, which takes the base query builder object (`$builder`) for the model and applies additional fluent constraints. In our case, we'll use `leftJoin` to join the `members` table, as well as `addSelect` to specify the additional columns that we want to retrieve from `members`.  Notice that we now need to explicitly tell the query builder to retrieve all columns from `users`. Otherwise, `addSelect` will actually end up telling Laravel to replace its default `select *` query, and we'd get _only_ the `city` and `country` columns. 
 
 ### Map the `Member` model
 
