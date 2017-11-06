@@ -10,7 +10,7 @@ When you start building your application with UserFrosting, you'll no doubt be a
 
 Though you could add new tables to your database through the command line, phpMyAdmin, or another tool, you will probably want something that is portable, allowing you to set up your database on other developers' machines or on your test and production servers. To do this, you should use a **migration**. Migrations bring version control to your database. If you have ever had to share sql files or manually edit a database schema, you've faced the problem that database migrations solve.
 
->>>>>> Even if you only have a simple table to create, creating a migration is a good practice. You never know what to that table later on and when or who will need to create it again later on a different system or even database provider!
+>>>>>> Even if you only have a simple table to create, creating a migration is a good practice. You never know what changes you'll need to do to that table later on. You also don't know when or who will need to create that table again later on a different system or even database provider!
 
 ## Migration Structure
 
