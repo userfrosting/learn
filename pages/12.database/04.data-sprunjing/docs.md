@@ -32,7 +32,7 @@ Every Sprunje can accept the following parameters.  Typically, they are passed i
 
 By implementing a custom `Sprunje` class, you can pass parameters directly from the client request and they will be used to safely construct the appropriate query.
 
-A custom Sprunje is simply a class that extends the base `UserFrosting\Sprinkles\Core\Sprunje\Sprunje` class.  At the minimum you must define the `name` property and implement the `baseQuery` class, which specifies the Eloquent query to be performed before any additional constraints are applied.  By convention, you should place your Sprunje classes in `src/Sprunje/` in your Sprinkle.
+A custom Sprunje is simply a class that extends the base `UserFrosting\Sprinkle\Core\Sprunje\Sprunje` class.  At the minimum you must define the `name` property and implement the `baseQuery` class, which specifies the Eloquent query to be performed before any additional constraints are applied.  By convention, you should place your Sprunje classes in `src/Sprunje/` in your Sprinkle.
 
 **OwlSprunje.php**
 
