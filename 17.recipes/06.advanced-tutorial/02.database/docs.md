@@ -15,7 +15,7 @@ Now that we have a sprinkle with an empty page to work with, it's time to get st
 
 ## Creating a data model
 
-First, we create the [data model](database/overview#data-models). In this model, we define the table name, list the columns we want to be [mass assignable](https://laravel.com/docs/5.4/eloquent#mass-assignment) and enable automatic timestamp creation.
+First, we create the [data model](/database/overview#data-models). In this model, we define the table name, list the columns we want to be [mass assignable](https://laravel.com/docs/5.4/eloquent#mass-assignment) and enable automatic timestamp creation.
 
 `app/sprinkles/pastries/src/Database/Models/Pastry.php`
 ```php
@@ -94,7 +94,7 @@ As described in the [Migration](/database/migrations) chapter, the `up` method c
 
 Next we'll populate our newly created table with some default data. To do this, we'll create a second migration. While this could be done in the same migration as the table creation, it is recommended to separate your migrations (this also gives us an excuse to demonstrate the concept of [migration dependencies](/database/migrations#dependencies)). We call this second migration `DefaultPastries`:
 
-`app/sprinkles/pastries/src/Database/Migrations/v00/DefaultPastries.php`
+`app/sprinkles/pastries/src/Database/Migrations/v100/DefaultPastries.php`
 ```php
 <?php
 
