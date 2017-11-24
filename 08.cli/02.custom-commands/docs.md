@@ -44,7 +44,7 @@ class CommandName extends BaseCommand
     protected function configure()
     {
         // the name of the command (the part after "php bakery")
-        $this->setName("my-command")
+        $this->setName("my-command");
         
         // the short description shown while running "php bakery list"
         $this->setDescription("My command description");
