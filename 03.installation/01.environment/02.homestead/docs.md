@@ -269,7 +269,7 @@ Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-66-generic x86_64)
 
 
 Last login: Wed Jun 21 06:42:59 2017 from 10.0.2.2
-vagrant@homestead:~$ 
+vagrant@homestead:~$
 ```
 
 If you try the `ls` command, you should see the `userfrosting` directory that you had mapped in your `Homestead.yaml` file.  If you don't see this directory, double-check your `Homestead.yaml`, log out of the virtual machine (`exit`) and then reload the virtual machine (`vagrant reload --provision`).
@@ -301,13 +301,16 @@ $ php bakery bake
 
 You will first be prompted for your database credentials.  Remember, our database information should be as follows:
 
+- Type: `MySQL`
 - Host: `localhost`
 - Port: `3306`
 - Database name: `userfrosting`
 - Database user: `homestead`
 - Database password: `secret`
 
-If the database connection is successful, the installer will then check that the basic dependencies are met. If so, the installer will run the _migrations_ to populate your database with new tables. During this process, you will be prompted for some information to set up the master account (first user). Finally, the installer will run the `build-assets` command to fetch javascript dependencies and build the [assets bundles](/asset-management/asset-bundles).
+If the database connection is successful, the installer will then ask for STMP server config. This config is used to connect to the outgoing mail server. You can use the default values here, but UserFrosting won't be able to send outgoing emails.
+
+Once the STMP config is defined, the installer will check that the basic dependencies are met. If so, the installer will run the _migrations_ to populate your database with new tables. After this process, you will be prompted for some information to set up the master account (first user). Finally, the installer will run the `build-assets` command to fetch javascript dependencies and build the [assets bundles](/asset-management/asset-bundles).
 
 #### Check our your first UserFrosting installation!
 
@@ -324,7 +327,7 @@ We highly recommend that you [change your git remote](/installation/environment/
 You can install phpmyadmin on your virtual machine to make it easier to interact with the `userfrosting` database.  If you're SSH'ed into your virtual machine, do the following:
 
 ```bash
-sudo apt-get install phpmyadmin 
+sudo apt-get install phpmyadmin
 ```
 
 Do **not** select apache2 nor lighttpd when prompted. Just hit tab and enter.  Choose the defaults for any prompts that appear.
