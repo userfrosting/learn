@@ -25,9 +25,9 @@ Each of these directories corresponds to specific types of entities that make up
 
 ### /composer.json
 
-The `composer.json` file is primarily used in UserFrosting to map a Sprinkles classes, but as this is Composer, it can also be used to reference additional PHP libraries. The `type` key in your sprinkle's `composer.json` file should always be defined as a `userfrosting-sprinkle`. This will make your sprinkles manageable by Composer itself later. 
+The `composer.json` file is primarily used in UserFrosting to map a Sprinkles classes, but as this is Composer, it can also be used to reference additional PHP libraries. The `type` key in your sprinkle's `composer.json` file should always be defined as a `userfrosting-sprinkle`. This will make your sprinkles manageable by Composer itself later.
 
-The master `composer.json` file in `/app` will automatically merge the `composer.json` file for every Sprinkle when performing:
+The master `composer.json` file in the project root directory (`/`) will automatically merge the `composer.json` file for every Sprinkle when performing:
 
 ```bash
 $ composer update
