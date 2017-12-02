@@ -1,5 +1,5 @@
 ---
-title: Custom Bakery Commands
+title: Custom Commands
 metadata:
     description: You may extend the UserFrosting\System\Bakery\BaseCommand class to implement your own CLI commands that can be run through Bakery.
 taxonomy:
