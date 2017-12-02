@@ -1,5 +1,5 @@
 ---
-title: Bakery Overview
+title: Built-in Commands
 metadata:
     description: An overview of the commands available in Bakery.
 taxonomy:

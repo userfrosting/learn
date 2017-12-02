@@ -11,7 +11,7 @@ We now have a complete, though very basic page to display a table of data dynami
 - [Use a Sprunje to paginate the results](/database/data-sprunjing)
 - [use ufForm to set up an interface for creating, editing and deleting entries](/client-side-code/components/forms)
 - [Create automated tests for your code](/advanced/automated-tests)
-- [Create a custom Bakery command](/advanced/custom-cli)
+- [Create a custom Bakery command](/cli/custom-commands)
 
 ## Source code
 
