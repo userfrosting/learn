@@ -169,11 +169,11 @@ The extended `view` also adds search paths for any template files loaded in a us
 
 #### authenticator
 
-Creates an instance of `Authenticator` (`UserFrosting\Sprinkle\Account\Authenticate\Authenticator`), which handles authenticating and logging in users.  See [Chapter 7](/users/user-accounts#Authenticationandauthorization) for more information.
+Creates an instance of `Authenticator` (`UserFrosting\Sprinkle\Account\Authenticate\Authenticator`), which handles authenticating and logging in users.  See [Chapter 7](/users/user-accounts#authentication-and-authorization) for more information.
 
 #### authGuard
 
-Sets up the `AuthGuard` middleware, which is bound to routes that require authentication to access ("protected routes").  See [Chapter 7](/users/user-accounts#Authenticationandauthorization) for more information.
+Sets up the `AuthGuard` middleware, which is bound to routes that require authentication to access ("protected routes").  See [Chapter 7](/users/user-accounts#authentication-and-authorization) for more information.
 
 #### authLogger
 
