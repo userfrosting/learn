@@ -98,7 +98,7 @@ $ php bakery bake
 
 #### Templates
 
-First, you'll need to update your template structure to reflect the new [template organization](/templating-with-twig/sprinkle-templates#Templateorganization):
+First, you'll need to update your template structure to reflect the new [template organization](/templating-with-twig/sprinkle-templates#template-organization):
 
 ```bash
 layouts/basic.html.twig => pages/abstract/base.html.twig
