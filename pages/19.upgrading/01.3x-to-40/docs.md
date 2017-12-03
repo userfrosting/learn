@@ -1,7 +1,7 @@
 ---
 title: 0.3.x to 4.1.x
 metadata:
-    description: 
+    description: Learn about the major changes in UserFrosting 4, and the tools available to help you cleanly migrate your code and data from UserFrosting 0.3.x.
 taxonomy:
     category: docs
 ---

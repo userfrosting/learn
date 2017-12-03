@@ -77,7 +77,7 @@ $ php bakery build-assets
 | -c, --compile | Compile the assets and asset bundles for production environment  |
 | -f, --force   | Force fresh install by deleting cached data and installed assets |
 
->>>>> The compile option is automatically added when the [environment mode](/configuration/config-files#EnvironmentModes) is set to `production`.
+>>>>> The compile option is automatically added when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.
 
 ### migrate
 

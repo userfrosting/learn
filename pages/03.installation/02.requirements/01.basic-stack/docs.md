@@ -35,7 +35,7 @@ Some distributions, like WampServer, may not have this module automatically enab
 </Directory>
 ```
 
-For more information, see [this troubleshooting page](/troubleshooting/common-problems#InstallationwentfineexceptIdontseeanystylingonmyhomepageIamusingApache).
+For more information, see [this troubleshooting page](/troubleshooting/common-problems#installation-went-fine-except-i-don-t-see-any-styling-on-my-home-page-i-am-using-apache-).
 
 ### PHP Requirements
 

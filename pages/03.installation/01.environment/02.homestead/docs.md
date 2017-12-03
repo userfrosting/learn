@@ -320,7 +320,7 @@ Ok, that should be it!  If you head over to `http://userfrosting.app` in your br
 
 #### Change your git remote
 
-We highly recommend that you [change your git remote](/installation/environment/native#Changinggitremote) to make it easier to pull future updates to UserFrosting.
+We highly recommend that you [change your git remote](/installation/environment/native#changing-git-remote) to make it easier to pull future updates to UserFrosting.
 
 #### Install phpmyadmin
 
