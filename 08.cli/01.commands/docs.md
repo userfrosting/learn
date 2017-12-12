@@ -10,49 +10,49 @@ UserFrosting's CLI, or [*Command-line Interface*](https://en.wikipedia.org/wiki/
 
 ```bash
 $ php bakery list
-``` 
+```
 
 Every command also includes a "help" screen which displays and describes the command's available arguments and options. To view a help screen, simply precede the name of the command with help:
 
 ```bash
 $ php bakery help [command]
-``` 
+```
 
 General help can also be displayed by running:
 
 ```bash
 $ php bakery help
-``` 
+```
 
 ## Available commands
 
 ### bake
 
-Bake is the general installation command. It combines `setup`, `debug`, `migrate`, `create-admin` and `build-assets` into a single command: 
+Bake is the general installation command. It combines `setup`, `debug`, `migrate`, `create-admin` and `build-assets` into a single command:
 
 ```bash
 $ php bakery bake
-``` 
+```
 
 >>>>>> This command should be executed every time you run `composer update`, change assets, create a new sprinkle or install a [community sprinkle](/sprinkles/community).
 
 ### debug
 
-The `debug` command will run a series of tests to make sure everything is ready to run UserFrosting on your system. If you have trouble accessing your UserFrosting installation, you should run this command first to make sure basic requirements are met. 
+The `debug` command will run a series of tests to make sure everything is ready to run UserFrosting on your system. If you have trouble accessing your UserFrosting installation, you should run this command first to make sure basic requirements are met.
 
-The information displayed by this command can also be useful to other people when [asking for help](/troubleshooting/getting-help) and submitting new issues on Github. 
+The information displayed by this command can also be useful to other people when [asking for help](/troubleshooting/getting-help) and submitting new issues on Github.
 
 ```bash
 $ php bakery debug
-``` 
+```
 
 ### setup
 
 The `setup` command can be used to setup the database and email configuration. This can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
 
 ```bash
-$ php bakery setup 
-``` 
+$ php bakery setup
+```
 
 | Option      | Description                                    |  
 |-------------|------------------------------------------------|
@@ -70,8 +70,8 @@ See the [Asset Management](/asset-management) chapter for more information about
 
 ```bash
 $ php bakery build-assets
-``` 
-  
+```
+
 | Option        | Description                                                      |
 |---------------|------------------------------------------------------------------|
 | -c, --compile | Compile the assets and asset bundles for production environment  |
@@ -87,52 +87,59 @@ The `migrate` command runs all the pending [database migrations](/database/migra
 
 ```bash
 $ php bakery migrate
-``` 
+```
 
-| Option              | Description                              |
-|---------------------|------------------------------------------|
-| -p, --pretend       | Run migrations in "dry run" mode         |
+| Option              | Description                                                    |
+|---------------------|----------------------------------------------------------------|
+| -p, --pretend       | Run migrations in "dry run" mode                               |
+| -f, --force         | Force the operation to run when in production                  |
+| -d, --database      | The database connection to use                                 |
+| -p, --step          | Migrations will be run so they can be rolled back individually |
 
 
-The `pretend` option can be used to test migrations. Use `-vvv` to also display the underlying SQL queries:
+The `pretend` option can be used to test migrations. This will display the underlying SQL queries:
 
 ```bash
-$ php bakery migrate --pretend -vvv
+$ php bakery migrate --pretend
 ```
 
 ### migrate:rollback
 
-The `migrate:rollback` command allows you to cancel, or rollback, the last migration operation. For example, if something went wrong with the last migration operation or if you made a mistake in your migration definition, you can use that command to undo it. 
+The `migrate:rollback` command allows you to cancel, or rollback, the last migration operation. For example, if something went wrong with the last migration operation or if you made a mistake in your migration definition, you can use that command to undo it.
 
-Note that migrations are run in batches. For example, when running the `migrate` command, if 4 classes (or migration definitions) are executed, all 4 definitions will be reverted when rolling back the last migration operation. 
+Note that migrations are run in batches. For example, when running the `migrate` command, if 4 classes (or migration definitions) are executed, all 4 definitions will be reverted when rolling back the last migration operation, unless you used the `step` option with the `migrate` command.
 
-Options can also be used to rollback more than one migration at a time or to rollback migrations from a specific sprinkle. 
+Options can also be used to rollback more than one migration at a time or to rollback migrations from a specific sprinkle.
 
 ```bash
 $ php bakery migrate:rollback
-``` 
+```
 
-| Option              | Description                              |
-|---------------------|------------------------------------------|
-| -s, --steps=STEPS   | Number of steps to rollback [default: 1] |
-| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]   |
-| -p, --pretend       | Run migrations in "dry run" mode         |
+| Option              | Description                                   |
+|---------------------|-----------------------------------------------|
+| -s, --steps=STEPS   | Number of steps to rollback [default: 1]      |
+| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]        |
+| -p, --pretend       | Run migrations in "dry run" mode              |
+| -f, --force         | Force the operation to run when in production |
+| -d, --database      | The database connection to use                |
 
 ### migrate:reset
 
 The `migrate:reset` command is the same as the _rollback_ command, but it will revert **every** migration. Without options, this is the same as wiping the database to a clean state. **_Use this command with caution!_**.
 
-The `--sprinkle=` option can also be used to reset only migrations from a specific sprinkle. 
+The `--sprinkle=` option can also be used to reset only migrations from a specific sprinkle.
 
 
 ```bash
 $ php bakery migrate:reset
-``` 
+```
 
-| Option              | Description                              |
-|---------------------|------------------------------------------|
-| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]   |
-| -p, --pretend       | Run migrations in "dry run" mode         |
+| Option              | Description                                   |
+|---------------------|-----------------------------------------------|
+| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]        |
+| -p, --pretend       | Run migrations in "dry run" mode              |
+| -f, --force         | Force the operation to run when in production |
+| -d, --database      | The database connection to use                |
 
 ### migrate:refresh
 
@@ -140,13 +147,26 @@ The `migrate:refresh` command will rollback the last migration operation and exe
 
 ```bash
 $ php bakery migrate:refresh
-``` 
+```
 
-| Option              | Description                              |
-|---------------------|------------------------------------------|
-| -s, --steps=STEPS   | Number of steps to rollback [default: 1] |
-| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]   |
-| -p, --pretend       | Run migrations in "dry run" mode         |
+| Option              | Description                                   |
+|---------------------|-----------------------------------------------|
+| -s, --steps=STEPS   | Number of steps to rollback [default: 1]      |
+| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]        |
+| -f, --force         | Force the operation to run when in production |
+| -d, --database      | The database connection to use                |
+
+### migrate:status
+
+The `migrate:status` command will show what migration have been run and which one can be run. It will also display if a ran migration is available, in other words if this migration class was found so it can be rolledback.
+
+```bash
+$ php bakery migrate:status
+```
+
+| Option              | Description                                   |
+|---------------------|-----------------------------------------------|
+| -d, --database      | The database connection to use                |
 
 ### clear-cache
 
@@ -154,7 +174,7 @@ The `clear-cache` command takes care of deleting all the cached data. See [Chapt
 
 ```bash
 $ php bakery clear-cache
-``` 
+```
 
 >>>>> You might need to run this command as administrator or using `sudo` to avoid file permission issues when using the `file` cache store.
 
