@@ -134,12 +134,13 @@ The `--sprinkle=` option can also be used to reset only migrations from a specif
 $ php bakery migrate:reset
 ```
 
-| Option              | Description                                   |
-|---------------------|-----------------------------------------------|
-| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]        |
-| -p, --pretend       | Run migrations in "dry run" mode              |
-| -f, --force         | Force the operation to run when in production |
-| -d, --database      | The database connection to use                |
+| Option              | Description                                                            |
+|---------------------|------------------------------------------------------------------------|
+| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]                                 |
+| -p, --pretend       | Run migrations in "dry run" mode                                       |
+| -f, --force         | Force the operation to run when in production                          |
+| -d, --database      | The database connection to use                                         |
+| --hard              | Hard reset the whole database to an empty state by dropping all tables |
 
 ### migrate:refresh
 
