@@ -45,6 +45,13 @@
         {% endblock %}
     
         {{ assets.js() }}
+
+        {# Must be in <head> for GA to verify site ownership #}
+        {% block analytics %}
+            {% if theme_config.google_analytics_code %}
+                {% include 'partials/analytics.html.twig' %}
+            {% endif %}
+        {% endblock %}
     {% endblock %}
 </head>
 
@@ -108,12 +115,6 @@
     </section>
     {% endblock %}
     {% include 'partials/rocket.html.twig' %}
-
-    {% block analytics %}
-        {% if theme_config.google_analytics_code %}
-            {% include 'partials/analytics.html.twig' %}
-        {% endif %}
-    {% endblock %}
 
     {% include 'partials/twitter.html.twig' %}
 </body>
