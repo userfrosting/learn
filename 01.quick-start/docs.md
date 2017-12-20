@@ -10,7 +10,7 @@ taxonomy:
 
 UserFrosting is a free, open-source jumping-off point for building user-centered web applications with PHP and Javascript.  It comes with a sleek, modern interface, basic user account features, and an administrative user management system - all fully functioning out of the box.
 
->>>> This is the documentation for UserFrosting 4.  If you are looking for documentation for previous versions of UserFrosting, please see [here](http://v3.userfrosting.com).
+>>>> This is the documentation for UserFrosting 4.  If you are looking for documentation for previous versions of UserFrosting, please see [here](https://legacy.userfrosting.com).
 
 ## Server Requirements
 
