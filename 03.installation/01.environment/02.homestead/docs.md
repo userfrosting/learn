@@ -127,7 +127,7 @@ folders:
  to: /home/vagrant/Code
 
 sites:
- - map: homestead.app
+ - map: homestead.test
  to: /home/vagrant/Code/Laravel/public
 
 databases:
@@ -201,15 +201,15 @@ folders:
 
 >>> For Windows users, you should use the use the full, absolute path including the drive letter in your `map` value.  For example, `C:/Users/alexweissman/dev/userfrosting`.
 
-If `folders` maps directories to directories, then `sites` maps URLs to our **document root** (similar to what VirtualHosts do in Apache).  In the case of UserFrosting, we want our document root on the virtual machine to be `/home/vagrant/userfrosting/public`.  We'll map this to a `userfrosting.app` URL, which we'll use to access our website in the browser.  Change the defaults to look like:
+If `folders` maps directories to directories, then `sites` maps URLs to our **document root** (similar to what VirtualHosts do in Apache).  In the case of UserFrosting, we want our document root on the virtual machine to be `/home/vagrant/userfrosting/public`.  We'll map this to a `userfrosting.test` URL, which we'll use to access our website in the browser.  Change the defaults to look like:
 
 ```yaml
 sites:
-    - map: userfrosting.app
+    - map: userfrosting.test
       to: /home/vagrant/userfrosting/public
 ```
 
-Now any time we visit `http://userfrosting.app` in our browser, it will run our website starting in `/home/vagrant/userfrosting/public`.
+Now any time we visit `http://userfrosting.test` in our browser, it will run our website starting in `/home/vagrant/userfrosting/public`.
 
 Finally, we need to tell Homestead to create a database for us.  Change the `database` section to:
 
@@ -220,15 +220,15 @@ databases:
 
 Homestead will automatically create a `userfrosting` database, along with a `homestead` database user account.  The password will be `secret`.
 
-#### Add `userfrosting.app` to your `hosts` file
+#### Add `userfrosting.test` to your `hosts` file
 
-We need to tell our host operating system how to find the "server" (running in our virtual machine) that corresponds to `userfrosting.app`.  To do this, we need to edit the `hosts` file.  In Windows, this file is located at `C:\Windows\System32\drivers\etc\hosts`.  In MacOS, you can find it at `/private/etc/hosts`.  In either case, you will need to edit it **as an administrator**, or temporarily give yourself permissions to write to this file.
+We need to tell our host operating system how to find the "server" (running in our virtual machine) that corresponds to `userfrosting.test`.  To do this, we need to edit the `hosts` file.  In Windows, this file is located at `C:\Windows\System32\drivers\etc\hosts`.  In MacOS, you can find it at `/private/etc/hosts`.  In either case, you will need to edit it **as an administrator**, or temporarily give yourself permissions to write to this file.
 
 Add the following lines at the bottom, save and exit:
 
 ```
 # Vagrant projects
-192.168.10.10  userfrosting.app
+192.168.10.10  userfrosting.test
 ```
 
 Notice that we're mapping the IP address from our `Homestead.yaml` file to our desired domain.
@@ -314,7 +314,7 @@ Once the STMP config is defined, the installer will check that the basic depende
 
 #### Check our your first UserFrosting installation!
 
-Ok, that should be it!  If you head over to `http://userfrosting.app` in your browser, you should see the front page of the default UserFrosting installation.
+Ok, that should be it!  If you head over to `http://userfrosting.test` in your browser, you should see the front page of the default UserFrosting installation.
 
 ### Next steps
 
@@ -342,19 +342,19 @@ sudo ln -s /usr/share/phpmyadmin/ /home/vagrant/phpmyadmin
 
 ```bash
 sites:
-    - map: userfrosting.app
+    - map: userfrosting.test
       to: /home/vagrant/userfrosting/public
 
-    - map: phpmyadmin.app
+    - map: phpmyadmin.test
       to: /home/vagrant/phpmyadmin
 ```
 
-Don't forget to add `phpmyadmin.app` to your `hosts` file as well:
+Don't forget to add `phpmyadmin.test` to your `hosts` file as well:
 
 ```
 # Vagrant projects
-192.168.10.10  userfrosting.app
-192.168.10.10  phpmyadmin.app
+192.168.10.10  userfrosting.test
+192.168.10.10  phpmyadmin.test
 ```
 
 Finally, reload your virtual machine and log back in:
@@ -364,7 +364,7 @@ vagrant reload --provision
 vagrant ssh
 ```
 
-You should be able to access phpmyadmin in your browser at `http://phpmyadmin.app`.  Remember, your database credentials are `homestead`/`secret`.  You may see some errors the first time you sign in - these can be ignored.
+You should be able to access phpmyadmin in your browser at `http://phpmyadmin.test`.  Remember, your database credentials are `homestead`/`secret`.  You may see some errors the first time you sign in - these can be ignored.
 
 #### Configure NFS if pages load slowly
 
