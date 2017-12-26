@@ -40,11 +40,33 @@ In addition, you might also want to be able to _receive_ email - for example, if
 
 #### Free services
 
+##### Elastic Email
+
+Our top recommendation is [Elastic Email](https://elasticemail.com/account#/create-account?r=a4a354f0-eab2-4fe6-a337-199facbf9288), which allows you to send up to 5000 emails per day for free.  It also has a very nice dashboard that includes reporting and some basic promotional emailing tools.
+
+| Setting | Value |
+| ------- | ----- |
+| SMTP server address | `smtp.elasticemail.com` |
+| SMTP user name | [Your registered email address] |
+| SMTP password | [Elastic Email API Key] |
+| SMTP port | `2525` |
+
+Use our [referral link](https://elasticemail.com/account#/create-account?r=a4a354f0-eab2-4fe6-a337-199facbf9288) when you sign up to help support UserFrosting!
+
 ##### Gmail
 
 If you have a Gmail account, you can use Gmail's SMTP servers to send mail from your application.  The main limitation, though, is that you can only send _as_ your Gmail account user (and not, for example, `webmaster@owlfancy.com`), and you can't send more than 99 messages per day.
 
-If you choose this option, your SMTP host will be `smtp.gmail.com`, and your credentials will be your full Gmail email address and password.  For more information, see [this guide](https://www.digitalocean.com/community/tutorials/how-to-use-google-s-smtp-server).
+You should also be aware that Google may deem your application as "less secure", and so you will need to [allow less secure applications](https://support.google.com/accounts/answer/6010255) to connect with your Gmail credentials.  Please note that the label "less secure" does not mean that UserFrosting has security flaws; rather this label is triggered [because you are allowing third parties to authenticate with your Gmail password rather than a revokeable API key](https://security.stackexchange.com/a/72371/74909).
+
+| Setting | Value |
+| ------- | ----- |
+| SMTP server address | `smtp.gmail.com` |
+| SMTP user name | [Your Gmail address] |
+| SMTP password | [Your Gmail password] |
+| SMTP port | `465` |
+
+For more information, see [this guide](https://www.digitalocean.com/community/tutorials/how-to-use-google-s-smtp-server).
 
 #### Paid services
 
