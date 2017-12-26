@@ -125,6 +125,8 @@ $ php bakery bake
 
 You will first be prompted for your database credentials. This is the information PHP needs to connect to your database. If PHP can't connect to your database using these credentials, make sure you have entered the right information and re-run the `bake` command. 
 
+Bakery will also prompt you for SMTP credentials, so that UserFrosting can send emails for activating new accounts and setting and resetting passwords.  If you are not ready to set up email at this time, you can press enter to skip through SMTP configuration.  Please note that in production, you _will_ need to have a working SMTP service.  If you do not already have a mail provider, please see our section on [mail providers](/mail/mail-providers) for our recommendations including both free and paid third-party mail services.
+
 If the database connection is successful, the installer will then check that the basic dependencies are met. If so, the installer will run the _migrations_ to populate your database with new tables. During this process, you will be prompted for some information to set up the master account (first user). Finally, the installer will run the `build-assets` command to fetch javascript dependencies and build the [assets bundles](/asset-management/asset-bundles).
 
 ## Visit your website
