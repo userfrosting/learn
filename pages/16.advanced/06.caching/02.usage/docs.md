@@ -16,7 +16,7 @@ $value = $this->ci->cache->get('users', function () {
 });
 ```
 
-Every method documented for the Laravel Cache is accessible inside the cache service: `get`, `has`, `increment`, `decrement`, `remember`, `pull`, `put`, `forever`, etc. 
+Every method documented for the Laravel Cache is accessible inside the cache service: `get`, `has`, `increment`, `decrement`, `remember`, `pull`, `put`, `forever`, `rememberForever`, `tags`, etc.
 
 ## User cache
 
@@ -30,7 +30,7 @@ $userCache->get('key'); // Return 'Foo'
 $userCache = User::find(2)->getCache();
 $userCache->forever('key', 'Bar');
 $userCache->get('key'); // Return 'Bar'
-``` 
+```
 
 ## Clearing the cache
 
@@ -42,7 +42,7 @@ $ php bakery clear-cache
 
 ## Cache drivers
 
-UserFrosting provide access and configuration out of the box for 3 cache drivers: `File`, `Memcache` and `Redis`. 
+UserFrosting provide access and configuration out of the box for 3 cache drivers: `File`, `Memcache` and `Redis`.
 
 The driver used by UserFrosting can be defined in the configuration files under the `cache.driver` key. To change drivers, simply overwrite this key in your sprinkle for one of the drivers below.
 
@@ -85,6 +85,10 @@ Similar to Memcached, **Redis** uses in-memory data structure to store the cache
 ]
 ```
 
+>>>>>> When using Redis with multiple applications on the same server, you can use the `database` option to assign one of 16 default Redis databases (identified by a number form 0 to 15) to your UserFrosting instance and avoid sharing the same database with multiple apps.
+
 ## Prefix configuration
 
-When using multiple instances of UserFrosting on the same server with the **Memcached** or **Redis** driver on the same server, you should edit the `config.prefix` configuration value so each installation uses a unique prefix. Otherwise, both installations of UserFrosting might end up sharing the same cached data. This does not affect the **file** driver.
+When using multiple instances of UserFrosting with the **Memcached** or **Redis** driver on the same server, or any other app using Redis/Memcached, you should edit the `config.prefix` configuration value so each installation uses a unique prefix. Otherwise, both installations of UserFrosting might end up sharing the same cached data. Note that this does not affect the **file** driver.
+
+>>>>  When using the **Redis** or **Memcached** drivers, flushing the cache does not respect the cache prefix and will remove all entries from the cache. That means all data stored in the Redis/Memcached database will be deleted, whether or not it belong to your application. Consider this carefully when clearing a cache which is shared by other applications. When using the Redis driver, [different database can be used for each app](https://stackoverflow.com/a/38272337/445757) to avoid this.
