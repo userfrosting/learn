@@ -17,7 +17,8 @@ Within each sprinkle, you will find any or all of the following directories and 
 ├── src
 ├── templates
 ├── composer.json
-├── bower.json
+├── package.json
+├── bower.json (deprecated)
 └── asset-bundles.json
 ```
 
@@ -35,14 +36,24 @@ $ composer update
 
 >>>> The master `composer.json` file will load **all** child `composer.json` files, even in Sprinkles that haven't been loaded in your site's `index.php`.  To change this behavior, you will need to modify the master `composer.json` file.
 
-### /bower.json
+### /package.json
 
-The `bower.json` file is used for easily retrieving vendor assets from the package management system [Bower.io](https://bower.io/search/), like [Bootstrap](http://getbootstrap.com/). Vendor assets specified in `bower.json` will be downloaded to the Sprinkle's `/assets/vendor` directory.
+The `package.json` file is used for retrieveing frontend dependencies via [Yarn](https://yarnpkg.com/), like [Bootstrap](http://getbootstrap.com/). Dependencies specified in `package.json` will be downloaded to `/app/assets/node_modules`.
 
-To download vendor assets, from the `/build` directory:
+To download frontend dependencies, from the project root directory:
 
 ```bash
-$ npm run uf-assets-install
+$ php bakery build-assets
+```
+
+### /bower.json (deprecated)
+
+The `bower.json` file is used for retrieving frontend dependencies via [Bower](https://bower.io/search/). Dependencies specified in `bower.json` will be downloaded to `/app/assets/bower_components`. Please note that Bower has been deprecated, and support is likely to be dropped from the next major release of UserFrosting.
+
+To download frontend dependencies, from the project root directory:
+
+```bash
+$ php bakery build-assets
 ```
 ### /asset-bundles.json
 
