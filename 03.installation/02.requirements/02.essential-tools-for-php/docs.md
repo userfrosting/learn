@@ -84,7 +84,7 @@ npm stands for **N**ode **P**ackage **M**anager.  npm is to Node.js as Composer 
 $ npm install npm@latest -g
 ```
 
-UserFrosting also uses **Bower**, a frontend package manager.  If you do not have this installed, don't worry!  UserFrosting's build scripts will automatically install it for you.
+UserFrosting also uses **Yarn** and **Bower** (deprecated) for frontend dependency management.  If you do not have this installed, don't worry!  UserFrosting's build scripts will automatically install it for you.
 
 ## Coding and style standards
 

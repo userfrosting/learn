@@ -293,7 +293,7 @@ If you only see `composer` and `wikimedia` subdirectories after running `compose
 
 #### Assets and database setup
 
-We can use [Bakery](/cli) to set up our database and download the Node and Bower dependencies:
+We can use [Bakery](/cli) to set up our database, and download frontend dependencies.
 
 ```bash
 $ php bakery bake

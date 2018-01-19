@@ -64,7 +64,7 @@ The `create-admin` command is used to create the root user. This command will se
 
 ### build-assets
 
-The `build-assets` command is an alias for the node.js and npm scripts used for asset management. The `/build` directory contains the scripts and configuration files required to download Javascript, CSS, and other assets used by UserFrosting. This command will install Gulp, Bower and other required npm packages locally. With npm set up with all of its required packages, it can be used to automatically download and install the assets in the correct directories.
+The `build-assets` command is an alias for the node.js scripts used for asset management. The `/build` directory contains the scripts and configuration files required to download Javascript, CSS, and other assets used by UserFrosting. This command will install all required build dependencies locally (e.g. Gulp and Yarn), and then automatically download frontend dependencies to `/app/assets`.
 
 See the [Asset Management](/asset-management) chapter for more information about asset bundles and the `compile` option.
 
