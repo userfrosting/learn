@@ -215,9 +215,13 @@ The level of detail can be specified with the `mail.smtp_debug` configuration va
 We can also arbitrarily send manual debugging messages to `userfrosting.log`.  This is useful when you want to inspect the value of a server-side variable at a particular point in your code ("dumping the variable") or determine if a particular method or function is being called.  To do this, simply use the `Debug` facade:
 
 ```
-\UserFrosting\Sprinkle\Core\Facades\Debug::debug("Fetching owls from database...");
+use UserFrosting\Sprinkle\Core\Facades\Debug;
+```
 
-\UserFrosting\Sprinkle\Core\Facades\Debug::debug("Owls found:", $owls);
+```
+Debug::debug("Fetching owls from database...");
+
+Debug::debug("Owls found:", $owls);
 ```
 
 >>> `Debug` is a facade for a [Monolog](https://github.com/Seldaek/monolog) logger instance, whose `debug` method takes a string as the first parameter and an optional array as a second parameter, and writes them to a log file.  Monolog also supports more advanced logging capabilities - check their documentation for more details.
