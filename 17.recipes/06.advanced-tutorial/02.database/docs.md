@@ -248,7 +248,7 @@ use UserFrosting\Sprinkle\Core\Facades\Debug;
 
 class PastriesController extends SimpleController
 {
-    public function displayPage(Request $request, Response $response, $args)
+    public function pageList(Request $request, Response $response, $args)
     {
         $pastries = Pastry::all();
         
