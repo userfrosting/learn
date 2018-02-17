@@ -181,7 +181,7 @@ $pastries = Pastry::all();
 
 >>>>> Fetching all the available rows is not an ideal solution since in production, it can involve an arbitrarily large number of rows. This can clutter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server resource usage). It is recommended to use AJAX and [**Sprunging**](/database/data-sprunjing) to display paginated data in this situation.
 
-The `$pastries` variable should now contains an [Eloquent Collection](https://laravel.com/docs/5.4/eloquent-collections) of `Pastry` objects. At this point, it's a good idea to use **Debugging** to make sure everything works as it should. We'll use the `Debug` facade to do so. Start by adding the facade class to the usage declaration of your class:
+The `$pastries` variable should now contains an [Eloquent Collection](https://laravel.com/docs/5.4/eloquent-collections) of `Pastry` objects. At this point, it's a good idea to use [**debugging**](/troubleshooting/debugging#debug-statements) to make sure everything works as it should. We'll use the `Debug` facade to do so. Start by adding the facade class to the usage declaration of your class:
 
 ```php
 use UserFrosting\Sprinkle\Core\Facades\Debug;
@@ -193,8 +193,7 @@ use UserFrosting\Sprinkle\Core\Facades\Debug;
 Debug::debug($pastries);
 ```
 
-
-This file should contain something similar to this:
+The next time we run this code, the UserFrosting log (`app/logs/userfrosting.log`) should contain something similar to this:
 ```
 debug.DEBUG: [{
 	"id": 1,
@@ -248,7 +247,7 @@ use UserFrosting\Sprinkle\Core\Facades\Debug;
 
 class PastriesController extends SimpleController
 {
-    public function displayPage(Request $request, Response $response, $args)
+    public function pageList(Request $request, Response $response, $args)
     {
         $pastries = Pastry::all();
         

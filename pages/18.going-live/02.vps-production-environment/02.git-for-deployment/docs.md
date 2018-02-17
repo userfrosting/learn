@@ -14,13 +14,19 @@ We can also use the git `post-receive` hook to run additional build tasks after 
 
 This guide assumes that you already set up your UserFrosting project as a git repository during installation.  If not, [go back to the installation guide](/installation/environment/native).
 
+This guide also assumes that you are **regularly committing changes to your repository.**  Git can **only** push files to the production server if it is [tracking them](https://www.atlassian.com/git/tutorials/saving-changes#git-add) and you have [committed your changes](https://www.atlassian.com/git/tutorials/saving-changes#git-commit). If you are new to git and _don't understand what this means_, we strongly suggest you check out the free git tutorials from [Github](https://try.github.io) or [Atlassian](https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud) before you continue.
+
+>>>> Your custom code will not get deployed unless you **add new files** and **commit changes** with git to your repository.
+
+## SSH into remote machine
+
 Before you can do anything else, you need to first `ssh` into the remote machine.  In general, I like to keep two terminals open at the same time - one connected to my remote machine, and the other for performing local commands.
 
 First, we'll set up a bare repository on the remote server.  The reason we use a _bare_ repository is because it separates the location of the repository (the files managed by git that live in the `.git` directory), and the **working tree** (the files you normally work with and from which you commit to the repository).
 
 If we used a non-bare repository, we wouldn't be able to "push to production" because git [does not allow you to push to a checked-out branch](https://stackoverflow.com/questions/20206502/why-use-a-git-bare-repository-for-website-deployment).  Since the checked-out branch would be the actual set of files that the webserver is running your application on, it would make it impossible to change these files when we do `git push`.
 
-## Creating a bare repository
+## Create a bare repository
 
 >>>>> You may need to use `sudo` to run some of these commands.
 
