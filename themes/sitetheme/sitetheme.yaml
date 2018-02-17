@@ -9,7 +9,5 @@ streams:
 google_analytics_code: UA-37689257-2
 github:
     position: top                                   # top | bottom | off
-    tree: https://github.com/userfrosting/learn/blob/develop/
-    commits: https://github.com/userfrosting/learn/commits/develop/
-    
-    
+    tree: https://github.com/userfrosting/learn/blob/hotfix/
+    commits: https://github.com/userfrosting/learn/commits/hotfix/
