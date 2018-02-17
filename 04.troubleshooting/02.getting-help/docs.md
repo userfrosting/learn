@@ -48,7 +48,7 @@ Our forums, built on the excellent [Discourse](https://www.discourse.org/) proje
 
 ## Chat
 
-UserFrosting has its very own [chat room](https://chat.userfrosting.com), built with [Rocket.chat](https://rocket.chat/) and hosted thanks to the [generous donations of viewers like you](https://pledgie.com/campaigns/29583)!  Please feel free to stop by any time - we'd love to chat with you and help you out!  You may sign in with your GitHub or Twitter account.  But first, please note the following:
+UserFrosting has its very own [chat room](https://chat.userfrosting.com), built with [Rocket.chat](https://rocket.chat/) and hosted thanks to the [generous donations of viewers like you](https://opencollective.com/userfrosting)!  Please feel free to stop by any time - we'd love to chat with you and help you out!  You may sign in with your GitHub or Twitter account.  But first, please note the following:
 
 ### Channels
 
