@@ -1,35 +1,16 @@
 ---
-title: Supporting UserFrosting
+title: Contributing
 metadata:
-    description: Donate your time, money, or expertise to furthering the development of UserFrosting.
+    description: Help out by providing support in our chat and forums, translating content, fixing bugs, and implementing new features.
 taxonomy:
     category: docs
 ---
 
-## Financial support
-
-UserFrosting is completely free and open source, and licensed under the [MIT License](https://github.com/userfrosting/UserFrosting/blob/master/LICENSE.md).
-
-That being said, yes, we'll take your money!
-
-Your financial contribution will help keep our chat and demo servers going.  And, who knows?  Maybe enough people will donate and Alex can make UserFrosting his full-time job ;-)
-
-The easiest way to contribute financially is through our [Pledgie campaign](https://pledgie.com/campaigns/29583).  Suggested donations are as follows:
-
-- Personal use: $10
-- Local nonprofit use (e.g. local chapters of Scouts, Elk Lodge, etc): $30
-- National nonprofit, municipal, and business use: $100
-- Super donor: $500
-
-We can also accept donations via bitcoin: `18Ew1xGy1E3kjH1UyPEgJ3nnDN3ZWUY1N1`
-
-You can also help pay for our web and chat server costs by signing up with DigitalOcean using our [referral link](https://m.do.co/c/833058cf3824).  Once you've spent $25 with them, we'll earn $25 towards our own DigitalOcean account.
-
-## Contributing time
+## Providing support
 
 Our chat room can get very busy!  We have users from all over the world, looking for help 24/7.  Although Alex tends to spend *nearly* every waking minute on his computer, he (and the majority of the other main developers, who mostly live in the UTC-4 timezone) do need to sleep, eat, and work from time to time.
 
-If you feel like you've gotten a handle on UserFrosting, it would be extremely helpful if you can simply keep a browser tab open to our [chat room](https://chat.userfrosting.com), and help out other users when you have a chance.
+If you feel like you've gotten a handle on UserFrosting, it would be extremely helpful if you can simply keep a browser tab open to our [chat room](https://chat.userfrosting.com) (or install the [Rocket.chat app](https://rocket.chat/download)), and help out other users when you have a chance.  You may also wish to sign up for our [forums](https://forums.userfrosting.com) to help other developers there, as well.
 
 ## Contributing code and content
 

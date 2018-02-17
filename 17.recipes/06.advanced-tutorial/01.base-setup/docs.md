@@ -38,7 +38,7 @@ We now create the [route](/routes-and-controllers) for the "pastries" page. Crea
  * Routes for pastry-related pages.
  */
 $app->group('/pastries', function () {
-    $this->get('', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:displayPage')
+    $this->get('', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:pageList')
          ->setName('pastries');
 })->add('authGuard');
 ```
@@ -47,7 +47,7 @@ We now have a `/pastries` route set up. We also define a route group for later u
 
 ## The controller class
 
-Now that we have a route, we need to create the `PastriesController` controller with the `displayPage` method:
+Now that we have a route, we need to create the `PastriesController` controller with the `pageList` method:
 
 `app/sprinkles/pastries/src/Controller/PastriesController.php`
 ```php
@@ -63,7 +63,7 @@ use UserFrosting\Support\Exception\ForbiddenException;
 
 class PastriesController extends SimpleController
 {
-    public function displayPage(Request $request, Response $response, $args)
+    public function pageList(Request $request, Response $response, $args)
     {
         return $this->ci->view->render($response, 'pages/pastries.html.twig', [
 

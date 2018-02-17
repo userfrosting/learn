@@ -215,7 +215,7 @@ Before we continue, you'll have to login as a non-root user to test permissions.
 
 #### Controller
 
-First we'll add a permission check in the `displayPage` of the `PastriesController`. Users without our `see_pastries` permission will not be able to see the page. In that case, a `ForbiddenException` will be thrown. The namespace alias for this exception should already be added: `use UserFrosting\Support\Exception\ForbiddenException;`.
+First we'll add a permission check in the `pageList` of the `PastriesController`. Users without our `see_pastries` permission will not be able to see the page. In that case, a `ForbiddenException` will be thrown. The namespace alias for this exception should already be added: `use UserFrosting\Support\Exception\ForbiddenException;`.
 
 Next, we need a reference to the `authorizer` service and the current user to perform the check. Add this code before loading the pastries from the database:
 
@@ -240,7 +240,7 @@ The full method should now be:
 
 `app/sprinkles/pastries/src/Controller/PastriesController.php`
 ```php
-public function displayPage(Request $request, Response $response, $args)
+public function pageList(Request $request, Response $response, $args)
 {
     /** @var UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager */
     $authorizer = $this->ci->authorizer;
