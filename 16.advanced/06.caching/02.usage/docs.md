@@ -42,7 +42,7 @@ $ php bakery clear-cache
 
 ## Cache drivers
 
-UserFrosting provide access and configuration out of the box for 3 cache drivers: `File`, `Memcache` and `Redis`.
+UserFrosting provide access and configuration out of the box for 3 cache drivers: `File`, `Memcached` and `Redis`.
 
 The driver used by UserFrosting can be defined in the configuration files under the `cache.driver` key. To change drivers, simply overwrite this key in your sprinkle for one of the drivers below.
 
