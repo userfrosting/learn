@@ -357,7 +357,7 @@ Specifies that the value of the field must match a specified Javascript- and PCR
 screech:
   validators:
     regex:
-      regex: "^who(o*)$"
+      regex: '^who(o*)$'
       message: You did not provide a valid screech.
 ```
 
