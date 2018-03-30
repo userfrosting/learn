@@ -16,16 +16,16 @@ A seed is actually the most versatile yet simple way to interact with the databa
 
 ## Seed structure
 
-First of all, to be picked up by the `seed` bakery command, a seed class files must be located in the `src/Database/Seeder/` directory of your Sprinkle and have the appropriate PSR-4 namespace, i.e. `UserFrosting\Sprinkle\{sprinkleName}\Database\Seeder` (where `{sprinkleName}` is the name of your sprinkle). Don't forget namespaces are case-sensitive and **must** match the case of the corresponding directories !
+First of all, to be picked up by the `seed` bakery command, a seed class files must be located in the `src/Database/Seeder/` directory of your Sprinkle and have the appropriate PSR-4 namespace, i.e. `UserFrosting\Sprinkle\{sprinkleName}\Database\Seeds` (where `{sprinkleName}` is the name of your sprinkle). Don't forget namespaces are case-sensitive and **must** match the case of the corresponding directories !
 
 Each seed class needs to extend the base `UserFrosting\Sprinkle\Core\Database\Seeder\Seeder` class. A migration class must at least contains the `run` method. This method will be the one ran by the `seed` Bakery command. Of course your class may contains other helper methods, but they need to be called by the `run` one.
 
 The basic seed class looks like this :
 
-```
+```php
 <?php
 
-namespace UserFrosting\Sprinkle\MySprinkle\Database\Seeder;
+namespace UserFrosting\Sprinkle\MySprinkle\Database\Seeds;
 
 use UserFrosting\Sprinkle\Core\Database\Seeder\Seeder;
 
@@ -44,8 +44,8 @@ Inside the `run` method, you can do whatever you want. The UserFrosting service 
 
 Seeds respects the Sprinkle priority. Let's say those two seeds are defined in this order :
 
-- `UserFrosting\Sprinkle\MySprinkle\Database\Seeder\Foo`
-- `UserFrosting\Sprinkle\MyOtherSprinkle\Database\Seeder\Foo`
+- `UserFrosting\Sprinkle\MySprinkle\Database\Seeds\Foo`
+- `UserFrosting\Sprinkle\MyOtherSprinkle\Database\Seeds\Foo`
 
 Running the `Foo` seed will run in this case the one from the `MyOtherSprinkle` sprinkle. This means two sprinkles can't have the same seeds name for two different seeds. It does means the sprinkle with higher priority can actually replace a seed defined by another sprinkle. Just like assets or templates.
 
@@ -63,10 +63,10 @@ Multiple seeds can be run at once by listing them all, separated by a space. See
 
 The seed below will create a new group with the `bar` slug using the `Group` model. The seeds will only create it if the `bar` slug doesn't already exist.
 
-```
+```php
 <?php
 
-namespace UserFrosting\Sprinkle\Core\Database\Seeder;
+namespace UserFrosting\Sprinkle\MySprinkle\Database\Seeds;
 
 use UserFrosting\Sprinkle\Core\Database\Seeder\Seeder;
 use UserFrosting\Sprinkle\Account\Database\Models\Group;
@@ -96,7 +96,7 @@ $ php bakery seed MyGroupSeed
 
 Of course, you can delete also choose to delete all existing groups before creating a new one :
 
-```
+```php
 public function run()
 {
     // Delete existing groups
@@ -118,7 +118,7 @@ public function run()
 
 When dealing with errors, exceptions should be thrown. Exception will be catch by the seed command and displayed as an error. For example, to display an error when the `bar` group already exist :
 
-```
+```php
 public function run()
 {
     $barGroup = Group::where('slug', 'bar')->first();
@@ -145,7 +145,7 @@ This will display the following error when running the seed :
 
 You can also check if the `Group` migration has been run before trying to manipulate the data of the group table using the `migrator` service :
 
-```
+```php
 public function run()
 {
     /** @var \UserFrosting\Sprinkle\Core\Database\Migrator\Migrator; */
@@ -168,10 +168,10 @@ public function run()
 
 Finally, while you can run multiple seed at once, you can also write a master seed that call other one :
 
-```
+```php
 <?php
 
-namespace UserFrosting\Sprinkle\Gaston\Database\Seeder;
+namespace UserFrosting\Sprinkle\Gaston\Database\Seeds;
 
 use UserFrosting\Sprinkle\Core\Database\Seeder\Seeder;
 use UserFrosting\Sprinkle\Gaston\MySprinkle\Seeder\MyGroups;
