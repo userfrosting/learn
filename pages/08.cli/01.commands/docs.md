@@ -222,6 +222,28 @@ $ php bakery seed Class1 Class2
 |---------------------|-----------------------------------------------|
 | -f, --force         | Force the operation to run when in production |
 
+### seed:list
+
+The `seed:list` command will list all database seeds available. See [Chapter 12](/database/seeding) for more info on database seeds.
+
+```bash
+$ php bakery seed:list
+```
+
+Example result:
+
+```txt
+Database Seeds List
+===================
+
+ ---------- -------------------------------------------------------- ----------
+  Name       Namespace                                                Sprinkle  
+ ---------- -------------------------------------------------------- ----------
+  TestSeed   \UserFrosting\Sprinkle\Core\Database\Seeds\TestSeed      Core      
+  TestSeed   \UserFrosting\Sprinkle\Account\Database\Seeds\TestSeed   Account   
+ ---------- -------------------------------------------------------- ----------
+```
+
 ### clear-cache
 
 The `clear-cache` command takes care of deleting all the cached data. See [Chapter 16](/advanced/caching) for more information.
