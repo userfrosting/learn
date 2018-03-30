@@ -8,61 +8,59 @@ taxonomy:
 
 When you start building your application with UserFrosting, you'll no doubt be adding your own tables to the data model. After all, what's the point of having users if there's nothing in your application for them to use?
 
-Though you could add new tables to your database through the command line, phpMyAdmin, or another tool, you will probably want something that is portable, allowing you to set up your database on other developers' machines or on your test and production servers. To do this, you should use a **migration**. Migrations bring version control to your database. If you have ever had to share sql files or manually edit a database schema, you've faced the problem that database migrations solve.
+Though you could add new tables to your database through the command line, phpMyAdmin, MySQL Workbench or another tool, you will probably want something that is portable, allowing you to set up your database on other developers' machines or on your test and production servers. To do this, you should use a **migration**. Migrations bring version control to your database. If you have ever had to share sql files or manually edit a database schema, you've faced the problem that database migrations solve.
 
 >>>>>> Even if you only have a simple table to create, creating a migration is a good practice. You never know what changes you'll need to do to that table later on. You also don't know when or who will need to create that table again later on a different system or even database provider!
 
+Migrations are also very useful when dealing with [Automated Test](/testing). Tests can use your migrations to setup a temporary or a test database so your tests are executed in a safe environment, keeping your production database secure.
+
 ## Migration Structure
 
-A migration is nothing more than a PHP class that uses Eloquent's [Schema](https://laravel.com/docs/5.4/migrations#tables) interface to create, remove, and modify tables in your database. Migrations can also be used to perform additional setup tasks like seeding your tables with some default values, or prompting the developer for additional information in the command line.
+A migration is nothing more than a PHP class that uses Eloquent's [Schema Builder](https://laravel.com/docs/5.4/migrations#tables) to create, remove, and modify tables in your database. Migrations can also be used to perform additional setup tasks like seeding your tables with some default values.
 
 
-When you run the main UserFrosting install script (`php bakery migrate`), it will first check your `migration` table to see which migrations have been run before. If the migration class has a record in this table, the migrate script will simply skip it.
+When you run the main UserFrosting install script (`php bakery migrate`), it will first check a special `migration` table to see which migrations have been run before. If the migration class has a record in this table, the migrate script will simply skip it.
 
-### Class namespace and semantic versioning
+### Class namespace
 
-To be picked up by the `migrate` bakery command, migration class files must be located in the `src/Database/Migrations/v{version}` directory of your Sprinkle, where `{sprinkleName}` is the name of your sprinkle and `{version}` the _semantic version_ of your migration.
+To be picked up by the `migrate` bakery command, migration class files must be located in the `src/Database/Migrations/` directory of your Sprinkle and have the appropriate PSR-4 namespace.
 
-*Semantic versioning* is a basic way to make sure that migrations are run in the correct order between your Sprinkle versions. It also helps organize migrations so it's easier to find them. This is achieved by grouping migrations by the sprinkle version number. For example:
+Recall that [PSR-4](http://www.php-fig.org/psr/psr-4/#examples) requires that classes have a namespace that corresponds to their file path, i.e. `UserFrosting\Sprinkle\{sprinkleName}\Database\Migrations`(where `{sprinkleName}` is the name of your sprinkle).  **Crucially**, namespaces are case-sensitive and **must** match the case of the corresponding directories. Also note that dots (`.`) and dashes (`-`) are not included in the directories (and namespace) as per PSR-4 rules. The class names must also correspond to these file names; e.g. `MembersTable.php` must contain a single `MembersTable` class.
+
+
+You can also optionally organize your migrations in subdirectories so it's easier to find and manage them. For example:
 
 ```bash
 src/Database/Migrations/v400/
     ├── MembersTable.php
     └── OwlsTable.php
-src/Database/Migrations/v410/
-    ├── OwlsTable.php
+src/Database/Migrations/SneksNStuff/
     ├── SneksTable.php
     └── VolesTable.php
-src/Database/Migrations/v412/
+src/Database/Migrations/v500/
+    ├── OwlsTable.php
     └── MembersTable.php
 ```
 
-The class names must correspond to these file names; e.g. `MembersTable.php` must contain a single `MembersTable` migration class.
+While multiple operations _can_ be done in the same migration class, it is recommended to use **one class per table (or operation)**. This way, if something goes wrong while creating one of the tables for example, the table previously created won't be created again when running the migrate command again. Plus, every change made before the error occurred can even be reverted using the `migrate:rollback` command.
 
-Recall that [PSR-4](http://www.php-fig.org/psr/psr-4/#examples) requires that classes have a namespace that corresponds to their file path, i.e. `UserFrosting\Sprinkle\{sprinkleName}\Database\Migrations\v{version}`.  **Crucially**, namespaces are case-sensitive and **must** match the case of the corresponding directories.  Also note that dots (`.`) and dashes (`-`) are not included in the directories (and namespace) as per PSR-4 rules. 
-
-Any migrations related to the `4.0.0` version of the sprinkle should be located in the `v400` directory and namespace. The same goes for migrations related to version `4.1.0` and `4.1.2` of your sprinkle. 
-
-While multiple operations _can_ be done in the same migration class, it is recommended to use **one class per table or operation**. This way, if something goes wrong while creating one of the tables for example, the table previously created won't be created again when running the migrate command again. Plus, every change made before the error occurred can even be reverted using the `migrate:rollback` command.
-
->>>>> Not every sprinkle requires a migration. If nothing changed in the database structure between two versions, there's simply nothing to migrate!
 
 ### Up and down we go
 
-Each migration class needs to extend the base `UserFrosting\System\Bakery\Migration` class. A migration class contains two methods: `up` and `down`. The `up` method is used to add new tables, columns, or indexes to your database, while the `down` method should simply reverse the operations performed by the `up` method.
+Each migration class needs to extend the base `UserFrosting\Sprinkle\Core\Database\Migration` class. A migration class must contains two methods: `up` and `down`. The `up` method is used to add new tables, columns, or indexes to your database, while the `down` method should simply reverse the operations performed by the `up` method.
 
-Within both of these methods you may use the [Laravel schema builder](https://laravel.com/docs/5.4/migrations) to expressively create and modify tables. To learn about all of the methods available on the Schema builder, [check out its documentation](https://laravel.com/docs/5.4/migrations#creating-tables).
+Within both of these methods you may use the [Laravel schema builder](https://laravel.com/docs/5.4/migrations) (avaialble in the `$this->schema` property) to expressively create and modify tables. To learn about all of the methods available on the Schema builder, [check out its documentation](https://laravel.com/docs/5.4/migrations#creating-tables).
 
 For a simple example, suppose that you want to create a `members` table, which will be used to add application-specific fields for our users:
- 
+
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations\v400;
+namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
-use UserFrosting\System\Bakery\Migration;
+use UserFrosting\Sprinkle\Core\Database\Migration;
 
 class MembersTable extends Migration
 {
@@ -74,7 +72,7 @@ class MembersTable extends Migration
                 $table->integer('user_id')->unsigned()->unique();
                 $table->string('city', 255)->nullable();
                 $table->timestamps();
-    
+
                 $table->engine = 'InnoDB';
                 $table->collation = 'utf8_unicode_ci';
                 $table->charset = 'utf8';
@@ -91,7 +89,7 @@ class MembersTable extends Migration
 }
 ```
 
-`$this->schema` is a variable created by the base migration class, which models your database structure. In this example, we call `hasTable` to check if the `members` table already exists, and then create it if it doesn't. 
+`$this->schema` is a variable created by the base migration class, which models your database structure. In this example, we call `hasTable` to check if the `members` table already exists, and then create it if it doesn't.
 
 >>>>> Using `hasTable` to make sure the table doesn't already exist is not strictly required since [Dependencies](#dependencies) could also be used to prevent any duplicate, but it can still be useful in case another sprinkle already created a table with the same name.
 
@@ -107,9 +105,9 @@ As for the `down` method, it simply tells the database structure to delete the t
 
 ## Dependencies
 
-An important aspect of migrations is **data consistency**. Since migrations are like recipes used to create and populate a database, the order in which theses migrations are executed is very important. You don't want to drop those cupcakes in the oven before mixing the flour and eggs, the same way you don't want to insert data into a table before that table is created! UserFrosting uses two methods to make sure migrations are run in the correct order. The first one is **semantic versioning** described above. The other one is **dependencies**.
+An important aspect of migrations is **data consistency**. Since migrations are like recipes used to create and populate a database, the order in which theses migrations are executed is very important. You don't want to drop those cupcakes in the oven before mixing the flour and eggs, the same way you don't want to insert data into a table before that table is created! UserFrosting uses **dependencies** to make sure migrations are run in the correct order.
 
-While semantic versioning is great for basic stuff, some situations require a more complex way to make sure migrations are run in the correct order. This is the case when a Sprinkle requires that a migration from another Sprinkle is executed before its own migration. It can also be the case when two tables inside the same version are dependent on one another. 
+Some situations require a more complex way to make sure migrations are run in the correct order. This is the case when a Sprinkle requires that a migration from another Sprinkle is executed before its own migration. It can also be the case when two tables inside the same Sprinkle are dependent on one another.
 
 To define which migrations are required to be executed before your own migration, you can specify the fully qualified class name of the dependent migration as an array in the `$dependencies` attribute. For example:
 
@@ -120,28 +118,28 @@ namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations\v400;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
-use UserFrosting\System\Bakery\Migration;
+use UserFrosting\Sprinkle\Core\Database\Migration;
 
 class MembersTable extends Migration
 {
-    public $dependencies = [
+    static public $dependencies = [
         '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\UsersTable',
         '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable',
         '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RoleUsersTable'
     ];
-    
+
     public function up()
     { ... }
 }
 ```
 
-The above example tells the bakery `migrate` command that the `UsersTable`, `RolesTable` and `RoleUsersTable` migrations from the `Account` Sprinkle need to be already executed (and at least at version `4.0.0`) before executing the `MembersTable` migration. If those migrations are not yet executed and are pending execution, the `migrate` command will take care of the order automatically. If a migration's dependencies cannot be met, the `migrate` command will abort.
+The above example tells the bakery `migrate` command that the `UsersTable`, `RolesTable` and `RoleUsersTable` migrations from the `Account` Sprinkle need to be already executed before executing the `MembersTable` migration from the `MySprinkle` sprinkle. If those migrations are not yet executed and are pending execution, the `migrate` command will take care of the order automatically. If a migration's dependencies cannot be met, the `migrate` command will abort.
 
->>>>> Dependencies can also target previous versions of your own migrations, but semantic versioning should already have taken care of this.
+>>>>> Dependencies can also target previous versions of your own migrations. For example, you should check that your `member` table is created before adding a new column in a new migration.
 
 ## Seeding
 
-Migrations can also seed data into the database. Seeding should be used when creating new rows, editing existing data or anything else not related to the table structure. Seeding is done in the `seed` method. 
+Migrations can also seed data into the database. Seeding should be used when creating new rows, editing existing data or anything else not related to the table structure. Seeding is done in the `seed` method.
 
 You can also interact with the person who is running the migration by displaying information, confirming actions or asking questions to populate the database. One example is the `CreateAdminUser` migration in the `account` Sprinkle, which is used to set up the master user account. Since migrations are run using UserFrosting's **Bakery** cli tool, which itself uses [Symfony Console](http://symfony.com/doc/current/components/console.html) as a core component, you can invoke I/O methods on the `$this->io` variable. For example:
 
@@ -150,10 +148,10 @@ public function seed()
 {
     // Show title
     $this->io->section("Foo creation");
-    
+
     // Get the Foo details
     $foo_name = $this->io->ask("Enter Foo name", "Default name");
-            
+
     // Save the new Foo
     $newFoo = new Foo([
         "name" => $foo_name,

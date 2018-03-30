@@ -124,22 +124,25 @@ The `migrate` command runs all the pending [database migrations](/database/migra
 $ php bakery migrate
 ```
 
-| Option              | Description                              |
-|---------------------|------------------------------------------|
-| -p, --pretend       | Run migrations in "dry run" mode         |
+| Option              | Description                                                    |
+|---------------------|----------------------------------------------------------------|
+| -p, --pretend       | Run migrations in "dry run" mode                               |
+| -f, --force         | Force the operation to run when in production                  |
+| -d, --database      | The database connection to use                                 |
+| -p, --step          | Migrations will be run so they can be rolled back individually |
 
 
-The `pretend` option can be used to test migrations. Use `-vvv` to also display the underlying SQL queries:
+The `pretend` option can be used to test migrations. This will display the underlying SQL queries:
 
 ```bash
-$ php bakery migrate --pretend -vvv
+$ php bakery migrate --pretend
 ```
 
 ### migrate:rollback
 
 The `migrate:rollback` command allows you to cancel, or rollback, the last migration operation. For example, if something went wrong with the last migration operation or if you made a mistake in your migration definition, you can use that command to undo it.
 
-Note that migrations are run in batches. For example, when running the `migrate` command, if 4 classes (or migration definitions) are executed, all 4 definitions will be reverted when rolling back the last migration operation.
+Note that migrations are run in batches. For example, when running the `migrate` command, if 4 classes (or migration definitions) are executed, all 4 definitions will be reverted when rolling back the last migration operation, unless you used the `step` option with the `migrate` command.
 
 Options can also be used to rollback more than one migration at a time or to rollback migrations from a specific sprinkle.
 
@@ -147,11 +150,13 @@ Options can also be used to rollback more than one migration at a time or to rol
 $ php bakery migrate:rollback
 ```
 
-| Option              | Description                              |
-|---------------------|------------------------------------------|
-| -s, --steps=STEPS   | Number of steps to rollback [default: 1] |
-| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]   |
-| -p, --pretend       | Run migrations in "dry run" mode         |
+| Option              | Description                                   |
+|---------------------|-----------------------------------------------|
+| -s, --steps=STEPS   | Number of steps to rollback [default: 1]      |
+| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]        |
+| -p, --pretend       | Run migrations in "dry run" mode              |
+| -f, --force         | Force the operation to run when in production |
+| -d, --database      | The database connection to use                |
 
 ### migrate:reset
 
@@ -164,10 +169,13 @@ The `--sprinkle=` option can also be used to reset only migrations from a specif
 $ php bakery migrate:reset
 ```
 
-| Option              | Description                              |
-|---------------------|------------------------------------------|
-| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]   |
-| -p, --pretend       | Run migrations in "dry run" mode         |
+| Option              | Description                                                            |
+|---------------------|------------------------------------------------------------------------|
+| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]                                 |
+| -p, --pretend       | Run migrations in "dry run" mode                                       |
+| -f, --force         | Force the operation to run when in production                          |
+| -d, --database      | The database connection to use                                         |
+| --hard              | Hard reset the whole database to an empty state by dropping all tables |
 
 ### migrate:refresh
 
@@ -177,11 +185,24 @@ The `migrate:refresh` command will rollback the last migration operation and exe
 $ php bakery migrate:refresh
 ```
 
-| Option              | Description                              |
-|---------------------|------------------------------------------|
-| -s, --steps=STEPS   | Number of steps to rollback [default: 1] |
-| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]   |
-| -p, --pretend       | Run migrations in "dry run" mode         |
+| Option              | Description                                   |
+|---------------------|-----------------------------------------------|
+| -s, --steps=STEPS   | Number of steps to rollback [default: 1]      |
+| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]        |
+| -f, --force         | Force the operation to run when in production |
+| -d, --database      | The database connection to use                |
+
+### migrate:status
+
+The `migrate:status` command will show what migration have been run and which one can be run. It will also display if a ran migration is available, in other words if this migration class was found so it can be rolledback.
+
+```bash
+$ php bakery migrate:status
+```
+
+| Option              | Description                                   |
+|---------------------|-----------------------------------------------|
+| -d, --database      | The database connection to use                |
 
 ### clear-cache
 
@@ -195,7 +216,7 @@ $ php bakery clear-cache
 
 ### test
 
-The `test` command is used to execute [PHPUnit](https://phpunit.de/) tests. See the [Automated Testing](/advanced/automated-tests) section for more information.
+The `test` command is used to execute [PHPUnit](https://phpunit.de/) tests. See the [Automated Testing](/testing) section for more information.
 
 ```bash
 $ php bakery test

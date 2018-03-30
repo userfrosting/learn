@@ -1,5 +1,5 @@
 ---
-title: Automated Testing
+title: Why Use Automated Testing ?
 taxonomy:
     category: docs
 ---
