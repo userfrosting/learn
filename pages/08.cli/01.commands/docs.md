@@ -204,6 +204,24 @@ $ php bakery migrate:status
 |---------------------|-----------------------------------------------|
 | -d, --database      | The database connection to use                |
 
+### seed
+
+The `seed` command will run the `<classname>` seed classes. See [Chapter 12](/database/seeding) for more info on database seeds.
+
+```bash
+$ php bakery seed <classname>
+```
+
+Multiple seeds classes can be run at one by separating multiple seed classes with a space. For example, to run `Class1` and `Class2` :
+
+```bash
+$ php bakery seed Class1 Class2
+```
+
+| Option              | Description                                   |
+|---------------------|-----------------------------------------------|
+| -f, --force         | Force the operation to run when in production |
+
 ### clear-cache
 
 The `clear-cache` command takes care of deleting all the cached data. See [Chapter 16](/advanced/caching) for more information.
