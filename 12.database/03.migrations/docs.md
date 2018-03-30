@@ -137,33 +137,6 @@ The above example tells the bakery `migrate` command that the `UsersTable`, `Rol
 
 >>>>> Dependencies can also target previous versions of your own migrations. For example, you should check that your `member` table is created before adding a new column in a new migration.
 
-## Seeding
-
-Migrations can also seed data into the database. Seeding should be used when creating new rows, editing existing data or anything else not related to the table structure. Seeding is done in the `seed` method.
-
-You can also interact with the person who is running the migration by displaying information, confirming actions or asking questions to populate the database. One example is the `CreateAdminUser` migration in the `account` Sprinkle, which is used to set up the master user account. Since migrations are run using UserFrosting's **Bakery** cli tool, which itself uses [Symfony Console](http://symfony.com/doc/current/components/console.html) as a core component, you can invoke I/O methods on the `$this->io` variable. For example:
-
-```php
-public function seed()
-{
-    // Show title
-    $this->io->section("Foo creation");
-
-    // Get the Foo details
-    $foo_name = $this->io->ask("Enter Foo name", "Default name");
-
-    // Save the new Foo
-    $newFoo = new Foo([
-        "name" => $foo_name,
-    ]);
-    $newFoo->save();
-}        
-```
-
-The above `seed` method will display the `Foo creation` title before asking the user to enter the new `Foo` name and saving it to the database.
-
-For a complete list of available I/O methods, check out the [Symfony documentation](http://symfony.com/doc/current/console/style.html#helper-methods).
-
 ## Running your migration
 
 To run your migrations simply re-run the Bakery `migrate` from your command line, in UserFrosting's root directory:
