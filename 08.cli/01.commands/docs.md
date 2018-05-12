@@ -10,53 +10,109 @@ UserFrosting's CLI, or [*Command-line Interface*](https://en.wikipedia.org/wiki/
 
 ```bash
 $ php bakery list
-``` 
+```
 
 Every command also includes a "help" screen which displays and describes the command's available arguments and options. To view a help screen, simply precede the name of the command with help:
 
 ```bash
 $ php bakery help [command]
-``` 
+```
 
 General help can also be displayed by running:
 
 ```bash
 $ php bakery help
-``` 
+```
 
 ## Available commands
 
 ### bake
 
-Bake is the general installation command. It combines `setup`, `debug`, `migrate`, `create-admin` and `build-assets` into a single command: 
+Bake is the general installation command. It combines `setup`, `debug`, `migrate`, `create-admin` and `build-assets` into a single command:
 
 ```bash
 $ php bakery bake
-``` 
+```
 
 >>>>>> This command should be executed every time you run `composer update`, change assets, create a new sprinkle or install a [community sprinkle](/sprinkles/community).
 
 ### debug
 
-The `debug` command will run a series of tests to make sure everything is ready to run UserFrosting on your system. If you have trouble accessing your UserFrosting installation, you should run this command first to make sure basic requirements are met. 
+The `debug` command will run a series of tests to make sure everything is ready to run UserFrosting on your system. If you have trouble accessing your UserFrosting installation, you should run this command first to make sure basic requirements are met.
 
-The information displayed by this command can also be useful to other people when [asking for help](/troubleshooting/getting-help) and submitting new issues on Github. 
+The information displayed by this command can also be useful to other people when [asking for help](/troubleshooting/getting-help) and submitting new issues on Github.
 
 ```bash
 $ php bakery debug
-``` 
+```
+
+### setup:db
+
+The `setup:db` command can be used to setup the database configuration. This configuration will be saved in the `app/.env` file. This can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
+
+```bash
+$ php bakery setup:db
+```
+
+Options can also be used to defined each info individually in a non-interactive way :
+
+| Option      | Description                                             |
+|-------------|---------------------------------------------------------|
+| db_driver   | The database driver ["mysql","pgsql","sqlsrv","sqlite"] |
+| db_name     | The database name                                       |
+| db_host     | The database hostname                                   |
+| db_port     | The database port                                       |
+| db_user     | The database user                                       |
+| db_password | The database password                                   |
+
+Example usage :
+```bash
+php bakery setup:db --db_driver=mysql --db_name=userfrosting --db_port=3306 --db_host=localhost --db_user=userfrosting --db_password=secret
+```
+
+### setup:smtp
+
+The `setup:smtp` command can be used to setup the outgoing email configuration. Different setup method can be selected to guide you into configuring outgoing email support. This configuration will be saved in the `app/.env` file.
+
+As with the database setup, this can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
+
+```bash
+$ php bakery setup:smtp
+```
+Options can also be used to defined each info individually in a non-interactive way. When using one or more option, the "SMTP Server" method will automatically be selected.
+
+| Option        | Description              |
+|---------------|--------------------------|
+| smtp_host     | The SMTP server hostname |
+| smtp_user     | The SMTP server user     |
+| smtp_password | The SMTP server password |
+
+### setup:env
+
+The `setup:env` command can be used to select the desired [Environment Mode](/configuration/config-files#environment-modes). The default choices are `production` and `default`. A custom value can also be defined.
+
+As with the database and outgoing email setup, this can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
+
+```bash
+$ php bakery setup:env
+```
+
+| Option        | Description              |
+|---------------|--------------------------|
+| mode          | The environment to use   |
+
+Example usage :
+```bash
+php bakery setup:env --mode=production
+```
 
 ### setup
 
-The `setup` command can be used to setup the database and email configuration. This can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
+The `setup` command combines the `setup:db`, `setup:smtp` and `setup:env` commands.
 
 ```bash
-$ php bakery setup 
-``` 
-
-| Option      | Description                                    |  
-|-------------|------------------------------------------------|
-| -f, --force | If `.env` file exist, force setup to run again |
+$ php bakery setup
+```
 
 ### create-admin
 
@@ -70,8 +126,8 @@ See the [Asset Management](/asset-management) chapter for more information about
 
 ```bash
 $ php bakery build-assets
-``` 
-  
+```
+
 | Option        | Description                                                      |
 |---------------|------------------------------------------------------------------|
 | -c, --compile | Compile the assets and asset bundles for production environment  |
@@ -87,7 +143,7 @@ The `migrate` command runs all the pending [database migrations](/database/migra
 
 ```bash
 $ php bakery migrate
-``` 
+```
 
 | Option              | Description                              |
 |---------------------|------------------------------------------|
@@ -102,15 +158,15 @@ $ php bakery migrate --pretend -vvv
 
 ### migrate:rollback
 
-The `migrate:rollback` command allows you to cancel, or rollback, the last migration operation. For example, if something went wrong with the last migration operation or if you made a mistake in your migration definition, you can use that command to undo it. 
+The `migrate:rollback` command allows you to cancel, or rollback, the last migration operation. For example, if something went wrong with the last migration operation or if you made a mistake in your migration definition, you can use that command to undo it.
 
-Note that migrations are run in batches. For example, when running the `migrate` command, if 4 classes (or migration definitions) are executed, all 4 definitions will be reverted when rolling back the last migration operation. 
+Note that migrations are run in batches. For example, when running the `migrate` command, if 4 classes (or migration definitions) are executed, all 4 definitions will be reverted when rolling back the last migration operation.
 
-Options can also be used to rollback more than one migration at a time or to rollback migrations from a specific sprinkle. 
+Options can also be used to rollback more than one migration at a time or to rollback migrations from a specific sprinkle.
 
 ```bash
 $ php bakery migrate:rollback
-``` 
+```
 
 | Option              | Description                              |
 |---------------------|------------------------------------------|
@@ -122,12 +178,12 @@ $ php bakery migrate:rollback
 
 The `migrate:reset` command is the same as the _rollback_ command, but it will revert **every** migration. Without options, this is the same as wiping the database to a clean state. **_Use this command with caution!_**.
 
-The `--sprinkle=` option can also be used to reset only migrations from a specific sprinkle. 
+The `--sprinkle=` option can also be used to reset only migrations from a specific sprinkle.
 
 
 ```bash
 $ php bakery migrate:reset
-``` 
+```
 
 | Option              | Description                              |
 |---------------------|------------------------------------------|
@@ -140,7 +196,7 @@ The `migrate:refresh` command will rollback the last migration operation and exe
 
 ```bash
 $ php bakery migrate:refresh
-``` 
+```
 
 | Option              | Description                              |
 |---------------------|------------------------------------------|
@@ -154,7 +210,7 @@ The `clear-cache` command takes care of deleting all the cached data. See [Chapt
 
 ```bash
 $ php bakery clear-cache
-``` 
+```
 
 >>>>> You might need to run this command as administrator or using `sudo` to avoid file permission issues when using the `file` cache store.
 
