@@ -65,13 +65,14 @@ This will hit Vagrant's public catalog of preconfigured boxes and install the `l
 
 Homestead will automatically give us the following components that we need to run UserFrosting:
 
-- Ubuntu 16.04
+- Ubuntu 18.04
 - Git
-- PHP 7.1
+- PHP 7.x
 - Nginx (webserver)
 - MySQL/MariaDB (database)
 - Composer
 - Node and npm
+- Bower and Gulp
 
 Nice!  This means that we are saved the hassle of [setting these up natively in our operating system](/installation/requirements/essential-tools-for-php).
 
@@ -120,31 +121,31 @@ provider: virtualbox
 authorize: ~/.ssh/id_rsa.pub
 
 keys:
- - ~/.ssh/id_rsa
+    - ~/.ssh/id_rsa
 
 folders:
- - map: ~/Code
- to: /home/vagrant/Code
+    - map: ~/code
+      to: /home/vagrant/code
 
 sites:
- - map: homestead.test
- to: /home/vagrant/Code/Laravel/public
+    - map: homestead.test
+      to: /home/vagrant/code/public
 
 databases:
- - homestead
+    - homestead
 
 # blackfire:
-# - id: foo
-# token: bar
-# client-id: foo
-# client-token: bar
+#     - id: foo
+#       token: bar
+#       client-id: foo
+#       client-token: bar
 
 # ports:
-# - send: 50000
-# to: 5000
-# - send: 7777
-# to: 777
-# protocol: udp
+#     - send: 50000
+#       to: 5000
+#     - send: 7777
+#       to: 777
+#       protocol: udp
 ```
 
 The first section we'll focus on is the `authorize` and `keys` section.  This is the configuration for SSH which, for our purposes, is the means by which we will be able to "log in" to our virtual machine.
@@ -258,18 +259,25 @@ vagrant ssh
 If it connects successfully, you will see a welcome message for Ubuntu:
 
 ```bash
-Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-66-generic x86_64)
+Welcome to Ubuntu 18.04 LTS (GNU/Linux 4.15.0-20-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
  * Management:     https://landscape.canonical.com
  * Support:        https://ubuntu.com/advantage
 
-157 packages can be updated.
-58 updates are security updates.
+  System information as of Sun May 13 19:06:39 UTC 2018
 
+  System load:  0.0               Processes:           121
+  Usage of /:   8.2% of 61.80GB   Users logged in:     0
+  Memory usage: 19%               IP address for eth0: 10.0.2.15
+  Swap usage:   0%                IP address for eth1: 192.168.10.10
 
-Last login: Wed Jun 21 06:42:59 2017 from 10.0.2.2
-vagrant@homestead:~$
+ * Meltdown, Spectre and Ubuntu: What are the attack vectors,
+   how the fixes work, and everything else you need to know
+   - https://ubu.one/u2Know
+
+0 packages can be updated.
+0 updates are security updates.
 ```
 
 If you try the `ls` command, you should see the `userfrosting` directory that you had mapped in your `Homestead.yaml` file.  If you don't see this directory, double-check your `Homestead.yaml`, log out of the virtual machine (`exit`) and then reload the virtual machine (`vagrant reload --provision`).
