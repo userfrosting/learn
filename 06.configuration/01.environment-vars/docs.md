@@ -15,10 +15,10 @@ The basic database settings for UserFrosting can be set through environment vari
 If you don't want to (or can't) configure environment variables directly in your development environment, UserFrosting uses the fantastic [phpdotenv](https://github.com/vlucas/phpdotenv) library to let you set these variables in a `.env` file. When running the `bake` installer, this file will be created for you. To make any modifications, your can run the following **Bakery** command:
 
 ```bash
-$ php bakery setup --force
+$ php bakery setup
 ```
 
-The `force` option allows to overwrite any existing environment file. You can also edit the `.env` file manually. Simply copy the sample file in your `app/` directory:
+You can also edit the `.env` file manually. Simply copy the sample file in your `app/` directory:
 
 ```bash
 $ cp app/.env.example app/.env
