@@ -124,12 +124,12 @@ The `migrate` command runs all the pending [database migrations](/database/migra
 $ php bakery migrate
 ```
 
-| Option              | Description                                                    |
-|---------------------|----------------------------------------------------------------|
-| -p, --pretend       | Run migrations in "dry run" mode                               |
-| -f, --force         | Force the operation to run when in production                  |
-| -d, --database      | The database connection to use                                 |
-| -p, --step          | Migrations will be run so they can be rolled back individually |
+| Option                  | Description                                                    |
+|-------------------------|----------------------------------------------------------------|
+| -p, --pretend           | Run migrations in "dry run" mode                               |
+| -f, --force             | Force the operation to run when in production                  |
+| -d, --database=DATABASE | The database connection to use                                 |
+| -p, --step              | Migrations will be run so they can be rolled back individually |
 
 
 The `pretend` option can be used to test migrations. This will display the underlying SQL queries:
@@ -144,19 +144,19 @@ The `migrate:rollback` command allows you to cancel, or rollback, the last migra
 
 Note that migrations are run in batches. For example, when running the `migrate` command, if 4 classes (or migration definitions) are executed, all 4 definitions will be reverted when rolling back the last migration operation, unless you used the `step` option with the `migrate` command.
 
-Options can also be used to rollback more than one migration at a time or to rollback migrations from a specific sprinkle.
+Options can also be used to rollback more than one migration at a time or to rollback a specific migration.
 
 ```bash
 $ php bakery migrate:rollback
 ```
 
-| Option              | Description                                   |
-|---------------------|-----------------------------------------------|
-| -s, --steps=STEPS   | Number of steps to rollback [default: 1]      |
-| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]        |
-| -p, --pretend       | Run migrations in "dry run" mode              |
-| -f, --force         | Force the operation to run when in production |
-| -d, --database      | The database connection to use                |
+| Option                    | Description                                   |
+|---------------------------|-----------------------------------------------|
+| -s, --steps=STEPS         | Number of steps to rollback [default: 1]      |
+| -p, --pretend             | Run migrations in "dry run" mode              |
+| -f, --force               | Force the operation to run when in production |
+| -d, --database=DATABASE   | The database connection to use                |
+| -m, --migration=MIGRATION | The specific migration class to rollback      |
 
 ### migrate:reset
 
@@ -169,13 +169,12 @@ The `--sprinkle=` option can also be used to reset only migrations from a specif
 $ php bakery migrate:reset
 ```
 
-| Option              | Description                                                            |
-|---------------------|------------------------------------------------------------------------|
-| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]                                 |
-| -p, --pretend       | Run migrations in "dry run" mode                                       |
-| -f, --force         | Force the operation to run when in production                          |
-| -d, --database      | The database connection to use                                         |
-| --hard              | Hard reset the whole database to an empty state by dropping all tables |
+| Option                  | Description                                                            |
+|-------------------------|------------------------------------------------------------------------|
+| -p, --pretend           | Run migrations in "dry run" mode                                       |
+| -f, --force             | Force the operation to run when in production                          |
+| -d, --database=DATABASE | The database connection to use                                         |
+| --hard                  | Hard reset the whole database to an empty state by dropping all tables |
 
 ### migrate:refresh
 
@@ -185,12 +184,11 @@ The `migrate:refresh` command will rollback the last migration operation and exe
 $ php bakery migrate:refresh
 ```
 
-| Option              | Description                                   |
-|---------------------|-----------------------------------------------|
-| -s, --steps=STEPS   | Number of steps to rollback [default: 1]      |
-| --sprinkle=SPRINKLE | The sprinkle to rollback [default: ""]        |
-| -f, --force         | Force the operation to run when in production |
-| -d, --database      | The database connection to use                |
+| Option                  | Description                                   |
+|-------------------------|-----------------------------------------------|
+| -s, --steps=STEPS       | Number of steps to rollback [default: 1]      |
+| -f, --force             | Force the operation to run when in production |
+| -d, --database=DATABASE | The database connection to use                |
 
 ### migrate:status
 
@@ -200,9 +198,9 @@ The `migrate:status` command will show what migration have been run and which on
 $ php bakery migrate:status
 ```
 
-| Option              | Description                                   |
-|---------------------|-----------------------------------------------|
-| -d, --database      | The database connection to use                |
+| Option                  | Description                                   |
+|-------------------------|-----------------------------------------------|
+| -d, --database=DATABASE | The database connection to use                |
 
 ### seed
 
