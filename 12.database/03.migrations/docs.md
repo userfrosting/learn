@@ -49,7 +49,7 @@ While multiple operations _can_ be done in the same migration class, it is recom
 
 Each migration class needs to extend the base `UserFrosting\Sprinkle\Core\Database\Migration` class. A migration class must contains two methods: `up` and `down`. The `up` method is used to add new tables, columns, or indexes to your database, while the `down` method should simply reverse the operations performed by the `up` method.
 
-Within both of these methods you may use the [Laravel schema builder](https://laravel.com/docs/5.4/migrations) (avaialble in the `$this->schema` property) to expressively create and modify tables. To learn about all of the methods available on the Schema builder, [check out its documentation](https://laravel.com/docs/5.4/migrations#creating-tables).
+Within both of these methods you may use the [Laravel schema builder](https://laravel.com/docs/5.4/migrations) (available in the `$this->schema` property) to expressively create and modify tables. To learn about all of the methods available on the Schema builder, [check out Laravel documentation](https://laravel.com/docs/5.4/migrations#creating-tables).
 
 For a simple example, suppose that you want to create a `members` table, which will be used to add application-specific fields for our users:
 
@@ -105,7 +105,7 @@ As for the `down` method, it simply tells the database structure to delete the t
 
 ## Dependencies
 
-An important aspect of migrations is **data consistency**. Since migrations are like recipes used to create and populate a database, the order in which theses migrations are executed is very important. You don't want to drop those cupcakes in the oven before mixing the flour and eggs, the same way you don't want to insert data into a table before that table is created! UserFrosting uses **dependencies** to make sure migrations are run in the correct order.
+An important aspect of migrations is **data consistency**. Since migrations are like recipes used to create a database, the order in which theses migrations are executed is very important. You don't want to drop those cupcakes in the oven before mixing the flour and eggs, the same way you don't want to add a column to a table before said table is created! UserFrosting uses **dependencies** to make sure migrations are run in the correct order.
 
 Some situations require a more complex way to make sure migrations are run in the correct order. This is the case when a Sprinkle requires that a migration from another Sprinkle is executed before its own migration. It can also be the case when two tables inside the same Sprinkle are dependent on one another.
 
