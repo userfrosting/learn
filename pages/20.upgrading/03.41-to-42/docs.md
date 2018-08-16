@@ -12,7 +12,7 @@ UserFrosting 4.2 brings improved organization of the codebase, a new migrator an
 
 ## New features
 
-- Include Vagrant integration directly inside UF (#829)
+- Include [Vagrant and Homestead](/installation/environment/homestead) integration directly inside UF (#829)
 - Added `migrate:status` Bakery command
 - Added `RefreshDatabase` test Trait to use a fresh database for a test
 - Added `TestDatabase` test Trait to use the in memory database for a test

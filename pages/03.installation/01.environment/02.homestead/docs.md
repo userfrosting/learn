@@ -10,7 +10,7 @@ taxonomy:
 
 ## Why you need a development environment
 
-We get it - you just want to get UserFrosting up and running as quickly as possible.  Don't worry!  We'll get you there.
+We get it - you just want to get UserFrosting up and running as quickly as possible.  Don't worry!  We'll get you there.  Actually, using Vagrant and Homestead is the easiest and fastest way to get UserFrosting up and running !
 
 If you're uploading your code to a live site while you're still writing it, this section is for you. If you are already developing in a local environment, please skip this section.
 
@@ -49,9 +49,75 @@ Before we begin, it's important to understand that we will rely heavily on **com
 
 However, **if you are a Windows user**, you'll need to install `git` and get set up with a decent command-line program.  Fortunately, [Git for Windows](https://git-scm.com/downloads) takes care of both of these things for you.  Just install it, and you'll have `git` and the `Git Bash` command-line terminal available in your start menu.
 
-### Setting up Homestead
+### Get Started
 
-**Once you've installed VirtualBox and Vagrant**, we can use Vagrant to spin up a virtual machine with the Homestead configuration.
+Once you've installed VirtualBox and Vagrant, we can use UserFrosting built-in support for Vagrant to spin up a virtual machine with the Homestead configuration. **In a directory of your choice** (I have a generic `dev/` directory on my computer where I keep all of my projects), clone the UserFrosting repository into a new directory :
+
+```bash
+git clone https://github.com/userfrosting/UserFrosting.git userfrosting
+```
+
+Next, `cd` into your new UserFrosting dir and clone Homestead Git repository :
+
+```sh
+cd userfrosting
+git clone https://github.com/laravel/homestead.git vagrant/Homestead
+```
+
+Now simply run `vagrant up` from the root of your cloned fork of the UserFrosting Git repository :
+
+```sh
+vagrant up
+```
+
+When you vagrant up, the Laravel/Homestead box is transparently loaded as a Virtual Machine on your computer (this may take several minutes the very first time while it downloads the VM image to your computer). Your local UserFrosting repository clone is mirrored/shared with the VM, so you can work on the UserFrosting code on your computer, and see the changes immediately when you browse to UserFrosting at the URL provided by the VM.
+
+Once ready, you'll be able to access UserFrosting at `http://192.168.10.10/`. A default administrator account will also be preconfigured with the following credentials :
+
+* Username: **admin**
+* Password: **adminadmin12**
+
+If you prefer to access UserFrosting from the more friendly URL `http://userfrosting.test` then you must update your computer's hosts file. This file is typically located at `/etc/hosts` for Mac/Linux or `C:\Windows\System32\drivers\etc\hosts` for Windows. Open this file and add the following line to it, at the very bottom, and save.
+
+```
+192.168.10.10  userfrosting.test
+```
+
+### Additional commands
+
+To access your Linux server from the command line:
+
+```sh
+vagrant ssh
+```
+
+To p/ause your server:
+
+```sh
+vagrant suspend
+```
+
+To shut down your server:
+
+```sh
+vagrant halt
+```
+
+To delete and remove your server:
+
+```sh
+vagrant destroy
+```
+
+>>>> Destroying the vagrant server will remove all traces of the VM from your computer, reclaiming any disk space used by it. However, it also means the next time you vagrant up, you will be creating a brand new VM with a fresh install of UserFrosting and a new database.
+
+### Customizing the UserFrosting configuration
+
+By default, UserFrosting is pre-configured to install with a MySQL database. You can, however, switch to PostegreSQL or SQLite3 by editing the `install-config.yml` file in the vagrant directory. The next time you run `vagrant up` (or `vagrant provision`) it will be installed under the new configuration.
+
+## Setting up Homestead Manually
+
+Homestead can also be setup manually. This can be done to customize Homestead install or load multiple site inside the same virtual machine.
 
 #### Set up the virtual machine
 
