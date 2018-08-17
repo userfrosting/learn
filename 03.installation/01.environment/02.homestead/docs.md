@@ -43,6 +43,19 @@ The next thing we'll do is set up **Vagrant**.  Vagrant works in tandem with Vir
 
 If you think of VirtualBox as your kitchen, Vagrant is sort of like the cookbook that contains recipes for how to set up a useful development environment on your virtual machine.  The particular recipe that we'll be using is called **Homestead**, and it is has everything we need to easily set up the UserFrosting development environment.
 
+Homestead will automatically give us the following components that we need to run UserFrosting:
+
+- Ubuntu 18.04
+- Git
+- PHP 7.x
+- Nginx (webserver)
+- MySQL/MariaDB (database)
+- Composer
+- Node and npm
+- Bower and Gulp
+
+Nice!  This means that we are saved the hassle of [setting these up natively in our operating system](/installation/requirements/essential-tools-for-php).
+
 ### Command-line Life
 
 Before we begin, it's important to understand that we will rely heavily on **command-line operations** and **git**.  If you are natively running on a Linux distribution or MacOS, this is already handled for you with Terminal and a preinstalled copy of git.
@@ -72,224 +85,20 @@ vagrant up
 
 When you vagrant up, the Laravel/Homestead box is transparently loaded as a Virtual Machine on your computer (this may take several minutes the very first time while it downloads the VM image to your computer). Your local UserFrosting repository clone is mirrored/shared with the VM, so you can work on the UserFrosting code on your computer, and see the changes immediately when you browse to UserFrosting at the URL provided by the VM.
 
-Once ready, you'll be able to access UserFrosting at `http://192.168.10.10/`. A default administrator account will also be preconfigured with the following credentials :
+### Check our your first UserFrosting installation!
+
+Ok, that should be it!  If you head over to `http://192.168.10.10/` in your browser, you should see the front page of the default UserFrosting installation.
+
+A default administrator account will also be preconfigured with the following credentials :
 
 * Username: **admin**
 * Password: **adminadmin12**
 
-If you prefer to access UserFrosting from the more friendly URL `http://userfrosting.test` then you must update your computer's hosts file. This file is typically located at `/etc/hosts` for Mac/Linux or `C:\Windows\System32\drivers\etc\hosts` for Windows. Open this file and add the following line to it, at the very bottom, and save.
+## Next steps
 
-```
-192.168.10.10  userfrosting.test
-```
+### Editing your hosts file
 
-### Additional commands
-
-To access your Linux server from the command line:
-
-```sh
-vagrant ssh
-```
-
-To p/ause your server:
-
-```sh
-vagrant suspend
-```
-
-To shut down your server:
-
-```sh
-vagrant halt
-```
-
-To delete and remove your server:
-
-```sh
-vagrant destroy
-```
-
->>>> Destroying the vagrant server will remove all traces of the VM from your computer, reclaiming any disk space used by it. However, it also means the next time you vagrant up, you will be creating a brand new VM with a fresh install of UserFrosting and a new database.
-
-### Customizing the UserFrosting configuration
-
-By default, UserFrosting is pre-configured to install with a MySQL database. You can, however, switch to PostegreSQL or SQLite3 by editing the `install-config.yml` file in the vagrant directory. The next time you run `vagrant up` (or `vagrant provision`) it will be installed under the new configuration.
-
-## Setting up Homestead Manually
-
-Homestead can also be setup manually. This can be done to customize Homestead install or load multiple site inside the same virtual machine.
-
-#### Set up the virtual machine
-
-The first thing we need to do is **create a virtual machine**.  To do this, open up your command line program (Terminal, Git Bash, whatever).  In Windows, you may need use choose "Run as administrator".  At the command line, run:
-
-```bash
-vagrant box add laravel/homestead
-```
-
-This will hit Vagrant's public catalog of preconfigured boxes and install the `laravel/homestead` box.  You will be prompted to choose which virtual machine manager to use.  Choose the `virtualbox` option.
-
-Homestead will automatically give us the following components that we need to run UserFrosting:
-
-- Ubuntu 18.04
-- Git
-- PHP 7.x
-- Nginx (webserver)
-- MySQL/MariaDB (database)
-- Composer
-- Node and npm
-- Bower and Gulp
-
-Nice!  This means that we are saved the hassle of [setting these up natively in our operating system](/installation/requirements/essential-tools-for-php).
-
-#### Download and initialize Homestead
-
-**In a directory of your choice** (I have a generic `dev/` directory on my computer where I keep all of my projects), clone the Homestead _repository_ to a new subdirectory (we need both the box and the repository!):
-
-```bash
-git clone https://github.com/laravel/homestead.git homestead
-```
-
-While we're at it, we can also clone the UserFrosting repository into another directory:
-
-```bash
-git clone https://github.com/userfrosting/UserFrosting.git userfrosting
-```
-
-You should now have a directory structure that looks something like this:
-
-```bash
-Users/
-└── alexweissman/
-    └── dev/
-        ├── homestead/
-        └── userfrosting/
-```
-
-Let's now change into the `homestead/` directory and run the initialization script:
-
-```bash
-cd homestead
-bash init.sh
-```
-
-This will create a `Homestead.yaml` file in the `homestead/` directory.  Open up this file in your favorite text editor, because we will need to make some modifications.
-
-The default `Homestead.yaml` configuration file looks like this:
-
-```yaml
----
-ip: "192.168.10.10"
-memory: 2048
-cpus: 1
-provider: virtualbox
-
-authorize: ~/.ssh/id_rsa.pub
-
-keys:
-    - ~/.ssh/id_rsa
-
-folders:
-    - map: ~/code
-      to: /home/vagrant/code
-
-sites:
-    - map: homestead.test
-      to: /home/vagrant/code/public
-
-databases:
-    - homestead
-
-# blackfire:
-#     - id: foo
-#       token: bar
-#       client-id: foo
-#       client-token: bar
-
-# ports:
-#     - send: 50000
-#       to: 5000
-#     - send: 7777
-#       to: 777
-#       protocol: udp
-```
-
-The first section we'll focus on is the `authorize` and `keys` section.  This is the configuration for SSH which, for our purposes, is the means by which we will be able to "log in" to our virtual machine.
-
-#### Create an SSH keypair
-
-You can generate a new SSH keypair using the `ssh-keygen` tool.  Before doing this, make sure you have a `.ssh` directory in your user's home directory (e.g. `C:/Users/<username>` in Windows, or `/Users/<username>` in Mac/Linux).  If not, you can do `mkdir $HOME/.ssh`.
-
-Then, run the following command:
-
-```bash
-ssh-keygen -t rsa -f $HOME/.ssh/homestead_rsa
-```
-
-It will prompt you to create a passphrase.  Since this is all for a development environment, we don't need a passphrase - just hit Enter.  If it succeeds, you'll see something like:
-
-```bash
-Your identification has been saved in /Users/alexweissman/.ssh/homestead_rsa.
-Your public key has been saved in /Users/alexweissman/.ssh/homestead_rsa.pub.
-The key fingerprint is:
-cf:3e:b8:a0:6a:11:91:74:a7:20:09:fb:b2:79:89:41 alexweissman@willis
-The key's randomart image is:
-+--[ RSA 2048]----+
-|+oo.. .          |
-|.ooo o           |
-|.E ..            |
-|...              |
-|o ..    S        |
-| *..     o       |
-|+ o.  .  .o      |
-| ..  . ....      |
-| ....   ....     |
-+-----------------+
-```
-
-You should now have files `homestead_rsa` and `homestead_rsa.pub`.  Change the `authorize` and `keys` paths to point to these files:
-
-```yaml
-authorize: ~/.ssh/homestead_rsa.pub
-
-keys:
- - ~/.ssh/homestead_rsa
-```
-
-#### Customize `folders`, `sites`, and `database`
-
-Homestead lets us share directories between our native operating system and the virtual machine.  For this to work, we need to map each directory in our native operating system, to a corresponding directory on the virtual machine.  To do this, we use the `folders` setting in `Homestead.yaml`.  Replace the default `map` with the directory where you cloned UserFrosting on your host machine:
-
-```yaml
-folders:
-    - map: ~/dev/userfrosting            # This is the directory on your "real" computer; should point to the userfrosting repo directory we made earlier
-      to: /home/vagrant/userfrosting   # This is the corresponding directory in the virtual machine
-```
-
->>> For Windows users, you should use the use the full, absolute path including the drive letter in your `map` value.  For example, `C:/Users/alexweissman/dev/userfrosting`.
-
-If `folders` maps directories to directories, then `sites` maps URLs to our **document root** (similar to what VirtualHosts do in Apache).  In the case of UserFrosting, we want our document root on the virtual machine to be `/home/vagrant/userfrosting/public`.  We'll map this to a `userfrosting.test` URL, which we'll use to access our website in the browser.  Change the defaults to look like:
-
-```yaml
-sites:
-    - map: userfrosting.test
-      to: /home/vagrant/userfrosting/public
-```
-
-Now any time we visit `http://userfrosting.test` in our browser, it will run our website starting in `/home/vagrant/userfrosting/public`.
-
-Finally, we need to tell Homestead to create a database for us.  Change the `database` section to:
-
-```yaml
-databases:
-    - userfrosting
-```
-
-Homestead will automatically create a `userfrosting` database, along with a `homestead` database user account.  The password will be `secret`.
-
-#### Add `userfrosting.test` to your `hosts` file
-
-We need to tell our host operating system how to find the "server" (running in our virtual machine) that corresponds to `userfrosting.test`.  To do this, we need to edit the `hosts` file.  In Windows, this file is located at `C:\Windows\System32\drivers\etc\hosts`.  In MacOS, you can find it at `/private/etc/hosts`.  In either case, you will need to edit it **as an administrator**, or temporarily give yourself permissions to write to this file.
+If you prefer to access UserFrosting from the more friendly URL `http://userfrosting.test` then you must update your computer's hosts file. To do this, we need to edit the `hosts` file.  In Windows, this file is located at `C:\Windows\System32\drivers\etc\hosts`.  In MacOS, you can find it at `/private/etc/hosts`.  In either case, you will need to edit it **as an administrator**, or temporarily give yourself permissions to write to this file.
 
 Add the following lines at the bottom, save and exit:
 
@@ -298,23 +107,14 @@ Add the following lines at the bottom, save and exit:
 192.168.10.10  userfrosting.test
 ```
 
-Notice that we're mapping the IP address from our `Homestead.yaml` file to our desired domain.
+### Change your git remote
 
-### Running the virtual machine
+We highly recommend that you [change your git remote](/installation/environment/native#changing-git-remote) to make it easier to pull future updates to UserFrosting.
 
-Congratulations!  We're ready to start up our virtual machine and get to work.  First, from inside your `homestead/` directory, run:
 
-```bash
-vagrant up
-```
+### Connecting to the virtual machine
 
-This will take a little bit of time to provision the virtual machine.
-
-If you get an error like "did not find expected key while parsing a block mapping", this means that Vagrant could not properly parse your `Homestead.yaml` file.  To find syntax errors in YAML files, try pasting them into [YAML Lint](http://www.yamllint.com/).
-
->>>>>> Make sure that the directories you map in `Homestead.yaml` exist _before_ you run `vagrant up`.  Otherwise, you will need to reload your virtual machine using `vagrant reload --provision` so that Homestead has a chance to find your directories.
-
-Once it's done, you'll be able to log into your virtual machine:
+Once your virtual machine is up and running, you'll be able to log into it:
 
 ```bash
 vagrant ssh
@@ -346,84 +146,39 @@ Welcome to Ubuntu 18.04 LTS (GNU/Linux 4.15.0-20-generic x86_64)
 0 updates are security updates.
 ```
 
-If you try the `ls` command, you should see the `userfrosting` directory that you had mapped in your `Homestead.yaml` file.  If you don't see this directory, double-check your `Homestead.yaml`, log out of the virtual machine (`exit`) and then reload the virtual machine (`vagrant reload --provision`).
+If you try the `ls` command, you should see the `userfrosting` directory. To log out of the virtual machine, use the `exit` command.
 
-### Installing UserFrosting
+#### Additional Vagrant Commands
 
-Now that you've logged into the virtual machine and have all the mappings properly set up, you can finish installing UserFrosting.
+To pause your server:
 
-#### Composer dependencies
-
-This will install UserFrosting's dependencies:
-
-```bash
-cd userfrosting
-composer install
+```sh
+vagrant suspend
 ```
 
-This may take some time to complete. If Composer has completed successfully, you should see that a `vendor/` directory has been created under `app/`. This `vendor/` directory contains all of UserFrosting's PHP dependencies - there should be nearly 30 subdirectories in here!
+To shut down your server:
 
-If you only see `composer` and `wikimedia` subdirectories after running `composer install`, then you may need to delete the `composer.lock` file (`rm composer.lock`) and run `composer install` again.
-
-#### Assets and database setup
-
-We can use [Bakery](/cli) to set up our database, and download frontend dependencies.
-
-```bash
-$ php bakery bake
+```sh
+vagrant halt
 ```
 
-You will first be prompted for your database credentials.  Remember, our database information should be as follows:
+To delete and remove your server:
 
-- Type: `MySQL`
-- Host: `localhost`
-- Port: `3306`
-- Database name: `userfrosting`
-- Database user: `homestead`
-- Database password: `secret`
-
-If the database connection is successful, the installer will then ask for STMP server config. This config is used to connect to the outgoing mail server. You can use the default values here, but UserFrosting won't be able to send outgoing emails.
-
-Once the STMP config is defined, the installer will check that the basic dependencies are met. If so, the installer will run the _migrations_ to populate your database with new tables. After this process, you will be prompted for some information to set up the master account (first user). Finally, the installer will run the `build-assets` command to fetch javascript dependencies and build the [assets bundles](/asset-management/asset-bundles).
-
-#### Check our your first UserFrosting installation!
-
-Ok, that should be it!  If you head over to `http://userfrosting.test` in your browser, you should see the front page of the default UserFrosting installation.
-
-### Next steps
-
-#### Change your git remote
-
-We highly recommend that you [change your git remote](/installation/environment/native#changing-git-remote) to make it easier to pull future updates to UserFrosting.
-
-#### Install phpmyadmin
-
-You can install phpmyadmin on your virtual machine to make it easier to interact with the `userfrosting` database.  If you're SSH'ed into your virtual machine, do the following:
-
-```bash
-sudo apt-get install phpmyadmin
+```sh
+vagrant destroy
 ```
 
-Do **not** select apache2 nor lighttpd when prompted. Just hit tab and enter.  Choose the defaults for any prompts that appear.
+>>>> Destroying the vagrant server will remove all traces of the VM from your computer, reclaiming any disk space used by it. However, it also means the next time you vagrant up, you will be creating a brand new VM with a fresh install of UserFrosting and a new database.
 
-Next, create a symlink to the phpmyadmin installation:
+### Using PostegreSQL
 
-```bash
-sudo ln -s /usr/share/phpmyadmin/ /home/vagrant/phpmyadmin
-```
+By default, UserFrosting is pre-configured to install with a MySQL database. You can, however, switch to PostegreSQL or SQLite3 by editing the `install-config.yml` file in the vagrant directory. The next time you run `vagrant up` (or `vagrant provision`) it will be installed under the new configuration.
 
-`exit` from your virtual machine, and then add `phpmyadmin` to your `sites` in `Homestead.yaml`:
+### Access phpmyadmin
 
-```bash
-sites:
-    - map: userfrosting.test
-      to: /home/vagrant/userfrosting/public
+Your virtual machine provides phpmyadmin to make it easier to interact with the `UserFrosting` database.  
 
-    - map: phpmyadmin.test
-      to: /home/vagrant/phpmyadmin
-```
-
-Don't forget to add `phpmyadmin.test` to your `hosts` file as well:
+First, simply add `phpmyadmin.test` to your `hosts` file as well:
 
 ```
 # Vagrant projects
@@ -431,51 +186,18 @@ Don't forget to add `phpmyadmin.test` to your `hosts` file as well:
 192.168.10.10  phpmyadmin.test
 ```
 
-Finally, reload your virtual machine and log back in:
+You should be able to access phpmyadmin in your browser at `http://phpmyadmin.test`. You may see some errors the first time you sign in - these can be ignored.
 
-```bash
-vagrant reload --provision
-vagrant ssh
-```
+The default database information should be as follows:
 
-You should be able to access phpmyadmin in your browser at `http://phpmyadmin.test`.  Remember, your database credentials are `homestead`/`secret`.  You may see some errors the first time you sign in - these can be ignored.
+- Type: `MySQL`
+- Host: `localhost`
+- Port: `3306`
+- Database name: `UserFrosting`
+- Database user: `homestead`
+- Database password: `secret`
 
-#### Configure NFS if pages load slowly
-
-By default, the way that VirtualBox shares directories between your native operating system and the virtual machine can be very slow.  If you are experiencing slow page loads because of this, you can configure Homestead to use the `nfs` filesystem.
-
-First, log in to the virtual machine:
-
-```bash
-vagrant ssh
-```
-
-Then install the `nfs-common` package in your virtual machine:
-
-```bash
-sudo apt-get install nfs-common portmap
-```
-
-When this is done, `exit` from your virtual machine.
-
-In your `Homestead.yaml`, modify the `folders` mappings to use `nfs`:
-
-```yaml
-folders:
-    - map: ~/userfrosting
-      to: /home/vagrant/userfrosting
-      type: "nfs"
-```
-
-Reload the virtual machine:
-
-```bash
-vagrant reload --provision
-```
-
-If you get errors about a missing `vboxsf` filesystem, then it is possible that your host operating system does not have NFS natively available.  In this case, you may need to install special NFS server software for your operating system.
-
-#### Start developing!
+## Start developing!
 
 Head over to the chapter on [Sprinkles](/sprinkles) to get oriented and find your way around the UserFrosting codebase.  Come see us in [chat](https://chat.userfrosting.com) if you're having trouble.
 
