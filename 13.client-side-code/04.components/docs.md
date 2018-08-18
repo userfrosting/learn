@@ -47,7 +47,7 @@ See the section on [forms](/client-side-code/components/forms) for more informat
 
 ### ufModal
 
-Renders and displays modal windows that dynamically their fetch content from a specified URL.  Very useful for pop-up forms and dialog boxes.
+Renders and displays modal windows that dynamically fetch their content from a specified URL.  Very useful for pop-up forms and dialog boxes.
 
 ```js
 // Fetch and launch the modal
