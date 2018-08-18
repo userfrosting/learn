@@ -48,7 +48,7 @@ The basic markup for a collection widget consists of a table "skeleton" wrapped 
 
 You'll notice that the table skeleton contains an empty `tbody` element.  By default, when a new row is added (by the client or programmatically), `ufCollection` will insert the new row inside this `tbody`.
 
-The markup for the rows themselves is dynamically generated using a [Handlebars template](/client-side-code/client-side-templating).  The row template can be embedded inside your page's Twig template using the `{% verbatim %}` tag.  It might look something like:
+The markup for the rows themselves is dynamically generated using a [Handlebars template](/client-side-code/client-side-templating).  The row template can be embedded inside your page's Twig template using the Twig `verbatim` tag.  It might look something like:
 
 ```
 {% verbatim %}
