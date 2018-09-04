@@ -150,6 +150,21 @@ Defaults to `0`.
 ### submitSuccess.ufForm
 
 Triggered when the form has been submitted successfully.  This happens after the submission button has been re-enabled.
+Any response from the server in JSON format will be provided in the `data` parameter.
+For example, log the response from the server to console and close the modal:
+```
+$("body").on('renderSuccess.ufModal', function (data) {
+    var modal = $(this).ufModal('getModal');
+    var form = modal.find('.js-form');
+
+    form.ufForm()
+    .on("submitSuccess.ufForm", function(event, data, textStatus, jqXHR) {
+        console.log(data)
+        $("body").ufModal('destroy');
+        $('.modal-backdrop').remove();
+    });
+});
+```
 
 ### submitError.ufForm
 
