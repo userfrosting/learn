@@ -149,7 +149,19 @@ Defaults to `0`.
 
 ### submitSuccess.ufForm
 
-Triggered when the form has been submitted successfully.  This happens after the submission button has been re-enabled.
+Triggered when the form has been submitted successfully. This happens after the submission button has been re-enabled.
+
+Any response from the server will be provided in the `data` parameter as JSON. For example, to log the response from the server when the form has been submitted successfully :
+
+```
+$("#account-settings").ufForm({
+    validator: page.validators.account_settings,
+    msgTarget: $("#alerts-page")
+}).on("submitSuccess.ufForm", function(event, data, textStatus, jqXHR) {
+    // Log data to console
+    console.log(data)
+});
+```
 
 ### submitError.ufForm
 
