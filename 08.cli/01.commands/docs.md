@@ -46,33 +46,66 @@ The information displayed by this command can also be useful to other people whe
 $ php bakery debug
 ```
 
-### setup
+### setup:db
+
+The `setup:db` command can be used to setup the database configuration. This configuration will be saved in the `app/.env` file. This can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
+
+```bash
+$ php bakery setup:db
+```
+
+Options can also be used to defined each info individually in a non-interactive way :
 
 The `setup` command can be used to setup the database and SMTP server configuration. This can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
+
+Example usage :
+```bash
+php bakery setup:db --db_driver=mysql --db_name=userfrosting --db_port=3306 --db_host=localhost --db_user=userfrosting --db_password=secret
+```
+
+### setup:smtp
+
+The `setup:smtp` command can be used to setup the outgoing email configuration. Different setup method can be selected to guide you into configuring outgoing email support. This configuration will be saved in the `app/.env` file.
+
+As with the database setup, this can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
+
+```bash
+$ php bakery setup:smtp
+```
+Options can also be used to defined each info individually in a non-interactive way. When using one or more option, the "SMTP Server" method will automatically be selected.
+
+| Option        | Description              |
+|---------------|--------------------------|
+| smtp_host     | The SMTP server hostname |
+| smtp_user     | The SMTP server user     |
+| smtp_password | The SMTP server password |
+
+### setup:env
+
+The `setup:env` command can be used to select the desired [Environment Mode](/configuration/config-files#environment-modes). The default choices are `production` and `default`. A custom value can also be defined.
+
+As with the database and outgoing email setup, this can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
+
+```bash
+$ php bakery setup:env
+```
+
+| Option        | Description              |
+|---------------|--------------------------|
+| mode          | The environment to use   |
+
+Example usage :
+```bash
+php bakery setup:env --mode=production
+```
+
+### setup
+
+The `setup` command combines the `setup:db`, `setup:smtp` and `setup:env` commands.
 
 ```bash
 $ php bakery setup
 ```
-
-Options can also be used to create the environment file without interaction (See the table below for the list of available options). For example :
-
-```bash
-$ php bakery setup --db_driver=mysql --db_name=UserFrosting --db_host=localhost --db_port=3306 --db_user=homestead --db_password=secret --smtp_host=foo --smtp_user=bar --smtp_password=secret
-```
-
-| Option                          | Description                                             |  
-|---------------------------------|---------------------------------------------------------|
-| -f, --force                     | If `.env` file exist, force setup to run again          |
-| --db_driver[=DB_DRIVER]         | The database driver ["mysql","pgsql","sqlsrv","sqlite"] |
-| --db_name[=DB_NAME]             | The database name                                       |
-| --db_host[=DB_HOST]             | The database hostname                                   |
-| --db_port[=DB_PORT]             | The database port                                       |
-| --db_user[=DB_USER]             | The database user                                       |
-| --db_password[=DB_PASSWORD]     | The database password                                   |
-| --smtp_host[=SMTP_HOST]         | The SMTP server hostname                                |
-| --smtp_user[=SMTP_USER]         | The SMTP server user                                    |
-| --smtp_password[=SMTP_PASSWORD] | The SMTP server password                                |
-
 
 ### create-admin
 

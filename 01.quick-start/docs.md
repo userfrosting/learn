@@ -25,7 +25,7 @@ However, if you are not using Homestead, you will need to make sure your local U
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
 - [Composer](https://getcomposer.org/)
 - [Node.js](https://nodejs.org/en/) **4.0** or higher
-- npm **3.0** or higher 
+- npm **3.0** or higher
 
 ## Installing UserFrosting
 
@@ -45,11 +45,11 @@ Now run the final setup by calling the [Bakery CLI](/cli):
 
 ```bash
 $ php bakery bake
-``` 
+```
 
 This will run the installation process:
 
-- Setting up your database credential in `app/.env`
+- Setting up your database and SMTP credential in `app/.env`
 - Checking for missing dependencies
 - Running the database migration
 - Building the raw assets
