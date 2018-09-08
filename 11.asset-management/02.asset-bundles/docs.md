@@ -48,7 +48,7 @@ UserFrosting ships with a number of predefined bundles.  If you look the `core` 
     ...
 ```
 
-Under `bundle` you will notice the name of the bundle (`js/main`), and then a list of paths to bundle assets.
+Under `bundle` you will notice the name of the bundle (`js/main`), and then a list of paths to bundle assets.  Newbe warning: Naming your bundle "js/main" will replace the bundle from core with yours and in the process will probably break core user management functionality.  In general, be careful to provide your bundle with a unique "js/name" name otherwise your bundle overwrites an existing sprinkle bundle with potentially difficult to diagnose runtime errors.
 
 
 >>> Each path in a bundle is treated as if it were prefixed with the `assets://` stream wrapper.  Thus, the same rules apply for overriding a Sprinkle's assets when referenced in bundles, as when referencing unbundled assets.  When the appropriate reference tags for the assets are rendered, UserFrosting will look in the most recently loaded Sprinkle's `/assets` directory and search back through the stack until it finds a match.
