@@ -50,15 +50,16 @@ UserFrosting ships with a number of predefined bundles.  If you look the `core` 
 
 Under `bundle` you will notice the name of the bundle (`js/main`), and then a list of paths to bundle assets.
 
+Each path in a bundle is treated as if it were prefixed with the `assets://` stream wrapper.  Thus, the same rules apply for overriding a Sprinkle's assets when referenced in bundles, as when referencing unbundled assets. When the appropriate reference tags for the assets are rendered, UserFrosting will look in the most recently loaded Sprinkle's `/assets` directory and search back through the stack until it finds a match.
 
->>> Each path in a bundle is treated as if it were prefixed with the `assets://` stream wrapper.  Thus, the same rules apply for overriding a Sprinkle's assets when referenced in bundles, as when referencing unbundled assets.  When the appropriate reference tags for the assets are rendered, UserFrosting will look in the most recently loaded Sprinkle's `/assets` directory and search back through the stack until it finds a match.
+Sprinkle's overriding properties also applies to the bundle themselves. In other words, naming a bundle `js/main` in your own sprinkle will replace the one defined in the `core` sprinkle with yours, for example. In the process, it will probably break core user management functionality. In general, be careful to provide your bundle with a unique name to avoid difficult to diagnose runtime errors. Alternatively, you can also [extend an existing bundle](#extending-and-overriding-bundles) to add or replace defined paths.
 
 ### Javascript bundles
 
 By convention, Javascript bundles should be named with the `js/` prefix.  The assets for a Javascript bundle must be defined under the `scripts` key in your bundle.
 
 ### CSS bundles
- 
+
 By convention, CSS bundles should be named with the `css/` prefix.  The assets for a CSS bundle must be defined under the `styles` key in your bundle.
 
 >>>> Generally speaking, it is a good idea to define your Javascript and CSS resources in separate bundles.  The `options` key in both types of bundles is required, and it tells [gulp-bundle-assets](https://github.com/dowjones/gulp-bundle-assets) how to construct the schema file for linking to [compiled assets](/asset-management/compiled-assets).
