@@ -48,10 +48,10 @@ The basic markup for a collection widget consists of a table "skeleton" wrapped 
 
 You'll notice that the table skeleton contains an empty `tbody` element.  By default, when a new row is added (by the client or programmatically), `ufCollection` will insert the new row inside this `tbody`.
 
-The markup for the rows themselves is dynamically generated using a [Handlebars template](/client-side-code/client-side-templating).  The row template can be embedded inside your page's Twig template using the Twig `verbatim` tag.  It might look something like:
+The markup for the rows themselves is dynamically generated using a [Handlebars template](/client-side-code/client-side-templating).  The row template can be embedded inside your page's Twig template using the Twig `{{ '{% verbatim %}' }}` tag.  It might look something like:
 
 ```
-{% verbatim %}
+{{ '{% verbatim %}' }}
 <script id="member-phones-row" type="text/x-handlebars-template">
     <tr class="uf-collection-row">
         <td>
@@ -69,7 +69,7 @@ The markup for the rows themselves is dynamically generated using a [Handlebars 
         </td>
     </tr>
 </script>
-{% endverbatim %}
+{{ '{% endverbatim %}' }}
 ```
 
 Some important features of the row template:
@@ -357,7 +357,7 @@ $('#member-owls').ufCollection({
 Our row template looks similar to that for one-to-many, except we name our hidden `id` input with the foreign key for the relationship.  For example, we use `species_id` to refer to the `id` of the selected species for that row:
 
 ```
-{% verbatim %}
+{{ '{% verbatim %}' }}
 <script id="member-owls-row" type="text/x-handlebars-template">
     <tr class="uf-collection-row">
         <td>
@@ -366,14 +366,14 @@ Our row template looks similar to that for one-to-many, except we name our hidde
         </td>
         <td>
             <input type="text" name="owls[{{ rownum }}][name]" value="{{name}}">
-            
+
         </td>
         <td>
             <button type="button" class="btn btn-link btn-trash js-delete-row pull-right" title="Delete"> <i class="fa fa-trash"></i> </button>
         </td>
     </tr>
 </script>
-{% endverbatim %}
+{{ '{% endverbatim %}' }}
 ```
 
 The additional options we need to set for many-to-many are:
@@ -385,7 +385,7 @@ The `dropdownTemplate` parameter should contain a valid Handlebars template that
 As with the row template, we can define our dropdown template in our page's main Twig template:
 
 ```
-{% verbatim %}
+{{ '{% verbatim %}' }}
 <script id="member-owls-select-option" type="text/x-handlebars-template">
     <div>
         <strong>
@@ -395,7 +395,7 @@ As with the row template, we can define our dropdown template in our page's main
         {{description}}
     </div>
 </script>
-{% endverbatim %}
+{{ '{% endverbatim %}' }}
 ```
 
 As with the `rowTemplate` option, we can retrieve reference this template using a jQuery selector and the `.html()` method.
@@ -541,7 +541,7 @@ This pattern is especially useful when you want to provide an "update" feature f
 ```json
 {
     // Maybe some other member information here
-    
+
     ...
 
     "phones": [
@@ -642,7 +642,7 @@ _An object containing options to pass to the `select2` initialization._  Unfortu
     - `dataType`: The type of data returned by the AJAX request.  Defaults to `json`.
     - `delay`: Delay, in milliseconds, before resending the AJAX request when refreshing the select2 options during search.  Defaults to `250`.
     - `data`: The callback that `select2` uses to parse the current search query (`params.term`) before submitting the AJAX request.  Defaults to:
-    
+
     ```
     function (params) {
         return {
@@ -652,11 +652,11 @@ _An object containing options to pass to the `select2` initialization._  Unfortu
         };
     }
     ```
-    
+
     With the default callback, the resulting AJAX query URL will look something like `http://example.com/api/member/12/phones?filters[info]=something`, which is the standard format expected by data Sprunjers.
-    
+
     - `processResults`: The callback used to parse the data received in the response from the AJAX request.  Defaults to:
-    
+
     ```
     function (data, params) {
         var suggestions = [];
@@ -675,7 +675,7 @@ _An object containing options to pass to the `select2` initialization._  Unfortu
     Notice that this callback must always return a JSON object with a `results` key.
 
 - `placeholder`: The placeholder to display in the dropdown before a selection is made.  Note that you need to have an empty `<option>` element in your `select` control for this to work.  You may alternatively use the `data-placeholder` attribute on the `select` control itself.  Defaults to "Item".
-- `selectOnClose`: Make a selection when the dropdown is closed for any reason (for example, even if the user clicks out of the box).  Useful if your users are dumb and don't understand how select controls work.  Defaults to `false`. 
+- `selectOnClose`: Make a selection when the dropdown is closed for any reason (for example, even if the user clicks out of the box).  Useful if your users are dumb and don't understand how select controls work.  Defaults to `false`.
 - `theme`: A select2 [theme](http://select2.github.io/examples.html#themes-templating-responsive-design) to apply to the dropdown.  Defaults to "default".
 - `width`: The width of the dropdown control relative to the parent element.  Defaults to "100%".
 
