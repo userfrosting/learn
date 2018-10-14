@@ -294,3 +294,14 @@ $ php bakery test
 ```
 
 >>>> UserFrosting's built-in integration tests use a temporary in-memory SQLite database.  For testing to run successfully, you must have the `php-sqlite3` package installed and enabled.  Alternatively, you can create a separate testing database and override the `test_integration` database settings in the `testing.php` [environment mode](/configuration/config-files).
+
+
+### route:list
+
+Display the list of all registered [routes](/routes-and-controllers/front-controller).
+
+```bash
+$ php bakery route:list
+```
+
+>>> This command was introduced in version 4.1.20
