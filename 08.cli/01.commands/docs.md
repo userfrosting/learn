@@ -304,4 +304,33 @@ Display the list of all registered [routes](/routes-and-controllers/front-contro
 $ php bakery route:list
 ```
 
->>> This command was introduced in version 4.1.20
+| Option              | Description                                                        |
+|---------------------|--------------------------------------------------------------------|
+| --method=METHOD     | Filter the routes by method                                        |
+| --name=NAME         | Filter the routes by name                                          |
+| --uri=URI           | Filter the routes by uri                                           |
+| --reverse, -r       | Reverse the ordering of the routes                                 |
+| --sort=SORT         | The column (method, uri, name, action) to sort by [default: "uri"] |
+
+Example result:
+
+```bash
+$ php bakery route:list --uri=/account/ --method=POST --sort=action
+```
+
+```txt
+Registered Routes
+=================
+
+ -------- ------------------------------ ---------- -------------------------------------------------------------------------------
+  Method   URI                            Name       Action                                                                         
+ -------- ------------------------------ ---------- -------------------------------------------------------------------------------
+  POST     /account/forgot-password                  UserFrosting\Sprinkle\Account\Controller\AccountController:forgotPassword      
+  POST     /account/login                            UserFrosting\Sprinkle\Account\Controller\AccountController:login               
+  POST     /account/settings/profile                 UserFrosting\Sprinkle\Account\Controller\AccountController:profile             
+  POST     /account/register                         UserFrosting\Sprinkle\Account\Controller\AccountController:register            
+  POST     /account/resend-verification              UserFrosting\Sprinkle\Account\Controller\AccountController:resendVerification  
+  POST     /account/set-password                     UserFrosting\Sprinkle\Account\Controller\AccountController:setPassword         
+  POST     /account/settings              settings   UserFrosting\Sprinkle\Account\Controller\AccountController:settings            
+ -------- ------------------------------ ---------- -------------------------------------------------------------------------------
+```
