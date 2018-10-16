@@ -79,3 +79,5 @@ If you need to host your own email accounts for users to receive mail (e.g., `da
 If you choose to run your own mail server, we highly recommend [Mail-in-a-box](https://mailinabox.email/).  MIAB is a prebuilt distribution, which contains all the software and configuration scripts you need to set up a dedicated mail server.  You will need a VPS **separate from your web server and with at least 1GB of memory** to run this on, which at DigitalOcean will cost you about [$10 per month](https://www.digitalocean.com/pricing/#droplet).
 
 Mail-in-a-box will not only set up an SMTP server, but IMAP/POP as well so that you can receive mail for user accounts on a domain associated with your server.  It even runs its own web server, to provide a web-based client for these email accounts.
+
+If you are allready running userfrosting in a docker container you might also use [Mailcow-dockerized](https://mailcow.email) as it doesn't require a seperate server.
