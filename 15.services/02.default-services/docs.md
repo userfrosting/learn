@@ -64,6 +64,10 @@ Monolog `Logger` object for sending non-fatal error information from custom erro
 
 Provide access to factories for the rapid creation of [test](/advanced/automated-tests) objects.
 
+#### filesystem
+
+Provide access to the filesystem for file handling. Include support for multiple cloud based storage solution. See [File Storage](/advanced/storage) for more information.
+
 #### localePathBuilder
 
 A `UserFrosting\I18n\LocalePathBuilder` instance that constructs an ordered list of files containing [translations](/advanced/i18n).  These files are used to initialize the `MessageTranslator` object available in the `translator` service.
