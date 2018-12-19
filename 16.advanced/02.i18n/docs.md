@@ -37,7 +37,7 @@ return array(
 );
 ```
 
->>>>> Locale files are grouped into folders named after the locale code, as pictured above. This means `locale/en_US/` can contain multiple locale files allowing you to split your translation keys accross multiple files for easier maintenance.
+>>>>> Locale files are grouped into folders named after the locale code, as pictured above. This means `locale/en_US/` can contain multiple locale files allowing you to split your translation keys across multiple files for easier maintenance.
 
 Messages may optionally have placeholders. The placeholders allows you to insert variables in a message, avoiding the need for a unique message for every possible solution. For example:
 
