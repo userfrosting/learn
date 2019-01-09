@@ -12,7 +12,7 @@ taxonomy:
 ## Install prerequisites
 
 ```bash
-// install apache httpd, git composer 
+// install apache httpd, git composer
 yum update
 yum -y install httpd git composer
 ```
@@ -38,10 +38,10 @@ yum -y install php56u php56u-opcache php56u-pdo php56u-pgsql php56u-xml php56u-m
 Getting Node.js is fun on CentOS. Do not run `yum install nodejs` as npm will not work properly and you will have to remove it. (If you've already done it use `yum remove node npm`).
 
 ```bash
-curl -sL https://rpm.nodesource.com/setup_7.x | bash -
+curl -sL https://rpm.nodesource.com/setup_11.x | bash -
 yum install -y nodejs
 ```
-Check that the installed version of Node.js is > 4.0:
+Check that the installed version of Node.js is > 10.12.0:
 
 ```bash
 npm --v
