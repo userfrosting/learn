@@ -19,13 +19,13 @@ UserFrosting has a few system requirements. Of course, all of these requirements
 However, if you are not using Homestead, you will need to make sure your local UserFrosting development environment meets the following requirements:
 
 - Web server software (Apache, Nginx, IIS, etc)
-- PHP **5.6** or higher
+- PHP **5.6** or higher (**7.2** recommended)
 - PDO PHP Extension
 - GD PHP Extension
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
 - [Composer](https://getcomposer.org/)
-- [Node.js](https://nodejs.org/en/) **4.0** or higher
-- npm **3.0** or higher
+- [Node.js](https://nodejs.org/en/) **10.12.0** or higher
+- npm **6.0** or higher
 
 ## Installing UserFrosting
 

@@ -15,7 +15,7 @@ If you already have a local environment and you're familiar with tools like **co
 If your local development environment doesn't already have the [required stack and tools](/installation/requirements), please set these up.  You'll need the following:
 
 - Web server software (Apache, Nginx, IIS, etc)
-- **PHP 5.6** or higher
+- **PHP 5.6** or higher (**PHP 7.2** recommended)
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
 
 One very simple solution is to install a complete web server stack.  Some of the more popular packages include:
@@ -44,7 +44,7 @@ Use git to clone the userfrosting repo into a new folder.  (If you're already us
 $ git clone https://github.com/userfrosting/UserFrosting.git userfrosting
 ```
 
->>>>>> Note the `userfrosting` at the end of the command. This means `git` will create new `userfrosting` subdirectory inside the current location. You can change `userfrosting` to whatever you like. 
+>>>>>> Note the `userfrosting` at the end of the command. This means `git` will create new `userfrosting` subdirectory inside the current location. You can change `userfrosting` to whatever you like.
 
 ### Set directory permissions
 
@@ -103,9 +103,9 @@ This may take some time to complete. If Composer has completed successfully, you
 
 If you only see `composer` and `wikimedia` subdirectories after running `composer install`, then you may need to delete the `composer.lock` file and run `composer install` again.
 
-## Run the installer 
+## Run the installer
 
-You're almost done! We now have the base code and the php dependencies. The remaining steps are to set up the **database**, create the first **user** and install the third-party **assets**. Luckily, at this point, **Bakery** is here to help! 
+You're almost done! We now have the base code and the php dependencies. The remaining steps are to set up the **database**, create the first **user** and install the third-party **assets**. Luckily, at this point, **Bakery** is here to help!
 
 ### Set up the database
 
@@ -123,7 +123,7 @@ This step will finish the installation and create your first UserFrosting accoun
 $ php bakery bake
 ```
 
-You will first be prompted for your database credentials. This is the information PHP needs to connect to your database. If PHP can't connect to your database using these credentials, make sure you have entered the right information and re-run the `bake` command. 
+You will first be prompted for your database credentials. This is the information PHP needs to connect to your database. If PHP can't connect to your database using these credentials, make sure you have entered the right information and re-run the `bake` command.
 
 Bakery will also prompt you for SMTP credentials, so that UserFrosting can send emails for activating new accounts and setting and resetting passwords.  If you are not ready to set up email at this time, you can press enter to skip through SMTP configuration.  Please note that in production, you _will_ need to have a working SMTP service.  If you do not already have a mail provider, please see our section on [mail providers](/mail/mail-providers) for our recommendations including both free and paid third-party mail services.
 

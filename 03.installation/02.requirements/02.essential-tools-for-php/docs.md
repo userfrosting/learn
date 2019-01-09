@@ -61,13 +61,13 @@ Composer has a special installer that you can use for Windows - [Composer-Setup.
 
 Finally, you will need to install **Node.js**,  Javascript runtime.  Although UserFrosting does not _run_ on Node.js, it does use several Node-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
 
-The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems.  We recommend using the latest version of Node.js (7.x at the time of this writing), however any version later than 4.x will suffice.
+The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems.  We recommend using the latest version of Node.js (11.x at the time of this writing), however any version later than 10.12.x will suffice.
 
 To check if Node.js is installed:
 
 ```bash
 $ node -v
-v7.4.0
+v11.6.0
 ```
 
 >>> Even though we'll be using these tools to get our application ready for deployment, you don't actually need to install Node.js on your live server.  You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.

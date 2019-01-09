@@ -32,7 +32,7 @@ Homestead will automatically give us the following components that we need to ru
 
 - Ubuntu 18.04
 - Git
-- PHP 7.1.x
+- PHP 7.2.x
 - Nginx (webserver)
 - MySQL/MariaDB (database)
 - Composer
