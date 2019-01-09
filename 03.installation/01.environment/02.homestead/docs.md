@@ -74,7 +74,7 @@ Next, `cd` into your new UserFrosting dir and clone Homestead Git repository :
 
 ```sh
 cd userfrosting
-git clone https://github.com/laravel/homestead.git vagrant/Homestead
+git clone -b v7.20.0 https://github.com/laravel/homestead.git vagrant/Homestead
 ```
 
 Now simply run `vagrant up` from the root of your cloned fork of the UserFrosting Git repository :
