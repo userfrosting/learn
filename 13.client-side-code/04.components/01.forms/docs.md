@@ -159,7 +159,7 @@ $("#account-settings").ufForm({
     msgTarget: $("#alerts-page")
 }).on("submitSuccess.ufForm", function(event, data, textStatus, jqXHR) {
     // Log data to console
-    console.log(data)
+    console.log(data);
 });
 ```
 
