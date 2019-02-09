@@ -80,4 +80,4 @@ If you choose to run your own mail server, we highly recommend [Mail-in-a-box](h
 
 Mail-in-a-box will not only set up an SMTP server, but IMAP/POP as well so that you can receive mail for user accounts on a domain associated with your server.  It even runs its own web server, to provide a web-based client for these email accounts.
 
-If you are allready running userfrosting in a docker container you might also use [Mailcow-dockerized](https://mailcow.email) as it doesn't require a seperate server.
+If you are already running UserFrosting in a Docker container you might also use [Mailcow-dockerized](https://mailcow.email), as it doesn't require a seperate server.
