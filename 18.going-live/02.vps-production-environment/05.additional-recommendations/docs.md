@@ -95,6 +95,22 @@ Again, replace `<version>` with the version of your new build.  Restart nginx:
 sudo service nginx restart
 ```
 
+### Prevent Ubuntu from automatically "upgrading" your nginx build
+
+It's likely that Ubuntu will have [automatic, unattended upgrades](https://help.ubuntu.com/community/AutomaticSecurityUpdates#Using_the_.22unattended-upgrades.22_package) enabled by default. This is fine for many packages, but can be disastrous for your custom nginx build. This feature can overwrite your build, **causing nginx to fatally terminate** with an `Unknown directive "pagespeed"` error the next time it is restarted!
+
+To prevent this, you can blacklist nginx from Ubuntu's unattended upgrades.
+
+In the file `/etc/apt/apt.conf.d/50unattended-upgrades`, find the block that begins with `Unattended-Upgrade::Package-Blacklist {`.
+
+Add the following lines in this block:
+```
+// Do not update nginx, since we use a custom build for pagespeed
+"nginx";
+```
+
+This should prevent Ubuntu from replacing your custom nginx build.
+
 ### Configure `server` blocks to use Pagespeed
 
 Now that you have Pagespeed compiled into nginx, you can uncomment the Pagespeed configuration settings (note that we have already added these commented-out in your configuration file) in the `server` block for each of your sites' configuration files (in `/etc/nginx/sites-available`):
