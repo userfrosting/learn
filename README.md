@@ -47,9 +47,9 @@ bin/grav install
 
 #### Step 2
 
-Grav needs your webserver to be able to write to certain directories.  In OSX with XAMPP installed, this won't work by default.  To deal with this:
+Grav needs your webserver to be able to write to certain directories.  In MacOS with XAMPP installed, this won't work by default.  To deal with this:
 
-Add default webserver user `daemon` to OSX's `staff` group (which already has the necessary permissions for writing to files/directories):
+Add default webserver user `daemon` to MacOS's `staff` group (which already has the necessary permissions for writing to files/directories):
 
 ```bash
 sudo dseditgroup -o edit -a daemon -t user staff
@@ -77,7 +77,7 @@ git clone https://github.com/userfrosting/learn.git userfrosting-learn
 
 ### Step 2
 
-Then we start the image, with the appropraite configuration.
+Then we start the image, with the appropriate configuration.
 
 ```bash
 docker pull ahumaro/grav-php-nginx
@@ -99,4 +99,3 @@ NOTE: Grav uses `rename` when moving plugins to their final destination, which m
 ## Credits
 
 Favicons were generated with https://realfavicongenerator.net/
-
