@@ -211,23 +211,10 @@ class CustomPermissions extends Migration
         '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable'
     ];
 
-    public function seed()
+    public function up()
     {
         // Add default permissions
-        $permissions = [
-            'uri_members' => new Permission([
-                'slug' => 'uri_members',
-                'name' => 'Member management page',
-                'conditions' => 'always()',
-                'description' => 'View a page containing a list of members.'
-            ]),
-            'uri_owls' => new Permission([
-                'slug' => 'uri_owls',
-                'name' => 'View owls',
-                'conditions' => 'always()',
-                'description' => 'View a full list of owls in the system.'
-            ])
-        ];
+        $permissions = $this->getPermissions();
 
         foreach ($permissions as $id => $permission) {
             $slug = $permission->slug;
@@ -246,6 +233,32 @@ class CustomPermissions extends Migration
                 $permissions['uri_owls']->id
             ]);
         }
+    }
+
+    public function down()
+    {
+        foreach ($this->getPermissions() as $id => $permissionData) {
+            $permission = Permission::where($permissionData)->first();
+            $permission->delete();
+        }
+    }
+
+    protected function getPermissions()
+    {
+        return [
+            'uri_members' => new Permission([
+                'slug' => 'uri_members',
+                'name' => 'Member management page',
+                'conditions' => 'always()',
+                'description' => 'View a page containing a list of members.'
+            ]),
+            'uri_owls' => new Permission([
+                'slug' => 'uri_owls',
+                'name' => 'View owls',
+                'conditions' => 'always()',
+                'description' => 'View a full list of owls in the system.'
+            ])
+        ];
     }
 }
 ```
