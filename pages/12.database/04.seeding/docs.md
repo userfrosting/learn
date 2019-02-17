@@ -168,6 +168,18 @@ public function run()
 }
 ```
 
+This can also be used using the `validateMigrationDependencies` helper method. This method accept a single string or an array of strings :
+
+```php
+public function run()
+{
+    // The migration we require
+    $this->validateMigrationDependencies('\UserFrosting\Sprinkle\Account\Database\Migrations\v400\GroupsTable');
+
+    // Execute group seed...
+}
+```
+
 ### Master seeds
 
 A master seed can be used instead of running multiple seed at once. Any seed can execute other seeds :
