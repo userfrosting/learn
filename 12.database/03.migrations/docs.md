@@ -122,7 +122,7 @@ use UserFrosting\Sprinkle\Core\Database\Migration;
 
 class MembersTable extends Migration
 {
-    static public $dependencies = [
+    public static $dependencies = [
         '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\UsersTable',
         '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable',
         '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RoleUsersTable'

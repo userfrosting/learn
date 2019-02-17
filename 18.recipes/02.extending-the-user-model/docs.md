@@ -39,7 +39,7 @@ use Illuminate\Database\Schema\Builder;
 
 class MembersTable extends Migration
 {
-    public $dependencies = [
+    public static $dependencies = [
         '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\UsersTable'
     ];
 
@@ -282,7 +282,7 @@ class MemberAuxScope implements Scope
 }
 ```
 
-This class only has one method, `apply`, which takes the base query builder object (`$builder`) for the model and applies additional fluent constraints. In our case, we'll use `leftJoin` to join the `members` table, as well as `addSelect` to specify the additional columns that we want to retrieve from `members`.  Notice that we now need to explicitly tell the query builder to retrieve all columns from `users`. Otherwise, `addSelect` will actually end up telling Laravel to replace its default `select *` query, and we'd get _only_ the `city` and `country` columns. 
+This class only has one method, `apply`, which takes the base query builder object (`$builder`) for the model and applies additional fluent constraints. In our case, we'll use `leftJoin` to join the `members` table, as well as `addSelect` to specify the additional columns that we want to retrieve from `members`.  Notice that we now need to explicitly tell the query builder to retrieve all columns from `users`. Otherwise, `addSelect` will actually end up telling Laravel to replace its default `select *` query, and we'd get _only_ the `city` and `country` columns.
 
 ### Map the `Member` model
 
@@ -328,7 +328,7 @@ $user = $classMapper->staticMethod('user', 'where', 'email', 'admin@example.com'
 $city = $user->city;
 ```
 
-The class mapper will call the method or property on the `Member` class instead. 
+The class mapper will call the method or property on the `Member` class instead.
 
 >>>>> You might want your _own_ references to be overrideable by other Sprinkles that might be loaded later on.  In this case, you should use the class mapper in your own controllers as well.
 

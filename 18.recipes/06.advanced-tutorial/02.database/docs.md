@@ -110,7 +110,7 @@ class DefaultPastries extends Migration
     /**
      * {@inheritDoc}
      */
-    public $dependencies = [
+    public static $dependencies = [
         '\UserFrosting\Sprinkle\Pastries\Database\Migrations\v100\PastriesTable'
     ];
 
@@ -189,7 +189,7 @@ use UserFrosting\Sprinkle\Core\Facades\Debug;
 
 ...and pass the `$pastries` variable to the debugger (right under the `$pastries = ...` line) :
 
-```php 
+```php
 Debug::debug($pastries);
 ```
 
@@ -250,7 +250,7 @@ class PastriesController extends SimpleController
     public function pageList(Request $request, Response $response, $args)
     {
         $pastries = Pastry::all();
-        
+
         //Debug::debug($pastries);
 
         return $this->ci->view->render($response, 'pages/pastries.html.twig', [
