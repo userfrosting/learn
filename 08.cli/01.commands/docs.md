@@ -354,6 +354,29 @@ The `setup` command combines the `setup:db`, `setup:smtp` and `setup:env` comman
 $ php bakery setup
 ```
 
+### sprinkle:list
+
+Display the list of all loaded sprinkles. It will also display the base namespace classes from the sprinkle is expected to have, as weel as the expected path.
+
+```bash
+$ php bakery sprinkle:list
+```
+
+Example result:
+
+```txt
+Loaded Sprinkles
+================
+
+ ---------- -------------------------------- ------------------------------------------
+  Sprinkle   Calculated Namespace             Calculated Path                                
+ ---------- -------------------------------- ------------------------------------------
+  core       UserFrosting\Sprinkle\Core       /home/UserFrosting/app/sprinkles/core      
+  account    UserFrosting\Sprinkle\Account    /home/UserFrosting/app/sprinkles/account   
+  admin      UserFrosting\Sprinkle\Admin      /home/UserFrosting/app/sprinkles/admin     
+ ---------- -------------------------------- ------------------------------------------
+```
+
 
 ### test
 
@@ -374,3 +397,16 @@ $ php bakery test [options] [--] [<testscope>]
 | --coverage-path=COVERAGE-PATH     | Code coverage report saving location. Default to `_meta/coverage`.                                   |
 
 >>>> UserFrosting's built-in integration tests use a temporary in-memory SQLite database.  For testing to run successfully, you must have the `php-sqlite3` package installed and enabled.  Alternatively, you can create a separate testing database and override the `test_integration` database settings in the `testing.php` [environment mode](/configuration/config-files).
+
+
+### test:mail
+
+The `test:mail` command lets you test the email sending capability of your UserFrosting setup by sending a test email. By default, it will send the test email to the admin contact defined the configuration file, but this can be changed using the provided `--to` options.
+
+```bash
+$ php bakery test:mail [options]
+```
+
+| Option  | Description                                                        |
+|---------|--------------------------------------------------------------------|
+| --to=TO | Email address to send test email to. Use admin contact if omitted. |
