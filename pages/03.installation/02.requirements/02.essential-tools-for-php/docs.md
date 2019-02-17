@@ -10,7 +10,7 @@ taxonomy:
 
 Git is one of the most popular [version control systems](https://en.wikipedia.org/wiki/Version_control), originally created for aiding development of the Linux kernel.
 
-To start working with Userfrosting, you will need to use **git**.  Git is important to use with UserFrosting for four reasons:
+To start working with UserFrosting, you will need to use **git**.  Git is important to use with UserFrosting for four reasons:
 
 1. Many of the [asset management tools](#npm) that UserFrosting depends on, use git;
 2. It makes it easier to merge updates in UserFrosting into your project;
@@ -39,7 +39,7 @@ To check if Composer is already installed:
 
 ```bash
 $ composer --version
-Composer version 1.3.1 2017-01-07 18:08:51
+Composer version 1.8.4 2019-02-11 10:52:10
 ```
 
 The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).  We **strongly recommend that you install Composer globally** on your system.  This will let you run Composer using the `composer` command.  For convenience, we recap the global installation instructions here:
@@ -59,7 +59,7 @@ Composer has a special installer that you can use for Windows - [Composer-Setup.
 
 **Node.js** is an an extremely popular JavaScript runtime built on Chrome's V8 JavaScript Engine. In recent years it has become extremely popular for creating multiplatform applications, and for its role in providing a means to run the platform independent build tools, like `gulp` and `grunt`, to name just a few. Node.js also includes `npm` (Node.js Package Manager).
 
-Finally, you will need to install **Node.js**,  Javascript runtime.  Although UserFrosting does not _run_ on Node.js, it does use several Node-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
+Although UserFrosting does not _run_ on Node.js, it does use several Node-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
 
 The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems.  We recommend using the latest version of Node.js (11.x at the time of this writing), however any version later than 10.12.x will suffice.
 

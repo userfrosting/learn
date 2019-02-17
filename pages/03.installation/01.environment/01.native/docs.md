@@ -73,9 +73,9 @@ $ php -v
 You should then see a message like:
 
 ```bash
-PHP 5.6.15 (cli) (built: Dec  4 2015 12:52:38)
-Copyright (c) 1997-2015 The PHP Group
-Zend Engine v2.6.0, Copyright (c) 1998-2015 Zend Technologies
+PHP 7.2.10 (cli) (built: Sep 13 2018 13:45:02) ( NTS )
+Copyright (c) 1997-2018 The PHP Group
+Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
 ```
 
 This is the version of PHP which will be used by Composer. Make sure it meets the minimum required version for UserFrosting!
@@ -103,21 +103,15 @@ This may take some time to complete. If Composer has completed successfully, you
 
 If you only see `composer` and `wikimedia` subdirectories after running `composer install`, then you may need to delete the `composer.lock` file and run `composer install` again.
 
-## Run the installer
-
-You're almost done! We now have the base code and the php dependencies. The remaining steps are to set up the **database**, create the first **user** and install the third-party **assets**. Luckily, at this point, **Bakery** is here to help!
-
 ### Set up the database
 
 Before installing, you'll need to create a database and database user account. Consult your database documentation for more details. If you use _phpmyadmin_ or a similar tool, you can create your database and database user through their interface. Otherwise, you can do it via the command line.
 
 >>>>> "Database user account" and "UserFrosting user account" are not the same thing. The "database user account" is independent of UserFrosting. See your database technology's documentation for information on creating a database user. Make sure that your database user has all read and write permissions for your database.
 
-### Bake installer
+## Run the installer
 
->>>>> We are currently getting reports of problems when running `bakery bake` on Windows due to a [problem with the target path](https://github.com/userfrosting/UserFrosting/issues/742) in npm.  If you run into a node/npm error when running `bake`, try running `npm install` directly from within the `build/` directory and then rerunning `bake`.
-
-This step will finish the installation and create your first UserFrosting account.  Again, in the main project directory where you cloned UserFrosting, run:
+You're almost done! We now have the base code and the php dependencies. The remaining steps are to set up the **database** credentials, create the first **user** and install the third-party **assets**. Luckily, at this point, **Bakery** is here to help!  Again, in the main project directory where you cloned UserFrosting, run:
 
 ```bash
 $ php bakery bake
@@ -125,7 +119,7 @@ $ php bakery bake
 
 You will first be prompted for your database credentials. This is the information PHP needs to connect to your database. If PHP can't connect to your database using these credentials, make sure you have entered the right information and re-run the `bake` command.
 
-Bakery will also prompt you for SMTP credentials, so that UserFrosting can send emails for activating new accounts and setting and resetting passwords.  If you are not ready to set up email at this time, you can press enter to skip through SMTP configuration.  Please note that in production, you _will_ need to have a working SMTP service.  If you do not already have a mail provider, please see our section on [mail providers](/mail/mail-providers) for our recommendations including both free and paid third-party mail services.
+Bakery will also prompt you for SMTP credentials, so that UserFrosting can send emails for activating new accounts and setting and resetting passwords.  If you are not ready to set up email at this time, you can choose _No email support_ to skip through SMTP configuration.  Please note that in production, you _will_ need to have a working SMTP service.  If you do not already have a mail provider, please see our section on [mail providers](/mail/mail-providers) for our recommendations including both free and paid third-party mail services.
 
 If the database connection is successful, the installer will then check that the basic dependencies are met. If so, the installer will run the _migrations_ to populate your database with new tables. During this process, you will be prompted for some information to set up the master account (first user). Finally, the installer will run the `build-assets` command to fetch javascript dependencies and build the [assets bundles](/asset-management/asset-bundles).
 

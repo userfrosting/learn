@@ -29,25 +29,21 @@ These are important concerns - and part of the reason that most people don't run
 
 ### Using a local server to view and test your code
 
-In the long run, the amount of time you'll spend uploading your code after each change you make will **easily dwarf** the amount of time it takes to set up a working test server on your own computer.  Examples of test server software are Apache and Nginx. If you don't like the idea of setting up a local test server, there's an alternative option that is a little easier and very reliable, called a virtual environment. Vagrant and Homestead (using them together) is an example of setting up a virtual environment.  
+In the long run, the amount of time you'll spend uploading your code after each change you make will **easily dwarf** the amount of time it takes to set up a working test server on your own computer.  Examples of test server software are Apache and Nginx. If you don't like the idea of setting up a local test server, there's an alternative option that is a little easier and very reliable, called a virtual environment. **Vagrant and Homestead (using them together) is an example of setting up a virtual environment**.  
 
-When you run your code in a place that is accessible only to you and where it's ok when something breaks, this is referred to as a **development environment.**  When you upload your code so that it is running live and interacting with real visitors to your site, this is called a **production environment.**
+When you run your code in a place that is accessible only to you and where it's ok when something breaks, this is referred to as a **development environment**.  When you upload your code so that it is running live and interacting with real visitors to your site, this is called a **production environment**.
 
-## VirtualBox, Vagrant and Homestead
+### VirtualBox, Vagrant and Homestead
 
-The first thing you'll need to do is install VirtualBox and Vagrant.  **VirtualBox** is a virtualization manager that lets you run just any operating system as a "guest" inside another operating system (the "host").  Our goal with VirtualBox is to let you run Ubuntu on a "virtual machine" on your computer, not matter which operating system you natively use.
+The easiest way to have a full **development environment** is to use _VirtualBox, Vagrant and Homestead_. Combined, they create a virtual machine (VM) on your computer containing all the necessary softwares to run a web server. All three components have their own purpose. **VirtualBox** is a virtualization manager that lets you run just any operating system as a "guest" inside another operating system (the "host").  **Vagrant** works in tandem with VirtualBox to automatically manage the configuration and installed software inside your virtual machine. Finally, **Homestead** is a VM configuration specifically designed for PHP development.
 
-To install VirtualBox, simply download and run one of the installers available [on their Downloads page](https://www.virtualbox.org/wiki/Downloads).
-
-The next thing we'll do is set up **Vagrant**.  Vagrant works in tandem with VirtualBox to automatically manage the configuration and installed software inside your virtual machine.  Head over to Vagrant's [downloads page](https://www.vagrantup.com/downloads.html) to grab one of their installers.
-
-If you think of VirtualBox as your kitchen, Vagrant is sort of like the cookbook that contains recipes for how to set up a useful development environment on your virtual machine.  The particular recipe that we'll be using is called **Homestead**, and it is has everything we need to easily set up the UserFrosting development environment.
+If you think of VirtualBox as your kitchen, Vagrant is sort of like the cookbook that contains recipes for how to set up a useful development environment on your virtual machine.  The particular recipe that we'll be using is called _Homestead_, and it is has everything we need to easily set up the UserFrosting development environment.
 
 Homestead will automatically give us the following components that we need to run UserFrosting:
 
 - Ubuntu 18.04
 - Git
-- PHP 7.x
+- PHP 7.2
 - Nginx (webserver)
 - MySQL/MariaDB (database)
 - Composer
@@ -55,6 +51,12 @@ Homestead will automatically give us the following components that we need to ru
 - Bower and Gulp
 
 Nice!  This means that we are saved the hassle of [setting these up natively in our operating system](/installation/requirements/essential-tools-for-php).
+
+## Setting up your local development environment
+
+The first thing you'll need to do is install VirtualBox.  Our goal with VirtualBox is to let you run Ubuntu on a "virtual machine" on your computer, not matter which operating system you natively use. To install VirtualBox, simply download and run one of the installers available [on their Downloads page](https://www.virtualbox.org/wiki/Downloads).
+
+The next thing we'll do is set up **Vagrant**. Head over to Vagrant's [downloads page](https://www.vagrantup.com/downloads.html) to grab one of their installers.
 
 ### Command-line Life
 
@@ -64,7 +66,7 @@ However, **if you are a Windows user**, you'll need to install `git` and get set
 
 ### Get Started
 
-Once you've installed VirtualBox and Vagrant, we can use UserFrosting built-in support for Vagrant to spin up a virtual machine with the Homestead configuration. **In a directory of your choice** (I have a generic `dev/` directory on my computer where I keep all of my projects), clone the UserFrosting repository into a new directory :
+Once you've installed VirtualBox and Vagrant, we can use UserFrosting built-in support for Vagrant to spin up a virtual machine with the Homestead configuration. **In a directory of your choice** (I have a generic `dev/` directory on my computer where I keep all of my projects), use git to clone the UserFrosting repository into a new directory :
 
 ```bash
 git clone https://github.com/userfrosting/UserFrosting.git userfrosting
@@ -83,7 +85,7 @@ Now simply run `vagrant up` from the root of your cloned fork of the UserFrostin
 vagrant up
 ```
 
-When you vagrant up, the Laravel/Homestead box is transparently loaded as a Virtual Machine on your computer (this may take several minutes the very first time while it downloads the VM image to your computer). Your local UserFrosting repository clone is mirrored/shared with the VM, so you can work on the UserFrosting code on your computer, and see the changes immediately when you browse to UserFrosting at the URL provided by the VM.
+When you _vagrant up_, the Laravel/Homestead box is transparently loaded as a Virtual Machine on your computer (this may take several minutes the very first time while it downloads the VM image to your computer). Your local UserFrosting repository clone is mirrored/shared with the VM, so you can work on the UserFrosting code on your computer, and see the changes immediately when you browse to UserFrosting at the URL provided by the VM.
 
 ### Check our your first UserFrosting installation!
 
@@ -98,7 +100,7 @@ A default administrator account will also be preconfigured with the following cr
 
 ### Editing your hosts file
 
-If you prefer to access UserFrosting from the more friendly URL `http://userfrosting.test` then you must update your computer's hosts file. To do this, we need to edit the `hosts` file.  In Windows, this file is located at `C:\Windows\System32\drivers\etc\hosts`.  In MacOS, you can find it at `/private/etc/hosts`.  In either case, you will need to edit it **as an administrator**, or temporarily give yourself permissions to write to this file.
+If you prefer to access UserFrosting from the more friendly URL `http://userfrosting.test` then you must update your computer's hosts file. To do this, we need to edit the `hosts` file.  In Windows, this file is located at `C:\Windows\System32\drivers\etc\hosts`.  In MacOS and Linux, you can find it at `/etc/hosts`.  In either case, you will need to edit it **as an administrator**, or temporarily give yourself permissions to write to this file.
 
 Add the following lines at the bottom, save and exit:
 
@@ -138,10 +140,6 @@ Welcome to Ubuntu 18.04 LTS (GNU/Linux 4.15.0-20-generic x86_64)
   Memory usage: 19%               IP address for eth0: 10.0.2.15
   Swap usage:   0%                IP address for eth1: 192.168.10.10
 
- * Meltdown, Spectre and Ubuntu: What are the attack vectors,
-   how the fixes work, and everything else you need to know
-   - https://ubu.one/u2Know
-
 0 packages can be updated.
 0 updates are security updates.
 ```
@@ -170,10 +168,6 @@ vagrant destroy
 
 >>>> Destroying the vagrant server will remove all traces of the VM from your computer, reclaiming any disk space used by it. However, it also means the next time you vagrant up, you will be creating a brand new VM with a fresh install of UserFrosting and a new database.
 
-### Using PostegreSQL
-
-By default, UserFrosting is pre-configured to install with a MySQL database. You can, however, switch to PostegreSQL or SQLite3 by editing the `install-config.yml` file in the vagrant directory. The next time you run `vagrant up` (or `vagrant provision`) it will be installed under the new configuration.
-
 ### Access phpmyadmin
 
 Your virtual machine provides phpmyadmin to make it easier to interact with the `UserFrosting` database.  
@@ -196,6 +190,10 @@ The default database information should be as follows:
 - Database name: `UserFrosting`
 - Database user: `homestead`
 - Database password: `secret`
+
+### Using PostegreSQL
+
+By default, UserFrosting is pre-configured to install with a MySQL database. You can, however, switch to PostegreSQL or SQLite3 by editing the `app/.env` file in the UserFrosting directory or running the `php bakery setup:db --force` command. The database user and password for PostegreSQL are the same, only the port is different (`54320`).
 
 ## Start developing!
 

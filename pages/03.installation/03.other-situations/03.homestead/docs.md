@@ -28,19 +28,6 @@ vagrant box add laravel/homestead
 
 This will hit Vagrant's public catalog of preconfigured boxes and install the `laravel/homestead` box.  You will be prompted to choose which virtual machine manager to use.  Choose the `virtualbox` option.
 
-Homestead will automatically give us the following components that we need to run UserFrosting:
-
-- Ubuntu 18.04
-- Git
-- PHP 7.2.x
-- Nginx (webserver)
-- MySQL/MariaDB (database)
-- Composer
-- Node and npm
-- Bower and Gulp
-
-Nice!  This means that we are saved the hassle of [setting these up natively in our operating system](/installation/requirements/essential-tools-for-php).
-
 #### Download and initialize Homestead
 
 **In a directory of your choice** (I have a generic `dev/` directory on my computer where I keep all of my projects), clone the Homestead _repository_ to a new subdirectory (we need both the box and the repository!):
