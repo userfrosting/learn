@@ -37,6 +37,8 @@ UserFrosting 4.2 brings improved organization of the codebase, a new migrator an
 - The console IO instance is not available anymore in migrations
 - Removed the `io` property from migration classes
 - Removed Bakery `projectRoot` property. Use the `\UserFrosting\ROOT_DIR` constant instead
+- Removed `UserFrosting\System\Bakery\DatabaseTest` trait for custom Bakery command, use `UserFrosting\Sprinkle\Core\Bakery\Helper\DatabaseTest` instead.
+- Removed `UserFrosting\System\Bakery\ConfirmableTrait` trait for custom Bakery command, use `UserFrosting\Sprinkle\Core\Bakery\Helper\ConfirmableTrait` instead.
 
 #### Minor (should only break heavily customized projects)
 - `dev` environment changed to `debug`  ([#653])
