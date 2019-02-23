@@ -18,8 +18,9 @@ $name = Folder::shift($path);
 $folder = "sites/{$name}";
 $prefix = "/{$name}";
 
+// If no sites is selected, default to master
 if (!$name || !is_dir(ROOT_DIR . "user/{$folder}")) {
-    return [];
+    return ['environment' => '4.1'];
 }
 
 // Prefix all pages with the name of the subsite
