@@ -27,8 +27,8 @@
                         {{ config.environment }}
                     </a>
                     <ul id="dropdown2" class="dropdown-content">
-                        {% for label, path in config.site.branches %}
-                            <li><a href="#">{{ label }}</a></li>
+                        {% for label, path in config.versions.branches %}
+                            <li><a href="{{ uri.base }}{{ path }}{{ page.route }}">{{ label }}</a></li>
                         {% endfor %}
                     </ul>
                 </li>
