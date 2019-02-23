@@ -28,7 +28,7 @@
                     </a>
                     <ul id="dropdown2" class="dropdown-content">
                         {% for label, path in config.versions.branches %}
-                            <li><a href="{{ uri.base }}{{ path }}{{ page.route }}">{{ label }}</a></li>
+                            <li><a href="{{ uri.base }}{{ path }}{{ uri.path }}">{{ label }}</a></li>
                         {% endfor %}
                     </ul>
                 </li>

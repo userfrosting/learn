@@ -1,4 +1,5 @@
 branches:
+    'latest': ''
     '4.0': '/4.0'
     '4.1': '/4.1'
     'develop': '/develop'
