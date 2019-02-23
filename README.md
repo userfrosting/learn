@@ -63,6 +63,20 @@ Install plugins and base theme. The base theme is learn2. The plugins each have 
 bin/gpm install -y error problems breadcrumbs anchors highlight simplesearch learn2
 ```
 
+#### Step 4
+
+Setup multisite for access to legacy version of the documentation.
+
+```bash
+cp user/setup.php setup.php
+```
+
+To update pages from the legacy version to their latest version :
+
+```bash
+git submodule update --remote --merge
+```
+
 ### Docker
 
 Most docker images (like the one used here) automate the installation of Grav. So for the most part, getting started with Docker is less tedious. Instead the tediousness is at the end due to a bug in Grav.
@@ -77,7 +91,7 @@ git clone https://github.com/userfrosting/learn.git userfrosting-learn
 
 ### Step 2
 
-Then we start the image, with the appropraite configuration.
+Then we start the image, with the appropriate configuration.
 
 ```bash
 docker pull ahumaro/grav-php-nginx
@@ -95,6 +109,23 @@ bin/gpm install -y error problems breadcrumbs anchors highlight simplesearch lea
 ```
 
 NOTE: Grav uses `rename` when moving plugins to their final destination, which means this is where everything falls apart. The issue is that `rename` doesn't work to well when crossing a drive boundary (even for emulated drives), throwing a "Invalid cross-device link" error when attempted. Until a fix is out, you'll need to install the theme and plugins manually under docker.
+
+## Adding a legacy documentation
+
+Move to the `user/branches/` directory, and add the . Replace `{brancheName}` with the name of the branch you want to include.
+
+```bash
+git submodule add -b {brancheName} https://github.com/userfrosting/learn.git user/branches/{brancheName}
+```
+
+Next we need to create a symlink between the submodule to the Grav multisite :
+
+```bash
+mkdir user/sites/{brancheName}
+cd user/sites/{brancheName}
+ln -s ../../branches/{brancheName}/pages/ pages
+ln -s ../../branches/{brancheName}/config/ config
+```
 
 ## Credits
 
