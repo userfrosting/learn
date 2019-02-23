@@ -105,20 +105,15 @@ NOTE: Grav uses `rename` when moving plugins to their final destination, which m
 
 ## Adding a legacy documentation
 
-Move to the `user/branches/` directory, and add the . Replace `{brancheName}` with the name of the branch you want to include.
+Move to the `user/` directory, and add the desired branch as a new git submodule. Replace `{brancheName}` with the name of the branch you want to include.
 
 ```bash
-git submodule add -b {brancheName} https://github.com/userfrosting/learn.git user/branches/{brancheName}
+git submodule add -b {brancheName} https://github.com/userfrosting/learn.git sites/{brancheName}
 ```
 
-Next we need to create a symlink between the submodule to the Grav multisite :
+Next edit `user/config/versions.yaml` to add your new branch/version to the dropdown list.
 
-```bash
-mkdir user/sites/{brancheName}
-cd user/sites/{brancheName}
-ln -s ../../branches/{brancheName}/pages/ pages
-ln -s ../../branches/{brancheName}/config/ config
-```
+The default branch can also be defined in `setup.php`.
 
 ## Credits
 
