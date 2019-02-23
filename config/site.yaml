@@ -8,6 +8,11 @@ taxonomies: [category,tag]
 summary:
   size: 300
 
+branches:
+    master: master
+    develop: develop
+    '4.0': '4.0'
+
 redirects:
     /basics/develop-locally-serve-globally: /background/develop-locally-serve-globally
     /basics/overview: /installation

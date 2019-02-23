@@ -146,7 +146,7 @@ html {
 /* Dropdown menu
 ===============================================*/
 
-#dropdown1 {
+#dropdown1, #dropdown2 {
     padding: 0px !important;
     width: 132px;
 }
@@ -216,7 +216,7 @@ nav.custom  .dropdown-content li > a > i {
     width: 52px;
 }
 
-/* Nav slides in and out 
+/* Nav slides in and out
 ===============================================*/
 
 #nav-main {
