@@ -26,9 +26,16 @@ if (!$name || !is_dir(ROOT_DIR . "user/{$folder}")) {
 // Prefix all pages with the name of the subsite
 $container['pages']->base($prefix);
 
+// Use site theme if it exist. Use only global one otherwise
 $themes = ["user/themes"];
-if (is_dir(__DIR__ . "/user/sites/{$folder}/themes")) {
-  array_unshift($themes, "user/sites/{$folder}/themes");
+if (is_dir(__DIR__ . "/user/{$folder}/themes")) {
+  array_unshift($themes, "user/{$folder}/themes");
+}
+
+// Use site config if it exist. Use only global one otherwise
+$config = ['user/config', 'system/config'];
+if (is_dir(__DIR__ . "/user/{$folder}/config")) {
+  array_unshift($themes, "user/{$folder}/config");
 }
 
 return [
@@ -40,6 +47,12 @@ return [
                'prefixes' => [
                    '' => ["user/{$folder}"],
                ]
+            ],
+            'config' => [
+                'type' => 'ReadOnlyStream',
+                'prefixes' => [
+                    '' => $config,
+                ]
             ],
             'themes' => [
                 'type' => 'ReadOnlyStream',
