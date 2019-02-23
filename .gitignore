@@ -1,13 +1,3 @@
-# Grav Specific
-.sass-cache
-composer.lock
-cache/*
-assets/*
-logs/*
-images/*
-user/data/*
-localhost/*
-
 # OS Generated
 .DS_Store*
 ehthumbs.db
