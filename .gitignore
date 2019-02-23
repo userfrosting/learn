@@ -1,3 +1,7 @@
+# Grav dependencies
+themes/learn2
+plugins/*
+
 # OS Generated
 .DS_Store*
 ehthumbs.db

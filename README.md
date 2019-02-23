@@ -20,7 +20,7 @@ To install this website on your computer, first [install grav core](https://getg
 git clone https://github.com/getgrav/grav.git userfrosting-learn
 cd userfrosting-learn
 rm -r user
-git clone https://github.com/userfrosting/learn.git user
+git clone --recursive https://github.com/userfrosting/learn.git user
 ```
 
 When you're done it should look like this:
@@ -57,23 +57,16 @@ sudo dseditgroup -o edit -a daemon -t user staff
 
 #### Step 3
 
-Install plugins and base theme. The base theme is learn2. The plugins each have empty directories in the plugins directory.
-
-```bash
-bin/gpm install -y error problems breadcrumbs anchors highlight simplesearch learn2
-```
-
-#### Step 4
-
 Setup multisite for access to legacy version of the documentation.
 
 ```bash
 cp user/setup.php setup.php
 ```
 
-To update pages from the legacy version to their latest version :
+To update pages from the legacy version to their latest version, from the `user/` directory :
 
 ```bash
+cd user/
 git submodule update --remote --merge
 ```
 
@@ -130,4 +123,3 @@ ln -s ../../branches/{brancheName}/config/ config
 ## Credits
 
 Favicons were generated with https://realfavicongenerator.net/
-
