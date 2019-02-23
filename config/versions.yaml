@@ -1,5 +1,4 @@
 branches:
-    master: master
-    develop: develop
     '4.0': '4.0'
     '4.1': '4.1'
+    'develop': 'develop'
