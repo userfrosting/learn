@@ -66,7 +66,7 @@ This will install the latest LTS (Long Term Support) version of Node.js.
 
 ## PHP 5.6 and 7.0 Support Deprecation
 
-As of UserFrosting 4.2.0, support for PHP version 5.6 and 7.0 is officially deprecated. While you can still use UserFrosting 4.2.x with PHP 7.0 or earlier, upgrading to PHP 7.2 or above is highly recommended as both PHP 5.6 and 7.0 have reach [End Of Life](http://php.net/supported-versions.php) since Jan. 1st 2019.
+As of UserFrosting 4.2.0, support for PHP version 5.6 and 7.0 is officially deprecated. While you can still use UserFrosting 4.2.x with PHP 7.0 or earlier, upgrading to PHP 7.2 or above is highly recommended as both PHP 5.6 and 7.0 have reached [End Of Life](http://php.net/supported-versions.php) since Jan. 1st 2019.
 
 **The next version of UserFrosting (4.3.x) won't support PHP 5.6 or 7.0**
 
@@ -80,9 +80,15 @@ $ composer update
 $ php bakery bake
 ```
 
-### Assets Packages
+### Frontend Assets
 
-!TODO
+1. Frontend dependencies are now located at `app/assets/bower_components` for Bower and `app/assets/node_modules` for NPM. Running `php bakery assets-install` or  `cd build && npm run uf-assetsInstall` will automatically remove dependencies in the old location. This does not affect asset resolution.
+
+2. Frontend dependencies used by UserFrosting are now retrieved from [NPM](https://www.npmjs.com/). If you depend on these you may find certain files have shifted around, verifying references are correct is recommended. UserFrosting can help in this endevour, as missing resources referenced using the locator infrustructure will produce a server error.
+
+3. Dependency conflicts between individual sprinkles for `bower.json` may now occur. If this occurs you'll need to update the [semver](https://semver.org/) range to resolve or force a specific version using the `resolutions` attribute.
+
+4. Bower has been deprecated since 2017, and with NPM support landing in UserFrosting it is now deprecated here as well. In the future support will be removed so migrating to `package.json` if possible is recommended. To facilitate an easier transition and accomadate the complexities assocaited with the node module resolution logic that permits duplicate indirect dependencies, compatible main entrypoints will be run through [Browserify](https://www.npmjs.com/package/browserify) to resolve `require` imports.
 
 ### Migrating your Sprinkles
 
