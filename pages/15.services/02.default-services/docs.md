@@ -221,7 +221,7 @@ An instance of `RocketTheme\Toolbox\Event\EventDispatcher`, which itself extends
 
 #### locator
 
-An instance of [RocketTheme's Uniform Resource Locator class](https://github.com/rockettheme/toolbox/blob/develop/ResourceLocator/src/UniformResourceLocator.php), which provides a unified method of accessing Sprinkle entities via [streams](https://webmozart.io/blog/2013/06/19/the-power-of-uniform-resource-location-in-php/).  
+An instance of [Uniform Resource Locator class](https://github.com/userfrosting/uniformresourcelocator), which provides a unified method of accessing Sprinkle entities via [streams](https://webmozart.io/blog/2013/06/19/the-power-of-uniform-resource-location-in-php/).  
 
 See [Chapter 16](/advanced/locator) for more information.
 
