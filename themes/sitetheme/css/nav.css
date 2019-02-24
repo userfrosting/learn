@@ -198,6 +198,7 @@ nav.custom  .dropdown-content li > a > i {
 .dropdown-button-version {
     width: 132px;
     text-align: center !important;
+    margin-right: 15px;
 }
 
 .dropdown-button-version i {
