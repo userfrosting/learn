@@ -92,7 +92,7 @@ class ServicesProvider
         $container['mapBuilder'] = function ($c) {
             // Do what you need before building the object
             ...
-            
+
             // Now, actually build the object
             $mapBuilder = new MapBuilder(...);
             return $mapBuilder;
@@ -115,10 +115,10 @@ Notice that we've defined our closure to return the object that we created.  Now
 public function getOwlCoordinates($request, $response, $args)
 {
     ...
-    
+
     $mapBuilder = $this->ci->mapBuilder;
     $coordinates = $mapBuilder->getCoordinates($myOwl);
-    
+
     ...
 }
 ```
@@ -225,7 +225,7 @@ class ServicesProvider
          * Adds global variables to Twig for my site Sprinkle.
          */
         $container->extend('view', function ($view, $c) {
-            $twig = $view->getEnvironment(); 
+            $twig = $view->getEnvironment();
             $extension = new Extension($c);
             $twig->addExtension($extension);
 
@@ -240,7 +240,7 @@ class ServicesProvider
         $container['mapBuilder'] = function ($c) {
             // Do what you need before building the object
             ...
-            
+
             // Now, actually build the object
             $mapBuilder = new MapBuilder(...);
             return $mapBuilder;
