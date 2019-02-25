@@ -20,7 +20,7 @@ $prefix = "/{$name}";
 
 // If no sites is selected, default to master
 if (!$name || !is_dir(ROOT_DIR . "user/{$folder}")) {
-    return ['environment' => '4.1'];
+    return ['environment' => 'latest'];
 }
 
 // Prefix all pages with the name of the subsite
