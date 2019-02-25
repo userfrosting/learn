@@ -209,7 +209,7 @@ Sets up a `VerificationRepository` object (`UserFrosting\Sprinkle\Account\Reposi
 
 #### userActivityLogger
 
-Sets up a Monolog logger, which uses `UserFrosting\Sprinkle\Account\Log\UserActivityDatabaseHandler` and `UserFrosting\Sprinkle\Account\Log\UserActivityProcessor` to allow logging of user activities to the `activities` database table.  By using Monolog, it makes it easy to swap other storage solutions such as redis or Elastic Search.
+Sets up a Monolog logger, which uses `UserFrosting\Sprinkle\Account\Log\UserActivityDatabaseHandler` and `UserFrosting\Sprinkle\Account\Log\UserActivityProcessor` to allow logging of user activities to the `activities` database table.  By using Monolog, it makes it easy to swap other storage solutions such as Redis or Elastic Search.
 
 ### System services
 
@@ -224,10 +224,6 @@ An instance of `RocketTheme\Toolbox\Event\EventDispatcher`, which itself extends
 An instance of [Uniform Resource Locator class](https://github.com/userfrosting/uniformresourcelocator), which provides a unified method of accessing Sprinkle entities via [streams](https://webmozart.io/blog/2013/06/19/the-power-of-uniform-resource-location-in-php/).  
 
 See [Chapter 16](/advanced/locator) for more information.
-
-#### streamBuilder
-
-An instance of `RocketTheme\Toolbox\StreamWrapper\StreamBuilder`, which registers custom streams (`cache://`, `config://`, `templates://`, etc) with PHP's [stream wrapper system](http://php.net/manual/en/function.stream-wrapper-register.php).
 
 #### sprinkleManager
 
