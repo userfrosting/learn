@@ -53,6 +53,12 @@ return [
                 'prefixes' => [
                     '' => ['user://plugins', "user/plugins"],
                 ]
+            ],
+            'plugin' => [
+                'type' => 'ReadOnlyStream',
+                'prefixes' => [
+                    '' => ['user://plugins', "user/plugins"],
+                ]
             ]
         ]
     ]
