@@ -14,9 +14,9 @@ The best place to look for community sprinkles is on [GitHub](https://github.com
 
 ## Distributing your Sprinkle
 
-If you want to distribute your sprinkle, there's no real requirements that need to be met. You should at least make sure your sprinkle contains a valid `composer.json` file. This file is required to add any sort of class and PSR-4 definition to your sprinkle, so the chances are good you already have one. Make sure it contains up-to-date information, like your name and licence details, it's always welcome. Oh, and make sure the `type` key is defined as `userfrosting-sprinkle` in your sprinkles `composer.json` file !
+If you want to distribute your sprinkle, there's no real requirements that need to be met. You should at least make sure your sprinkle contains a valid `composer.json` file. This file is required to add any sort of class and PSR-4 definition to your sprinkle, so the chances are good you already have one. Make sure it contains up-to-date information, like your name and license details, it's always welcome. Oh, and make sure the `type` key is defined as `userfrosting-sprinkle` in your sprinkles `composer.json` file !
 
-You should also make sure your Sprinkle is up to date with the latest version of UserFrosting. Providing documentation and examples in a `README` file will encourage dev to use your sprinkle. If your sprinkle is interacting with the database, make sure you bundle a working [migration](/database/migrations) with your sprinkle. That's pretty much it! 
+You should also make sure your Sprinkle is up to date with the latest version of UserFrosting. Providing documentation and examples in a `README` file will encourage dev to use your sprinkle. If your sprinkle is interacting with the database, make sure you bundle a working [migration](/database/migrations) with your sprinkle. That's pretty much it!
 
 ## Sprinkles and Composer
 

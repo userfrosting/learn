@@ -62,14 +62,14 @@ As you can see, all `-` and `_` characters are first converted to spaces.  Then,
 Some examples:
 
 | Sprinkle directory | Sprinkle namespace |
-| --- | --- |
-| `site` | `Site` |
-| `pokemon-master` | `PokemonMaster` |
-| `pokemonmaster` | `Pokemonmaster` |
-| `pokemonMaster` | `PokemonMaster` |
-| `Pokemonmaster` | `Pokemonmaster` |
-| `PokemonMaster` | `PokemonMaster` |
-| `Pokemon-Master` | `PokemonMaster` |
+|--------------------|--------------------|
+| `site`             | `Site`             |
+| `pokemon-master`   | `PokemonMaster`    |
+| `pokemonmaster`    | `Pokemonmaster`    |
+| `pokemonMaster`    | `PokemonMaster`    |
+| `Pokemonmaster`    | `Pokemonmaster`    |
+| `PokemonMaster`    | `PokemonMaster`    |
+| `Pokemon-Master`   | `PokemonMaster`    |
 
 We **strongly recommend** using only lowercase words separated with `-` for Sprinkle directory names.
 
