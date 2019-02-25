@@ -6,9 +6,9 @@ taxonomy:
     category: docs
 ---
 
-Extending PHP classes is a little different from extending other types of entities.  You cannot simply replace a class by redefining it in a custom Sprinkle.  In fact, classes with the same name in two different Sprinkles would be treated as two different fully-qualified classes.  For example, if I loaded the Sprinkles `Account` and `Site`, and I had the following structure:
+Extending PHP classes is a little different from extending other types of entities. You cannot simply replace a class by redefining it in a custom Sprinkle. In fact, classes with the same name in two different Sprinkles would be treated as two different fully-qualified classes per the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/). For example, if I loaded the Sprinkles `Account` and `Site`, and I had the following structure:
 
-```
+```txt
 sprinkles
 ├── account
 │   └── src
@@ -22,11 +22,11 @@ sprinkles
 │               └── User.php
 ```
 
-then `User.php` in `site` would *not* override `User.php` in `account`.  Rather, I'd have two different classes: `\UserFrosting\Sprinkle\Account\Database\Models\User` and `\UserFrosting\Sprinkle\Site\Database\Models\User`.
+then `User.php` in `site` would *not* override `User.php` in `account`.  Rather, I'd have two different classes because both classes would have two different **namespace** : `\UserFrosting\Sprinkle\Account\Database\Models\User` and `\UserFrosting\Sprinkle\Site\Database\Models\User`.
 
 To actually override and replace the functionality of a class, we have two tools available:
 
-##### Class Inheritance
+#### Class Inheritance
 
 We could, for example, define our `User` class in the `site` Sprinkle to inherit from the `User` class in `account` using the `extends` keyword:
 
@@ -48,11 +48,11 @@ class User extends \UserFrosting\Sprinkle\Account\Database\Models\User
 
 Now, we can start using `\UserFrosting\Sprinkle\Site\Database\Models\User` to extend the functionality provided by the `User` class in the `Account` sprinkle.
 
-##### Dynamic Class Mapper
+#### Dynamic Class Mapper
 
 Of course, the limitations of object-oriented inheritance becomes clear when you want to change the behavior of the original class in other places where it has been used.  For example, if I extended `Account\Database\Models\User` and redefined the `onLogin` method in my `Site\Database\Models\User` class, this would let me use `Site\Database\Models\User` going forward in any code I write in the `site` Sprinkle.  However, it wouldn't affect references to `User` in the `account` Sprinkle - they would still be referring to the base class.
 
-To allow this sort of "retroactive extendability", UserFrosting introduces another layer of abstraction - the **class mapper**.  The class mapper resolves generic class identifiers to specific class names at runtime.  Rather than hardcoding references to `Account\Database\Models\User`, Sprinkles can generically reference `user` through the class mapper, and it will find the most recently mapped version of that class.
+To allow this sort of "_retroactive extendability_", UserFrosting introduces another layer of abstraction - the **class mapper**.  The class mapper resolves generic class identifiers to specific class names at runtime.  Rather than hardcoding references to `Account\Database\Models\User`, Sprinkles can generically reference `user` through the class mapper, and it will find the most recently mapped version of that class.
 
 For example, a controller in the account Sprinkle could do something like:
 
@@ -86,3 +86,9 @@ $container->extend('classMapper', function ($classMapper, $c) {
 You can learn more about services in [Chapter 15](/services).
 
 Note that it's not just database models that you can dynamically remap (though they are the most common use case!)  Any class references that haven't been hardcoded can be dynamically remapped in another Sprinkle's `classMapper` service.
+
+>>> Unless you plan to distribute your sprinkle or have another sprinkle extending it's functionalities, it's generally not necessary to define a new class mapping for your own classes (eg. `\UserFrosting\Sprinkle\Site\Database\Models\MyAwesomeModel`). In such cases, the hardcoding your class reference can be done safely. This of course doesn't apply for classes already registered by the default sprinkles.
+
+### Default Model Identifiers
+
+See the [Services Chapter](/services/default-services#classmapper-1) for a list of default model identifiers defined by the `Account` sprinkle.

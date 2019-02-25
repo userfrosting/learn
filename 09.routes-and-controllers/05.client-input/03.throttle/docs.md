@@ -71,13 +71,13 @@ if ($delay > 0) {
 }
 
 // Begin transaction - DB will be rolled back if an exception occurs
-Capsule::transaction( function() use ($classMapper, $data, $throttler, $throttleData, $config) {
+Capsule::transaction( function() use ($data, $throttler, $throttleData) {
 
     // Log throttleable event
     $throttler->logEvent('password_reset_request', $throttleData);
 
     ...
-    
+
 });
 ```
 

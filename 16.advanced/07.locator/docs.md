@@ -6,11 +6,13 @@ taxonomy:
 
 The locator service goal is to provides an abstraction layer for the different files and folders available across different sprinkles inside UserFrosting. In other words, it is a way of aggregating many search paths together. As you've seen in the previous chapter, each sprinkle can provides multiple resources and sprinkles can have the ability to overwrite a previous sprinkle resources. All of those resources, combined with the overwriting properties of a sprinkle is handled by the locator service. _Templates_ and _config_ files are a good example of those resources.
 
+>>>> While the locator can be used to find files inside the sprinkles `src/` directory, it can't be directly used to handle _PHP Class Inheritance_. The [Dynamic Class Mapper](/advanced/class-mapper) needs to be used in such cases.<br />The locator *can* however be used where it's necessary to list PHP classes used to define objects or usable elements, such as _migrations_, _seeds_ and _Bakery commands_ related classes.
+
 ## Streams and Locations
 
 The locator uses the concept of _Streams_ and _Locations_ to represent directories and Sprinkles respectively. Each active sprinkle is registered as a Locator Location on boot. Several streams are registered on boot by the _base system_ and the _core_ sprinkle.
 
-Two types of streams are available within the locator : shared and non-shared streams. The non-shared streams, or normal streams, represent a directory within the Sprinkles folder. Shared streams exists only in . Note that both type can coexist. For example, the `bakery` stream is defined twice, once shared and once non-shared. This allows to find ressources (in this cases Bakery commands), inside each sprinkles as well as inside the system (`app/system/`) directory.
+Two types of streams are available within the locator : shared and non-shared streams. The non-shared streams, or normal streams, represent a directory within the Sprinkles folder. Shared streams exists only in . Note that both type can coexist. For example, the `bakery` stream is defined twice, once shared and once non-shared. This allows to find resources (in this cases Bakery commands), inside each sprinkles as well as inside the system (`app/system/`) directory.
 
 ### Default streams
 
@@ -136,7 +138,7 @@ To register a new stream, the locator service can't be extended. Fortunately, a 
 This later approach is recommended as you won't have to touch a particular service to use the stream or create a service only for this purpose. However, if the stream is tied to a particular service, it could be easier to register the stream at the same time as this service. For example, if a `foo` service uses the `bar` stream and all access to the `bar` stream is done inside the `foo` service, then it make sense to register the `bar` stream inside the service.
 
 
-To register a new service, the locator `registerStream` method can be used. The first argument is the stream name, the second the [prefix](https://github.com/userfrosting/UniformResourceLocator/tree/master/docs#using-scheme-prefix) and the third one the relative search path (from the root dir for shared stream, from each sprinkle dir for non-shared streams). The fourth parameter can be set to `true` to indicate a shared stream. 
+To register a new service, the locator `registerStream` method can be used. The first argument is the stream name, the second the [prefix](https://github.com/userfrosting/UniformResourceLocator/tree/master/docs#using-scheme-prefix) and the third one the relative search path (from the root dir for shared stream, from each sprinkle dir for non-shared streams). The fourth parameter can be set to `true` to indicate a shared stream.
 
 
 For example :

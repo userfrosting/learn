@@ -91,7 +91,7 @@ class OwlSprunje extends Sprunje
         'species'
     ];
     ...
-} 
+}
 ```
 
 This whitelisting is done to prevent consumers of your API from sorting/filtering on arbitrary columns, which could reveal potentially sensitive information.  For example, even if you don't return the actual **value** of a column in your result set (e.g., `is_admin`), one could still determine which users are admins, for example, by filtering based on `is_admin=1`.  Whitelisting ensures that this cannot happen.
@@ -249,9 +249,9 @@ class OwlSprunje extends Sprunje
     protected $listable = [
         'species'
     ];
-    
+
     ...
-    
+
 ```
 
 An array mapping each listable field to a list of possible values can be obtained by calling the `getListable` method on your Sprunje.  For each listable field, by default `getListable` will look for a corresponding table column of the same name, and generate sub-arrays containing `value` and `text` fields, each of which will contain the given value:
