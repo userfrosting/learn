@@ -6,3 +6,7 @@
 	path = sites/4.0
 	url = https://github.com/userfrosting/learn.git
 	branch = 4.0
+[submodule "sites/master"]
+	path = sites/master
+	url = https://github.com/userfrosting/learn.git
+	branch = master
