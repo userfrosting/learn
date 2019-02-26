@@ -20,7 +20,7 @@ To install this website on your computer, first [install grav core](https://getg
 git clone https://github.com/getgrav/grav.git userfrosting-learn
 cd userfrosting-learn
 rm -r user
-git clone https://github.com/userfrosting/learn.git user
+git clone --recursive https://github.com/userfrosting/learn.git user
 ```
 
 When you're done it should look like this:
@@ -57,10 +57,17 @@ sudo dseditgroup -o edit -a daemon -t user staff
 
 #### Step 3
 
-Install plugins and base theme. The base theme is learn2. The plugins each have empty directories in the plugins directory.
+Setup multisite for access to legacy version of the documentation.
 
 ```bash
-bin/gpm install -y error problems breadcrumbs anchors highlight simplesearch learn2
+cp user/setup.php setup.php
+```
+
+To update pages from the legacy version to their latest version, from the `user/` directory :
+
+```bash
+cd user/
+git submodule update --remote --merge
 ```
 
 ### Docker
@@ -77,7 +84,7 @@ git clone https://github.com/userfrosting/learn.git userfrosting-learn
 
 ### Step 2
 
-Then we start the image, with the appropraite configuration.
+Then we start the image, with the appropriate configuration.
 
 ```bash
 docker pull ahumaro/grav-php-nginx
@@ -96,7 +103,18 @@ bin/gpm install -y error problems breadcrumbs anchors highlight simplesearch lea
 
 NOTE: Grav uses `rename` when moving plugins to their final destination, which means this is where everything falls apart. The issue is that `rename` doesn't work to well when crossing a drive boundary (even for emulated drives), throwing a "Invalid cross-device link" error when attempted. Until a fix is out, you'll need to install the theme and plugins manually under docker.
 
+## Adding a legacy documentation
+
+Move to the `user/` directory, and add the desired branch as a new git submodule. Replace `{brancheName}` with the name of the branch you want to include.
+
+```bash
+git submodule add -b {brancheName} https://github.com/userfrosting/learn.git sites/{brancheName}
+```
+
+Next edit `user/config/versions.yaml` to add your new branch/version to the dropdown list.
+
+The default branch can also be defined in `setup.php`.
+
 ## Credits
 
 Favicons were generated with https://realfavicongenerator.net/
-

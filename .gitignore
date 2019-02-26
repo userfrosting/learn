@@ -1,12 +1,6 @@
-# Grav Specific
-.sass-cache
-composer.lock
-cache/*
-assets/*
-logs/*
-images/*
-user/data/*
-localhost/*
+# Grav dependencies
+themes/learn2
+plugins/*
 
 # OS Generated
 .DS_Store*
