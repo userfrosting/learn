@@ -9,7 +9,7 @@
 use Grav\Common\Filesystem\Folder;
 
 // Get relative path from Grav root.
-$path = isset($_SERVER['PATH_INFO'])
+$path = !empty($_SERVER['PATH_INFO'])
    ? $_SERVER['PATH_INFO']
    : Folder::getRelativePath($_SERVER['REQUEST_URI'], ROOT_DIR);
 
