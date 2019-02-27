@@ -20,7 +20,7 @@ To install this website on your computer, first [install grav core](https://getg
 git clone https://github.com/getgrav/grav.git userfrosting-learn
 cd userfrosting-learn
 rm -r user
-git clone --recursive https://github.com/userfrosting/learn.git user
+git clone https://github.com/userfrosting/learn.git user
 ```
 
 When you're done it should look like this:
@@ -39,7 +39,7 @@ htdocs/
    └── ...
 ```
 
-To finish the install off, just run:
+To finish Grav install, just run:
 
 ```bash
 bin/grav install
@@ -63,7 +63,14 @@ Setup multisite for access to legacy version of the documentation.
 cp user/setup.php setup.php
 ```
 
-To update pages from the legacy version to their latest version, from the `user/` directory :
+Fetch the git submodules from the `user/` directory, which contains the pages for every doc versions :
+
+```bash
+cd user/
+git submodule update --init
+```
+
+To update pages from the legacy version to their latest version, run from the `user/` directory :
 
 ```bash
 cd user/
