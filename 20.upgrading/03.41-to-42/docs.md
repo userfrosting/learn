@@ -109,14 +109,7 @@ Seeding performed in migrations will still work, but support for database seedin
 
 ### Assets installation has failed
 
-If assets installation fail with a similar message :
-
-```
-Error: Cannot find module 'acorn'
-    at Object.<anonymous> (/home/vagrant/userfrosting/build/node_modules/acorn-dynamic-import/lib/index.js:18:14)
-```
-
-Simply delete the `build/package-lock.json` file and the `build/node_modules/` directory. You can then run the Bake or `build-assets` command again.
+If assets installation fail, simply delete the `build/package-lock.json` file and the `build/node_modules/` directory. You can then run the Bake or `build-assets` command again.
 
 ## Complete change Log
 
