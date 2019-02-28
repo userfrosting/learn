@@ -20,7 +20,7 @@ To install this website on your computer, first [install grav core](https://getg
 git clone https://github.com/getgrav/grav.git userfrosting-learn
 cd userfrosting-learn
 rm -r user
-git clone https://github.com/userfrosting/learn.git user
+git clone -b website https://github.com/userfrosting/learn.git user
 ```
 
 When you're done it should look like this:
@@ -57,7 +57,7 @@ sudo dseditgroup -o edit -a daemon -t user staff
 
 #### Step 3
 
-Setup multisite for access to legacy version of the documentation.
+Setup Grav multisite for access to all versions of the documentation.
 
 ```bash
 cp user/setup.php setup.php
@@ -110,7 +110,7 @@ bin/gpm install -y error problems breadcrumbs anchors highlight simplesearch lea
 
 NOTE: Grav uses `rename` when moving plugins to their final destination, which means this is where everything falls apart. The issue is that `rename` doesn't work to well when crossing a drive boundary (even for emulated drives), throwing a "Invalid cross-device link" error when attempted. Until a fix is out, you'll need to install the theme and plugins manually under docker.
 
-## Adding a legacy documentation
+## Adding a new documentation version
 
 Move to the `user/` directory, and add the desired branch as a new git submodule. Replace `{brancheName}` with the name of the branch you want to include.
 
