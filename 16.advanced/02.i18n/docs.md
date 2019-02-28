@@ -8,7 +8,31 @@ taxonomy:
 
 UserFrosting comes with a complete internationalization system. This system allows you to translate your pages in any language you want. The internationalization service uses the [i18n module](https://github.com/userfrosting/i18n) to handles translation tasks for UserFrosting. The internationalization system also includes a powerful pluralization handling.
 
-Translating strings, or sentences, is as easy as assigning localized sentences to a common _translation key_. To achieve this, two things are used: the translation files and the `MessageTranslator`. 
+Translating strings, or sentences, is as easy as assigning localized sentences to a common _translation key_. To achieve this, two things are used: the translation files and the `MessageTranslator`.
+
+## Setting up the site language
+
+The site default languages can be set in the [config](/configuration/config-files) parameters. The `site.locales.default` contains the locale to use for global, guest users. Multiple locales can be listed, separated by commas, to indicate the locale precedence order. For example, `'locales' => 'en_US, fr_FR'` means that the _French_ language will be loaded first and if the requested key doesn't exist in French, it will try to use the _English_ one instead.
+
+A user can also use its own language. This is defined in the user's profile. All available locales are defined in the `site.locales.available` config. To remove one locale from the user profile, simply set the unwanted locale to `null` in your sprinkle config. For example, the following config will only present the English, Spanish and French locale to the user :
+
+```
+    'available' => [
+        'en_US' => 'English',
+        'zh_CN' => null,
+        'es_ES' => 'Español',
+        'ar'    => null,
+        'pt_PT' => null,
+        'ru_RU' => null,
+        'de_DE' => null,
+        'fr_FR' => 'Français',
+        'tr'    => null,
+        'it_IT' => null,
+        'th_TH' => null,
+        'fa'    => null,
+        'el'    => null,
+    ],
+```
 
 ## The translation files
 
@@ -60,9 +84,9 @@ return array(
 Translating string is just a matter of asking the `MessageTranslator`, via the `translator` service, to return the localized version of a key based on the site or user locale as follows:
 ```
 $this->ci->translator->translate($hook, $params);
-``` 
+```
 
-Where `$this->ci` is the [DI container](/services/the-di-container), `$hook` the _language keys_ you want to display and `$params` the placeholders value. For example: 
+Where `$this->ci` is the [DI container](/services/the-di-container), `$hook` the _language keys_ you want to display and `$params` the placeholders value. For example:
 
 ```
 echo $this->ci->translator->translate("ACCOUNT_USER_CHAR_LIMIT", [
@@ -81,19 +105,11 @@ The translator service is also available as a [Twig function](/templating-with-t
 {{ translate("ACCOUNT_USER_CHAR_LIMIT", {min: 4, max: 200}) }}
 ```
 
-
-## Setting up the site language
-
-The site default languages can be set in the [config](/configuration/config-files) parameters. The `site.locales` contains the locale to use for global, guest users. Multiple locales can be listed, separated by commas, to indicate the locale precedence order. For example, `'locales' => 'en_US, fr_FR'` means that the _French_ language will be loaded first and if the requested key doesn't exist in French, it will try to use the _English_ one instead. 
-
->>>>>> A user can also use its own language. This is defined in the user's profile.
-
-
 ## Pluralization
 
-The plural system allows for easy pluralization of strings. For a given language, there is a grammatical rule on how to change words depending on the number qualifying the word. Different languages can have different rules. For example, in English you say `no cars` (note the **plural** `cars`) while in French you say `Aucune voiture` (note the **singular** `voiture`). 
+The plural system allows for easy pluralization of strings. For a given language, there is a grammatical rule on how to change words depending on the number qualifying the word. Different languages can have different rules. For example, in English you say `no cars` (note the **plural** `cars`) while in French you say `Aucune voiture` (note the **singular** `voiture`).
 
-The rule associated with a particular language is based on [Mozilla plural rules](https://developer.mozilla.org/en-US/docs/Mozilla/Localization/Localization_and_Plurals). The language plural rule is defined in the `@PLURAL_RULE` key. So in the **English** file, you should find `"@PLURAL_RULE" => 1` and in the **French** file `"@PLURAL_RULE" => 2`. Those should be set in the `core` Sprinkle and you don't need to change them, unless if you’re adding a new language to UserFrosting. 
+The rule associated with a particular language is based on [Mozilla plural rules](https://developer.mozilla.org/en-US/docs/Mozilla/Localization/Localization_and_Plurals). The language plural rule is defined in the `@PLURAL_RULE` key. So in the **English** file, you should find `"@PLURAL_RULE" => 1` and in the **French** file `"@PLURAL_RULE" => 2`. Those should be set in the `core` Sprinkle and you don't need to change them, unless if you’re adding a new language to UserFrosting.
 
 Strings with plural forms are defined as sub arrays with the **rules** as the key. The right plural form is determined by the plural value passed as the second parameter of the `translate` function :
 ```
@@ -273,7 +289,7 @@ $this->ci->translator->translate('ACCOUNT.ALT'); //Return "Profile"
 	2 => "{{plural}} hungry cats",
 ]
 ```
- 
+
 
 ### `@PLURAL`
 The default `plural` default placeholder can be overwritten by the `@PLURAL` handle in the language files. This may be useful if you pass an existing array to the translate function.
@@ -304,7 +320,7 @@ $this->ci->translator->translate('I_LOVE_MY_CATS', 3); //Return "I love my 3 cat
 In this example, `{{&MY_CATS}}` gets replaced with the `MY_CATS` and since there are 3 cats, the n° 2 rule is selected. So the string becomes `I love my {{plural}} cats` which then becomes `I love my 3 cats`.
 
 
->>> Since this is the last thing handled by the translator, this behaviour can be overwritten by the function call: 
+>>> Since this is the last thing handled by the translator, this behaviour can be overwritten by the function call:
 `$this->ci->translator->translate('I_LOVE_MY_CATS', ["plural" => 3, "&MY_CATS" => "my 3 dogs"); //Return "I love my 3 dogs"`
 
 Since the other placeholders, including the plural value(s) are also being passed to the sub translation, it can be useful for languages like French where the adjectives can also be pluralizable. Consider this sentence : `I have 3 white catS`. In French, we would say `J'ai 3 chatS blancS`. Notice the **S** on the color **blanc**? One developer could be tempted to do this in an English context :
