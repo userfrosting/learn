@@ -14,6 +14,9 @@ UserFrosting 4.2 brings improved organization of the codebase, a new migrator an
 
 - Include [Vagrant and Homestead](/installation/environment/homestead) integration directly inside UF ([#829])
 - New `migrate:status` Bakery command
+- New `sprinkle:list` Bakery command
+- New `test:mail` Bakery Command
+- New `NoCache` middleware to prevent caching of routes with dynamic content
 - `migrate` and `migrate:*` Bakery command now require confirmation before execution when in production mode.
 - Implement `withRaw`, `withSum`, `withAvg`, `withMin`, `withMax` (see https://github.com/laravel/framework/pull/16815)
 - Added arguments to the `create-admin` and `setup` Bakery commands so it can be used in a non-interactive way ([#808])
@@ -24,18 +27,17 @@ UserFrosting 4.2 brings improved organization of the codebase, a new migrator an
 - Improved overall test coverage and added coverage config to `phpunit.xml`
 - Added code style config (`.php_cs`) and instructions for PHP-CS-Fixer in Readme
 - Add cache facade (Ref [#838])
-- Added `test:mail` Bakery Command
 - Add support for other config['mailer'] options ([#872]; Thanks @apple314159 !)
 - Improved `route:list` Bakery command
-- Added support for npm dependencies on the frontend with auditting for known vulnerabilities
-- Rewrote asset processing to minimise file sizes, drastically reduce IO, and improve maintainability
+- Added support for npm dependencies on the frontend with auditing for known vulnerabilities
+- Rewrote asset processing to minimize file sizes, drastically reduce IO, and improve maintainability
 - Rewrote frontend dependency installation to prevent duplication and detect incompatibilities
+- Added Greek locale (Thanks @lenasterg!; [#940])
 
 ### Breaking changes
 
 #### Major (likely to break your project)
-- The console IO instance is not available anymore in migrations
-- Removed the `io` property from migration classes
+- Removed the `io` property from migration classes. The console IO instance is not available anymore in migrations
 - Removed Bakery `projectRoot` property. Use the `\UserFrosting\ROOT_DIR` constant instead
 - Removed `UserFrosting\System\Bakery\DatabaseTest` trait for custom Bakery command, use `UserFrosting\Sprinkle\Core\Bakery\Helper\DatabaseTest` instead.
 - Removed `UserFrosting\System\Bakery\ConfirmableTrait` trait for custom Bakery command, use `UserFrosting\Sprinkle\Core\Bakery\Helper\ConfirmableTrait` instead.
@@ -47,11 +49,11 @@ UserFrosting 4.2 brings improved organization of the codebase, a new migrator an
 #### Deprecations (still available but may be removed at any time)
 - Migrations should now extends `UserFrosting\Sprinkle\Core\Database\Migration` instead of `UserFrosting\System\Bakery\Migration`
 - Migrations dependencies property should now be a static property
-- Deprecated migration `seed` method. Database seeding should now be done using the new Seeder
-- Trait `\UserFrosting\Tests\DatabaseTransactions` has been deprecated. Tests should now use the `\UserFrosting\Sprinkle\Core\Tests\DatabaseTransactions` trait instead. (#826)
+- Deprecated migration `seed` method. Database seeding should now be done using the new [Seeder](/database/seeding).
+- Trait `\UserFrosting\Tests\DatabaseTransactions` has been deprecated. Tests should now use the `\UserFrosting\Sprinkle\Core\Tests\DatabaseTransactions` trait instead. ([#826])
 - Makes the `semantic versioning` part of a migration class optional. Migrations classes can now have the `UserFrosting\Sprinkle\{sprinkleName}\Database\Migrations` namespace, or any other sub-namespace
 
-## New Node.js and NPM requirements
+### New Node.js and NPM requirements
 
 UserFrosting 4.2.x now requires [Node.js](https://nodejs.org/en/) 10.12.0 or above and NPM 6.0.0 or above.
 
@@ -64,11 +66,27 @@ sudo n -q lts
 
 This will install the latest LTS (Long Term Support) version of Node.js.
 
-## PHP 5.6 and 7.0 Support Deprecation
+### Bower deprecation, new Yarn support
+
+Bower has been deprecated since 2017, and with NPM support landing in UserFrosting, Bower is now deprecated here as well. In the future, support for it will be removed.
+
+Frontend dependencies used by UserFrosting are now retrieved from [NPM](https://www.npmjs.com/). If you depend on these you may find certain files have shifted around, verifying references are correct is recommended. UserFrosting can help in this endeavor, as missing resources referenced using the locator infrastructure will produce a server error.
+
+To facilitate an easier transition and accommodate the complexities associated with the node module resolution logic that permits duplicate indirect dependencies, compatible main entry points will be run through [Browserify](https://www.npmjs.com/package/browserify) to resolve `require` imports.
+
+Dependency conflicts between individual sprinkles for `bower.json` may now occur. If this occurs you'll need to update the [semver](https://semver.org/) range to resolve or force a specific version using the `resolutions` attribute.
+
+Finally, frontend dependencies are now located at `app/assets/bower_components` for Bower and `app/assets/node_modules` for NPM. Running `php bakery assets-install` will automatically remove dependencies in the old location. This does not affect asset resolution.
+
+### PHP 5.6 and 7.0 support deprecation
 
 As of UserFrosting 4.2.0, support for PHP version 5.6 and 7.0 is officially deprecated. While you can still use UserFrosting 4.2.x with PHP 7.0 or earlier, upgrading to PHP 7.2 or above is highly recommended as both PHP 5.6 and 7.0 have reached [End Of Life](http://php.net/supported-versions.php) since Jan. 1st 2019.
 
-**The next version of UserFrosting (4.3.x) won't support PHP 5.6 or 7.0**
+>>>> **The next major version of UserFrosting (4.3.x) won't support PHP 5.6 or 7.0**
+
+### Complete change Log
+
+See the [Changelog](https://github.com/userfrosting/UserFrosting/blob/master/CHANGELOG.md#v420) for the complete list of changes included in this release.
 
 
 ## Upgrading to 4.2.x
@@ -80,23 +98,19 @@ $ composer update
 $ php bakery bake
 ```
 
-### Frontend Assets
-
-1. Frontend dependencies are now located at `app/assets/bower_components` for Bower and `app/assets/node_modules` for NPM. Running `php bakery assets-install` or  `cd build && npm run uf-assetsInstall` will automatically remove dependencies in the old location. This does not affect asset resolution.
-
-2. Frontend dependencies used by UserFrosting are now retrieved from [NPM](https://www.npmjs.com/). If you depend on these you may find certain files have shifted around, verifying references are correct is recommended. UserFrosting can help in this endevour, as missing resources referenced using the locator infrustructure will produce a server error.
-
-3. Dependency conflicts between individual sprinkles for `bower.json` may now occur. If this occurs you'll need to update the [semver](https://semver.org/) range to resolve or force a specific version using the `resolutions` attribute.
-
-4. Bower has been deprecated since 2017, and with NPM support landing in UserFrosting it is now deprecated here as well. In the future support will be removed so migrating to `package.json` if possible is recommended. To facilitate an easier transition and accomadate the complexities assocaited with the node module resolution logic that permits duplicate indirect dependencies, compatible main entrypoints will be run through [Browserify](https://www.npmjs.com/package/browserify) to resolve `require` imports.
-
 ### Migrating your Sprinkles
+
+#### Frontend Assets
+
+Since Bower is now deprecated, it is recommended to migrate your sprinkle third party frontend dependencies to [**Yarn**](https://yarnpkg.com/). This can be accomplished by renaming your sprinkle `bower.json` file to Yarn's `package.json`.
+
+Some package can be named differently between Bower and Yarn. For example, the **Bootstrap 3 Typeahead** package is named `bootstrap3-typeahead` in Bower, but `bootstrap-3-typeahead` in Yarn. Refer to [**Yarn**](https://yarnpkg.com/) website to see if your sprinkle third party dependencies need updating.
 
 #### Migrations
 
-1. Migrations should be updated to extends `UserFrosting\Sprinkle\Core\Database\Migration` instead of `UserFrosting\System\Bakery\Migration`.
+Migrations should be updated to extends `UserFrosting\Sprinkle\Core\Database\Migration` instead of `UserFrosting\System\Bakery\Migration`. Migration that have already been run don't need to be run again.
 
-2. Any migrations using the `io` property to interact with the user through the command line needs to be updated. Since migrations can now be run outside of the CLI, migrations can't make use of the `io` anymore. Any task requiring user input should be moved to a [custom Bakery command](/cli/custom-commands).
+Any migrations using the `io` property to interact with the user through the command line needs to be updated. Since migrations can now be run outside of the CLI, migrations can't make use of the `io` anymore. Any task requiring user input should be moved to a [custom Bakery command](/cli/custom-commands) or seed.
 
 #### Seeds
 
@@ -111,9 +125,6 @@ Seeding performed in migrations will still work, but support for database seedin
 
 If assets installation fail, simply delete the `build/package-lock.json` file and the `build/node_modules/` directory. You can then run the Bake or `build-assets` command again.
 
-## Complete change Log
-
-See the [Changelog](https://github.com/userfrosting/UserFrosting/blob/master/CHANGELOG.md#v420) for the complete list of changes included in this release.
 
 [#653]: https://github.com/userfrosting/UserFrosting/issues/653
 [#793]: https://github.com/userfrosting/UserFrosting/issues/793
