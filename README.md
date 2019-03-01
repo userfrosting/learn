@@ -39,12 +39,6 @@ htdocs/
    └── ...
 ```
 
-To finish Grav install, just run:
-
-```bash
-bin/grav install
-```
-
 #### Step 2
 
 Grav needs your webserver to be able to write to certain directories.  In OSX with XAMPP installed, this won't work by default.  To deal with this:
@@ -68,20 +62,23 @@ Fetch the git submodules from the `user/` directory, which contains the pages fo
 ```bash
 cd user/
 git submodule update --init
+cd ../
 ```
 
-To update pages from the legacy version to their latest version, run from the `user/` directory :
+#### Step 4
+
+To finish Grav install, just run:
 
 ```bash
-cd user/
-git submodule update --remote --merge
+
+bin/grav install
 ```
 
 ### Docker
 
 Most docker images (like the one used here) automate the installation of Grav. So for the most part, getting started with Docker is less tedious. Instead the tediousness is at the end due to a bug in Grav.
 
-### Step 1
+#### Step 1
 
 We start off by cloning this repo.
 
@@ -89,7 +86,7 @@ We start off by cloning this repo.
 git clone https://github.com/userfrosting/learn.git userfrosting-learn
 ```
 
-### Step 2
+#### Step 2
 
 Then we start the image, with the appropriate configuration.
 
@@ -98,7 +95,7 @@ docker pull ahumaro/grav-php-nginx
 docker run -d -i -p 80:80 -p 2222:22 -v "$(pwd):/usr/share/nginx/html/user/" --name ufLearn ahumaro/grav-php-nginx
 ```
 
-### Step 3
+#### Step 3
 
 Install plugins and base theme. The base theme is learn2. The plugins each have empty directories in the plugins directory.
 
@@ -121,6 +118,15 @@ git submodule add -b {brancheName} https://github.com/userfrosting/learn.git sit
 Next edit `user/config/versions.yaml` to add your new branch/version to the dropdown list.
 
 The default branch can also be defined in `setup.php`.
+
+## Updating submodules / doc pages
+
+To update pages from the legacy version to their latest version, run from the `user/` directory :
+
+```bash
+cd user/
+git submodule update --remote --merge
+```
 
 ## Credits
 
