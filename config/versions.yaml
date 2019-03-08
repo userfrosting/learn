@@ -1,6 +1,16 @@
 branches:
-    'latest': ''
-    '4.0': '/4.0'
-    '4.1': '/4.1'
-    '4.2 Beta': '/4.2'
-    'develop': '/develop'
+    'latest':
+        path: ''
+        label: 'Latest'
+    '4.0':
+        path: '/4.0'
+        label: '4.0'
+    '4.1':
+        path: '/4.1'
+        label: '4.1'
+    '4.2':
+        path: '/4.2'
+        label: '4.2 Beta'
+    'develop':
+        path: '/develop'
+        label: 'Develop'

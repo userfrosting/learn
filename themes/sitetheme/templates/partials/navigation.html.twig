@@ -25,11 +25,11 @@
                 <li><a class="btn" href="https://www.userfrosting.com/donate">Donate</a></li>
                 <li>
                     <a class="dropdown-button dropdown-button-version" href="#!" data-activates="dropdown2">
-                        {{ config.environment }} <i class="fa fa-caret-down"></i>
+                        {{ config.versions.branches[config.environment].label }} <i class="fa fa-caret-down"></i>
                     </a>
                     <ul id="dropdown2" class="dropdown-content">
-                        {% for label, path in config.versions.branches %}
-                            <li><a href="{{ uri.base }}{{ path }}{{ uri.path }}">{{ label }}</a></li>
+                        {% for version in config.versions.branches %}
+                            <li><a href="{{ uri.base }}{{ version.path }}{{ uri.path }}">{{ version.label }}</a></li>
                         {% endfor %}
                     </ul>
                 </li>

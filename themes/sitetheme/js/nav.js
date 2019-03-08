@@ -25,6 +25,11 @@ $( document ).ready(function() {
     // Hide the navbar when scrolled down
     var isHidden = false;
 
+    // Normal select event
+    $('.version-select > select').on('change', function(){
+       window.location = $(this).val();
+    });
+
     $(window).on('scroll', function () {
         if (($(document).scrollTop() <= 200)) {
             if (isHidden) {

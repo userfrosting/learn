@@ -36,7 +36,7 @@ a.nav-next:hover, a.nav-prev:hover {
 }
 
 
-/* Top bar 
+/* Top bar
 =====================*/
 
 #top-bar {
@@ -49,7 +49,7 @@ a.nav-next:hover, a.nav-prev:hover {
 }
 
 
-/* TOC 
+/* TOC
 =====================*/
 .toc h1 {
     margin-bottom: 1rem;
@@ -96,7 +96,7 @@ a.nav-next:hover, a.nav-prev:hover {
 }
 
 
-/* Github link 
+/* Github link
 =====================*/
 
 #top-github-link a {
@@ -223,7 +223,7 @@ h1 {
 
 h2 {
     font-size: 2rem;
-    border-bottom: 2px solid #ee6e73; 
+    border-bottom: 2px solid #ee6e73;
     display: table;
 }
 
@@ -464,7 +464,7 @@ mark {
     .searchbox input {
         font-size: 12px;
     }
-    
+
     #sidebar ul li a span {
         font-size: 14px;
     }
@@ -474,26 +474,26 @@ mark {
     #top-bar {
     padding: 42px 16px 24px 16px;
     }
-    
+
     h1 {}
     h2 {font-size: 1.5rem;}
     h3 {font-size: 1.25rem;}
     h4 {font-size: 1.15rem;}
     h5 {font-size: 1rem;}
     h6 {font-size: 1rem;}
-    
+
     code, pre, pre code {
         max-width: 94vw;
         white-space: pre-wrap;
     }
-    
+
     #chapter h1 {font-size: 2rem;}
     #chapter h4 {font-size: 1.5rem;}
-    
+
     #chapter #body-inner {
         height: 30vh;
     }
-    
+
     body {font-size: 15px;}
     p {margin: 1.33rem 0;}
     pre, code, pre code {font-size: 14px;}
@@ -548,4 +548,25 @@ input.form-control {
 
 .example-output pre {
     margin: 0;
+}
+
+/* Doc version select
+=====================*/
+
+div.version-select {
+    margin: 1rem;
+}
+
+div.version-select label,
+div.version-select select {
+    display: inline;
+    margin-bottom: 0;
+}
+
+div.version-select label {
+    color: #a2a2a2;
+}
+
+div.version-select select {
+    margin-left: 5px;
 }
