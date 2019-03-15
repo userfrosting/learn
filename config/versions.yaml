@@ -10,7 +10,7 @@ branches:
         label: '4.1'
     '4.2':
         path: '/4.2'
-        label: '4.2 Beta'
+        label: '4.2'
     'develop':
         path: '/develop'
         label: 'Develop'
