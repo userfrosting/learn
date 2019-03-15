@@ -11,10 +11,10 @@ process:
 The basic requirements for running UserFrosting are pretty typical of any web framework or CMS.  You'll need:
 
 - Web server software (Apache, Nginx, IIS, etc)
-- **PHP 5.6** or higher
+- **PHP 5.6** or higher (**7.2** recommended)
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
 
-(By the way, MariaDB is just an open-source fork of MySQL.  The reason it exists is because of [numerous concerns](http://www.computerworld.com.au/article/457551/dead_database_walking_mysql_creator_why_future_belongs_mariadb/) that Oracle would not do a good job honoring the open-source nature of the MySQL community.  For all technical purposes, MariaDB and MySQL are more or less perfectly interoperable).
+>>>>>> MariaDB is just an open-source fork of MySQL. The reason it exists is because of [numerous concerns](http://www.computerworld.com.au/article/457551/dead_database_walking_mysql_creator_why_future_belongs_mariadb/) that Oracle would not do a good job honoring the open-source nature of the MySQL community.  For all technical purposes, MariaDB and MySQL are more or less perfectly interoperable.
 
 ### Web Server Requirements
 
@@ -93,16 +93,17 @@ During development, and before you're ready to deploy, you'll also want to have 
 
 See the [next section](/installation/requirements/essential-tools-for-php) for more information on these tools.
 
-## But my host only supports PHP 5.x!  Why do I need PHP 5.6?
+## But my host only supports PHP 5.x! Why do I need PHP 5.6? And don't get me started about PHP 7.2!
 
 Look, programming languages evolve, and PHP is no exception.  Actually, PHP (and other web languages) have it particularly tough because they have so many responsibilities.  PHP is the bouncer at the door and it has to be prepared to defend against the constantly evolving security threats to your server.  At the same time it has to keep up with the demand for faster performance, and satisfy the demand for new features from the [enormous](https://w3techs.com/technologies/overview/programming_language/all) PHP community.
 
-Honestly, PHP 5.6 isn't exactly cutting edge - in fact, it's no longer in active support as of [January 19, 2017](http://php.net/supported-versions.php).  And the truth is, we didn't make this decision directly.  UserFrosting depends on a lot of third-party components, and *those* components require a minimum version of 5.6.  Thus, UF does too, and the whole community moves forward.
+Honestly, PHP 5.6 isn't exactly cutting edge - in fact, **PHP 5.6 is no longer in active support as of [January 19, 2017](http://php.net/supported-versions.php) and declared "End of Life" as of [January 1st, 2019](http://php.net/supported-versions.php)**.  And the truth is, we didn't make this decision directly.  UserFrosting depends on a lot of third-party components, and *those* components require a minimum version of 5.6.  Thus, UF does too, and the whole community moves forward. Even PHP 7.1 won't be supported starting [December 1st 2019](http://php.net/supported-versions.php) !
 
-If your hosting service doesn't have PHP 5.6 or higher installed, call them and ask them to upgrade.  If they refuse, point out that PHP 5.6 has been out of support for {{ date("now").diff(date("2017-01-19")).m }} months!  To be honest, there is little reason to use a shared hosting (e.g. cPanel)
-service these days, especially when VPS providers like DigitalOcean and Amazon EC2 are so inexpensive.  Unless you're stuck with shared hosting for some reason another (fussy boss), [there's no real reason not to switch to a VPS](https://www.hostt.com/still-use-shared-hosting-theres-vps/).
+If your hosting service doesn't have PHP 5.6 or higher installed, call them and ask them to upgrade.  If they refuse, point out that PHP 5.6 has been out of support for {{ date("now").diff(date("2017-01-19")).m }} months!  To be honest, there is little reason to use a shared hosting (e.g. cPanel) service these days, especially when VPS providers like DigitalOcean and Amazon EC2 are so inexpensive.  Unless you're stuck with shared hosting for some reason another (fussy boss), [there's no real reason not to switch to a VPS](https://www.hostt.com/still-use-shared-hosting-theres-vps/).
 
-As for your local development environment ([You _do_ have a local development environment, right](/background/develop-locally-serve-globally)), if it's that much of a burden then...I don't know what to tell you.  So what are you waiting for?  Upgrade!
+As for your local development environment ([You _do_ have a local development environment, right ?](/background/develop-locally-serve-globally)), if it's that much of a burden then...I don't know what to tell you.  So what are you waiting for?  Upgrade!
+
+>>>> As of UserFrosting 4.2.0, support for PHP version 5.6 and 7.0 is officially deprecated. While you can still use UserFrosting 4.2.x and before with those versions, upgrading to PHP 7.2 or above is highly recommended as both PHP 5.6 and 7.0 have reach [End Of Life](http://php.net/supported-versions.php) since Jan. 1st 2019 and PHP 7.1 won't be supported starting [December 1st 2019](http://php.net/supported-versions.php).
 
 ## Third-party components?  Why don't you write all your own code?
 

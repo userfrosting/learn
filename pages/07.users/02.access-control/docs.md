@@ -19,7 +19,7 @@ For example, consider the following roles, and their associated permissions:
 - **Site Administrator**
   - Can update any account's info
   - Can delete any account's messages
-  
+
 If Alice has the **Member** role, she will be able to update her account info, post new messages, and delete her own messages.  If she had the **Site Administrator** role as well, she would gain the ability to update other users' accounts and delete their messages, in addition to the permissions that she has from her **Member** role.
 
 ## Permissions
@@ -109,7 +109,7 @@ UserFrosting ships with a number of predefined access condition callbacks, which
 
 ### Custom callbacks
 
-To add your own access condition callbacks, simply [extend](/services/extending-services#extending-existing-services) the `authorizer` service in your Sprinkle's `ServicesProvider`: 
+To add your own access condition callbacks, simply [extend](/services/extending-services#extending-existing-services) the `authorizer` service in your Sprinkle's `ServicesProvider`:
 
 ```
 $container->extend('authorizer', function ($authorizer, $c) {
@@ -137,26 +137,25 @@ You may notice that while roles can be created and modified through the administ
 
 Think about it this way - for a permission to have any effect on your application at all, you must reference its slug somewhere in one of your controllers.  This means that even if a user were to create a new permission through the web interface, it **wouldn't make any difference** until a developer were to implement some code that makes use of it.
 
-Instead, you should think of permissions as hardcoded parts of your application that just happen to be stored in the database.  Permissions can be **added, removed, or modified**  using a [database migration](/database/migrations).
+Instead, you should think of permissions as hardcoded parts of your application that just happen to be stored in the database.  Permissions can be **added, removed, or modified**  using a [database migration](/database/migrations) or a [database seed](/database/seeding).
 
-For example, you might add a `CustomPermissions` migration to your project:
+Both methods can be used to create or manipulate permissions. **Migrations** are better suited to edit or remove existing permissions since they assure you permissions stays constant in time, but won't help you restore a permission if one gets deleted by accident, since a migration can only be run once. **Seeds** on the other hand can be run more than once, so they can be used to restore a deleted permission, but can't be relied on to edit a permission the same way you can with a migration, since a seed can be run in any order, and can't be automatically reverted.
+
+With that in mind, it is recommended to use a **seed** to create permissions as it will make it easier to restore a deleted permission and the consistency can be checked manually. However, since both methods are valid and can be used depending on the developer choice, both are shown below.
+
+### Using a Seed
 
 ```php
 <?php
-namespace UserFrosting\Sprinkle\Site\Database\Migrations\v100;
+namespace UserFrosting\Sprinkle\Site\Database\Seeds;
 
 use UserFrosting\Sprinkle\Account\Database\Models\Permission;
 use UserFrosting\Sprinkle\Account\Database\Models\Role;
-use UserFrosting\System\Bakery\Migration;
+use UserFrosting\Sprinkle\Core\Database\Seeder\BaseSeed;
 
-class CustomPermissions extends Migration
+class CustomPermissions extends BaseSeed
 {
-    public $dependencies = [
-        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\PermissionsTable',
-        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable'
-    ];
-
-    public function seed()
+    public function run()
     {
         // Add default permissions
         $permissions = [
@@ -191,6 +190,75 @@ class CustomPermissions extends Migration
                 $permissions['uri_owls']->id
             ]);
         }
+    }
+}
+```
+
+### Using a Migration
+
+```php
+<?php
+namespace UserFrosting\Sprinkle\Site\Database\Migrations\v100;
+
+use UserFrosting\Sprinkle\Account\Database\Models\Permission;
+use UserFrosting\Sprinkle\Account\Database\Models\Role;
+use UserFrosting\System\Bakery\Migration;
+
+class CustomPermissions extends Migration
+{
+    public static $dependencies = [
+        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\PermissionsTable',
+        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable'
+    ];
+
+    public function up()
+    {
+        // Add default permissions
+        $permissions = $this->getPermissions();
+
+        foreach ($permissions as $id => $permission) {
+            $slug = $permission->slug;
+            $conditions = $permission->conditions;
+            // Skip if a permission with the same slug and conditions has already been added
+            if (!Permission::where('slug', $slug)->where('conditions', $conditions)->first()) {
+                $permission->save();
+            }
+        }
+
+        // Automatically add permissions to particular roles
+        $roleAdmin = Role::where('slug', 'site-admin')->first();
+        if ($roleAdmin) {
+            $roleAdmin->permissions()->syncWithoutDetaching([
+                $permissions['uri_members']->id,
+                $permissions['uri_owls']->id
+            ]);
+        }
+    }
+
+    public function down()
+    {
+        foreach ($this->getPermissions() as $id => $permissionData) {
+            $permission = Permission::where($permissionData)->first();
+            $permission->delete();
+        }
+    }
+
+    protected function getPermissions()
+    {
+        return [
+            'uri_members' => new Permission([
+                'slug' => 'uri_members',
+                'name' => 'Member management page',
+                'conditions' => 'always()',
+                'description' => 'View a page containing a list of members.'
+            ]),
+            'uri_owls' => new Permission([
+                'slug' => 'uri_owls',
+                'name' => 'View owls',
+                'conditions' => 'always()',
+                'description' => 'View a full list of owls in the system.'
+            ])
+        ];
     }
 }
 ```

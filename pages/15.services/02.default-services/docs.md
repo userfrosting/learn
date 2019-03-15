@@ -64,6 +64,10 @@ Monolog `Logger` object for sending non-fatal error information from custom erro
 
 Provide access to factories for the rapid creation of [test](/advanced/automated-tests) objects.
 
+#### filesystem
+
+Provide access to the filesystem for file handling. Include support for multiple cloud based storage solution. See [File Storage](/advanced/storage) for more information.
+
 #### localePathBuilder
 
 A `UserFrosting\I18n\LocalePathBuilder` instance that constructs an ordered list of files containing [translations](/advanced/i18n).  These files are used to initialize the `MessageTranslator` object available in the `translator` service.
@@ -205,7 +209,7 @@ Sets up a `VerificationRepository` object (`UserFrosting\Sprinkle\Account\Reposi
 
 #### userActivityLogger
 
-Sets up a Monolog logger, which uses `UserFrosting\Sprinkle\Account\Log\UserActivityDatabaseHandler` and `UserFrosting\Sprinkle\Account\Log\UserActivityProcessor` to allow logging of user activities to the `activities` database table.  By using Monolog, it makes it easy to swap other storage solutions such as redis or Elastic Search.
+Sets up a Monolog logger, which uses `UserFrosting\Sprinkle\Account\Log\UserActivityDatabaseHandler` and `UserFrosting\Sprinkle\Account\Log\UserActivityProcessor` to allow logging of user activities to the `activities` database table.  By using Monolog, it makes it easy to swap other storage solutions such as Redis or Elastic Search.
 
 ### System services
 
@@ -217,13 +221,9 @@ An instance of `RocketTheme\Toolbox\Event\EventDispatcher`, which itself extends
 
 #### locator
 
-An instance of [RocketTheme's Uniform Resource Locator class](https://github.com/rockettheme/toolbox/blob/develop/ResourceLocator/src/UniformResourceLocator.php), which provides a unified method of accessing Sprinkle entities via [streams](https://webmozart.io/blog/2013/06/19/the-power-of-uniform-resource-location-in-php/).  
+An instance of [Uniform Resource Locator class](https://github.com/userfrosting/uniformresourcelocator), which provides a unified method of accessing Sprinkle entities via [streams](https://webmozart.io/blog/2013/06/19/the-power-of-uniform-resource-location-in-php/).  
 
 See [Chapter 16](/advanced/locator) for more information.
-
-#### streamBuilder
-
-An instance of `RocketTheme\Toolbox\StreamWrapper\StreamBuilder`, which registers custom streams (`cache://`, `config://`, `templates://`, etc) with PHP's [stream wrapper system](http://php.net/manual/en/function.stream-wrapper-register.php).
 
 #### sprinkleManager
 
