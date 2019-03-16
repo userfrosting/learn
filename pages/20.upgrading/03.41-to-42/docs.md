@@ -112,6 +112,8 @@ Migrations should be updated to extends `UserFrosting\Sprinkle\Core\Database\Mig
 
 Any migrations using the `io` property to interact with the user through the command line needs to be updated. Since migrations can now be run outside of the CLI, migrations can't make use of the `io` anymore. Any task requiring user input should be moved to a [custom Bakery command](/cli/custom-commands) or seed.
 
+Finally, the [`$dependencies` property](/database/migrations#dependencies) should now be static. Non-static property will still work, but the support for it is deprecated which means it might be removed in a future update. To make sure your migrations are compatible with future version, simply change `public $dependencies = [ ... ];` to `public static $dependencies = [ ... ];` in your migration file. This can also be applied safely to migrations which have already been run, as it doesn't affect the data or table structure.
+
 #### Seeds
 
 Database seeding should now be perform using the new Seeder class and `seed` bakery command. This new seeder allows for multiple seeding, detached from the migration system. It can also be used along Unit Tests.
@@ -124,6 +126,12 @@ Seeding performed in migrations will still work, but support for database seedin
 ### Assets installation has failed
 
 If assets installation fail, simply delete the `build/package-lock.json` file and the `build/node_modules/` directory. You can then run the Bake or `build-assets` command again.
+
+### Foreign key constraint errors in migrations
+
+Due to changes in the logic used to load migrations classes in 4.2, the order in which they are run may differ from previous releases. This may result in new **foreign key constraint errors**. If this happens in your own custom migrations, it may be a sign of [missing dependencies](/database/migrations#dependencies) (Those migrations working under 4.1 may just be a coincidence!)
+
+To fix this, make sure your migrations define the [appropriate dependencies](/database/migrations#dependencies). Also make sure those dependencies are up to date. You might also want to change the `$dependencies` property [to a static one at the same time](/upgrading/41-to-42#migrations). Don't hesitate to [seek help](/troubleshooting/getting-help) if you need assistance on this or encounter a different migration related issue.
 
 
 [#653]: https://github.com/userfrosting/UserFrosting/issues/653
