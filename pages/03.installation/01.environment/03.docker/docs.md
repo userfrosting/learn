@@ -35,7 +35,7 @@ the `-d` flag will launch this in the background so you can continue to use the 
 
 then replace `bash` with `ash` for all the docker-compose commands
 
-    $ docker exec -it -u www-data userfrosting_php_1 *ash* -c 'php bakery migrate'
+    $ docker exec -it -u www-data userfrosting_php_1 ash -c 'php bakery migrate'
 
 You also need to setup the first admin user (again, your container name may be different depending on the name of your root directory):
 
