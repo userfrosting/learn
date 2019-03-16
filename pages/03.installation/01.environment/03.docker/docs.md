@@ -29,9 +29,21 @@ the `-d` flag will launch this in the background so you can continue to use the 
 
     $ docker exec -it -u www-data userfrosting_php_1 bash -c 'php bakery migrate'
 
+**_docker-compose bash error : if you get an error like this_**
+
+`OCI runtime exec failed: exec failed: container_linux.go:344: starting container process caused "exec: \"bin/sh\": stat bin/sh: no such file or directory": unknown`
+
+then replace `bash` with `ash` for all the docker-compose commands
+
+    $ docker exec -it -u www-data userfrosting_php_1 *ash* -c 'php bakery migrate'
+
 You also need to setup the first admin user (again, your container name may be different depending on the name of your root directory):
 
     $ docker exec -it -u www-data userfrosting_php_1 bash -c 'php bakery create-admin'
+
+OR
+
+    $ docker exec -it -u www-data userfrosting_php_1 ash -c 'php bakery create-admin'
 
 Now visit `http://localhost:8591/` to see your UserFrosting homepage!
 
@@ -46,8 +58,8 @@ docker-compose run composer update --ignore-platform-reqs --no-scripts
 docker-compose up -d
 echo -n "Enter Docker Container Name --> "
 read docker_container
-docker exec -it -u www-data $docker_container bash -c 'php bakery migrate'
-docker exec -it -u www-data $docker_container bash -c 'php bakery create-admin'
+docker exec -it -u www-data $docker_container ash -c 'php bakery migrate'
+docker exec -it -u www-data $docker_container ash -c 'php bakery create-admin'
 ```
 
 **This is not (yet) meant for production!**
