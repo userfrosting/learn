@@ -43,6 +43,16 @@ If you get an error stating rewrite module is not found, then your `userdir` mod
 
 For more information, see [this blog article](http://seventhsoulmountain.blogspot.com/2014/02/wordpress-permalink-ubuntu-problem-solutions.html).
 
+## Docker
+
+### I added a new asset to my package.json in my sprinkle, how do I load the new asset using docker-compose
+
+Use the following command to install the assets with docker-compose
+
+```
+docker-compose run node npm run uf-assets-install
+```
+
 ## Sprinkles
 
 ### I get an error like "There is no class mapped" or "class not found" when using the class mapper or running my migrations.
