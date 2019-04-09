@@ -79,6 +79,11 @@ cd userfrosting
 git clone -b v7.20.0 https://github.com/laravel/homestead.git vagrant/Homestead
 ```
 
+You will need a SSH key-pair to connect to the Virtual Machine created in the next step. 
+```sh
+ssh-keygen -t rsa -f $HOME/.ssh/homestead_rsa
+```
+
 Now simply run `vagrant up` from the root of your cloned fork of the UserFrosting Git repository :
 
 ```sh
