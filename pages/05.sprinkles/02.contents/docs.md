@@ -56,7 +56,7 @@ To download frontend dependencies, from the project root directory:
 $ php bakery build-assets
 ```
 
->>>> Bower support is now deprecated. `/package.json` should be used instead.
+>>>> Bower support is deprecated since version 4.2.0. `/package.json` should be used instead.
 
 ### /asset-bundles.json
 
