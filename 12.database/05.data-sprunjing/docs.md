@@ -283,6 +283,8 @@ An array mapping each listable field to a list of possible values can be obtaine
 }
 ```
 
+>>>> It is recommended to use strings for both the `value` and `text` for compatability purposes with the TableSorter plugin. You can cast your value to a string by wrapping it in double quotation marks or with `(string)` prefix of the value. See [this thread](https://github.com/userfrosting/UserFrosting/issues/966#issuecomment-483245033) for an example.
+
 Of course you can override the default listing behavior for a field by defining a custom method.  This method must consist of the field name (converted to StudlyCase) prefixed with `list`:
 
 ```
