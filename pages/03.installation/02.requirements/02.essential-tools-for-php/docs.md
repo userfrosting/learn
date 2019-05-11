@@ -78,7 +78,7 @@ Node.js has an installer that you can use for MacOS and Windows - [Node.js Downl
 
 ## npm
 
-npm stands for **N**ode **P**ackage **M**anager.  npm is to Node.js as Composer is to PHP - it is used to grab the various Node packages that are required by UserFrosting's installation and build tools.  When you installed Node, it should have automatically installed npm as well.  However, we still recommend updating npm (if unable to update, any version later than 3.x will suffice):
+npm stands for **N**ode **P**ackage **M**anager.  npm is to Node.js as Composer is to PHP - it is used to grab the various Node packages that are required by UserFrosting's installation and build tools.  When you installed Node, it should have automatically installed npm as well.  However, we still recommend updating npm (if unable to update, any version later than 6.x will suffice):
 
 ```bash
 $ npm install npm@latest -g
