@@ -16,7 +16,7 @@ If installation of npm dependencies fails, see [npm](/basics/requirements/essent
 
 ### When trying to view my site I get an error like "An exception has been thrown during the rendering of a template ("The asset 'vendor/font-awesome/css/font-awesome.css' could not be found. Referenced in '/home/vagrant/userfrosting/app/sprinkles/core/asset-bundles.json [css/main]'.")."
 
-An installation step was missed or failed. Try running `php bakery bake` and check for any error messages.
+This is an indication that asset build failed or you missed a step in the installation process. Try running `php bakery bake` and check for any error messages.
 
 ### Installation went fine, except I don't see any styling on my home page.  I am using Apache.
 
