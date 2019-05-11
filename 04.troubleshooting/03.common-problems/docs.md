@@ -14,6 +14,10 @@ taxonomy:
 
 If installation of npm dependencies fails, see [npm](/basics/requirements/essential-tools-for-php#npm) to ensure npm is correctly installed and updated. You may need to [change npm permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions).
 
+### When trying to view my site I get an error like "An exception has been thrown during the rendering of a template ("The asset 'vendor/font-awesome/css/font-awesome.css' could not be found. Referenced in '/home/vagrant/userfrosting/app/sprinkles/core/asset-bundles.json [css/main]'.")."
+
+An installation step was missed or failed. Try running `php bakery bake` and check for any error messages.
+
 ### Installation went fine, except I don't see any styling on my home page.  I am using Apache.
 
 UserFrosting uses a [dynamic routing system](/asset-management/basic-usage#PublicassetURLs) for serving assets in a development environment.  For this to work on an Apache webserver, `mod_rewrite` needs to be enabled, **and** you need to give Apache permission to use the `.htaccess` file in `public/`.
