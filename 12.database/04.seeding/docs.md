@@ -157,11 +157,16 @@ public function run()
     $ranMigrations = $migrator->getRepository()->getMigrationsList();
 
     // The migration we require
-    $groupMigration = '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\GroupsTable';
+    $groupMigrations = [
+        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\ActivitiesTable',
+        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\GroupsTable'
+    ];
 
-    // Make sure required migration is in the ran list. Throw exception if it isn't.
-    if (!in_array($groupMigration, $ranMigrations)) {
-        throw new \Exception("Migration `$groupMigration` doesn't appear to have been run!");
+    foreach ($groupMigrations as $groupMigration) {
+        // Make sure required migration is in the ran list. Throw exception if it isn't.
+        if (!in_array($groupMigration, $ranMigrations)) {
+            throw new \Exception("Migration `$groupMigration` doesn't appear to have been run!");
+        }
     }
 
     // Execute group seed...
