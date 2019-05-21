@@ -28,11 +28,11 @@ Now you can start up the entire Nginx + PHP + MySQL stack using docker with:
 
 the `-d` flag will launch this in the background so you can continue to use the terminal window. On the first run you need to init the database (your container name may be different depending on the name of your root directory):
 
-    $ docker exec -it -u www-data userfrosting_php_1 php bakery migrate
+    $ docker exec -it -u www-data userfrosting_php_1 sh -c 'php bakery migrate'
 
 You also need to setup the first admin user (again, your container name may be different depending on the name of your root directory):
 
-    $ docker exec -it -u www-data userfrosting_php_1 php bakery create-admin
+    $ docker exec -it -u www-data userfrosting_php_1 sh -c 'php bakery create-admin'
 
 Now visit `http://localhost:8591/` to see your UserFrosting homepage!
 
