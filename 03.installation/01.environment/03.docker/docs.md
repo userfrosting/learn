@@ -8,6 +8,8 @@ taxonomy:
 
 >>> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
+>Docker support is currently at **experimental** stability. Expect quirks and documentation gaps.
+
 The relevant files for installing UserFrosting with Docker are `docker-compose.yml`, and the contents of `docker/`.
 
 First, install [Docker Compose](https://docs.docker.com/compose/install/).
