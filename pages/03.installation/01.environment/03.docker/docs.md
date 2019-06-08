@@ -12,9 +12,13 @@ taxonomy:
 
 The relevant files for installing UserFrosting with Docker are `docker-compose.yml`, and the contents of `docker/`.
 
-First, install [Docker Compose](https://docs.docker.com/compose/install/).
+First clone the [UserFrosting](https://github.com/userfrosting/UserFrosting) repo to your computer.  (It contains all the configuration resources needed for the Docker example.)
 
-Second, initialize a new UserFrosting project:
+Second, cd into the root of the userfrosting folder you cloned.
+
+Third, install [Docker Compose](https://docs.docker.com/compose/install/).
+
+Fourth, initialize a new UserFrosting project:
 
 1. Copy `app/sprinkles.example.json` to `app/sprinkles.json`
 2. Run `chmod 777 app/{logs,cache,sessions}` to fix file permissions for web server. (NOTE: File
@@ -49,8 +53,8 @@ docker-compose run composer update --ignore-platform-reqs --no-scripts
 docker-compose up -d
 echo -n "Enter Docker Container Name --> "
 read docker_container
-docker exec -it -u www-data $docker_container bash -c 'php bakery migrate'
-docker exec -it -u www-data $docker_container bash -c 'php bakery create-admin'
+docker exec -it -u www-data $docker_container sh -c 'php bakery migrate'
+docker exec -it -u www-data $docker_container sh -c 'php bakery create-admin'
 ```
 
 **This is not (yet) meant for production!**
