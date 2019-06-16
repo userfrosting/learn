@@ -104,3 +104,62 @@ Here are some things to take note of:
 - `js/pages/pastries` (without the `.js`) is the name of our asset-bundle and is what will be referenced in our Twig template when we add the asset-bundle to the page.
 
 - This asset-bundle includes two assets (the files we created in the previous step): `js/widgets/pastries.js` and `js/pages/pastries.js`.
+
+
+### Update the page template files
+
+Now that we have created a dedicated Twig template file for our table we can go back and modify `/pages/pastries.html.twig`. We will replace the basic html table code with our ufTable Twig template file using `include`:
+```
+<div class="box-body">
+    {% include "tables/pastries.html.twig" with {
+            "table" : {
+                "id" : "table-pastries"
+            }
+        }
+    %}
+</div>
+```
+
+In `tables/pastries.html.twig` we set `id="{{table.id}}"`. This allows us to set this value when we `include` the Twig file. We have set the `id` to `table-pastries`.
+
+There are a few more things we will add to setup for additions further on in the tutorial.
+
+`pages/pastries.html.twig`
+
+```
+{% extends "pages/abstract/dashboard.html.twig" %}
+
+{# Overrides blocks in head of base template #}
+{% block page_title %}{{translate('PASTRIES')}}{% endblock %}
+{% block page_description %}{{translate('PASTRIES.PAGE')}}{% endblock %}
+
+{% block body_matter %}
+    <div class="row">
+        <div class="col-md-12">
+                  <div id="widget-pastries" class="box box-primary">
+                      <div class="box-header">
+                          <h3 class="box-title"><i class="fa fa-cutlery fa-fw"></i> {{translate('PASTRIES.LIST')}}</h3>
+                          {% include "tables/table-tool-menu.html.twig" %}
+                      </div>
+                      <div class="box-body">
+                          {% include "tables/pastries.html.twig" with {
+                                  "table" : {
+                                      "id" : "table-pastries"
+                                  }
+                              }
+                          %}
+                      </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts_page %}
+    <!-- Include form widgets JS -->
+    {{ assets.js('js/form-widgets') | raw }}
+
+    <!-- Include page-specific JS -->
+    {{ assets.js('js/pages/pastries') | raw }}
+{% endblock %}
+```
