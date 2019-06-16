@@ -6,6 +6,8 @@ taxonomy:
     category: docs
 ---
 
+>>>>> You can find the complete source code from this tutorial on [GitHub](https://github.com/userfrosting/pastries).
+
 ## The sprinkle
 
 First thing to do is to create an empty sprinkle for our code to live in. We'll call this sprinkle `Pastries`. As described in the [Sprinkles](/sprinkles/first-site) chapter, start by creating an empty `pastries/` directory under `app/sprinkles`. We now have to create the `composer.json` file for our sprinkle:
@@ -43,7 +45,7 @@ $app->group('/pastries', function () {
 })->add('authGuard');
 ```
 
-We now have a `/pastries` route set up. We also define a route group for later use, if we wish to add additional routes whose URLs also begin with `/pastries/`. As you can see this route has the `pastries` name and will invoke the `authGuard` middleware, which requires a user to be logged in to see this page. 
+We now have a `/pastries` route set up. We also define a route group for later use, if we wish to add additional routes whose URLs also begin with `/pastries/`. As you can see this route has the `pastries` name and will invoke the `authGuard` middleware, which requires a user to be logged in to see this page.
 
 ## The controller class
 
@@ -70,7 +72,7 @@ class PastriesController extends SimpleController
         ]);
     }
 }
-``` 
+```
 
 >>>>>> Later on, we can add methods for other pastry-related pages to this same class as a way to logically organize our code.
 
