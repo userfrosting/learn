@@ -133,7 +133,7 @@ Next we will create the modal for the delete button. Because this is a basic for
 
 ### Validation schema
 
-Let's create our srequest schema for client validation. If you need a refresher you can go read the chapter on [validation](/routes-and-controllers/client-input/validation). Your directory structure should look like:
+Next we need to create our request schema for validation. We will use a single file named `pastry.yaml` for both the `create` and `edit` forms. The chapter on [validation](/routes-and-controllers/client-input/validation) provides complete information on UserFrosting's validation process. Your directory structure and schema file should look like:
 
 ```
 pastries
@@ -183,7 +183,7 @@ description:
 
 ### Adding the routes
 
-We will now add three routes to the `/pastries/modals` group inside our route file.
+We will now add three routes to each the `/pastries/modals` group and  the `/api/pastries` group inside our route file.
 
 ```
 // These routes will be used to access any modals
@@ -194,11 +194,57 @@ $app->group('/modals/pastries', function ()
 
     $this->get('/edit', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:getModalEdit');
 })->add('authGuard');
+
+// These routes will for any methods that retrieve/modify data from the database.
+$app->group('/api/pastries', function () {
+    $this->delete('/p/{name}', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:delete');
+
+    $this->post('', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:create');
+
+    $this->put('/p/{name}', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:updateInfo');
+})->add('authGuard')->add(new NoCache());
+```
+
+Your finalized route file should look like this:
+
+`app/sprinkles/pastries/routes/pastries.php`
+
+```php
+<?php
+
+use UserFrosting\Sprinkle\Core\Util\NoCache;
+
+$app->group('/pastries', function () {
+    $this->get('', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:pageList')
+         ->setName('pastries');
+})->add('authGuard');
+
+// These routes will for any methods that retrieve/modify data from the database.
+$app->group('/api/pastries', function () {
+    $this->delete('/p/{name}', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:delete');
+
+    $this->get('', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:getList');
+
+    $this->post('', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:create');
+
+    $this->put('/p/{name}', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:updateInfo');
+})->add('authGuard')->add(new NoCache());
+
+// These routes will be used to store any modals
+$app->group('/modals/pastries', function () {
+    $this->get('/create', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:getModalCreate');
+
+    $this->get('/confirm-delete', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:getModalDelete');
+
+    $this->get('/edit', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:getModalEdit');
+})->add('authGuard');
 ```
 
 ### Adding to the controller
 
-We now need to add additional functions to our controller. Each of the routes we added in the previous step will require two more functions inside our controller class. Lets begin by examining the code that calls our modal to create a new pastry and break down what is happening.
+We now need to add additional functions to our controller. Each of the routes we added in the previous step will require two more functions inside our controller class. The first function will retrieve the modal form and send it to the client and the second function will actually process the form submission. We will begin by examining the code that calls our modal to create a new pastry and break down what is happening.
+
+#### The create modal
 
 ```php
 public function getModalCreate(Request $request, Response $response, $args)
@@ -218,7 +264,7 @@ public function getModalCreate(Request $request, Response $response, $args)
     $translator = $this->ci->translator;
 
     // Load validation rules
-    $schema = new RequestSchema('schema://requests/pastry/create.yaml');
+    $schema = new RequestSchema('schema://requests/pastry/pastry.yaml');
     $validator = new JqueryValidationAdapter($schema, $translator);
 
     // Create a dummy pastry to prepopulate fields
@@ -260,3 +306,85 @@ if (!$authorizer->checkAccess($currentUser, 'see_pastries')) {
 ```
 
 >>>>> We will use the [`see_pastries` permission ](/recipes/advanced-tutorial/custom-permissions) throughout the rest of this tutorial. However, you will probably want to add additional permissions in your own Sprinkle.
+
+#### The create function
+
+Next, we need to create the code that will process the actually form submission. Let's look at the complete code and then go back through and break down the different "chunks" inside. Some of these "chunks" will be similar to the function we used to retrieve the modal (such as the authorizer service) and we will not cover those again.
+
+```php
+public function create(Request $request, Response $response, $args)
+{
+    // Get POST parameters: name, origin, description
+    $params = $request->getParsedBody();
+
+    /** @var \UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager $authorizer */
+    $authorizer = $this->ci->authorizer;
+
+    /** @var \UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface $currentUser */
+    $currentUser = $this->ci->currentUser;
+
+    // Access-controlled page
+    if (!$authorizer->checkAccess($currentUser, 'see_pastries')) {
+        throw new ForbiddenException();
+    }
+
+    /** @var \UserFrosting\Sprinkle\Core\Alert\AlertStream $ms */
+    $ms = $this->ci->alerts;
+
+    // Load the request schema
+    $schema = new RequestSchema('schema://requests/pastry/pastry.yaml');
+
+    // Whitelist and set parameter defaults
+    $transformer = new RequestDataTransformer($schema);
+    $data = $transformer->transform($params);
+
+    $error = false;
+
+    // Validate request data
+    $validator = new ServerSideValidator($schema, $this->ci->translator);
+    if (!$validator->validate($data)) {
+        $ms->addValidationErrors($validator);
+        $error = true;
+    }
+
+    // Check if a pastry with this name already exists
+    if (Pastries::where('name', $params['name'])->first()) {
+        $ms->addMessageTranslated('danger', 'This pastry name is already in use.', $data);
+        $error = true;
+    }
+
+    if ($error) {
+        return $response->withJson([], 400);
+    }
+
+    // All checks passed!  log events/activities and create pastry
+    // Begin transaction - DB will be rolled back if an exception occurs
+    Capsule::transaction(function () use ($data, $ms, $currentUser) {
+        // Create the pastry
+        $pastry = new Pastries($data);
+
+        // Store new pastry to database
+        $pastry->save();
+
+        // Create activity record
+        $this->ci->userActivityLogger->info("User {$currentUser->user_name} created pastry {$pastry->name}.", [
+          'type'    => 'pastry_create',
+          'user_id' => $currentUser->id,
+      ]);
+
+        $ms->addMessageTranslated('success', 'New pastry created!', $data);
+    });
+
+    return $response->withJson([], 200);
+}
+```
+
+The first thing we do is [retrieve the body parameters](/routes-and-controllers/client-input#retrieving-body-parameters) and assign an instance of the [alert stream service](/services/default-services#alerts) to the $ms variable.
+
+```   
+$params = $request->getParsedBody();
+
+// ....
+
+$ms = $this->ci->alerts;
+```
