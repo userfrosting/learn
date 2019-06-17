@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-We will use a Sprunje to sort, paginate and filter data after adding ufTable later on in this tutorial. 
+We will use a Sprunje to sort, paginate and filter data after adding ufTable later on in this tutorial.
 
 Sprunje classes are stored in the `src/Sprunje` directory. Create a new file in the directory called `PastriesSprunje.php`.
 

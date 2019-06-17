@@ -1,0 +1,89 @@
+---
+title: Setting up the basics
+metadata:
+    description: Setting up the basic sprinkle
+taxonomy:
+    category: docs
+---
+
+>>>>> You can find the complete source code from this tutorial on [GitHub](https://github.com/userfrosting/pastries).
+
+## The Sprinkle
+
+Let's begin by setting up some basics that we will expand upon throughout the tutorial.
+
+### The route
+
+You should already have a [route file](/routes-and-controllers) located at `app/sprinkles/pastries/routes/pastries.php`. We will add two additional groups to the file. Let's add a group `/api/pastries` to use later on for routes that will retrieve/modify data from the database.
+
+```php
+// These routes will be for any methods that retrieve/modify data from the database.
+$app->group('/api/pastries', function () {
+
+})->add('authGuard')->add(new NoCache());
+```
+
+Next, add a group `/modals/pastries` that will be used to retrieve our form modals.
+
+```php
+// These routes will be used to store any modals
+$app->group('/modals/pastries', function () {
+
+})->add('authGuard');
+```
+
+We have not added any routes to these groups yet but will do some later on in this tutorial. For now, your completed file should look like:
+
+`app/sprinkles/pastries/routes/pastries.php`
+
+```php
+<?php
+
+use UserFrosting\Sprinkle\Core\Util\NoCache;
+
+$app->group('/pastries', function () {
+    $this->get('', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:pageList')
+         ->setName('pastries');
+})->add('authGuard');
+
+// These routes will be for any methods that retrieve/modify data from the database.
+$app->group('/api/pastries', function () {
+
+})->add('authGuard')->add(new NoCache());
+
+// These routes will be used to store any modals
+$app->group('/modals/pastries', function () {
+
+})->add('authGuard');
+
+```
+### Template directories
+
+We will now create directories to hold additional Twig template files created later on in the tutorial.
+
+In `pastries/templates/` we will add the `forms`, `modals`, and `tables` sub directories. Your directory structure should look like:
+
+```
+pastries
+├──templates
+   ├── forms
+   ├── modals
+   ├── navigation
+   ├── pages
+   └── tables
+```
+
+Each of these directories will contain a file named `pastries.html.twig`. Go ahead and create those now:
+
+```
+pastries
+├──templates
+   ├──forms
+       └── pastries.html.twig
+   ├── modals
+       └── pastries.html.twig
+   ├── navigation
+   ├── pages
+   └── tables
+       └── pastries.html.twig
+```

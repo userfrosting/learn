@@ -108,7 +108,8 @@ Here are some things to take note of:
 
 ### Update the page template files
 
-Now that we have created a dedicated Twig template file for our table we can go back and modify `/pages/pastries.html.twig`. We will replace the basic html table code with our ufTable Twig template file using `include`:
+Now that we have a dedicated Twig template file for our table we can go back and modify `/pages/pastries.html.twig`. We will replace the basic html table code with our ufTable Twig template file using `include`:
+
 ```
 <div class="box-body">
     {% include "tables/pastries.html.twig" with {
