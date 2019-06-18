@@ -87,3 +87,22 @@ pastries
    └── tables
        └── pastries.html.twig
 ```
+
+### Controller additions
+
+We need to add a number of `use` statements to the top of our controller file. Go ahead and completely replace the existing with:
+
+```php
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use UserFrosting\Sprinkle\Core\Controller\SimpleController;
+use UserFrosting\Support\Exception\ForbiddenException;
+use UserFrosting\Sprinkle\Pastries\Database\Models\Pastries;
+use UserFrosting\Sprinkle\Pastries\Sprunje\PastrySprunje;
+use UserFrosting\Fortress\RequestDataTransformer;
+use UserFrosting\Fortress\RequestSchema;
+use UserFrosting\Fortress\ServerSideValidator;
+use UserFrosting\Support\Exception\NotFoundException;
+use UserFrosting\Fortress\Adapter\JqueryValidationAdapter;
+```

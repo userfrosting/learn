@@ -164,3 +164,5 @@ There are a few more things we will add to setup for additions further on in the
     {{ assets.js('js/pages/pastries') | raw }}
 {% endblock %}
 ```
+
+### Adding to the controller
