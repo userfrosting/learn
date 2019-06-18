@@ -532,7 +532,7 @@ if (!$pastry) {
 }
 ```
 
-Notice that the form `action`, `method`, and `submit_text` are once again set in our controller code, allowing us to use the same Twig file template for both `create` and `edit`.
+Notice that the form `action`, `method`, and `submit_text` are once again set in our controller code, allowing us to use the same Twig template file for both `create` and `edit`.
 
 ```
 'form'   => [

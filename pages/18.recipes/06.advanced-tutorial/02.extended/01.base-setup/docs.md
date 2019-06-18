@@ -14,7 +14,7 @@ Let's begin by setting up some basics that we will expand upon throughout the tu
 
 ### The route
 
-You should already have a [route file](/routes-and-controllers) located at `app/sprinkles/pastries/routes/pastries.php`. We will add two additional groups to the file. Let's add a group `/api/pastries` to use later on for routes that will retrieve/modify data from the database.
+You should already have a [route file](/routes-and-controllers) at `app/sprinkles/pastries/routes/pastries.php`. We will add two additional groups to the file. First, lets add the group `/api/pastries` to use later on for routes that will retrieve/modify data from the database.
 
 ```php
 // These routes will be for any methods that retrieve/modify data from the database.
@@ -23,7 +23,7 @@ $app->group('/api/pastries', function () {
 })->add('authGuard')->add(new NoCache());
 ```
 
-Next, add a group `/modals/pastries` that will be used to retrieve our form modals.
+Second, add the group `/modals/pastries` which will be used to retrieve our modal forms.
 
 ```php
 // These routes will be used to store any modals
@@ -57,11 +57,12 @@ $app->group('/modals/pastries', function () {
 })->add('authGuard');
 
 ```
+
 ### Template directories
 
-We will now create directories to hold additional Twig template files created later on in the tutorial.
+We need to create a few more directories that will be used to hold additional Twig template files created later on in the tutorial. Go ahead and create those now.
 
-In `pastries/templates/` we will add the `forms`, `modals`, and `tables` sub directories. Your directory structure should look like:
+In `pastries/templates/` add the `forms`, `modals`, and `tables` sub directories. Your directory structure should look like:
 
 ```
 pastries
@@ -73,7 +74,7 @@ pastries
    └── tables
 ```
 
-Each of these directories will contain a file named `pastries.html.twig`. Go ahead and create those now:
+Each of these directories will contain a file named `pastries.html.twig`. Go ahead and create those now as well.
 
 ```
 pastries

@@ -10,7 +10,7 @@ taxonomy:
 
 We will use a Sprunje to sort, paginate and filter data after adding ufTable later on in this tutorial.
 
-Sprinkle Sprunje classes are stored inside the `src/Sprunje` directory. Create a new file in the directory called `PastriesSprunje.php`.
+Sprinkle Sprunje classes are stored inside the `src/Sprunje` directory. Create a new file in the directory called `PastrySprunje.php`.
 
 `app/sprinkles/pastries/src/Sprunje/PastriesSprunje.php`
 ```php
@@ -61,9 +61,9 @@ $app->group('/api/pastries', function () {
 
 ### Adding to the controller
 
-Now that we have a route for `getList` we need to actually add that function to our controller. 
+There is now a route for `getList` so we should add that function to our controller class. Add the following code block to the `PastriesController.php` file
 
-```
+```php
 public function getList(Request $request, Response $response, $args)
 {
     // GET parameters
@@ -87,4 +87,9 @@ public function getList(Request $request, Response $response, $args)
     // Be careful how you consume this data - it has not been escaped and contains untrusted user-supplied content.
     // For example, if you plan to insert it into an HTML DOM, you must escape it on the client side (or use client-side templating).
     return $sprunje->toResponse($response);
-}```
+}
+```
+
+At this point you should be able to use a web browser to navigate to the URI  (HOSTNAME/api/pastries) and get a json response that has the default pastries.
+
+![Sprunje Response](/images/pastries/sprunjeresponse.png)
