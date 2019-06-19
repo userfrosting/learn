@@ -1,42 +1,26 @@
 ---
-title: The Create modal form
+title: Adding ufForm and ufModal
 metadata:
-    description: Adding form modals to allow Pastries to be created and deleted.
+    description: Adding form modals to create, edit, and delete Pastries.
 taxonomy:
     category: docs
 ---
 
-At this point you should be able to navigate to the `/pastries` page and see a table with the default data we have added. Seeds are great for initial setup but you will probably want the ability to dynamically add, edit, and delete rows from the table without relying on a seed. Let's add `create`, `edit`, and `delete` buttons to our table that will launch corresponding modal forms.
+At this point you should be able to navigate to the `/pastries` page and see a table with the default data we have added. Seeds are great for initial setup but you will probably want the ability to dynamically add, edit, and delete rows from the table without relying on a seed. Let's add `create`, `edit`, and `delete` buttons to our table that will open modal forms.
 
 You should have already created the necessary directories and files earlier in the tutorial. If not, [go back](/recipes/advanced-tutorial/extended/base-setup#template-directories) and do that now.
 
-We will begin by creating our ufForm and ufModal Twig template files, add the neccessary routes to our route file, and finally add code to our controller. For each modal we will need to add two functions to our controller - one to display the modal and one to complete the appropriate task upon form submission.  
+Let's first begin by creating our ufForm and ufModal Twig template files, add the neccessary routes to our route file, and finally add code to our controller. For each modal we will need to add two functions to our controller - one to display the modal and one to complete the appropriate task after the modal form submission.  
 
 ### ufForm template
 
-Instead of creating one form template and one modal template for both our `create` and `edit` buttons (four files total) we will create a dynamic template that can be used for either task. Let's begin by adding a standard html `<form>` tag to our Twig template. Rather than hardcoding the form `method` and `action` we will set these as Twig variables. This will allow us to dynamically change the `method` and `action` as needed in our controller.
+Instead of creating one form template and one modal template for both our `create` and `edit` buttons, we will create a dynamic template that can be used for either task. Begin by adding a standard html `<form>` tag to the Twig template. Rather than hardcoding the form `method` and `action` we will set these as Twig variables. This will allow us to dynamically change the `method` and `action` as needed in our controller.
 
-We will also include `forms/csrf.html.twig` to protect against [CSRF](/routes-and-controllers/client-input/csrf-guard#injecting-the-tokens-into-forms) and an empty `<div>` with the class `js-form-alerts` which will be used to display validation messages. We will also add in a `script` block that will be used for validation.
-
-`templates/forms/pastries.html.twig`
-
-```js
-<form class="js-form" method="{{form.method | default('POST')}}" action="{{site.uri.public}}/{{form.action}}">
-    {% include "forms/csrf.html.twig" %}
-    <div class="js-form-alerts">
-    </div>
-
-    <script>
-{% include "pages/partials/page.js.twig" %}
-</script>
-</form>
-```
-
-Lets add in code for each of our table columns. The final file should look like:
+The final file should look like:
 
 `templates/forms/pastries.html.twig`
 
-```js
+```html
 <form class="js-form" method="{{form.method | default('POST')}}" action="{{site.uri.public}}/{{form.action}}">
     {% include "forms/csrf.html.twig" %}
     <div class="js-form-alerts">
@@ -87,15 +71,17 @@ Lets add in code for each of our table columns. The final file should look like:
 </script>
 ```
 
-You can review the chapter on [ufTable](/client-side-code/components/forms) for additional functionality and options when working with ufForm.
+Notice that `forms/csrf.html.twig` is included to protect against [CSRF](/routes-and-controllers/client-input/csrf-guard#injecting-the-tokens-into-forms) and an empty `<div>` with the class `js-form-alerts` is added, which will be used to display validation messages. Needed for validation, the asset-bundle `{% include "pages/partials/page.js.twig" %}` is included.
+
+You can review the chapter on [ufForm](/client-side-code/components/forms) for additional functionality and options when working with ufForm.
 
 ### ufModal template
 
-The Twig template file for ufModal pretty basic. Set the modal title inside the `modal_title` block and then `include` our form template file inside the `modal_body` block.
+The Twig template file for ufModal is pretty basic. We set the modal title inside the `modal_title` block and then `include` our form template file inside the `modal_body` block.
 
 `modals/pastries.html.twig`
 
-```
+```html
 {% extends "modals/modal.html.twig" %}
 
 {% block modal_title %}Pastry{% endblock %}
@@ -107,11 +93,11 @@ The Twig template file for ufModal pretty basic. Set the modal title inside the 
 
 ### ufModal delete template
 
-Next we will create the modal for the delete button. Because this is a basic form we will not create a separate Twig file for our form element and instead include it directly.
+Next we will create the modal for the delete button. Because this is a basic form we will not create a separate Twig file for our form element and instead include it directly inside the modal Twig file.
 
 `modals/confirm-delete-pastries.html.twig`
 
-```
+```html
 {% extends "modals/modal.html.twig" %}
 
 {% block modal_title %}Delete Pastry{% endblock %}
@@ -133,7 +119,7 @@ Next we will create the modal for the delete button. Because this is a basic for
 
 ### Validation schema
 
-Next we need to create our request schema for validation. We will use a single file named `pastry.yaml` for both the `create` and `edit` forms. The chapter on [validation](/routes-and-controllers/client-input/validation) provides complete information on UserFrosting's validation process. Your directory structure and schema file should look like:
+Next we will create the request schema that will be used for validation. We will use a single file named `pastry.yaml` for both the `create` and `edit` forms. The chapter on [validation](/routes-and-controllers/client-input/validation) is a good place to start for additional information on UserFrosting's validation process. Your directory structure and schema file should look like this:
 
 ```
 pastries
@@ -145,7 +131,7 @@ pastries
 
 `schema/requests/pastry/pastry.yaml`
 
-```
+```yaml
 ---
 name:
   validators:
@@ -242,7 +228,7 @@ $app->group('/modals/pastries', function () {
 
 ## Adding to the controller
 
-We now need to add additional functions to our controller. Each of the routes we added in the previous step will require two more functions inside our controller class. The first function will retrieve the modal form and send it to the client and the second function will actually process the form submission. We will begin by examining the code that calls our modal to create a new pastry and break down what is happening.
+We now need to add the additional functions to our controller class that we added to our routes file. Each modal form will require two functions. The first will retrieve the modal form and send it to the client and the second function will actually process the form submission. We will begin by examining the code that calls our modal to create a new Pastry and break down what is happening.
 
 ### Create
 
@@ -718,5 +704,368 @@ public function delete(Request $request, Response $response, $args)
     $ms->addMessageTranslated('success', 'Pastry deleted!');
 
     return $response->withJson([], 200);
+}
+```
+
+
+### Final controller
+
+`PastriesController.php`
+
+```php
+<?php
+
+namespace UserFrosting\Sprinkle\Pastries\Controller;
+
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use UserFrosting\Sprinkle\Core\Controller\SimpleController;
+use UserFrosting\Support\Exception\ForbiddenException;
+use UserFrosting\Sprinkle\Pastries\Database\Models\Pastries;
+use UserFrosting\Sprinkle\Pastries\Sprunje\PastrySprunje;
+use UserFrosting\Fortress\RequestDataTransformer;
+use UserFrosting\Fortress\RequestSchema;
+use UserFrosting\Fortress\ServerSideValidator;
+use UserFrosting\Support\Exception\NotFoundException;
+use UserFrosting\Fortress\Adapter\JqueryValidationAdapter;
+
+class PastriesController extends SimpleController
+{
+    public function create(Request $request, Response $response, $args)
+    {
+        // Get POST parameters: name, origin, description
+        $params = $request->getParsedBody();
+
+        /** @var \UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager $authorizer */
+        $authorizer = $this->ci->authorizer;
+
+        /** @var \UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface $currentUser */
+        $currentUser = $this->ci->currentUser;
+
+        // Access-controlled page
+        if (!$authorizer->checkAccess($currentUser, 'see_pastries')) {
+            throw new ForbiddenException();
+        }
+
+        /** @var \UserFrosting\Sprinkle\Core\Alert\AlertStream $ms */
+        $ms = $this->ci->alerts;
+
+        // Load the request schema
+        $schema = new RequestSchema('schema://requests/pastry/pastry.yaml');
+
+        // Whitelist and set parameter defaults
+        $transformer = new RequestDataTransformer($schema);
+        $data = $transformer->transform($params);
+
+        $error = false;
+
+        // Validate request data
+        $validator = new ServerSideValidator($schema, $this->ci->translator);
+        if (!$validator->validate($data)) {
+            $ms->addValidationErrors($validator);
+            $error = true;
+        }
+
+        // Check if a pastry with this name already exists
+        if (Pastries::where('name', $params['name'])->first()) {
+            $ms->addMessageTranslated('danger', 'This pastry name is already in use.', $data);
+            $error = true;
+        }
+
+        if ($error) {
+            return $response->withJson([], 400);
+        }
+
+        // All checks passed!  log events/activities and create pastry
+        // Begin transaction - DB will be rolled back if an exception occurs
+        Capsule::transaction(function () use ($data, $ms, $currentUser) {
+            // Create the pastry
+            $pastry = new Pastries($data);
+
+            // Store new pastry to database
+            $pastry->save();
+
+            // Create activity record
+            $this->ci->userActivityLogger->info("User {$currentUser->user_name} created pastry {$pastry->name}.", [
+              'type'    => 'pastry_create',
+              'user_id' => $currentUser->id,
+          ]);
+
+            $ms->addMessageTranslated('success', 'New pastry created!', $data);
+        });
+
+        return $response->withJson([], 200);
+    }
+
+    public function delete(Request $request, Response $response, $args)
+    {
+        $pastry = Pastries::where('name', $args['name'])->first();
+
+        // If the pastry doesn't exist, return 404
+        if (!$pastry) {
+            throw new NotFoundException();
+        }
+
+        /** @var \UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager $authorizer */
+        $authorizer = $this->ci->authorizer;
+
+        /** @var \UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface $currentUser */
+        $currentUser = $this->ci->currentUser;
+
+        // Access-controlled page
+        if (!$authorizer->checkAccess($currentUser, 'see_pastries')) {
+            throw new ForbiddenException();
+        }
+
+        $pastryName = $pastry->name;
+
+        // Begin transaction - DB will be rolled back if an exception occurs
+        Capsule::transaction(function () use ($pastry, $pastryName, $currentUser) {
+            $pastry->delete();
+            unset($pastry);
+
+            // Create activity record
+            $this->ci->userActivityLogger->info("User {$currentUser->user_name} deleted pastry {$pastryName}.", [
+                'type'    => 'pastry_delete',
+                'user_id' => $currentUser->id,
+            ]);
+        });
+
+        /** @var \UserFrosting\Sprinkle\Core\Alert\AlertStream $ms */
+        $ms = $this->ci->alerts;
+
+        $ms->addMessageTranslated('success', 'Pastry deleted!');
+
+        return $response->withJson([], 200);
+    }
+
+    public function pageList(Request $request, Response $response, $args)
+    {
+        /** @var UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager */
+        $authorizer = $this->ci->authorizer;
+
+        /** @var UserFrosting\Sprinkle\Account\Database\Models\User $currentUser */
+        $currentUser = $this->ci->currentUser;
+
+        // Access-controlled page
+        if (!$authorizer->checkAccess($currentUser, 'see_pastries')) {
+            throw new ForbiddenException();
+        }
+
+        $pastries = Pastries::all();
+
+        return $this->ci->view->render($response, 'pages/pastries.html.twig', [
+            'pastries' => $pastries,
+        ]);
+    }
+
+    public function getList(Request $request, Response $response, $args)
+    {
+        // GET parameters
+        $params = $request->getQueryParams();
+
+        /** @var UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager */
+        $authorizer = $this->ci->authorizer;
+
+        /** @var UserFrosting\Sprinkle\Account\Database\Models\User $currentUser */
+        $currentUser = $this->ci->currentUser;
+
+        // Access-controlled page
+        if (!$authorizer->checkAccess($currentUser, 'see_pastries')) {
+            throw new ForbiddenException();
+        }
+        /** @var UserFrosting\Sprinkle\Core\Util\ClassMapper $classMapper */
+        $classMapper = $this->ci->classMapper;
+
+        $sprunje = new PastrySprunje($classMapper, $params);
+
+        // Be careful how you consume this data - it has not been escaped and contains untrusted user-supplied content.
+        // For example, if you plan to insert it into an HTML DOM, you must escape it on the client side (or use client-side templating).
+        return $sprunje->toResponse($response);
+    }
+
+    public function getModalCreate(Request $request, Response $response, $args)
+    {
+        /** @var \UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager $authorizer */
+        $authorizer = $this->ci->authorizer;
+
+        /** @var \UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface $currentUser */
+        $currentUser = $this->ci->currentUser;
+
+        // Access-controlled page
+        if (!$authorizer->checkAccess($currentUser, 'see_pastries')) {
+            throw new ForbiddenException();
+        }
+
+        /** @var \UserFrosting\I18n\MessageTranslator $translator */
+        $translator = $this->ci->translator;
+
+        // Load validation rules
+        $schema = new RequestSchema('schema://requests/pastry/pastry.yaml');
+        $validator = new JqueryValidationAdapter($schema, $translator);
+
+        // Create a dummy pastry to prepopulate fields
+        $pastry = new Pastries();
+
+        return $this->ci->view->render($response, 'modals/pastries.html.twig', [
+            'pastry' => $pastry,
+            'form'   => [
+                'action'      => 'api/pastries',
+                'method'      => 'POST',
+                'submit_text' => 'Create',
+            ],
+            'page' => [
+                'validators' => $validator->rules('json', false),
+            ],
+        ]);
+    }
+
+    public function getModalDelete(Request $request, Response $response, $args)
+    {
+        // GET parameters
+        $params = $request->getQueryParams();
+
+        $pastry = Pastries::where('name', $params['name'])->first();
+
+        // If the pastry no longer exists, forward to main pastry listing page
+        if (!$pastry) {
+            throw new NotFoundException();
+        }
+
+        /** @var \UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager $authorizer */
+        $authorizer = $this->ci->authorizer;
+
+        /** @var \UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface $currentUser */
+        $currentUser = $this->ci->currentUser;
+
+        // Access-controlled page
+        if (!$authorizer->checkAccess($currentUser, 'see_pastries')) {
+            throw new ForbiddenException();
+        }
+
+        return $this->ci->view->render($response, 'modals/confirm-delete-pastries.html.twig', [
+            'pastry' => $pastry,
+            'form'   => [
+                'action' => "api/pastries/p/{$pastry->name}",
+              ],
+            ]);
+    }
+
+    public function getModalEdit(Request $request, Response $response, $args)
+    {
+        // GET parameters
+        $params = $request->getQueryParams();
+
+        $pastry = Pastries::where('name', $params['name'])->first();
+
+        // If the postry doesn't exist, return 404
+        if (!$pastry) {
+            throw new NotFoundException();
+        }
+
+        /** @var \UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager $authorizer */
+        $authorizer = $this->ci->authorizer;
+
+        /** @var \UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface $currentUser */
+        $currentUser = $this->ci->currentUser;
+
+        /** @var \UserFrosting\I18n\MessageTranslator $translator */
+        $translator = $this->ci->translator;
+
+        // Load validation rules
+        $schema = new RequestSchema('schema://requests/pastry/pastry.yaml');
+        $validator = new JqueryValidationAdapter($schema, $translator);
+
+        return $this->ci->view->render($response, 'modals/pastries.html.twig', [
+        'pastry' => $pastry,
+        'form'   => [
+            'action'      => "api/pastries/p/{$pastry->name}",
+            'method'      => 'PUT',
+            'submit_text' => 'Update',
+        ],
+        'page' => [
+            'validators' => $validator->rules('json', false),
+          ],
+        ]);
+    }
+
+    public function updateInfo(Request $request, Response $response, $args)
+    {
+        $pastry = Pastries::where('name', $args['name'])->first();
+
+        // If the pastry doesn't exist, return 404
+        if (!$pastry) {
+            throw new NotFoundException();
+        }
+
+        // Get PUT parameters: (name, origin, description)
+        $params = $request->getParsedBody();
+
+        /** @var \UserFrosting\Sprinkle\Core\Alert\AlertStream $ms */
+        $ms = $this->ci->alerts;
+
+        // Load the request schema
+        $schema = new RequestSchema('schema://requests/pastry/pastry.yaml');
+
+        // Whitelist and set parameter defaults
+        $transformer = new RequestDataTransformer($schema);
+        $data = $transformer->transform($params);
+
+        $error = false;
+
+        // Validate request data
+        $validator = new ServerSideValidator($schema, $this->ci->translator);
+        if (!$validator->validate($data)) {
+            $ms->addValidationErrors($validator);
+            $error = true;
+        }
+
+        /** @var \UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager $authorizer */
+        $authorizer = $this->ci->authorizer;
+
+        /** @var \UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface $currentUser */
+        $currentUser = $this->ci->currentUser;
+
+        // Access-controlled action.
+        if (!$authorizer->checkAccess($currentUser, 'see_pastries')) {
+            throw new ForbiddenException();
+        }
+
+        // Check if the name already exists.
+        if (isset($data['name']) && $data['name'] != $pastry->name && Pastries::where('name', $data['name'])->first()) {
+            $ms->addMessageTranslated('danger', 'A pastry with this name already exists.', $data);
+            $error = true;
+        }
+
+        if ($error) {
+            return $response->withJson([], 400);
+        }
+
+        // Begin transaction - DB will be rolled back if an exception occurs
+        Capsule::transaction(function () use ($data, $pastry, $currentUser) {
+            // Update the pastry and generate success messages
+            foreach ($data as $name => $value) {
+                if ($value != $pastry->$name) {
+                    $pastry->$name = $value;
+                }
+            }
+
+            // Save the changes.
+            $pastry->save();
+
+            // Create activity record
+            $this->ci->userActivityLogger->info("User {$currentUser->user_name} updated details for pastry {$pastry->name}.", [
+                'type'    => 'pastry_update_info',
+                'user_id' => $currentUser->id,
+            ]);
+        });
+
+        $ms->addMessageTranslated('success', 'The pastry was updated!', [
+            'name' => $pastry->name,
+        ]);
+
+        return $response->withJson([], 200);
+    }
 }
 ```
