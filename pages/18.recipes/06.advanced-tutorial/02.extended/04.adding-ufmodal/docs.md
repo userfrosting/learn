@@ -6,6 +6,8 @@ taxonomy:
     category: docs
 ---
 
+## ufForm
+
 At this point you should be able to navigate to the `/pastries` page and see a table with the default data we have added. Seeds are great for initial setup but you will probably want the ability to dynamically add, edit, and delete rows from the table without relying on a seed. Let's add `create`, `edit`, and `delete` buttons to our table that will open modal forms.
 
 You should have already created the necessary directories and files earlier in the tutorial. If not, [go back](/recipes/advanced-tutorial/extended/base-setup#template-directories) and do that now.
@@ -74,6 +76,8 @@ The final file should look like:
 Notice that `forms/csrf.html.twig` is included to protect against [CSRF](/routes-and-controllers/client-input/csrf-guard#injecting-the-tokens-into-forms) and an empty `<div>` with the class `js-form-alerts` is added, which will be used to display validation messages. Needed for validation, the asset-bundle `{% include "pages/partials/page.js.twig" %}` is included.
 
 You can review the chapter on [ufForm](/client-side-code/components/forms) for additional functionality and options when working with ufForm.
+
+## ufModal
 
 ### ufModal template
 

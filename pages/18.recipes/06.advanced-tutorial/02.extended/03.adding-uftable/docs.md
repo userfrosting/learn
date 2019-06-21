@@ -6,6 +6,8 @@ taxonomy:
     category: docs
 ---
 
+## ufTable
+
 ### Twig template file
 
 Rather than using the basic html table that was [created earlier in the tutorial](/recipes/advanced-tutorial/base-setup#the-template-file) inside `/pages/pastries.html.twig`, the ufTable code will be placed into a separate file inside the `tables` sub directory. We will take a look at the complete file code and then go back through and look at a few different chunks of code.
@@ -190,8 +192,6 @@ Here are some things to take note of:
 - `js/pages/pastries` (without the `.js`) is the name of our asset-bundle and is what will be referenced in our Twig template when we add the asset-bundle to the page.
 
 - This asset-bundle includes two assets (the files we created in the previous step): `js/widgets/pastries.js` and `js/pages/pastries.js`.
-
-
 
 ### Updating `pages/pastries.html.twig`
 

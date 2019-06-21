@@ -6,11 +6,9 @@ taxonomy:
     category: docs
 ---
 
-### The Sprunje file
+## The Sprunje
 
-We will use a Sprunje to sort, paginate and filter data after adding ufTable later on in this tutorial.
-
-Sprinkle Sprunje classes are stored inside the `src/Sprunje` directory. Create a new file in the directory called `PastrySprunje.php`.
+We will use a Sprunje to sort, paginate and filter data after adding ufTable later on in this tutorial. Sprinkle Sprunje classes are stored inside the `src/Sprunje` directory. Create a new file in the directory called `PastrySprunje.php`.
 
 `app/sprinkles/pastries/src/Sprunje/PastriesSprunje.php`
 ```php
@@ -48,7 +46,7 @@ class PastrySprunje extends Sprunje
 
 ### The route
 
-We will need to add another route to the route file that will be called from our JavaScript code. This allows the table to be refreshed and changed dynamically without requiring the page to be refreshed. The route will be inside the `/api/pastries` group:
+We will add a route to allow us to retrieve data using our Sprunje. We will use Java Script to send requests to this route, allowing the table to be changed dynamically without requiring the page to be refreshed. The route will be inside the `/api/pastries` group:
 
 ```php
 // These routes will be for any methods that retrieve/modify data from the database.
@@ -59,7 +57,7 @@ $app->group('/api/pastries', function () {
 })->add('authGuard')->add(new NoCache());
 ```
 
-### Adding to the controller
+### The controller
 
 There is now a route for `getList` so we should add that function to our controller class. Add the following code block to the `PastriesController.php` file
 

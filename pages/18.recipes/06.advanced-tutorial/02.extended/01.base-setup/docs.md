@@ -1,5 +1,5 @@
 ---
-title: Setting up the basics
+title: Setup
 metadata:
     description: Setting up the basic sprinkle
 taxonomy:
@@ -14,7 +14,7 @@ Let's begin by setting up some basics that we will expand upon throughout the tu
 
 ### The route
 
-You should already have a [route file](/routes-and-controllers) at `app/sprinkles/pastries/routes/pastries.php`. We will add two additional groups to the file. First, lets add the group `/api/pastries` to use later on for routes that will retrieve/modify data from the database.
+You should already have a [route file](/routes-and-controllers) at `app/sprinkles/pastries/routes/pastries.php`. We will add two additional groups to the file. First, add the group `/api/pastries` to use later on for routes that will retrieve/modify data from the database.
 
 ```php
 // These routes will be for any methods that retrieve/modify data from the database.
@@ -32,7 +32,7 @@ $app->group('/modals/pastries', function () {
 })->add('authGuard');
 ```
 
-We have not added any routes to these groups yet but will do some later on in this tutorial. For now, your completed file should look like:
+We will add routes to these groups later on in the tutorial. For now, your completed file should look like:
 
 `app/sprinkles/pastries/routes/pastries.php`
 
@@ -60,9 +60,7 @@ $app->group('/modals/pastries', function () {
 
 ### Template directories
 
-We need to create a few more directories that will be used to hold additional Twig template files created later on in the tutorial. Go ahead and create those now.
-
-In `pastries/templates/` add the `forms`, `modals`, and `tables` sub directories. Your directory structure should look like:
+We need to create a few more directories for which we will add additional Twig template files to later on in the tutorial. In `pastries/templates/` add the `forms`, `modals`, and `tables` sub directories. Your directory structure should look like:
 
 ```
 pastries
@@ -89,7 +87,7 @@ pastries
        └── pastries.html.twig
 ```
 
-### Controller additions
+### The Controller
 
 We need to add a number of `use` statements to the top of our controller file. Go ahead and completely replace the existing with:
 
