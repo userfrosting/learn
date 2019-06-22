@@ -14,7 +14,7 @@ Let's begin by setting up some basics that we will expand upon throughout the tu
 
 ### The route
 
-You should already have a [route file](/routes-and-controllers) at `app/sprinkles/pastries/routes/pastries.php`. We will add two additional groups to the file. First, add the group `/api/pastries` to use later on for routes that will retrieve/modify data from the database.
+You should already have a [route file](/routes-and-controllers) at `app/sprinkles/pastries/routes/pastries.php`. We will add two additional route groups to the file. First, add the group `/api/pastries` which will be used for routes that will retrieve/modify data from the database.
 
 ```php
 // These routes will be for any methods that retrieve/modify data from the database.
@@ -86,6 +86,52 @@ pastries
    └── tables
        └── pastries.html.twig
 ```
+
+### Assets
+
+We will add two asset files in this tutorial. For now, we will create the required directories and asset files, and then add in the code later. Create the directory `assets` and sub directory `js` inside `pastries`. Then create `pages` and `widgets` sub directories inside `js`:
+
+```
+pastries
+├──assets
+   ├── js
+       ├──pages
+          └── pastries.js
+       └──tables
+          └── pastries.js
+```
+
+#### Adding assets to the asset-bundle
+
+Assets can be bundled by including them in `asset-bundles.json` in the root directory of your sprinkle. Create that file now:
+
+`pastries/asset-bundle.json`
+
+```json
+{
+  "bundle": {
+    "js/pages/pastries": {
+      "scripts": [
+        "js/widgets/pastries.js",
+        "js/pages/pastries.js"
+      ],
+      "options": {
+        "result": {
+          "type": {
+            "scripts": "plain"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Here are some things to take note of:
+
+- `js/pages/pastries` (without the `.js`) is the name of our asset-bundle and is what will be referenced in our Twig template when we add the asset-bundle to the page.
+
+- This asset-bundle includes two assets (the files we created in the previous step): `js/widgets/pastries.js` and `js/pages/pastries.js`.
 
 ### The Controller
 

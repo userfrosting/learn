@@ -78,7 +78,7 @@ Rather than using the basic html table that was [created earlier in the tutorial
 
 #### block table
 
-The table structure is inside the `{% block table %}` block. Each of our table column headers has the `data-column-template` data-* attribute set, which will be used by Handlebars. The required `data-*` attributes can be found in the [chapter on ufTable](client-side-code/components/tables#column-headers). Notice we have added an additional column header for `actions` which will be used for a drop-down `actions` menu for each row, with `Edit` and `Delete` buttons.
+The table structure is inside the `{% block table %}` block. Each of our table column headers has the `data-column-template` data-* attribute set, which will be used by Handlebars. The required `data-` attributes can be found in the [chapter on ufTable](/client-side-code/components/tables#column-headers). Notice we have added an additional column header for `actions` which will be used for a drop-down `actions` menu for each row, with `Edit` and `Delete` buttons.
 
 ```html
 {% block table %}
@@ -99,7 +99,7 @@ The table structure is inside the `{% block table %}` block. Each of our table c
 
 #### block table_cell_templates
 
-Notice that the `id`s in the template `<script>` tags match the `data-column-template` values that were set in the `block table` block. Noticed that the script for `pastry-table-column-actions` includes a `btn-group` with two buttons - `edit` and `delete`.
+Notice that the `id`s in the template `<script>` tags match the `data-column-template` values that were set in the `block table` block. The script for `pastry-table-column-actions` includes a `btn-group` with two buttons - `edit` and `delete`.
 
 ```html
 {% block table_cell_templates %}
@@ -144,54 +144,6 @@ Notice that the `id`s in the template `<script>` tags match the `data-column-tem
     {% endverbatim %}
 {% endblock %}
 ```
-
-### Assets
-
-We will need to add an asset so that ufTable can dynamically fetch data from the database.
-
-Create the directory `assets` and sub directory `js` inside `pastries`. Then create `pages` and `widgets` sub directories inside `js`:
-
-```
-pastries
-├──assets
-   ├── js
-       ├──pages
-          └── pastries.js
-       └──tables
-          └── pastries.js
-```
-
-#### Adding assets to the asset-bundle
-
-Assets can be bundled by including them in `asset-bundles.json` in the root directory of your sprinkle. Create that file now:
-
-`pastries/asset-bundle.json`
-
-```json
-{
-  "bundle": {
-    "js/pages/pastries": {
-      "scripts": [
-        "js/widgets/pastries.js",
-        "js/pages/pastries.js"
-      ],
-      "options": {
-        "result": {
-          "type": {
-            "scripts": "plain"
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-Here are some things to take note of:
-
-- `js/pages/pastries` (without the `.js`) is the name of our asset-bundle and is what will be referenced in our Twig template when we add the asset-bundle to the page.
-
-- This asset-bundle includes two assets (the files we created in the previous step): `js/widgets/pastries.js` and `js/pages/pastries.js`.
 
 ### Updating `pages/pastries.html.twig`
 
@@ -271,7 +223,7 @@ We have added a button for the create action at the bottom of the page.
 
 #### Including assets
 
-Two assets have been included on this page.
+Two assets have been included on in the page template:
 
 ```html
 {% block scripts_page %}
@@ -285,7 +237,7 @@ Two assets have been included on this page.
 
 ### Asset files
 
-We have now created and added to our page an asset-bundle that contains two assets that don't yet exist. Let's go ahead and create those two files now.
+We have now created and added to our page an asset-bundle that contains two assets that don't yet exist. Let's go ahead and add our code to those files now.
 
 `assets/js/pages/pastries.js`
 

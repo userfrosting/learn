@@ -8,7 +8,7 @@ taxonomy:
 
 ## The Sprunje
 
-We will use a Sprunje to sort, paginate and filter data after adding ufTable later on in this tutorial. Sprinkle Sprunje classes are stored inside the `src/Sprunje` directory. Create a new file in the directory called `PastrySprunje.php`.
+We will use a custom Sprunje to sort, paginate, and filter data that will be displayed inside ufTable, added later in the tutorial. Sprunje classes are stored inside the `src/Sprunje` directory of each Sprinkle. Create a new file in the directory called `PastrySprunje.php`.
 
 `app/sprinkles/pastries/src/Sprunje/PastriesSprunje.php`
 ```php
@@ -46,7 +46,7 @@ class PastrySprunje extends Sprunje
 
 ### The route
 
-We will add a route to allow us to retrieve data using our Sprunje. We will use Java Script to send requests to this route, allowing the table to be changed dynamically without requiring the page to be refreshed. The route will be inside the `/api/pastries` group:
+Let's add a route to allow us to retrieve data using our Sprunje. We will use Java Script to send requests to this route, allowing the table to be changed dynamically without requiring a complete page refresh. The route will be inside the `/api/pastries` group:
 
 ```php
 // These routes will be for any methods that retrieve/modify data from the database.

@@ -12,7 +12,7 @@ At this point you should be able to navigate to the `/pastries` page and see a t
 
 You should have already created the necessary directories and files earlier in the tutorial. If not, [go back](/recipes/advanced-tutorial/extended/base-setup#template-directories) and do that now.
 
-Let's first begin by creating our ufForm and ufModal Twig template files, add the neccessary routes to our route file, and finally add code to our controller. For each modal we will need to add two functions to our controller - one to display the modal and one to complete the appropriate task after the modal form submission.  
+Let's begin by creating our ufForm and ufModal Twig template files, add routes to our route file, and finally add code to our controller. For each modal we will need to add two functions to our controller - one to display the modal and one to complete the appropriate task after the modal form submission.  
 
 ### ufForm template
 
@@ -175,7 +175,7 @@ description:
 
 Next add three routes to each the `/pastries/modals` group and  the `/api/pastries` group inside our route file.
 
-```
+```php
 // These routes will be used to access any modals
 $app->group('/modals/pastries', function ()
     $this->get('/create', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:getModalCreate');
@@ -396,7 +396,7 @@ public function create(Request $request, Response $response, $args)
 }
 ```
 
-The first few lines of code [assign the body parameters](/routes-and-controllers/client-input#retrieving-body-parameters) to the `$params` variable and then assign an instance of the [alert stream service](/services/default-services#alerts) to the $ms variable.
+The first few lines of code [assign the body parameters](/routes-and-controllers/client-input#retrieving-body-parameters) to the `$params` variable and then assign an instance of the [alert stream service](/services/default-services#alerts) to the `$ms` variable.
 
 ```   
 $params = $request->getParsedBody();
@@ -406,7 +406,7 @@ $params = $request->getParsedBody();
 $ms = $this->ci->alerts;
 ```
 
-Next, we will use the `pastry.yaml` request schema to whitelist and filter the submitted data before then performing [server-side validation](/routes-and-controllers/client-input/validation#server-side-validation). We also run an Eloquent query to check if there is already a database record with the same name. If either of these actions fails then variable `$error` is set to `true` and the function ends by returning `  return $response->withJson([], 400);`.
+Next, we will use the `pastry.yaml` request schema to whitelist and filter the submitted data before performing [server-side validation](/routes-and-controllers/client-input/validation#server-side-validation). We also run an Eloquent query to check if there is already a database record with the same name. If either of these actions fails then variable `$error` is set to `true` and the function ends by returning `  return $response->withJson([], 400);`.
 
 ```php
 // Load the request schema
@@ -461,7 +461,7 @@ return $response->withJson([], 200);
 ```
 
 ### Edit
-Both the create and edit controller functions have similar code so we will not cover similar snippets twice. Rather, we will be point out just the pieces that are unique.
+Both the create and edit controller functions have similar code so we will not cover similar snippets twice. Again, we will only examine the pieces that are unique.
 
 #### `getModalEdit` function
 
@@ -710,7 +710,6 @@ public function delete(Request $request, Response $response, $args)
     return $response->withJson([], 200);
 }
 ```
-
 
 ### Final controller
 
