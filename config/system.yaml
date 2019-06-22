@@ -2,7 +2,7 @@ home:
   alias: '/quick-start'
 
 pages:
-  theme: learn2
+  theme: sitetheme
   markdown_extra: true
   process:
     markdown: true
