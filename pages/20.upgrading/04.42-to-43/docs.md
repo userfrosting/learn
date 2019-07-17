@@ -45,7 +45,9 @@ $ php bakery bake
 
 ### Migrating your Sprinkles
 
-#### Font Awesomne
+#### Font Awesome
+
+Breaking changes include new [icon prefix](https://fontawesome.com/how-to-use/on-the-web/setup/upgrading-from-version-4#changes), the removal of icon aliases and many icon name changes to align with the new standards. Custom sprinkles will need to be updated to use the new icon names. You can check the [upgrade guide](https://fontawesome.com/how-to-use/on-the-web/setup/upgrading-from-version-4#name-changes) for a comprehensive list of icon name changes.
 
 #### Custom Bake Command
 
