@@ -17,6 +17,8 @@ The **local** disk stores files in `app/storage`. This is also the **default dis
 #### The _public_ disk
 The **public** disk, on the other hand, store files directly in your project public folder, under `public/files/`. This means any files saved in this disk will be **publicly available**. It's the perfect disk for user generated assets (think images), as they will be directly handled by the web server. For example, if you store a file named `cats.jpg` in the public disk, you'll be able to access this image by typing `https://localhost/files/cats.jpg` in your browser.
 
+>>>>> In `4.3` the package required to use S3 disk was removed from the `core` sprinkle. You must now include `league/flysystem-aws-s3-v3` inside a custom Sprinkles `composer.json`.
+
 #### The _S3_ disk
 The **S3** disk provides an example configuration to access an [Amazon S3](https://aws.amazon.com/s3/) bucket from your app. Because of the sensitive information, we recommend storing your S3 credential in the `app/.env` file. This will avoid committing your private keys to your git repo, for example.
 
@@ -31,6 +33,20 @@ AWS_URL=""
 ```
 
 See [Amazon S3 Support Page](https://aws.amazon.com/en/blogs/security/wheres-my-secret-access-key/) if you need help finding your access keys. The region code can be found [here](http://docs.aws.amazon.com/general/latest/gr/rande.html).
+
+>>>>> In `4.3` the package required to use rackspace disk was removed from the `core` sprinkle. You must now include `league/flysystem-rackspace` inside a custom Sprinkles `composer.json`.
+
+#### The _rackspace_ disk
+The **rackspace** disk provides an example configuration to access [rackspace](https://www.rackspace.com) storage solution. Because of the sensitive information, we recommend storing your rackspace credential in the `app/.env` file.
+
+```bash
+RACKSPACE_USERNAME=""
+RACKSPACE_KEY=""
+RACKSPACE_CONTAINER=""
+RACKSPACE_ENDPOINT=""
+RACKSPACE_REGION=""
+RACKSPACE_URL_TYPE=""
+```
 
 ### Adding your own disk
 
@@ -180,4 +196,4 @@ Last thing to do is to create a disk using the `gdrive` driver in your sprinkle 
 
 ```
 
->>>>>> As with the S3 Driver, it's recommended to store your tokens and keys in the `app/.env` file.
+>>>>>> As with the S3 and rackspace Drivers, it's recommended to store your tokens and keys in the `app/.env` file.
