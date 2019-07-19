@@ -17,10 +17,10 @@ UserFrosting 4.3 focus on updating dependencies.
 ### Breaking changes
 
 #### Major (likely to break your project)
--
+- Removed `league/flysystem-aws-s3-v3` and `league/flysystem-rackspace` dependencies from the `core` sprinkle. If you are using `s3` or `rackspace` for File Storage, you must now include these packages in your custom Sprinkle.  
 
 #### Minor (should only break heavily customized projects)
--
+- Updated AdminLTE to `2.4.x`. Reference the [upgrade guide](https://adminlte.io/docs/2.4/upgrade-guide) for change details.
 
 #### Deprecations (still available but may be removed at any time)
 -
@@ -45,7 +45,9 @@ $ php bakery bake
 
 ### Migrating your Sprinkles
 
-#### Font Awesomne
+#### Font Awesome
+
+Breaking changes include new [icon prefix](https://fontawesome.com/how-to-use/on-the-web/setup/upgrading-from-version-4#changes), the removal of icon aliases and many icon name changes to align with the new standards. Custom sprinkles will need to be updated to use the new icon names. You can check the [upgrade guide](https://fontawesome.com/how-to-use/on-the-web/setup/upgrading-from-version-4#name-changes) for a comprehensive list of icon name changes.
 
 #### Custom Bake Command
 
