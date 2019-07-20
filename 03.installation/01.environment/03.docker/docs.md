@@ -8,6 +8,8 @@ taxonomy:
 
 >>> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
+>Docker support is currently at **experimental** stability. Expect quirks and documentation gaps.
+
 The relevant files for installing UserFrosting with Docker are `docker-compose.yml`, and the contents of `docker/`.
 
 First, install [Docker Compose](https://docs.docker.com/compose/install/).
@@ -20,6 +22,7 @@ Second, initialize a new UserFrosting project:
 3. Run `docker-compose run composer install --ignore-platform-reqs --no-scripts` to install all composer modules. (https://hub.docker.com/_/composer) Sometimes dependencies or Composer scripts require the availability of certain PHP extensions. You can work around this as follows: Pass the `--ignore-platform-reqs and --no-scripts` flags to install or update
 4. Run `docker-compose run node npm install` to install all npm modules.
 5. Run `docker-compose run composer update --ignore-platform-reqs --no-scripts` to install remaining composer modules
+6. Run `docker-compose run node npm run uf-assets-install` to install all frontend vendor assets.
 
 Now you can start up the entire Nginx + PHP + MySQL stack using docker with:
 
@@ -27,11 +30,11 @@ Now you can start up the entire Nginx + PHP + MySQL stack using docker with:
 
 the `-d` flag will launch this in the background so you can continue to use the terminal window. On the first run you need to init the database (your container name may be different depending on the name of your root directory):
 
-    $ docker exec -it -u www-data userfrosting_php_1 bash -c 'php bakery migrate'
+    $ docker exec -it -u www-data userfrosting_php_1 sh -c 'php bakery migrate'
 
 You also need to setup the first admin user (again, your container name may be different depending on the name of your root directory):
 
-    $ docker exec -it -u www-data userfrosting_php_1 bash -c 'php bakery create-admin'
+    $ docker exec -it -u www-data userfrosting_php_1 sh -c 'php bakery create-admin'
 
 Now visit `http://localhost:8591/` to see your UserFrosting homepage!
 
