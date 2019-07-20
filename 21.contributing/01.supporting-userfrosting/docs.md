@@ -14,7 +14,7 @@ That being said, yes, we'll take your money!
 
 Your financial contribution will help keep our chat and demo servers going.  And, who knows?  Maybe enough people will donate and Alex can make UserFrosting his full-time job ;-)
 
-The easiest way to contribute financially is through our [Pledgie campaign](https://pledgie.com/campaigns/29583).  Suggested donations are as follows:
+The easiest way to contribute financially is through [Open Collective](https://opencollective.com/userfrosting).  Suggested donations are as follows:
 
 - Personal use: $10
 - Local nonprofit use (e.g. local chapters of Scouts, Elk Lodge, etc): $30
