@@ -8,11 +8,11 @@ taxonomy:
 
 ## Overview
 
-UserFrosting 4.3 focus on updating dependencies.
+UserFrosting 4.3 focuses on updating dependencies.
 
 ### Key new features
-
-
+- Option to set password manually when creating a new user through the admin dashboard.
+-
 
 ### Breaking changes
 
@@ -21,6 +21,8 @@ UserFrosting 4.3 focus on updating dependencies.
 
 #### Minor (should only break heavily customized projects)
 - Updated AdminLTE to `2.4.x`. Reference the [upgrade guide](https://adminlte.io/docs/2.4/upgrade-guide) for change details.
+- Users are no longer required to be in a group.
+- PostgreSQL now performs case-insensitive comparison when creating new users. (You can no longer create two different users with the same email address E.g. user@userfrosting.com and User@userfrosting.com) 
 
 #### Deprecations (still available but may be removed at any time)
 -
