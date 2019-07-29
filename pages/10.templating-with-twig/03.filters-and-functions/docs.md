@@ -26,4 +26,14 @@ You can perform permission checks in your Twig templates using the `checkAccess`
 {{ translate("ACCOUNT_USER_CHAR_LIMIT", {min: 4, max: 200}) }}
 ```
 
+### path_for
+
+You can use `path_for` in your Twig templates to get the URL for a named route. This Twig function is simply mapped to the Slim router `pathFor(string $name, array $data, array $queryParams)` instance method.
+
+```
+<li>
+    <a href="{{ path_for('awesome-owls' )}}">Owls</a>
+</li>
+```
+
 To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
