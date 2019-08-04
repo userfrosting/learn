@@ -177,7 +177,7 @@ if (!$validator->validate($data)) {
 
 The `validate` method will return `false` if any fields fail any of their validation rules.  Notice that we use the `alerts` service to store any error messages that we wish to display to the client.
 
->>> Internally, UserFrosting uses the [Valitron](https://github.com/vlucas/valitron) validation package to perform server-side validation. 
+>>> Internally, UserFrosting uses the [Valitron](https://github.com/vlucas/valitron) validation package to perform server-side validation.
 
 ### Schema Specifications
 
@@ -185,21 +185,21 @@ The `validate` method will return `false` if any fields fail any of their valida
 
 A field consists of a unique **field name**, along with a set of attributes.  The following attributes are defined for a field:
 
-##### `transformations` (optional)
+- **transformations** (optional)
 
-The `transformations` attribute specifies an ordered list of **data transformations** to be applied to the field.
+ The `transformations` attribute specifies an ordered list of **data transformations** to be applied to the field.
 
-##### `validators` (optional)
+- **validators** (optional)
 
-The `validators` attribute specifies an ordered list of **validators** to be applied to the field.
+ The `validators` attribute specifies an ordered list of **validators** to be applied to the field.
 
-##### `default` (optional)
+- **default** (optional)
 
-The `default` attribute specifies a default value to be used if the field has not been specified in the HTTP request.  When a default value is applied, the data transformations and validators for the field shall be ignored.
+ The `default` attribute specifies a default value to be used if the field has not been specified in the HTTP request.  When a default value is applied, the data transformations and validators for the field shall be ignored.
 
-**Example:**
+ **Example:**
 
-```yaml
+ ```yaml
 owls:
   validators:
     ...
@@ -214,29 +214,29 @@ owls:
 
 Data transformations should be applied before validation, in the specified order.  The following transformations are currently supported:
 
-##### `purge`
+- `purge`
 
-Remove all HTML entities (`'"<>&` and characters with ASCII value less than 32) from this field.
+ Remove all HTML entities (`'"<>&` and characters with ASCII value less than 32) from this field.
 
-**Example:**
+ **Example:**
 
-```yaml
+ ```yaml
 comment:
   transformations:
   - purge
 ```
 
-##### `escape`
+- `escape`
 
-Escape all HTML entities (`'"<>&` and characters with ASCII value less than 32).
+ Escape all HTML entities (`'"<>&` and characters with ASCII value less than 32).
 
-##### `purify`
+- `purify`
 
-Apply an HTML purification library, for example [HTMLPurifier](http://htmlpurifier.org/), to remove any potentially dangerous HTML code.
+ Apply an HTML purification library, for example [HTMLPurifier](http://htmlpurifier.org/), to remove any potentially dangerous HTML code.
 
-##### `trim`
+- `trim`
 
-Remove any leading and trailing whitespace.
+ Remove any leading and trailing whitespace.
 
 #### Validators
 
@@ -244,17 +244,60 @@ A validator consists of a **validator name**, and a set of validator attributes.
 
 The validation message will be recorded during the call to `ServerSideValidator::validate` in the event that the field fails the validation rule.  This can be a simple text message, or you may [reference a translatable string key](/advanced/i18n#the-placeholder) using the `&` prefix.
 
+**Example:**
+```yaml
+talons:
+  validators:
+    required:
+      label: "talons"
+      message: "Talons is a required field."
+    length:
+      label: "talons"
+      max: 120
+      message: "Talons must be less than {{max}} characters."
+```
+Note there are two validators for `talons`. The `required` validator requires a value to be in this field and the `length` validator sets a maximum of 120 characters. The `message` key for each validator is simply the message that will be displayed if the validator parameters are not met. E.g. if a value of over 120 characters is provided, the user will see the validation message `Talons must be less than 120 characters.`
+
+To integrate a translatable string key simply add your key using the `&` prefix. For example, your [translation file](/advanced/i18n#the-translation-files) might look like:
+
+`locale/en_US/talons.php`
+```
+return [
+  'TALONS' => [
+    'VALIDATE' => [
+      'REQUIRED' => 'Talons is a required field.',
+      'LENGTH'   => 'Talons must be less than {{max}} characters.'
+    ]
+  ]
+];
+```
+
+And then in your schema file:
+```yaml
+talons:
+  validators:
+    required:
+      label: "talons"
+      message: "&TALONS.VALIDATE.REQUIRED"
+    length:
+      label: "talons"
+      max: 120
+      message: "&TALONS.VALIDATE.LENGTH"
+```
+
+Remember `&` is a special character in YAML, so using double-quotes is necessary.
+
 The following validators are available:
 
-##### `email`
+- `email`
 
-Specifies that the value of the field must represent a valid email address.
+ Specifies that the value of the field must represent a valid email address.
 
-##### `equals`
+- `equals`
 
-Specifies that the value of the field must be equivalent to `value`.
+ Specifies that the value of the field must be equivalent to `value`.
 
-```yaml
+ ```yaml
 owls:
   validators:
     equals:
@@ -262,17 +305,17 @@ owls:
       message: "Number of owls must be equal to {{value}}."
 ```
 
-By default, this is case-insensitive.  It can be made case-sensitive by setting `caseSensitive` to `true`.
+ By default, this is case-insensitive.  It can be made case-sensitive by setting `caseSensitive` to `true`.
 
-##### `integer`
+- `integer`
 
-Specifies that the value of the field must represent an integer value.
+ Specifies that the value of the field must represent an integer value.
 
-##### `length`
+- `length`
 
-Specifies `min` and `max` bounds on the length, in characters, of the field's value.
+ Specifies `min` and `max` bounds on the length, in characters, of the field's value.
 
-```yaml
+ ```yaml
 screech:
   validators:
     length:
@@ -281,11 +324,11 @@ screech:
       message: "Your screech must be between {{min}} and {{max}} characters long."
 ```
 
-##### `matches`
+- `matches`
 
-Specifies that the value of the field must be equivalent to the value of `field`.
+ Specifies that the value of the field must be equivalent to the value of `field`.
 
-```yaml
+ ```yaml
 passwordc:
   validators:
     matches:
@@ -293,11 +336,11 @@ passwordc:
       message: "The value of this field does not match the value of the 'password' field."
 ```
 
-##### `member_of`
+- `member_of`
 
-Specifies that the value of the field must appear in the specified `values` array.
+ Specifies that the value of the field must appear in the specified `values` array.
 
-```yaml
+ ```yaml
 genus:
   validators:
     member_of:
@@ -310,35 +353,35 @@ genus:
       message: Sorry, that is not one of the permitted genuses.
 ```
 
-##### `no_leading_whitespace`
+- `no_leading_whitespace`
 
-Specifies that the value of the field must not have any leading whitespace characters.
+ Specifies that the value of the field must not have any leading whitespace characters.
 
-##### `no_trailing_whitespace`
+- `no_trailing_whitespace`
 
-Specifies that the value of the field must not have any trailing whitespace characters.
+ Specifies that the value of the field must not have any trailing whitespace characters.
 
-##### `not_equals`
+- `not_equals`
 
-Specifies that the value of the field must **not** be equivalent to `value`.  By default, this is case-insensitive.  It can be made case-sensitive by setting `caseSensitive` to `true`.
+ Specifies that the value of the field must **not** be equivalent to `value`.  By default, this is case-insensitive.  It can be made case-sensitive by setting `caseSensitive` to `true`.
 
-##### `not_matches`
+- `not_matches`
 
-Specifies that the value of the field must **not** be equivalent to the value of `field`. 
+ Specifies that the value of the field must **not** be equivalent to the value of `field`.
 
-##### `not_member_of`
+- `not_member_of`
 
-Specifies that the value of the field must **not** appear in the specified `values` array.
+ Specifies that the value of the field must **not** appear in the specified `values` array.
 
-##### `numeric`
+- `numeric`
 
-Specifies that the value of the field must represent a numeric (floating-point or integer) value.
+ Specifies that the value of the field must represent a numeric (floating-point or integer) value.
 
-##### `range`
+- `range`
 
-Specifies a numeric interval bound on the field's value.  The `range` validator supports the following attributes:
+ Specifies a numeric interval bound on the field's value.  The `range` validator supports the following attributes:
 
-```yaml
+ ```yaml
 owls:
   validators:
     range:
@@ -347,13 +390,13 @@ owls:
       message: "Please provide {{min}} - {{max}} owls."
 ```
 
-You can use `min_exclusive` instead of `min`, and `max_exclusive` instead of `max` to create open intervals.
+ You can use `min_exclusive` instead of `min`, and `max_exclusive` instead of `max` to create open intervals.
 
-##### `regex`
+- `regex`
 
-Specifies that the value of the field must match a specified Javascript- and PCRE-compliant regular expression.
+ Specifies that the value of the field must match a specified Javascript- and PCRE-compliant regular expression.
 
-```yaml
+ ```yaml
 screech:
   validators:
     regex:
@@ -361,25 +404,25 @@ screech:
       message: You did not provide a valid screech.
 ```
 
->>>> Regular expressions should _not_ be wrapped in quotes in YAML.  Also the jQuery Validation plugin, for some unholy reason, wraps regular expressions on the client side with `^...$`.  Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).
+ >>>> Regular expressions should _not_ be wrapped in quotes in YAML.  Also the jQuery Validation plugin, for some unholy reason, wraps regular expressions on the client side with `^...$`.  Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).
 
-##### `required`
+- `required`
 
-Specifies that the field is a required field.  If the field is not present in the HTTP request, validation will fail unless a default value has been specified for the field.
+ Specifies that the field is a required field.  If the field is not present in the HTTP request, validation will fail unless a default value has been specified for the field.
 
-##### `telephone`
+- `telephone`
 
-Specifies that the value of the field must represent a valid telephone number.
+ Specifies that the value of the field must represent a valid telephone number.
 
-##### `uri`
+- `uri`
 
-Specifies that the value of the field must represent a valid Uniform Resource Identifier (URI).
+ Specifies that the value of the field must represent a valid Uniform Resource Identifier (URI).
 
-##### `username`
+- `username`
 
-Specifies that the value of the field must be a valid username (lowercase letters, numbers, `.`, `-`, and `_`).
+ Specifies that the value of the field must be a valid username (lowercase letters, numbers, `.`, `-`, and `_`).
 
-#### Limit rules to server or client only
+### Limit rules to server or client only
 
 Sometimes, you only want a validation rule to be applied server-side but not in Javascript on the client side, or vice versa.  For example, there may be forms that contain hidden data that needs to be validated on the server-side, but is not directly manipulated by the user in the browser. Thus, these fields would not need client-side validation rules.
 
