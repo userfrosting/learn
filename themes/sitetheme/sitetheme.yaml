@@ -1,0 +1,13 @@
+streams:
+ schemes:
+   theme:
+     type: ReadOnlyStream
+     prefixes:
+       '':
+         - user/themes/sitetheme
+         - user/themes/learn2
+google_analytics_code: UA-37689257-2
+github:
+    position: top                                   # top | bottom | off
+    tree: https://github.com/userfrosting/learn/blob/hotfix/
+    commits: https://github.com/userfrosting/learn/commits/hotfix/

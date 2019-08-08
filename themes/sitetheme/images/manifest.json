@@ -1,0 +1,17 @@
+{
+	"name": "UserFrosting",
+	"icons": [
+		{
+			"src": "https:\/\/learn.userfrosting.com\/user\/themes\/sitetheme\/images\/android-chrome-192x192.png",
+			"sizes": "192x192",
+			"type": "image\/png"
+		},
+		{
+			"src": "https:\/\/learn.userfrosting.com\/user\/themes\/sitetheme\/images\/android-chrome-512x512.png",
+			"sizes": "512x512",
+			"type": "image\/png"
+		}
+	],
+	"theme_color": "#ffffff",
+	"display": "standalone"
+}
