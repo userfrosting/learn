@@ -4,8 +4,9 @@ ehthumbs.db
 Icon?
 Thumbs.db
 *.swp
-/plugins/
-themes/learn2/
 
 # Custom
 _meta
+/plugins/
+themes/learn2/
+config/security.yaml
