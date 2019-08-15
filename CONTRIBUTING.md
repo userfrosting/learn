@@ -19,7 +19,6 @@ Pull Requests for this repository should be created against the appropriate bran
 
 | Change should be published | Branch to make PR against |
 |---|---|
-| now | `master` |
 | next patch release | `hotfix` |
 | next breaking change release | `develop` |
 | previous release | `previous.vesion.branch` |
