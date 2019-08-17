@@ -102,7 +102,7 @@ Next we'll populate our newly created table with some default data. To do this, 
 namespace UserFrosting\Sprinkle\Pastries\Database\Seeds;
 
 use UserFrosting\Sprinkle\Core\Database\Seeder\BaseSeed;
-use UserFrosting\Sprinkle\Pastries\Database\Models\Pastries;
+use UserFrosting\Sprinkle\Pastries\Database\Models\Pastry;
 
 class DefaultPastries extends BaseSeed
 {
@@ -112,7 +112,7 @@ class DefaultPastries extends BaseSeed
     public function run()
     {
         foreach ($this->pastries() as $pastry) {
-            $pastry = new Pastries($pastry);
+            $pastry = new Pastry($pastry);
             $pastry->save();
         }
     }
