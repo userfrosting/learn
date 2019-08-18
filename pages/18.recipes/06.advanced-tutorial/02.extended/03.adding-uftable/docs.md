@@ -10,7 +10,7 @@ taxonomy:
 
 ### Twig template file
 
-Rather than using the basic html table that was [created earlier in the tutorial](/recipes/advanced-tutorial/base-setup#the-template-file) inside `/pages/pastries.html.twig`, the ufTable code will be placed into a separate file inside the `tables` sub directory. We will take a look at the complete file code and then go back through and look at a few different chunks of code.
+Rather than using the basic html table that was [created earlier in the tutorial](/recipes/advanced-tutorial/basics/base-setup#the-template-file) inside `/pages/pastries.html.twig`, the ufTable code will be placed into a separate file inside the `tables` sub directory. We will take a look at the complete file code and then go back through and look at a few different chunks of code.
 
 `templates/tables/pastries.html.twig`.
 
