@@ -39,8 +39,8 @@ services:
   appserver:
     composer:
       phpunit/phpunit: '*'
-    config:
-      conf: ./lando-config/php.ini 
+    #config:
+    #  conf: ./lando-config/php.ini # uncomment this section to enable your custom php.ini file
     overrides:
       environment:
         PHP_IDE_CONFIG: "serverName=userfrosting.lndo.site"
