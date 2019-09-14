@@ -97,7 +97,7 @@ vagrant up
 
 When you _vagrant up_, the Laravel/Homestead box is transparently loaded as a Virtual Machine on your computer (this may take several minutes the very first time while it downloads the VM image to your computer). Your local UserFrosting repository clone is mirrored/shared with the VM, so you can work on the UserFrosting code on your computer, and see the changes immediately when you browse to UserFrosting at the URL provided by the VM.
 
-### Check our your first UserFrosting installation!
+### Check out your first UserFrosting installation!
 
 Ok, that should be it!  If you head over to `http://192.168.10.10/` in your browser, you should see the front page of the default UserFrosting installation.
 
@@ -105,6 +105,9 @@ A default administrator account will also be preconfigured with the following cr
 
 * Username: **admin**
 * Password: **adminadmin12**
+
+
+If you encounter any error at this point, look at the previous output for signs of failure. You might need to [connect to the virtual machine](#connecting-to-the-virtual-machine) to run the installer script again. In doubts, the [troubleshooting section](/troubleshooting) might also be of help.
 
 ## Next steps
 
@@ -154,7 +157,14 @@ Welcome to Ubuntu 18.04 LTS (GNU/Linux 4.15.0-20-generic x86_64)
 0 updates are security updates.
 ```
 
-If you try the `ls` command, you should see the `userfrosting` directory. To log out of the virtual machine, use the `exit` command.
+If you try the `ls` command, you should see the `userfrosting` directory. You can switch to this directory and run all [bakery commands](/cli/commands) directly in the VM. For example :
+
+```
+$ cd userfrosting
+$ php bakery bake
+```
+
+To log out of the virtual machine, use the `exit` command. 
 
 #### Additional Vagrant Commands
 
