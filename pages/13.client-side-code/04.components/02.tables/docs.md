@@ -447,7 +447,7 @@ Get saved filters from the browser's local storage.
 
 ### refresh
 
-Refreshes the table by re-querying the data URL with the current set of filters, sorts, etc. Usage: `$("#your-widget-id").ufTable("refresh");`
+Refreshes the table by re-querying the data URL with the current set of filters, sorts, etc. Usage: `$("#myUserTable").ufTable("refresh");`
 
 ## Customizing the base template for your table
 
