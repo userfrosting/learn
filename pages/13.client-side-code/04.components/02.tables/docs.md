@@ -445,6 +445,10 @@ Fetches the current page size, page number, sort order, sort field, and column f
 
 Get saved filters from the browser's local storage.
 
+### refresh
+
+Refreshes the table by re-querying the data URL with the current set of filters, sorts, etc. Usage: `$("#myUserTable").ufTable("refresh");`
+
 ## Customizing the base template for your table
 
 If you don't want to use the default `table-paginated.html.twig` base template for your tables, you can create your own base template.  Your template needs to have six things:
