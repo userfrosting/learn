@@ -39,6 +39,13 @@ services:
   appserver:
     composer:
       phpunit/phpunit: '*'
+    build_as_root:
+      - apt-get update -y
+      - apt-get install -my wget gnupg
+      - curl -sL https://deb.nodesource.com/setup_11.x | bash - # install node 11 + (UF4.2.0 requires 10.12+) https://github
+      - apt-get install -y nodejs
+      - a2enmod headers
+      - service apache2 restart
     #config:
     #  conf: ./lando-config/php.ini # uncomment this section to enable your custom php.ini file
     overrides:
