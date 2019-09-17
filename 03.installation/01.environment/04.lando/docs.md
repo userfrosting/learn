@@ -135,7 +135,7 @@ Here are some vitals:
 
 Next, we need to install UserFrosting. 
 
-1. Run `lando php composer install --ignore-platform-reqs --no-scripts` to install Lando's PHP dependencies.
+1. Run `lando composer install --ignore-platform-reqs --no-scripts` to install Lando's PHP dependencies.
 1. Run `lando npm install` to install NPM modules
 1. **Optional:** If you have an existing database file, you can import that right away using `lando db-import <filename>`. It is important to note that your file must be within the UF app as Lando, like Docker, cannot access files outside of its environment.
 1. Run `lando php bakery bake` to run UserFrosting's `bake` command and follow the UserFrosting install steps as described in the previous chapter.
@@ -153,7 +153,7 @@ DB_USER="lamp"
 DB_PASSWORD="lamp"
 ```
 
->>> **Having database connection troubles?**  Get database connection details and more at `lando info`
+>>> **Having database connection troubles?**  Get database connection details and more by running `lando info`
 
 ### Additional Lando Commands
 
