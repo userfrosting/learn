@@ -44,8 +44,7 @@ services:
       - apt-get install -my wget gnupg
       - curl -sL https://deb.nodesource.com/setup_11.x | bash - # install node 11 + (UF4.2.0 requires 10.12+) https://github
       - apt-get install -y nodejs
-      #- a2enmod headers # uncomment this to enable modrewrite
-      #- service apache2 restart # uncomment this to enable modrewrite
+      - a2enmod headers
     #config:
     #  conf: ./lando-config/php.ini # uncomment this section to enable your custom php.ini file
     overrides:
@@ -106,7 +105,7 @@ tooling:
     service: cache
 ```
 
-This configuration file creates a LAMP stack. If you prefer a LEMP (nginx) stack, change "lamp" to "lemp" in the `recipe` setting near the top of the file. This will enable `xdebug` for integration with your IDE. If you do not use xdebug, you can set `xdebug` to false in the configuration file to improve performance. However, since this is a local development environment, we strongly encourage you to keep it enabled!
+This configuration file creates a LAMP stack. If you prefer a LEMP (nginx) stack, change "lamp" to "lemp" in the `recipe` setting near the top of the file and be sure to comment out the `a2enmod headers` line in the build section for the Lando config file. This will enable `xdebug` for integration with your IDE. If you do not use xdebug, you can set `xdebug` to false in the configuration file to improve performance. However, since this is a local development environment, we strongly encourage you to keep it enabled!
 
 ### Configure UserFrosting
 
