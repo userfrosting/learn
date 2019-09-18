@@ -44,8 +44,8 @@ services:
       - apt-get install -my wget gnupg
       - curl -sL https://deb.nodesource.com/setup_11.x | bash - # install node 11 + (UF4.2.0 requires 10.12+) https://github
       - apt-get install -y nodejs
-      - a2enmod headers
-      - service apache2 restart
+      #- a2enmod headers # uncomment this to enable modrewrite
+      #- service apache2 restart # uncomment this to enable modrewrite
     #config:
     #  conf: ./lando-config/php.ini # uncomment this section to enable your custom php.ini file
     overrides:
