@@ -13,7 +13,7 @@ Lando provides a stable and easy-to-use local development environment. It allows
 
 >> Note: Lando is not meant for production!
 
->> Note: Lando works best with Mac & Linux, but does support Windows as well. Note that if you are using windows, you must enable Hyper-V. Doing so prevents you from running Vagrant/VMBox.
+>> Note: Lando works best with Mac & Linux, but does support Windows as well. Note that if you are using Windows, you must enable Hyper-V. Doing so prevents you from running Vagrant/VMBox. If you are able to run Docker on Windows, you _should_ be able to run Lando on Windows as well.
 
 ## Installation Steps
 
