@@ -11,11 +11,15 @@ Here's a few examples of what you could do to improve the learning resources of 
 - add examples;
 - fix incorrect statements;
 
-You can also contibute by checking out the [open issues](https://github.com/userfrosting/learn/issues) and giving your two cents. Especially if your two cents are different than everyone else's. New perspectives can be excellent learning opportunities.
+You can also contribute by checking out the [open issues](https://github.com/userfrosting/learn/issues) and giving your two cents. Especially if your two cents are different than everyone else's. New perspectives can be excellent learning opportunities.
+
+## Formatting
+
+UserFrosting documentation is written in Markdown. Usual Markdown syntax is available for formatting individual pages. Advance formatting, including note, info, tip and warning notices is available through the [Grav shortcode plugin](https://github.com/getgrav/grav-plugin-shortcode-core#available-shortcodes).
 
 ## Pull Requests
 
-Pull Requests for this repository should be created against the appropriate branch as per the table below. If you're unsure, just pick the branch that fits best and someone will take it from there. 
+Pull Requests for this repository should be created against the appropriate branch as per the table below. If you're unsure, just pick the branch that fits best and someone will take it from there.
 
 | Change should be published | Branch to make PR against |
 |---|---|
