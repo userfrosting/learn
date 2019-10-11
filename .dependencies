@@ -10,7 +10,7 @@ git:
     breadcrumbs:
         url: https://github.com/getgrav/grav-plugin-breadcrumbs
         path: user/plugins/breadcrumbs
-        branch: develop    
+        branch: develop
     anchors:
         url: https://github.com/getgrav/grav-plugin-anchors
         path: user/plugins/anchors
@@ -27,6 +27,10 @@ git:
         url: https://github.com/getgrav/grav-theme-learn2
         path: user/themes/learn2
         branch: develop
+    shortcode-core:
+        url: https://github.com/getgrav/grav-plugin-shortcode-core
+        path: user/plugins/shortcode-core
+        branch: master
 links:
     problems:
         src: grav-plugin-problems
@@ -39,20 +43,24 @@ links:
     breadcrumbs:
         src: grav-plugin-breadcrumbs
         path: user/plugins/breadcrumbs
-        scm: github    
+        scm: github
     anchors:
         src: grav-plugin-anchors
         path: user/plugins/anchors
-        scm: github  
+        scm: github
     highlight:
         src: grav-plugin-highlight
         path: user/plugins/highlight
-        scm: github  
+        scm: github
     simplesearch:
         src: grav-plugin-simplesearch
         path: user/plugins/simplesearch
-        scm: github        
+        scm: github
     learn2:
         src: grav-theme-learn2
         path: user/themes/learn2
+        scm: github
+    shortcode-core:
+        src: grav-plugin-shortcode-core
+        path: user/plugins/shortcode-core
         scm: github
