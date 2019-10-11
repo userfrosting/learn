@@ -132,9 +132,11 @@ class MembersTable extends Migration
     { ... }
 }
 ```
->>>>>> Don't forget to start your fully qualified class names with `\`. If you're using `class` to get the fully qualified class name you can do 
+
+>>>>>> Don't forget to start your fully qualified class names with `\`. If you're using `class` to get the fully qualified class name you can do the following
+
 ```php
-`\\` . MyClass::class
+'\\' . MyClass::class
 ```
 
 The above example tells the bakery `migrate` command that the `UsersTable`, `RolesTable` and `RoleUsersTable` migrations from the `Account` Sprinkle need to be already executed before executing the `MembersTable` migration from the `MySprinkle` sprinkle. If those migrations are not yet executed and are pending execution, the `migrate` command will take care of the order automatically. If a migration's dependencies cannot be met, the `migrate` command will abort.
