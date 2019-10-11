@@ -10,7 +10,7 @@ When you start building your application with UserFrosting, you'll no doubt be a
 
 Though you could add new tables to your database through the command line, phpMyAdmin, MySQL Workbench or another tool, you will probably want something that is portable, allowing you to set up your database on other developers' machines or on your test and production servers. To do this, you should use a **migration**. Migrations bring version control to your database. If you have ever had to share sql files or manually edit a database schema, you've faced the problem that database migrations solve.
 
->>>>>> Even if you only have a simple table to create, creating a migration is a good practice. You never know what changes you'll need to do to that table later on. You also don't know when or who will need to create that table again later on a different system or even database provider!
+[notice=tip]Even if you only have a simple table to create, creating a migration is a good practice. You never know what changes you'll need to do to that table later on. You also don't know when or who will need to create that table again later on a different system or even database provider![/notice]
 
 Migrations are also very useful when dealing with [Automated Test](/testing). Tests can use your migrations to setup a temporary or a test database so your tests are executed in a safe environment, keeping your production database secure.
 
@@ -91,7 +91,7 @@ class MembersTable extends Migration
 
 `$this->schema` is a variable created by the base migration class, which models your database structure. In this example, we call `hasTable` to check if the `members` table already exists, and then create it if it doesn't.
 
->>>>> Using `hasTable` to make sure the table doesn't already exist is not strictly required since [Dependencies](#dependencies) could also be used to prevent any duplicate, but it can still be useful in case another sprinkle already created a table with the same name.
+[notice=note]Using `hasTable` to make sure the table doesn't already exist is not strictly required since [Dependencies](#dependencies) could also be used to prevent any duplicate, but it can still be useful in case another sprinkle already created a table with the same name.[/notice]
 
 We then call a series of methods on the `$table` variable in `create`'s closure, to set up the columns and other table properties.
 
@@ -101,7 +101,7 @@ For a complete explanation of the available methods for working with tables, see
 
 As for the `down` method, it simply tells the database structure to delete the table created by the `up` method when rolling back that migration. In the `members` example, the table created by the `up` method would be **deleted** by the `down` method.
 
->>>> For your table to work correctly with Eloquent, it should always have an autoincrementing `id` column which serves as the primary key. This is done automatically for you with the `increments` method.
+[notice=warning]For your table to work correctly with Eloquent, it should always have an autoincrementing `id` column which serves as the primary key. This is done automatically for you with the `increments` method.[/notice]
 
 ## Dependencies
 
@@ -133,15 +133,16 @@ class MembersTable extends Migration
 }
 ```
 
->>>>>> Don't forget to start your fully qualified class names with `\`. If you're using `class` to get the fully qualified class name you can do the following
+[notice=note]Don't forget to start your fully qualified class names with `\`. If you're using `class` to get the fully qualified class name you can do the following :
 
 ```php
 '\\' . MyClass::class
 ```
+[/notice]
 
 The above example tells the bakery `migrate` command that the `UsersTable`, `RolesTable` and `RoleUsersTable` migrations from the `Account` Sprinkle need to be already executed before executing the `MembersTable` migration from the `MySprinkle` sprinkle. If those migrations are not yet executed and are pending execution, the `migrate` command will take care of the order automatically. If a migration's dependencies cannot be met, the `migrate` command will abort.
 
->>>>> Dependencies can also target previous versions of your own migrations. For example, you should check that your `member` table is created before adding a new column in a new migration.
+[notice=note]Dependencies can also target previous versions of your own migrations. For example, you should check that your `member` table is created before adding a new column in a new migration.[/notice]
 
 ## Running your migration
 
