@@ -36,4 +36,4 @@ MVC organizes our application into three main domains - the **model**, which rep
 
 UserFrosting uses a templating engine called [Twig](/templating-with-twig) to handle the rendering of HTML output in the view.  UserFrosting's model consists of a set of [Eloquent](https://laravel.com/docs/5.4/eloquent) models for handling interactions with the database, as well as a number of other accessory classes that perform most of heavy lifting for your application.  We'll talk about both of these in later chapters.
 
-In this chapter, we discuss UserFrosting's **controller**, which is based around the [Slim](https://www.slimframework.com) microframework.  Whenever you are looking to add a new page or feature to your application, you probably want to start with the controller.
+In this chapter, we discuss UserFrosting's **controller**, which is based around the [Slim](https://www.slimframework.com/docs/v3/) microframework.  Whenever you are looking to add a new page or feature to your application, you probably want to start with the controller.
