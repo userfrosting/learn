@@ -108,7 +108,7 @@ use Slim\Exception\NotFoundException;
 
 ### 405 (Method Not Allowed)
 
-This code is [automatically returned by Slim](https://www.slimframework.com/docs/handlers/not-allowed.html), when a route exists for a given URL, but not for the requested method.  For example, if someone tries to `POST` to a URL, but there is only a `GET` route defined.
+This code is [automatically returned by Slim](https://www.slimframework.com/docs/v3/handlers/not-allowed.html), when a route exists for a given URL, but not for the requested method.  For example, if someone tries to `POST` to a URL, but there is only a `GET` route defined.
 
 ### 429 (Too Many Requests)
 
