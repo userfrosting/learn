@@ -33,13 +33,13 @@ $app->get('/api/users/u/{user_name}', function ($request, $response, $args) {
 
 This is a very simplified example, but it illustrates the main features of a route definition.  First, there is the call to `$app->get()`.  The `get` refers to the HTTP method for which this route is defined.  You may also define `post()`, `put()`, `delete()`, `options`, and `patch`, routes.
 
-The first parameter is the url for the route.  Routes can contain placeholders, such as `{user_name}` to match arbitrary values in a portion of the url.  These placeholders can even be matched according to regular expressions.  See the [Slim documentation ](https://www.slimframework.com/docs/objects/router.html#route-placeholders) for a complete guide to url placeholders.
+The first parameter is the url for the route.  Routes can contain placeholders, such as `{user_name}` to match arbitrary values in a portion of the url.  These placeholders can even be matched according to regular expressions.  See the [Slim documentation ](https://www.slimframework.com/docs/v3/objects/router.html#route-placeholders) for a complete guide to url placeholders.
 
 After the url comes the **closure**, where we place our actual route logic.  The closure requires three parameters - the **request** object, which contains all the information from the client request, the **response** object, which is used to build the response that the server sends back to the client, and the `$args` parameter, which is an array of the values of any matched placeholders in the url.
 
 In the example above, we grab the `user_name` placeholder from `$args`, and use it to look up information for that user from the database.  We then use the value of the `format` query parameter from the request, to decide what to put in the response.  You'll notice that the closure modifies and then returns the `$response` object, which is then passed back to the main Slim application.  Slim will return the response to the client, perhaps modifying it further through the use of [middleware](https://www.slimframework.com/docs/concepts/middleware.html) first.
 
-For a more detailed guide to routes, we highly recommend that you read the [Slim documentation](https://www.slimframework.com/docs/objects/router.html).
+For a more detailed guide to routes, we highly recommend that you read the [Slim documentation](https://www.slimframework.com/docs/v3/objects/router.html).
 
 ## Overriding Routes
 
