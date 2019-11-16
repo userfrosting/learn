@@ -134,7 +134,7 @@ if ($authorizer->checkAccess($currentUser, 'uri_dashboard')) {
 }
 ```
 
-This uses the [authorizer](/users/access-control) to decide where to redirect the user. First, it will redirect to the `dashboard` [named route](https://www.slimframework.com/docs/objects/router.html#route-names) if the user has access to it. If they don't, it will try the `settings` named route.  Finally, if the user doesn't have access to that either, it'll redirect the user to the `index` named route. Since in our case, we always want to redirect to the `index` route, we'll change that part to:
+This uses the [authorizer](/users/access-control) to decide where to redirect the user. First, it will redirect to the `dashboard` [named route](https://www.slimframework.com/docs/v3/objects/router.html#route-names) if the user has access to it. If they don't, it will try the `settings` named route.  Finally, if the user doesn't have access to that either, it'll redirect the user to the `index` named route. Since in our case, we always want to redirect to the `index` route, we'll change that part to:
 
 ```php
 return $response->withHeader('UF-Redirect', $c->router->pathFor('index'));

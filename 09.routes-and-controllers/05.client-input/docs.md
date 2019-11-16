@@ -41,7 +41,7 @@ echo $params['format'];
 
 ## Retrieving Body Parameters
 
-Slim [provides a number of methods](https://www.slimframework.com/docs/objects/request.html#the-request-body) for retrieving data from the body.  The two most common scenarios involve retrieving data that was submitted from a form, and uploaded files.
+Slim [provides a number of methods](https://www.slimframework.com/docs/v3/objects/request.html#the-request-body) for retrieving data from the body.  The two most common scenarios involve retrieving data that was submitted from a form, and uploaded files.
 
 ### Form Data
 
