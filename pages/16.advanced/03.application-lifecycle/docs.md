@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-Every time UserFrosting is booted up to handle a request, it goes through its **application lifecycle**.  This process includes loading the resources and [services](/services) in your Sprinkles, setting up the [Slim application](https://www.slimframework.com/docs/objects/application.html), registering middleware, and setting up your [routes](/routes-and-controllers/front-controller).
+Every time UserFrosting is booted up to handle a request, it goes through its **application lifecycle**.  This process includes loading the resources and [services](/services) in your Sprinkles, setting up the [Slim application](https://www.slimframework.com/docs/v3/objects/application.html), registering middleware, and setting up your [routes](/routes-and-controllers/front-controller).
 
 At each stage in this process, events are triggered that you can hook into via a **Bootstrapper class** in your Sprinkle.
 
