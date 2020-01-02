@@ -304,7 +304,7 @@ class ServicesProvider
     /**
      * Register extended user fields services.
      *
-     * @param Container $container A DI container implementing ArrayAccess and container-interop.
+     * @param Container $container A DI container implementing ArrayAccess and psr-container.
      */
     public function register($container)
     {
