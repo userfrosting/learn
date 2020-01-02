@@ -89,7 +89,7 @@ $logger->pushHandler($handler);
 
 This is a lot of code to write just to create one measly object!  It would be great if we could somehow encapsulate the creation of the object, but without creating tight couplings by doing that within the object itself.
 
-This is where the **dependency injection container (DIC)** comes into play.  The DIC handles basic management of dependencies, encapsulating their creation into simple callbacks.  We will call these callbacks **services**.  The DIC implementation that we use, [Pimple](http://pimple.sensiolabs.org/), has two powerful features that we rely on:
+This is where the **dependency injection container (DIC)** comes into play.  The DIC handles basic management of dependencies, encapsulating their creation into simple callbacks.  We will call these callbacks **services**.  The DIC implementation that we use, _Slim's Container_, which itself [Pimple](http://pimple.sensiolabs.org/), has two powerful features that we rely on:
 
 - It creates dependencies lazily ("on demand").  My `$logger` (and its dependencies) won't be created until the first time I actually try to access them through the container (`$container->logger`).
 - Once an object has been created in the container, Pimple can return the same object in each subsequent call to the container.  For example:
@@ -116,7 +116,7 @@ class ServicesProvider
     /**
      * Register UserFrosting's core services.
      *
-     * @param ContainerInterface $container A DI container implementing ArrayAccess and container-interop.
+     * @param ContainerInterface $container A DI container implementing ArrayAccess and psr-container.
      */
     public function register(ContainerInterface $container)
     {
@@ -128,9 +128,9 @@ class ServicesProvider
         $container['alerts'] = function ($c) {
             return new MessageStream($c->session, $c->config['session.keys.alerts'], $c->translator);
         };
-    
+
         ...
-    
+
     }
 ```
 

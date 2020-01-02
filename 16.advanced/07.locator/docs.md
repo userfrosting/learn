@@ -149,7 +149,7 @@ For example :
 namespace UserFrosting\Sprinkle\MySite;
 
 use UserFrosting\System\Sprinkle\Sprinkle;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Bootstrapper class for the `MySite` sprinkle.
