@@ -158,4 +158,4 @@ $user->delete();
 
 ### Advanced usage
 
-We've only touched on the very basics of how Eloquent and the query builder work.  You will likely want to learn how to [define relationships between models](https://laravel.com/docs/5.4/eloquent-relationships), [encapsulate longer queries](https://laravel.com/docs/5.4/eloquent#local-scopes), and perform more [advanced queries](https://laravel.com/docs/5.4/queries), for example.  For this, we urge you to spend some time reading through Laravel's excellent documentation.
+We've only touched on the very basics of how Eloquent and the query builder works. You will likely want to learn how to [define relationships between models](https://laravel.com/docs/5.8/eloquent-relationships), [encapsulate longer queries](https://laravel.com/docs/5.8/eloquent#local-scopes), and perform more advanced queries, for example. For this, we urge you to spend some time reading through [Laravel Eloquent excellent documentation](https://laravel.com/docs/5.8/eloquent).
