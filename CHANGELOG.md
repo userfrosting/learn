@@ -1,17 +1,8 @@
-# v1.0.2
-## 06/22/2015
+# Changelog
+All notable changes to this project will be documented in this file.
 
-1. [](#new)
-    * Added sub-topic pages
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-# v1.0.1
-## 06/17/2015
-
-1. [](#new)
-    * Added screenshot
-
-# v1.0.0
-## 06/17/2015
-
-1. [](#new)
-    * ChangeLog started...
+## 2020-01-31
+### Changed
+- Updated README
