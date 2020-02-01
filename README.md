@@ -1,4 +1,4 @@
-# learn.userfrosting.com
+# UserFrosting Documentation
 
 https://learn.userfrosting.com
 
@@ -10,9 +10,15 @@ This application uses the [Grav](https://learn.getgrav.org/) CMS.  This reposito
 
 In terms of actually getting it running, you can opt for a local installation, or utilise a containerised VPS solution like Docker.
 
-### Local installation
+## Complete Local Installation
 
-#### Step 1 - Install Grav
+[See Website Installation Guide](https://github.com/userfrosting/learn/blob/website/README.md#getting-started) to install a complete instance of the docs all versions available.
+
+## Local installation
+
+This method will only install the version contained within this branch. To install the full documentation, see the [Complete Local Installation](#complete-local-installation).
+
+### Step 1 - Install Grav
 
 To install this website on your computer, first [install grav core](https://getgrav.org/downloads) in a project folder called `userfrosting-learn` under your webserver's document root folder. Then, find the `user` folder inside of your project folder.  Delete the contents of the `user` folder and clone this repository directly into the user folder.
 
@@ -45,25 +51,23 @@ To finish the install off, just run:
 bin/grav install
 ```
 
-#### Step 2
+### Step 2 - Setup permission (MacOS)
 
-Grav needs your webserver to be able to write to certain directories.  In MacOS with XAMPP installed, this won't work by default.  To deal with this:
-
-Add default webserver user `daemon` to MacOS's `staff` group (which already has the necessary permissions for writing to files/directories):
+Grav needs your webserver to be able to write to certain directories.  In MacOS with XAMPP installed, this won't work by default.  To deal with this, add default webserver user `daemon` to MacOS's `staff` group (which already has the necessary permissions for writing to files/directories):
 
 ```bash
 sudo dseditgroup -o edit -a daemon -t user staff
 ```
 
-#### Step 3
+### Step 3 - Install Grav
 
-Install plugins and base theme. The base theme is learn2. The plugins each have empty directories in the plugins directory.
+To finish Grav install, just run:
 
 ```bash
-bin/gpm install -y error problems breadcrumbs anchors highlight simplesearch learn2
+bin/grav install
 ```
 
-### Docker
+## Docker Installation
 
 Most docker images (like the one used here) automate the installation of Grav. So for the most part, getting started with Docker is less tedious. Instead the tediousness is at the end due to a bug in Grav.
 
@@ -91,14 +95,10 @@ Install plugins and base theme. The base theme is learn2. The plugins each have 
 ```bash
 docker exec -it ufLearn bash
 chmod +x bin/gpm # This is only needed if permissions are acting up
-bin/gpm install -y error problems breadcrumbs anchors highlight simplesearch learn2
+bin/grav install
 ```
 
 NOTE: Grav uses `rename` when moving plugins to their final destination, which means this is where everything falls apart. The issue is that `rename` doesn't work to well when crossing a drive boundary (even for emulated drives), throwing a "Invalid cross-device link" error when attempted. Until a fix is out, you'll need to install the theme and plugins manually under docker.
-
-### Complete Local Installation
-
-[See Website Installation Guide](https://github.com/userfrosting/learn/blob/website/README.md#getting-started) to install a complete instance of the docs with multiple versions available.
 
 ## Credits
 
