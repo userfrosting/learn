@@ -1,8 +1,9 @@
-name: UserFrosting Learn Theme
+name: Site Theme
 version: 1.0.0
-description: "Theme for UserFrosting documentation. Modifies the Learn2 Theme."
+description: "Modifies the Learn2 Theme"
 icon: crosshairs
 author:
  name: Alexander Weissman
  email: alex@alexanderweissman.com
  url: https://alexanderweissman.com
+ 

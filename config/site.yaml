@@ -1,7 +1,7 @@
 title: UserFrosting Documentation
 metadata:
     description: 'The official documentation for UserFrosting, a PHP framework and full-featured user management application.'
-    msapplication-config: 'https://learn.userfrosting.com/user/themes/userfrosting/images/browserconfig.xml'
+    msapplication-config: 'https://learn.userfrosting.com/user/themes/sitetheme/images/browserconfig.xml'
     theme-color: 'ffffff'
 
 taxonomies: [category,tag]
