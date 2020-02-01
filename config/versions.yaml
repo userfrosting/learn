@@ -1,5 +1,5 @@
 branches:
-    'latest':
+    'master':
         path: ''
         label: 'Latest'
     '4.0':
