@@ -45,12 +45,6 @@ htdocs/
    └── ...
 ```
 
-To finish the install off, just run:
-
-```bash
-bin/grav install
-```
-
 ### Step 2 - Setup permission (MacOS)
 
 Grav needs your webserver to be able to write to certain directories.  In MacOS with XAMPP installed, this won't work by default.  To deal with this, add default webserver user `daemon` to MacOS's `staff` group (which already has the necessary permissions for writing to files/directories):
