@@ -1,7 +1,7 @@
 <?php
  namespace Grav\Theme;
 
-class Sitetheme extends Learn2
+class Userfrosting extends Learn2
 {
 
 }

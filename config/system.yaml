@@ -2,7 +2,7 @@ home:
   alias: '/quick-start'
 
 pages:
-  theme: sitetheme
+  theme: userfrosting
   markdown_extra: true
   process:
     markdown: true
