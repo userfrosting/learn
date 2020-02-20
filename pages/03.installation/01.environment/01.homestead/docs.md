@@ -16,7 +16,7 @@ If you're uploading your code to a live site while you're still writing it, this
 
 ### Web hosting vs. web server
 
-In actuality, "web server" and "web hosting" are not the same thing. A web server is nothing more than a piece of software that runs on a computer and listens for **HTTP requests**.  The most common web servers - Apache and Nginx - are completely free and open-source.  You can download and run them on your personal computer.  
+In actuality, "web server" and "web hosting" are not the same thing. A web server is nothing more than a piece of software that runs on a computer and listens for **HTTP requests**.  The most common web servers - Apache and Nginx - are completely free and open-source.  You can download and run them on your personal computer.
 
 When you sign up with a web hosting company, you're not paying for the web server software; you're paying to run a web server on _their computers_ instead of your own.  The reason that you need a web hosting service is **not** because they possess some magical ability to run PHP.  What you're paying for is:
 
@@ -29,7 +29,7 @@ These are important concerns - and part of the reason that most people don't run
 
 ### Using a local server to view and test your code
 
-In the long run, the amount of time you'll spend uploading your code after each change you make will **easily dwarf** the amount of time it takes to set up a working test server on your own computer.  Examples of test server software are Apache and Nginx. If you don't like the idea of setting up a local test server, there's an alternative option that is a little easier and very reliable, called a virtual environment. **Vagrant and Homestead (using them together) is an example of setting up a virtual environment**.  
+In the long run, the amount of time you'll spend uploading your code after each change you make will **easily dwarf** the amount of time it takes to set up a working test server on your own computer.  Examples of test server software are Apache and Nginx. If you don't like the idea of setting up a local test server, there's an alternative option that is a little easier and very reliable, called a virtual environment. **Vagrant and Homestead (using them together) is an example of setting up a virtual environment**.
 
 When you run your code in a place that is accessible only to you and where it's ok when something breaks, this is referred to as a **development environment**.  When you upload your code so that it is running live and interacting with real visitors to your site, this is called a **production environment**.
 
@@ -76,7 +76,7 @@ Next, `cd` into your new UserFrosting dir and clone Homestead Git repository :
 
 ```sh
 cd userfrosting
-git clone -b v7.20.0 https://github.com/laravel/homestead.git vagrant/Homestead
+git clone https://github.com/laravel/homestead.git vagrant/Homestead
 ```
 
 You will need a SSH key-pair to connect to the Virtual Machine created in the next step. If you already have a keypair in your user's home directory you can skip this step. Otherwise you can generate a new SSH keypair using the `ssh-keygen` tool.  Before doing this, make sure you have a `.ssh` directory in your user's home directory (e.g. `C:/Users/<username>` in Windows, or `/Users/<username>` in Mac/Linux).  If not, you can do `mkdir $HOME/.ssh`.
@@ -140,18 +140,18 @@ vagrant ssh
 If it connects successfully, you will see a welcome message for Ubuntu:
 
 ```bash
-Welcome to Ubuntu 18.04 LTS (GNU/Linux 4.15.0-20-generic x86_64)
+Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-74-generic x86_64)
 
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
+Thanks for using
+ _                               _                 _
+| |                             | |               | |
+| |__   ___  _ __ ___   ___  ___| |_ ___  __ _  __| |
+| '_ \ / _ \| '_ ` _ \ / _ \/ __| __/ _ \/ _` |/ _` |
+| | | | (_) | | | | | |  __/\__ \ ||  __/ (_| | (_| |
+|_| |_|\___/|_| |_| |_|\___||___/\__\___|\__,_|\__,_|
 
-  System information as of Sun May 13 19:06:39 UTC 2018
-
-  System load:  0.0               Processes:           121
-  Usage of /:   8.2% of 61.80GB   Users logged in:     0
-  Memory usage: 19%               IP address for eth0: 10.0.2.15
-  Swap usage:   0%                IP address for eth1: 192.168.10.10
+* Homestead v10.3.0 released
+* Settler v9.2.0 released
 
 0 packages can be updated.
 0 updates are security updates.
@@ -164,7 +164,7 @@ $ cd userfrosting
 $ php bakery bake
 ```
 
-To log out of the virtual machine, use the `exit` command. 
+To log out of the virtual machine, use the `exit` command.
 
 #### Additional Vagrant Commands
 
@@ -190,9 +190,15 @@ vagrant destroy
 
 ### Access phpmyadmin
 
-Your virtual machine provides phpmyadmin to make it easier to interact with the `UserFrosting` database.  
+Your virtual machine provides phpmyadmin to make it easier to interact with the `UserFrosting` database.
 
-First, simply add `phpmyadmin.test` to your `hosts` file as well:
+First, while logged in into your virtual machine, install phpmyadmin. Accept all default settings:
+
+```
+sudo apt-get install phpmyadmin
+```
+
+Next, simply add `phpmyadmin.test` to your `hosts` file as well:
 
 ```
 # Vagrant projects
