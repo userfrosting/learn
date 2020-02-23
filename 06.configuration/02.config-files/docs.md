@@ -40,7 +40,7 @@ Sprinkle config files are merged according to the rules of [`array_replace_recur
     return [
         'site' => [
             'title'     =>      'Save the Kakapo',
-            'twitter'   =>      '@savethekakapo'    
+            'twitter'   =>      '@savethekakapo'
         ]
     ];
 ```
@@ -53,7 +53,7 @@ And I load it after the `mysite` Sprinkle, the resulting configuration array cre
         'site' => [
             'title'     =>      'Save the Kakapo',
             'author'    =>      'David Attenborough',
-            'twitter'   =>      '@savethekakapo'            
+            'twitter'   =>      '@savethekakapo'
         ]
     ]
 ```
@@ -75,7 +75,20 @@ To summarize, Sprinkle configuration files are loaded using the following algori
 
 If `UF_MODE` is empty or not set, UserFrosting will only load the `default.php` configuration files in each Sprinkle.
 
->>>>>> Use environment variables to easily set the appropriate configuration parameters for different environments.  In addition to setting the `UF_MODE` environment variable to select different configuration files, you can assign sensitive information like database passwords and API keys directly to environment variables, and then reference them in your configuration files using `getenv()`.<br><br>See [the Twelve-Factor App](https://12factor.net/config) for more information on why this is a good idea.
+[notice=tip]Use environment variables to easily set the appropriate configuration parameters for different environments.  In addition to setting the `UF_MODE` environment variable to select different configuration files, you can assign sensitive information like database passwords and API keys directly to environment variables, and then reference them in your configuration files using `getenv()`.
+
+See [the Twelve-Factor App](https://12factor.net/config) for more information on why this is a good idea.[/notice]
+
+The default environement mode includes:
+
+|    Mode    | Description                                                                   |
+| :--------: | ----------------------------------------------------------------------------- |
+|  default   | The default mode. Should be used only for developement.                       |
+| production | Serve optimized assets and error management the front user facing application |
+|   debug    | Enables all debugging options                                                 |
+|  testing   | Mode used for [automated testing](/testing)                                   |
+
+[notice=tip]The Bakery command `php bakery setup:env` can be used to switch from one envrionement to the other.[/notice]
 
 ## Accessing Config Values
 
@@ -87,7 +100,7 @@ To access values from the final, merged configuration array during runtime, use 
         'site' => [
             'title'     =>      'Save the Kakapo',
             'author'    =>      'David Attenborough',
-            'twitter'   =>      '@savethekakapo'            
+            'twitter'   =>      '@savethekakapo'
         ]
     ]
 ```

@@ -90,7 +90,7 @@ This is because the template for this page is dynamically pulling that particula
 
 ### composer.json
 
-Chances are, you'll be adding some classes to your Sprinkle - at the very least, you will probably have some new models and controllers. You will want these to be autoloaded by Composer.  For this to happen, we need to create a `composer.json` file in the base directory of our Sprinkle.  This file will tell Composer where to look for source code in your Sprinkle:
+Chances are, you'll be adding some classes to your Sprinkle - at the very least, you will probably have some new models and controllers. You will want these to be autoloaded by Composer. For this to happen, we need to create a `composer.json` file in the base directory of our Sprinkle. This file will tell Composer where to look for source code in your Sprinkle:
 
 **composer.json**
 
@@ -114,7 +114,7 @@ Chances are, you'll be adding some classes to your Sprinkle - at the very least,
 }
 ```
 
-The important part here is the `autoload.psr-4` key.  This tells Composer to map the root `src/` directory of your Sprinkle to the root **namespace** `UserFrosting\Sprinkle\Site\`.
+The important part here is the `autoload.psr-4` key. This tells Composer to map the root `src/` directory of your Sprinkle to the root **namespace** `UserFrosting\Sprinkle\Site\`.
 
 If you're not familiar with PSR-4, it is a standard that says we should map a base directory to a base namespace, and then the relative namespaces of classes in that directory should correspond to the relative paths of their class files.  For example, the directory `/app/sprinkles/mysprinkle/src/Controller/OwlController.php` would be mapped to the fully qualified class name `\UserFrosting\Sprinkle\MySprinkle\Controller\OwlController`.
 

@@ -18,7 +18,6 @@ Within each sprinkle, you will find any or all of the following directories and 
 ├── templates
 ├── composer.json
 ├── package.json
-├── bower.json (deprecated)
 └── asset-bundles.json
 ```
 
@@ -45,18 +44,6 @@ To download frontend dependencies, from the project root directory:
 ```bash
 $ php bakery build-assets
 ```
-
-### /bower.json (deprecated)
-
-The `bower.json` file is used for retrieving frontend dependencies via [Bower](https://bower.io/search/). Dependencies specified in `bower.json` will be downloaded to `/app/assets/bower_components`. Please note that Bower has been deprecated, and support is likely to be dropped from the next major release of UserFrosting.
-
-To download frontend dependencies, from the project root directory:
-
-```bash
-$ php bakery build-assets
-```
-
->>>> Bower support is deprecated since version 4.2.0. `/package.json` should be used instead.
 
 ### /asset-bundles.json
 
