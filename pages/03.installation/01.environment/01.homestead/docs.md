@@ -6,7 +6,9 @@ taxonomy:
     category: docs
 ---
 
->>> If this is your first time installing UserFrosting or if you're not already familiar with setting up a local environment, this page will guide you in setting up your first local environment using Homestead. If you already have a local environment (e.g., LAMP or LEMP) and you're already familiar with **composer**, the [Native Installation](/installation/environment/native) guide is for you.
+[notice=note]If this is your first time installing UserFrosting or if you're not already familiar with setting up a local environment, this page will guide you in setting up your first local environment using Homestead.
+
+If you already have a local environment (e.g., LAMP or LEMP) and you're already familiar with **composer**, the [Native Installation](/installation/environment/native) guide is for you.[/notice]
 
 ## Why you need a development environment
 
@@ -43,7 +45,7 @@ Homestead will automatically give us the following components that we need to ru
 
 - Ubuntu 18.04
 - Git
-- PHP 7.2
+- PHP 7.4
 - Nginx (webserver)
 - MySQL/MariaDB (database)
 - Composer
@@ -69,13 +71,13 @@ However, **if you are a Windows user**, you'll need to install `git` and get set
 Once you've installed VirtualBox and Vagrant, we can use UserFrosting built-in support for Vagrant to spin up a virtual machine with the Homestead configuration. **In a directory of your choice** (I have a generic `dev/` directory on my computer where I keep all of my projects), use git to clone the UserFrosting repository into a new directory :
 
 ```bash
-git clone https://github.com/userfrosting/UserFrosting.git userfrosting
+git clone https://github.com/userfrosting/UserFrosting.git
 ```
 
 Next, `cd` into your new UserFrosting dir and clone Homestead Git repository :
 
 ```sh
-cd userfrosting
+cd UserFrosting
 git clone https://github.com/laravel/homestead.git vagrant/Homestead
 ```
 
@@ -160,7 +162,7 @@ Thanks for using
 If you try the `ls` command, you should see the `userfrosting` directory. You can switch to this directory and run all [bakery commands](/cli/commands) directly in the VM. For example :
 
 ```
-$ cd userfrosting
+$ cd UserFrosting
 $ php bakery bake
 ```
 
@@ -190,13 +192,13 @@ vagrant destroy
 
 ### Access phpmyadmin
 
-Your virtual machine provides phpmyadmin to make it easier to interact with the `UserFrosting` database.
-
-First, while logged in into your virtual machine, install phpmyadmin. Accept all default settings:
+You can install phpmyadmin on your virtual machine to make it easier to interact with the `userfrosting` database.  If you're SSH'ed into your virtual machine, do the following:
 
 ```
 sudo apt-get install phpmyadmin
 ```
+
+Do **not** select apache2 nor lighttpd when prompted. Just hit tab and enter.  Choose the defaults for any prompts that appear.
 
 Next, simply add `phpmyadmin.test` to your `hosts` file as well:
 
@@ -210,12 +212,12 @@ You should be able to access phpmyadmin in your browser at `http://phpmyadmin.te
 
 The default database information should be as follows:
 
-- Type: `MySQL`
-- Host: `localhost`
-- Port: `3306`
-- Database name: `UserFrosting`
-- Database user: `homestead`
-- Database password: `secret`
+- **Type**: MySQL
+- **Host**: localhost
+- **Port**: 3306
+- **Database name**: UserFrosting
+- **Database user**: homestead
+- **Database password**: secret
 
 ### Using PostegreSQL
 

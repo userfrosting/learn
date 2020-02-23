@@ -15,14 +15,9 @@ If you already have a local environment and you're familiar with tools like **co
 If your local development environment doesn't already have the [required stack and tools](/installation/requirements), please set these up.  You'll need the following:
 
 - Web server software (Apache, Nginx, IIS, etc)
-- **PHP 5.6** or higher (**PHP 7.2** recommended)
+- PHP **7.1** or higher (**7.3** or above recommended)
+- PDO & GD PHP Extension
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
-
-One very simple solution is to install a complete web server stack.  Some of the more popular packages include:
-
-- [XAMPP](https://www.apachefriends.org/index.html) - a bundle that includes Apache, MariaDB, and PHP
-- [MAMP/MAMP Pro](http://mamp.info)
-- [WampServer](http://www.wampserver.com/en/)
 
 Make certain that you have [properly configured](/installation/requirements/basic-stack) your web server (for example, Apache needs `mod_rewrite` enabled), PHP, and the file system permissions.
 
@@ -32,19 +27,19 @@ Please **make sure** that you have the following installed **before** attempting
 
 - [Git](/installation/requirements/essential-tools-for-php#Git)
 - [Composer](/installation/requirements/essential-tools-for-php#Composer)
-- [Node.js](/installation/requirements/essential-tools-for-php#Nodejs)
+- [Node.js](/installation/requirements/essential-tools-for-php#Nodejs) version **10.12.0** or higher
 
 ## Get UserFrosting
 
 ### Clone the UserFrosting repository
 
-Use git to clone the userfrosting repo into a new folder.  (If you're already using Homestead, you're in the right place, start here.) In your development directory:
+Use git to clone the userfrosting repo into a new folder. In your development directory:
 
 ```bash
-$ git clone https://github.com/userfrosting/UserFrosting.git userfrosting
+$ git clone https://github.com/userfrosting/UserFrosting.git UserFrosting
 ```
 
->>>>>> Note the `userfrosting` at the end of the command. This means `git` will create new `userfrosting` subdirectory inside the current location. You can change `userfrosting` to whatever you like.
+>>>>>> Note the `UserFrosting` at the end of the command. This means `git` will create new `UserFrosting` subdirectory inside the current location. You can change `UserFrosting` to whatever you like.
 
 ### Set directory permissions
 
@@ -53,6 +48,7 @@ UserFrosting needs to be able to write to the following directories:
 - `/app/cache`
 - `/app/logs`
 - `/app/sessions`
+- `/app/storage`
 
 Set your system permissions so that the group under which your webserver runs has read and write permissions for these directories. See [File System Permissions](/installation/requirements/basic-stack#FileSystemPermissions) for help with this.
 

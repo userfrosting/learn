@@ -10,3 +10,4 @@ This section covers configuring UserFrosting for other less common development a
 
 - [Configuring for IIS](/installation/other-situations/iis)
 - [Configuring for CentOS](/installation/other-situations/centos)
+- [Advanced Homestead Setup](/installation/other-situations/homestead)
