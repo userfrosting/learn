@@ -14,11 +14,15 @@ taxonomy:
 
 If installation of npm dependencies fails, see [npm](/basics/requirements/essential-tools-for-php#npm) to ensure npm is correctly installed and updated. You may need to [change npm permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions).
 
-### When trying to view my site I get an error like "An exception has been thrown during the rendering of a template ("The asset 'vendor/font-awesome/css/font-awesome.css' could not be found. Referenced in '/home/vagrant/userfrosting/app/sprinkles/core/asset-bundles.json [css/main]'.")."
+### An exception has been thrown during the rendering of a template
+
+When trying to view your site you get an error similar to this :
+
+> An exception has been thrown during the rendering of a template ("The asset 'vendor/font-awesome/css/font-awesome.css' could not be found. Referenced in '/home/vagrant/userfrosting/app/sprinkles/core/asset-bundles.json [css/main]'.").
 
 This is an indication that asset build failed or you missed a step in the installation process. Try [running the installer](/installation/environment/native#run-the-installer) again with `php bakery bake` and check for any error messages.
 
-If you're using the [Homestead dev environment](/installation/environment/homestead), you'll need to login to the VM first to run the bake command inside the UserFrosting directory : 
+If you're using the [Homestead dev environment](/installation/environment/homestead), you'll need to login to the VM first to run the bake command inside the UserFrosting directory :
 
 ```
 vagrant ssh

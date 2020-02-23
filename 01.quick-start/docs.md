@@ -19,7 +19,7 @@ UserFrosting has a few system requirements. Of course, all of these requirements
 However, if you are not using Homestead, you will need to make sure your local UserFrosting development environment meets the following requirements:
 
 - Web server software (Apache, Nginx, IIS, etc)
-- PHP **5.6** or higher (**7.2** recommended)
+- PHP **7.1** or higher (**7.3** or above recommended)
 - PDO PHP Extension
 - GD PHP Extension
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
@@ -32,12 +32,13 @@ However, if you are not using Homestead, you will need to make sure your local U
 Use git to clone the latest version of UserFrosting into a new `userfrosting` folder:
 
 ```bash
-$ git clone https://github.com/userfrosting/UserFrosting.git userfrosting
+$ git clone https://github.com/userfrosting/UserFrosting.git
 ```
 
-Once the project is created using composer, `cd` into the newly created `userfrosting` folder and run the following command to fetch the composer dependencies:
+Once the project is created using composer, `cd` into the newly created `UserFrosting` folder and run the following command to fetch the composer dependencies:
 
 ```bash
+$ cd UserFrosting
 $ composer install
 ```
 
@@ -51,6 +52,7 @@ This will run the installation process:
 
 - Setting up your database and SMTP credential in `app/.env`
 - Checking for missing dependencies
+- Create the admin user
 - Running the database migration
 - Building the raw assets
 
@@ -67,6 +69,7 @@ UserFrosting needs to be able to write to the file system for a few directories:
 - `/app/cache`
 - `/app/logs`
 - `/app/sessions`
+- `/app/storage`
 
 ## Web Server Configuration
 

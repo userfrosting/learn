@@ -211,22 +211,18 @@ vagrant ssh
 If it connects successfully, you will see a welcome message for Ubuntu:
 
 ```bash
-Welcome to Ubuntu 18.04 LTS (GNU/Linux 4.15.0-20-generic x86_64)
+Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-74-generic x86_64)
 
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
+Thanks for using
+ _                               _                 _
+| |                             | |               | |
+| |__   ___  _ __ ___   ___  ___| |_ ___  __ _  __| |
+| '_ \ / _ \| '_ ` _ \ / _ \/ __| __/ _ \/ _` |/ _` |
+| | | | (_) | | | | | |  __/\__ \ ||  __/ (_| | (_| |
+|_| |_|\___/|_| |_| |_|\___||___/\__\___|\__,_|\__,_|
 
-  System information as of Sun May 13 19:06:39 UTC 2018
-
-  System load:  0.0               Processes:           121
-  Usage of /:   8.2% of 61.80GB   Users logged in:     0
-  Memory usage: 19%               IP address for eth0: 10.0.2.15
-  Swap usage:   0%                IP address for eth1: 192.168.10.10
-
- * Meltdown, Spectre and Ubuntu: What are the attack vectors,
-   how the fixes work, and everything else you need to know
-   - https://ubu.one/u2Know
+* Homestead v10.3.0 released
+* Settler v9.2.0 released
 
 0 packages can be updated.
 0 updates are security updates.
@@ -261,12 +257,12 @@ $ php bakery bake
 
 You will first be prompted for your database credentials.  Remember, our database information should be as follows:
 
-- Type: `MySQL`
-- Host: `localhost`
-- Port: `3306`
-- Database name: `userfrosting`
-- Database user: `homestead`
-- Database password: `secret`
+- **Type**: MySQL
+- **Host**: localhost
+- **Port**: 3306
+- **Database name**: UserFrosting
+- **Database user**: homestead
+- **Database password**: secret
 
 If the database connection is successful, the installer will then ask for STMP server config. This config is used to connect to the outgoing mail server. You can use the default values here, but UserFrosting won't be able to send outgoing emails.
 
