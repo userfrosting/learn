@@ -8,7 +8,7 @@ taxonomy:
 
 ## The Cache service
 
-The UserFrosting cache service instantiates the [Laravel Cache](https://laravel.com/docs/5.4/cache) component for global caching. The [Laravel documentation](https://laravel.com/docs/5.4/cache#cache-usage) provides excellent examples on how to use the caching API. The only difference is that UserFrosting provides the required setup for you. Plus, instead of using a `Cache` facade, you simply use the **cache service** from the [The DI Container](/services/the-di-container):
+The UserFrosting cache service instantiates the [Laravel Cache](https://laravel.com/docs/5.8/cache) component for global caching. The [Laravel documentation](https://laravel.com/docs/5.8/cache#cache-usage) provides excellent examples on how to use the caching API. The only difference is that UserFrosting provides the required setup for you. Plus, instead of using a `Cache` facade, you simply use the **cache service** from the [The DI Container](/services/the-di-container):
 
 ```php
 $value = $this->ci->cache->get('users', function () {
@@ -50,7 +50,7 @@ The driver used by UserFrosting can be defined in the configuration files under 
 
 ### File
 
-The file driver is the one enabled by default. Cached data is stored in text files located in `app/cache/`. While slower and less efficient than memory based drivers, the file driver is ideal for a development environment.   
+The file driver is the one enabled by default. Cached data is stored in text files located in `app/cache/`. While slower and less efficient than memory based drivers, the file driver is ideal for a development environment.
 
 >>>>> The default Laravel File Driver doesn't support `tags`. UserFrosing uses a custom version of this driver that enabled tagging. Still, Memecached and Redis are more optimized for this and should be used in a production environment for better performance.
 

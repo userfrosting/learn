@@ -14,11 +14,11 @@ The first thing I do is ask them - **have you been able to get it to work locall
 
 If you're not sure what ["local development environment"](http://daraskolnick.com/developer-tip-tuesday-always-develop-locally/) means, then please continue reading.
 
-#### Why you shouldn't test code on a live server 
+#### Why you shouldn't test code on a live server
 
 You don't need special hardware to run a web server.  PHP, Apache, nginx, MySQL - these are all free open-source projects that you can install and run on just about any computer.  When you pay your $60/year for Jimbo's Web Hosting, Inc., you're not paying for the software.  You're paying for storage and bandwidth on a machine that is (hopefully) running in a well-maintained data center, with 24/7 uptime.  Some of your money might also go to paying for basic sysadmin tasks, like updating software, maintaining mail servers, etc.
 
-The 24/7 uptime is critical for your live application - no doubt about that.  But for **developing** your application, you don't need 
+The 24/7 uptime is critical for your live application - no doubt about that.  But for **developing** your application, you don't need
 to run and test it on a computer in a data center.  In fact, there are several reasons why this is a terrible idea:
 
 1. Convenience.  I've seen people who write their code in a text editor or IDE, but then upload their code to their hosting service and refresh the page *at their live URL* to "test" their code.  This introduces an entire extra step into your development cycle.  And what a pain it is!  It's much easier if you can just test your code directly on your own machine.
@@ -43,7 +43,7 @@ There are a number of "one-click" installers available, which can set up your ma
 
 If you don't have a laptop on which you can install a full solution stack natively, or you want to develop in an environment that **more closely resembles your production environment,** consider using [VirtualBox](https://www.virtualbox.org/manual/ch01.html).  VirtualBox allows you to run a complete virtual operating system (such as Ubuntu) from within any parent operating system.
 
-If you install [Vagrant](https://www.vagrantup.com/) as well, you can use pre-built and pre-configured environments like [Homestead](https://laravel.com/docs/5.4/homestead), which comes with PHP, nginx, MariaDB, Composer, and Node.js pre-installed.  What's more, Vagrant can actually link up its virtual file system to your native OS's file system.  This makes it easy to write code on your "real" machine, and then **run** it in the virtual environment instantly without having to actually **copy** it over to the virtual machine.
+If you install [Vagrant](https://www.vagrantup.com/) as well, you can use pre-built and pre-configured environments like [Homestead](https://laravel.com/docs/5.8/homestead), which comes with PHP, nginx, MariaDB, Composer, and Node.js pre-installed.  What's more, Vagrant can actually link up its virtual file system to your native OS's file system.  This makes it easy to write code on your "real" machine, and then **run** it in the virtual environment instantly without having to actually **copy** it over to the virtual machine.
 
 To get started with VirtualBox, Vagrant, and Homestead, head over to our documentation on [development environments](/installation/environment/homestead).
 

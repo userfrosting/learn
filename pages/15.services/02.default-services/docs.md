@@ -24,7 +24,7 @@ This service handles requests for [raw assets](/asset-management/asset-bundles#r
 
 #### cache
 
-Creates an instance of a Laravel [Cache](https://laravel.com/docs/5.4/cache). See [Chapter 16](/advanced/caching) for more information.
+Creates an instance of a Laravel [Cache](https://laravel.com/docs/5.8/cache). See [Chapter 16](/advanced/caching) for more information.
 
 #### checkEnvironment
 
@@ -46,7 +46,7 @@ Constructs the [CSRF Guard](https://github.com/slimphp/Slim-Csrf) middleware, wh
 
 #### db
 
-Sets up the [database](/database).  
+Sets up the [database](/database).
 
 #### debugLogger
 
@@ -98,7 +98,7 @@ See [Chapter 9](/routes-and-controllers) for more information about defining rou
 
 #### session
 
-Sets up UserFrosting's `Session` object (`UserFrosting\Session\Session`), which serves as a wrapper for the `$_SESSION` superglobal.  `Session` will use file- or database-based storage for sessions, depending on your configuration setting for `session.handler`.  Session handlers are provided by [Laravel's session handlers](https://laravel.com/docs/5.4/session#configuration), which implement PHP's [`SessionHandlerInterface`](http://php.net/SessionHandlerInterface).
+Sets up UserFrosting's `Session` object (`UserFrosting\Session\Session`), which serves as a wrapper for the `$_SESSION` superglobal.  `Session` will use file- or database-based storage for sessions, depending on your configuration setting for `session.handler`.  Session handlers are provided by [Laravel's session handlers](https://laravel.com/docs/5.8/session#configuration), which implement PHP's [`SessionHandlerInterface`](http://php.net/SessionHandlerInterface).
 
 Please note that when using file-based sessions, UserFrosting places sessions in its own `/app/sessions` directory instead of PHP's default session directory.
 
@@ -221,7 +221,7 @@ An instance of `RocketTheme\Toolbox\Event\EventDispatcher`, which itself extends
 
 #### locator
 
-An instance of [Uniform Resource Locator class](https://github.com/userfrosting/uniformresourcelocator), which provides a unified method of accessing Sprinkle entities via [streams](https://webmozart.io/blog/2013/06/19/the-power-of-uniform-resource-location-in-php/).  
+An instance of [Uniform Resource Locator class](https://github.com/userfrosting/uniformresourcelocator), which provides a unified method of accessing Sprinkle entities via [streams](https://webmozart.io/blog/2013/06/19/the-power-of-uniform-resource-location-in-php/).
 
 See [Chapter 16](/advanced/locator) for more information.
 
