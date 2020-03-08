@@ -13,9 +13,9 @@ Since every aspect of UF is extendable, there are a number of ways to go about t
 Our general constraints are:
 
 1. We will avoid modifying the `users` table directly.  This will make it easier to integrate any future updates to UF that affect the `users` table.  It will also help prevent collisions with any community Sprinkles that modify the `users` table.  Instead, we will create a separate table, that has a one-to-one relationship with the `users` model.
-2. We will avoid overriding controller methods as much as possible.  Controller methods tend to be longer and more complex than methods in our models, so again, it will be more work to integrate changes to controllers in future updates to UserFrosting.  It will be much easier if instead we extend the data models whenever possible, implementing new methods that enhance the base models.  We can also take advantage of Eloquent's [event handlers](https://laravel.com/docs/5.4/eloquent#events) for model classes to hook in additional functionality.
+2. We will avoid overriding controller methods as much as possible.  Controller methods tend to be longer and more complex than methods in our models, so again, it will be more work to integrate changes to controllers in future updates to UserFrosting.  It will be much easier if instead we extend the data models whenever possible, implementing new methods that enhance the base models.  We can also take advantage of Eloquent's [event handlers](https://laravel.com/docs/5.8/eloquent#events) for model classes to hook in additional functionality.
 
->>>>>> Don't forget to check out the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). Some may provide easy ways to add custom profile fields to your users and groups.   
+>>>>>> Don't forget to check out the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). Some may provide easy ways to add custom profile fields to your users and groups.
 
 ## Set up your site Sprinkle
 
@@ -95,7 +95,7 @@ class MemberAux extends Model
 }
 ```
 
-This should be placed in the `src/Database/Models/` directory in your own Sprinkle.  Notice that we set three properties: `$timestamps`, to disable timestamps for this table (we already have them in our main `users` table), `$table`, which should contain the name of your table, and `$fillable`, which should be an array of column names that you want to allow to be [mass assignable](https://laravel.com/docs/5.4/eloquent#mass-assignment) when creating new instances of the model.
+This should be placed in the `src/Database/Models/` directory in your own Sprinkle.  Notice that we set three properties: `$timestamps`, to disable timestamps for this table (we already have them in our main `users` table), `$table`, which should contain the name of your table, and `$fillable`, which should be an array of column names that you want to allow to be [mass assignable](https://laravel.com/docs/5.8/eloquent#mass-assignment) when creating new instances of the model.
 
 ### Extend the User model
 
@@ -235,13 +235,13 @@ There's a lot going on here, so just a quick tour:
 - `LinkMemberAux` is a [trait](http://php.net/manual/en/language.oop5.traits.php) used to attach handlers to events for our model.  In this case, we use the `saved` event to tell Laravel to save the related `MemberAux` model any time the `Member` is saved.  It will also call `createAuxIfNotExists` which...well, does exactly what the name says it does.
 - We add `city` and `country` to the model's `fillable` attributes, so that they can be directly passed in to the `Member` model's constructor.
 - The `__isset` method is overridden to allow Twig to automatically fetch the related `MemberAux` object (e.g., `current_user.aux`).  See [this answer](http://stackoverflow.com/questions/29514081/cannot-access-eloquent-attributes-on-twig/35908957#35908957) for an explanation of why this is needed.
-- We override the model's booting method to automatically add the [global scope](https://laravel.com/docs/5.4/eloquent#global-scopes), `MemberAuxScope`. This will automatically join the `members` table whenever we make queries through the `Member` model, allowing us to access the additional fields.  We'll explain how to create this scope next.
-- We have two [custom mutator methods](https://laravel.com/docs/5.4/eloquent-mutators), `setCityAttribute` and `setCountryAttribute`.  These allow us to modify the new fields directly through the `Member` object (e.g., `$member->city` and `$member->country`), passing them through to the related `MemberAux` model.
+- We override the model's booting method to automatically add the [global scope](https://laravel.com/docs/5.8/eloquent#global-scopes), `MemberAuxScope`. This will automatically join the `members` table whenever we make queries through the `Member` model, allowing us to access the additional fields.  We'll explain how to create this scope next.
+- We have two [custom mutator methods](https://laravel.com/docs/5.8/eloquent-mutators), `setCityAttribute` and `setCountryAttribute`.  These allow us to modify the new fields directly through the `Member` object (e.g., `$member->city` and `$member->country`), passing them through to the related `MemberAux` model.
 - The `aux()` method defines the relationship with the underlying `MemberAux` object.
 
 ### Define a global scope to automatically join the tables
 
-A global scope allows us to customize the query that Laravel issues under the hood when you use methods like `Member::all()`, `Member::where('city', 'Bloomington')->first()`, and other [Eloquent](https://laravel.com/docs/5.4/eloquent) features.  To do this, we'll create a new class in `src/Database/Scopes/MemberAuxScope.php`:
+A global scope allows us to customize the query that Laravel issues under the hood when you use methods like `Member::all()`, `Member::where('city', 'Bloomington')->first()`, and other [Eloquent](https://laravel.com/docs/5.8/eloquent) features.  To do this, we'll create a new class in `src/Database/Scopes/MemberAuxScope.php`:
 
 ```php
 <?php

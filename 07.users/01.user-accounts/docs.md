@@ -153,7 +153,7 @@ The settings and profile forms are posted to the `/account/settings` or `/accoun
 
 ### Account avatar
 
-Account avatars are currently handled via Gravatar.  To set this up, users need to create an account with Gravatar and associate 
+Account avatars are currently handled via Gravatar.  To set this up, users need to create an account with Gravatar and associate
 their account email address with an avatar of their choice.  UserFrosting will automatically generate a URL for the registered Gravatar image, which can be accessed via the `$user->avatar` property.
 
 Built-in avatar uploading is not yet implemented.
@@ -170,7 +170,7 @@ $this->ci->userActivityLogger->info("User {$currentUser->user_name} updated thei
 ]);
 ```
 
-Every logged event includes the user's id, IP address, timestamp, an event type (e.g., `update_profile_settings`), and a description of the event.  You may add additional logging directly in your controllers, or you can attach them to Laravel [model events](https://laravel.com/docs/5.4/eloquent#events) so that they occur automatically when the model is created/saved/updated/deleted.
+Every logged event includes the user's id, IP address, timestamp, an event type (e.g., `update_profile_settings`), and a description of the event.  You may add additional logging directly in your controllers, or you can attach them to Laravel [model events](https://laravel.com/docs/5.8/eloquent#events) so that they occur automatically when the model is created/saved/updated/deleted.
 
 ## Account administration
 
@@ -192,7 +192,7 @@ Basic user details (name, email, locale, group) can be modified via the "Edit us
 
 ### Set user roles
 
-Roles can be added to or removed from a user account via the `Manage roles` button on the user's profile page, or in the dropdown menu in the user table.  
+Roles can be added to or removed from a user account via the `Manage roles` button on the user's profile page, or in the dropdown menu in the user table.
 
 ![User role management](/images/uf-collection.png)
 
@@ -216,7 +216,7 @@ The administrator can later re-enable the account, if desired.
 
 User accounts can be deleted from the user profile page, or the user dropdown menu in the users table.
 
-Deleting user accounts presents a problem because the user may have related data in the database that would become orphaned, potentially breaking other functionality in your site.  For this reason, UserFrosting performs [soft deletes](https://laravel.com/docs/5.4/eloquent#soft-deleting) by default.  The user record is not actually deleted, but instead a `deleted_at` timestamp is added to the record and the user is no longer able to sign in.  Deleted users are also excluded from all queries unless the `withTrashed` method is added to the Eloquent query.  Related entities (activities, roles, etc) are left alone.
+Deleting user accounts presents a problem because the user may have related data in the database that would become orphaned, potentially breaking other functionality in your site.  For this reason, UserFrosting performs [soft deletes](https://laravel.com/docs/5.8/eloquent#soft-deleting) by default.  The user record is not actually deleted, but instead a `deleted_at` timestamp is added to the record and the user is no longer able to sign in.  Deleted users are also excluded from all queries unless the `withTrashed` method is added to the Eloquent query.  Related entities (activities, roles, etc) are left alone.
 
 If you really want to completely remove the user from the database, you can call `User::delete` method in your controller and set
 the `$hardDelete` parameter to `true`.  This will detach the user from all of their roles, and delete the user's activity records.
