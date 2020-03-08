@@ -34,7 +34,7 @@ Bake is the general installation command. It combines `setup:db`, `setup:smtp`, 
 $ php bakery bake
 ```
 
->>>>>> This command should be executed every time you run `composer update`, change assets, create a new sprinkle or install a [community sprinkle](/sprinkles/community).
+[notice=tip]This command should be executed every time you run `composer update`, change assets, create a new sprinkle or install a [community sprinkle](/sprinkles/community).[/notice]
 
 
 ### build-assets
@@ -48,11 +48,11 @@ $ php bakery build-assets [options]
 ```
 
 | Option        | Description                                                      |
-|---------------|------------------------------------------------------------------|
+| ------------- | ---------------------------------------------------------------- |
 | -c, --compile | Compile the assets and asset bundles for production environment  |
 | -f, --force   | Force fresh install by deleting cached data and installed assets |
 
->>>>> The compile option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.
+[notice=note]The compile option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.[/notice]
 
 
 ### clear-cache
@@ -63,7 +63,7 @@ The `clear-cache` command takes care of deleting all the cached data. See [Chapt
 $ php bakery clear-cache
 ```
 
->>>>> You might need to run this command as administrator or using `sudo` to avoid file permission issues when using the `file` cache store.
+[notice=note]You might need to run this command as administrator or using `sudo` to avoid file permission issues when using the `file` cache store.[/notice]
 
 
 ### create-admin
@@ -80,13 +80,13 @@ Options can also be used to create the admin user without interaction (See the t
 $ php bakery create-admin --username="admin" --email="admin@userfrosting.test" --password="adminadmin12" --firstName="Admin" --lastName="istrator"
 ```
 
-| Option                   | Description                |  
-|--------------------------|----------------------------|
-| --username[=USERNAME]    | The admin user username    |
-| --email[=EMAIL]          | The admin user email       |
-| --password[=PASSWORD]    | The admin user password    |
-| --firstName[=FIRSTNAME]  | The admin user first name  |
-| --lastName[=LASTNAME]    | The admin user last name   |
+| Option                  | Description               |
+| ----------------------- | ------------------------- |
+| --username[=USERNAME]   | The admin user username   |
+| --email[=EMAIL]         | The admin user email      |
+| --password[=PASSWORD]   | The admin user password   |
+| --firstName[=FIRSTNAME] | The admin user first name |
+| --lastName[=LASTNAME]   | The admin user last name  |
 
 
 ### debug
@@ -99,10 +99,78 @@ The information displayed by this command can also be useful to other people whe
 $ php bakery debug
 ```
 
+### locale:compare
+
+This command compare two locales dictionaries. A list of all locale keys found in the left locale and not found in the right locale will be generated, as well as a list of all keys with empty values and/or duplicate values. This can be helpful to list all values in a specific languages that are present, but might need translation.
+
+```bash
+$ php bakery locale:compare [options]
+```
+
+This command is interactive, which mean it will ask for which locales to compare. Options can also be used to automatically compare the two locales without user interaction (See the table below for the list of available options).
+
+This command will display :
+ - Comparaison between _Right_ and _Left_ locales : Returns al list of all differences in both locales using [`array_diff_assoc`](https://www.php.net/manual/en/function.array-diff-assoc.php). This can be used to compare the two locales.
+ - Missing keys from _Right_ found in _Left_ : This can be used to see which keys are missing in the _Right_ locale, but that can be found in the _Left_ locale, so they can be added.
+ - Same values found in both _Left_ and _Right_ locale : This can be used to find strings in the _right_ locale that is the same in the _left_ locale. When two locale have the same string value, it may means the string is not translated in the _right_ locale.
+ - Empty values for _Right_ locale : List keys with empty string for the _right_ locale. Thoses string might need to be filled in.
+
+| Option            | Description                                           |
+| ----------------- | ----------------------------------------------------- |
+| -l, --left=LEFT   | The base locale to compare against.                   |
+| -r, --right=RIGHT | The second locale to compare.                         |
+| --length=LENGTH   | Set the length for preview column text. [default: 50] |
+
+For example :
+
+```bash
+$ php bakery locale:compare -l en_US -r fr_FR
+```
+
+### locale:dictionary
+
+This command shows the compiled dictionnary for the selected locale.
+
+```bash
+$ php bakery locale:dictionary [options]
+```
+This command is interactive, which mean it will ask to select the locale to show the dictionnary from. Options can also be used to automatically select the locale without user interaction (See the table below for the list of available options).
+
+| Option              | Description                                           |
+| ------------------- | ----------------------------------------------------- |
+| -l, --locale=LOCALE | The selected locale.                                  |
+| --length=LENGTH     | Set the length for preview column text. [default: 50] |
+
+For example :
+
+```bash
+$ php bakery locale:dictionary -l fr_FR
+```
+
+### locale:info
+
+This command list all available locale as well as the defaut locale.
+
+```bash
+$ php bakery locale:info
+```
+
+Example output :
+
+```txt
++------------+----------------------+----------------------+---------+---------+
+| Identifier | Name                 | Regional             | Parents | Default |
++------------+----------------------+----------------------+---------+---------+
+| en_US      | English              | English              |         | Yes     |
+| es_ES      | Spanish              | Español              | en_US   |         |
+| de_DE      | German               | Deutsch              | en_US   |         |
+| fr_FR      | French               | Français             | en_US   |         |
++------------+----------------------+----------------------+---------+---------+
+```
 
 ### migrate
 
->>>> Database migrations have the potential to destroy data.  **Always** back up production databases, and databases with important data, before running migrations on them.
+[notice=warning]Database migrations have the potential to destroy data. **Always** back up production databases, and databases with important data, before running migrations on them.[/notice]
 
 The `migrate` command runs all the pending [database migrations](/database/migrations). Migrations consist of special PHP classes used to manipulate the database structure and data, creating new tables or modifying existing ones. UserFrosting comes with a handful of migrations to create the [default tables](/database/default-tables). The built-in migrations also handle the changes in the database between versions. See the [Migrations](/database/migrations) section for more information about migrations.
 
@@ -111,7 +179,7 @@ $ php bakery migrate [options]
 ```
 
 | Option                  | Description                                                    |
-|-------------------------|----------------------------------------------------------------|
+| ----------------------- | -------------------------------------------------------------- |
 | -p, --pretend           | Run migrations in "dry run" mode                               |
 | -f, --force             | Force the operation to run when in production                  |
 | -d, --database=DATABASE | The database connection to use                                 |
@@ -145,7 +213,7 @@ $ php bakery migrate:rollback [options]
 ```
 
 | Option                    | Description                                   |
-|---------------------------|-----------------------------------------------|
+| ------------------------- | --------------------------------------------- |
 | -p, --pretend             | Run migrations in "dry run" mode              |
 | -f, --force               | Force the operation to run when in production |
 | -d, --database=DATABASE   | The database connection to use                |
@@ -162,13 +230,13 @@ $ php bakery migrate:reset [options]
 ```
 
 | Option                  | Description                                                            |
-|-------------------------|------------------------------------------------------------------------|
+| ----------------------- | ---------------------------------------------------------------------- |
 | -p, --pretend           | Run migrations in "dry run" mode                                       |
 | -f, --force             | Force the operation to run when in production                          |
 | --hard                  | Hard reset the whole database to an empty state by dropping all tables |
 | -d, --database=DATABASE | The database connection to use                                         |
 
->>>> The `--hard` option will bypass all migrations and drop all tables from the database. This can be used as a last resort when a specific migration won't allow you to reset the whole stack. Use **extreme** caution with this option !
+[notice=warning]The `--hard` option will bypass all migrations and drop all tables from the database. This can be used as a last resort when a specific migration won't allow you to reset the whole stack. Use **extreme** caution with this option ![/notice]
 
 ### migrate:refresh
 
@@ -179,7 +247,7 @@ $ php bakery migrate:refresh [options]
 ```
 
 | Option                  | Description                                   |
-|-------------------------|-----------------------------------------------|
+| ----------------------- | --------------------------------------------- |
 | -f, --force             | Force the operation to run when in production |
 | -d, --database=DATABASE | The database connection to use                |
 | -s, --steps=STEPS       | Number of steps to rollback [default: 1]      |
@@ -193,9 +261,9 @@ The `migrate:status` command will show what migration have been run and which on
 $ php bakery migrate:status [options]
 ```
 
-| Option                  | Description                                   |
-|-------------------------|-----------------------------------------------|
-| -d, --database=DATABASE | The database connection to use                |
+| Option                  | Description                    |
+| ----------------------- | ------------------------------ |
+| -d, --database=DATABASE | The database connection to use |
 
 
 ### route:list
@@ -207,7 +275,7 @@ $ php bakery route:list [options]
 ```
 
 | Option          | Description                                                        |
-|-----------------|--------------------------------------------------------------------|
+| --------------- | ------------------------------------------------------------------ |
 | --method=METHOD | Filter the routes by method                                        |
 | --name=NAME     | Filter the routes by name                                          |
 | --uri=URI       | Filter the routes by uri                                           |
@@ -225,15 +293,15 @@ Registered Routes
 =================
 
  -------- ------------------------------ ---------- -------------------------------------------------------------------------------
-  Method   URI                            Name       Action                                                                         
+  Method   URI                            Name       Action
  -------- ------------------------------ ---------- -------------------------------------------------------------------------------
-  POST     /account/forgot-password                  UserFrosting\Sprinkle\Account\Controller\AccountController:forgotPassword      
-  POST     /account/login                            UserFrosting\Sprinkle\Account\Controller\AccountController:login               
-  POST     /account/settings/profile                 UserFrosting\Sprinkle\Account\Controller\AccountController:profile             
-  POST     /account/register                         UserFrosting\Sprinkle\Account\Controller\AccountController:register            
-  POST     /account/resend-verification              UserFrosting\Sprinkle\Account\Controller\AccountController:resendVerification  
-  POST     /account/set-password                     UserFrosting\Sprinkle\Account\Controller\AccountController:setPassword         
-  POST     /account/settings              settings   UserFrosting\Sprinkle\Account\Controller\AccountController:settings            
+  POST     /account/forgot-password                  UserFrosting\Sprinkle\Account\Controller\AccountController:forgotPassword
+  POST     /account/login                            UserFrosting\Sprinkle\Account\Controller\AccountController:login
+  POST     /account/settings/profile                 UserFrosting\Sprinkle\Account\Controller\AccountController:profile
+  POST     /account/register                         UserFrosting\Sprinkle\Account\Controller\AccountController:register
+  POST     /account/resend-verification              UserFrosting\Sprinkle\Account\Controller\AccountController:resendVerification
+  POST     /account/set-password                     UserFrosting\Sprinkle\Account\Controller\AccountController:setPassword
+  POST     /account/settings              settings   UserFrosting\Sprinkle\Account\Controller\AccountController:settings
  -------- ------------------------------ ---------- -------------------------------------------------------------------------------
 ```
 
@@ -253,7 +321,7 @@ $ php bakery seed Class1 Class2
 ```
 
 | Option      | Description                                   |
-|-------------|-----------------------------------------------|
+| ----------- | --------------------------------------------- |
 | -f, --force | Force the operation to run when in production |
 
 
@@ -272,10 +340,10 @@ Database Seeds List
 ===================
 
  ---------- -------------------------------------------------------- ----------
-  Name       Namespace                                                Sprinkle  
+  Name       Namespace                                                Sprinkle
  ---------- -------------------------------------------------------- ----------
-  TestSeed   \UserFrosting\Sprinkle\Core\Database\Seeds\TestSeed      Core      
-  TestSeed   \UserFrosting\Sprinkle\Account\Database\Seeds\TestSeed   Account   
+  TestSeed   \UserFrosting\Sprinkle\Core\Database\Seeds\TestSeed      Core
+  TestSeed   \UserFrosting\Sprinkle\Account\Database\Seeds\TestSeed   Account
  ---------- -------------------------------------------------------- ----------
 ```
 
@@ -296,7 +364,7 @@ php bakery setup:db --db_driver=mysql --db_name=userfrosting --db_port=3306 --db
 
 
 | Option                      | Description                                             |
-|-----------------------------|---------------------------------------------------------|
+| --------------------------- | ------------------------------------------------------- |
 | --force                     | Force setup if db is already configured                 |
 | --db_driver[=DB_DRIVER]     | The database driver ["mysql","pgsql","sqlsrv","sqlite"] |
 | --db_name[=DB_NAME]         | The database name                                       |
@@ -319,7 +387,7 @@ $ php bakery setup:smtp [options]
 Options can also be used to defined each info individually in a non-interactive way. When using one or more option, the "SMTP Server" method will automatically be selected.
 
 | Option                          | Description                                          |
-|---------------------------------|------------------------------------------------------|
+| ------------------------------- | ---------------------------------------------------- |
 | --force                         | Force setup if SMTP appears to be already configured |
 | --smtp_host[=SMTP_HOST]         | The SMTP server hostname                             |
 | --smtp_user[=SMTP_USER]         | The SMTP server user                                 |
@@ -337,7 +405,7 @@ $ php bakery setup:env [options]
 ```
 
 | Option        | Description            |
-|---------------|------------------------|
+| ------------- | ---------------------- |
 | --mode[=MODE] | The environment to use |
 
 Example usage :
@@ -369,11 +437,11 @@ Loaded Sprinkles
 ================
 
  ---------- -------------------------------- ------------------------------------------
-  Sprinkle   Calculated Namespace             Calculated Path                                
+  Sprinkle   Calculated Namespace             Calculated Path
  ---------- -------------------------------- ------------------------------------------
-  core       UserFrosting\Sprinkle\Core       /home/UserFrosting/app/sprinkles/core      
-  account    UserFrosting\Sprinkle\Account    /home/UserFrosting/app/sprinkles/account   
-  admin      UserFrosting\Sprinkle\Admin      /home/UserFrosting/app/sprinkles/admin     
+  core       UserFrosting\Sprinkle\Core       /home/UserFrosting/app/sprinkles/core
+  account    UserFrosting\Sprinkle\Account    /home/UserFrosting/app/sprinkles/account
+  admin      UserFrosting\Sprinkle\Admin      /home/UserFrosting/app/sprinkles/admin
  ---------- -------------------------------- ------------------------------------------
 ```
 
@@ -391,12 +459,14 @@ $ php bakery test [options] [--] [<testscope>]
 ```
 
 | Option                            | Description                                                                                          |
-|-----------------------------------|------------------------------------------------------------------------------------------------------|
+| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | -c, --coverage                    | Enable code coverage report.                                                                         |
 | --coverage-format=COVERAGE-FORMAT | Select test coverage format. Choose from html, clover, crap4j, php, text, xml, etc. Default to HTML. |
 | --coverage-path=COVERAGE-PATH     | Code coverage report saving location. Default to `_meta/coverage`.                                   |
 
->>>> UserFrosting's built-in integration tests use a temporary in-memory SQLite database.  For testing to run successfully, you must have the `php-sqlite3` package installed and enabled.  Alternatively, you can create a separate testing database and override the `test_integration` database settings in the `testing.php` [environment mode](/configuration/config-files).
+[notice=warning]UserFrosting's built-in integration tests use a temporary in-memory SQLite database.  For testing to run successfully, you must have the `php-sqlite3` package installed and enabled.
+
+Alternatively, you can create a separate testing database and override the `test_integration` database settings in the `testing.php` [environment mode](/configuration/config-files).[/notice]
 
 
 ### test:mail
@@ -408,5 +478,5 @@ $ php bakery test:mail [options]
 ```
 
 | Option  | Description                                                        |
-|---------|--------------------------------------------------------------------|
+| ------- | ------------------------------------------------------------------ |
 | --to=TO | Email address to send test email to. Use admin contact if omitted. |
