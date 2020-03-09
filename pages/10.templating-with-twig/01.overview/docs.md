@@ -31,10 +31,9 @@ if (isset($_POST)) {
 }
 ```
 
-You'll notice that the HTML we generate is heavily intermingled with PHP code.  Wouldn't it be easier to read and maintain if we could separate the two?  If we used Twig, we could factor all of our HTML out into a **template** file:
+You'll notice that the HTML we generate is heavily intermingled with PHP code. Wouldn't it be easier to read and maintain if we could separate the two? If we used Twig, we could factor all of our HTML out into a **template** file:
 
 **user-table.html.twig**
-
 ```html
 <table>
     <tr>
@@ -51,7 +50,7 @@ You'll notice that the HTML we generate is heavily intermingled with PHP code.  
 </table>
 ```
 
-Notice the `{{ mustache }}` syntax, which tells Twig where to substitute dynamic content into the template.  Our PHP code can now **render** this template, passing in any required dynamic content:
+Notice the `{{ mustache }}` syntax, which tells Twig where to substitute dynamic content into the template. Our PHP code can now **render** this template, passing in any required dynamic content:
 
 ```php
 if (isset($_POST)) {
@@ -65,7 +64,7 @@ if (isset($_POST)) {
     $stmt->execute();
 
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+
     // Assume that $twig is an instance of the Twig view object
     echo $twig->render('user-table.html.twig', [
         'users' => $users
@@ -73,12 +72,12 @@ if (isset($_POST)) {
 }
 ```
 
-So, what did this get us?  Well in this example, not _that_ much.  We don't have our HTML littered with PHP syntax anymore, like `echo` and `;`, though we still need some logic in our template to loop through the array of `users` and render each row in our table.  We could conceivably pass off our Twig template to our web designer friend, who knows HTML and CSS but isn't familiar with PHP, and he could get to work styling the page.
+So, what did this get us? Well in this example, not _that_ much. We don't have our HTML littered with PHP syntax anymore, like `echo` and `;`, though we still need some logic in our template to loop through the array of `users` and render each row in our table. We could conceivably pass off our Twig template to our web designer friend, who knows HTML and CSS but isn't familiar with PHP, and he could get to work styling the page.
 
-Our PHP code also looks better, because it's no longer full of calls to `echo` and mixed with scraps of HTML.  Overall, it's a solid improvement.  The _real_ power of Twig, however, comes from its more advanced features:
+Our PHP code also looks better, because it's no longer full of calls to `echo` and mixed with scraps of HTML. Overall, it's a solid improvement. The _real_ power of Twig, however, comes from its more advanced features:
 
 - Using `include` and `extend`, we can reuse HTML components like headers and footers on multiple pages, and develop "child pages" that build off a common base template;
-- Twig, unless directed otherwise, will automatically escape dynamic content.  This protects your pages from [XSS vulnerabilities](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)).
+- Twig, unless directed otherwise, will automatically escape dynamic content. This protects your pages from [XSS vulnerabilities](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)).
 - Template files can be completely overridden, so you can modify page content in your Sprinkle without touching the UserFrosting core.
 
 We'll explain these features more as we discuss how Twig is used in UserFrosting.
