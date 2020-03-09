@@ -1,40 +1,10 @@
 ---
-title: Internationalization
+title: The translation files
 metadata:
-    description: Internationalization consists of the translation files used to translate pages of your web application. UserFrosting provides a framework for translating strings and sentences easily and efficiently.
+    description: TODO
 taxonomy:
     category: docs
 ---
-
-UserFrosting comes with a complete internationalization system. This system allows you to translate your pages in any language you want. The internationalization service uses the [i18n module](https://github.com/userfrosting/i18n) to handles translation tasks for UserFrosting. The internationalization system also includes a powerful pluralization handling.
-
-Translating strings, or sentences, is as easy as assigning localized sentences to a common _translation key_. To achieve this, two things are used: the translation files and the `Translator`.
-
-## Setting up the site language
-
-The site default languages can be set in the [config](/configuration/config-files) parameters. The `site.locales.default` contains the locale to use for global, guest users. Multiple locales can be listed, separated by commas, to indicate the locale precedence order. For example, `'default' => 'en_US, fr_FR'` means that the _French_ language will be loaded first and if the requested key doesn't exist in French, it will try to use the _English_ one instead.
-
-A user can also use its own language. This is defined in the user's profile. All available locales are defined in the `site.locales.available` config. To remove one locale from the user profile, simply set the unwanted locale to `null` in your sprinkle config. For example, the following config will only present the English, Spanish and French locale to the user :
-
-```
-    'available' => [
-        'en_US' => 'English',
-        'zh_CN' => null,
-        'es_ES' => 'Español',
-        'ar'    => null,
-        'pt_PT' => null,
-        'ru_RU' => null,
-        'de_DE' => null,
-        'fr_FR' => 'Français',
-        'tr'    => null,
-        'it_IT' => null,
-        'th_TH' => null,
-        'fa'    => null,
-        'el'    => null,
-    ],
-```
-
-## The translation files
 
 The `locale` directory contains [translation files](/sprinkles/contents#locale) for your Sprinkle.  Like configuration files, translation files simply return an associative array mapping _language keys_ to _localized messages_.
 

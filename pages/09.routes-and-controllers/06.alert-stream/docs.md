@@ -39,7 +39,7 @@ $ms = $this->ci->alerts;
 $ms->addMessage('success', 'Your owl has successfully captured another vole!');
 ```
 
-To generate [translated](/advanced/i18n) messages, use the `addMessageTranslated` method instead. Placeholder values can be specified in by passing an array as the third argument:
+To generate [translated](/i18n) messages, use the `addMessageTranslated` method instead. Placeholder values can be specified in by passing an array as the third argument:
 
 ```php
 $ms = $this->ci->alerts;

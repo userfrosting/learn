@@ -57,7 +57,7 @@ $ php bakery build-assets [options]
 
 ### clear-cache
 
-The `clear-cache` command takes care of deleting all the cached data. See [Chapter 16](/advanced/caching) for more information.
+The `clear-cache` command takes care of deleting all the cached data. See [Chapter 17](/advanced/caching) for more information.
 
 ```bash
 $ php bakery clear-cache

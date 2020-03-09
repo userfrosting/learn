@@ -51,3 +51,4 @@ redirects:
     /going-live/cron: /going-live/unix-primer-ubuntu
     /recipes/hosting-with-iis: /installation/other-situations/iis
     /contributing/supporting-userfrosting: /contributing
+    /advanced/i18n: /i18n
