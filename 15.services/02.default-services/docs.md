@@ -70,7 +70,7 @@ Provide access to the filesystem for file handling. Include support for multiple
 
 #### localePathBuilder
 
-A `UserFrosting\I18n\LocalePathBuilder` instance that constructs an ordered list of files containing [translations](/advanced/i18n).  These files are used to initialize the `MessageTranslator` object available in the `translator` service.
+A `UserFrosting\I18n\LocalePathBuilder` instance that constructs an ordered list of files containing [translations](/advanced/i18n).  These files are used to initialize the `Translator` object available in the `translator` service.
 
 #### mailer
 
@@ -114,7 +114,7 @@ Creates a `Throttler` object, which handles [request throttling](/routes-and-con
 
 #### translator
 
-Sets up the `MessageTranslator` object (`UserFrosting\I18n\MessageTranslator`) for translation, localization, and internationalization of your site's contents.  See [Chapter 16](/advanced/i18n) for more information.
+Sets up the `Translator` object (`UserFrosting\I18n\Translator`) for translation, localization, and internationalization of your site's contents.  See [Chapter 16](/advanced/i18n) for more information.
 
 #### view
 
