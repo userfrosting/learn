@@ -70,7 +70,7 @@ This table contains records for each user.
 | `email` | `string(255)` | The email address of the user. Must be unique. |
 | `first_name` | `string(20)` | The user's first name.  Optional. |
 | `last_name` | `string(30)` | The user's last name.  Optional. |
-| `locale` | `string(10)` | The [language and locale](/advanced/i18n) to use for this user. |
+| `locale` | `string(10)` | The [language and locale](/i18n) to use for this user. |
 | `theme` | `string(100)` | The user theme (not yet fully implemented). |
 | `group_id` | unsigned `int` | The id of the user's [group](/users/groups). |
 | `flag_verified` | `bool` | Set to 1 if the user has verified their account via email, 0 otherwise. |

@@ -59,11 +59,11 @@ The `assets` directory contains all of the Javascript, CSS, images, and other st
 
 ### /locale
 
-The `locale` directory contains [translation files](/advanced/i18n) for your Sprinkle.  Like configuration files, translation files simply return an associative array.
+The `locale` directory contains [translation files](/i18n) for your Sprinkle.  Like configuration files, translation files simply return an associative array.
 
 Just as with configuration files, UserFrosting will recursively merge translation files for the currently selected language(s) from each loaded Sprinkle.  This means that each subsequently loaded Sprinkle can override translations from previous Sprinkles, or define new ones entirely.
 
-See [Chapter 16](/advanced/i18n) for more information on UserFrosting's internationalization and localization system.
+See [Chapter 16](/i18n) for more information on UserFrosting's internationalization and localization system.
 
 ### /routes
 

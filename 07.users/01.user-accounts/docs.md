@@ -47,7 +47,7 @@ There is also a "suggest username" feature, that will use a built-in dictionary 
 
 ### Locale
 
-UserFrosting supports a rich set of [multi-language](/advanced/i18n) features.  If your audience consists of users who speak different languages, they can set their `locale` so that they may interact with UserFrosting in the language of their choice.
+UserFrosting supports a rich set of [multi-language](/i18n) features.  If your audience consists of users who speak different languages, they can set their `locale` so that they may interact with UserFrosting in the language of their choice.
 
 ### Password
 

@@ -24,7 +24,7 @@ This service handles requests for [raw assets](/asset-management/asset-bundles#r
 
 #### cache
 
-Creates an instance of a Laravel [Cache](https://laravel.com/docs/5.8/cache). See [Chapter 16](/advanced/caching) for more information.
+Creates an instance of a Laravel [Cache](https://laravel.com/docs/5.8/cache). See [Chapter 17](/advanced/caching) for more information.
 
 #### checkEnvironment
 
@@ -54,7 +54,7 @@ Monolog `Logger` object for sending debug print statements and data to `logs/deb
 
 #### errorHandler
 
-Sets up a `ExceptionHandlerManager` object, which is used as a [custom error handler](http://www.slimframework.com/docs/handlers/error.html#custom-error-handler) for UF's Slim application.  It then registers the custom handlers for `HttpException`, `PDOException`, and `phpmailerException`.  See [Chapter 16](/advanced/error-handling) for more information on custom exceptions and exception error handlers.
+Sets up a `ExceptionHandlerManager` object, which is used as a [custom error handler](http://www.slimframework.com/docs/handlers/error.html#custom-error-handler) for UF's Slim application.  It then registers the custom handlers for `HttpException`, `PDOException`, and `phpmailerException`.  See [Chapter 17](/advanced/error-handling) for more information on custom exceptions and exception error handlers.
 
 #### errorLogger
 
@@ -70,7 +70,7 @@ Provide access to the filesystem for file handling. Include support for multiple
 
 #### localePathBuilder
 
-A `UserFrosting\I18n\LocalePathBuilder` instance that constructs an ordered list of files containing [translations](/advanced/i18n).  These files are used to initialize the `Translator` object available in the `translator` service.
+A `UserFrosting\I18n\LocalePathBuilder` instance that constructs an ordered list of files containing [translations](/i18n).  These files are used to initialize the `Translator` object available in the `translator` service.
 
 #### mailer
 
@@ -114,7 +114,7 @@ Creates a `Throttler` object, which handles [request throttling](/routes-and-con
 
 #### translator
 
-Sets up the `Translator` object (`UserFrosting\I18n\Translator`) for translation, localization, and internationalization of your site's contents.  See [Chapter 16](/advanced/i18n) for more information.
+Sets up the `Translator` object (`UserFrosting\I18n\Translator`) for translation, localization, and internationalization of your site's contents.  See [Chapter 16](/i18n) for more information.
 
 #### view
 
@@ -223,7 +223,7 @@ An instance of `RocketTheme\Toolbox\Event\EventDispatcher`, which itself extends
 
 An instance of [Uniform Resource Locator class](https://github.com/userfrosting/uniformresourcelocator), which provides a unified method of accessing Sprinkle entities via [streams](https://webmozart.io/blog/2013/06/19/the-power-of-uniform-resource-location-in-php/).
 
-See [Chapter 16](/advanced/locator) for more information.
+See [Chapter 17](/advanced/locator) for more information.
 
 #### sprinkleManager
 

@@ -229,7 +229,7 @@ comment:
 
 A validator consists of a **validator name**, and a set of validator attributes. In addition to the rule-specific attributes described below, each validator may contain a **validation message** assigned to a `message` attribute.
 
-The validation message will be recorded during the call to `ServerSideValidator::validate` in the event that the field fails the validation rule. This can be a simple text message, or you may [reference a translatable string key](/advanced/i18n#the-placeholder) using the `&` prefix.
+The validation message will be recorded during the call to `ServerSideValidator::validate` in the event that the field fails the validation rule. This can be a simple text message, or you may [reference a translatable string key](/i18n#the-placeholder) using the `&` prefix.
 
 **Example:**
 ```yaml
@@ -245,7 +245,7 @@ talons:
 ```
 Note there are two validators for `talons`. The `required` validator requires a value to be in this field and the `length` validator sets a maximum of 120 characters. The `message` key for each validator is simply the message that will be displayed if the validator parameters are not met. E.g. if a value of over 120 characters is provided, the user will see the validation message `Talons must be less than 120 characters.`
 
-To integrate a translatable string key simply add your key using the `&` prefix. For example, your [translation file](/advanced/i18n#the-translation-files) might look like:
+To integrate a translatable string key simply add your key using the `&` prefix. For example, your [translation file](/i18n#the-translation-files) might look like:
 
 **locale/en_US/talons.php**
 ```php

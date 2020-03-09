@@ -29,7 +29,7 @@ Stream       | Sprinkle      | Path                                             
 `config`     | `core`        | `app/sprinkles/{sprinkleName}/config`                  | no     | [Config files](/configuration/config-files) location
 `extra`      | `core`        | `app/sprinkles/{sprinkleName}/extra`                   | no     | Misc directory, used to store files unrelated to any other stream
 `factories`  | `core`        | `app/sprinkles/{sprinkleName}/factories`               | no     | Factory Muffin [factories definition](/testing/writting-tests/factories) used for testing
-`locale`     | `core`        | `app/sprinkles/{sprinkleName}/locale`                  | no     | [Translation files](/advanced/i18n)
+`locale`     | `core`        | `app/sprinkles/{sprinkleName}/locale`                  | no     | [Translation files](/i18n)
 `routes`     | `core`        | `app/sprinkles/{sprinkleName}/routes`                  | no     | [Routes files](/routes-and-controllers/front-controller)
 `schema`     | `core`        | `app/sprinkles/{sprinkleName}/schema`                  | no     | [Request Schema](/routes-and-controllers/client-input/validation#fortress) files
 `templates`  | `core`        | `app/sprinkles/{sprinkleName}/templates`               | no     | [Templates files](/templating-with-twig/sprinkle-templates)
