@@ -10,4 +10,4 @@ taxonomy:
 
 # Assets
 
-The Javascript files, CSS files, image files, fonts, and other resources used to create the client-side experience of your web application are collectively known as **assets**.  In UserFrosting, assets are kept under the `assets/` subdirectories of each Sprinkle.
+The Javascript files, CSS files, image files, fonts, and other resources used to create the client-side experience of your web application are collectively known as **assets**. In UserFrosting, assets are kept under the `assets/` subdirectories of each Sprinkle.
