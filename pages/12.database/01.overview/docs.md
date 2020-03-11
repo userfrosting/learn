@@ -6,13 +6,13 @@ taxonomy:
     category: docs
 ---
 
-Even in relatively simple applications, writing out the same types of database queries over and over can get tedious.  To make things easier and your code [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself)er, UserFrosting takes advantage of Laravel's excellent object-relation mapper, [Eloquent](https://laravel.com/docs/5.8/eloquent#introduction).
+Even in relatively simple applications, writing out the same types of database queries over and over can get tedious. To make things easier and your code [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself)er, UserFrosting takes advantage of Laravel's excellent object-relation mapper, **[Eloquent](https://laravel.com/docs/5.8/eloquent#introduction)**.
 
 ## Configuration
 
 By default, UserFrosting creates a `default` database connection, and handles basic configuration through [environment variables](/configuration/environment-vars).
 
-These values are, in turn, retrieved through the `db` key in your [configuration files](/configuration/config-files).  For advanced database configuration, or to add additional database connections, you can directly override this key or subkeys in your Sprinkle's configuration file:
+These values are, in turn, retrieved through the `db` key in your [configuration files](/configuration/config-files). For advanced database configuration, or to add additional database connections, you can directly override this key or subkeys in your Sprinkle's configuration file:
 
 ```php
 <?php
@@ -43,9 +43,9 @@ return [
 
 ## Data models
 
-Eloquent works by having you define [model classes](https://laravel.com/docs/5.8/eloquent#eloquent-model-conventions).  Generally speaking, each model maps to a table in your database.  Interactions with the table are then handled through the corresponding model.
+Eloquent works by having you define [model classes](https://laravel.com/docs/5.8/eloquent#eloquent-model-conventions). Generally speaking, each model maps to a table in your database. Interactions with the table are then handled through the corresponding model.
 
-UserFrosting has already implemented all of the models needed for interacting with its [default tables](/database/default-tables).  These can be found in the `src/Database/Models/` subdirectories of your sprinkles.  Among the three default Sprinkles (`core`, `account`, and `admin`), UserFrosting implements:
+UserFrosting has already implemented all of the models needed for interacting with its [default tables](/database/default-tables). These can be found in the `src/Database/Models/` subdirectories of your sprinkles. Among the three default Sprinkles (`core`, `account`, and `admin`), UserFrosting implements:
 
 - Migration
 - Throttle
@@ -81,11 +81,11 @@ $user = new User([
 $user->save();
 ```
 
->>>> Notice that the `User` class is in a [namespace](http://php.net/manual/en/language.namespaces.rationale.php).  To reference it correctly, we need to either specify the fully qualified path in a `use` statement at the top of our file, or explicitly reference it in our code as `\UserFrosting\Sprinkle\Account\Database\Models\User`.
+[notice=warning]Notice that the `User` class is in a [namespace](http://php.net/manual/en/language.namespaces.rationale.php). To reference it correctly, we need to either specify the fully qualified path in a `use` statement at the top of our file, or explicitly reference it in our code as `\UserFrosting\Sprinkle\Account\Database\Models\User`.[/notice]
 
 #### Select
 
-Records can be fetched from the database using Eloquent's sophisticated [query builder](https://laravel.com/docs/5.8/eloquent#retrieving-models).  This is typically done by calling a static method on the corresponding model class:
+Records can be fetched from the database using Eloquent's sophisticated [query builder](https://laravel.com/docs/5.8/eloquent#retrieving-models). This is typically done by calling a static method on the corresponding model class:
 
 ```php
 <?php
