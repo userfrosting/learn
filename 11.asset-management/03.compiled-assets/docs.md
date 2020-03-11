@@ -26,7 +26,7 @@ To compile assets for a production environment, simply use the [Bakery CLI tool]
 $ php bakery build-assets --compile
 ```
 
-If you have shell access (for example, [using a VPS](/going-live/vps-production-environment)), you can run this directly on your host server as part of your deployment process.  Otherwise, you can run Bakery locally before transferring your application to the host server.
+If you have shell access (for example, [using a VPS](/going-live/vps-production-environment)), you can run this directly on your host server as part of your deployment process. Otherwise, you can run Bakery locally before transferring your application to the host server.
 
 ## Configuration
 
@@ -36,10 +36,10 @@ If you reload your page and view the source, you'll see that references to the c
 
 ```html
 <!-- Include main CSS asset bundle -->
-<link rel="stylesheet" type="text/css" href="http://localhost/myUserFrostingProject/public/assets/css/main-2c1912c984.css" >
+<link rel="stylesheet" type="text/css" href="http://owlfancy.com/myUserFrostingProject/public/assets/css/main-2c1912c984.css" >
 
 <!-- Page-group-specific CSS asset bundle -->
-<link rel="stylesheet" type="text/css" href="http://localhost/myUserFrostingProject/public/assets/css/guest-5a16771b5a.css" >
+<link rel="stylesheet" type="text/css" href="http://owlfancy.com/myUserFrostingProject/public/assets/css/guest-5a16771b5a.css" >
 ```
 
 The `AssetManager` service pulls the names of these compiled assets from `build/bundle.result.json`, which was generated when we ran the `build-assets` command.
@@ -50,7 +50,7 @@ Bakery uses a suite of tools based on [Node.js](https://nodejs.org/en/) to build
 
 Why do we use Node.js, anyway, instead of a PHP-based asset management tools?
 
-Honestly, it's because the Node.js tools are better.  Since every web application needs to minify and process assets, it makes sense to develop the tools for these tasks in a common language. No matter which server-side technology a developer uses, they all have to deal with Javascript sooner or later. Thus, Javascript-based tools are the most popular and actively developed and maintained options.
+Honestly, it's because the Node.js tools are better. Since every web application needs to minify and process assets, it makes sense to develop the tools for these tasks in a common language. No matter which server-side technology a developer uses, they all have to deal with Javascript sooner or later. Thus, Javascript-based tools are the most popular and actively developed and maintained options.
 
 ### Gulp
 
@@ -62,8 +62,8 @@ All build tasks are defined in `build/gulpfile.js`. UserFrosting ships with thre
 
 1. `uf-bundle-build`
 2. `uf-bundle`
-4. `uf-bundle-clean`
+3. `uf-bundle-clean`
 
 The `uf-bundle-build` task combines the `asset-bundles.json` files in each loaded Sprinkle (as per your `sprinkles.json` file), respecting the collision rules defined in each bundle. This combined bundle file is written to `build/asset-bundles.json`.
 
-The `uf-bundle` task uses [`gulp-bundle-assets`](https://github.com/dowjones/gulp-bundle-assets) to minify and concatenate the assets referenced in each bundle in `build/asset-bundles.json` into a single file per bundle. These compiled bundles will be placed in the `public/assets/` directory by default. It also copies fonts, images, and other files from your Sprinkles to the `public/assets/` directory, so that your web server can directly serve these files as well. 
+The `uf-bundle` task uses [`gulp-bundle-assets`](https://github.com/dowjones/gulp-bundle-assets) to minify and concatenate the assets referenced in each bundle in `build/asset-bundles.json` into a single file per bundle. These compiled bundles will be placed in the `public/assets/` directory by default. It also copies fonts, images, and other files from your Sprinkles to the `public/assets/` directory, so that your web server can directly serve these files as well.
