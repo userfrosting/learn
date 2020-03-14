@@ -102,6 +102,10 @@ While both are compatible with eachother, it is now recommended all sprinkle be 
 
 Custom locales (those not bundled by default with UserFrosting) needs to be updated with a new `locale.yaml` file. See [Custom locale]() for more information..
 
+#### MessageTranslator => Translator
+
+Search for `UserFrosting\I18n\MessageTranslator` and replace all instances with `UserFrosting\I18n\Translator`. Both class (mostly) works the same.
+
 #### PHPUnit
 
 If your sprinkle has PHPUnit tests, you may need to update them. The methods listed below now have a `void` return type declaration:
