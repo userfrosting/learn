@@ -6,11 +6,11 @@ taxonomy:
     category: docs
 ---
 
-For page loads, as well as requests made by most of UserFrosting's [client-side components](/client-side-code/components), alerts are automatically fetched from the [alert stream](/routes-and-controllers/alert-stream) and rendered for you.  However, sometimes you will make your own custom AJAX requests that need to manually fetch and render alerts after the request is complete.  To do this, you may create your own instance of the `ufAlerts` plugin.
+For page loads, as well as requests made by most of UserFrosting's [client-side components](/client-side-code/components), alerts are automatically fetched from the [alert stream](/routes-and-controllers/alert-stream) and rendered for you. However, sometimes you will make your own custom AJAX requests that need to manually fetch and render alerts after the request is complete. To do this, you may create your own instance of the `ufAlerts` plugin.
 
 ## Initialization
 
-To initialize the `ufAlerts` plugin, simply call `.ufAlerts()` on the target element where alerts will be displayed.  For example, you can do this in the `.fail()` callback for an AJAX request in jQuery:
+To initialize the `ufAlerts` plugin, simply call `.ufAlerts()` on the target element where alerts will be displayed. For example, you can do this in the `.fail()` callback for an AJAX request in jQuery:
 
 ```js
 $.ajax({
@@ -22,7 +22,7 @@ $.ajax({
 }).fail(function (jqXHR) {
     // Display errors on failure
     var debugAjax = (typeof site !== "undefined") && site.debug.ajax;
-    
+
     if (debugAjax && jqXHR.responseText) {
         document.write(jqXHR.responseText);
         document.close();
@@ -35,7 +35,7 @@ $.ajax({
 });
 ```
 
-The `fetch` method will retrieve any alerts that were added to the message stream, via the `/alerts` route.  The `render` method will then display them in the element that you initialized `ufAlerts` on.
+The `fetch` method will retrieve any alerts that were added to the message stream, via the `/alerts` route. The `render` method will then display them in the element that you initialized `ufAlerts` on.
 
 ## Methods
 
@@ -53,13 +53,13 @@ Fetch alerts from the message stream resource url.
 
 Render all alert messages in the initialized element.
 
-Alerts are rendered using a custom [Handlebars template](/client-side-code/client-side-templating).  The default template is located in `core/templates/pages/partials/alerts.html.twig`, and uses Bootstrap 3's [alert](https://getbootstrap.com/docs/3.3/components/#alerts) component to render each message.  This partial template is automatically included in the `core/templates/pages/abstract/base.html.twig` template, in the `uf_alerts_template` block.
+Alerts are rendered using a custom [Handlebars template](/client-side-code/client-side-templating). The default template is located in `core/templates/pages/partials/alerts.html.twig`, and uses Bootstrap 3's [alert](https://getbootstrap.com/docs/3.3/components/#alerts) component to render each message. This partial template is automatically included in the `core/templates/pages/abstract/base.html.twig` template, in the `uf_alerts_template` block.
 
 If you wish you may include your own custom Handlebars template instead, overriding the `uf_alerts_template` block and and specifying its `id` with the `alertTemplateId` option when you initialize `ufAlerts`.
 
 ### `push`
 
-This method allows you to add additional alert messages in your client-side code.  They will be rendered just like any messages that were retrieved with `fetch` the next time `render` is called:
+This method allows you to add additional alert messages in your client-side code. They will be rendered just like any messages that were retrieved with `fetch` the next time `render` is called:
 
 ```js
 $("#alerts-page").ufAlerts('push', 'danger', 'You messed up!').ufAlerts('render');
@@ -85,24 +85,24 @@ $("#alerts-page").ufAlerts('destroy');
 
 ### `url`
 
-The absolute URL from which to fetch flash alerts.  Defaults to `site.uri.public + '/alerts'`.
+The absolute URL from which to fetch flash alerts. Defaults to `site.uri.public + '/alerts'`.
 
 ### `scrollToTop`
 
-Whether to automatically scroll back to the top of the page after rendering alerts.  Defaults to `true`.
+Whether to automatically scroll back to the top of the page after rendering alerts. Defaults to `true`.
 
 ### `scrollWhenVisible`
 
-Whether to automatically scroll back to the top of the page even if the alerts are already visible in the current viewport.  Only used when `scrollToTop` is `true`.  Defaults to `false`.
+Whether to automatically scroll back to the top of the page even if the alerts are already visible in the current viewport. Only used when `scrollToTop` is `true`. Defaults to `false`.
 
 ### `agglomerate`
 
-Set to true to render all alerts in a single bulleted list (`ul/li`), applying styling based on the highest-priority alert being rendered.  Defaults to `false`.
- 
+Set to true to render all alerts in a single bulleted list (`ul/li`), applying styling based on the highest-priority alert being rendered. Defaults to `false`.
+
 ### `alertMessageClass`
 
-The CSS class(es) to be applied to each alert message.  Defaults to `uf-alert-message`.
+The CSS class(es) to be applied to each alert message. Defaults to `uf-alert-message`.
 
 ### `alertTemplateId`
 
-The id of the Handlebars alert template to use when rendering alerts.  Defaults to `uf-alert-template`.
+The id of the Handlebars alert template to use when rendering alerts. Defaults to `uf-alert-template`.

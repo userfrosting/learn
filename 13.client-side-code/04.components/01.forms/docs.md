@@ -6,11 +6,11 @@ taxonomy:
     category: docs
 ---
 
-You may have noticed that in UserFrosting, forms are usually submitted via an AJAX request.  By submitting forms with AJAX rather than HTML's native form submission, we can control the behavior of the page before submission (client-side validation, transforming form data) and after submission (deciding whether to reload the page, redirect, display messages, etc).
+You may have noticed that in UserFrosting, forms are usually submitted via an AJAX request. By submitting forms with AJAX rather than HTML's native form submission, we can control the behavior of the page before submission (client-side validation, transforming form data) and after submission (deciding whether to reload the page, redirect, display messages, etc).
 
-UserFrosting's `ufForm` widget makes it easy to handle many form-submission tasks automatically.  Simply create your usual form markup:
+UserFrosting's `ufForm` widget makes it easy to handle many form-submission tasks automatically. Simply create your usual form markup:
 
-```twig
+```html
 <form id="sign-in" action="{{site.uri.public}}/account/login" method="post">
   {% include "forms/csrf.html.twig" %}
   <div class="form-group has-feedback">
@@ -47,7 +47,7 @@ $("#sign-in").ufForm({
 });
 ```
 
-The form will automatically be validated and submitted when the user clicks the `submit` button (`<button type="submit"...>`).  The submit button must be _inside_ the `<form>` block for this to work properly.
+The form will automatically be validated and submitted when the user clicks the `submit` button (`<button type="submit"...>`). The submit button must be _inside_ the `<form>` block for this to work properly.
 
 ## Options
 
@@ -55,11 +55,11 @@ The form will automatically be validated and submitted when the user clicks the 
 
 This option contains any AJAX settings that you would like to pass through to the form submission [`.ajax` handler](http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings).
 
-The defaults for this option should be sufficient most of the time - you shouldn't need to change them in most circumstances.  By default, `ufForm` will determine the request url and HTTP verb from your `<form>` tag's `action` and `method` attributes, respectively.
+The defaults for this option should be sufficient most of the time - you shouldn't need to change them in most circumstances. By default, `ufForm` will determine the request url and HTTP verb from your `<form>` tag's `action` and `method` attributes, respectively.
 
 ### validators
 
-If the `validators` option is set, `ufForm` will automatically validate on the form using the jQueryValidation plugin with the rules provided.  `validators` should be a JSON object, which might look something like:
+If the `validators` option is set, `ufForm` will automatically validate on the form using the jQueryValidation plugin with the rules provided. `validators` should be a JSON object, which might look something like:
 
 ```json
 {
@@ -91,7 +91,7 @@ See the section on [generating client-side validation rules in Fortress](/routes
 
 ### msgTarget
 
-If `ufForm` receives an error from the server when it attempts to submit your form (i.e., the response contains a 4xx or 5xx status code), it will automatically retrieve any error messages from the [alert stream](/routes-and-controllers/alert-stream) and render them on the page.  `msgTarget` allows you to specify an element of the DOM where `ufForm` should display these messages.
+If `ufForm` receives an error from the server when it attempts to submit your form (i.e., the response contains a 4xx or 5xx status code), it will automatically retrieve any error messages from the [alert stream](/routes-and-controllers/alert-stream) and render them on the page. `msgTarget` allows you to specify an element of the DOM where `ufForm` should display these messages.
 
 Internally, `ufForm` will set up a `ufAlerts` widget to fetch and render the alert stream messages.
 
@@ -99,13 +99,13 @@ If `msgTarget` is not specified, `ufForm` will use the first element inside your
 
 ### encType
 
-The encoding type to use for submitting the form.  By default, `ufForm` will use the `enctype` attribute in your `<form>` tag.
+The encoding type to use for submitting the form. By default, `ufForm` will use the `enctype` attribute in your `<form>` tag.
 
-If the attribute is not set in the form or this option, the encoding type will default to `application/x-www-form-urlencoded`.  The default will work for most types of forms.  The exception is for forms that involve file uploads.  In this case, you need to use `enctype = "multipart/form-data"` instead.
+If the attribute is not set in the form or this option, the encoding type will default to `application/x-www-form-urlencoded`. The default will work for most types of forms. The exception is for forms that involve file uploads. In this case, you need to use `enctype = "multipart/form-data"` instead.
 
 ### submittingText
 
-Content to show in the submit button (`<button type="submit"...>`) while the form is being submitted.  Defaults to a spinner icon: `"<i class='fa fa-spinner fa-spin'></i>"`.  When the submission button is clicked, the button will become disabled and this content will be displayed while the request is being submitted.  Once the form submission is complete and a response has been received, `ufForm` automatically re-enables the button and reverts its text back to its original value.
+Content to show in the submit button (`<button type="submit"...>`) while the form is being submitted. Defaults to a spinner icon: `"<i class='fa fa-spinner fa-spin'></i>"`. When the submission button is clicked, the button will become disabled and this content will be displayed while the request is being submitted. Once the form submission is complete and a response has been received, `ufForm` automatically re-enables the button and reverts its text back to its original value.
 
 ### beforeSubmitCallback
 
@@ -117,31 +117,31 @@ If this option is set to `true`, `ufForm` will ignore the `value` attributes of 
 
 For example, suppose you have the checkbox control:
 
-```
+```html
 <input type="checkbox" name="rememberme" value="yes">
 ```
 
-When the checkbox is checked, the submitted data will look something like `rememberme=yes`.  But if it's _not_ checked, then no `rememberme` value will be submitted to the server at all!
+When the checkbox is checked, the submitted data will look something like `rememberme=yes`. But if it's _not_ checked, then no `rememberme` value will be submitted to the server at all!
 
-This behavior can be frustrating when processing the form on the server side.  Unlike other types of controls, where a missing value might be considered a validation error, the interpretation of a missing checkbox can be ambiguous.  When using a single checkbox, the purpose is typically to serve as a "toggle" element representing true/false.  But of course since an unchecked box is not submitted at all, you would need the server to provide a default "false" value.
+This behavior can be frustrating when processing the form on the server side. Unlike other types of controls, where a missing value might be considered a validation error, the interpretation of a missing checkbox can be ambiguous. When using a single checkbox, the purpose is typically to serve as a "toggle" element representing true/false. But of course since an unchecked box is not submitted at all, you would need the server to provide a default "false" value.
 
 To summarize, when `binaryCheckboxes` is set to `false`:
 
-Checkbox status | Submitted data
-----------------| --------------
-checked         | `rememberme=yes`
-unchecked       | -
+| Checkbox status | Submitted data   |
+| --------------- | ---------------- |
+| checked         | `rememberme=yes` |
+| unchecked       | -                |
 
 By setting `binaryCheckboxes` to `true` (the default), we get a much more predictable behavior from our checkbox:
 
-Checkbox status | Submitted data
-----------------| --------------
-checked         | `rememberme=1`
-unchecked       | `rememberme=0`
+| Checkbox status | Submitted data |
+| --------------- | -------------- |
+| checked         | `rememberme=1` |
+| unchecked       | `rememberme=0` |
 
 ### keyupDelay
 
-The time, in milliseconds, to wait before revalidating the form after the user stops typing.  See [this SO question](http://stackoverflow.com/questions/41363409/jquery-validate-add-delay-to-keyup-validation) for more information.
+The time, in milliseconds, to wait before revalidating the form after the user stops typing. See [this SO question](http://stackoverflow.com/questions/41363409/jquery-validate-add-delay-to-keyup-validation) for more information.
 
 Defaults to `0`.
 
@@ -153,7 +153,7 @@ Triggered when the form has been submitted successfully. This happens after the 
 
 Any response from the server will be provided in the `data` parameter as JSON. For example, to log the response from the server when the form has been submitted successfully :
 
-```
+```js
 $("#account-settings").ufForm({
     validator: page.validators.account_settings,
     msgTarget: $("#alerts-page")
@@ -165,4 +165,4 @@ $("#account-settings").ufForm({
 
 ### submitError.ufForm
 
-Triggered when the form submission has returned an error.  This happens after the submission button has been re-enabled and any error messages have been rendered.
+Triggered when the form submission has returned an error. This happens after the submission button has been re-enabled and any error messages have been rendered.
