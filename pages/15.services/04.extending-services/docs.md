@@ -1,129 +1,10 @@
 ---
-title: Extending Services
+title: Extending Existing Services
 metadata:
     description: You may extend UserFrosting's default services for additional functionality, or define completely new services in your Sprinkles.
 taxonomy:
     category: docs
 ---
-
-## Adding Services
-
-You'll probably want to create your own services to modularize certain aspects of your own project.  For example, if your application needs to interact with some third-party API like Google Maps, you might create a `MapBuilder` class that encapsulates all of that functionality.  This is a cleaner and more manageable alternative to simply stuffing all of your code directly into your controller classes.
-
-If you want to use a single instance of `MapBuilder` throughout your application, you'll probably end up defining it as a service.  To do this, you'll need to create a new service provider class in your site Sprinkle.
-
-First, create a class `src/ServicesProvider/ServicesProvider.php` in your Sprinkle:
-
-```
-app
-└── sprinkles
-    └── site
-        └── src
-            └── ServicesProvider
-                └── ServicesProvider.php
-```
-
-The skeleton of this file should look like:
-
-```php
-<?php
-/**
- * Owl Fancy (https://owlfancy.com)
- *
- * @license   All rights reserved.
- */
-namespace UserFrosting\Sprinkle\Site\ServicesProvider;
-
-use UserFrosting\Sprinkle\Core\Facades\Debug;
-
-/**
- * Registers services for my site Sprinkle
- *
- * @author David Attenborough
- */
-class ServicesProvider
-{
-    /**
-     * Register my site services.
-     *
-     * @param Container $container A DI container implementing ArrayAccess and psr-container.
-     */
-    public function register($container)
-    {
-
-    }
-}
-
-```
-
-Notice that we have one method, `register`, which takes the Pimple DIC as its lone parameter.  Ok, let's add our `MapBuilder` service!
-
-```php
-<?php
-/**
- * Owl Fancy (https://owlfancy.com)
- *
- * @license   All rights reserved.
- */
-namespace UserFrosting\Sprinkle\Site\ServicesProvider;
-
-use UserFrosting\Sprinkle\Core\Facades\Debug;
-use UserFrosting\Sprinkle\Site\GoogleMaps\MapBuilder;
-
-/**
- * Registers services for my site Sprinkle
- *
- * @author David Attenborough
- */
-class ServicesProvider
-{
-    /**
-     * Register my site services.
-     *
-     * @param Container $container A DI container implementing ArrayAccess and psr-container.
-     */
-    public function register($container)
-    {
-       /**
-         * Map builder service.
-         *
-         * Needed to find our owls and track down those delicious voles.
-         */        
-        $container['mapBuilder'] = function ($c) {
-            // Do what you need before building the object
-            ...
-
-            // Now, actually build the object
-            $mapBuilder = new MapBuilder(...);
-            return $mapBuilder;
-        };
-    }
-}
-
-```
-
-You'll notice that we've added `use UserFrosting\Sprinkle\Site\GoogleMaps\MapBuilder;` to the top of the file.  This means that we don't have to use the fully qualified class name (with the entire namespace) every time we want to refer to the `MapBuilder` class.
-
-Notice that we've defined our closure to return the object that we created.  Now, in a controller class, we can do something like:
-
-```php
-/**
- * Get the current location of the currently selected owl.
- *
- * Request type: GET
- */
-public function getOwlCoordinates($request, $response, $args)
-{
-    ...
-
-    $mapBuilder = $this->ci->mapBuilder;
-    $coordinates = $mapBuilder->getCoordinates($myOwl);
-
-    ...
-}
-```
-
->>>> It is very important that your class be named `ServicesProvider`, and be in the `ServicesProvider` namespace of your Sprinkle.  Otherwise, UserFrosting will be unable to find and automatically register your services!
 
 ## Extending Existing Services
 
@@ -236,7 +117,7 @@ class ServicesProvider
          * Map builder service.
          *
          * Needed to find our owls and track down those delicious voles.
-         */        
+         */
         $container['mapBuilder'] = function ($c) {
             // Do what you need before building the object
             ...
@@ -262,3 +143,7 @@ Most of the default services that UserFrosting defines can be completely overrid
 - `locator`
 - `sprinkleManager`
 - `streamBuilder`
+
+### Overwriting existing service class
+
+TODO
