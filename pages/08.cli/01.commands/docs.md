@@ -24,6 +24,8 @@ General help can also be displayed by running:
 $ php bakery help
 ```
 
+[notice=tip]Always run any bakery command from the project root directory (`/`). Otherwise, you'll receive a `Could not open input file: bakery` error.[/notice]
+
 ## Available commands
 
 ### bake
