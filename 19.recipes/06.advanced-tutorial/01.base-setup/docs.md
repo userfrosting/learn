@@ -24,7 +24,9 @@ First thing to do is to create an empty sprinkle for our code to live in. We'll 
 }
 ```
 
-Next we need to add our `Pastries` sprinkle to the `sprinkles.json` list and update **Composer** so our new [PSR4 mapping](http://www.php-fig.org/psr/psr-4/#3-examples) is picked up. From the command line, run `composer update` in the root directory of your UserFrosting project.
+Next we need to add our `Pastries` sprinkle to the `sprinkles.json` list and update **Composer** so our new [PSR4 mapping](http://www.php-fig.org/psr/psr-4/#3-examples) is picked up. From the command line, run `composer update` in the **root directory** of your UserFrosting project.
+
+[notice=tip]Don't forget to always run any composer command from the project root directory (`/`).[/notice]
 
 ## The route
 
@@ -43,7 +45,7 @@ $app->group('/pastries', function () {
 })->add('authGuard');
 ```
 
-We now have a `/pastries` route set up. We also define a route group for later use, if we wish to add additional routes whose URLs also begin with `/pastries/`. As you can see this route has the `pastries` name and will invoke the `authGuard` middleware, which requires a user to be logged in to see this page. 
+We now have a `/pastries` route set up. We also define a route group for later use, if we wish to add additional routes whose URLs also begin with `/pastries/`. As you can see this route has the `pastries` name and will invoke the `authGuard` middleware, which requires a user to be logged in to see this page.
 
 ## The controller class
 
@@ -70,7 +72,7 @@ class PastriesController extends SimpleController
         ]);
     }
 }
-``` 
+```
 
 >>>>>> Later on, we can add methods for other pastry-related pages to this same class as a way to logically organize our code.
 

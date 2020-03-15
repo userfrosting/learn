@@ -35,6 +35,8 @@ $ composer update
 
 >>>> The master `composer.json` file will load **all** child `composer.json` files, even in Sprinkles that haven't been loaded in your site's `sprinkles.json`.  To change this behavior, you will need to modify the master `composer.json` file.
 
+[notice=tip]Always run any composer command from the project root directory (`/`).[/notice]
+
 ### /package.json
 
 The `package.json` file is used for retrieving frontend dependencies via [Yarn](https://yarnpkg.com/), like [Bootstrap](http://getbootstrap.com/). Dependencies specified in `package.json` will be downloaded to `/app/assets/node_modules`.
