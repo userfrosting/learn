@@ -91,6 +91,57 @@ class PastriesTable extends Migration
 
 As described in the [Migration](/database/migrations) chapter, the `up` method contains the instructions to create the new table while the `down` method contains the instructions to undo the changes made by the `up` method - in this case, removing the `pastries` table.
 
+## Modifying the database table using a migration
+
+Migrations can also be used to edit existing tables. We will modify the database table created in the [last step](/recipes/advanced-tutorial/database#creating-the-database-table-using-a-migration) by creating the migration class `UpdatePastriesTable` in `src/Database/Migrations/v100`. This migration will use the `change` method to modify one of our columns.
+
+Since this migration will alter the `pastries` table created in our `PastriesTable` migration, we need to add it as a dependency:
+```
+public static $dependencies = [
+    '\UserFrosting\Sprinkle\Pastries\Database\Migrations\v100\PastriesTable'
+];
+```
+Lets change the `name` column length from `255` to `100`:
+
+`app/sprinkles/pastries/src/Database/Migrations/v100/UpdatePastriesTable.php`
+```
+<?php
+
+namespace UserFrosting\Sprinkle\Pastries\Database\Migrations\v100;
+
+use UserFrosting\System\Bakery\Migration;
+use Illuminate\Database\Schema\Blueprint;
+
+class UpdatePastriesTable extends Migration
+{
+     public static $dependencies = [
+      '\UserFrosting\Sprinkle\Pastries\Database\Migrations\v100\PastriesTable'
+   ];
+
+    /**
+     * {@inheritDoc}
+     */
+     public function up()
+     {
+             $this->schema->table('pastries', function (Blueprint $table) {
+                 $table->string('name', 100)->change();
+     )}
+   }
+
+    /**
+    * {@inheritDoc}
+    */
+     public function down()
+     {
+             $this->schema->table('pastries', function (Blueprint $table) {
+                 $table->string('name', 255)->change();
+     )}
+   }
+}
+```
+
+In the `up` method the length is changed to `100` and in the `down` method it is changed back to `255`. Creating migrations that alter tables like this allows changes to easily be undone by using the [Bakery](/cli/commands#migrate-rollback) `migrate:rollback` command. This is a very basic example of how migrations can be used to alter tables. Check out the [Laravel documentation](https://laravel.com/docs/5.4/migrations#modifying-columns) for more information on how to use the `change` method.
+
 ## Populating the database with default data using a seed
 
 Next we'll populate our newly created table with some default data. To do this, we'll create a [**seed**](/database/seeding). While this could be done in a migration, it is recommended to create default database values using a seed as it enabled the data to be recreated if it get deleted. We call this seed `DefaultPastries`:
