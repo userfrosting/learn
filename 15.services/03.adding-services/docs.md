@@ -12,8 +12,6 @@ If you want to use a single instance of `MapBuilder` throughout your application
 
 ## In a global services provider class
 
-[notice]In future version of UserFrosting, this method of registering a new service will be deprecated. While both method still coexist, using a [custom provider class](#in-a-global-services-provider-class) should be prefered.[/notice]
-
 First, create a class `src/ServicesProvider/ServicesProvider.php` in your Sprinkle:
 
 ```
@@ -92,6 +90,9 @@ class ServicesProvider
         $container['mapBuilder'] = function ($c) {
             // Do what you need before building the object
             ...
+
+            // Access curent user
+            $user = $c->currentUser;
 
             // Now, actually build the object
             $mapBuilder = new MapBuilder(...);
@@ -175,7 +176,7 @@ app
 
 ### Create your service
 
-First, we'll create the service class. This class **must** extends a `BaseServicesProvider`. Inside this class, you can register your callback the same way you'll do in a normal ServiceProvider. The only difference is the `register` function doesn't accept the `$c` parameter. Instead, the DIC is avaiable in the class `ci` property, accesible with `$this->ci`, just like in a controller class.
+First, we'll create the service class. This class **must** extends a `BaseServicesProvider`. Inside this class, you can register your callback the same way you'll do in a normal ServiceProvider. The only difference is the callback doesn't accept the `$c` parameter. Instead, the DIC is avaiable in the class `ci` property, accesible with `$this->ci`, just like in a controller class.
 
 **app/sprinkles/site/src/ServicesProvider/MapBuilderService.php**:
 
@@ -203,6 +204,9 @@ class MapBuilderService extends BaseServicesProvider
         $this->ci['mapBuilder'] = function () {
             // Do what you need before building the object
             ...
+
+            // Access curent user
+            $user = $this->ci->currentUser;
 
             // Now, actually build the object
             $mapBuilder = new MapBuilder(...);
