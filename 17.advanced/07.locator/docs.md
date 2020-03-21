@@ -4,9 +4,11 @@ taxonomy:
     category: docs
 ---
 
-The locator service goal is to provides an abstraction layer for the different files and folders available across different sprinkles inside UserFrosting. In other words, it is a way of aggregating many search paths together. As you've seen in the previous chapter, each sprinkle can provides multiple resources and sprinkles can have the ability to overwrite a previous sprinkle resources. All of those resources, combined with the overwriting properties of a sprinkle is handled by the locator service. _Templates_ and _config_ files are a good example of those resources.
+The locator service goal is to provides an abstraction layer for the different files and folders available across different sprinkles inside UserFrosting. In other words, it is a way of aggregating many search paths together. As you've seen in the previous chapters, each sprinkle can provides multiple resources and sprinkles can have the ability to overwrite a previous sprinkle resources. All of those resources, combined with the overwriting properties of a sprinkle is handled by the locator service. _Templates_ and _config_ files are a good example of those resources.
 
->>>> While the locator can be used to find files inside the sprinkles `src/` directory, it can't be directly used to handle _PHP Class Inheritance_. The [Dynamic Class Mapper](/advanced/class-mapper) needs to be used in such cases.<br />The locator *can* however be used where it's necessary to list PHP classes used to define objects or usable elements, such as _migrations_, _seeds_ and _Bakery commands_ related classes.
+While the locator can be used to find files inside the sprinkles `src/` directory, it can't be directly used to handle _PHP Class Inheritance_. The [Dynamic Class Mapper](/advanced/class-mapper) needs to be used in such cases.
+
+The locator *can* however be used where it's necessary to list PHP classes used to define objects or usable elements, such as _migrations_, _seeds_ and _Bakery commands_ related classes.
 
 ## Streams and Locations
 
@@ -19,27 +21,27 @@ Two types of streams are available within the locator : shared and non-shared st
 The following streams are defined by default by UserFrosting :
 
 Stream       | Sprinkle      | Path                                                   | Shared | Description / Use
--------------|---------------|--------------------------------------------------------|--------|------------------------------------------------------------------------------------------
+-------------|:-------------:|--------------------------------------------------------|:------:|----------------------------------------------
 `bakery`     | _base system_ | `app/system/Bakery/Command`                            | yes    | System Bakery commands
 `bakery`     | _base system_ | `app/sprinkles/{sprinkleName}/src/Bakery`              | no     | Sprinkles [Bakery commands](/cli/custom-commands)
 `sprinkles`  | _base system_ | `app/sprinkles/{sprinkleName}/`                        | no     | General path to each sprinkles
-`cache`      | `core`        | `app/cache`                                            | yes    | Shared cache directory
-`log`        | `core`        | `app/log`                                              | yes    | Shared log directory
-`session`    | `core`        | `app/session`                                          | no     | Shared [sessions](/advanced/sessions#file-driver) directory
-`config`     | `core`        | `app/sprinkles/{sprinkleName}/config`                  | no     | [Config files](/configuration/config-files) location
-`extra`      | `core`        | `app/sprinkles/{sprinkleName}/extra`                   | no     | Misc directory, used to store files unrelated to any other stream
-`factories`  | `core`        | `app/sprinkles/{sprinkleName}/factories`               | no     | Factory Muffin [factories definition](/testing/writting-tests/factories) used for testing
-`locale`     | `core`        | `app/sprinkles/{sprinkleName}/locale`                  | no     | [Translation files](/i18n)
-`routes`     | `core`        | `app/sprinkles/{sprinkleName}/routes`                  | no     | [Routes files](/routes-and-controllers/front-controller)
-`schema`     | `core`        | `app/sprinkles/{sprinkleName}/schema`                  | no     | [Request Schema](/routes-and-controllers/client-input/validation#fortress) files
-`templates`  | `core`        | `app/sprinkles/{sprinkleName}/templates`               | no     | [Templates files](/templating-with-twig/sprinkle-templates)
-`seeds`      | `core`        | `app/sprinkles/{sprinkleName}/src/Database/Seeds`      | no     | [Seed Classes](/database/seeding)
-`migrations` | `core`        | `app/sprinkles/{sprinkleName}/src/Database/Migrations` | no     | [Migration Classes](/database/migrations)
-`assets`     | `core`        | See below                                              | both   | [Assets](/asset-management)
+`cache`      | core          | `app/cache`                                            | yes    | Shared cache directory
+`log`        | core          | `app/log`                                              | yes    | Shared log directory
+`session`    | core          | `app/session`                                          | no     | Shared [sessions](/advanced/sessions#file-driver) directory
+`config`     | core          | `app/sprinkles/{sprinkleName}/config`                  | no     | [Config files](/configuration/config-files) location
+`extra`      | core          | `app/sprinkles/{sprinkleName}/extra`                   | no     | Misc directory, used to store files unrelated to any other stream
+`factories`  | core          | `app/sprinkles/{sprinkleName}/factories`               | no     | Factory Muffin [factories definition](/testing/writting-tests/factories) used for testing
+`locale`     | core          | `app/sprinkles/{sprinkleName}/locale`                  | no     | [Translation files](/i18n)
+`routes`     | core          | `app/sprinkles/{sprinkleName}/routes`                  | no     | [Routes files](/routes-and-controllers/front-controller)
+`schema`     | core          | `app/sprinkles/{sprinkleName}/schema`                  | no     | [Request Schema](/routes-and-controllers/client-input/validation#fortress) files
+`templates`  | core          | `app/sprinkles/{sprinkleName}/templates`               | no     | [Templates files](/templating-with-twig/sprinkle-templates)
+`seeds`      | core          | `app/sprinkles/{sprinkleName}/src/Database/Seeds`      | no     | [Seed Classes](/database/seeding)
+`migrations` | core          | `app/sprinkles/{sprinkleName}/src/Database/Migrations` | no     | [Migration Classes](/database/migrations)
+`assets`     | core          | See below                                              | both   | [Assets](/asset-management)
 
 Note that the `assets` streams will register different paths depending of the current [Environment Mode](/configuration/config-files#environment-modes). When in production mode, the [compiled assets](/asset-management/compiled-assets) will be returned. Otherwise, the shared assets as well as the one from each sprinkles will be returned.
 
->>>>>> The `sprinkles` stream can be used as wildcard to access pretty much anything inside a sprinkle without defining a new [custom stream](#registering-a-custom-stream).
+[notice=tip]The `sprinkles` stream can be used as wildcard to access pretty much anything inside a sprinkle without defining a new [custom stream](#registering-a-custom-stream).[/notice]
 
 
 ## Using the locator
@@ -52,9 +54,10 @@ Whether you want to find a specific file or directory, the `getResource` and `ge
 
 Those two methods can be used to find paths for the specified URI. While `getResource` will return the top most file, `getResources` will return all the resources available for that URI, sorted by priority. For example:
 
-```
+```php
 $this->ci->locator->getResources('schema://default.json');
 
+// RESULT :
 /*
 [
     'app/sprinkles/Core/schema/default.json',
@@ -63,25 +66,29 @@ $this->ci->locator->getResources('schema://default.json');
 ]
 */
 
+
 $this->ci->locator->getResource('schema://default.json');
 
+// RESULT :
 // 'app/sprinkles/MySite/schema/default.json',
 ```
 
 The locator will retuned an instance of the `Resource` object (or an array of objects). Theses objects can cast as string and will return the absolute path to the resource (file or directory). Further [public methods](https://github.com/userfrosting/UniformResourceLocator/tree/master/docs#resource-instance) can be used on the Resource object to get more informations about the returned resource. For example, to return the sprinkle name where it was found :
 
-```
+```php
 $schema = $this->ci->locator->getResource('schema://default.json');
 echo $schema->getLocation()->getName();
 
+// RESULT :
 // 'MySite'
 ```
 
 Note theses methods can also work on directories URI :
 
-```
+```php
 $this->ci->locator->getResources('schema://foo');
 
+// RESULT :
 /*
 [
     'app/sprinkles/Core/schema/foo',
@@ -95,9 +102,10 @@ $this->ci->locator->getResources('schema://foo');
 
 All available resources in a given directory can be listed using the `listResources` method. This method will also returns the resources recursively, unlike `getResources`.
 
-```
+```php
 $resources = $this->ci->locator->listResources('schema://');
 
+// RESULT :
 /*
 [
     'app/sprinkles/Core/schema/develop.json',
@@ -110,9 +118,10 @@ $resources = $this->ci->locator->listResources('schema://');
 
 If every sprinkle have a `default.json` file, only the top most version will be returned. To return all instances of every resources, the `all` flag can be set to `true` :
 
-```
+```php
 $resources = $this->ci->locator->listResources('schema://', true);
 
+// RESULT :
 /*
 [
     'app/sprinkles/Core/schema/develop.json',
