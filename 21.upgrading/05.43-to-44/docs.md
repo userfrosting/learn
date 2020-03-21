@@ -72,6 +72,24 @@ Search for `use Interop\Container\ContainerInterface;` and replace all instances
 
 [notice]You can alternatively require `container-interop/container-interop` in your sprinkle `composer.json` to quickly reenable `Interop` container interface. However, since `container-interop/container-interop` is now deprecated, using Psr container is preferable.[/notice]
 
+#### The default locale
+
+Previous version of Userfrostin allowed to define a "fallback" locale as the default one. For example:
+
+```php
+'default' => 'en_US,fr_FR',
+```
+
+This meant the _French_ language would be loaded first and if the requested key doesn't exist in French, it will try to use the _English_ one instead.
+
+Starting with **4.4.0**, the fallback locale is now defined in the [locale metadata](). The default locale in your configuration file should be update to use a specific locale instead :
+
+```php
+'default' => 'fr_FR',
+```
+
+[notice]If this setting is not updated, you will get a similar error message : `The repository file 'locale://en_US,fr_FR/locale.yaml' could not be found.`[/notice]
+
 #### Available locales configuration
 
 The old configuration for available locale used to be an `identifier => name` key/value pair :

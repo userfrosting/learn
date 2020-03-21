@@ -70,7 +70,7 @@ Provide access to the filesystem for file handling. Include support for multiple
 
 ### locale
 
-Creates an instance of `SiteLocale` (namespace `UserFrosting\Sprinkle\Core\I18n\SiteLocale`), which provides helper methods for the locale system. See [Chapter 16](/i18n/locale-service) for more information.
+Creates an instance of `SiteLocale` (namespace `UserFrosting\Sprinkle\Core\I18n\SiteLocale`), which provides helper methods for the locale system. See [Chapter 16](/i18n/locale-service) for more information about locale and the [API Documentation](http://api.userfrosting.com) for available methods.
 
 ### mailer
 

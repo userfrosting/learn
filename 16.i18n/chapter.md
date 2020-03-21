@@ -10,6 +10,4 @@ taxonomy:
 
 # Internationalization
 
-UserFrosting comes with a complete internationalization system. This system allows you to translate your pages in any language you want. The internationalization service uses the [i18n module](https://github.com/userfrosting/i18n) to handles translation tasks for UserFrosting. The internationalization system also includes a powerful pluralization handling.
-
-Translating strings, or sentences, is as easy as assigning localized sentences to a common _translation key_. To achieve this, two things are used: the translation files and the `Translator`.
+UserFrosting include a complete [internationalization](https://whatis.techtarget.com/definition/internationalization-I18N) system. This system allows you to translate your pages in any language you want. The internationalization service uses the [i18n module](https://github.com/userfrosting/i18n) to handles translation tasks for UserFrosting which also includes a powerful pluralization handling.
