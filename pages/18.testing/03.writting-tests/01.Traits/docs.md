@@ -6,9 +6,11 @@ taxonomy:
 
 UserFrosting provides some helper Traits to easily enable features and tools for your tests. Some of those tools make it easier to test your code against a testing database.
 
->>>> While you **can** test your code against the main database (it actually the default behaviour), it usually not a good idea to do so with a production database. Those are tests after all. They _can_ fails. Catastrophically. UserFrosting built-in tests are all run against a test database.
+[notice=warning]While you **can** test your code against the main database, it usually not a good idea to do so with a production database. Those are _tests_ after all. They _can_ fails. Catastrophically. UserFrosting built-in tests are all run against a test database.[/notice]
 
 To enable one feature, simply add the Trait to your class. For example :
+
+<<<< TODO :: THIS NEED FIXING. Not true anymore >>>>
 
 ```php
 <?php

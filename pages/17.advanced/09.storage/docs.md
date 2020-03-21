@@ -17,7 +17,7 @@ The **local** disk stores files in `app/storage`. This is also the **default dis
 #### The _public_ disk
 The **public** disk, on the other hand, store files directly in your project public folder, under `public/files/`. This means any files saved in this disk will be **publicly available**. It's the perfect disk for user generated assets (think images), as they will be directly handled by the web server. For example, if you store a file named `cats.jpg` in the public disk, you'll be able to access this image by typing `https://localhost/files/cats.jpg` in your browser.
 
->>>>> In `4.3` the package required to use S3 disk was removed from the `core` sprinkle. You must now include `league/flysystem-aws-s3-v3` inside a custom Sprinkles `composer.json`.
+[notice=note]The package required to use S3 disk is not included with a default install. You must include `league/flysystem-aws-s3-v3` inside a custom Sprinkles `composer.json`.[/notice]
 
 #### The _S3_ disk
 The **S3** disk provides an example configuration to access an [Amazon S3](https://aws.amazon.com/s3/) bucket from your app. Because of the sensitive information, we recommend storing your S3 credential in the `app/.env` file. This will avoid committing your private keys to your git repo, for example.
@@ -34,7 +34,7 @@ AWS_URL=""
 
 See [Amazon S3 Support Page](https://aws.amazon.com/en/blogs/security/wheres-my-secret-access-key/) if you need help finding your access keys. The region code can be found [here](http://docs.aws.amazon.com/general/latest/gr/rande.html).
 
->>>>> In `4.3` the package required to use rackspace disk was removed from the `core` sprinkle. You must now include `league/flysystem-rackspace` inside a custom Sprinkles `composer.json`.
+[notice=note]The package required to use rackspace disk is not included with a default install. You must include `league/flysystem-rackspace` inside a custom Sprinkles `composer.json`.[/notice]
 
 #### The _rackspace_ disk
 The **rackspace** disk provides an example configuration to access [rackspace](https://www.rackspace.com) storage solution. Because of the sensitive information, we recommend storing your rackspace credential in the `app/.env` file.
@@ -52,11 +52,11 @@ RACKSPACE_URL_TYPE=""
 
 Of course, you may configure as many disks as you like, and may even have multiple disks that use the same driver.
 
->>>> Since every sprinkles can access the filesystem, we recommend you create a sprinkle specific disk if you want to avoid another sprinkle from accidentally overwriting a file managed by your sprinkle.
+[notice=warning]Since every sprinkles can access the filesystem, we recommend you create a sprinkle specific disk if you want to avoid another sprinkle from accidentally overwriting a file managed by your sprinkle.[/notice]
 
 To define a new disk, simply add the necessary configuration to your sprinkle configuration file :
 
-```
+```php
 'filesystems' => [
     'disks' => [
         'mySite' => [
@@ -64,13 +64,14 @@ To define a new disk, simply add the necessary configuration to your sprinkle co
             'root' => \UserFrosting\STORAGE_DIR . "/_mySite"
         ]
     ]
+],
 ```
 
 The `mySite` disk will point to the `app/storage/_mySite` directory.
 
 Note that you can also overwrite a default disk configuration values in your sprinkle the same way you do with other configuration values.
 
->>>>>> To change the default disk used by UserFrosting, you can also overwrite the `filesystems.default` configuration.
+[notice=tip]To change the default disk used by UserFrosting, you can also overwrite the `filesystems.default` configuration.[/notice]
 
 The following drivers have built-in support in UserFrosting :
  - local
@@ -85,20 +86,20 @@ The following drivers have built-in support in UserFrosting :
 
 The filesystem service may be used to interact with any of your configured disks. For example, you may use the put method on the facade to store an avatar on the default disk. If you call methods on the Storage facade without first calling the disk method, the method call will automatically be passed to the default disk:
 
-```
+```php
 $this->ci->filesystem->put('avatars/1', $fileContents);
 ```
 
 If your applications interact with multiple disks, you may use the disk method on the Storage facade to work with files on a particular disk:
 
-```
+```php
 $this->ci->filesystem->disk('s3')->put('avatars/1', $fileContents);
 ```
 
 
 The Storage facade may also be used to interact with any of your configured disks the same way the filesystem service is :
 
-```
+```php
 use UserFrosting\Sprinkle\Core\Facades\Storage;
 
 Storage::put('avatars/1', $fileContents);
@@ -106,7 +107,7 @@ Storage::put('avatars/1', $fileContents);
 
 You may also use the disk method on the Storage facade to work with files on a particular disk:
 
-```
+```php
 Storage::disk('s3')->put('avatars/1', $fileContents);
 ```
 
@@ -114,13 +115,13 @@ Storage::disk('s3')->put('avatars/1', $fileContents);
 
 The get method may be used to retrieve the contents of a file. The raw string contents of the file will be returned by the method. Remember, all file paths should be specified relative to the "root" location configured for the disk:
 
-```
+```php
 $contents = $this->ci->filesystem->get('file.jpg');
 ```
 
 The exists method may be used to determine if a file exists on the disk:
 
-```
+```php
 $exists = $this->ci->filesystem->disk('s3')->exists('file.jpg');
 ```
 
@@ -128,7 +129,7 @@ $exists = $this->ci->filesystem->disk('s3')->exists('file.jpg');
 
 The `put` method may be used to store raw file contents on a disk. You may also pass a PHP `resource` to the `put` method, which will use Flysystem's underlying stream support. Using streams is greatly recommended when dealing with large files:
 
-```
+```php
 $this->ci->filesystem->put('file.jpg', $contents);
 
 $this->ci->filesystem->put('file.jpg', $resource);
@@ -138,7 +139,7 @@ $this->ci->filesystem->put('file.jpg', $resource);
 
 The delete method accepts a single filename or an array of files to remove from the disk:
 
-```
+```php
 $this->ci->filesystem->delete('file.jpg');
 
 $this->ci->filesystem->delete(['file1.jpg', 'file2.jpg']);
@@ -154,13 +155,13 @@ UserFrosting's Flysystem integration provides drivers for several "drivers" out 
 
 In order to set up the custom filesystem you will need a Flysystem adapter. Let's add a community maintained Google Drive adapter to your sprinkle `composer.json` :
 
-```
+```json
 "nao-pon/flysystem-google-drive": "~1.1"
 ```
 
 Next, you should [extend the `filesystem` service](/services/extending-services#extending-existing-services) in your sprinkle. There you can use the filesystem service `extend` method to define the custom driver:
 
-```
+```php
     $container->extend('filesystem', function ($filesystem, $c) {
         $filesystem->extend('gdrive', function ($config, $diskConfig) {
 
@@ -185,7 +186,7 @@ The first argument of the `extend` method is the name of the driver and the seco
 
 Last thing to do is to create a disk using the `gdrive` driver in your sprinkle configuration file :
 
-```
+```php
     'google' => [
         'driver' => 'gdrive', // For help finding the client ID : https://developers.google.com/drive/api/v3/enable-sdk
         'clientID' => getenv('GOOGLE_CLIENT_ID') ?: '', // [app client id].apps.googleusercontent.com
@@ -196,4 +197,4 @@ Last thing to do is to create a disk using the `gdrive` driver in your sprinkle 
 
 ```
 
->>>>>> As with the S3 and rackspace Drivers, it's recommended to store your tokens and keys in the `app/.env` file.
+[notice=tip]As with the S3 and rackspace Drivers, it's recommended to store your tokens and keys in the `app/.env` file.[/notice]
