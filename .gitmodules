@@ -18,3 +18,7 @@
 	path = sites/4.2
 	url = https://github.com/userfrosting/learn.git
 	branch = 4.2
+[submodule "sites/4.3"]
+	path = sites/4.3
+	url = https://github.com/userfrosting/learn.git
+	branch = 4.3
