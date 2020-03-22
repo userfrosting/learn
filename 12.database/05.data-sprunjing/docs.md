@@ -118,7 +118,7 @@ With your Sprunje defined, you can use the `toResponse` method in your controlle
      * This page requires authentication.
      * Request type: GET
      */
-    public function getList($request, $response, $args)
+    public function getList(Request $request, Response $response, array $args)
     {
         // GET parameters
         $params = $request->getQueryParams();

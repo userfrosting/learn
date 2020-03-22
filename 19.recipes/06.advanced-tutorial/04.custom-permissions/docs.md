@@ -18,7 +18,7 @@ To [create a new permission](/users/access-control#creating-new-permissions), we
 
 Let's start by creating our base seed class. That class will be located in the same place as our other seed class and will be named `PastriesPermissions`.
 
-`app/sprinkles/pastries/src/Database/Seeds/PastriesPermissions.php`
+**app/sprinkles/pastries/src/Database/Seeds/PastriesPermissions.php**:
 ```php
 <?php
 
@@ -47,10 +47,10 @@ One could reasonably assume at this point that the migrations for the `Account` 
 With that cleared up, let's add the dependencies for the `Permission` and `Role` models inside the seed `run` method. We will use the `validateMigrationDependencies` helper method to test our dependencies are met :
 
 ```php
-    $this->validateMigrationDependencies([
-        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable',
-        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\PermissionsTable'
-    ]);
+$this->validateMigrationDependencies([
+    '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable',
+    '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\PermissionsTable'
+]);
 ```
 
 The clever reader may ask about the [`PermissionRolesTable` migration](https://github.com/userfrosting/UserFrosting/blob/v4.1.11-alpha/app/sprinkles/account/src/Database/Migrations/v400/PermissionRolesTable.php). This migration is tied to the `permission_roles` table which we will indirectly use to associate our new permission with roles. Since the `PermissionsTable` migration already defines the `PermissionRolesTable` as a dependency, we are not required to define it again on our side. By this logic, we could also skip the `RolesTable` from our dependencies list, but let's keep it anyway for sanity reasons.
@@ -147,7 +147,7 @@ class PastriesPermissions extends BaseSeed
 
 You can now run the migration using :
 
-```
+```bash
 $ php bakery seed PastriesPermissions
 ```
 
@@ -186,7 +186,7 @@ if (!$authorizer->checkAccess($currentUser, 'see_pastries')) {
 
 The full method should now be:
 
-`app/sprinkles/pastries/src/Controller/PastriesController.php`
+**app/sprinkles/pastries/src/Controller/PastriesController.php**:
 ```php
 public function pageList(Request $request, Response $response, $args)
 {
@@ -213,14 +213,14 @@ public function pageList(Request $request, Response $response, $args)
 
 At this point, we haven't yet added the `see_pastries` permission to any role. This means if you navigate to the page (with a non-root user), you'll get an error.
 
->>>>> If you see a detailed debugging page, don't worry. In a **production** environment, this will automatically be replaced by a generic "access denied" page.
+[notice=note]If you see a detailed debugging page, don't worry. In a **production** environment, this will automatically be replaced by a generic "access denied" page.[/notice]
 
 #### Removing the link From the menu
 
 Now that non-root users don't have access to the page, it would be nice to hide the link to the page in the sidebar menu. Let's dive back into our implementation of that link and add the permission verification using the `checkAccess`  Twig function provided by UserFrosting:
 
-`app/sprinkles/pastries/templates/navigation/sidebar-menu.html.twig`
-```twig
+**app/sprinkles/pastries/templates/navigation/sidebar-menu.html.twig**:
+```html
 {% extends '@admin/navigation/sidebar-menu.html.twig' %}
 
 {% block navigation %}
@@ -233,7 +233,7 @@ Now that non-root users don't have access to the page, it would be nice to hide 
 {% endblock %}
 ```
 
->>>>> We don't need to tell `checkAccess` to use the current user here as it is done by default.
+[notice=note]We don't need to tell `checkAccess` to use the current user here as it is done by default.[/notice]
 
 The link should now be hidden from the menu when you refresh the page.
 
@@ -253,8 +253,8 @@ Your non-root user should now have access to the pastry page again (assuming the
 
 For this permission, we won't need to add anything to the controller. We will simply hide the `origin` column in the Twig template if the user doesn't have the permission. The `checkAccess` function needs to be used twice so it can control the table header as well as the rows in the loop:
 
-`app/sprinkles/pastries/templates/pages/pastries.html.twig`
-```twig
+**app/sprinkles/pastries/templates/pages/pastries.html.twig**:
+```html
 {% extends 'pages/abstract/dashboard.html.twig' %}
 
 {# Overrides blocks in head of base template #}

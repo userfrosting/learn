@@ -205,7 +205,7 @@ templates/
 ├── forms/
 ├── navigation/
 ├── pages/
-    └── partials/
+│   └── partials/
 └── tables/
 ```
 

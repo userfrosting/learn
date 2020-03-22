@@ -6,11 +6,11 @@ taxonomy:
     category: docs
 ---
 
->>> **This documentation is outdated.** To contribute to this documentation, please consider submitting a pull request to our [learn repository](https://github.com/userfrosting/learn/blob/hotfix/pages/03.installation/03.other-situations/02.centos/docs.md).
+[notice=warning]**This documentation is outdated.** To contribute to this documentation, please consider submitting a pull request to our [learn repository](https://github.com/userfrosting/learn/blob/hotfix/pages/03.installation/03.other-situations/02.centos/docs.md).[/notice]
 
 ## Install prerequisites
 
->>>>> If you are experiencing errors or unexpected behaviour, temporarily disable SELinux using `sudo setenforce 0` and see if the problem persists. If the error is fixed, you have an SELinux permissions error and will need to add an exception. If the error persists, this is likely not SELinux, so make sure you re-enable with `sudo setenforce 1`.
+[notice=note]If you are experiencing errors or unexpected behaviour, temporarily disable SELinux using `sudo setenforce 0` and see if the problem persists. If the error is fixed, you have an SELinux permissions error and will need to add an exception. If the error persists, this is likely not SELinux, so make sure you re-enable with `sudo setenforce 1`.[/notice]
 
 ```bash
 // install apache httpd, git composer

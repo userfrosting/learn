@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
->>>>> This recipe assumes that the reader is familiar with IIS7 or greater, and that the `web.config` file has been placed in `public`.
+[notice=note]This recipe assumes that the reader is familiar with IIS7 or greater, and that the `web.config` file has been placed in `public`.[/notice]
 
 In order for UserFrosting to work as expected under IIS, additional action may be required.
 

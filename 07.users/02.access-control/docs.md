@@ -1,14 +1,14 @@
 ---
 title: Authorization
 metadata:
-    description: Authorization is sometimes referred to as "access control" or "protecting pages".  UserFrosting implements an extended version of role-based access control that supports procedural conditions on user permissions.
+    description: Authorization is sometimes referred to as "access control" or "protecting pages". UserFrosting implements an extended version of role-based access control that supports procedural conditions on user permissions.
 taxonomy:
     category: docs
 ---
 
 ## Roles
 
-UserFrosting implements an extended version of [role-based access control](https://en.wikipedia.org/wiki/Role-based_access_control), which allows for very fine-grained control over user permissions.  Every user can have zero or more **roles**, and every role can have zero or more **permissions**.  Users' effective permissions are determined through their roles.
+UserFrosting implements an extended version of [role-based access control](https://en.wikipedia.org/wiki/Role-based_access_control), which allows for very fine-grained control over user permissions. Every user can have zero or more **roles**, and every role can have zero or more **permissions**. Users' effective permissions are determined through their roles.
 
 For example, consider the following roles, and their associated permissions:
 
@@ -20,26 +20,26 @@ For example, consider the following roles, and their associated permissions:
   - Can update any account's info
   - Can delete any account's messages
 
-If Alice has the **Member** role, she will be able to update her account info, post new messages, and delete her own messages.  If she had the **Site Administrator** role as well, she would gain the ability to update other users' accounts and delete their messages, in addition to the permissions that she has from her **Member** role.
+If Alice has the **Member** role, she will be able to update her account info, post new messages, and delete her own messages. If she had the **Site Administrator** role as well, she would gain the ability to update other users' accounts and delete their messages, in addition to the permissions that she has from her **Member** role.
 
 ## Permissions
 
-A permission is a rule that associates an **action** with a set of **conditions** under which that action can be performed.  These are defined in the `permissions` database table.  For example:
+A permission is a rule that associates an **action** with a set of **conditions** under which that action can be performed. These are defined in the `permissions` database table. For example:
 
-| id | slug | name | conditions | description |
-| -- | ---- | ---- | ---------- | ----------- |
-| 1  | `uri_user` | View user | `always()` | View the user page of any user. |
+| id  | slug       | name      | conditions | description                     |
+| --- | ---------- | --------- | ---------- | ------------------------------- |
+| 1   | `uri_user` | View user | `always()` | View the user page of any user. |
 
-- **slug** is a string that you select to represent this permission in your code.  If your slug is `uri_user`, then in your code you can call `$authorizer->checkAccess($currentUser, 'uri_user')` to determine if the current user has this permission.  You can define multiple permissions on the same slug.  As long as a user passes at least one permission on that slug, they will be granted access.
-- **conditions** allows you to set constraints on this permission.  For example, you might want to create a permission that allows access on `uri_user`, but only for users in a particular group.  A boolean expression consisting of [**access condition callbacks**](#callbacks) can be used to construct your condition.
+- **slug** is a string that you select to represent this permission in your code. If your slug is `uri_user`, then in your code you can call `$authorizer->checkAccess($currentUser, 'uri_user')` to determine if the current user has this permission. You can define multiple permissions on the same slug. As long as a user passes at least one permission on that slug, they will be granted access.
+- **conditions** allows you to set constraints on this permission. For example, you might want to create a permission that allows access on `uri_user`, but only for users in a particular group. A boolean expression consisting of [**access condition callbacks**](#callbacks) can be used to construct your condition.
 - **name** is a human-readable label for the permission, which can be used to easily identify it in the role management interface.
 - **description** is a text description for the permission, allowing you to describe the purpose of the permission in human-readable terms.
 
 ## Performing access checks
 
-In your code, access is controlled through the use of access checks on permission slugs.  Often times, you will want to perform these checks in your controller methods, and throw a `ForbiddenException` if the current user fails the check.
+In your code, access is controlled through the use of access checks on permission slugs. Often times, you will want to perform these checks in your controller methods, and throw a `ForbiddenException` if the current user fails the check.
 
-This can be done by calling the `checkAccess` method of the `authorizer` service.  For example:
+This can be done by calling the `checkAccess` method of the `authorizer` service. For example:
 
 ```php
 /** @var UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager */
@@ -53,9 +53,9 @@ if (!$authorizer->checkAccess($currentUser, 'uri_users')) {
 }
 ```
 
-If the current user does not have any permissions for the slug `uri_users`, then the controller method will be aborted and a `ForbiddenException` will be thrown.  By default, the `ForbiddenExceptionHandler` will catch this exception and generate a "404 Not Found" response.
+If the current user does not have any permissions for the slug `uri_users`, then the controller method will be aborted and a `ForbiddenException` will be thrown. By default, the `ForbiddenExceptionHandler` will catch this exception and generate a "404 Not Found" response.
 
-You can, of course, use `checkAccess` to control the behavior of your controller methods in other ways.  For example, you might build a data API that is available to the public, but that returns more specialized information to authorized users:
+You can, of course, use `checkAccess` to control the behavior of your controller methods in other ways. For example, you might build a data API that is available to the public, but that returns more specialized information to authorized users:
 
 ```php
 if ($authorizer->checkAccess($currentUser, 'uri_owls')) {
@@ -67,11 +67,11 @@ if ($authorizer->checkAccess($currentUser, 'uri_owls')) {
 
 ## Access conditions
 
-Access conditions are PHP expressions composed of callbacks and boolean operators.  These expressions must return a boolean value when evaluated.  When UserFrosting checks a permission for a given user, it will evaluate the condition expression, passing in any additional data from the final argument of `checkAccess`, and grant the permission only if the expression evaluates to `true`.  For example, suppose the current user has the permission:
+Access conditions are PHP expressions composed of callbacks and boolean operators. These expressions must return a boolean value when evaluated. When UserFrosting checks a permission for a given user, it will evaluate the condition expression, passing in any additional data from the final argument of `checkAccess`, and grant the permission only if the expression evaluates to `true`. For example, suppose the current user has the permission:
 
-| id | slug | name | conditions | description |
-| -- | ---- | ---- | ---------- | ----------- |
-| 1  | `uri_activity` | View activity | `equals_num(self.id,activity.user_id)` | View one of your own activities. |
+| id  | slug           | name          | conditions                             | description                      |
+| --- | -------------- | ------------- | -------------------------------------- | -------------------------------- |
+| 1   | `uri_activity` | View activity | `equals_num(self.id,activity.user_id)` | View one of your own activities. |
 
 In your code, if you call:
 
@@ -85,11 +85,13 @@ if (!$authorizer->checkAccess($currentUser, 'uri_activity', [
 }
 ```
 
-Then, the `equals_num` condition will be used to compare the current user's `id` with the `user_id` associated with the requested activity (passed in as the `activity` key).  If they match, then the condition evaluates to `true` and the user is granted access.  You can use boolean operators to built arbitrarily complex conditions:
+Then, the `equals_num` condition will be used to compare the current user's `id` with the `user_id` associated with the requested activity (passed in as the `activity` key). If they match, then the condition evaluates to `true` and the user is granted access. You can use boolean operators to built arbitrarily complex conditions:
 
-`!has_role(user.id,2) && !is_master(user.id)`
+```php
+!has_role(user.id,2) && !is_master(user.id)
+```
 
->>> In access conditions, the special keyword `self` is used to refer to the current user.  This avoids the need to explicitly pass in the current user's object.
+[notice]In access conditions, the special keyword `self` is used to refer to the current user. This avoids the need to explicitly pass in the current user's object.[/notice]
 
 ### Callbacks
 
@@ -133,11 +135,11 @@ $container->extend('authorizer', function ($authorizer, $c) {
 
 ## Creating new permissions
 
-You may notice that while roles can be created and modified through the administrative interface, permissions cannot.  This is because permissions are intimately tied to your code and should **not** be modified during the course of daily site operation.
+You may notice that while roles can be created and modified through the administrative interface, permissions cannot. This is because permissions are intimately tied to your code and should **not** be modified during the course of daily site operation.
 
-Think about it this way - for a permission to have any effect on your application at all, you must reference its slug somewhere in one of your controllers.  This means that even if a user were to create a new permission through the web interface, it **wouldn't make any difference** until a developer were to implement some code that makes use of it.
+Think about it this way - for a permission to have any effect on your application at all, you must reference its slug somewhere in one of your controllers. This means that even if a user were to create a new permission through the web interface, it **wouldn't make any difference** until a developer were to implement some code that makes use of it.
 
-Instead, you should think of permissions as hardcoded parts of your application that just happen to be stored in the database.  Permissions can be **added, removed, or modified**  using a [database migration](/database/migrations) or a [database seed](/database/seeding).
+Instead, you should think of permissions as hardcoded parts of your application that just happen to be stored in the database. Permissions can be **added, removed, or modified** using a [database migration](/database/migrations) or a [database seed](/database/seeding).
 
 Both methods can be used to create or manipulate permissions. **Migrations** are better suited to edit or remove existing permissions since they assure you permissions stays constant in time, but won't help you restore a permission if one gets deleted by accident, since a migration can only be run once. **Seeds** on the other hand can be run more than once, so they can be used to restore a deleted permission, but can't be relied on to edit a permission the same way you can with a migration, since a seed can be run in any order, and can't be automatically reverted.
 

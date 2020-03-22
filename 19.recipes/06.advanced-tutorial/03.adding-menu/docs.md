@@ -10,7 +10,7 @@ Now that we have our page, it's time to add it to the sidebar menu. To do so, we
 
 Create a new template file located in `templates/navigation/` and call it `sidebar-menu.html.twig`, so that it can replace the original sidebar menu template file:
 
-`app/sprinkles/pastries/templates/navigation/sidebar-menu.html.twig`
+**app/sprinkles/pastries/templates/navigation/sidebar-menu.html.twig**:
 ```twig
 {% extends '@admin/navigation/sidebar-menu.html.twig' %}
 

@@ -55,7 +55,7 @@ It turns out that `git`, the popular version control software, can be used to do
 
 When it comes time to actually deploy your application, you can [set up a special git remote on your live server](https://www.digitalocean.com/community/tutorials/how-to-set-up-automatic-deployment-with-git-with-a-vps).  Then, deploying new changes will be as simple as:
 
-```
+```bash
 git push deploy master
 ```
 

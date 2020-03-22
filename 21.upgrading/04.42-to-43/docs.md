@@ -35,7 +35,7 @@ UserFrosting 4.3 focuses on updating dependencies and removing support for older
 
 #### Major (likely to break your project)
 - Updated Font Awesome to 5.9. [See Details Here](#font-awesome).
-- Removed `league/flysystem-aws-s3-v3` and `league/flysystem-rackspace` dependencies from the `core` sprinkle. If you are using `s3` or `rackspace` for File Storage, you must now include these packages in your custom Sprinkle.  
+- Removed `league/flysystem-aws-s3-v3` and `league/flysystem-rackspace` dependencies from the `core` sprinkle. If you are using `s3` or `rackspace` for File Storage, you must now include these packages in your custom Sprinkle.
 
 #### Minor (should only break heavily customized projects)
 - Updated AdminLTE to `2.4.x`. Reference the [AdminLTE upgrade guide](https://adminlte.io/docs/2.4/upgrade-guide) for change details.

@@ -10,7 +10,7 @@ taxonomy:
 
 First thing to do is to create an empty sprinkle for our code to live in. We'll call this sprinkle `Pastries`. As described in the [Sprinkles](/sprinkles/first-site) chapter, start by creating an empty `pastries/` directory under `app/sprinkles`. We now have to create the `composer.json` file for our sprinkle:
 
-`app/sprinkles/pastries/composer.json`
+**app/sprinkles/pastries/composer.json**:
 ```json
 {
     "name": "owlfancy/pastries",
@@ -32,7 +32,7 @@ Next we need to add our `Pastries` sprinkle to the `sprinkles.json` list and upd
 
 We now create the [route](/routes-and-controllers) for the "pastries" page. Create the empty `routes/` directory inside your sprinkle directory structure and create the `pastries.php` file:
 
-`app/sprinkles/pastries/routes/pastries.php`
+**app/sprinkles/pastries/routes/pastries.php**:
 ```php
 <?php
 
@@ -51,7 +51,7 @@ We now have a `/pastries` route set up. We also define a route group for later u
 
 Now that we have a route, we need to create the `PastriesController` controller with the `pageList` method:
 
-`app/sprinkles/pastries/src/Controller/PastriesController.php`
+**app/sprinkles/pastries/src/Controller/PastriesController.php**:
 ```php
 <?php
 
@@ -74,14 +74,14 @@ class PastriesController extends SimpleController
 }
 ```
 
->>>>>> Later on, we can add methods for other pastry-related pages to this same class as a way to logically organize our code.
+[notice=tip]Later on, we can add methods for other pastry-related pages to this same class as a way to logically organize our code.[/notice]
 
 ## The template file
 
 Finally, we need to create the template file. We use the same file as the one defined in your controller:
 
-`app/sprinkles/pastries/templates/pages/pastries.html.twig`
-```twig
+****app/sprinkles/pastries/templates/pages/pastries.html.twig**:
+```html
 {% extends 'pages/abstract/dashboard.html.twig' %}
 
 {# Overrides blocks in head of base template #}

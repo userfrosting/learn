@@ -49,7 +49,7 @@ Again, clients can't run PHP in their browsers.  If you want to pass along the v
 <script>
     // This is a Javascript variable
     var baseUrl = <?php echo $baseUrl; ?> ;
-    
+
     // Our Javascript code can now reference the Javascript variable baseUrl
     $("#updateButton").on("click", function () {
         $("#myOwlLink").prop("attr", baseUrl + "/great-horned-owl");
@@ -76,7 +76,7 @@ Fortunately, modern browsers support something called AJAX, which allows Javascr
 <script>
     var baseUrl = <?php echo $baseUrl; ?> ;
     var owlId = <?php echo $owlId; ?> ;
-    
+
     $("#seeVoleHuntResults").on("click", function () {
         // This is an AJAX function that makes another request to the server!
         $.getJSON(baseUrl + "/vole-hunt/today",
@@ -183,4 +183,3 @@ It might be easier to understand this whole process if we provide an example of 
 **owlfancy.com:** "Sure thing.  Hey, I know you, you're VolesALaMode!  Here you go, have some JSON.  The status code is 200.  Let me know if you need anything else.  Bye!"
 
 **Your browser:** "Ok, what am I supposed to do with this?  I'll just look back to the Javascript for this page.  Let's see, it wants me to display these notifications with a green background and a light shadow over here, just below the navigation bar.  Can do!"
-

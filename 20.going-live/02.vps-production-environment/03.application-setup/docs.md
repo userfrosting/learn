@@ -6,6 +6,8 @@ taxonomy:
     category: docs
 ---
 
+[notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+
 To actually get our application up and running, we need to do a few more things on the remote server:
 
 1. Run Composer to install PHP dependencies;
@@ -16,14 +18,14 @@ To actually get our application up and running, we need to do a few more things 
 
 ## Run Composer on the remote server
 
-The tricky thing about Composer is that it will try to pull the latest version of a dependency (subject to the version constraints in `composer.json`) every time you run `composer update`.  This means that you could end up with latest version of dependencies in production every time you update your code - even if you don't want them!
+The tricky thing about Composer is that it will try to pull the latest version of a dependency (subject to the version constraints in `composer.json`) every time you run `composer update`. This means that you could end up with latest version of dependencies in production every time you update your code - even if you don't want them!
 
-To get around this, commit the `composer.lock` file to your repository.  Then, when you run `composer install` on the remote machine, it will pull the _exact_ same versions of your dependencies as those that were last pulled when you ran `composer update` locally.
+To get around this, commit the `composer.lock` file to your repository. Then, when you run `composer install` on the remote machine, it will pull the _exact_ same versions of your dependencies as those that were last pulled when you ran `composer update` locally.
 
 A few more caveats:
 
-- On a 512MB Droplet, there may not be enough physical memory to run Composer.  What a pig!  [Create a swapfile](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04) first to avoid Composer failing due to insufficient memory.
-- Composer needs to be able to write to the `~/.composer` directory, but it doesn't like when you try to run Composer as `sudo`.  To address this set proper ownership and permissions on the `~/.composer` directory:
+- On a 512MB Droplet, there may not be enough physical memory to run Composer. What a pig! [Create a swapfile](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04) first to avoid Composer failing due to insufficient memory.
+- Composer needs to be able to write to the `~/.composer` directory, but it doesn't like when you try to run Composer as `sudo`. To address this set proper ownership and permissions on the `~/.composer` directory:
 
 ```bash
 sudo chown <your username>:<your username> ~/.composer
@@ -53,7 +55,7 @@ composer install --working-dir=/var/www/<repo name> >> /var/log/deploy.log 2>&1
 
 ## Run Bakery on the remote server
 
-Just like we did in development, we'll run Bakery in the production environment to configure our DB and mail credentials, setup `sprinkles.json`, and install assets.  Again, do this in the `/var/www/<repo name>` directory:
+Just like we did in development, we'll run Bakery in the production environment to configure our DB and mail credentials, setup `sprinkles.json`, and install assets. Again, do this in the `/var/www/<repo name>` directory:
 
 ```bash
 php bakery bake
@@ -63,13 +65,13 @@ When Bakery finishes, modify the `.env` file and set `UF_MODE` to `production`.
 
 ## Configure the webserver (nginx)
 
-UserFrosting ships with a default nginx configuration file, in `webserver-configs/nginx.conf`.  Copy this file to a new filename.  You can name the copy anything you like, but the convention is to use the same name as that of your repository, followed by `.conf`.
+UserFrosting ships with a default nginx configuration file, in `webserver-configs/nginx.conf`. Copy this file to a new filename. You can name the copy anything you like, but the convention is to use the same name as that of your repository, followed by `.conf`.
 
-We'll start by setting the `root` and `server_name` directives.  `root` is the application's document root directory, and `server_name` is the hostname (domain or subdomain) that should be served from this directory.  Find the `Server Info` block.  Change it to look like this:
+We'll start by setting the `root` and `server_name` directives. `root` is the application's document root directory, and `server_name` is the hostname (domain or subdomain) that should be served from this directory. Find the `Server Info` block. Change it to look like this:
 
 ```
 ## Begin - Server Info
-## Document root directory for your project.  Should be set to the directory that contains your index.php.
+## Document root directory for your project. Should be set to the directory that contains your index.php.
 root /var/www/<repo name>/public;
 server_name owlfancy.com;
 ## End - Server Info
@@ -77,7 +79,7 @@ server_name owlfancy.com;
 
 Again, `<repo name>` should be replaced with your project repo name, and `owlfancy.com` should be changed to your site's planned domain or subdomain.
 
-Next, we'll tell nginx to run our application with PHP 7.  Why?  Because it's super fast!  Find the lines that say "For FPM".  Comment out the line for PHP 5, and _uncomment_ the line for PHP 7:
+Next, we'll tell nginx to run our application with PHP 7. Why? Because it's super fast! Find the lines that say "For FPM". Comment out the line for PHP 5, and _uncomment_ the line for PHP 7:
 
 ```
 # For FPM (PHP 5.x)
@@ -86,7 +88,7 @@ Next, we'll tell nginx to run our application with PHP 7.  Why?  Because it's su
 fastcgi_pass unix:/run/php/php7.0-fpm.sock;
 ```
 
-Save your changes.  We can now use `scp` to copy this file from your local machine to nginx's configuration directory on the remote repository.  Since we disabled remote root login, and only the root user can write to `/etc/nginx/sites-available` by default, we'll first copy to our home directory on the remote server, and then use `sudo` on the remote server to move it into nginx's directory.
+Save your changes. We can now use `scp` to copy this file from your local machine to nginx's configuration directory on the remote repository. Since we disabled remote root login, and only the root user can write to `/etc/nginx/sites-available` by default, we'll first copy to our home directory on the remote server, and then use `sudo` on the remote server to move it into nginx's directory.
 
 In your local development environment:
 
@@ -110,13 +112,13 @@ sudo chown <your username>:www-data public
 sudo chown <your username>:www-data app/cache app/logs app/sessions
 ```
 
-After your first `git push`, you'll want to set up the `cache/` directory so that it is owned by the `www-data` **group**.  Since both your user account and webserver are part of this group, they'll both be able to write to it.  This is important, so that in your `post-receive` script, you'll have the necessary permissions to clear the cache when you push.  To do this, we'll use the `setfacl` command:
+After your first `git push`, you'll want to set up the `cache/` directory so that it is owned by the `www-data` **group**. Since both your user account and webserver are part of this group, they'll both be able to write to it. This is important, so that in your `post-receive` script, you'll have the necessary permissions to clear the cache when you push. To do this, we'll use the `setfacl` command:
 
 ```bash
 sudo setfacl -d -m g::rwx /var/www/<repo name>/app/cache
 ```
 
->>>>> **A note about debugging server configuration:** Browsers and operating systems tend to aggressively cache DNS resolutions and redirects.  This means that if you misconfigured your server initially and it returned an error due to DNS or webserver configuration issues, your browser might still have the error response cached even after you've fixed the problem.  You may need to clear your browser's cache or even [your operating system's DNS cache](https://help.dreamhost.com/hc/en-us/articles/214981288-Flushing-your-DNS-cache-in-Mac-OS-X-and-Linux).  When configuring your server, you might have better luck using `curl` to check whether a particular URL is working, rather than going through your browser.
+[notice=note]**A note about debugging server configuration:** Browsers and operating systems tend to aggressively cache DNS resolutions and redirects. This means that if you misconfigured your server initially and it returned an error due to DNS or webserver configuration issues, your browser might still have the error response cached even after you've fixed the problem. You may need to clear your browser's cache or even [your operating system's DNS cache](https://help.dreamhost.com/hc/en-us/articles/214981288-Flushing-your-DNS-cache-in-Mac-OS-X-and-Linux). When configuring your server, you might have better luck using `curl` to check whether a particular URL is working, rather than going through your browser.[/notice]
 
 ## Compile assets for production
 
@@ -126,4 +128,4 @@ We can use Bakery again to compile our asset bundles for production, and copy al
 php bakery build-assets -c
 ```
 
-If everything worked out successfully, you should now be able to access the `http` version of your live site in your browser!  The next step is to [install an SSL certificate](/going-live/vps-production-environment/ssl).
+If everything worked out successfully, you should now be able to access the `http` version of your live site in your browser! The next step is to [install an SSL certificate](/going-live/vps-production-environment/ssl).

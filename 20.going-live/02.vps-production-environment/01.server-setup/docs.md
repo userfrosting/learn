@@ -6,9 +6,11 @@ taxonomy:
     category: docs
 ---
 
-We recommend that you start with a $5/month Droplet and install a LEMP stack (Ubuntu 16.04, nginx, MariaDB, and PHP 7).  If you prefer you may install Apache instead, but nginx offers superior performance and requires less configuration.
+[notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
 
-When you go to create your Droplet, DigitalOcean will ask you some initial configuration questions.  Choose Ubuntu 16.04 as your distribution, and select a datacenter that is nearest to you and your customers.  **Do NOT set up SSH keys at this time** - if you do, DigitalOcean won't email you a root user password.  We will set up SSH later, after we've logged in with a password first.
+We recommend that you start with a $5/month Droplet and install a LEMP stack (Ubuntu 16.04, nginx, MariaDB, and PHP 7). If you prefer you may install Apache instead, but nginx offers superior performance and requires less configuration.
+
+When you go to create your Droplet, DigitalOcean will ask you some initial configuration questions. Choose Ubuntu 16.04 as your distribution, and select a datacenter that is nearest to you and your customers. **Do NOT set up SSH keys at this time** - if you do, DigitalOcean won't email you a root user password. We will set up SSH later, after we've logged in with a password first.
 
 From here, you can follow DigitalOcean's tutorials to set up your server:
 
@@ -19,8 +21,8 @@ First, follow [**this tutorial**](https://www.digitalocean.com/community/tutoria
 Some notes:
 
 1. On Windows, you may find it easier to generate an SSH key in Putty and manually copy it to the `authorized_keys` file on your Droplet.
-2. When you create your non-root user account in Ubuntu, we recommend adding them to the `www-data` group, which is the group to which your webserver belongs.  That way, you can set the group owner of your UserFrosting application files to `www-data`, and both your account _and_ the webserver account will have ownership.  To do this, do `sudo usermod -a -G www-data alex`, assuming `alex` is your user account name.
-3. Their instructions for the `ufw` firewall only have you open up the `ssh` port by default.  Obviously for a web server, you will also need to open up ports 80 and 443.  See [this guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-14-04#allow-other-connections) for help opening up additional ports.
+2. When you create your non-root user account in Ubuntu, we recommend adding them to the `www-data` group, which is the group to which your webserver belongs. That way, you can set the group owner of your UserFrosting application files to `www-data`, and both your account _and_ the webserver account will have ownership. To do this, do `sudo usermod -a -G www-data alex`, assuming `alex` is your user account name.
+3. Their instructions for the `ufw` firewall only have you open up the `ssh` port by default. Obviously for a web server, you will also need to open up ports 80 and 443. See [this guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-14-04#allow-other-connections) for help opening up additional ports.
 4. For additional security, you may also want to disable root login via SSH by setting `PermitRootLogin` to `no` in your `/etc/ssh/sshd_config` file.
 
 ## Additional server configuration
@@ -54,11 +56,11 @@ sudo nano /root/.nanorc
 
 ## Add Swap Space
 
-Follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04).  Swap space is a part of virtual memory, which allows your server to temporarily move data to the hard drive when there is not enough physical memory available for whatever it is doing.  This is essentially the same thing as the `pagefile.sys` in a Windows environment.
+Follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04). Swap space is a part of virtual memory, which allows your server to temporarily move data to the hard drive when there is not enough physical memory available for whatever it is doing. This is essentially the same thing as the `pagefile.sys` in a Windows environment.
 
 Some notes:
 
-1. This is just a failsafe in the event that your server experiences occasional spikes in memory usage, for example when installing new software or running a backup.  If your server seems to be routinely using more than 70% of its allocated memory, you should consider upgrading to a Droplet with more memory.
+1. This is just a failsafe in the event that your server experiences occasional spikes in memory usage, for example when installing new software or running a backup. If your server seems to be routinely using more than 70% of its allocated memory, you should consider upgrading to a Droplet with more memory.
 
 ## Install the LEMP Stack
 
@@ -66,9 +68,9 @@ See [**this guide**](https://www.digitalocean.com/community/tutorials/how-to-ins
 
 Some notes:
 
-1. This guide has you install MySQL instead of MariaDB.  In general they are completely interchangeable, but MariaDB is more reliable as an  open-source option going forward.  See [Switching to MariaDB](https://www.digitalocean.com/community/tutorials/switching-to-mariadb-from-mysql) for help with this.
-2. Be sure to [log into MySQL from the command line](https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial) and [create a non-root database user account](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql).  You should give this user limited permissions on your production database.
-3. The `gzip` module (which is important for site speed and SEO!), may require some additional configuration.  See [this guide](https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04).
+1. This guide has you install MySQL instead of MariaDB. In general they are completely interchangeable, but MariaDB is more reliable as an open-source option going forward. See [Switching to MariaDB](https://www.digitalocean.com/community/tutorials/switching-to-mariadb-from-mysql) for help with this.
+2. Be sure to [log into MySQL from the command line](https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial) and [create a non-root database user account](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql). You should give this user limited permissions on your production database.
+3. The `gzip` module (which is important for site speed and SEO!), may require some additional configuration. See [this guide](https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04).
 
 ### Additional php modules to install:
 
@@ -82,7 +84,7 @@ sudo service nginx restart
 
 ### `browscap.ini`
 
-PHP's [`get_browser()`](http://php.net/manual/en/function.get-browser.php) function uses the `User-Agent` header to guess information about your visitors such as browser, OS, etc.  For it to work properly, you need to download a copy of `browscap.ini` from the [Browscap Project](https://browscap.org) and configure your `php.ini` to find the file.
+PHP's [`get_browser()`](http://php.net/manual/en/function.get-browser.php) function uses the `User-Agent` header to guess information about your visitors such as browser, OS, etc. For it to work properly, you need to download a copy of `browscap.ini` from the [Browscap Project](https://browscap.org) and configure your `php.ini` to find the file.
 
 Assuming that your PHP installation is in `/etc/php/7.0`, do the following:
 
@@ -92,7 +94,7 @@ sudo mkdir extra
 sudo curl -o /etc/php/7.0/fpm/extra/browscap.ini https://browscap.org/stream?q=Lite_PHP_BrowsCapINI
 ```
 
-This will download the "lite" browscap database, which is supposed to be adequate for most websites.  Visit [Browscap Project](https://browscap.org) for other options.
+This will download the "lite" browscap database, which is supposed to be adequate for most websites. Visit [Browscap Project](https://browscap.org) for other options.
 
 Now, we need to edit our `php.ini` to tell PHP where this file is located:
 
@@ -100,7 +102,7 @@ Now, we need to edit our `php.ini` to tell PHP where this file is located:
 sudo nano /etc/php/7.0/fpm/php.ini
 ```
 
-Use Ctrl+W to search for the `browscap` section.  Uncomment the `browscap = ` line.  When you're done, it should look like this:
+Use Ctrl+W to search for the `browscap` section. Uncomment the `browscap = ` line. When you're done, it should look like this:
 
 ```
 [browscap]
@@ -118,9 +120,9 @@ Save and exit.
 
 ### Node.js compatibility package
 
-On Ubuntu, the `node` package has been changed to `nodejs` to avoid a naming collision with another package called `node`.  Unfortunately, this breaks `npm`, which is expecting the `node` command to refer to Node.js.  To fix this, install the compatibility package:
+On Ubuntu, the `node` package has been changed to `nodejs` to avoid a naming collision with another package called `node`. Unfortunately, this breaks `npm`, which is expecting the `node` command to refer to Node.js. To fix this, install the compatibility package:
 
-```
+```bash
 sudo apt-get install nodejs-legacy
 ```
 
@@ -130,7 +132,7 @@ See the [**certbot tutorial**](https://certbot.eff.org/#ubuntuxenial-nginx).
 
 Some notes:
 
-1. You won't actually be able to set up a new SSL certificate until you have deployed your application for the first time.  Just install the `certbot` client for now.
+1. You won't actually be able to set up a new SSL certificate until you have deployed your application for the first time. Just install the `certbot` client for now.
 
 ## Install phpMyAdmin
 
@@ -139,17 +141,17 @@ See this [**DigitalOcean tutorial**](https://www.digitalocean.com/community/tuto
 Notes:
 
 1. This guide is for Ubuntu 14.04, but the process should be basically the same in Ubuntu 16.04.
-2. Make sure to pick a particularly strong password for the phpmyadmin user account.  You can use [Random.org](https://www.random.org/passwords/) - we recommend generating something with at least 20 characters.
+2. Make sure to pick a particularly strong password for the phpmyadmin user account. You can use [Random.org](https://www.random.org/passwords/) - we recommend generating something with at least 20 characters.
 3. To enable `mcrypt` in PHP 7:
 
-```
+```bash
 sudo phpenmod mcrypt
 sudo service php7.0-fpm restart
 ```
 
 To disable root login and restrict access to specific users:
 
-```
+```bash
 cd /etc/phpmyadmin
 sudo nano config.inc.php
 ```

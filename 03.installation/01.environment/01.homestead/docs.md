@@ -1,7 +1,7 @@
 ---
 title: Homestead
 metadata:
-    description: Homestead is a virtual environment, managed by Vagrant, that comes with everything you need to run UserFrosting preinstalled.  It's a great way to develop in a Ubuntu environment, if you'll be running your production site in a similar environment.
+    description: Homestead is a virtual environment, managed by Vagrant, that comes with everything you need to run UserFrosting preinstalled. It's a great way to develop in a Ubuntu environment, if you'll be running your production site in a similar environment.
 taxonomy:
     category: docs
 ---
@@ -12,15 +12,15 @@ If you already have a local environment (e.g., LAMP or LEMP) and you're already 
 
 ## Why you need a development environment
 
-We get it - you just want to get UserFrosting up and running as quickly as possible.  Don't worry!  We'll get you there.  Actually, using Vagrant and Homestead is the easiest and fastest way to get UserFrosting up and running !
+We get it - you just want to get UserFrosting up and running as quickly as possible. Don't worry! We'll get you there. Actually, using Vagrant and Homestead is the easiest and fastest way to get UserFrosting up and running !
 
 If you're uploading your code to a live site while you're still writing it, this section is for you. If you are already developing in a local environment, please skip this section.
 
 ### Web hosting vs. web server
 
-In actuality, "web server" and "web hosting" are not the same thing. A web server is nothing more than a piece of software that runs on a computer and listens for **HTTP requests**.  The most common web servers - Apache and Nginx - are completely free and open-source.  You can download and run them on your personal computer.
+In actuality, "web server" and "web hosting" are not the same thing. A web server is nothing more than a piece of software that runs on a computer and listens for **HTTP requests**. The most common web servers - Apache and Nginx - are completely free and open-source. You can download and run them on your personal computer.
 
-When you sign up with a web hosting company, you're not paying for the web server software; you're paying to run a web server on _their computers_ instead of your own.  The reason that you need a web hosting service is **not** because they possess some magical ability to run PHP.  What you're paying for is:
+When you sign up with a web hosting company, you're not paying for the web server software; you're paying to run a web server on _their computers_ instead of your own. The reason that you need a web hosting service is **not** because they possess some magical ability to run PHP. What you're paying for is:
 
 - Hardware maintenance and reliable uptime
 - Better network connections, superior bandwidth
@@ -31,15 +31,15 @@ These are important concerns - and part of the reason that most people don't run
 
 ### Using a local server to view and test your code
 
-In the long run, the amount of time you'll spend uploading your code after each change you make will **easily dwarf** the amount of time it takes to set up a working test server on your own computer.  Examples of test server software are Apache and Nginx. If you don't like the idea of setting up a local test server, there's an alternative option that is a little easier and very reliable, called a virtual environment. **Vagrant and Homestead (using them together) is an example of setting up a virtual environment**.
+In the long run, the amount of time you'll spend uploading your code after each change you make will **easily dwarf** the amount of time it takes to set up a working test server on your own computer. Examples of test server software are Apache and Nginx. If you don't like the idea of setting up a local test server, there's an alternative option that is a little easier and very reliable, called a virtual environment. **Vagrant and Homestead (using them together) is an example of setting up a virtual environment**.
 
-When you run your code in a place that is accessible only to you and where it's ok when something breaks, this is referred to as a **development environment**.  When you upload your code so that it is running live and interacting with real visitors to your site, this is called a **production environment**.
+When you run your code in a place that is accessible only to you and where it's ok when something breaks, this is referred to as a **development environment**. When you upload your code so that it is running live and interacting with real visitors to your site, this is called a **production environment**.
 
 ### VirtualBox, Vagrant and Homestead
 
-The easiest way to have a full **development environment** is to use _VirtualBox, Vagrant and Homestead_. Combined, they create a virtual machine (VM) on your computer containing all the necessary softwares to run a web server. All three components have their own purpose. **VirtualBox** is a virtualization manager that lets you run just any operating system as a "guest" inside another operating system (the "host").  **Vagrant** works in tandem with VirtualBox to automatically manage the configuration and installed software inside your virtual machine. Finally, **Homestead** is a VM configuration specifically designed for PHP development.
+The easiest way to have a full **development environment** is to use _VirtualBox, Vagrant and Homestead_. Combined, they create a virtual machine (VM) on your computer containing all the necessary softwares to run a web server. All three components have their own purpose. **VirtualBox** is a virtualization manager that lets you run just any operating system as a "guest" inside another operating system (the "host"). **Vagrant** works in tandem with VirtualBox to automatically manage the configuration and installed software inside your virtual machine. Finally, **Homestead** is a VM configuration specifically designed for PHP development.
 
-If you think of VirtualBox as your kitchen, Vagrant is sort of like the cookbook that contains recipes for how to set up a useful development environment on your virtual machine.  The particular recipe that we'll be using is called _Homestead_, and it is has everything we need to easily set up the UserFrosting development environment.
+If you think of VirtualBox as your kitchen, Vagrant is sort of like the cookbook that contains recipes for how to set up a useful development environment on your virtual machine. The particular recipe that we'll be using is called _Homestead_, and it is has everything we need to easily set up the UserFrosting development environment.
 
 Homestead will automatically give us the following components that we need to run UserFrosting:
 
@@ -52,19 +52,19 @@ Homestead will automatically give us the following components that we need to ru
 - Node and npm
 - Bower and Gulp
 
-Nice!  This means that we are saved the hassle of [setting these up natively in our operating system](/installation/requirements/essential-tools-for-php).
+Nice! This means that we are saved the hassle of [setting these up natively in our operating system](/installation/requirements/essential-tools-for-php).
 
 ## Setting up your local development environment
 
-The first thing you'll need to do is install VirtualBox.  Our goal with VirtualBox is to let you run Ubuntu on a "virtual machine" on your computer, not matter which operating system you natively use. To install VirtualBox, simply download and run one of the installers available [on their Downloads page](https://www.virtualbox.org/wiki/Downloads).
+The first thing you'll need to do is install VirtualBox. Our goal with VirtualBox is to let you run Ubuntu on a "virtual machine" on your computer, not matter which operating system you natively use. To install VirtualBox, simply download and run one of the installers available [on their Downloads page](https://www.virtualbox.org/wiki/Downloads).
 
 The next thing we'll do is set up **Vagrant**. Head over to Vagrant's [downloads page](https://www.vagrantup.com/downloads.html) to grab one of their installers.
 
 ### Command-line Life
 
-Before we begin, it's important to understand that we will rely heavily on **command-line operations** and **git**.  If you are natively running on a Linux distribution or MacOS, this is already handled for you with Terminal and a preinstalled copy of git.
+Before we begin, it's important to understand that we will rely heavily on **command-line operations** and **git**. If you are natively running on a Linux distribution or MacOS, this is already handled for you with Terminal and a preinstalled copy of git.
 
-However, **if you are a Windows user**, you'll need to install `git` and get set up with a decent command-line program.  Fortunately, [Git for Windows](https://git-scm.com/downloads) takes care of both of these things for you.  Just install it, and you'll have `git` and the `Git Bash` command-line terminal available in your start menu.
+However, **if you are a Windows user**, you'll need to install `git` and get set up with a decent command-line program. Fortunately, [Git for Windows](https://git-scm.com/downloads) takes care of both of these things for you. Just install it, and you'll have `git` and the `Git Bash` command-line terminal available in your start menu.
 
 ### Get Started
 
@@ -81,7 +81,7 @@ cd UserFrosting
 git clone https://github.com/laravel/homestead.git vagrant/Homestead
 ```
 
-You will need a SSH key-pair to connect to the Virtual Machine created in the next step. If you already have a keypair in your user's home directory you can skip this step. Otherwise you can generate a new SSH keypair using the `ssh-keygen` tool.  Before doing this, make sure you have a `.ssh` directory in your user's home directory (e.g. `C:/Users/<username>` in Windows, or `/Users/<username>` in Mac/Linux).  If not, you can do `mkdir $HOME/.ssh`.
+You will need a SSH key-pair to connect to the Virtual Machine created in the next step. If you already have a keypair in your user's home directory you can skip this step. Otherwise you can generate a new SSH keypair using the `ssh-keygen` tool. Before doing this, make sure you have a `.ssh` directory in your user's home directory (e.g. `C:/Users/<username>` in Windows, or `/Users/<username>` in Mac/Linux). If not, you can do `mkdir $HOME/.ssh`.
 
 Then, run the following command:
 
@@ -101,7 +101,7 @@ When you _vagrant up_, the Laravel/Homestead box is transparently loaded as a Vi
 
 ### Check out your first UserFrosting installation!
 
-Ok, that should be it!  If you head over to `http://192.168.10.10/` in your browser, you should see the front page of the default UserFrosting installation.
+Ok, that should be it! If you head over to `http://192.168.10.10/` in your browser, you should see the front page of the default UserFrosting installation.
 
 A default administrator account will also be preconfigured with the following credentials :
 
@@ -115,7 +115,7 @@ If you encounter any error at this point, look at the previous output for signs 
 
 ### Editing your hosts file
 
-If you prefer to access UserFrosting from the more friendly URL `http://userfrosting.test` then you must update your computer's hosts file. To do this, we need to edit the `hosts` file.  In Windows, this file is located at `C:\Windows\System32\drivers\etc\hosts`.  In MacOS and Linux, you can find it at `/etc/hosts`.  In either case, you will need to edit it **as an administrator**, or temporarily give yourself permissions to write to this file.
+If you prefer to access UserFrosting from the more friendly URL `http://userfrosting.test` then you must update your computer's hosts file. To do this, we need to edit the `hosts` file. In Windows, this file is located at `C:\Windows\System32\drivers\etc\hosts`. In MacOS and Linux, you can find it at `/etc/hosts`. In either case, you will need to edit it **as an administrator**, or temporarily give yourself permissions to write to this file.
 
 Add the following lines at the bottom, save and exit:
 
@@ -137,7 +137,7 @@ Once your virtual machine is up and running, you'll be able to log into it:
 vagrant ssh
 ```
 
->>>> It would appear that Git-Bash functions poorly as an SSH client in Windows.  For Windows users, you may want to use the native "command prompt" application instead.
+[notice=warning]It would appear that Git-Bash functions poorly as an SSH client in Windows.  For Windows users, you may want to use the native "command prompt" application instead.[/notice]
 
 If it connects successfully, you will see a welcome message for Ubuntu:
 
@@ -161,7 +161,7 @@ Thanks for using
 
 If you try the `ls` command, you should see the `userfrosting` directory. You can switch to this directory and run all [bakery commands](/cli/commands) directly in the VM. For example :
 
-```
+```bash
 $ cd UserFrosting
 $ php bakery bake
 ```
@@ -172,33 +172,33 @@ To log out of the virtual machine, use the `exit` command.
 
 To pause your server:
 
-```sh
+```bash
 vagrant suspend
 ```
 
 To shut down your server:
 
-```sh
+```bash
 vagrant halt
 ```
 
 To delete and remove your server:
 
-```sh
+```bash
 vagrant destroy
 ```
 
->>>> Destroying the vagrant server will remove all traces of the VM from your computer, reclaiming any disk space used by it. However, it also means the next time you vagrant up, you will be creating a brand new VM with a fresh install of UserFrosting and a new database.
+[notice=warning]Destroying the vagrant server will remove all traces of the VM from your computer, reclaiming any disk space used by it. However, it also means the next time you vagrant up, you will be creating a brand new VM with a fresh install of UserFrosting and a new database.[/notice]
 
 ### Access phpmyadmin
 
-You can install phpmyadmin on your virtual machine to make it easier to interact with the `userfrosting` database.  If you're SSH'ed into your virtual machine, do the following:
+You can install phpmyadmin on your virtual machine to make it easier to interact with the `userfrosting` database. If you're SSH'ed into your virtual machine, do the following:
 
-```
+```bash
 sudo apt-get install phpmyadmin
 ```
 
-Do **not** select apache2 nor lighttpd when prompted. Just hit tab and enter.  Choose the defaults for any prompts that appear.
+Do **not** select apache2 nor lighttpd when prompted. Just hit tab and enter. Choose the defaults for any prompts that appear.
 
 Next, simply add `phpmyadmin.test` to your `hosts` file as well:
 
@@ -225,7 +225,7 @@ By default, UserFrosting is pre-configured to install with a MySQL database. You
 
 ## Start developing!
 
-Head over to the chapter on [Sprinkles](/sprinkles) to get oriented and find your way around the UserFrosting codebase.  Come see us in [chat](https://chat.userfrosting.com) if you're having trouble.
+Head over to the chapter on [Sprinkles](/sprinkles) to get oriented and find your way around the UserFrosting codebase. Come see us in [chat](https://chat.userfrosting.com) if you're having trouble.
 
 It will help us a lot if you could star [the UserFrosting project on GitHub](https://github.com/userfrosting/UserFrosting). Just look for the button in the upper right-hand corner!
 

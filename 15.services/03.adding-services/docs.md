@@ -167,8 +167,8 @@ app
     └── site
         └── src
             └── ServicesProvider
-                └── ServicesProvider.php
-                └── MapBuilderService.php
+                ├── ServicesProvider.php
+                ├── MapBuilderService.php
                 └── FooService.php
 ```
 

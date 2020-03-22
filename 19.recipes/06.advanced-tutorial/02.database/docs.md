@@ -17,7 +17,7 @@ Now that we have a sprinkle with an empty page to work with, it's time to get st
 
 First, we create the [data model](/database/overview#data-models). In this model, we define the table name, list the columns we want to be [mass assignable](https://laravel.com/docs/5.8/eloquent#mass-assignment) and enable automatic timestamp creation.
 
-`app/sprinkles/pastries/src/Database/Models/Pastry.php`
+**app/sprinkles/pastries/src/Database/Models/Pastry.php**:
 ```php
 <?php
 
@@ -50,7 +50,7 @@ class Pastry extends Model
 
 Next we create a migration class. This migration will create the database table for us. Migrations are located in `src/Database/Migrations`. Since this is the first version of our Sprinkle, we'll add them to the `v100` sub directory. Finally, since the migration's purpose is to create the `pastries` table, we'll name the migration class `PastriesTable`.
 
-`app/sprinkles/pastries/src/Database/Migrations/v100/PastriesTable.php`
+**app/sprinkles/pastries/src/Database/Migrations/v100/PastriesTable.php**:
 ```php
 <?php
 
@@ -95,7 +95,7 @@ As described in the [Migration](/database/migrations) chapter, the `up` method c
 
 Next we'll populate our newly created table with some default data. To do this, we'll create a [**seed**](/database/seeding). While this could be done in a migration, it is recommended to create default database values using a seed as it enabled the data to be recreated if it get deleted. We call this seed `DefaultPastries`:
 
-`app/sprinkles/pastries/src/Database/Seeds/DefaultPastries.php`
+**app/sprinkles/pastries/src/Database/Seeds/DefaultPastries.php**:
 ```php
 <?php
 
@@ -145,14 +145,14 @@ class DefaultPastries extends BaseSeed
 Notice at this point how we haven't run our migration and seed yet. This means the table and the default data doesn't exist. Before doing so, we'll make one small change to the `PastriesTable` migration. We'll tell the migration to execute the `DefaultPastries` seed after the table is created. Let's edit the `PastriesTable` up method (down method isn't affected) and add the following :
 
 ```php
-    Seeder::execute('DefaultPastries');
+Seeder::execute('DefaultPastries');
 ```
 
 We'll also need to declare the `Seeder` facade class usage by adding `use UserFrosting\Sprinkle\Core\Facades\Seeder;` to the top of our class.
 
 Our `PastriesTable` class should now look like this :
 
-`app/sprinkles/pastries/src/Database/Migrations/v100/PastriesTable.php`
+**app/sprinkles/pastries/src/Database/Migrations/v100/PastriesTable.php**:
 ```php
 <?php
 
@@ -210,7 +210,7 @@ Now that we've defined this convenient alias for our model, it's time to interac
 $pastries = Pastry::all();
 ```
 
->>>>> Fetching all the available rows is not an ideal solution since in production, it can involve an arbitrarily large number of rows. This can clutter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server resource usage). It is recommended to use AJAX and [**Sprunging**](/database/data-sprunjing) to display paginated data in this situation.
+[notice=note]Fetching all the available rows is not an ideal solution since in production, it can involve an arbitrarily large number of rows. This can clutter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server resource usage). It is recommended to use AJAX and [**Sprunging**](/database/data-sprunjing) to display paginated data in this situation.[/notice]
 
 The `$pastries` variable should now contains an [Eloquent Collection](https://laravel.com/docs/5.8/eloquent-collections) of `Pastry` objects. At this point, it's a good idea to use [**debugging**](/troubleshooting/debugging#debug-statements) to make sure everything works as it should. We'll use the `Debug` facade to do so. Start by adding the facade class to the usage declaration of your class:
 
@@ -262,7 +262,7 @@ return $this->ci->view->render($response, 'pages/pastries.html.twig', [
 
 Our controller should now look like this:
 
-`app/sprinkles/pastries/src/Controller/PastriesController.php`
+**app/sprinkles/pastries/src/Controller/PastriesController.php**:
 ```php
 <?php
 
@@ -295,7 +295,7 @@ class PastriesController extends SimpleController
 
 Back in our template file, we'll use Twig's [`for`](https://twig.symfony.com/doc/2.x/tags/for.html) construct to loop through the `pastries` variable and render a new HTML table row for each pastry:
 
-```twig
+```html
 {% extends 'pages/abstract/dashboard.html.twig' %}
 
 {# Overrides blocks in head of base template #}
@@ -335,7 +335,7 @@ What we are interested in here is what's inside the `box-body` div, especially t
 
 Let's get a closer look at our `for` block:
 
-```twig
+```html
 {% for pastry in pastries %}
     <tr>
         <td>{{pastry.name}}</td>
