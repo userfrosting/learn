@@ -15,7 +15,7 @@ UserFrosting 4.4 focuses on rewriting the Translator service and locale improvem
 #### Translator & Locale service
 The translator has been completely rewritten, focusing on optimization and better usability. All locales can now defines metadata and configuration options in a required `locale.yaml` file. The current locale identifier (ie. `en_US` or `fr_FR`) can now be accessed from Twig template using the `currentLocale` global variable.
 
-A new [`Locale` service]() is now available. It provides a list of available locales in diffeent form.
+A new [Locale service](/services/default-services#locale) is now available. It provides a list of available locales in diffeent form.
 
 Finally, three new locale focused Bakery command are now available:
 - [locale:compare](/cli/commands#locale-compare)
@@ -24,7 +24,7 @@ Finally, three new locale focused Bakery command are now available:
 
 #### Services Provider
 
-Services providers can now be defined in different files and semi-autoloaded for easier testing. See [detailed document page]() for more info.
+Services providers can now be defined in different files and semi-autoloaded for easier testing. See [detailed document page](/services/adding-services#in-an-independent-services-class) for more info.
 
 #### Misc changes & fixes
 
@@ -82,7 +82,7 @@ Previous version of Userfrostin allowed to define a "fallback" locale as the def
 
 This meant the _French_ language would be loaded first and if the requested key doesn't exist in French, it will try to use the _English_ one instead.
 
-Starting with **4.4.0**, the fallback locale is now defined in the [locale metadata](). The default locale in your configuration file should be update to use a specific locale instead :
+Starting with **4.4.0**, the fallback locale is now defined in the [locale metadata](/i18n/custom-locale). The default locale in your configuration file should be update to use a specific locale instead :
 
 ```php
 'default' => 'fr_FR',
@@ -94,7 +94,7 @@ Starting with **4.4.0**, the fallback locale is now defined in the [locale metad
 
 The old configuration for available locale used to be an `identifier => name` key/value pair :
 
-```
+```php
 'available' => [
     'en_US' => 'English',
     'zh_CN' => '中文',
@@ -105,7 +105,7 @@ The old configuration for available locale used to be an `identifier => name` ke
 
 The new configuration are now an `identifier => (bool) enabled` key/value pair :
 
-```
+```php
 'available' => [
     'en_US' => true,
     'zh_CN' => true,
@@ -114,15 +114,15 @@ The new configuration are now an `identifier => (bool) enabled` key/value pair :
 ],
 ```
 
-While both are compatible with eachother, it is now recommended all sprinkle be update to the new format. The locale name defined in the configuration will not be used anymore as it as been replaced by the locale config.
+While both are compatible with eachother, it is now recommended all sprinkle be update to the new format. The locale name defined in the configuration will is not used anymore as it as been replaced by the locale config.
 
 #### Locale upgrade
 
-Custom locales (those not bundled by default with UserFrosting) needs to be updated with a new `locale.yaml` file. See [Custom locale]() for more information..
+Custom locales (those not bundled by default with UserFrosting) needs to be updated with a new `locale.yaml` file. See [Custom locale](/i18n/custom-locale) for more information..
 
 #### MessageTranslator => Translator
 
-Search for `UserFrosting\I18n\MessageTranslator` and replace all instances with `UserFrosting\I18n\Translator`. Both class (mostly) works the same.
+Search for `UserFrosting\I18n\MessageTranslator` and replace all instances with `UserFrosting\I18n\Translator`. The `translate` method in **Translator** and **MessageTranslator** are compatible with each other.
 
 #### PHPUnit
 
@@ -132,5 +132,23 @@ If your sprinkle has PHPUnit tests, you may need to update them. The methods lis
 - `PHPUnit\Framework\TestCase::tearDown()`
 
 Your implementations of the methods listed above now must be declared void, too, otherwise you will get a compiler error.
+
+```php
+public function setUp(): void
+{
+    parent::setUp();
+
+    // Do stuff
+    // ...
+}
+
+public function tearDown(): void
+{
+    parent::tearDown();
+
+    // Do stuff
+    // ...
+}
+```
 
 See [PHPUnit 8 Announcement page](https://phpunit.de/announcements/phpunit-8.html) for more details.

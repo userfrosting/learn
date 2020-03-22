@@ -34,6 +34,10 @@ Constructs the `CheckEnvironment` object (namespace `UserFrosting\Sprinkle\Core\
 
 Constructs the `ClassMapper` object (namespace `UserFrosting\Sprinkle\Core\Util\ClassMapper`), which provides dynamic class mapping in your controllers and classes. See [Advanced Dev Features](/advanced/class-mapper) for more information on dynamic class mapping.
 
+### cli
+
+The CLI service return a boolean value. True means the APP is in CLI mode, either in a test of Bakery command.
+
 ### config
 
 Constructs a `Repository` object (namespace `UserFrosting\Support\Repository\Repository`), which [processes and provides a merged repository for the configuration files](/configuration/config-files) across all loaded Sprinkles. Additionally, it imports the [Dotenv](https://github.com/vlucas/phpdotenv) to allow automagically loading environment variables from `.env` file.
