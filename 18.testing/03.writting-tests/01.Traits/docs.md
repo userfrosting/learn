@@ -6,47 +6,92 @@ taxonomy:
 
 UserFrosting provides some helper Traits to easily enable features and tools for your tests. Some of those tools make it easier to test your code against a testing database.
 
+## TestDatabase
+
+This trait can be used force the `test_integration` database connection to be used for testing. This means all tests will be run against an in-memory SQLite database. This database is temporary and independent from the database used by your UserFrosting instance. That means your data is safe when tests are run. If you prefer to use a real database for tests, you can overwrite the `test_integration` connection config in your own sprinkle for the `testing` environment.
+
 [notice=warning]While you **can** test your code against the main database, it usually not a good idea to do so with a production database. Those are _tests_ after all. They _can_ fails. Catastrophically. UserFrosting built-in tests are all run against a test database.[/notice]
-
-To enable one feature, simply add the Trait to your class. For example :
-
-<<<< TODO :: THIS NEED FIXING. Not true anymore >>>>
-
-```php
-<?php
-
-use UserFrosting\Tests\TestCase;
-use UserFrosting\Tests\WithTestDatabase;
-
-/**
- * MyTest class.
- */
-class MyTest extends TestCase
-{
-    use WithTestDatabase;
-
-    function myTest()
-    {
-
-    }
-```
-
-## `WithTestDatabase`
-
-This trait will force the `test_integration` database connection to be used for testing. This means all tests will be run against an in-memory SQLite database. This database is temporary and independent from the database used by your UserFrosting instance. That means your data is safe when tests are run. If you prefer to use a real database for tests, you can overwrite the `test_integration` connection config in your own sprinkle for the `testing` environment.
 
 Note that the in-memory database is empty by default. If your test requires the standard tables to be up, you can use the `RefreshDatabase` trait to run all migrations up. You could also use the migrator service to run a particular migration up.
 
->>>>> While it's generaly not a good idea to run test against a real database, there might be time where it is necessary. The `DatabaseTransactions` trait can help you when dealing with an actual database.
+To use, you need to add the `TestDatabase` trait, and call `$this->setupTestDatabase();` in your test setup:
 
-## `RefreshDatabase`
+```php
+class MyTest extends TestCase
+{
+    use TestDatabase;
 
-It is often useful to reset your database after each test so that data from a previous test does not interfere with subsequent tests. The `RefreshDatabase` trait will wipe the database clean between each test and run all migration up. Simply use the trait on your test class and everything will be handled for you.
+    public function setUp(): void
+    {
+        parent::setUp();
 
->>>> This trait is destructive! All existing data in the database will be lost. Use it along the `WithTestDatabase` trait to avoid losing data in your production database ! If you need
+        // Setup test database
+        $this->setupTestDatabase();
+    }
+}
+```
 
-## `DatabaseTransactions`
+## RefreshDatabase
 
-This trait will wrap each operation in your tests in a transaction. This means the actions applied to your database will be automatically be cancelled when the test is over. Be careful as this Trait will only enable transactions on the main database connection.
+It's good practice to reset your database before each test so that data from a previous test does not interfere with your tests. The `RefreshDatabase` trait will help you wipe the database clean and run all migration up.
 
->>>>> Migration and tables manipulations are not covered by transactions.
+[notice=warning]This is **destructive**! All existing data in the database will be lost. Use it along the `TestDatabase` trait to avoid losing data in your production database ![/notice]
+
+To use, you need to add the `RefreshDatabase` trait, and call `$this->refreshDatabase();` in your test setup:
+
+```php
+class MyTest extends TestCase
+{
+    use TestDatabase;
+    use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        // Setup test database
+        $this->setupTestDatabase();
+        $this->refreshDatabase();
+    }
+}
+```
+
+## withTestUser
+
+This trait contains many useful methods for tests that require an actual user. To use any of the methods, you first need to add the `withTestUser` trait to your class.
+
+
+| Class                                                                          | Description                                                           |
+| ------------------------------------------------------------------------------ | --------------------------------------------------------------------- |
+| `loginUser(UserInterface $user)`                                               | Login the provided user object                                        |
+| `logoutCurrentUser`                                                            | Logout the currently logged user                                      |
+| `createTestUser($isMaster = false, $login = false, array $params = [])`        | Create a test user. Use arguments to make it a master user, to log him in and set any user parameter. |
+| `getRandomUserId($masterId)`                                                   | Returns a random user id, exclusing th master id                      |
+| `giveUserTestPermission(UserInterface $user, $slug, $conditions = 'always()')` | Gives a user a new test permission                                    |
+| `giveUserPermission(UserInterface $user, Permission $permission)`              | Add the test permission to a Role, then the role to the user          |
+
+[notice]When dealing with logged-in user, they will be automatically logout at the end of the test to avoid collision with subsequent tests.[/notice]
+
+## withDatabaseSessionHandler
+
+This trait needs to be included if you want to test the `database` session handler. This trait should be used with `TestDatabase` and `RefreshDatabase`.
+
+To use, you need to add the `withDatabaseSessionHandler` trait, and call `$this->useDatabaseSessionHandler();` in your test:
+
+```php
+class MyTest extends TestCase
+{
+    use TestDatabase;
+    use RefreshDatabase;
+    use withTestUser;
+    use withDatabaseSessionHandler;
+
+    public function testSomethingWithSessionDatabase()
+    {
+        // Reset CI Session
+        $this->useDatabaseSessionHandler();
+
+        // ...
+    }
+}
+```
