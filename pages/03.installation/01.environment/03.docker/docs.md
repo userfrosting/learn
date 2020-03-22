@@ -6,9 +6,9 @@ taxonomy:
   category: docs
 ---
 
->>> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
+[notice=warning]Docker support is currently at **experimental** stability. Expect quirks and documentation gaps.
 
->Docker support is currently at **experimental** stability. Expect quirks and documentation gaps.
+To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
 
 The relevant files for installing UserFrosting with Docker are `docker-compose.yml`, and the contents of `docker/`.
 
@@ -20,12 +20,12 @@ Second, initialize a new UserFrosting project:
 2. Change to the new directory `cd userfrosting`
 3. Copy `app/sprinkles.example.json` to `app/sprinkles.json`
 4. Copy `app/.env.example` to `app/.env`
-4. Run `chmod 777 app/{logs,cache,sessions}` to fix file permissions for web server. (NOTE: File
+5. Run `chmod 777 app/{logs,cache,sessions}` to fix file permissions for web server. (NOTE: File
    permissions should be properly secured in a production environment!)
-5. Run `docker-compose build --no-cache` to build all the docker containers.
-6. Run `docker-compose up -d` to to start all the containers.
-7. Run `docker-compose exec app sh -c "composer update"` to install all composer modules used in UserFrosting.
-8. Run `docker-compose exec app sh -c "php bakery bake"` to install UserFrosting (database configuration and migrations, creation of admin user, ...). You'll need to provide info to create the admin user.
+6. Run `docker-compose build --no-cache` to build all the docker containers.
+7. Run `docker-compose up -d` to to start all the containers.
+8. Run `docker-compose exec app sh -c "composer update"` to install all composer modules used in UserFrosting.
+9. Run `docker-compose exec app sh -c "php bakery bake"` to install UserFrosting (database configuration and migrations, creation of admin user, ...). You'll need to provide info to create the admin user.
 
 Now visit `http://localhost:8591/` to see your UserFrosting homepage!
 
@@ -57,7 +57,7 @@ To start containers again, change to your userfrosting directory and run:
 
 If you need to purge your docker containers (this will not delete any source file or sprinkle, but will empty the database), run:
 
-```
+```bash
 docker-compose down --remove-orphans
 ```
 

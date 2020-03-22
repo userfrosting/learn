@@ -43,7 +43,7 @@ UserFrosting 4.2 brings improved organization of the codebase, a new migrator an
 - Removed `UserFrosting\System\Bakery\ConfirmableTrait` trait for custom Bakery command, use `UserFrosting\Sprinkle\Core\Bakery\Helper\ConfirmableTrait` instead.
 
 #### Minor (should only break heavily customized projects)
-- `dev` environment changed to `debug`  ([#653])
+- `dev` environment changed to `debug` ([#653])
 - Move User registration out of the `AccountController` ([#793])
 
 #### Deprecations (still available but may be removed at any time)
@@ -82,7 +82,7 @@ Finally, frontend dependencies are now located at `app/assets/bower_components` 
 
 As of UserFrosting 4.2.0, support for PHP version 5.6 and 7.0 is officially deprecated. While you can still use UserFrosting 4.2.x with PHP 7.0 or earlier, upgrading to PHP 7.2 or above is highly recommended as both PHP 5.6 and 7.0 have reached [End Of Life](http://php.net/supported-versions.php) since Jan. 1st 2019.
 
->>>> **The next major version of UserFrosting (4.3.x) won't support PHP 5.6 or 7.0**
+[notice=warning]**The next major version of UserFrosting (4.3.x) won't support PHP 5.6 or 7.0**[/notice]
 
 ### Complete change Log
 

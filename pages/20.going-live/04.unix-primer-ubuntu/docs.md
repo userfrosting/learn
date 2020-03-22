@@ -6,11 +6,11 @@ taxonomy:
     category: docs
 ---
 
->>> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
+[notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
 
 ## Basic commands
 
->>>>>> When you precede a path with `/`, this indicates an **absolute** file path.  For example, `cd /` changes into the root directory, and `cd /var/log` changes into the log directory - no matter what directory you're currently in.
+[notice=tip]When you precede a path with `/`, this indicates an **absolute** file path.  For example, `cd /` changes into the root directory, and `cd /var/log` changes into the log directory - no matter what directory you're currently in.[/notice]
 
 ### Files
 
@@ -110,7 +110,7 @@ Then we have the following permissions:
 - **Group**: `r-x`.  The owning group (`alex`) has read and execute permissions for this file.
 - **Other**: `r--`.  Other users only have read permissions for this file.
 
->>> "User" in this context refers to the _operating system's_ users.  User accounts in your UserFrosting application are **not** users on the operating system.  Visitors to your website can only interact with the files on your machine through the webserver and your application.
+[notice]"User" in this context refers to the _operating system's_ users.  User accounts in your UserFrosting application are **not** users on the operating system.  Visitors to your website can only interact with the files on your machine through the webserver and your application.[/notice]
 
 #### Changing the owning user/group for a file
 
@@ -168,15 +168,15 @@ First try `kill <pid>`.  If that doesn't work, try `kill -9 <pid>`.
 
 ## Default locations in Ubuntu
 
-| Path | Description | Notes |
-| ---- | ----------- | ----- |
-| `/var/www/` | Home directory for web applications. | |
-| `/var/log/` | Default directory for most logs. | |
-| `/etc/nginx/sites-available/` | Physical location of configuration files for nginx. | |
-| `/etc/nginx/sites-enabled/` | Symbolic links to 'enabled' nginx config files. | |
-| `/etc/letsencrypt/archive/` | Physical location of LE certificate files. | Default only accessible to root |
-| `/etc/letsencrypt/live/` | Symbolic links to current LE certificate files. | Default only accessible to root |
-| `/etc/letsencrypt/renewal/` | Renewal scripts for LE certificates. | Default only accessible to root |
+| Path                          | Description                                         | Notes                           |
+| ----------------------------- | --------------------------------------------------- | ------------------------------- |
+| `/var/www/`                   | Home directory for web applications.                |                                 |
+| `/var/log/`                   | Default directory for most logs.                    |                                 |
+| `/etc/nginx/sites-available/` | Physical location of configuration files for nginx. |                                 |
+| `/etc/nginx/sites-enabled/`   | Symbolic links to 'enabled' nginx config files.     |                                 |
+| `/etc/letsencrypt/archive/`   | Physical location of LE certificate files.          | Default only accessible to root |
+| `/etc/letsencrypt/live/`      | Symbolic links to current LE certificate files.     | Default only accessible to root |
+| `/etc/letsencrypt/renewal/`   | Renewal scripts for LE certificates.                | Default only accessible to root |
 
 ## User accounts
 
@@ -185,3 +185,5 @@ First try `kill <pid>`.  If that doesn't work, try `kill -9 <pid>`.
 - `backup`: The "backup" user account.
 
 ## Automation With Cron
+
+TODO

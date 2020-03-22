@@ -10,7 +10,7 @@ taxonomy:
 
 Git is one of the most popular [version control systems](https://en.wikipedia.org/wiki/Version_control), originally created for aiding development of the Linux kernel.
 
-To start working with UserFrosting, you will need to use **git**.  Git is important to use with UserFrosting for four reasons:
+To start working with UserFrosting, you will need to use **git**. Git is important to use with UserFrosting for four reasons:
 
 1. Many of the [asset management tools](#npm) that UserFrosting depends on, use git;
 2. It makes it easier to merge updates in UserFrosting into your project;
@@ -21,7 +21,7 @@ To start working with UserFrosting, you will need to use **git**.  Git is import
 
 ### Installing git (MacOS)
 
-By default, MacOS and other *nix operating systems should come with git preinstalled.  If you would like to update your version of git, you can do so with their [installer](https://git-scm.com/download/mac).
+By default, MacOS and other *nix operating systems should come with git preinstalled. If you would like to update your version of git, you can do so with their [installer](https://git-scm.com/download/mac).
 
 ### Installing git (Windows)
 
@@ -29,7 +29,7 @@ Git has an installer that you can use for Windows - [Git Download](https://git-s
 
 ## Composer
 
-Up until March of 2012, PHP didn't really have a good project-level package manager.  There was PEAR, but it [failed to keep up with the evolution of the PHP community](https://benramsey.com/blog/2013/11/the-fall-of-pear-and-the-rise-of-composer/). In March of 2012, on the heels of the [PHP Standard Recommendations (PSR)](http://www.php-fig.org/psr/) project, Composer was released and a new era of PHP began.
+Up until March of 2012, PHP didn't really have a good project-level package manager. There was PEAR, but it [failed to keep up with the evolution of the PHP community](https://benramsey.com/blog/2013/11/the-fall-of-pear-and-the-rise-of-composer/). In March of 2012, on the heels of the [PHP Standard Recommendations (PSR)](http://www.php-fig.org/psr/) project, Composer was released and a new era of PHP began.
 
 If you've been out of the PHP world for a while, you might have missed this critical shift. Over the past few years, Composer has risen to become the *de facto* package manager for PHP, with [Packagist](https://packagist.org/) as its main public package repository. This means that the best way to incorporate third-party code (which you [definitely should do](/background/dont-reinvent-the-wheel)) is by installing and using Composer - at the very least, in your development environment.
 
@@ -42,7 +42,7 @@ $ composer --version
 Composer version 1.9.3 2020-02-04 12:58:49
 ```
 
-The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).  We **strongly recommend that you install Composer globally** on your system.  This will let you run Composer using the `composer` command.  For convenience, we recap the global installation instructions here:
+The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx). We **strongly recommend that you install Composer globally** on your system. This will let you run Composer using the `composer` command. For convenience, we recap the global installation instructions here:
 
 ### Installing Composer (MacOS and *nix)
 
@@ -55,7 +55,7 @@ On some versions of MacOS the `/usr` directory does not exist by default. If you
 
 ### Installing Composer (Windows)
 
-Composer has a special installer that you can use for Windows - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe).  If this gives you trouble, you can try the [manual installation instructions](https://getcomposer.org/doc/00-intro.md#manual-installation).
+Composer has a special installer that you can use for Windows - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe). If this gives you trouble, you can try the [manual installation instructions](https://getcomposer.org/doc/00-intro.md#manual-installation).
 
 ## Node.js
 
@@ -63,7 +63,7 @@ Composer has a special installer that you can use for Windows - [Composer-Setup.
 
 Although UserFrosting does not _run_ on Node.js, it does use several Node-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
 
-The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems.  We recommend using the latest version of Node.js (13.9 at the time of this writing), however any version later than 10.12 will suffice.
+The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems. We recommend using the latest version of Node.js (13.9 at the time of this writing), however any version later than 10.12 will suffice.
 
 To check if Node.js is installed:
 
@@ -72,7 +72,7 @@ $ node -v
 v12.14.1
 ```
 
->>> Even though we'll be using these tools to get our application ready for deployment, you don't actually need to install Node.js on your live server.  You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.
+[notice]Even though we'll be using these tools to get our application ready for deployment, you don't actually need to install Node.js on your live server. You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.[/notice]
 
 ### Installing Node.js (MacOS and Windows)
 
@@ -80,34 +80,34 @@ Node.js has an installer that you can use for MacOS and Windows - [Node.js Downl
 
 ## npm
 
-npm stands for **N**ode **P**ackage **M**anager.  npm is to Node.js as Composer is to PHP - it is used to grab the various Node packages that are required by UserFrosting's installation and build tools.  When you installed Node, it should have automatically installed npm as well.  However, we still recommend updating npm (if unable to update, any version later than 6.x will suffice):
+npm stands for **N**ode **P**ackage **M**anager. npm is to Node.js as Composer is to PHP - it is used to grab the various Node packages that are required by UserFrosting's installation and build tools. When you installed Node, it should have automatically installed npm as well. However, we still recommend updating npm (if unable to update, any version later than 6.x will suffice):
 
 ```bash
 $ npm install npm@latest -g
 ```
 
-UserFrosting also uses **Yarn** and **Bower** (deprecated) for frontend dependency management.  If you do not have this installed, don't worry!  UserFrosting's build scripts will automatically install it for you.
+UserFrosting also uses **Yarn** and **Bower** (deprecated) for frontend dependency management. If you do not have this installed, don't worry! UserFrosting's build scripts will automatically install it for you.
 
 ## Coding and style standards
 
-Standards are boring.  But guess what?  "Boring" == "predictable" - a good thing when it comes to writing code.  Most of your time spent as a developer is actually spent [reading, not writing](https://blog.codinghorror.com/when-understanding-means-rewriting/) code.  Without a clean set of standards and good comments, it can be difficult to read your own code 3 months after you wrote it, let alone someone else's code.
+Standards are boring. But guess what? "Boring" == "predictable" - a good thing when it comes to writing code. Most of your time spent as a developer is actually spent [reading, not writing](https://blog.codinghorror.com/when-understanding-means-rewriting/) code. Without a clean set of standards and good comments, it can be difficult to read your own code 3 months after you wrote it, let alone someone else's code.
 
-The increasingly modular and community-driven nature of software development means that it is important not just to have internal coding standards, but community-wide standards as well.  We **strongly recommend** that you familiarize yourself with some basic standards for PHP, Javascript, and CSS:
+The increasingly modular and community-driven nature of software development means that it is important not just to have internal coding standards, but community-wide standards as well. We **strongly recommend** that you familiarize yourself with some basic standards for PHP, Javascript, and CSS:
 
 - **PHP**: [PHP-FIG](http://www.php-fig.org/)
 - **HTML and CSS**: [Code Guide by @mdo](http://codeguide.co)
-- **Javascript**: The Javascript community (which, let's face it, is HUGE) has so far failed to adopt a single set of coding standards.  Over the past few years, [Airbnb's coding guidelines](https://github.com/airbnb/javascript) have started to gain a lot of traction.  It is extremely thorough and widely used, and for these reasons we recommend it.
+- **Javascript**: The Javascript community (which, let's face it, is HUGE) has so far failed to adopt a single set of coding standards. Over the past few years, [Airbnb's coding guidelines](https://github.com/airbnb/javascript) have started to gain a lot of traction. It is extremely thorough and widely used, and for these reasons we recommend it.
 
 ## Comments and API documentation generators
 
-Sooner or later, you may want to generate some low-level documentation for every class and function in your application.  **Don't try to do this by hand!**
+Sooner or later, you may want to generate some low-level documentation for every class and function in your application. **Don't try to do this by hand!**
 
 Instead, by following a specific set of standards for in-code comments ("doc blocks"), you can use automated tools that will scan your codebase and generate the appropriate documentation.
 
 ### PHP
 
-For PHP code, use the [phpDoc standard](https://phpdoc.org/docs/latest/guides/docblocks.html) to document your classes, methods, and member variables.  You can then use [ApiGen](http://www.apigen.org/) to automatically generate clean, attractive, fully searchable API documentation for your application.
+For PHP code, use the [phpDoc standard](https://phpdoc.org/docs/latest/guides/docblocks.html) to document your classes, methods, and member variables. You can then use [ApiGen](http://www.apigen.org/) to automatically generate clean, attractive, fully searchable API documentation for your application.
 
 ### Javascript
 
-For Javascript, use the [JSDoc](http://usejsdoc.org/about-getting-started.html) standard and tool to comment your code and generate an attractive set of API documentation.  It is consistent with Airbnb's commenting standards.
+For Javascript, use the [JSDoc](http://usejsdoc.org/about-getting-started.html) standard and tool to comment your code and generate an attractive set of API documentation. It is consistent with Airbnb's commenting standards.

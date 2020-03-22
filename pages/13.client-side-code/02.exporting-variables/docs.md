@@ -48,7 +48,7 @@ For your convenience, the `core/templates/pages/partials/page.js.twig` template 
 ```php
 // In account/src/Controller/AccountController.php
 
-public function pageRegister($request, $response, $args)
+public function pageRegister(Request $request, Response $response, array $args)
 {
     // ...
 
