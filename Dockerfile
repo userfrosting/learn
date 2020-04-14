@@ -27,12 +27,17 @@ RUN \
     php7.3-zip \
     php7.3-mbstring \
     php7.3-xml \
-    php7.3-intl && \
+    php7.3-intl
+
+RUN \
   ## Download GRAV
   mkdir -p \
     /grav && \
   GRAV_VERSION=$(curl -sX GET "https://api.github.com/repos/getgrav/grav/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]') && \
   curl -o /grav/grav.zip -L https://github.com/getgrav/grav/releases/download/${GRAV_VERSION}/grav-v${GRAV_VERSION}.zip && \
+  unzip /grav/grav.zip -d /var/www && \
+  rm /grav/grav.zip && \
+  rm -R /var/www/html && \
   ## Setup cron
   touch /var/spool/cron/crontabs/xyz && \
   (crontab -l; echo "* * * * * cd /var/www/grav;/usr/bin/php bin/grav scheduler 1>> /dev/null 2>&1") | crontab -u xyz - && \
