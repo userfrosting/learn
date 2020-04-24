@@ -66,7 +66,7 @@ sudo n -q lts
 
 This will install the latest LTS (Long Term Support) version of Node.js.
 
-### Bower deprecation, new Yarn support
+### Bower deprecation, new NPM support
 
 Bower has been deprecated since 2017, and with NPM support landing in UserFrosting, Bower is now deprecated here as well. In the future, support for it will be removed.
 
