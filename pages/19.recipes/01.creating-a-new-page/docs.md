@@ -79,6 +79,8 @@ app
 
 namespace UserFrosting\Sprinkle\Site\Controller;
 
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use UserFrosting\Sprinkle\Core\Controller\SimpleController;
 
 class PageController extends SimpleController
