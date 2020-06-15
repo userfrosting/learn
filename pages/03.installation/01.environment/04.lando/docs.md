@@ -42,7 +42,7 @@ services:
     build_as_root:
       - apt-get update -y
       - apt-get install -my wget gnupg
-      - curl -sL https://deb.nodesource.com/setup_11.x | bash - # install node 11 + (UF4.2.0 requires 10.12+) https://github
+      - curl -sL https://deb.nodesource.com/setup_12.x | bash - # install node + (UF4.2.0 requires 10.12+) https://github
       - apt-get install -y nodejs
       - a2enmod headers
     #config:
@@ -76,8 +76,6 @@ tooling:
   phpunit:
     service: appserver
     description: "Run PHP Unit tests: lando phpunit"
-  git:
-    service: appserver
   composer:
 
     # Run the `lando composer` command against the appserver from the services
@@ -93,7 +91,7 @@ tooling:
     # this will default to the name you give the service eg composer.
     #
     # This can be a string or an array if you want to run multiple commands
-    # See "test" below for a multi-command example
+    # See below for a multi-command example
 #    cmd: composer --ansi
   npm:
     service: appserver
