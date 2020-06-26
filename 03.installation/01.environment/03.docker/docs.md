@@ -1,5 +1,4 @@
 ---
----
 title: Docker
 metadata:
   description: Docker is a containerization platform that helps maintain consistent behavior across different development and production environments.

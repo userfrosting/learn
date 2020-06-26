@@ -1,5 +1,4 @@
 ---
----
 title: Lando
 metadata:
   description: Lando is a wrapper around Docker that simplifies the process for PHP applications to run on Docker.
