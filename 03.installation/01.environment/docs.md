@@ -13,3 +13,4 @@ The links below will guide you to the right installation guide for you, which ca
 - ["I don't have a local environment / don't know what that is"](/installation/environment/homestead)
 - ["I have a local environment set up already"](/installation/environment/native)
 - ["I'm already using Docker"](/installation/environment/docker)
+- ["I'd like to try Lando"](/installation/environment/lando)

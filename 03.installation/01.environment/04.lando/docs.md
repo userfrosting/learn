@@ -9,17 +9,15 @@ taxonomy:
 
 >>> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
-Lando provides a stable and easy-to-use local development environment. It allows you to integrate PHPMyAdmin and most PHP IDE debuggers hook simply into this as well.
+[Lando](https://lando.dev/) provides a stable, easy-to-use, and portable local development environment. It allows you to integrate [phpMyAdmin](https://www.phpmyadmin.net/) (among [other services](https://docs.lando.dev/config/services.html)) and simplifies setting up [XDebug](https://xdebug.org/).
 
->> Note: Lando is not meant for production!
-
->> Note: Lando works best with Mac & Linux, but does support Windows as well. Note that if you are using Windows, you must enable Hyper-V. Doing so prevents you from running Vagrant/VMBox. If you are able to run Docker on Windows, you _should_ be able to run Lando on Windows as well.
+>>> Note: Lando is not meant for production!
 
 ## Installation Steps
 
 ### Install & Configure Lando
 
-Start by installing [Lando](https://docs.lando.dev/basics/installation.html#system-requirements).
+Start by installing [Lando](https://docs.lando.dev/basics/installation.html).
 
 Next, create your Lando configuraton file in your application root. Call the file `.lando.yml`. A sample configuration is provided below:
 
@@ -33,41 +31,32 @@ config:
   php: '7.3'
   database: mariadb
   xdebug: true
-  cache: redis
 
 services:
   appserver:
-    composer:
-      phpunit/phpunit: '*'
     build_as_root:
       - apt-get update -y
       - apt-get install -my wget gnupg
-      - curl -sL https://deb.nodesource.com/setup_12.x | bash - # install node + (UF4.2.0 requires 10.12+) https://github
-      - apt-get install -y nodejs
       - a2enmod headers
-    #config:
-    #  conf: ./lando-config/php.ini # uncomment this section to enable your custom php.ini file
+      # Patch to bring NodeJS into app server container
+      # https://docs.lando.dev/guides/installing-node-in-your-lando-php-service.html
+      - curl -sL https://deb.nodesource.com/setup_12.x | bash -
+      - apt-get install -y nodejs
     overrides:
       environment:
         PHP_IDE_CONFIG: "serverName=userfrosting.lndo.site"
     ssl: true
 
+  # Redis cache
+  cache:
+    type: redis
 
-  # Add a phpmyadmin db frontend
+  # Add phpMyAdmin database web client
   pma:
-
-    # Use the latest version of phpmyadmin
     type: phpmyadmin
-
-    # The databases you want to look at, this will default to a service called
-    # "database"
-    #
-    # You might want to run `lando info` on your app to see what databases you
-    # have available
     hosts:
       - database
 
-# Add in a proxy route to phpmyadmin
 proxy:
   pma:
     - pma.userfrosting.lndo.site
@@ -75,35 +64,20 @@ proxy:
 tooling:
   phpunit:
     service: appserver
-    description: "Run PHP Unit tests: lando phpunit"
-  composer:
-
-    # Run the `lando composer` command against the appserver from the services
-    # section above
-    service: appserver
-
-    # Give a nice description to describe what this does.
-    # If ommited this will default to "Run COMMAND commands" where COMMAND is
-    # composer in this case
-    description: Run composer commands
-
-    # Define a specific command to start with inside the container. If omitted
-    # this will default to the name you give the service eg composer.
-    #
-    # This can be a string or an array if you want to run multiple commands
-    # See below for a multi-command example
-#    cmd: composer --ansi
-  npm:
-    service: appserver
-  node:
-    service: appserver
-  gulp:
-    service: appserver
+    description: "Run PHP Unit tests"
+    cmd: app/vendor/bin/phpunit
   redis-cli:
     service: cache
+    description: "Redis cache CLI"
+  bakery:
+    service: appserver
+    description: "UserFrosting CLI"
+    cmd: php bakery
 ```
 
-This configuration file creates a LAMP stack. If you prefer a LEMP (nginx) stack, change "lamp" to "lemp" in the `recipe` setting near the top of the file and be sure to comment out the `a2enmod headers` line in the build section for the Lando config file. This will enable `xdebug` for integration with your IDE. If you do not use xdebug, you can set `xdebug` to false in the configuration file to improve performance. However, since this is a local development environment, we strongly encourage you to keep it enabled!
+This configuration file creates a LAMP stack.
+
+If you prefer a LEMP (nginx) stack, change "lamp" to "lemp" in the `recipe` setting near the top of the file and be sure to comment out the `a2enmod headers` line in the build section for the Lando config file.
 
 ### Configure UserFrosting
 
@@ -118,31 +92,33 @@ Using the terminal, run `lando start` from within your UserFrosting app. The fir
 When the application boots successfully, you'll see something like: 
 
 ```
-BOOMSHAKALAKA!!!
+
+   ___                      __        __        __     __        ______
+  / _ )___  ___  __ _  ___ / /  ___ _/ /_____ _/ /__ _/ /_____ _/ / / /
+ / _  / _ \/ _ \/  ' \(_-</ _ \/ _ `/  '_/ _ `/ / _ `/  '_/ _ `/_/_/_/ 
+/____/\___/\___/_/_/_/___/_//_/\_,_/_/\_\\_,_/_/\_,_/_/\_\\_,_(_|_|_)  
+                                                                       
 
 Your app has started up correctly.
 Here are some vitals:
 
- NAME            userfrosting
- LOCATION        /Your/application/location
- SERVICES        appserver, database, pma
- APPSERVER URLS  https://localhost:32841
-                 http://localhost:32842
-                 http://userfrosting.lndo.site
-                 https://userfrosting.lndo.site
- PMA URLS        http://localhost:32844
-                 http://userfrosting.phub.lndo.site
-                 https://userfrosting.phub.lndo.site
+ NAME            userfrosting                       
+ LOCATION        /home/silicon/source/uf/framework  
+ SERVICES        appserver, database, cache, pma    
+ APPSERVER URLS  https://localhost:32895            
+                 http://localhost:32896             
+                 http://userfrosting.lndo.site/     
+                 https://userfrosting.lndo.site/    
+ PMA URLS        http://localhost:32898             
+                 http://pma.userfrosting.lndo.site/
 ```
 
 ### Install UserFrosting
 
 Next, we need to install UserFrosting. 
 
-1. Run `lando composer install --ignore-platform-reqs --no-scripts` to install Lando's PHP dependencies.
-1. Run `lando npm install` to install NPM modules
-1. **Optional:** If you have an existing database file, you can import that right away using `lando db-import <filename>`. It is important to note that your file must be within the UF app as Lando, like Docker, cannot access files outside of its environment.
-1. Run `lando php bakery bake` to run UserFrosting's `bake` command and follow the UserFrosting install steps as described in the previous chapter.
+1. Run `lando composer install` to install UserFrosting's PHP dependencies.
+1. Run `lando bakery bake` to run UserFrosting's `bake` command and follow the UserFrosting install steps as described in the previous chapter.
 
 ### Database Settings
 
@@ -169,9 +145,23 @@ DB_PASSWORD="lamp"
 
 ### Accessing Your Site
 
-Now that you have your application installed, you can access it <http://userfrosting.lndo.site> and access PHPMyAdmin (PMA) at <http://pma.userfrosting.lndo.site>. Lando supports SSL as well, but if you get SSL certificate errors follow the guidance listed at <https://docs.lando.dev/config/security.html>.
+Now that you have your application running, you can access it at <http://userfrosting.lndo.site>. Lando supports SSL as well, but if you get SSL certificate errors follow the guidance listed at [Lando Security](https://docs.lando.dev/config/security.html).
 
-### Integrating with PHPStorm IDE 
+Additional tooling and services can be accessed via;
+
+* phpMyAdmin - http://pma.userfrosting.lndo.site
+* Bakery CLI - `lando bakery`
+* PHPUnit - `lando phpunit` and `lando bakery test`
+* Redis CLI - `lando redis-cli`
+* ...and those documented at the [Lando LAMP recipe docs](https://docs.lando.dev/config/lamp.html#tooling).
+
+### IDE Integration
+
+>>> If using Lando in WSL 2 via the Docker for Windows WSL 2 backend you may experience difficulties connecting to XDebug.
+>>> The cause may be the XDebug port (`9000` by default) not being forwarded to Windows, assuming an XDebug misconfiguration has not already been ruled out.
+>>> [microsoft/WSL#4636](https://github.com/microsoft/WSL/issues/4636) is a good place to start looking for potential workarounds and fixes if impacted.
+
+#### PHPStorm
 
 To use PHPStorm's built in xdebug support to enable breakpoints and other useful debug tools, you'll want to add your Lando server to PHPStorm.
 
@@ -186,3 +176,7 @@ To use PHPStorm's built in xdebug support to enable breakpoints and other useful
 1. Under project files, be sure the application matches your UF install directory. If not, you'll need to open your application in PHPStorm first and repeat the above steps.
 1. To the right of your project files, under "absolute path on the server", click into this field and enter `/app` and save your changes
 1. You should be done at this point and your server will accept XDebug incoming connections. For additional help, see <https://www.jetbrains.com/help/phpstorm/configuring-xdebug.html>
+
+#### Further Reading
+
+* [Lando XDebug toggle docs](https://docs.lando.dev/config/php.html#toggling-xdebug)
