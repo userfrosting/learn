@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Set User
+DUID=${DUID:-911}
+DGID=${DGID:-911}
+
+groupmod -o -g "$DGID" xyz
+usermod -o -u "$DUID" xyz
+sed -i -e 's/www-data/xyz/g' /etc/php/7.3/fpm/pool.d/www.conf
+
+# Set Permissions
+chown -R xyz:xyz /var/www
+find /var/www/grav -type f | xargs chmod 664
+find /var/www/grav/bin -type f | xargs chmod 775 
+find /var/www/grav -type d | xargs chmod 775
+find /var/www/grav -type d | xargs chmod +s
+umask 0002
+
+## Start services
+service php7.3-fpm start
+service nginx start
+
+## Install Grav
+/var/www/grav/bin/grav install
+
+## Start cron
+service cron start
+
+## trap SIGINT and SIGTERM signals and gracefully exit
+trap "service cron stop; kill \$!; exit" SIGINT SIGTERM
+tail -f /dev/null
+

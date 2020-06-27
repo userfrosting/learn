@@ -63,7 +63,7 @@ bin/grav install
 
 ## Docker Installation
 
-Most docker images (like the one used here) automate the installation of Grav. So for the most part, getting started with Docker is less tedious. Instead the tediousness is at the end due to a bug in Grav.
+Most docker images (like the one used here) automate the installation of Grav. So for the most part, getting started with Docker is less tedious.
 
 ### Step 1
 
@@ -75,24 +75,28 @@ git clone https://github.com/userfrosting/learn.git userfrosting-learn
 
 ### Step 2
 
-Then we start the image, with the appropriate configuration.
+From the newly cloned folder, we can build the image and start it, with the appropriate configuration.
 
 ```bash
-docker pull ahumaro/grav-php-nginx
-docker run -d -i -p 80:80 -p 2222:22 -v "$(pwd):/usr/share/nginx/html/user/" --name ufLearn ahumaro/grav-php-nginx
+docker build -t learn:latest .
+docker run -d --name=learn -p 8080:80 -v "$(pwd):/var/www/grav/user" learn:latest
 ```
 
-### Step 3
+It will take a couples of second for the site to be up and running while the base Grav installation is setup. Once this is done, you can access the documentation at [http://localhost:8080/](http://localhost:8080/).
 
-Install plugins and base theme. The base theme is learn2. The plugins each have empty directories in the plugins directory.
+To stop the image:
+
+```bash
+docker stop learn
+```
+
+To access Grav command line utility or gpm, use :
 
 ```bash
 docker exec -it ufLearn bash
 chmod +x bin/gpm # This is only needed if permissions are acting up
 bin/grav install
 ```
-
-NOTE: Grav uses `rename` when moving plugins to their final destination, which means this is where everything falls apart. The issue is that `rename` doesn't work to well when crossing a drive boundary (even for emulated drives), throwing a "Invalid cross-device link" error when attempted. Until a fix is out, you'll need to install the theme and plugins manually under docker.
 
 ## Credits
 
