@@ -1,12 +1,12 @@
 ---
 title: Activity Logging
 metadata:
-    description: The activity logger allows you to capture and log user activities.  By default this information is sent to the database, but you can use Monolog to customize how this information is stored - even having critical activity alerts sent to an administrator!
+    description: The activity logger allows you to capture and log user activities. By default this information is sent to the database, but you can use Monolog to customize how this information is stored - even having critical activity alerts sent to an administrator!
 taxonomy:
     category: docs
 ---
 
-By default, user activities are logged to the `activities` database table.  Logged information includes the activity time and an activity type, the `user_id`, the user's IP address, and a description of the activity.  The administrative interface provides convenient tables for viewing these logs:
+By default, user activities are logged to the `activities` database table. Logged information includes the activity time and an activity type, the `user_id`, the user's IP address, and a description of the activity. The administrative interface provides convenient tables for viewing these logs:
 
 ![User activity logging](/images/user-activities.png)
 
@@ -33,7 +33,7 @@ The following activity types are logged by the core UserFrosting features:
 | `account_update_info` | The user updated general account info (name, locale, etc) for another user. |
 | `account_update_field` | The user updated a specific field for another user (this includes modifying a user's roles or password, and enabling/disabling their account). |
 
->>> These activities are only logged _when successful_.  If a user is unable to perform one of these activities, for example because they don't have the necessary permissions or there is some other problem, the attempt won't be logged.
+[notice]These activities are only logged _when successful_. If a user is unable to perform one of these activities, for example because they don't have the necessary permissions or there is some other problem, the attempt won't be logged.[/notice]
 
 ## Logging activities
 
@@ -46,9 +46,9 @@ $this->ci->userActivityLogger->info("User {$currentUser->user_name} adopted a ne
 ]);
 ```
 
-The first parameter is the activity description.  The second parameter contains an array, which should have a `type` key defined.  The value of this key decides the activity type that will be logged.  Note that these activity types are not defined anywhere explicitly - they are stored in the database as plain text and you may create new types on the fly when you log an activity.
+The first parameter is the activity description. The second parameter contains an array, which should have a `type` key defined. The value of this key decides the activity type that will be logged. Note that these activity types are not defined anywhere explicitly - they are stored in the database as plain text and you may create new types on the fly when you log an activity.
 
->>>>> In general, you will probably want to log user activities at the end of the controller method, after the user's activity has completed successfully.  However, you may choose to write to this log at any point in your code.
+[notice=note]In general, you will probably want to log user activities at the end of the controller method, after the user's activity has completed successfully. However, you may choose to write to this log at any point in your code.[/notice]
 
 ## Retrieving activities for a user
 
@@ -62,7 +62,7 @@ The `User` model also provides a number of helper methods for user activities.
 
 ### Getting a user's last activity
 
-The `id` of a user's last activity is 'cached' in the `users` table under the `last_activity_id` column.  This makes it more efficient to retrieve the user's last activity.
+The `id` of a user's last activity is 'cached' in the `users` table under the `last_activity_id` column. This makes it more efficient to retrieve the user's last activity.
 
 You can get the `Activity` record for a user's last activity using the `lastActivity` relation:
 
@@ -70,7 +70,7 @@ You can get the `Activity` record for a user's last activity using the `lastActi
 $lastActivity = $user->lastActivity;
 ```
 
->>> Notice that we reference this as an model _property_, rather than calling it as a method.  If we called `$user->lastActivity()` (with parentheses) instead, it would return the _relationship_ rather than the model itself.
+[notice]Notice that we reference this as an model _property_, rather than calling it as a method. If we called `$user->lastActivity()` (with parentheses) instead, it would return the _relationship_ rather than the model itself.[/notice]
 
 ### Getting a user's last activity by type
 
@@ -108,9 +108,9 @@ $usersWithActivities = User::joinLastActivity()->get();
 
 ## Logging to other handlers
 
-By default, UserFrosting implements a [custom Monolog handler](https://github.com/Seldaek/monolog/blob/master/doc/04-extending.md),  `UserFrosting\Sprinkles\Account\Log\UserActivityDatabaseHandler`, that sends user activity logs to the `activities` database table.
+By default, UserFrosting implements a [custom Monolog handler](https://github.com/Seldaek/monolog/blob/master/doc/04-extending.md), `UserFrosting\Sprinkles\Account\Log\UserActivityDatabaseHandler`, that sends user activity logs to the `activities` database table.
 
-This is all assembled in the `userActivityLogger` service.  If you'd prefer, you can [extend or override](/services/extending-services) the `userActivityLogger` service to add additional handlers, or even completely replace the custom handler altogether.
+This is all assembled in the `userActivityLogger` service. If you'd prefer, you can [extend or override](/services/extending-services) the `userActivityLogger` service to add additional handlers, or even completely replace the custom handler altogether.
 
 ```php
 $container->extend('userActivityLogger', function ($logger, $c) {

@@ -22,7 +22,7 @@ Interacting with the user can be done with the `SymfonyStyle` instance defined i
 
 ### Interacting with UserFrosting
 
-The UserFrosting service providers can be accessed by using `$this->ci` which holds an instance of the [The DI Container](/services/the-di-container). The project root directory path is also available in the `$this->projectRoot` property.
+The UserFrosting service providers can be accessed by using `$this->ci` which holds an instance of the [The DI Container](/services/the-di-container). The project root directory path is also available in the `\UserFrosting\ROOT_DIR` constant.
 
 ## Command Class Template
 
@@ -89,15 +89,18 @@ class BakeCommand extends AccountBakeCommand
 }
 ```
 
->>>>> Because of PHP class inheritance, you must extend the last class in the chain. Since the `Account` sprinkle extend the class from the `Core` sprinkle, your sprinkle should typically extend the class from the `account` sprinkle, aka `UserFrosting\Sprinkle\Account\Bakery\BakeCommand`.
+[notice=note]Because of PHP class inheritance, you must extend the last class in the chain. Since the `Account` sprinkle extend the class from the `Core` sprinkle, your sprinkle should typically extend the class from the `account` sprinkle, aka `UserFrosting\Sprinkle\Account\Bakery\BakeCommand`.[/notice]
 
 The main `BakeCommand` class contains many methods you can use to insert your command in the right place in the _baking_ process.
 
 Available methods / inclusion points for your custom commands are, in order of execution :
-- `executeSetup` : Execute database setup commands
-- `executeDebug` : Execute commands displaying debugging information
-- `executeConfiguration` : Execute commands that ask for configuration values
-- `executeAsset` : Execute assets related commands
-- `executeCleanup` : Execute cache clearing operations
+
+| Method                 | Description                                        |
+| ---------------------- | -------------------------------------------------- |
+| `executeSetup`         | Execute database setup commands                    |
+| `executeDebug`         | Execute commands displaying debugging information  |
+| `executeConfiguration` | Execute commands that ask for configuration values |
+| `executeAsset`         | Execute assets related commands                    |
+| `executeCleanup`       | Execute cache clearing operations                  |
 
 For example, the `foo:bar` command above is added in the `executeConfiguration` method, which means it will be executed after the `executeSetup` and `executeDebug` method / commands. This is useful if your command requires to be run after the database setup for example, but before the assets installation.

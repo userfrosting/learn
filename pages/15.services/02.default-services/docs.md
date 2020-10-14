@@ -6,130 +6,142 @@ taxonomy:
     category: docs
 ---
 
-As mentioned in the last section, each Sprinkle can set up its own services through a **service provider** class.  The default `core` and `account` Sprinkles set up many services that are essential to UserFrosting's functionality.  These classes can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory.
+As mentioned in the last section, each Sprinkle can set up its own services through a **service provider** class. The default `core` and `account` Sprinkles set up many services that are essential to UserFrosting's functionality. These classes can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory.
 
-### Core Services
+## Core Services
 
-#### alerts
+### alerts
 
-This service handles the [alert message stream](/routes-and-controllers/alert-stream), sometimes known as "flash messages".  See Section 9.6 for more information.
+This service handles the [alert message stream](/routes-and-controllers/alert-stream), sometimes known as "flash messages". See [Section 9](/routes-and-controllers/alert-stream) for more information.
 
-#### assets
+### assetLoader
 
-Constructs the `AssetManager` object (namespace `UserFrosting\Assets\AssetManager`), which is responsible for loading information about assets (Javascript, CSS, images, etc) required by each page and constructing the appropriate HTML tags.  See [Asset Management](/asset-management/asset-bundles) for more information.
+This service handles requests for [raw assets](/asset-management/asset-bundles#raw-assets) made to the application. It locates the appropriate file for a given url, and builds the response containing the contents of the asset, along with setting headers for MIME type and length.
 
-#### assetLoader
+### assets
 
-This service handles requests for [raw assets](/asset-management/asset-bundles#raw-assets) made to the application.  It locates the appropriate file for a given url, and builds the response containing the contents of the asset, along with setting headers for MIME type and length.
+Constructs the `Assets` object (namespace `UserFrosting\Assets\Assets`), which is responsible for loading information about assets (Javascript, CSS, images, etc) required by each page and constructing the appropriate HTML tags. See [Asset Management](/asset-management/asset-bundles) for more information.
 
-#### cache
+### cache
 
-Creates an instance of a Laravel [Cache](https://laravel.com/docs/5.4/cache). See [Chapter 16](/advanced/caching) for more information.
+Creates an instance of a Laravel [Cache](https://laravel.com/docs/5.8/cache). See [Chapter 17](/advanced/caching) for more information.
 
-#### checkEnvironment
+### checkEnvironment
 
 Constructs the `CheckEnvironment` object (namespace `UserFrosting\Sprinkle\Core\Util\CheckEnvironment`), which does some basic checks in a new UF installation to make sure that the minimum requirements are met, directory permissions are set, etc.
 
-#### classMapper
+### classMapper
 
-Constructs the `ClassMapper` object (namespace `UserFrosting\Sprinkle\Core\Util\ClassMapper`), which provides dynamic class mapping in your controllers and classes.  See [Advanced Dev Features](/advanced/class-mapper) for more information on dynamic class mapping.
+Constructs the `ClassMapper` object (namespace `UserFrosting\Sprinkle\Core\Util\ClassMapper`), which provides dynamic class mapping in your controllers and classes. See [Advanced Dev Features](/advanced/class-mapper) for more information on dynamic class mapping.
 
-#### config
+### cli
 
-Constructs a `Repository` object (namespace `UserFrosting\Support\Repository\Repository`), which [processes and provides a merged repository for the configuration files](/configuration/config-files) across all loaded Sprinkles.  Additionally, it imports the [Dotenv](https://github.com/vlucas/phpdotenv) to allow automagically loading environment variables from `.env` file.
+The CLI service return a boolean value. True means the APP is in CLI mode, either in a test of Bakery command.
+
+### config
+
+Constructs a `Repository` object (namespace `UserFrosting\Support\Repository\Repository`), which [processes and provides a merged repository for the configuration files](/configuration/config-files) across all loaded Sprinkles. Additionally, it imports the [Dotenv](https://github.com/vlucas/phpdotenv) to allow automagically loading environment variables from `.env` file.
 
 The `config` service also builds the `site.uri.public` config variable from the component values specified in the configuration.
 
-#### csrf
+### csrf
 
-Constructs the [CSRF Guard](https://github.com/slimphp/Slim-Csrf) middleware, which mitigates cross-site request forgery attacks on your users.  See [Chapter 2](/background/security) for more information on security features.
+Constructs the [CSRF Guard](https://github.com/slimphp/Slim-Csrf) middleware, which mitigates cross-site request forgery attacks on your users. See [Chapter 2](/background/security) for more information on security features.
 
-#### db
+### db
 
-Sets up the [database](/database).  
+Sets up the [database](/database).
 
-#### debugLogger
+### debugLogger
 
-Monolog `Logger` object for sending debug print statements and data to `logs/debug.log`.  Can also be accessed via the [`Debug` facade](/troubleshooting/debugging#debug-statements).
+Monolog `Logger` object for sending debug print statements and data to `logs/debug.log`. Can also be accessed via the [`Debug` facade](/troubleshooting/debugging#debug-statements).
 
-#### errorHandler
+### errorHandler
 
-Sets up a `ExceptionHandlerManager` object, which is used as a [custom error handler](http://www.slimframework.com/docs/handlers/error.html#custom-error-handler) for UF's Slim application.  It then registers the custom handlers for `HttpException`, `PDOException`, and `phpmailerException`.  See [Chapter 16](/advanced/error-handling) for more information on custom exceptions and exception error handlers.
+Sets up a `ExceptionHandlerManager` object, which is used as a [custom error handler](http://www.slimframework.com/docs/v3/handlers/error.html#custom-error-handler) for UF's Slim application. It then registers the custom handlers for `HttpException`, `PDOException`, and `phpmailerException`. See [Chapter 17](/advanced/error-handling) for more information on custom exceptions and exception error handlers.
 
-#### errorLogger
+### errorLogger
 
 Monolog `Logger` object for sending non-fatal error information from custom error handlers to `logs/userfrosting.log`.
 
-#### factory
+### factory
 
-Provide access to factories for the rapid creation of [test](/advanced/automated-tests) objects.
+Provide access to factories for the rapid creation of [test](/testing/writting-tests/factories) objects.
 
-#### filesystem
+### filesystem
 
 Provide access to the filesystem for file handling. Include support for multiple cloud based storage solution. See [File Storage](/advanced/storage) for more information.
 
-#### localePathBuilder
+### locale
 
-A `UserFrosting\I18n\LocalePathBuilder` instance that constructs an ordered list of files containing [translations](/advanced/i18n).  These files are used to initialize the `MessageTranslator` object available in the `translator` service.
+Creates an instance of `SiteLocale` (namespace `UserFrosting\Sprinkle\Core\I18n\SiteLocale`), which provides helper methods for the locale system. See [Chapter 16](/i18n) for more information about locale and the [API Documentation](http://api.userfrosting.com) for available methods.
 
-#### mailer
+### mailer
 
 Creates an instance of `Mailer` (namespace `UserFrosting\Sprinkle\Core\Mail\Mailer`), which serves as a UF-compatible wrapper for a [PHPMailer](https://github.com/PHPMailer/PHPMailer) object.
 
 See [Chapter 14](/mail) for more information.
 
-#### mailLogger
+### mailLogger
 
-Monolog `Logger` object for sending detailed SMTP mail server information from the `mailer` service to `logs/userfrosting.log`.  Mail logging will only occur if `debug.smtp` is set to `true`.
+Monolog `Logger` object for sending detailed SMTP mail server information from the `mailer` service to `logs/userfrosting.log`. Mail logging will only occur if `debug.smtp` is set to `true`.
 
-#### notFoundHandler
+### migrator
 
-Implements Slim's [Custom Not Found handler](http://www.slimframework.com/docs/handlers/not-found.html), causing the application to return a 404 not found page.
+Creates an instance of `Migrator` (namespace `UserFrosting\Sprinkle\Core\Database\Migrator\Migrator`), which runs your database [migrations](/database/migrations).
 
-#### queryLogger
+### notFoundHandler
+
+Implements Slim's [Custom Not Found handler](http://www.slimframework.com/v3/docs/handlers/not-found.html), causing the application to return a 404 not found page.
+
+### phpErrorHandler
+
+Alias for the [`errorHandler`](#errorhandler) service.
+
+### queryLogger
 
 Monolog `Logger` object for logging successfully completed database queries to `logs/userfrosting.log`.
 
-#### router
+### router
 
-Overrides Slim's default `router`, replacing their `Router` object with a `UserFrosting\Sprinkle\Core\Router` object.  Our custom `Router` class allows for routes to be overridden and redefined in Sprinkles.
+Overrides Slim's default `router`, replacing their `Router` object with a `UserFrosting\Sprinkle\Core\Router` object. Our custom `Router` class allows for routes to be overridden and redefined in Sprinkles.
 
 See [Chapter 9](/routes-and-controllers) for more information about defining routes.
 
-#### session
+### seeder
 
-Sets up UserFrosting's `Session` object (`UserFrosting\Session\Session`), which serves as a wrapper for the `$_SESSION` superglobal.  `Session` will use file- or database-based storage for sessions, depending on your configuration setting for `session.handler`.  Session handlers are provided by [Laravel's session handlers](https://laravel.com/docs/5.4/session#configuration), which implement PHP's [`SessionHandlerInterface`](http://php.net/SessionHandlerInterface).
+Creates an instance of `Seeder` (namespace `UserFrosting\Sprinkle\Core\Database\Seeder\Seeder`), which runs your database [seeds](/database/seeding).
+
+### session
+
+Sets up UserFrosting's `Session` object (`UserFrosting\Session\Session`), which serves as a wrapper for the `$_SESSION` superglobal. `Session` will use file- or database-based storage for sessions, depending on your configuration setting for `session.handler`. Session handlers are provided by [Laravel's session handlers](https://laravel.com/docs/5.8/session#configuration), which implement PHP's [`SessionHandlerInterface`](http://php.net/SessionHandlerInterface).
 
 Please note that when using file-based sessions, UserFrosting places sessions in its own `/app/sessions` directory instead of PHP's default session directory.
 
->>>> Use UserFrosting's `session` service (`$container->session`) instead of PHP's `$_SESSION` superglobal in your code for proper functionality.
+[notice=warning]Use UserFrosting's `session` service (`$container->session`) instead of PHP's `$_SESSION` superglobal in your code for proper functionality.[/notice]
 
-#### shutdownHandler
+### throttler
 
-Sets up an instance of `ShutdownHandler` (`UserFrosting\Sprinkle\Core\Util\ShutdownHandler`), which attempts to capture and log any fatal errors raised.  It registers itself with PHP's `register_shutdown_function`.
+Creates a `Throttler` object, which handles [request throttling](/routes-and-controllers/client-input/throttle) for different routes. This service will automatically register any throttling rules defined in the `throttles` key of your configuration.
 
-#### throttler
+### translator
 
-Creates a `Throttler` object, which handles [request throttling](/routes-and-controllers/client-input/throttle) for different routes.  This service will automatically register any throttling rules defined in the `throttles` key of your configuration.
+Sets up the `Translator` object (`UserFrosting\I18n\Translator`) for translation, localization, and internationalization of your site's contents. See [Chapter 16](/i18n) for more information.
 
-#### translator
+### view
 
-Sets up the `MessageTranslator` object (`UserFrosting\I18n\MessageTranslator`) for translation, localization, and internationalization of your site's contents.  See [Chapter 16](/advanced/i18n) for more information.
-
-#### view
-
-Sets up the Twig View object, which is implemented by the [Slim Twig-View](https://github.com/slimphp/Twig-View) project.  Turns on caching and/or debugging depending on the settings for `cache.twig` and `debug.twig`, respectively.  Also registers the UserFrosting's `CoreExtension`
+Sets up the Twig View object, which is implemented by the [Slim Twig-View](https://github.com/slimphp/Twig-View) project. Turns on caching and/or debugging depending on the settings for `cache.twig` and `debug.twig`, respectively. Also registers the UserFrosting's `CoreExtension`
 extension (`UserFrosting\Sprinkle\Core\Twig\CoreExtension`), which provides some additional functions, filters, and global variables for UserFrosting.
 
 See [Templating with Twig](/templating-with-twig) for more information about Twig and the custom functions, filters, and variables that UserFrosting defines.
 
-### Account Services
+## Account Services
 
-#### assets
+### assets
 
 The Account Sprinkle extends the core `assets` service, to add search paths for any assets loaded in a user's custom theme.
 
-#### classMapper
+### classMapper
 
 The Account Sprinkle extends the core `classMapper` service, and registers the following model identifiers:
 
@@ -142,8 +154,9 @@ The Account Sprinkle extends the core `classMapper` service, and registers the f
 | `activity`       | `UserFrosting\Sprinkle\Account\Database\Models\Activity`      |
 | `password_reset` | `UserFrosting\Sprinkle\Account\Database\Models\PasswordReset` |
 | `verification`   | `UserFrosting\Sprinkle\Account\Database\Models\Verification`  |
+| `persistence`    | `UserFrosting\Sprinkle\Account\Database\Models\Persistence`   |
 
-#### errorHandler
+### errorHandler
 
 The Account Sprinkle extends the core `errorHandler` service, to add the following custom exception handlers:
 
@@ -153,78 +166,84 @@ The Account Sprinkle extends the core `errorHandler` service, to add the followi
 | `UserFrosting\Sprinkle\Account\Authenticate\Exception\AuthExpiredException`     | `UserFrosting\Sprinkle\Account\Error\Handler\AuthExpiredExceptionHandler`     |
 | `UserFrosting\Sprinkle\Account\Authenticate\Exception\AuthCompromisedException` | `UserFrosting\Sprinkle\Account\Error\Handler\AuthCompromisedExceptionHandler` |
 
-#### localePathBuilder
+### view
 
-The Account Sprinkle extends the core `localePathBuilder` service, to add search paths for any locale files loaded in a user's custom theme.
+The Account Sprinkle extends the core `view` service, adding the `AccountExtension` Twig extension (`UserFrosting\Sprinkle\Account\Twig\AccountExtension`). This extension adds the following:
 
-#### view
-
-The Account Sprinkle extends the core `view` service, adding the `AccountExtension` Twig extension (`UserFrosting\Sprinkle\Account\Twig\AccountExtension`).  This extension adds the following:
-
-##### Functions
+#### Functions
 
 - `checkAccess`: Twig wrapper for the `authorizer` service's `checkAccess` method.
 
-##### Variables
+#### Variables
 
 - `current_user`: Twig wrapper for the `currentUser` service.
 
 The extended `view` also adds search paths for any template files loaded in a user's custom theme.
 
-#### authenticator
+### authenticator
 
-Creates an instance of `Authenticator` (`UserFrosting\Sprinkle\Account\Authenticate\Authenticator`), which handles authenticating and logging in users.  See [Chapter 7](/users/user-accounts#authentication-and-authorization) for more information.
+Creates an instance of `Authenticator` (`UserFrosting\Sprinkle\Account\Authenticate\Authenticator`), which handles authenticating and logging in users. See [Chapter 7](/users/user-accounts#authentication-and-authorization) for more information.
 
-#### authGuard
+### authGuard
 
-Sets up the `AuthGuard` middleware, which is bound to routes that require authentication to access ("protected routes").  See [Chapter 7](/users/user-accounts#authentication-and-authorization) for more information.
+Sets up the `AuthGuard` middleware, which is bound to routes that require authentication to access ("protected routes"). See [Chapter 7](/users/user-accounts#authentication-and-authorization) for more information.
 
-#### authLogger
+### authLogger
 
-Monolog `Logger` object for logging detailed information about access control checks.  See [Chapter 7](/users/access-control) for more information about access control.  Note that access control checks will only be logged if `debug.auth` is set to `true` in the configuration.
+Monolog `Logger` object for logging detailed information about access control checks. See [Chapter 7](/users/access-control) for more information about access control. Note that access control checks will only be logged if `debug.auth` is set to `true` in the configuration.
 
-#### authorizer
+### authorizer
 
-Creates an instance of `AuthorizationManager` (`UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager`), which handles access control checks via the `checkAccess` method.  This service also defines several default access condition callbacks.  More information, and a complete list of default access condition callbacks, can be found in [Chapter 7](/users/access-control).
+Creates an instance of `AuthorizationManager` (`UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager`), which handles access control checks via the `checkAccess` method. This service also defines several default access condition callbacks. More information, and a complete list of default access condition callbacks, can be found in [Chapter 7](/users/access-control).
 
-#### currentUser
+### currentUser
 
-Sets up the `User` object (`UserFrosting\Sprinkle\Account\Database\Models\User`) for the currently logged-in user.  If there is no logged-in user, it returns `null`.  It also loads the locale and theme for the current user, if set.
+Sets up the `User` object (`UserFrosting\Sprinkle\Account\Database\Models\User`) for the currently logged-in user. If there is no logged-in user, it returns `null`. It also loads the locale and theme for the current user, if set.
 
-#### redirect.onAlreadyLoggedIn
+### locale
 
-Returns a callback that redirects the client when they attempt to perform certain guest actions, but they are already logged in.  For example, if they attempt to visit the registration or login pages when they are already signed in, this service will be used to redirect them to an appropriate landing page.
+Extends the _Core_ `SiteLocale` instance (with namespace `UserFrosting\Sprinkle\Account\I18n\SiteLocale`) to add account related info to the service.
 
-#### redirect.onLogin
+### passwordHasher
 
-Returns a callback that sets the `UF-Redirect` header in the response.  This callback is automatically invoked in the `AccountController::login` method.  The `UF-Redirect` header is used by client-side code to determine where to redirect a given user after they log in.
+Creates an instance of `Hasher` (`UserFrosting\Sprinkle\Account\Authenticate\Hasher`), which handles password hashing and validation.
 
-#### repoPasswordReset
+### redirect.onAlreadyLoggedIn
+
+Returns a callback that redirects the client when they attempt to perform certain guest actions, but they are already logged in. For example, if they attempt to visit the registration or login pages when they are already signed in, this service will be used to redirect them to an appropriate landing page.
+
+### redirect.onLogin
+
+Returns a callback that sets the `UF-Redirect` header in the response. This callback is automatically invoked in the `AccountController::login` method. The `UF-Redirect` header is used by client-side code to determine where to redirect a given user after they log in.
+
+See [_Changing the post-login destination_](/recipes/custom-login-page#changing-the-post-login-destination) for an example on how to customixzed this in your own sprinkle.
+
+### repoPasswordReset
 
 Sets up a `PasswordResetRepository` object (`UserFrosting\Sprinkle\Account\Repository\PasswordResetRepository`), which handles token creation, verification, and expiration for password reset requests.
 
-#### repoVerification
+### repoVerification
 
 Sets up a `VerificationRepository` object (`UserFrosting\Sprinkle\Account\Repository\VerificationRepository`), which handles token creation, verification, and expiration for new account verification requests.
 
-#### userActivityLogger
+### userActivityLogger
 
-Sets up a Monolog logger, which uses `UserFrosting\Sprinkle\Account\Log\UserActivityDatabaseHandler` and `UserFrosting\Sprinkle\Account\Log\UserActivityProcessor` to allow logging of user activities to the `activities` database table.  By using Monolog, it makes it easy to swap other storage solutions such as Redis or Elastic Search.
+Sets up a Monolog logger, which uses `UserFrosting\Sprinkle\Account\Log\UserActivityDatabaseHandler` and `UserFrosting\Sprinkle\Account\Log\UserActivityProcessor` to allow logging of user activities to the `activities` database table. By using Monolog, it makes it easy to swap other storage solutions such as Redis or Elastic Search.
 
-### System services
+## System services
 
-There are a few services which are loaded outside of the Sprinkle system, in UserFrosting's `UserFrosting\System\ServiceProvider` service provider.  These include:
+There are a few services which are loaded outside of the Sprinkle system, in UserFrosting's `UserFrosting\System\ServiceProvider` service provider. These include:
 
-#### eventDispatcher
+### eventDispatcher
 
-An instance of `RocketTheme\Toolbox\Event\EventDispatcher`, which itself extends the Symfony `EventDispatcher` class.  This is used by Sprinkles to hook into the [application lifecycle](/advanced/application-lifecycle).
+An instance of `RocketTheme\Toolbox\Event\EventDispatcher`, which itself extends the Symfony `EventDispatcher` class. This is used by Sprinkles to hook into the [application lifecycle](/advanced/application-lifecycle).
 
-#### locator
+### locator
 
-An instance of [Uniform Resource Locator class](https://github.com/userfrosting/uniformresourcelocator), which provides a unified method of accessing Sprinkle entities via [streams](https://webmozart.io/blog/2013/06/19/the-power-of-uniform-resource-location-in-php/).  
+An instance of our own [Uniform Resource Locator class](https://github.com/userfrosting/uniformresourcelocator), which provides a unified method of accessing Sprinkle entities via [streams](https://webmozart.io/blog/2013/06/19/the-power-of-uniform-resource-location-in-php/).
 
-See [Chapter 16](/advanced/locator) for more information.
+See [Chapter 17](/advanced/locator) for more information.
 
-#### sprinkleManager
+### sprinkleManager
 
-An instance of `UserFrosting\System\Sprinkle\SprinkleManager`.  Handles registration of Sprinkle bootstrapper classes and the loading of Sprinkle resources when UserFrosting is initialized.
+An instance of `UserFrosting\System\Sprinkle\SprinkleManager`. Handles registration of Sprinkle bootstrapper classes and the loading of Sprinkle resources when UserFrosting is initialized.

@@ -16,7 +16,7 @@ Migrations are also very useful when dealing with [Automated Test](/testing). Te
 
 ## Migration Structure
 
-A migration is nothing more than a PHP class that uses Eloquent's [Schema Builder](https://laravel.com/docs/5.4/migrations#tables) to create, remove, and modify tables in your database. Migrations can also be used to perform additional setup tasks like seeding your tables with some default values.
+A migration is nothing more than a PHP class that uses Eloquent's [Schema Builder](https://laravel.com/docs/5.8/migrations#tables) to create, remove, and modify tables in your database. Migrations can also be used to perform additional setup tasks like seeding your tables with some default values.
 
 
 When you run the main UserFrosting install script (`php bakery migrate`), it will first check a special `migration` table to see which migrations have been run before. If the migration class has a record in this table, the migrate script will simply skip it.
@@ -25,7 +25,7 @@ When you run the main UserFrosting install script (`php bakery migrate`), it wil
 
 To be picked up by the `migrate` bakery command, migration class files must be located in the `src/Database/Migrations/` directory of your Sprinkle and have the appropriate PSR-4 namespace.
 
-Recall that [PSR-4](http://www.php-fig.org/psr/psr-4/#examples) requires that classes have a namespace that corresponds to their file path, i.e. `UserFrosting\Sprinkle\{sprinkleName}\Database\Migrations`(where `{sprinkleName}` is the name of your sprinkle).  **Crucially**, namespaces are case-sensitive and **must** match the case of the corresponding directories. Also note that dots (`.`) and dashes (`-`) are not included in the directories (and namespace) as per PSR-4 rules. The class names must also correspond to these file names; e.g. `MembersTable.php` must contain a single `MembersTable` class.
+Recall that [PSR-4](http://www.php-fig.org/psr/psr-4/#examples) requires that classes have a namespace that corresponds to their file path, i.e. `UserFrosting\Sprinkle\{sprinkleName}\Database\Migrations`(where `{sprinkleName}` is the name of your sprinkle). **Crucially**, namespaces are case-sensitive and **must** match the case of the corresponding directories. Also note that dots (`.`) and dashes (`-`) are not included in the directories (and namespace) as per PSR-4 rules. The class names must also correspond to these file names; e.g. `MembersTable.php` must contain a single `MembersTable` class.
 
 
 You can also optionally organize your migrations in subdirectories so it's easier to find and manage them. For example:
@@ -49,7 +49,7 @@ While multiple operations _can_ be done in the same migration class, it is recom
 
 Each migration class needs to extend the base `UserFrosting\Sprinkle\Core\Database\Migration` class. A migration class must contains two methods: `up` and `down`. The `up` method is used to add new tables, columns, or indexes to your database, while the `down` method should simply reverse the operations performed by the `up` method.
 
-Within both of these methods you may use the [Laravel schema builder](https://laravel.com/docs/5.4/migrations) (available in the `$this->schema` property) to expressively create and modify tables. To learn about all of the methods available on the Schema builder, [check out Laravel documentation](https://laravel.com/docs/5.4/migrations#creating-tables).
+Within both of these methods you may use the [Laravel schema builder](https://laravel.com/docs/5.8/migrations) (available in the `$this->schema` property) to expressively create and modify tables. To learn about all of the methods available on the Schema builder, [check out Laravel documentation](https://laravel.com/docs/5.8/migrations#creating-tables).
 
 For a simple example, suppose that you want to create a `members` table, which will be used to add application-specific fields for our users:
 
@@ -95,9 +95,9 @@ class MembersTable extends Migration
 
 We then call a series of methods on the `$table` variable in `create`'s closure, to set up the columns and other table properties.
 
-You'll also notice that we've created a `user_id` column, which associates each record in `members` with a corresponding record in `users`. By adding a `unique` constraint to this column as well, we effectively set up a one-to-one relationship between `members` and `users`.  Since we've also added a foreign key from `user_id` to the `id` column in `users`, it's **very important** that the two columns have the exact same type.  Since `id` is an unsigned integer, `user_id` must also be defined as an unsigned integer.
+You'll also notice that we've created a `user_id` column, which associates each record in `members` with a corresponding record in `users`. By adding a `unique` constraint to this column as well, we effectively set up a one-to-one relationship between `members` and `users`. Since we've also added a foreign key from `user_id` to the `id` column in `users`, it's **very important** that the two columns have the exact same type. Since `id` is an unsigned integer, `user_id` must also be defined as an unsigned integer.
 
-For a complete explanation of the available methods for working with tables, see Laravel's [Migrations](https://laravel.com/docs/5.4/migrations) chapter. They have a nice table with all the available options.
+For a complete explanation of the available methods for working with tables, see Laravel's [Migrations](https://laravel.com/docs/5.8/migrations) chapter. They have a nice table with all the available options.
 
 As for the `down` method, it simply tells the database structure to delete the table created by the `up` method when rolling back that migration. In the `members` example, the table created by the `up` method would be **deleted** by the `down` method.
 
