@@ -10,7 +10,7 @@ UserFrosting provides some helper Traits to easily enable features and tools for
 
 This trait can be used force the `test_integration` database connection to be used for testing. This means all tests will be run against an in-memory SQLite database. This database is temporary and independent from the database used by your UserFrosting instance. That means your data is safe when tests are run. If you prefer to use a real database for tests, you can overwrite the `test_integration` connection config in your own sprinkle for the `testing` environment.
 
-[notice=warning]While you **can** test your code against the main database, it usually not a good idea to do so with a production database. Those are _tests_ after all. They _can_ fails. Catastrophically. UserFrosting built-in tests are all run against a test database.[/notice]
+[notice=warning]While you **can** test your code against the main database, it usually not a good idea to do so with a production database. Those are _tests_ after all. They _can_ fail. Catastrophically. UserFrosting built-in tests are all run against a test database.[/notice]
 
 Note that the in-memory database is empty by default. If your test requires the standard tables to be up, you can use the `RefreshDatabase` trait to run all migrations up. You could also use the migrator service to run a particular migration up.
 
