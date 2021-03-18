@@ -1,0 +1,23 @@
+# Updates the submodules in the website branch
+name: Website
+
+on:
+  push:
+    branches: [ master, develop, '4.*' ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: website
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git submodule update --remote --merge
+          git add --all
+          git commit -m "Updating submodules"
+          git push
