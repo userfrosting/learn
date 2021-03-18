@@ -21,7 +21,6 @@ jobs:
       - name: Commit changes
         uses: EndBug/add-and-commit@v7
         with: 
-          add: 'src'
           author_name: Github Actions
           author_email: github-actions@github.com
           branch: website
