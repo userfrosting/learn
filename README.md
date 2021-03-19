@@ -79,7 +79,7 @@ From the newly cloned folder, we can build the image and start it, with the appr
 
 ```bash
 docker build -t learn:latest .
-docker run -d -rm --name=learn -p 8080:80 -v "$(pwd):/var/www/grav/user" learn:latest
+docker run -d --rm --name=learn -p 8080:80 -v "$(pwd):/var/www/grav/user" learn:latest
 ```
 
 It will take a couples of second for the site to be up and running while the base Grav installation is setup. Once this is done, you can access the documentation at [http://localhost:8080/](http://localhost:8080/).
@@ -93,7 +93,7 @@ docker stop learn
 To access Grav command line utility or gpm, use :
 
 ```bash
-docker exec -it ufLearn bash
+docker exec -it learn bash
 chmod +x bin/gpm # This is only needed if permissions are acting up
 bin/grav install
 ```

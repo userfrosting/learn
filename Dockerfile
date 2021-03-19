@@ -1,4 +1,4 @@
-FROM bitnami/minideb:buster
+FROM bitnami/minideb:stretch
 
 RUN \
   ## Docker User
@@ -31,8 +31,7 @@ RUN \
 
 RUN \
   ## Download GRAV
-  mkdir -p \
-    /grav && \
+  mkdir -p /grav && \
   GRAV_VERSION=$(curl -sX GET "https://api.github.com/repos/getgrav/grav/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]') && \
   curl -o /grav/grav.zip -L https://github.com/getgrav/grav/releases/download/${GRAV_VERSION}/grav-v${GRAV_VERSION}.zip && \
   unzip /grav/grav.zip -d /var/www && \
