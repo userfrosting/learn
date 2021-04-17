@@ -1,0 +1,20 @@
+name: userfrosting-learn
+
+services:
+  appserver:
+    type: php:7.4
+    via: apache:2.4
+    ssl: true
+    app_mount: false
+    overrides:
+      volumes:
+        - ./:/var/www/grav/user
+
+events:
+  pre-start:
+    - appserver: bash .lando.dist.sh
+
+proxy:
+  appserver:
+    - learn.userfrosting.lndo.site
+
