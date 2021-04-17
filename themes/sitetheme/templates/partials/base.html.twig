@@ -30,7 +30,7 @@
                 {% do assets.addCss('theme://css/pure-0.5.0/grids-min.css') %}
                 {% do assets.addJs('theme://js/html5shiv-printshiv.min.js') %}
             {% endif %}
-            {{ assets.css() }}
+            {{ assets.css()|raw }}
         {% endblock %}
 
         {% block javascripts %}
@@ -44,7 +44,7 @@
             {% do assets.addJs('theme://js/jquery.toc.js', 94) %}
         {% endblock %}
     
-        {{ assets.js() }}
+        {{ assets.js()|raw }}
 
         {# Must be in <head> for GA to verify site ownership #}
         {% block analytics %}

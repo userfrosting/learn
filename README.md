@@ -4,105 +4,87 @@ https://learn.userfrosting.com
 
 This is the repository for the documentation for UserFrosting 4.  It is built with the flat-file CMS [Grav](http://getgrav.org), using their [RTFM skeleton](https://github.com/getgrav/grav-skeleton-rtfm-site#rtfm-skeleton).
 
-## Getting started
+## Getting Started
 
-This application uses the [Grav](https://learn.getgrav.org/) CMS.  This repository does not contain a full Grav installation - rather, it just contains the contents of Grav's `user` directory, which is where all of our custom content, themes, and assets live.  This was done as per the [recommendation on Grav's blog](https://getgrav.org/blog/developing-with-github-part-2), to make it easier to deploy changes to the live server.
+This site is built using [Grav](https://learn.getgrav.org/) CMS, which like UserFrosting v4 has combined framework and project skeleton code. To permit easier content management, this repository only includes Grav's `user` directory, which is where all of our custom content, themes, and assets live. See [Grav Development with GitHub - Part 2](https://getgrav.org/blog/developing-with-github-part-2) for more on this approach.
 
-In terms of actually getting it running, you can opt for a local installation, or utilise a containerised VPS solution like Docker.
+This unique structure does complicate local hosting somewhat. Lando is recommended, however local installation and Docker are also documented.
 
-## Local installation
+### Lando
 
-### Step 1 - Install Grav
+1. Clone repo
+   ```
+   git clone -b website https://github.com/userfrosting/learn.git userfrosting-learn
+   cd userfrosting-learn
+   ```
 
-To install this website on your computer, first [install grav core](https://getgrav.org/downloads) in a project folder called `userfrosting-learn` under your webserver's document root folder. Then, find the `user` folder inside of your project folder.  Delete the contents of the `user` folder and clone this repository directly into the user folder.
+2. Prepare multisite
+   ```
+   git submodule update --init
+   ```
 
-```bash
-git clone https://github.com/getgrav/grav.git userfrosting-learn
-cd userfrosting-learn
-rm -r user
-git clone -b website https://github.com/userfrosting/learn.git user
-```
+3. Start Lando
+   ```
+   lando start
+   ```
 
-When you're done it should look like this:
+### Local Installation
 
-```
-htdocs/
-└── userfrosting-learn/
-   ├── assets/
-   ├── ...
-   ├── user/
-       ├── .git
-       ├── accounts/
-       ├── assets/
-       ├── config/
-       └── ...
-   └── ...
-```
+This guide does not cover setting up the webserver and assumes XAMPP is being used.
 
-### Step 2 - Setup permission (MacOS)
+1. Install Grav and replace the `user` directory with this repository
+   ```
+   git clone https://github.com/getgrav/grav.git userfrosting-learn
+   cd userfrosting-learn
+   rm -r user
+   git clone -b website https://github.com/userfrosting/learn.git user
+   ```
 
-Grav needs your webserver to be able to write to certain directories.  In OSX with XAMPP installed, this won't work by default.  To deal with this, add default webserver user `daemon` to OSX's `staff` group (which already has the necessary permissions for writing to files/directories):
+2. Correct permissions (MacOS with XAMPP)
+   ```
+   sudo dseditgroup -o edit -a daemon -t user staff
+   ```
 
-```bash
-sudo dseditgroup -o edit -a daemon -t user staff
-```
+3. Setup Grav multisite
+   ```
+   cp user/setup.php setup.php
+   cd user/
+   git submodule update --init
+   cd ../
+   ```
 
-### Step 3 - Setup Multisite
+4. Install Grav
+   ```
+   bin/grav install
+   ```
 
-Setup Grav multisite for access to all versions of the documentation.
 
-```bash
-cp user/setup.php setup.php
-```
-
-Fetch the git submodules from the `user/` directory, which contains the pages for every doc versions :
-
-```bash
-cd user/
-git submodule update --init
-cd ../
-```
-
-### Step 4 - Install Grav
-
-To finish Grav install, just run:
-
-```bash
-bin/grav install
-```
-
-## Docker Installation
+### Docker
 
 Most docker images (like the one used here) automate the installation of Grav. So for the most part, getting started with Docker is less tedious. Instead the tediousness is at the end due to a bug in Grav.
 
-### Step 1
+1. Clone repo
+   ```
+   git clone -b website https://github.com/userfrosting/learn.git userfrosting-learn
+   cd userfrosting-learn
+   ```
 
-We start off by cloning this repo.
+2. Start Grav container
+   ```
+   docker pull ahumaro/grav-php-nginx
+   docker run -d -i -p 80:80 -p 2222:22 -v "$(pwd):/usr/share/nginx/html/user/" --name ufLearn ahumaro/grav-php-nginx
+   ```
 
-```bash
-git clone https://github.com/userfrosting/learn.git userfrosting-learn
-```
+3. TODO Multisite
 
-### Step 2
+4. Install Grav
+   ```
+   docker exec -it ufLearn bash
+   chmod +x bin/gpm # This is only needed if permissions are acting up
+   bin/grav install
+   ```
 
-Then we start the image, with the appropriate configuration.
-
-```bash
-docker pull ahumaro/grav-php-nginx
-docker run -d -i -p 80:80 -p 2222:22 -v "$(pwd):/usr/share/nginx/html/user/" --name ufLearn ahumaro/grav-php-nginx
-```
-
-### Step 3
-
-Install plugins and base theme. The base theme is learn2. The plugins each have empty directories in the plugins directory.
-
-```bash
-docker exec -it ufLearn bash
-chmod +x bin/gpm # This is only needed if permissions are acting up
-bin/grav install
-```
-
-NOTE: Grav uses `rename` when moving plugins to their final destination, which means this is where everything falls apart. The issue is that `rename` doesn't work to well when crossing a drive boundary (even for emulated drives), throwing a "Invalid cross-device link" error when attempted. Until a fix is out, you'll need to install the theme and plugins manually under docker.
+   NOTE: Grav uses `rename` when moving plugins to their final destination, which means this is where everything falls apart. The issue is that `rename` doesn't work to well when crossing a drive boundary (even for emulated drives), throwing a "Invalid cross-device link" error when attempted. Until a fix is out, you'll need to install the theme and plugins manually under docker.
 
 ## Adding a new documentation version
 
