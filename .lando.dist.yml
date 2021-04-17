@@ -5,14 +5,16 @@ services:
     type: php:7.4
     via: apache:2.4
     ssl: true
+    webroot: ../var/www/grav
     app_mount: false
     overrides:
       volumes:
         - ./:/var/www/grav/user
+        - ./setup.php:/var/www/grav/setup.php
 
 events:
   pre-start:
-    - appserver: bash .lando.dist.sh
+    - appserver: bash ~/grav/user/.lando.dist.sh
 
 proxy:
   appserver:

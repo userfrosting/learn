@@ -12,8 +12,6 @@ This unique structure does complicate local hosting somewhat. Lando is recommend
 
 ### Lando
 
-This currently does not fully support multisite.
-
 1. Clone repo
    ```
    git clone -b website https://github.com/userfrosting/learn.git userfrosting-learn
