@@ -79,12 +79,12 @@ lando stop
 
 2. Build Grav container
    ```
-   docker build -t learn-website:latest .
+   docker build -t learn:latest .
    ```
 
 3. Start Grav container
    ```
-   docker run -d --rm --name=learn -p 8080:80 -v "$(pwd):/var/www/grav/user" learn-website:latest
+   docker run -d --rm --name=learn -p 8080:80 -v "$(pwd):/var/www/grav/user" learn:latest
    ```
 
 It will take a couples of second for the site to be up and running while the base Grav installation is done. Once this is complete, you can access the documentation at [http://localhost:8080/](http://localhost:8080/).
