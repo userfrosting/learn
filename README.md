@@ -2,35 +2,27 @@
 
 https://learn.userfrosting.com
 
-This is the repository for the documentation for UserFrosting 4.  It is built with the flat-file CMS [Grav](http://getgrav.org), using their [RTFM skeleton](https://github.com/getgrav/grav-skeleton-rtfm-site#rtfm-skeleton).
+This is the repository for the documentation for UserFrosting 4. It is built with the flat-file CMS [Grav](http://getgrav.org), using their [RTFM skeleton](https://github.com/getgrav/grav-skeleton-rtfm-site#rtfm-skeleton). 
 
 ## Getting Started
 
-This site is built using [Grav](https://learn.getgrav.org/) CMS, which like UserFrosting v4 has combined framework and project skeleton code. To permit easier content management, this repository only includes Grav's `user` directory, which is where all of our custom content, themes, and assets live. See [Grav Development with GitHub - Part 2](https://getgrav.org/blog/developing-with-github-part-2) for more on this approach.
+This site is built using [Grav](https://learn.getgrav.org/) CMS, which like UserFrosting v4 has combined framework and project skeleton code. To permit easier content management, this repository only includes Grav's `user/` directory, which is where all of our custom content, themes, and assets live. See [Grav Development with GitHub - Part 2](https://getgrav.org/blog/developing-with-github-part-2) for more on this approach.
 
-This unique structure does complicate local hosting somewhat. Lando is recommended, however local installation and Docker are also documented.
+This branch contains the site with documentation for every versions of UserFrosting, as available at [https://learn.userfrosting.com](https://learn.userfrosting.com). This particular setup is made possible using [Grav Multisite Setup feature](https://learn.getgrav.org/17/advanced/multisite-setup) and each branch of this repo setup as git submodules in the `sites/` directory. 
 
-### Lando
+Submodules in this branch are kept automatically to the latest version using [GitHub Actions Workflow](https://github.com/userfrosting/learn/actions/workflows/website.yml).
 
-1. Clone repo
-   ```
-   git clone -b website https://github.com/userfrosting/learn.git userfrosting-learn
-   cd userfrosting-learn
-   ```
+## Installation
 
-2. Prepare multisite
-   ```
-   git submodule update --init
-   ```
+This unique structure does complicate local hosting somewhat complicated, but other installation methods are also available:
 
-3. Start Lando
-   ```
-   lando start
-   ```
+1. [Local Installation](#local-installation)
+2. [Lando](#lando)
+3. [Docker](#docker)
 
 ### Local Installation
 
-This guide does not cover setting up the webserver and assumes XAMPP is being used.
+This guide does not cover setting up the webserver and assumes your host is already setup.
 
 1. Install Grav and replace the `user` directory with this repository
    ```
@@ -40,12 +32,7 @@ This guide does not cover setting up the webserver and assumes XAMPP is being us
    git clone -b website https://github.com/userfrosting/learn.git user
    ```
 
-2. Correct permissions (MacOS with XAMPP)
-   ```
-   sudo dseditgroup -o edit -a daemon -t user staff
-   ```
-
-3. Setup Grav multisite
+2. Setup Grav multisite
    ```
    cp user/setup.php setup.php
    cd user/
@@ -53,15 +40,12 @@ This guide does not cover setting up the webserver and assumes XAMPP is being us
    cd ../
    ```
 
-4. Install Grav
+3. Install Grav
    ```
    bin/grav install
    ```
 
-
-### Docker
-
-Most docker images (like the one used here) automate the installation of Grav. So for the most part, getting started with Docker is less tedious. Instead the tediousness is at the end due to a bug in Grav.
+### Lando
 
 1. Clone repo
    ```
@@ -69,39 +53,71 @@ Most docker images (like the one used here) automate the installation of Grav. S
    cd userfrosting-learn
    ```
 
-2. Start Grav container
+2. Prepare multisite / submodules
    ```
-   docker pull ahumaro/grav-php-nginx
-   docker run -d -i -p 80:80 -p 2222:22 -v "$(pwd):/usr/share/nginx/html/user/" --name ufLearn ahumaro/grav-php-nginx
-   ```
-
-3. TODO Multisite
-
-4. Install Grav
-   ```
-   docker exec -it ufLearn bash
-   chmod +x bin/gpm # This is only needed if permissions are acting up
-   bin/grav install
+   git submodule update --init
    ```
 
-   NOTE: Grav uses `rename` when moving plugins to their final destination, which means this is where everything falls apart. The issue is that `rename` doesn't work to well when crossing a drive boundary (even for emulated drives), throwing a "Invalid cross-device link" error when attempted. Until a fix is out, you'll need to install the theme and plugins manually under docker.
+3. Start Lando
+   ```
+   lando start
+   ```
+
+To stop the container:
+
+```bash
+lando stop
+```
+
+### Docker
+
+1. Clone repo
+   ```
+   git clone -b website https://github.com/userfrosting/learn.git userfrosting-learn
+   cd userfrosting-learn
+   ```
+
+2. Build Grav container
+   ```
+   docker build -t learn-website:latest .
+   ```
+
+3. Start Grav container
+   ```
+   docker run -d --rm --name=learn -p 8080:80 -v "$(pwd):/var/www/grav/user" learn-website:latest
+   ```
+
+It will take a couples of second for the site to be up and running while the base Grav installation is done. Once this is complete, you can access the documentation at [http://localhost:8080/](http://localhost:8080/).
+
+To stop the container:
+
+```bash
+docker stop learn
+```
+
+To access Grav command line utility or gpm, you can use :
+
+```bash
+docker exec -it learn bash
+chmod +x bin/gpm # This is only needed if permissions are acting up
+bin/grav install
+```
 
 ## Adding a new documentation version
 
-Move to the `user/` directory, and add the desired branch as a new git submodule. Replace `{brancheName}` with the name of the branch you want to include.
+Move to Grav's `user/` directory, and add the desired branch as a new git submodule. Replace `{brancheName}` with the name of the branch you want to include.
 
 ```bash
 git submodule add -b {brancheName} https://github.com/userfrosting/learn.git sites/{brancheName}
 ```
 
-Next edit `user/config/versions.yaml` to add your new branch/version to the dropdown list.
+Next edit `config/versions.yaml` from this branch to add your new branch/version to the dropdown list.
 
 ## Updating submodules / doc pages
 
-To update pages from the legacy version to their latest version, run from the `user/` directory :
+To update pages from the legacy version to their latest version, run from Grav's `user/` directory :
 
 ```bash
-cd user/
 git submodule update --remote --merge
 ```
 
