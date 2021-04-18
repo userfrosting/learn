@@ -6,11 +6,11 @@ taxonomy:
   category: docs
 ---
 
->>> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
-
 [Lando](https://lando.dev/) provides a stable, easy-to-use, and portable local development environment. It allows you to integrate [phpMyAdmin](https://www.phpmyadmin.net/) (among [other services](https://docs.lando.dev/config/services.html)) and simplifies setting up [XDebug](https://xdebug.org/).
 
->>> Note: Lando is not meant for production!
+[notice=warning]**This is a development tool!**
+
+Note that while you can run Lando in production, it is highly discouraged, not recommended and 100% not supported! DON'T DO IT![/notice]
 
 ## Installation Steps
 
