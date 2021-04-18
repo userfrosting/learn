@@ -13,6 +13,9 @@ UserFrosting 4.5 focuses on cleaning up deprecated code, adding Composer 2 suppo
 ### Added Composer 2 Version
 The [`wikimedia/composer-merge-plugin`](https://github.com/wikimedia/composer-merge-plugin) dependency was updated to from `^1.4.0` to `^2.1.0` ([#1117](https://github.com/userfrosting/UserFrosting/issues/1117)). This enabled Composer 2 support. Performance should be through the roof!
 
+### Added Lando Support
+Lando is a free, open source, cross-platform, local development environment and DevOps tool built on Docker container technology and developed by Tandem. Designed to work with most major languages, frameworks and services, Lando provides an easy way for developers of all skill levels to specify simple or complex requirements for their projects, and then quickly get to work on them. To learn more, check out our [new Lando guide](/installation/environment/lando).
+
 ### PHP 7.1 Support Removal
 As of UserFrosting 4.5.0, support for PHP version 7.1 has officially **been removed**. Support for PHP 7.1 was deprecated in 4.4.0 as it had reached [End Of Life](http://php.net/supported-versions.php). *PHP version 7.4 or higher is now recommended*.
 
