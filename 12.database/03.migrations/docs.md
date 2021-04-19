@@ -158,9 +158,9 @@ If you want to do a "fresh install" of your migration or cancel the changes made
 
 When building your application with UserFrosting, you may run into situations where you need or want to use a database other than the default instance to keep data. When migrating these tables, you will need to control which connection is used to create the tables so that they are created in the correct databse. Here is one easily extensible approach to doing so.
 
-We will start by creating a new abstract Migrations class in the `src/Database/Migrations` folder of your Sprinkle that will be the basis for all of your migration classes.
+We will start by creating a new abstract Migrations class in the `src/Database/Migrations` folder of your Sprinkle that will extend the default migration abstract class and be the basis for all of your migration classes that requires the different database connection.
 
-```
+```php
 <?php
 
 namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations;
@@ -171,30 +171,18 @@ use UserFrosting\Sprinkle\Core\Facades\Config;
 abstract class Migration extends UF_Migration
 {
     /**
-     * @var \Illuminate\Database\Schema\Builder
-     */
-    protected $schema;
-
-    /**
-     * List of dependencies for this migration.
-     * Should return an array of class required to be run before this migration.
-     *
-     * N.B.: Uncomment the next line when the static $dependencie deprecation is removed
-     */
-    //public static $dependencies = [];
-
-    /**
      * Create a new migration instance.
      *
      * @param \Illuminate\Database\Schema\Builder|null $schema
      */
     public function __construct(Builder $schema = null)
     {
-        //Hack to get the needed database connection
+        // Hack to get the needed database connection
+        // Change `my_new_conection` to reflect the db connection you need.
         $myconnect = Config::getFacadeContainer()->db->getConnection('my_new_conection');
         $schema->setConnection($myconnect);
         $this->schema = $schema;
     }
 }
 ```
-Now when you create your migrations, extend your custom Migrations class and it will use your named database connection instead of the default one.
+Now when you create your migrations, extend `UserFrosting\Sprinkle\MySprinkle\Database\Migrations\Migration` instead of `UserFrosting\Sprinkle\Core\Database\Migration` and it will use your named database connection `my_new_conection` instead of the default one.
