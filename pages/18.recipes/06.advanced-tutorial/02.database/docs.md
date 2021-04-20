@@ -17,7 +17,7 @@ Now that we have a sprinkle with an empty page to work with, it's time to get st
 
 First, we create the [data model](/database/overview#data-models). In this model, we define the table name, list the columns we want to be [mass assignable](https://laravel.com/docs/5.4/eloquent#mass-assignment) and enable automatic timestamp creation.
 
-`app/sprinkles/pastries/src/Database/Models/Pastry.php`
+`app/sprinkles/pastries/src/Database/Models/Pastries.php`
 ```php
 <?php
 
@@ -102,7 +102,7 @@ Next we'll populate our newly created table with some default data. To do this, 
 namespace UserFrosting\Sprinkle\Pastries\Database\Seeds;
 
 use UserFrosting\Sprinkle\Core\Database\Seeder\BaseSeed;
-use UserFrosting\Sprinkle\Pastries\Database\Models\Pastry;
+use UserFrosting\Sprinkle\Pastries\Database\Models\Pastries;
 
 class DefaultPastries extends BaseSeed
 {
@@ -112,7 +112,7 @@ class DefaultPastries extends BaseSeed
     public function run()
     {
         foreach ($this->pastries() as $pastry) {
-            $pastry = new Pastry($pastry);
+            $pastry = new Pastries($pastry);
             $pastry->save();
         }
     }
