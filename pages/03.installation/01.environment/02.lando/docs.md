@@ -59,14 +59,16 @@ Your app has started up correctly.
 Here are some vitals:
 
  NAME            userfrosting                       
- LOCATION        /home/silicon/source/uf/framework  
- SERVICES        appserver, database, cache, pma    
- APPSERVER URLS  https://localhost:32895            
-                 http://localhost:32896             
+ LOCATION        /home/user/source/uf/framework  
+ SERVICES        appserver, database, cache, pma, mh    
+ APPSERVER URLS  https://localhost:49266            
+                 http://localhost:49267             
                  http://userfrosting.lndo.site/     
                  https://userfrosting.lndo.site/    
- PMA URLS        http://localhost:32898             
-                 http://pma.userfrosting.lndo.site/
+ PMA URLS        http://localhost:49270             
+                 http://pma.userfrosting.lndo.site/    
+ MH URLS         http://localhost:49268             
+                 http://mh.userfrosting.lndo.site/
 ```
 
 ### Install UserFrosting
