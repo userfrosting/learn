@@ -238,7 +238,7 @@ Array
 
 Notice that one of our phone numbers has a set `id` value (17), while the other number has an empty/unset `id`. This is how we tell the server that the first number is an existing entity that should be updated, while the second is a completely new entity that should be created and associated with the parent entity.
 
-UserFrosting implements a custom version of Laravel's [`hasMany` relationship](https://laravel.com/docs/5.8/eloquent-relationships#one-to-many), which allows you to synchronize the related entities for a parent entity:
+UserFrosting implements a custom version of Laravel's [`hasMany` relationship](https://laravel.com/docs/8.x/eloquent-relationships#one-to-many), which allows you to synchronize the related entities for a parent entity:
 
 ```php
 $member->phones()->sync($phones);
@@ -500,7 +500,7 @@ Array
 )
 ```
 
-Laravel's `sync` method can synchronize our input data with the database for [many-to-many relationships](https://laravel.com/docs/5.8/eloquent-relationships#many-to-many):
+Laravel's `sync` method can synchronize our input data with the database for [many-to-many relationships](https://laravel.com/docs/8.x/eloquent-relationships#many-to-many):
 
 ```php
 $owlsCollection = collect($owls)->pluck(['species_id', 'name'])->all();
@@ -509,7 +509,7 @@ $member->owls()->sync($owlsCollection);
 
 The `collect` function will convert the raw multidimensional array into a collection of objects. `pluck` will then make sure that we only grab the values we're interested in. This is useful as a validation tool, to reject any fields that we don't want to allow the client to modify).
 
-Finally, calling the [`sync` method](https://laravel.com/docs/5.8/eloquent-relationships#updating-many-to-many-relationships) on a member's `owls` relationship will update the entire relationship, so that the owls associated with the member match exactly the submitted data.
+Finally, calling the [`sync` method](https://laravel.com/docs/8.x/eloquent-relationships#updating-many-to-many-relationships) on a member's `owls` relationship will update the entire relationship, so that the owls associated with the member match exactly the submitted data.
 
 ## Methods, events, and options
 
