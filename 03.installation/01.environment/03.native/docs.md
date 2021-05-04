@@ -15,7 +15,7 @@ If you already have a local environment and you're familiar with tools like **co
 If your local development environment doesn't already have the [required stack and tools](/installation/requirements), please set these up. You'll need the following:
 
 - Web server software (Apache, Nginx, IIS, etc)
-- PHP **7.1** or higher (**7.3** or above recommended)
+- PHP **7.2** or higher (**7.4** recommended)
 - PDO & GD PHP Extension
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
 
