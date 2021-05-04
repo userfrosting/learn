@@ -48,7 +48,7 @@ The following deprecated class and methods have been removed. This could turn ou
 ### Other Misc Changes & Fixes
 - Implement findInt ([#1117](https://github.com/userfrosting/UserFrosting/issues/1117)).
 - Replace `getenv()` with `env()` ([#1121](https://github.com/userfrosting/UserFrosting/issues/1121)). 
-- Added more SMTP options in env and `setup:smtp` bakery command ([#1077](https://github.com/userfrosting/UserFrosting/issues/1077).
+- Added more SMTP options in env and `setup:smtp` bakery command ([#1077](https://github.com/userfrosting/UserFrosting/issues/1077), that is now renamed as `setup:mail` (old name still available as an alias).
 - Replaced `UserFrosting\Sprinkle\Core\Bakery\Helper\NodeVersionCheck` with new `UserFrosting\Sprinkle\Core\Util\VersionValidator` class.
 - Changed `.php_cs` to `.php_cs.dist`.
 - Changed `phpunit.xml` to `phpunit.xml.dist`.

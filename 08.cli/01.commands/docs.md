@@ -30,7 +30,7 @@ $ php bakery help
 
 ### bake
 
-Bake is the general installation command. It combines `setup:db`, `setup:smtp`, `debug`, `migrate`, `create-admin` and `build-assets` into a single command:
+Bake is the general installation command. It combines `setup:db`, `setup:mail`, `debug`, `migrate`, `create-admin` and `build-assets` into a single command:
 
 ```bash
 $ php bakery bake
@@ -376,14 +376,14 @@ php bakery setup:db --db_driver=mysql --db_name=userfrosting --db_port=3306 --db
 | --db_password[=DB_PASSWORD] | The database password                                   |
 
 
-### setup:smtp
+### setup:mail
 
-The `setup:smtp` command can be used to setup the outgoing email configuration. Different setup method can be selected to guide you into configuring outgoing email support. This configuration will be saved in the `app/.env` file.
+The `setup:mail` command can be used to setup the outgoing email configuration. Different setup method can be selected to guide you into configuring outgoing email support. This configuration will be saved in the `app/.env` file.
 
 As with the database setup, this can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
 
 ```bash
-$ php bakery setup:smtp [options]
+$ php bakery setup:mail [options]
 ```
 
 Options can also be used to defined each info individually in a non-interactive way. When using one or more option, the "SMTP Server" method will automatically be selected.
@@ -394,6 +394,9 @@ Options can also be used to defined each info individually in a non-interactive 
 | --smtp_host[=SMTP_HOST]         | The SMTP server hostname                             |
 | --smtp_user[=SMTP_USER]         | The SMTP server user                                 |
 | --smtp_password[=SMTP_PASSWORD] | The SMTP server password                             |
+| --smtp_port[=SMTP_PORT]         | The SMTP server port                                 |
+| --smtp_auth[=SMTP_PASSWORD]     | The SMTP server authentication                       |
+| --smtp_secure[=SMTP_SECURE]     | The SMTP server security type                        |
 
 
 ### setup:env
@@ -418,7 +421,7 @@ php bakery setup:env --mode=production
 
 ### setup
 
-The `setup` command combines the `setup:db`, `setup:smtp` and `setup:env` commands. This command can't accept any of the option of it's child command.
+The `setup` command combines the `setup:db`, `setup:mail` and `setup:env` commands. This command can't accept any of the option of it's child command.
 
 ```bash
 $ php bakery setup
