@@ -1,7 +1,7 @@
 ---
 title: Basic Stack Requirements
 metadata:
-    description: UserFrosting requires a web server, PHP 7.1 or higher, and some sort of database.
+    description: UserFrosting requires a web server, PHP 7.2 or higher, and some sort of database.
 taxonomy:
     category: docs
 process:
@@ -11,7 +11,7 @@ process:
 The basic requirements for running UserFrosting are pretty typical of any web framework or CMS. You'll need:
 
 - Web server software (Apache, Nginx, IIS, etc)
-- **PHP 7.1** or higher (**7.3** or higher recommended)
+- **PHP 7.2** or higher (**7.4** recommended)
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
 
 [notice=tip]MariaDB is just an open-source fork of MySQL. The reason it exists is because of [numerous concerns](http://www.computerworld.com.au/article/457551/dead_database_walking_mysql_creator_why_future_belongs_mariadb/) that Oracle would not do a good job honoring the open-source nature of the MySQL community. For all technical purposes, MariaDB and MySQL are more or less perfectly interoperable.[/notice]
@@ -99,13 +99,13 @@ Look, programming languages evolve, and PHP is no exception. Actually, PHP (and 
 
 Honestly, PHP 5.6 isn't exactly cutting edge - in fact, **PHP 5.6 is no longer in active support as of [January 19, 2017](http://php.net/supported-versions.php) and declared "End of Life" as of [January 1st, 2019](http://php.net/supported-versions.php)**.
 
-And the truth is, we didn't make this decision directly. UserFrosting depends on a lot of third-party components, and *those* components require a minimum PHP version of _7.1_. Thus, UF does too, and the whole community moves forward. Even PHP 7.2 won't be supported starting [November 30th 2020](http://php.net/supported-versions.php) !
+And the truth is, we didn't make this decision directly. UserFrosting depends on a lot of third-party components, and *those* components require a minimum PHP version of _7.2_. Thus, UF does too, and the whole community moves forward. Even PHP 7.2 won't be supported starting [November 30th 2020](http://php.net/supported-versions.php) !
 
-If your hosting service doesn't have PHP 7.1 or higher installed, call them and ask them to upgrade. If they refuse, point out that PHP 5.6 has been out of support for {{ date("now").diff(date("2017-01-19")).m }} months! To be honest, there is little reason to use a shared hosting (e.g. cPanel) service these days, especially when VPS providers like DigitalOcean and Amazon EC2 are so inexpensive. Unless you're stuck with shared hosting for some reason another (fussy boss), [there's no real reason not to switch to a VPS](https://www.hostt.com/still-use-shared-hosting-theres-vps/).
+If your hosting service doesn't have PHP 7.2 or higher installed, call them and ask them to upgrade. If they refuse, point out that PHP 5.6 has been out of support for {{ date("now").diff(date("2017-01-19")).m }} months! To be honest, there is little reason to use a shared hosting (e.g. cPanel) service these days, especially when VPS providers like DigitalOcean and Amazon EC2 are so inexpensive. Unless you're stuck with shared hosting for some reason another (fussy boss), [there's no real reason not to switch to a VPS](https://www.hostt.com/still-use-shared-hosting-theres-vps/).
 
 As for your local development environment ([You _do_ have a local development environment, right ?](/background/develop-locally-serve-globally)), if it's that much of a burden then...I don't know what to tell you. So what are you waiting for? Upgrade!
 
-[notice=warning]As of UserFrosting 4.4.0, support for PHP version 7.1 is officially deprecated. While you can still use UserFrosting 4.4.x with PHP 7.1, upgrading to PHP 7.3 or above is highly recommended as both PHP 7.1 and 7.2 have, or will, reach [End Of Life](http://php.net/supported-versions.php) by the end of the year 2020.[/notice]
+[notice=warning]As of UserFrosting 4.5.0, support for PHP version 7.2 is officially deprecated. While you can still use UserFrosting 4.4.x with PHP 7.2, upgrading to PHP 7.3 or above is highly recommended as PHP 7.2 have, or will, reach [End Of Life](http://php.net/supported-versions.php) soon.[/notice]
 
 ## Third-party components? Why don't you write all your own code?
 
