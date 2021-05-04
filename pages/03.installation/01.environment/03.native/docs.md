@@ -15,7 +15,7 @@ If you already have a local environment and you're familiar with tools like **co
 If your local development environment doesn't already have the [required stack and tools](/installation/requirements), please set these up. You'll need the following:
 
 - Web server software (Apache, Nginx, IIS, etc)
-- PHP **7.1** or higher (**7.3** or above recommended)
+- PHP **7.3** or higher (**8.0** or above recommended)
 - PDO & GD PHP Extension
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
 
@@ -69,9 +69,9 @@ $ php -v
 You should then see a message like:
 
 ```bash
-PHP 7.2.10 (cli) (built: Sep 13 2018 13:45:02) ( NTS )
-Copyright (c) 1997-2018 The PHP Group
-Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
+PHP 8.0.3 (cli) (built: Apr 12 2021 09:04:34) ( NTS )
+Copyright (c) The PHP Group
+Zend Engine v4.0.3, Copyright (c) Zend Technologies
 ```
 
 This is the version of PHP which will be used by Composer. Make sure it meets the minimum required version for UserFrosting!
