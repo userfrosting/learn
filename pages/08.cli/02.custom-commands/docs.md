@@ -57,6 +57,8 @@ class CommandName extends BaseCommand
 
         // do something !
         $this->io->writeln("Hello World !");
+
+        return self::SUCCESS;
     }
 }
 ```
@@ -85,6 +87,8 @@ class BakeCommand extends AccountBakeCommand
 
         $command = $this->getApplication()->find('foo:bar');
         $command->run($input, $output);
+
+        self::SUCCESS;
     }
 }
 ```
