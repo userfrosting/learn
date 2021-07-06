@@ -358,7 +358,7 @@ owls:
 screech:
   validators:
     regex:
-      regex: ^who(o*)$
+      regex: '^who(o*)$'
       message: You did not provide a valid screech.
 ```
 
