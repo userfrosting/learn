@@ -8,7 +8,7 @@ taxonomy:
 
 ## The Cache service
 
-The UserFrosting cache service instantiates the [Laravel Cache](https://laravel.com/docs/5.8/cache) component for global caching. The [Laravel documentation](https://laravel.com/docs/5.8/cache#cache-usage) provides excellent examples on how to use the caching API. The only difference is that UserFrosting provides the required setup for you. Plus, instead of using a `Cache` facade, you simply use the **cache service** from the [The DI Container](/services/the-di-container):
+The UserFrosting cache service instantiates the [Laravel Cache](https://laravel.com/docs/8.x/cache) component for global caching. The [Laravel documentation](https://laravel.com/docs/8.x/cache#cache-usage) provides excellent examples on how to use the caching API. The only difference is that UserFrosting provides the required setup for you. Plus, instead of using a `Cache` facade, you simply use the **cache service** from the [The DI Container](/services/the-di-container):
 
 ```php
 $value = $this->ci->cache->get('users', function () {
