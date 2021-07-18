@@ -30,7 +30,7 @@ The overall lifecycle is managed in the `UserFrosting/System/UserFrosting` class
 
 ## Bootstrapper classes
 
-At the base level of each Sprinkle, you may optionally define a bootstrapper class. This is a class where you can hook into any of the five events mentioned above: `onSprinklesInitialized`, `onSprinklesAddResources`, `onSprinklesRegisterServices`, `onAppInitialize`, and `onAddGlobalMiddleware`. The name of the class must be the same as the name of the Sprinkle directory, but in [StudlyCaps](https://laravel.com/api/5.8/Illuminate/Support/Str.html#method_studly). The class itself must extend the base `UserFrosting\System\Sprinkle\Sprinkle` class.
+At the base level of each Sprinkle, you may optionally define a bootstrapper class. This is a class where you can hook into any of the five events mentioned above: `onSprinklesInitialized`, `onSprinklesAddResources`, `onSprinklesRegisterServices`, `onAppInitialize`, and `onAddGlobalMiddleware`. The name of the class must be the same as the name of the Sprinkle directory, but in [StudlyCaps](https://laravel.com/api/8.x/Illuminate/Support/Str.html#method_studly). The class itself must extend the base `UserFrosting\System\Sprinkle\Sprinkle` class.
 
 Bootstrapper classes are basically implementations of [Symfony's `EventSubscriberInterface`](http://symfony.com/doc/current/components/event_dispatcher.html#using-event-subscribers), and they subscribe to the event dispatcher that is created in step 2 of the application lifecycle.
 

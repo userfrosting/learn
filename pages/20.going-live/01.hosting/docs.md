@@ -1,7 +1,7 @@
 ---
 title: Hosting Your Site
 description:
-    metadata: UserFrosting can easily be deployed to any server with PHP 7.2 or higher, a compatible database, and a webserver application (nginx, Apache, or IIS).
+    metadata: UserFrosting can easily be deployed to any server with PHP 7.3 or higher, a compatible database, and a webserver application (nginx, Apache, or IIS).
 taxonomy:
     category: docs
 ---

@@ -43,7 +43,7 @@ There are a number of "one-click" installers available, which can set up your ma
 
 If you don't have a laptop on which you can install a full solution stack natively, or you want to develop in an environment that **more closely resembles your production environment,** consider using [VirtualBox](https://www.virtualbox.org/manual/ch01.html).  VirtualBox allows you to run a complete virtual operating system (such as Ubuntu) from within any parent operating system.
 
-If you install [Vagrant](https://www.vagrantup.com/) as well, you can use pre-built and pre-configured environments like [Homestead](https://laravel.com/docs/5.8/homestead), which comes with PHP, nginx, MariaDB, Composer, and Node.js pre-installed.  What's more, Vagrant can actually link up its virtual file system to your native OS's file system.  This makes it easy to write code on your "real" machine, and then **run** it in the virtual environment instantly without having to actually **copy** it over to the virtual machine.
+If you install [Vagrant](https://www.vagrantup.com/) as well, you can use pre-built and pre-configured environments like [Homestead](https://laravel.com/docs/8.x/homestead), which comes with PHP, nginx, MariaDB, Composer, and Node.js pre-installed.  What's more, Vagrant can actually link up its virtual file system to your native OS's file system.  This makes it easy to write code on your "real" machine, and then **run** it in the virtual environment instantly without having to actually **copy** it over to the virtual machine.
 
 To get started with VirtualBox, Vagrant, and Homestead, head over to our documentation on [development environments](/installation/environment/homestead).
 
