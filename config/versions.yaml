@@ -20,6 +20,9 @@ branches:
     '4.5':
         path: '/4.5'
         label: '4.5'
+    '4.6':
+        path: '/4.6'
+        label: '4.6'
     'develop':
         path: '/develop'
         label: 'Develop'
