@@ -10,11 +10,16 @@ taxonomy:
 
 To actually get our application up and running, we need to do a few more things on the remote server:
 
-1. Run Composer to install PHP dependencies;
-2. Run Bakery to set up our environment variables, create `sprinkles.json`, run our migrations, and install frontend vendor assets;
-3. Configure the webserver to use `/var/www/<repo name>/public/` as the document root;
-4. Compile assets for production.
-5. Use `certbot` to install an SSL certificate for your site.
+1. Set the base URL.
+2. Run Composer to install PHP dependencies;
+3. Run Bakery to set up our environment variables, create `sprinkles.json`, run our migrations, and install frontend vendor assets;
+4. Configure the webserver to use `/var/www/<repo name>/public/` as the document root;
+5. Compile assets for production.
+6. Use `certbot` to install an SSL certificate for your site.
+
+## Set the base URL
+
+During development UserFrosting infers the base URL from the request (untrusted input). In production `site.uri.public` must be explicitly set in your configuration.
 
 ## Run Composer on the remote server
 
