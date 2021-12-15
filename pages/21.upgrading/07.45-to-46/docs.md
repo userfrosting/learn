@@ -6,6 +6,8 @@ taxonomy:
     category: docs
 ---
 
+[notice=warning]As of 4.6.3, `site.uri.public` must be explicitly set in your [`production` configuration](https://github.com/userfrosting/UserFrosting/blob/15d713a1fa2e9a67000b2a9a9413473f5c51da4d/app/sprinkles/core/config/production.php#L56) to avoid security issues. If not set, some links and emails will not work properly. See [Going Live](/going-live/vps-production-environment/application-setup#set-the-base-url) for more info.[/notice]
+
 ## Overview
 
 UserFrosting 4.6 focuses on adding PHP 8 support and upgrading Laravel dependencies. Individual UserFrositng supporting repository are also now available inside `userfrosting/framework`.
