@@ -16,7 +16,7 @@ Migrations are also very useful when dealing with [Automated Test](/testing). Te
 
 ## Migration Structure
 
-A migration is nothing more than a PHP class that uses Eloquent's [Schema Builder](https://laravel.com/docs/5.8/migrations#tables) to create, remove, and modify tables in your database. Migrations can also be used to perform additional setup tasks like seeding your tables with some default values.
+A migration is nothing more than a PHP class that uses Eloquent's [Schema Builder](https://laravel.com/docs/8.x/migrations#tables) to create, remove, and modify tables in your database. Migrations can also be used to perform additional setup tasks like seeding your tables with some default values.
 
 
 When you run the main UserFrosting install script (`php bakery migrate`), it will first check a special `migration` table to see which migrations have been run before. If the migration class has a record in this table, the migrate script will simply skip it.
@@ -49,7 +49,7 @@ While multiple operations _can_ be done in the same migration class, it is recom
 
 Each migration class needs to extend the base `UserFrosting\Sprinkle\Core\Database\Migration` class. A migration class must contains two methods: `up` and `down`. The `up` method is used to add new tables, columns, or indexes to your database, while the `down` method should simply reverse the operations performed by the `up` method.
 
-Within both of these methods you may use the [Laravel schema builder](https://laravel.com/docs/5.8/migrations) (available in the `$this->schema` property) to expressively create and modify tables. To learn about all of the methods available on the Schema builder, [check out Laravel documentation](https://laravel.com/docs/5.8/migrations#creating-tables).
+Within both of these methods you may use the [Laravel schema builder](https://laravel.com/docs/8.x/migrations) (available in the `$this->schema` property) to expressively create and modify tables. To learn about all of the methods available on the Schema builder, [check out Laravel documentation](https://laravel.com/docs/8.x/migrations#creating-tables).
 
 For a simple example, suppose that you want to create a `members` table, which will be used to add application-specific fields for our users:
 
@@ -97,7 +97,7 @@ We then call a series of methods on the `$table` variable in `create`'s closure,
 
 You'll also notice that we've created a `user_id` column, which associates each record in `members` with a corresponding record in `users`. By adding a `unique` constraint to this column as well, we effectively set up a one-to-one relationship between `members` and `users`. Since we've also added a foreign key from `user_id` to the `id` column in `users`, it's **very important** that the two columns have the exact same type. Since `id` is an unsigned integer, `user_id` must also be defined as an unsigned integer.
 
-For a complete explanation of the available methods for working with tables, see Laravel's [Migrations](https://laravel.com/docs/5.8/migrations) chapter. They have a nice table with all the available options.
+For a complete explanation of the available methods for working with tables, see Laravel's [Migrations](https://laravel.com/docs/8.x/migrations) chapter. They have a nice table with all the available options.
 
 As for the `down` method, it simply tells the database structure to delete the table created by the `up` method when rolling back that migration. In the `members` example, the table created by the `up` method would be **deleted** by the `down` method.
 
@@ -153,3 +153,36 @@ $ php bakery migrate
 ```
 
 If you want to do a "fresh install" of your migration or cancel the changes made, you can **rollback** the previous migration. You can also do a dry run of your migrations using the `pretend` option. See [Chapter 8](/cli/commands) for more details.
+
+## Migrating using a different database connection
+
+When building your application with UserFrosting, you may run into situations where you need or want to use a database other than the default instance to keep data. When migrating these tables, you will need to control which connection is used to create the tables so that they are created in the correct databse. Here is one easily extensible approach to doing so.
+
+We will start by creating a new abstract Migrations class in the `src/Database/Migrations` folder of your Sprinkle that will extend the default migration abstract class and be the basis for all of your migration classes that requires the different database connection.
+
+```php
+<?php
+
+namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations;
+
+use UserFrosting\Sprinkle\Core\Database\Migration as UF_Migration;
+use UserFrosting\Sprinkle\Core\Facades\Config;
+
+abstract class Migration extends UF_Migration
+{
+    /**
+     * Create a new migration instance.
+     *
+     * @param \Illuminate\Database\Schema\Builder|null $schema
+     */
+    public function __construct(Builder $schema = null)
+    {
+        // Hack to get the needed database connection
+        // Change `my_new_conection` to reflect the db connection you need.
+        $myconnect = Config::getFacadeContainer()->db->getConnection('my_new_conection');
+        $schema->setConnection($myconnect);
+        $this->schema = $schema;
+    }
+}
+```
+Now when you create your migrations, extend `UserFrosting\Sprinkle\MySprinkle\Database\Migrations\Migration` instead of `UserFrosting\Sprinkle\Core\Database\Migration` and it will use your named database connection `my_new_conection` instead of the default one.

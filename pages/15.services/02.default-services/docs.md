@@ -24,7 +24,7 @@ Constructs the `Assets` object (namespace `UserFrosting\Assets\Assets`), which i
 
 ### cache
 
-Creates an instance of a Laravel [Cache](https://laravel.com/docs/5.8/cache). See [Chapter 17](/advanced/caching) for more information.
+Creates an instance of a Laravel [Cache](https://laravel.com/docs/8.x/cache). See [Chapter 17](/advanced/caching) for more information.
 
 ### checkEnvironment
 
@@ -114,7 +114,7 @@ Creates an instance of `Seeder` (namespace `UserFrosting\Sprinkle\Core\Database\
 
 ### session
 
-Sets up UserFrosting's `Session` object (`UserFrosting\Session\Session`), which serves as a wrapper for the `$_SESSION` superglobal. `Session` will use file- or database-based storage for sessions, depending on your configuration setting for `session.handler`. Session handlers are provided by [Laravel's session handlers](https://laravel.com/docs/5.8/session#configuration), which implement PHP's [`SessionHandlerInterface`](http://php.net/SessionHandlerInterface).
+Sets up UserFrosting's `Session` object (`UserFrosting\Session\Session`), which serves as a wrapper for the `$_SESSION` superglobal. `Session` will use file- or database-based storage for sessions, depending on your configuration setting for `session.handler`. Session handlers are provided by [Laravel's session handlers](https://laravel.com/docs/8.x/session#configuration), which implement PHP's [`SessionHandlerInterface`](http://php.net/SessionHandlerInterface).
 
 Please note that when using file-based sessions, UserFrosting places sessions in its own `/app/sessions` directory instead of PHP's default session directory.
 

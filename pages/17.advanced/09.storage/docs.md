@@ -4,7 +4,7 @@ taxonomy:
     category: docs
 ---
 
-The filesystem service provides access to locally and remotely stored files using the [Flysystem](https://github.com/thephpleague/flysystem) PHP package by Frank de Jonge. Based on [Laravel Flysystem integration](https://laravel.com/docs/5.8/filesystem), UserFrosting integration provides simple to use drivers for working with local filesystems, Amazon S3, and Rackspace Cloud Storage. Even better, it's amazingly simple to switch between these storage options as the API remains the same for each system. You can even [add your own adapter] in your sprinkle if you need access to the many adapter supported by Flysystem.
+The filesystem service provides access to locally and remotely stored files using the [Flysystem](https://github.com/thephpleague/flysystem) PHP package by Frank de Jonge. Based on [Laravel Flysystem integration](https://laravel.com/docs/8.x/filesystem), UserFrosting integration provides simple to use drivers for working with local filesystems, Amazon S3, and Rackspace Cloud Storage. Even better, it's amazingly simple to switch between these storage options as the API remains the same for each system. You can even [add your own adapter] in your sprinkle if you need access to the many adapter supported by Flysystem.
 
 ## Disks Configuration
 
@@ -147,7 +147,7 @@ $this->ci->filesystem->delete(['file1.jpg', 'file2.jpg']);
 
 ### Going Further
 
-Since UserFrosting relies on Laravel implementation, see [Laravel Documentation](https://laravel.com/docs/5.8/filesystem) for more info on how to use the **filesystem** service.
+Since UserFrosting relies on Laravel implementation, see [Laravel Documentation](https://laravel.com/docs/8.x/filesystem) for more info on how to use the **filesystem** service.
 
 ## Custom driver setup
 

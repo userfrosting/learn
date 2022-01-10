@@ -4,11 +4,13 @@ ehthumbs.db
 Icon?
 Thumbs.db
 *.swp
-plugins/
-themes/learn2/
 
 # Custom
 _meta
-/plugins/
 themes/learn2/
 config/security.yaml
+plugins/*
+!plugins/.gitkeep
+themes/learn2/
+config/versions.yaml
+data/scheduler/status.yaml
