@@ -51,7 +51,7 @@ The form will automatically be validated and submitted when the user clicks the 
 
 ## Options
 
-### reqParams
+### ajax
 
 This option contains any AJAX settings that you would like to pass through to the form submission [`.ajax` handler](http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings).
 
