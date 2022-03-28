@@ -50,7 +50,7 @@ If your service was registered using an [independent service class](/services/ad
 
 ## Extending Twig Extensions
 
-The `view` service loads UserFrosting's [Twig extensions](/templating-with-twig/filters-and-functions) to expose additional functions, filters, and variables in our templates. If we want to define more global Twig variables in our site Sprinkle, we can create a new Twig extension and then add it to our `view` service by extending it in our service provider class.
+The `view` service loads UserFrosting's [Twig extensions](/templating-with-twig/filters-and-functions) to expose additional functions, filters, and variables in our templates. If we want to define more global Twig variables in our site Sprinkle, we can create a new Twig extension and then add it to our `view` service by extending it in our service provider class. An extension which adds globals like this must also implement Twig's `GlobalsInterface`.
 
 First, create your new Twig extension class in `src/Twig/Extension.php`:
 
@@ -64,13 +64,15 @@ First, create your new Twig extension class in `src/Twig/Extension.php`:
 namespace UserFrosting\Sprinkle\Site\Twig;
 
 use Psr\Container\ContainerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
 
 /**
  * Extends Twig functionality for my site sprinkle.
  *
  * @author David Attenborough
  */
-class Extension extends \Twig_Extension
+class Extension extends AbstractExtension implements GlobalsInterface
 {
 
     /**
