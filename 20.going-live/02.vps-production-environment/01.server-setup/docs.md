@@ -8,28 +8,28 @@ taxonomy:
 
 [notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
 
-We recommend that you start with a $5/month Droplet and install a LEMP stack (Ubuntu 16.04, nginx, MariaDB, and PHP 7). If you prefer you may install Apache instead, but nginx offers superior performance and requires less configuration.
+We recommend that you start with a $5/month Droplet and install a LEMP stack (Ubuntu 20.04, nginx, MariaDB, and PHP 8.0). If you prefer you may install Apache instead, but nginx offers superior performance and requires less configuration.
 
-When you go to create your Droplet, DigitalOcean will ask you some initial configuration questions. Choose Ubuntu 16.04 as your distribution, and select a datacenter that is nearest to you and your customers. **Do NOT set up SSH keys at this time** - if you do, DigitalOcean won't email you a root user password. We will set up SSH later, after we've logged in with a password first.
+When you go to create your Droplet, DigitalOcean will ask you some initial configuration questions. Choose Ubuntu 20.04 as your distribution, and select a datacenter that is nearest to you and your customers. **Do NOT set up SSH keys at this time** - if you do, DigitalOcean won't email you a root user password. We will set up SSH later, after we've logged in with a password first.
 
 From here, you can follow DigitalOcean's tutorials to set up your server:
 
-## Initial Server Setup with Ubuntu 16.04
+## Initial Server Setup with Ubuntu 20.04
 
-First, follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04).
+First, follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04).
 
 Some notes:
 
 1. On Windows, you may find it easier to generate an SSH key in Putty and manually copy it to the `authorized_keys` file on your Droplet.
-2. When you create your non-root user account in Ubuntu, we recommend adding them to the `www-data` group, which is the group to which your webserver belongs. That way, you can set the group owner of your UserFrosting application files to `www-data`, and both your account _and_ the webserver account will have ownership. To do this, do `sudo usermod -a -G www-data alex`, assuming `alex` is your user account name.
-3. Their instructions for the `ufw` firewall only have you open up the `ssh` port by default. Obviously for a web server, you will also need to open up ports 80 and 443. See [this guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-14-04#allow-other-connections) for help opening up additional ports.
+2. When you create your non-root user account in Ubuntu, we recommend adding them to the `www-data` group, which is the group to which your webserver belongs. That way, you can set the group owner of your UserFrosting application files to `www-data`, and both your account _and_ the webserver account will have ownership. To do this, do `sudo usermod -a -G www-data alex`, replacing `alex` with your user account name.
+3. Their instructions for the `ufw` firewall only have you open up the `ssh` port by default. Obviously for a web server, you will also need to open up ports 80 or `http` and/or 443 or `https`. See [this guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-20-04#step-5-allowing-other-connections) for help opening up additional ports. DigitalOcean also provides a [cloud firewall](https://docs.digitalocean.com/products/networking/firewalls/) which can be set up through the dashboard, rather than the commandline.
 4. For additional security, you may also want to disable root login via SSH by setting `PermitRootLogin` to `no` in your `/etc/ssh/sshd_config` file.
 
 ## Additional server configuration
 
 ### Set your server's **timezone**
 
-See [**this guide from DigitalOcean**](https://www.digitalocean.com/community/tutorials/how-to-set-up-time-synchronization-on-ubuntu-16-04).
+See [**this guide from DigitalOcean**](https://www.digitalocean.com/community/tutorials/how-to-set-up-time-synchronization-on-ubuntu-20-04).
 
 ### Configure the `nano` command-line editor to convert tabs to spaces
 
@@ -56,28 +56,29 @@ sudo nano /root/.nanorc
 
 ## Add Swap Space
 
-Follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04). Swap space is a part of virtual memory, which allows your server to temporarily move data to the hard drive when there is not enough physical memory available for whatever it is doing. This is essentially the same thing as the `pagefile.sys` in a Windows environment.
+Follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-20-04). Swap space is a part of virtual memory, which allows your server to temporarily move data to the hard drive when there is not enough physical memory available for whatever it is doing. This is essentially the same thing as the `pagefile.sys` in a Windows environment.
 
 Some notes:
 
 1. This is just a failsafe in the event that your server experiences occasional spikes in memory usage, for example when installing new software or running a backup. If your server seems to be routinely using more than 70% of its allocated memory, you should consider upgrading to a Droplet with more memory.
+2. DigitalOcean recommends against enabling a swap file on any server (including theirs) which uses SSD.
 
 ## Install the LEMP Stack
 
-See [**this guide**](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04).
+See [**this guide**](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-20-04).
 
 Some notes:
 
 1. This guide has you install MySQL instead of MariaDB. In general they are completely interchangeable, but MariaDB is more reliable as an open-source option going forward. See [Switching to MariaDB](https://www.digitalocean.com/community/tutorials/switching-to-mariadb-from-mysql) for help with this.
-2. Be sure to [log into MySQL from the command line](https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial) and [create a non-root database user account](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql). You should give this user limited permissions on your production database.
-3. The `gzip` module (which is important for site speed and SEO!), may require some additional configuration. See [this guide](https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04).
+2. Be sure to log into MySQL from the command line and [create a non-root database user account](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql). You should give this user limited permissions on your production database.
+3. The `gzip` module (which is important for site speed and SEO!), may require some additional configuration. See [this guide](https://www.digitalocean.com/community/tutorials/how-to-improve-website-performance-using-gzip-and-nginx-on-ubuntu-20-04).
 
 ### Additional php modules to install:
 
 Install gd and curl:
 
 ```bash
-sudo apt-get install php7.0-gd
+sudo apt-get install php8.0-gd
 sudo apt-get install php-curl
 sudo service nginx restart
 ```
@@ -86,12 +87,12 @@ sudo service nginx restart
 
 PHP's [`get_browser()`](http://php.net/manual/en/function.get-browser.php) function uses the `User-Agent` header to guess information about your visitors such as browser, OS, etc. For it to work properly, you need to download a copy of `browscap.ini` from the [Browscap Project](https://browscap.org) and configure your `php.ini` to find the file.
 
-Assuming that your PHP installation is in `/etc/php/7.0`, do the following:
+Assuming that your PHP installation is in `/etc/php/8.0`, do the following:
 
 ```bash
-cd /etc/php/7.0/fpm
+cd /etc/php/8.0/fpm
 sudo mkdir extra
-sudo curl -o /etc/php/7.0/fpm/extra/browscap.ini https://browscap.org/stream?q=Lite_PHP_BrowsCapINI
+sudo curl -o /etc/php/8.0/fpm/extra/browscap.ini https://browscap.org/stream?q=Lite_PHP_BrowsCapINI
 ```
 
 This will download the "lite" browscap database, which is supposed to be adequate for most websites. Visit [Browscap Project](https://browscap.org) for other options.
@@ -99,7 +100,7 @@ This will download the "lite" browscap database, which is supposed to be adequat
 Now, we need to edit our `php.ini` to tell PHP where this file is located:
 
 ```bash
-sudo nano /etc/php/7.0/fpm/php.ini
+sudo nano /etc/php/8.0/fpm/php.ini
 ```
 
 Use Ctrl+W to search for the `browscap` section. Uncomment the `browscap = ` line. When you're done, it should look like this:
@@ -114,9 +115,9 @@ Save and exit.
 
 ## Other Tools
 
-- [Installing Composer](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-ubuntu-16-04) (Steps 1 and 2 only)
-- [Installing Node.js and npm](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04) (Distro-stable version)
-- Git comes preinstalled on Ubuntu, but you may want to [update and configure](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-16-04) it as well.
+- [Installing Composer](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-ubuntu-20-04) (Steps 1 and 2 only)
+- [Installing Node.js and npm](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04) (Distro-stable version)
+- Git comes preinstalled on Ubuntu, but you may want to [update and configure](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-20-04) it as well.
 
 ### Node.js compatibility package
 
@@ -136,17 +137,16 @@ Some notes:
 
 ## Install phpMyAdmin
 
-See this [**DigitalOcean tutorial**](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-an-ubuntu-14-04-server).
+See this [**DigitalOcean tutorial**](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-an-ubuntu-20-04-server).
 
 Notes:
 
-1. This guide is for Ubuntu 14.04, but the process should be basically the same in Ubuntu 16.04.
-2. Make sure to pick a particularly strong password for the phpmyadmin user account. You can use [Random.org](https://www.random.org/passwords/) - we recommend generating something with at least 20 characters.
-3. To enable `mcrypt` in PHP 7:
+1. Make sure to pick a particularly strong password for the phpmyadmin user account. For development, you can use [Random.org](https://www.random.org/passwords/) - we recommend generating something with at least 20 characters. [notice]Random.org recommends against using any online password creation service, including theirs, for anything sensitive.[/notice]
+2. To enable `mcrypt` in PHP 8:
 
 ```bash
 sudo phpenmod mcrypt
-sudo service php7.0-fpm restart
+sudo service php8.0-fpm restart
 ```
 
 To disable root login and restrict access to specific users:
