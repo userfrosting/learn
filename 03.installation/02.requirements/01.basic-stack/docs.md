@@ -69,6 +69,7 @@ UserFrosting needs to be able to write to the file system for a few directories:
 - `/app/cache` - This is where UF will cache rendered Twig templates for faster processing, as well as other objects;
 - `/app/logs` - UF writes error, debugging, and mail logs to this directory;
 - `/app/sessions` - If you're using file-based sessions, UF writes to this directory instead of PHP's default session directory.
+- `/app/storage`
 
 You should make sure that the group under which your webserver runs (for example, `www-data`, `apache`, `_www`, `nobody`) has read and write permissions for these directories. You may need to use `chgrp` to ensure that these directories are owned by the webserver's group.
 
