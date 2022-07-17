@@ -15,7 +15,7 @@ There are two ways to define a route - as a closure, or as a reference to a [con
 The following is an example of a `GET` route:
 
 ```php
-$app->get('/api/users/u/{user_name}', function ($Request $request, Response $response, array $args) {
+$app->get('/api/users/u/{user_name}', function (Request $request, Response $response, array $args) {
     $userName = $args['user_name'];
 
     $getParams = $request->getQueryParams();
