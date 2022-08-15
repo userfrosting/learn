@@ -27,7 +27,7 @@ A few reasons that we suggest that you **_not_** use shared hosting:
 
 DigitalOcean is a popular VPS hosting service that offers a flat monthly rate. They call their virtual machines "Droplets", which are priced based on memory, processing power, disk storage, and bandwidth. Each Droplet is essentially a dedicated IP address and computer that you have root access to, and on which you can install whatever operating system and software you like.
 
-Their cheapest option is a USD $5/mo server, which provides 1GB memory, 25GB storage, and 1TB bandwidth per month. This is more than enough to run a typical UserFrosting application - as a matter of fact, we host all of the documentation and the demo site for UserFrosting on a $5/month Droplet.
+Their cheapest option is a USD $4/mo server, which provides 512MB memory, 10GB storage, and 500GB bandwidth per month. This is more than enough to run a typical UserFrosting application - as a matter of fact, we host all of the documentation and the demo site for UserFrosting on a slightly larger $6/month Droplet (1GB memory, 25GB storage, 1TB monthly bandwidth).
 
 They also provide a convenient web-based control panel, which lets you perform some basic administrative tasks and monitor your Droplet's resource usage:
 
@@ -35,6 +35,6 @@ They also provide a convenient web-based control panel, which lets you perform s
 
 ### Promotions
 
-DigitalOcean offers a number of discounts and promotions. If you are a student, you can get $50 in free credit when you register for the [GitHub student pack](https://education.github.com/pack) (requires a `.edu` email address).
+DigitalOcean offers a number of discounts and promotions. If you are a student, you can get $100 in free credit (good towards first 60 days) when you register for the [GitHub student pack](https://education.github.com/pack) (requires a `.edu` email address).
 
-If you don't have a `.edu` address, you can get $10 free credit by using our [referral link](https://m.do.co/c/833058cf3824). This is also a great way to support UserFrosting - if you use this link, _we'll_ also get $25 in credit for our own hosting once you've spent $25.
+If you don't have a `.edu` address, DigitalOcean often offers $100 free credit towards your first 30 days by using our [referral link](https://m.do.co/c/833058cf3824). This is also a great way to support UserFrosting - if you use this link, _we'll_ also get $25 in credit for our own hosting once you've spent $25.
