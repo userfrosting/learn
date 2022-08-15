@@ -8,15 +8,15 @@ taxonomy:
 
 [notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
 
-We recommend that you start with a $5/month Droplet and install a LEMP stack (Ubuntu 20.04, nginx, MariaDB, and PHP 8.0). If you prefer you may install Apache instead, but nginx offers superior performance and requires less configuration.
+We recommend that you start with a $4/month Droplet and [install a LEMP stack](https://marketplace.digitalocean.com/apps/lemp) (Ubuntu 20.04, nginx, MariaDB, and PHP 8.0). If you prefer you may [install Apache instead](https://marketplace.digitalocean.com/apps/lamp), but nginx offers superior performance and requires less configuration.
 
-When you go to create your Droplet, DigitalOcean will ask you some initial configuration questions. Choose Ubuntu 20.04 as your distribution, and select a datacenter that is nearest to you and your customers. **Do NOT set up SSH keys at this time** - if you do, DigitalOcean won't email you a root user password. We will set up SSH later, after we've logged in with a password first.
+When you go to create your Droplet, DigitalOcean will ask you some initial configuration questions. Choose Ubuntu 22.04 as your distribution, and select a datacenter that is nearest to you and your customers. **Do NOT set up SSH keys at this time** - if you do, DigitalOcean won't email you a root user password. We will set up SSH later, after we've logged in with a password first.
 
 From here, you can follow DigitalOcean's tutorials to set up your server:
 
-## Initial Server Setup with Ubuntu 20.04
+## Initial Server Setup with Ubuntu 22.04
 
-First, follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04).
+First, follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04).
 
 Some notes:
 
@@ -29,7 +29,7 @@ Some notes:
 
 ### Set your server's **timezone**
 
-See [**this guide from DigitalOcean**](https://www.digitalocean.com/community/tutorials/how-to-set-up-time-synchronization-on-ubuntu-20-04).
+See [**this guide from DigitalOcean**](https://www.digitalocean.com/community/tutorials/how-to-set-up-time-synchronization-on-ubuntu-22-04).
 
 ### Configure the `nano` command-line editor to convert tabs to spaces
 
@@ -56,7 +56,7 @@ sudo nano /root/.nanorc
 
 ## Add Swap Space
 
-Follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-20-04). Swap space is a part of virtual memory, which allows your server to temporarily move data to the hard drive when there is not enough physical memory available for whatever it is doing. This is essentially the same thing as the `pagefile.sys` in a Windows environment.
+Follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-22-04). Swap space is a part of virtual memory, which allows your server to temporarily move data to the hard drive when there is not enough physical memory available for whatever it is doing. This is essentially the same thing as the `pagefile.sys` in a Windows environment.
 
 Some notes:
 
@@ -65,13 +65,13 @@ Some notes:
 
 ## Install the LEMP Stack
 
-See [**this guide**](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-20-04).
+See [**this guide**](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-22-04).
 
 Some notes:
 
 1. This guide has you install MySQL instead of MariaDB. In general they are completely interchangeable, but MariaDB is more reliable as an open-source option going forward. See [Switching to MariaDB](https://www.digitalocean.com/community/tutorials/switching-to-mariadb-from-mysql) for help with this.
 2. Be sure to log into MySQL from the command line and [create a non-root database user account](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql). You should give this user limited permissions on your production database.
-3. The `gzip` module (which is important for site speed and SEO!), may require some additional configuration. See [this guide](https://www.digitalocean.com/community/tutorials/how-to-improve-website-performance-using-gzip-and-nginx-on-ubuntu-20-04).
+3. The `gzip` module (which is important for site speed and SEO!), may require some additional configuration. See [this guide](https://www.digitalocean.com/community/tutorials/how-to-improve-website-performance-using-gzip-and-nginx-on-ubuntu-22-04).
 
 ### Additional php modules to install:
 
@@ -115,9 +115,9 @@ Save and exit.
 
 ## Other Tools
 
-- [Installing Composer](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-ubuntu-20-04) (Steps 1 and 2 only)
-- [Installing Node.js and npm](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04) (Distro-stable version)
-- Git comes preinstalled on Ubuntu, but you may want to [update and configure](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-20-04) it as well.
+- [Installing Composer](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-ubuntu-22-04) (Steps 1 and 2 only)
+- [Installing Node.js and npm](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-22-04) (Distro-stable version)
+- Git comes preinstalled on Ubuntu, but you may want to [update and configure](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04) it as well.
 
 ### Node.js compatibility package
 
@@ -137,7 +137,7 @@ Some notes:
 
 ## Install phpMyAdmin
 
-See this [**DigitalOcean tutorial**](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-an-ubuntu-20-04-server).
+See this [**DigitalOcean tutorial**](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-an-ubuntu-22-04-server).
 
 Notes:
 
