@@ -108,7 +108,7 @@ class Extension extends AbstractExtension implements GlobalsInterface
     public function getGlobals()
     {
         return array(
-            'pelletCounter'   => $this->services->mapBuilder->getNest()
+            'nest'   => $this->services->mapBuilder->getNest()
         );
     }
 }
