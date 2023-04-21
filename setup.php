@@ -16,13 +16,13 @@ $path = !empty($_SERVER['PATH_INFO'])
 // Extract name of subsite from path
 $name = Folder::shift($path);
 
-// If no sites is selected, default to master
+// If no sites is selected, default to latest
 if (!$name || !is_dir(ROOT_DIR . "user/sites/{$name}")) {
-    $name = 'master';
+    $name = 'latest';
 }
 
 // Prefix all pages with the name of the subsite
-$prefix = ($name === 'master') ? '' : "/{$name}";
+$prefix = ($name === 'latest') ? '' : "/{$name}";
 $container['pages']->base($prefix);
 
 return [

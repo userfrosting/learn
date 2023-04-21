@@ -1,5 +1,5 @@
 branches:
-    'master':
+    'latest':
         path: ''
         label: 'Latest'
     '4.0':
@@ -23,6 +23,6 @@ branches:
     '4.6':
         path: '/4.6'
         label: '4.6'
-    'develop':
-        path: '/develop'
-        label: 'Develop'
+    '5.0-beta':
+        path: '/5.0-beta'
+        label: '5.0 Beta'
