@@ -77,12 +77,17 @@ lando stop
    cd userfrosting-learn
    ```
 
-2. Build Grav container
+1. Setup Grav multisite
+   ```
+   git submodule update --init
+   ```
+
+1. Build Grav container
    ```
    docker build -t learn:latest .
    ```
 
-3. Start Grav container
+1. Start Grav container
    ```
    docker run -d --rm --name=learn -p 8080:80 -v "$(pwd):/var/www/grav/user" learn:latest
    ```
