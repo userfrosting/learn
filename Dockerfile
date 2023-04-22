@@ -1,4 +1,4 @@
-FROM bitnami/minideb:stretch
+FROM bitnami/minideb:bullseye
 
 RUN \
   ## Docker User
@@ -17,17 +17,17 @@ RUN \
     wget && \
   ## Install PHP APT Repository
   wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
-  echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php7.3.list && \
-  ## Install PHP 7.3
+  echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php8.2.list && \
+  ## Install PHP 8.2
   install_packages \
-    php7.3 \
-    php7.3-fpm \
-    php7.3-gd \
-    php7.3-curl \
-    php7.3-zip \
-    php7.3-mbstring \
-    php7.3-xml \
-    php7.3-intl
+    php8.2 \
+    php8.2-fpm \
+    php8.2-gd \
+    php8.2-curl \
+    php8.2-zip \
+    php8.2-mbstring \
+    php8.2-xml \
+    php8.2-intl
 
 RUN \
   ## Download GRAV
