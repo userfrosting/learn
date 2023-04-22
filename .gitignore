@@ -4,6 +4,7 @@ ehthumbs.db
 Icon?
 Thumbs.db
 *.swp
+.vscode
 
 # Custom
 _meta

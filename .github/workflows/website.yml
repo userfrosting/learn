@@ -3,7 +3,7 @@ name: Website
 
 on:
   push:
-    branches: [ master, develop, '4.*' ]
+    branches: [ master, develop, '4.*', '5.*' ]
   workflow_dispatch:
 
 jobs:
