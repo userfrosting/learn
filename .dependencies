@@ -2,27 +2,27 @@ git:
     problems:
         url: https://github.com/getgrav/grav-plugin-problems
         path: user/plugins/problems
-        branch: develop
+        branch: 2.0.3
     error:
         url: https://github.com/getgrav/grav-plugin-error
         path: user/plugins/error
-        branch: develop
+        branch: 1.6.2
     breadcrumbs:
         url: https://github.com/getgrav/grav-plugin-breadcrumbs
         path: user/plugins/breadcrumbs
-        branch: develop    
+        branch: 1.5.1    
     anchors:
         url: https://github.com/getgrav/grav-plugin-anchors
         path: user/plugins/anchors
-        branch: develop
+        branch: 1.5.3
     highlight:
         url: https://github.com/getgrav/grav-plugin-highlight
         path: user/plugins/highlight
-        branch: develop
+        branch: 1.4.1
     simplesearch:
         url: https://github.com/getgrav/grav-plugin-simplesearch
         path: user/plugins/simplesearch
-        branch: develop
+        branch: 1.14.2
     learn2:
         url: https://github.com/getgrav/grav-theme-learn2
         path: user/themes/learn2
@@ -30,7 +30,7 @@ git:
     shortcode-core:
         url: https://github.com/getgrav/grav-plugin-shortcode-core
         path: user/plugins/shortcode-core
-        branch: master
+        branch: 4.1.7
 links:
     problems:
         src: grav-plugin-problems
