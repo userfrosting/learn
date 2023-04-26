@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 This section covers configuring UserFrosting for other less common development and production environment situations.
 

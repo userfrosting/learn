@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 UserFrosting is translated in a variaty of languages provided by our community. While a default locale will be used for new visitors, each user can  choose their prefered language.
 

@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 The process of setting up UserFrosting so that you can begin work in your [local development environment](/background/develop-locally-serve-globally) is known as **installation**. This is a separate process from [deployment](/going-live), which is when you actually push your fully developed application to a live server. Please be sure that you understand this distinction before proceeding further! UserFrosting is not like, for example, Wordpress, where you can "install" directly to your production server.
 

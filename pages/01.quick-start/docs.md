@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 [notice=note]This quick start guide is aimed at experienced PHP developers who already have a development environment set up. Head over to the [Installation Chapter](/installation) for the complete guide.[/notice]
 

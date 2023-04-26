@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Within each sprinkle, you will find any or all of the following directories and files:
 

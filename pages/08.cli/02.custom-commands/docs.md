@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 While the Bakery CLI tool comes with great built-in commands, your Sprinkles can also take advantage of the Bakery by adding their own cli commands.
 

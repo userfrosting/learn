@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 By default, UserFrosting is configured to use an external SMTP mail server of your choice.
 

@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Seeding can be used to populate the database. A seed is perfect to add test or default data to the database at any moment.
 

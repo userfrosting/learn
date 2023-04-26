@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Before we begin this tutorial, it is important that you understand what a web page really is. Unfortunately, many "classic" approaches to building a website give developers the mistaken impression that a web page "is" either a static `.html` page or a scripted `.php` page. Neither of these approaches are conceptually correct.
 

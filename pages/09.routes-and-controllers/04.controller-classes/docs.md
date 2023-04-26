@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 To keep your code organized, it is highly recommended to use controller classes. By separating your code in this way, you can easily see a list of the endpoints that a Sprinkle defines by looking at its route files. The implementation can then be tucked away in separate files.
 

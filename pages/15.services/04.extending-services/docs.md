@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Pimple also allows us to extend services that were defined previously, for example in another Sprinkle.
 

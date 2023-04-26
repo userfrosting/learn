@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 People tend to be bad at picking strong passwords. [Publicly available lists of passwords](https://github.com/danielmiessler/SecLists/tree/master/Passwords) recovered from hacked databases reveal that, despite efforts to educate, users still pick the same highly predictable passwords over and over. These lists make it easy for brute-force attackers to gain unauthorized access to a large number of your users' accounts.
 

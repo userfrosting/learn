@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 As we mentioned in [Chapter 2](/background/the-client-server-conversation), a web application is not a single piece of software. It consists of the server running PHP code, the client (browser) running Javascript and rendering the web page, and the conversation between the two parties. Things can go wrong in any of these three places.
 

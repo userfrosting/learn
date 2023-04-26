@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 As we discussed in [The Client-Server Conversation](/background/the-client-server-conversation), it's important to distinguish between the code that is running on the server, and the response that it sends back to the client.
 

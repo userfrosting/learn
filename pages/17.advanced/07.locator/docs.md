@@ -3,6 +3,7 @@ title: Locator Service
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 The locator service goal is to provides an abstraction layer for the different files and folders available across different sprinkles inside UserFrosting. In other words, it is a way of aggregating many search paths together. As you've seen in the previous chapters, each sprinkle can provides multiple resources and sprinkles can have the ability to overwrite a previous sprinkle resources. All of those resources, combined with the overwriting properties of a sprinkle is handled by the locator service. _Templates_ and _config_ files are a good example of those resources.
 

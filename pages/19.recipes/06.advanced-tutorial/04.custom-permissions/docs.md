@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Now it's time to add custom authorization rules to our page. We will use these rules to control two things: visibility of the page itself, and visibility of the `origin` column in the table. Each one will require a new [permission](/users/access-control#permissions).
 

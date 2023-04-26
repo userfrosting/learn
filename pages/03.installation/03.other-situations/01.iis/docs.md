@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 [notice=note]This recipe assumes that the reader is familiar with IIS7 or greater, and that the `web.config` file has been placed in `public`.[/notice]
 

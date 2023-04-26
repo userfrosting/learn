@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 In a more minimalistic setup, asset retrieval is fairly straightforward. We might just keep all of our Javascript files in a `js/` directory directly under our public document root directory. Then the URL is simply `http://example.com/js/whatever.js`, and our webserver matches the _URL path_ `/js/whatever.js` to the _filesystem_ path `/path/to/document/root/js/whatever.js`, and places the contents of that file in the HTTP response. In most web servers this happens so transparently, that a lot of new developers assume that they're somehow giving direct access to the server's file system. In reality the web server is mediating the interaction, and generating an HTTP response using the _contents_ of these files.
 

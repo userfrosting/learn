@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Cross-site request forgeries (CSRF) are a type of social engineering attack in which a malicious agent tricks a user into submitting a valid, but unintended request to your server. This can happen, for example, when a user opens a malicious email or website while they are still signed in to your website.
 

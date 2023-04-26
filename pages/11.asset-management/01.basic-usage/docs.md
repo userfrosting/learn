@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 When a user loads a page of your website in their browser, it includes a number of `<link ...>`, `<img ...>`, `<script ...>` and other tags that tell their browser how to fetch these additional resources from the server.
 

@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Most CSS and Javascript resources should be integrated into your pages through **asset bundles**. Asset bundles are groups of assets for which UserFrosting can automatically render `<link>` or `<script>` tags in your pages, using the `assets` Twig helper. Each Sprinkle can define asset bundles in its `asset-bundles.json` file.
 

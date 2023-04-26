@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 As mentioned in the last section, each Sprinkle can set up its own services through a **service provider** class. The default `core` and `account` Sprinkles set up many services that are essential to UserFrosting's functionality. These classes can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory.
 

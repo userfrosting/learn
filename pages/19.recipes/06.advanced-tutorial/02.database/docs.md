@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Now that we have a sprinkle with an empty page to work with, it's time to get started with our database integration. Our data structures for the database table will be straightforward. We'll store pastries in a `pastries` table using the following columns:
 

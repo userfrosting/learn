@@ -1,0 +1,1 @@
+[notice=warning]This page requires updating for UserFrosting 5.0. You can help by [contributing on GitHub](https://github.com/userfrosting/learn/tree/5.0-beta).[/notice]

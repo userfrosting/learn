@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 This section covers situations where you have an internationalized application - i.e., the text will need to be displayed in different languages for different users. We will first need to change the hardcoded English strings to localization keys, which create an extra layer of abstraction by mapping a common identifier to the corresponding English string. Once this is done, we'll add French translations for these same identifiers.
 

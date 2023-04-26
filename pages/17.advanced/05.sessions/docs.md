@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 HTTP itself is stateless - you may recall that we compare a web application to a [conversation between two agents with very poor memory](/background/the-client-server-conversation). This presents a problem if we want to implement a "login" functionality - the server needs to be able to remember that someone has already authenticated in an earlier request!
 

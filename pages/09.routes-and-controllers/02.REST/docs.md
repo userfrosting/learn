@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Before we talk about the application itself, let's talk about how the client gets to the application in the first place: by making a **request**. A request consists of a few main components:
 

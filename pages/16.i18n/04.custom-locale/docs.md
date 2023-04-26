@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Whether to add an unsupported language (Klingon anyone?), to create a new dialect (eg. French Canadian), or simply to modify the predefined values, a custom locale can help you communicate with your end users.
 

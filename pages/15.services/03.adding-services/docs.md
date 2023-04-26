@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 You'll probably want to create your own services to modularize certain aspects of your own project. For example, if your application needs to interact with some third-party API like Google Maps, you might create a `MapBuilder` class that encapsulates all of that functionality. This is a cleaner and more manageable alternative to simply stuffing all of your code directly into your controller classes.
 

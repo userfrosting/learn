@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 When you start building your application with UserFrosting, you'll no doubt be adding your own tables to the data model. After all, what's the point of having users if there's nothing in your application for them to use?
 

@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 We often need to access the value of some server-side variable in our client-side code. For example, we use the value `site.uri.public` throughout our Javascript code when building urls for AJAX requests. The value of this variable is taken directly from UserFrosting's configuration variable of the same name, and embedded into a Javascript variable on every page.
 

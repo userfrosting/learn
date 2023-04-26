@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 I think that for a lot of developers - novices and professionals alike - building on top of others' work can seem like a betrayal of our trade.  We're not "real" developers unless we built everything with our bare hands from scratch, and know firsthand the nitty-gritty details of how our code works.  With third-party components, we have to take time to actually *learn* how to use them, and follow *their* rules.  I get it.  It all feels so antithetical to the DIY spirit that got so many of us into coding in the first place.  Trust me, as someone who built a cold frame out of some doors and framing I found in the dumpster, I know:
 
