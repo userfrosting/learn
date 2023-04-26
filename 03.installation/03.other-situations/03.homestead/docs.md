@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 [notice]This guide is intended for advanced users who are familiar with Vagrant and Virtual Machines. For basic Homestead installation, see the [Homestead Dev Environment](/installation/environment/homestead) guide.[/notice]
 

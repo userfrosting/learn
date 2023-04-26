@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Now that we've [seen the basics](/i18n/introduction), it's time to actually use the translator in code, and learn a little bit more about special features the translator offers, mainly **placeholder**, **pluralization** and **nested keys**.
 

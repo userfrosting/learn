@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 The front controller is a collective term for the **routes** that your web application defines for its various **endpoints**. This is how UserFrosting links urls and methods to your application's code.
 

@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Now that we have our page, it's time to add it to the sidebar menu. To do so, we will [extend the default menu template](/recipes/extending-template#adding-custom-menu-entries).
 

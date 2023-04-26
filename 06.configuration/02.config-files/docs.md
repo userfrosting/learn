@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Configuration files allow you to customize the default behavior of UserFrosting - for example to toggle debugging, caching, and logging behavior and to set other sitewide settings.  Configuration files are found in the `config/` directory of Sprinkles.
 

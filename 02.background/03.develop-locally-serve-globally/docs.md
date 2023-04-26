@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Just about every week, we see someone wander into [chat](https://chat.userfrosting.com) and ask:
 

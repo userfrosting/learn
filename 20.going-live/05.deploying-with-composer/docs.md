@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 [notice=note]This guide assumes the reader already have a fully functionnal server with ssh access. It also assume the reader is familiar with git and Github.[/notice]
 

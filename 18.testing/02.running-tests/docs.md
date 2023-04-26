@@ -3,6 +3,7 @@ title: Running Tests
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 You can execute tests using the `test` Bakery command.
 

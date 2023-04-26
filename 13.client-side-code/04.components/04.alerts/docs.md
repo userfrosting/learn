@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 For page loads, as well as requests made by most of UserFrosting's [client-side components](/client-side-code/components), alerts are automatically fetched from the [alert stream](/routes-and-controllers/alert-stream) and rendered for you. However, sometimes you will make your own custom AJAX requests that need to manually fetch and render alerts after the request is complete. To do this, you may create your own instance of the `ufAlerts` plugin.
 

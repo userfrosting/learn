@@ -5,6 +5,7 @@ description:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 PHP scripts are executed at run time. This means that every time someone refreshes a page from your website in their browser, all the code defined in your app needs to be interpreted by the PHP engine. Modern hardware and processing power means that even complex PHP scripts can be executed in seconds. However, this is not _always_ the case, especially when dealing with external data.
 

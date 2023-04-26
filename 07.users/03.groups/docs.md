@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 Every user can belong to **exactly one group**.  Groups are used to horizontally partition your users - for example, if you have offices in Baltimore, London, and Munich, you might want to group your users according to which office they are in.  Group membership can be used to broadly determine styling, layout, or access control for all users in the group.
 
 Like roles, groups have a **name**, **slug**, and **description**.  The slug is used as a unique, semantic identifier for the group and will show up in group-related URLs.

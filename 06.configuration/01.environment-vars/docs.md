@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 The basic database settings for UserFrosting can be set through environment variables. By default, UserFrosting looks for the following environment variables:
 

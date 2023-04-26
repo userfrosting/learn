@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Search Engine Optimization (SEO) is an integral part of the design and development process. Getting the public side of your website to rank well in search results should be something you consider from the very beginning, and not an afterthought once you're getting ready to deploy.
 

@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Things don't always go the way they were intended in your application. Sometimes this is the client's fault, and sometimes it is the server's (i.e. _your_) fault. When this happens, it is important that your application:
 

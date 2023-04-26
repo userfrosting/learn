@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 Even in relatively simple applications, writing out the same types of database queries over and over can get tedious. To make things easier and your code [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself)er, UserFrosting takes advantage of Laravel's excellent object-relation mapper, **[Eloquent](https://laravel.com/docs/8.x/eloquent#introduction)**.
 

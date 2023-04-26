@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 One of the most common misconceptions is that web applications are coherent pieces of software that sit on a server somewhere, and that the client "runs" this application in their browser.  This is actually an illusion, carefully crafted to provide a smooth experience for the end user.
 
