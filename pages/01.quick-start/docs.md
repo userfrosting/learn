@@ -5,59 +5,47 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 [notice=note]This quick start guide is aimed at experienced PHP developers who already have a development environment set up. Head over to the [Installation Chapter](/installation) for the complete guide.[/notice]
 
 UserFrosting is a free, open-source jumping-off point for building user-centered web applications with PHP and Javascript. It comes with a sleek, modern interface, basic user account features, and an administrative user management system - all fully functioning out of the box.
 
-[notice]This is the documentation for UserFrosting 4. If you are looking for documentation for previous versions of UserFrosting, please see [here](https://legacy.userfrosting.com).[/notice]
+[notice]This is the documentation for **UserFrosting 5**. If you are looking for documentation for _UserFrosting 4_, please see [here](https://learn.userfrosting.com/4.6/).[/notice]
 
 ## Server Requirements
 
-UserFrosting has a few system requirements. Of course, all of these requirements are satisfied by the [Homestead](/installation/environment/homestead) virtual machine, so it's highly recommended that you use Homestead as your local UserFrosting development environment.
+UserFrosting has a few system requirements. Of course, all of these requirements are satisfied by the [Docker](/installation/environment/docker) virtual machine, so it's highly recommended that you use Docker as your local UserFrosting development environment.
 
-However, if you are not using Homestead, you will need to make sure your local UserFrosting development environment meets the following requirements:
+However, if you are not using Docker, you will need to make sure your local UserFrosting development environment meets the following requirements:
 
 - Web server software (Apache, Nginx, IIS, etc)
-- PHP **7.3** or higher (**8.0** or higher recommended)
+- PHP **8.0* or higher (**8.2** recommended)
 - PDO PHP Extension
 - GD PHP Extension
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
-- [Composer](https://getcomposer.org/)
-- [Node.js](https://nodejs.org/en/) **10.12.0** or higher
-- npm **6.0** or higher
+- [Composer 2](https://getcomposer.org/)
+- [Node.js](https://nodejs.org/en/) **12.17.0** or higher or **14.0.0** or higher
+- npm **6.14** or higher
 
 ## Installing UserFrosting
 
-Use git to clone the latest version of UserFrosting into a new `userfrosting` folder:
+Use Composer to create an empty project with the latest version of UserFrosting into a new `UserFrosting` folder:
 
 ```bash
-$ git clone https://github.com/userfrosting/UserFrosting.git
+$ composer create-project userfrosting/userfrosting UserFrosting
 ```
 
-Once the project is created using composer, `cd` into the newly created `UserFrosting` folder and run the following command to fetch the composer dependencies:
+This will clone the skeleton repository and run the installation process:
 
-```bash
-$ cd UserFrosting
-$ composer install
-```
-
-Now run the final setup by calling the [Bakery CLI](/cli):
-
-```bash
-$ php bakery bake
-```
-
-This will run the installation process:
-
+- Run `composer install`
+- Run `php bakery bake`
 - Setting up your database and SMTP credential in `app/.env`
 - Checking for missing dependencies
 - Create the admin user
 - Running the database migration
 - Building the raw assets
 
-If any dependencies are not met, an error will occur. Simply run the command again after fixing said error. For more information about the `bake` command, head to the [Bakery CLI](/cli) chapter.
+If any dependencies are not met, an error will occur. Simply try again after fixing said error, or manually run `composer install` and `php bakery bake` from the install directory. For more information about the `bake` command, head to the [Bakery CLI](/cli) chapter.
 
 ## Public Directory
 
