@@ -5,6 +5,7 @@ metadata:
 taxonomy:
   category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 [notice=warning]Docker support is currently at **experimental** stability. Expect quirks and documentation gaps.
 
