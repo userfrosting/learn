@@ -732,4 +732,4 @@ You can write,
 return $instance->newQuery()->select("Id AS id");
 }
 ```
-in your sprunje file, or use any other method to alias the Id column. Keeping in your mind that your sprunje's baseQuery function should return an instance of a "queriable" class. See more [`Defining a Sprunje` Data Sprunjing](https://learn.userfrosting.com/database/data-sprunjing#defining-a-sprunje)[/notice]
+in your sprunje file, or use any other method to alias the Id column. Keeping in your mind that your sprunje's baseQuery function should return an instance of a "queriable" class. See more [`Defining a Sprunje` Data Sprunjing](/database/data-sprunjing#defining-a-sprunje)[/notice]

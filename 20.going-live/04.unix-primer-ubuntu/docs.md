@@ -7,7 +7,7 @@ taxonomy:
 ---
 [plugin:content-inject](/modular/_update5.0)
 
-[notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+[plugin:content-inject](/modular/_updateRequired)
 
 ## Basic commands
 
