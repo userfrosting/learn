@@ -7,4 +7,6 @@ taxonomy:
 ---
 [plugin:content-inject](/modular/_update5.0)
 
+# Requirements
+
 UserFrosting has a few basic, sensible requirements - requirements that just about any modern web developer should already have set up!

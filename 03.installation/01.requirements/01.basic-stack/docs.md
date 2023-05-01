@@ -7,6 +7,7 @@ taxonomy:
 process:
     twig: true
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 The basic requirements for running UserFrosting are pretty typical of any web framework or CMS. You'll need:
 

@@ -7,7 +7,7 @@ taxonomy:
 ---
 [plugin:content-inject](/modular/_update5.0)
 
-[notice=warning]**This documentation is outdated.** To contribute to this documentation, please consider submitting a pull request to our [learn repository](https://github.com/userfrosting/learn/blob/hotfix/pages/03.installation/03.other-situations/02.centos/docs.md).[/notice]
+[plugin:content-inject](/modular/_updateRequired)
 
 ## Install prerequisites
 

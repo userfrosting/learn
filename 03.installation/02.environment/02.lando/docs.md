@@ -5,6 +5,7 @@ metadata:
 taxonomy:
   category: docs
 ---
+[plugin:content-inject](/modular/_update5.0)
 
 [Lando](https://lando.dev/) provides a stable, easy-to-use, and portable local development environment. It allows you to integrate [phpMyAdmin](https://www.phpmyadmin.net/) (among [other services](https://docs.lando.dev/config/services.html)) and simplifies setting up [XDebug](https://xdebug.org/).
 

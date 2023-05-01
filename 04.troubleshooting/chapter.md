@@ -5,8 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
-
-#### Chapter 4
+[plugin:content-inject](/modular/_update5.0)
 
 # Troubleshooting
 
