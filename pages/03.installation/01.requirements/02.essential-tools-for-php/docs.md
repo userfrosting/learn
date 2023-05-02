@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 ## Git
 
@@ -40,12 +39,13 @@ To check if Composer is already installed:
 
 ```bash
 $ composer --version
-Composer version 1.9.3 2020-02-04 12:58:49
+Composer version 2.5.4 2023-02-15 13:10:06
 ```
 
-The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx). We **strongly recommend that you install Composer globally** on your system. This will let you run Composer using the `composer` command. For convenience, we recap the global installation instructions here:
+The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx). We **strongly recommend that you install Composer globally** on your system. This will let you run Composer using the `composer` command. <!--For convenience, we recap the global installation instructions here:-->
 
-### Installing Composer (MacOS and *nix)
+<!-- Removing this part. Best to not _reinvent the wheel_ -->
+<!-- ### Installing Composer (MacOS and *nix)
 
 1. Download and run the installer as per the instructions on the [downloads page](https://getcomposer.org/download/).
 2. Run `mv composer.phar /usr/local/bin/composer` to make `composer` available as a shell command.
@@ -56,7 +56,7 @@ On some versions of MacOS the `/usr` directory does not exist by default. If you
 
 ### Installing Composer (Windows)
 
-Composer has a special installer that you can use for Windows - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe). If this gives you trouble, you can try the [manual installation instructions](https://getcomposer.org/doc/00-intro.md#manual-installation).
+Composer has a special installer that you can use for Windows - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe). If this gives you trouble, you can try the [manual installation instructions](https://getcomposer.org/doc/00-intro.md#manual-installation). -->
 
 ## Node.js
 
@@ -64,13 +64,13 @@ Composer has a special installer that you can use for Windows - [Composer-Setup.
 
 Although UserFrosting does not _run_ on Node.js, it does use several Node-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
 
-The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems. We recommend using the latest version of Node.js (13.9 at the time of this writing), however any version later than 10.12 will suffice.
+The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems. We recommend using the latest version of Node.js (18.16 LTS as of May 2023), however any version later than 14 will suffice.
 
 To check if Node.js is installed:
 
 ```bash
 $ node -v
-v12.14.1
+v14.17.3
 ```
 
 [notice]Even though we'll be using these tools to get our application ready for deployment, you don't actually need to install Node.js on your live server. You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.[/notice]
@@ -81,13 +81,13 @@ Node.js has an installer that you can use for MacOS and Windows - [Node.js Downl
 
 ## npm
 
-npm stands for **N**ode **P**ackage **M**anager. npm is to Node.js as Composer is to PHP - it is used to grab the various Node packages that are required by UserFrosting's installation and build tools. When you installed Node, it should have automatically installed npm as well. However, we still recommend updating npm (if unable to update, any version later than 6.x will suffice):
+npm stands for **N**ode **P**ackage **M**anager. npm is to Node.js as Composer is to PHP - it is used to grab the various Node packages that are required by UserFrosting's installation and build tools. When you installed Node, it should have automatically installed npm as well. However, we still recommend updating npm (if unable to update, any version later than 6.14 will suffice):
 
 ```bash
 $ npm install npm@latest -g
 ```
 
-UserFrosting also uses **Yarn** and **Bower** (deprecated) for frontend dependency management. If you do not have this installed, don't worry! UserFrosting's build scripts will automatically install it for you.
+UserFrosting build scripts will automatically install all other Node and NPM dependencies for you !
 
 ## Coding and style standards
 
@@ -97,7 +97,7 @@ The increasingly modular and community-driven nature of software development mea
 
 - **PHP**: [PHP-FIG](http://www.php-fig.org/)
 - **HTML and CSS**: [Code Guide by @mdo](http://codeguide.co)
-- **Javascript**: The Javascript community (which, let's face it, is HUGE) has so far failed to adopt a single set of coding standards. Over the past few years, [Airbnb's coding guidelines](https://github.com/airbnb/javascript) have started to gain a lot of traction. It is extremely thorough and widely used, and for these reasons we recommend it.
+- **Javascript**: The Javascript community (which, let's face it, is HUGE) has so far failed to adopt a single set of coding standards. Over the past few years, [Airbnb's coding guidelines](https://github.com/airbnb/javascript) have started to gain a lot of traction. It is extremely thorough and widely used, and for these reasons we recommend it. <!-- Is this still true? -->
 
 ## Comments and API documentation generators
 
@@ -107,8 +107,8 @@ Instead, by following a specific set of standards for in-code comments ("doc blo
 
 ### PHP
 
-For PHP code, use the [phpDoc standard](https://phpdoc.org/docs/latest/guides/docblocks.html) to document your classes, methods, and member variables. You can then use [ApiGen](http://www.apigen.org/) to automatically generate clean, attractive, fully searchable API documentation for your application.
+For PHP code, use the [phpDoc standard](https://docs.phpdoc.org/3.0/guide/getting-started/what-is-a-docblock.html#what-is-a-docblock) to document your classes, methods, and member variables. You can then use [phpDocumentor](https://docs.phpdoc.org/guide/getting-started/installing.html) to automatically generate clean, attractive, fully searchable API documentation for your application.
 
 ### Javascript
 
-For Javascript, use the [JSDoc](http://usejsdoc.org/about-getting-started.html) standard and tool to comment your code and generate an attractive set of API documentation. It is consistent with Airbnb's commenting standards.
+For Javascript, use the [JSDoc](https://jsdoc.app/about-getting-started.html) standard and tool to comment your code and generate an attractive set of API documentation. <!-- It is consistent with Airbnb's commenting standards.  --> <!-- Is this still true? -->
