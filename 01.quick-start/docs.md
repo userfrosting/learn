@@ -24,16 +24,17 @@ However, if you are not using Docker, you will need to make sure your local User
 - GD PHP Extension
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
 - [Composer 2](https://getcomposer.org/)
-- [Node.js](https://nodejs.org/en/) **12.17.0** or higher or **14.0.0** or higher
+- [Node.js](https://nodejs.org/en/) **14.0.0** or higher
 - npm **6.14** or higher
 
 ## Installing UserFrosting
 
-Use Composer to create an empty project with the latest version of UserFrosting into a new `UserFrosting` folder:
+Use Composer to create an empty project with the latest version of UserFrosting skeleton into a new `UserFrosting` folder:
 
 ```bash
-$ composer create-project userfrosting/userfrosting UserFrosting
+$ composer create-project userfrosting/userfrosting UserFrosting "^5.0.0@dev"
 ```
+<!-- TODO : Change this for release -->
 
 This will clone the skeleton repository and run the installation process:
 
