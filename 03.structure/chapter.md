@@ -1,16 +1,13 @@
 ---
 title: App Structure
 metadata:
-    description: Sprinkles are modular units of code and content that implement some feature or override some default behavior of UserFrosting.
+    description: UserFrosting is modular application framework build on the shoulders of giants. This chapter describe how UserFrosting is structured.
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 #### Chapter 3
 
-# TODO
+# App Structure
 
-<!-- The **sprinkle** system is a modular, flexible approach to separating core functionality from developer-added code and content.
-
-New in UserFrosting 4, this is a powerful means of customizing your site without having to modify UF's core code.  It also allows the UserFrosting community to share and integrate functionally cohesive units of code and content across projects. -->
+UserFrosting is modular application framework build on the shoulders of giants. From the base framework, the skeleton, the dependencies up to the Sprinkles, this chapter describe how UserFrosting is structure and make use of all theses element to create a powerful and complete application.

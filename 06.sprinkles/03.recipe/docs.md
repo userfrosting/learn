@@ -7,6 +7,8 @@ taxonomy:
 ---
 [plugin:content-inject](/modular/_update5.0)
 
-### Basic concept
+## Basic concept
 
-### Optional recipes
+## Dependencies
+
+## Optional recipes
