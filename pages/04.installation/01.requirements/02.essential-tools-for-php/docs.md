@@ -5,6 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
+<!-- TODO : Might be useful to move to "Background" chapter? Or split in two, make only installation here? -->
 
 ## Git
 
