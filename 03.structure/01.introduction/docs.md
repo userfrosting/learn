@@ -23,10 +23,10 @@ But what makes a UserFrosting application, a UserFrosting application? What does
 
 ```
 You App
-└── Your code & content
+├── Your code & content
 └── Dependencies
-    └── Framework
-    └── External Libraries
+    ├── Framework
+    ├── External Libraries
     └── Sprinkles
 ```
 
