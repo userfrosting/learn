@@ -7,6 +7,8 @@ taxonomy:
 ---
 [plugin:content-inject](/modular/_update5.0)
 
+<!-- TODO : We need to talk about main sprinkle concept, and how it ties to Public/Bakery ! -->
+
 This guide assumes that you've already completed the [installation guide](/installation) and successfully managed to get UserFrosting working in your [local development environment](/background/develop-locally-serve-globally). If not, please do that now - feel free to [ask for help](/troubleshooting/getting-help) if you're running into trouble!
 
 ## Create a Sprinkle

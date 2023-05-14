@@ -7,6 +7,9 @@ taxonomy:
 ---
 [plugin:content-inject](/modular/_update5.0)
 
+<!-- This page talk about sprinkles, but it's important to note in V5, a project is a sprinkle! So this is still valid for V5, just need to be updated -->
+<!-- TODO : Take  -->
+
 Within each sprinkle, you will find any or all of the following directories and files:
 
 ```
