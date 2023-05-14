@@ -14,7 +14,8 @@ UserFrosting 5 is the culmination of almost two years of work. It is a complete 
 - Skeleton type main repo for easier initial development
 - Built-in sprinkle are now managed by Composer
 - New Event dispatcher and listener services
-- New Bakery command for easier debugging
+- New Bakery command available for easier debugging
+- Added return type, type-hint and other quality improvement across all code
 - (Almost) 100% test coverage and quality check through PHPStan
 - ***And so much more***
 
@@ -34,25 +35,27 @@ The database structure is 99% identical to UserFrosting 4. One migration have be
 
 ## New requirements
 
-UserFrosting 5 now requires :
+With the release of PHP 8 in november 2020 some major updates where made to the system requirements. UserFrosting 5 now requires :
 - PHP 8.0 or higher
 - [Node.js](https://nodejs.org/en/) 14 or higher
 - [Composer 2](https://getcomposer.org/)
 
+While any version of PHP 8 is supported, we recommend you use the latest version.
+
 ## New Structure
 
-This is where all the magic happened. The new structure introduced in UserFrosting 5 makes it easier to separate your code from UserFrosting's code while also making it easier for new developer to get things started with UserFrosting. Upgrading will also be easier, as simple as upgrading your `composer.json` file, as well as overwriting default pages.
+This is where all the magic happened. The new structure introduced in UserFrosting 5 makes it even more easier to separate your code from UserFrosting's code. This also makes it easier for new developer to get started with UserFrosting. Upgrading will also be easier, as everything is now managed by Composer. Requesting a new major version will required to edit your `composer.json` file. Finally, default pages and content are not part of the Core Sprinkle anymore. This makes easier to overwrite default pages.
 
 ### Sprinkles
-All Sprinkles are now managed by Composer. Gone is the `app/sprinkles` directory. Sprinkles will now be loaded into the `vendor/` directory, like any other dependencies.
+All Sprinkles are now managed by Composer, and directly required in your `composer.json`. Gone is the `app/sprinkles` directory. Sprinkles will now be loaded into the `vendor/` directory, like any other dependencies.
 
-Gone is also `app/sprinkles.json`. To register sprinkles, we now use **Sprinkle Recipe**. Recipes makes it easier for sprinkle to define other sprinkle has dependencies. In fact, recipe also makes it easier for Sprinkles to _register_ any class and resources they need. UserFrosting 4 used to rely on naming convention and auto-discovery, which was prone to errors. Registering resources also makes the structure more adaptable. You can read more about [Sprinkle Recipe here](/sprinkles/recipe).
+Gone is also `app/sprinkles.json`. To register sprinkles, we now use **Sprinkle Recipe**. Recipes makes it easier for sprinkle to define other sprinkle has dependencies. In fact, recipe also makes it easier for Sprinkles to _register_ any class and resources they need. UserFrosting 4 used to rely on naming convention and auto-discovery, which was prone to errors. Registering resources also makes the structure more adaptable, as there's **no** naming convention anymore for classes : The structure of `/src` can be whatever you want! You can read more about [Sprinkle Recipe here](/sprinkles/recipe).
 
-Finally, as mentioned before, the AdminLTE Theme has been moved to it's own Sprinkle. This will make it easier to switch theme in the future, but also means some reference will be updated.
+Finally, as mentioned before, the AdminLTE Theme has been moved to it's own Sprinkle. This will make it easier to switch theme in the future, but also means some reference will need to be updated.
 
 ### Routes
 
-Routes used to be in `sprinkles/routes`. While still technically PHP files, they were not part of any namespace, and were included using the `require()` methods. Routes are now namespaced along with all other class in `src/`.
+Routes used to be in `sprinkles/routes`. While still technically PHP files, they were not part of any namespace, and were included using the [`require()`](https://www.php.net/manual/fr/function.require.php) method. Routes are now namespaced, same as any other class in `src/`.
 
 ### Directories
 
@@ -90,6 +93,7 @@ To wraps things up, the old directory structure looked like this:
     ├── .env
     ├── defines.php
     └── sprinkles.json
+├── public/
 ├── vendor/
 └── composer.json
 ```
@@ -116,6 +120,7 @@ The new structure looks like this:
     ├── templates/
     ├── tests/
     └── .env
+├── public/
 ├── vendor/
     ├── account/
     ├── admin/
@@ -125,7 +130,20 @@ The new structure looks like this:
 └── webpack.config.js
 ```
 
-As you see, since `/vendor` should be omitted from version control (your Github Repository), the new structure is much more cleaner !
+As you see, since `/vendor` should be omitted from version control (your Github Repository), the new structure is much more cleaner! This doesn't means your code can't be distributed and added as a sprinkle in another UserFrosting powered app. [Community Sprinkle](/sprinkles/community) are still a thing! This new structure even makes it easier to develop them!
+
+<!-- Uncomment once the path are valid, and changelog complete? -->
+<!--## Full Changelog
+
+If you're interested in the complete changelog, you can find it for every component on Github:
+
+| Component | Changelog                                                                |
+| :-------: | ------------------------------------------------------------------------ |
+| Framework | <https://github.com/userfrosting/framework/blob/5.0/CHANGELOG.md>        |
+|   Core    | <https://github.com/userfrosting/sprinkle-core/blob/5.0/CHANGELOG.md>    |
+|  Account  | <https://github.com/userfrosting/sprinkle-account/blob/5.0/CHANGELOG.md> |
+|   Admin   | <https://github.com/userfrosting/sprinkle-admin/blob/5.0/CHANGELOG.md>   |
+| AdminLTE  | <https://github.com/userfrosting/theme-adminlte/blob/5.0/CHANGELOG.md>   |-->
 
 ## Migrating
 

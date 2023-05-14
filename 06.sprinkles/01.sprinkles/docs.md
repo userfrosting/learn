@@ -7,9 +7,12 @@ taxonomy:
 ---
 [plugin:content-inject](/modular/_update5.0)
 
+<!-- TODO : Reference Sprinkle page in Structure -->
+<!-- TODO : Reference Skeleton -->
+
 In previous versions of UserFrosting, you had to directly modify the files that come with the default installation in order to add your own functionality. For example, if you wanted to add a field to the user registration page, you had to actually modify `register.twig`. Or, if you wanted to add a new relation on the `User` class, you had to modify the actual `User.php` class that comes with UserFrosting.
 
-Starting in version 4, this is no longer the case! UserFrosting 4 now introduces the **Sprinkle system** as a way to completely isolate the code and content that you and your team produce from the core UserFrosting installation, as well as third-party code.
+Starting in version 4, this is no longer the case! UserFrosting 4 introduced the **Sprinkle system** as a way to completely isolate the code and content that you and your team produce from the core UserFrosting installation, as well as third-party code. UserFrosting 5 took 
 
 ## What is a "Sprinkle"?
 

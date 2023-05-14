@@ -9,4 +9,6 @@ taxonomy:
 
 ## Overview
 
+<!-- General syntax and PHP 8 return types -->
+
 ## Upgrading in production
