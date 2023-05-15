@@ -5,18 +5,14 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
-
-<!-- TODO : Reference Sprinkle page in Structure -->
-<!-- TODO : Reference Skeleton -->
 
 In previous versions of UserFrosting, you had to directly modify the files that come with the default installation in order to add your own functionality. For example, if you wanted to add a field to the user registration page, you had to actually modify `register.twig`. Or, if you wanted to add a new relation on the `User` class, you had to modify the actual `User.php` class that comes with UserFrosting.
 
-Starting in version 4, this is no longer the case! UserFrosting 4 introduced the **Sprinkle system** as a way to completely isolate the code and content that you and your team produce from the core UserFrosting installation, as well as third-party code. UserFrosting 5 took 
+Starting in version 4, this is no longer the case! UserFrosting 4 introduced the **[Sprinkle system](/structure/sprinkles)** as a way to completely isolate the code and content that you and your team produce from the core UserFrosting installation, as well as third-party code. UserFrosting 5 took this a step further, by allowing Composer to manage Sprinkles.
 
 ## What is a "Sprinkle"?
 
-A Sprinkle is a functionally cohesive unit of code and content that fits neatly into its own separate directory. A Sprinkle could implement a core component, a third-party plugin or theme, or even an entire website! In fact, the first step in building your application with UserFrosting is to **create a new sprinkle.**
+A Sprinkle is a functionally cohesive unit of code and content that fits neatly into its own package. A Sprinkle could implement a core component, a third-party plugin, a theme, or even an entire website! As a reminder, any project created from the [App Skeleton](/structure/introduction#the-app-skeleton-your-project-s-template) is still a Sprinkle!
 
 Each Sprinkle can contain any or all of the following entities:
 
@@ -29,65 +25,16 @@ Each Sprinkle can contain any or all of the following entities:
 - templates (Twig files)
 - "extra" content that does not fit into any of these categories
 
-Sprinkles are loaded in a specific order, and entities of each type in one sprinkle can extend entities of the same type in other sprinkles. We'll explain exactly what we mean by "extend" in a minute.
+As seen in the [App Structure Chapter](/structure), sprinkles can be located anywhere. The only requirement is it's **recipe** need to be accessible by PSR-4 compatible namespace.
 
-Each Sprinkle is located in its own subdirectory under the main `app/sprinkles/` directory. To create a new Sprinkle, simply create a new subdirectory in `app/sprinkles/`.
+### The Main Sprinkle
 
-## Loading Sprinkles
+Sprinkles are loaded in a specific order, defined by their dependencies, and entities of each type in one sprinkle can extend entities of the same type in other sprinkles. The topmost sprinkle, usually your own project, is called the **main sprinkle**. Every other sprinkles are called **depends sprinkles**. 
 
-Sprinkles are automatically loaded via the `sprinkles.json` file in your `app/` directory. If you used Bakery to install UserFrosting, this file will have been automatically created for you:
-
-```json
-{
-    "base": [
-        "core",
-        "account",
-        "admin"
-    ]
-}
-```
-
-UserFrosting will load the Sprinkles specified under the `base` key during the application lifecycle. To have UserFrosting load another Sprinkle, simply add it to this array. For example, if you have a `site` Sprinkle:
-
-```json
-{
-    "base": [
-        "core",
-        "account",
-        "admin",
-        "site"
-    ]
-}
-```
-
-By default, the UserFrosting repository is set to ignore the `sprinkles.json` file. You may wish to commit this to your own personal repository, though. In this case, simply remove it from your `.gitignore` file.
-
-[notice=warning]The order in which we load our Sprinkles is important. Files in one Sprinkle may override files with the same name and path in previously loaded Sprinkles. For example, if we created `site/templates/pages/about.html.twig`, this would override `core/templates/pages/about.html.twig` because we load the `site` Sprinkle *after* the `core` Sprinkle.[/notice]
+<!-- [notice=warning]The order in which we load our Sprinkles is important. Files in one Sprinkle may override files with the same name and path in previously loaded Sprinkles. For example, if we created `site/templates/pages/about.html.twig`, this would override `core/templates/pages/about.html.twig` because we load the `site` Sprinkle *after* the `core` Sprinkle.[/notice] -->
 
 ### Default Sprinkles
 
-A basic UserFrosting installation comes with three sprinkles, each of which can be found in its own subdirectory in `/app/sprinkles`:
-
-```
-app
-└──sprinkles
-   ├── account
-   ├── admin
-   └── core
-```
-
-When you begin to implement your own project, you will do so in a new Sprinkle, separate from these three.
-
-#### Core
-
-`core` contains most of the "heavy lifting" PHP code, and provides a basic, public website. It loads most of UserFrosting's PHP and asset dependencies, and contains classes for features like [mail](/mail), [request throttling](/routes-and-controllers/client-input/throttle), [error handling](/advanced/error-handling), and much more!
-
-#### Account
-
-The `account` sprinkle handles user modeling and authentication, user groups, roles, and access control, and contains the routes, templates, and controllers needed to implement pages for registration, password reset, login, and more.
-
-#### Admin
-
-The `admin` sprinkle contains the routes, templates, and controllers to implement the administrative user management interface, as well as the group, role, and permission management interfaces.
+A basic UserFrosting installation comes with fours sprinkles. A description of them can be found [in a previous chapter](/structure/sprinkles#bundled-sprinkles).
 
 Now that we're familiar with the basic concept, let's dig into the [contents of a Sprinkle](/sprinkles/contents)!
