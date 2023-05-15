@@ -10,7 +10,7 @@ Sprinkles are an integral part of UserFrosting. We'll see in details how they wo
 
 Unlike dependencies, which are usually meant to be used across many different framework, sprinkles are meant to integrate directly into UserFrosting and interact together. Sprinkles could be compared to "plugins", but we don't call them that because they're so much more.
 
-Actually, your own project, created from the _App Skeleton_, **is** a Sprinkle. Even if it's not physically in the `/vendor` directory. The directory structure is one part, but what really makes a Sprinkle a Sprinkle, is it's **recipe**, which we'll see later.
+Actually, your own project, created from the _App Skeleton_, **is** a Sprinkle. Even if it's not physically in the `/vendor` directory. The directory structure is one part, but what really makes a Sprinkle a Sprinkle is it's **recipe**, which we'll see later. Your project will actually be the **main sprinkle**, while the ones it uses will be the **dependent sprinkles**.
 
 You app can have as many sprinkles as you want. A sprinkle could even depend on another sprinkle, creating a nesting doll of sprinkle. Maybe your first app could become a sprinkle in someone else app!
 
