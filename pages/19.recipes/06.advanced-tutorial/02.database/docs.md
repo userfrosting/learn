@@ -56,7 +56,7 @@ Next we create a migration class. This migration will create the database table 
 
 namespace UserFrosting\Sprinkle\Pastries\Database\Migrations\v100;
 
-use UserFrosting\System\Bakery\Migration;
+use UserFrosting\Sprinkle\Core\Database\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
 class PastriesTable extends Migration
