@@ -32,7 +32,7 @@ If you want a menu item to be added to the main navigation, create following tem
 
 **app/sprinkles/pastries/templates/navigation/main-nav.html.twig**:
 ```twig
-{% extends '@core/navigation/main-nav.html.twig' %}
+{% extends '@account/navigation/main-nav.html.twig' %}
 
 {% block main_nav %}
     <li>
@@ -42,4 +42,4 @@ If you want a menu item to be added to the main navigation, create following tem
 {% endblock %}
 ```
 
-Notice that we are now extending the `@admin/navigation/sidebar-menu.html.twig` template file now. Instead of overriding the `navigation` block we are now overriding the `main_nav` block. This snippet adds a additional menu item before the default menu items.
+Notice that we are now extending the `@account/navigation/main-nav.html.twig` template file now. Instead of overriding the `navigation` block we are now overriding the `main_nav` block. This snippet adds a additional menu item before the default menu items.
