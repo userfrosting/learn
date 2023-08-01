@@ -27,3 +27,19 @@ The key here is the `{% extends '@admin/navigation/sidebar-menu.html.twig' %}` p
 You should now see the new link in the menu:
 
 ![Pastries menu link](/images/pastries/03.png)
+
+If you want a menu item to be added to the main navigation, create following temmplate file:
+
+**app/sprinkles/pastries/templates/navigation/main-nav.html.twig**:
+```twig
+{% extends '@account/navigation/main-nav.html.twig' %}
+
+{% block main_nav %}
+    <li>
+        <a href="{{site.uri.public}}/pastries"><span>List of Pastries</span></a>
+    </li>
+    {{ parent() }}
+{% endblock %}
+```
+
+Notice that we are now extending the `@account/navigation/main-nav.html.twig` template file now. Instead of overriding the `navigation` block we are now overriding the `main_nav` block. This snippet adds a additional menu item before the default menu items.
