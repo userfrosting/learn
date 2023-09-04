@@ -31,6 +31,10 @@ git:
         url: https://github.com/getgrav/grav-plugin-shortcode-core
         path: user/plugins/shortcode-core
         branch: 4.1.7
+    page-inject:
+        url: https://github.com/getgrav/grav-plugin-page-inject
+        path: user/plugins/page-inject
+        branch: master
 links:
     problems:
         src: grav-plugin-problems
@@ -63,4 +67,8 @@ links:
     shortcode-core:
         src: grav-plugin-shortcode-core
         path: user/plugins/shortcode-core
+        scm: github
+    page-inject:
+        src: grav-plugin-page-inject
+        path: user/plugins/page-inject
         scm: github
