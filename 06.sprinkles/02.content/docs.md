@@ -8,7 +8,7 @@ taxonomy:
 
 Within each sprinkle, you will find any or all of the following directories and files:
 
-```
+```txt
 ├── app/
     ├── assets/
     ├── cache/
@@ -23,7 +23,7 @@ Within each sprinkle, you will find any or all of the following directories and 
         ├── [...]
         ├── Routes/
         ├── Sprunje/
-        └── yourSprinkle.php
+        └── YourSprinkle.php
     ├── storage/
     ├── templates/
     ├── tests/

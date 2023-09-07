@@ -31,8 +31,6 @@ As seen in the [App Structure Chapter](/structure), sprinkles can be located any
 
 Sprinkles are loaded in a specific order, defined by their dependencies, and entities of each type in one sprinkle can extend entities of the same type in other sprinkles. The topmost sprinkle, usually your own project, is called the **main sprinkle**. Every other sprinkles are called **depends sprinkles**. 
 
-<!-- [notice=warning]The order in which we load our Sprinkles is important. Files in one Sprinkle may override files with the same name and path in previously loaded Sprinkles. For example, if we created `site/templates/pages/about.html.twig`, this would override `core/templates/pages/about.html.twig` because we load the `site` Sprinkle *after* the `core` Sprinkle.[/notice] -->
-
 ### Default Sprinkles
 
 A basic UserFrosting installation comes with fours sprinkles. A description of them can be found [in a previous chapter](/structure/sprinkles#bundled-sprinkles).
