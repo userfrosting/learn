@@ -1,0 +1,19 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - 'website'
+
+jobs:
+  deploy:
+    name: Deploy code to prod
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Deploy
+      uses: deployphp/action@v1
+      with:
+        dep: deploy prod -f .github/deploy.php
+        private-key: ${{ secrets.PRIVATE_KEY }}
