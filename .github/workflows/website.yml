@@ -22,7 +22,7 @@ jobs:
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with: 
-          author_name: Github Actions
-          author_email: github-actions@github.com
+          committer_name: Github Actions
+          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
           new_branch: website
           message: 'Updating submodules'
