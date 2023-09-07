@@ -19,6 +19,6 @@ jobs:
     - name: Deploy
       uses: deployphp/action@v1
       with:
-        deployer-version: "7.3.1"
+        deployer-version: "7.3.0"
         dep: deploy prod -f .github/deploy.php
         private-key: ${{ secrets.PRIVATE_KEY }}
