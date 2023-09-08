@@ -24,8 +24,8 @@ However, if you are not using Docker, you will need to make sure your local User
 - GD PHP Extension
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
 - [Composer 2](https://getcomposer.org/)
-- [Node.js](https://nodejs.org/en/) **14.0.0** or higher
-- npm **6.14** or higher
+- [Node.js](https://nodejs.org/en/) **18.0** or higher
+- npm **9** or higher
 
 ## Installing UserFrosting
 
