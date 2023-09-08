@@ -37,7 +37,7 @@ The database structure is 99% identical to UserFrosting 4. One migration have be
 
 With the release of PHP 8 in november 2020 some major updates where made to the system requirements. UserFrosting 5 now requires :
 - PHP 8.0 or higher
-- [Node.js](https://nodejs.org/en/) 14 or higher
+- [Node.js](https://nodejs.org/en/) 18 or higher
 - [Composer 2](https://getcomposer.org/)
 
 While any version of PHP 8 is supported, we recommend you use the latest version.

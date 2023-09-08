@@ -29,7 +29,7 @@ Please **make sure** that you have the following installed **before** attempting
 
 - [Git](/installation/requirements/essential-tools-for-php#Git)
 - [Composer 2](/installation/requirements/essential-tools-for-php#Composer)
-- [Node.js](/installation/requirements/essential-tools-for-php#Nodejs) version **14.0.0** or higher
+- [Node.js](/installation/requirements/essential-tools-for-php#Nodejs) version **18.0.0** or higher
 
 ## Install PHP dependencies
 

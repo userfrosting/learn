@@ -43,7 +43,7 @@ Getting Node.js is fun on CentOS. Do not run `yum install nodejs` as npm will no
 curl -sL https://rpm.nodesource.com/setup_11.x | bash -
 yum install -y nodejs
 ```
-Check that the installed version of Node.js is > 10.12.0:
+Check that the installed version of Node.js is > 18.0:
 
 ```bash
 npm --v

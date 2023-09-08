@@ -65,13 +65,13 @@ Composer has a special installer that you can use for Windows - [Composer-Setup.
 
 Although UserFrosting does not _run_ on Node.js, it does use several Node-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
 
-The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems. We recommend using the latest version of Node.js (18.16 LTS as of May 2023), however any version later than 14 will suffice.
+The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems. We recommend using the latest version of Node.js (18.16 LTS as of May 2023).
 
 To check if Node.js is installed:
 
 ```bash
 $ node -v
-v14.17.3
+v18.17.1
 ```
 
 [notice]Even though we'll be using these tools to get our application ready for deployment, you don't actually need to install Node.js on your live server. You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.[/notice]
@@ -82,7 +82,7 @@ Node.js has an installer that you can use for MacOS and Windows - [Node.js Downl
 
 ## npm
 
-npm stands for **N**ode **P**ackage **M**anager. npm is to Node.js as Composer is to PHP - it is used to grab the various Node packages that are required by UserFrosting's installation and build tools. When you installed Node, it should have automatically installed npm as well. However, we still recommend updating npm (if unable to update, any version later than 6.14 will suffice):
+npm stands for **N**ode **P**ackage **M**anager. npm is to Node.js as Composer is to PHP - it is used to grab the various Node packages that are required by UserFrosting's installation and build tools. When you installed Node, it should have automatically installed npm as well. However, we still recommend updating npm (if unable to update, any version later than 7 should work):
 
 ```bash
 $ npm install npm@latest -g
