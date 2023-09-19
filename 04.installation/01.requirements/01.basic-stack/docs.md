@@ -11,7 +11,7 @@ process:
 The basic requirements for running UserFrosting are pretty typical of any web framework or CMS. You'll need:
 
 - Web server software (Apache, Nginx, IIS, etc)
-- **PHP 8.0** or higher (**8.3** or higher recommended)
+- **PHP 8.0** or higher (**8.2** or higher recommended)
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
 
 [notice=tip]MariaDB is just an open-source fork of MySQL. The reason it exists is because of [numerous concerns](https://www2.computerworld.com.au/article/457551/dead_database_walking_mysql_creator_why_future_belongs_mariadb/) that Oracle would not do a good job honoring the open-source nature of the MySQL community. For all technical purposes, MariaDB and MySQL are more or less perfectly interoperable.[/notice]
@@ -92,13 +92,13 @@ Look, programming languages evolve, and PHP is no exception. Actually, PHP (and 
 
 Honestly, PHP 8.0 isn't exactly cutting edge - in fact, **PHP 8.0 is no longer in active support as of [November 26th, 2022](http://php.net/supported-versions.php) and will be declared "End of Life" as of [November 26th, 2023](http://php.net/supported-versions.php)**.
 
-And the truth is, we didn't make this decision directly. UserFrosting depends on a lot of third-party components, and *those* components require a minimum PHP version of _8.0_. Thus, UserFrosting does too, and the whole community moves forward. And fast too! PHP 8.3 will only be supported until [December 8th, 2024](http://php.net/supported-versions.php) !
+And the truth is, we didn't make this decision directly. UserFrosting depends on a lot of third-party components, and *those* components require a minimum PHP version of _8.0_. Thus, UserFrosting does too, and the whole community moves forward. And fast too! PHP 8.2 will only be supported until [December 8th, 2024](http://php.net/supported-versions.php) !
 
 If your hosting service doesn't have PHP 8 installed, call them and ask them to upgrade. If they refuse, point out that PHP 7 has been out of support for {{ date("now").diff(date("2022-11-08")).m }} months! To be honest, there is little reason to use a shared hosting (e.g. cPanel) service these days, especially when VPS providers like DigitalOcean and Amazon EC2 are so inexpensive. Unless you're stuck with shared hosting for some reason another (fussy boss), [there's no real reason not to switch to a VPS](https://www.hostt.com/still-use-shared-hosting-theres-vps/).
 
 As for your local development environment ([You _do_ have a local development environment, right ?](/background/develop-locally-serve-globally)), if it's that much of a burden then... I don't know what to tell you. So what are you waiting for? Upgrade!
 
-[notice=tip]For UserFrosting 5.0, PHP 8.2 is officially recommended. While you can still use UserFrosting 5 with PHP 8.0 and 8.1, upgrading to PHP 8.3 (or above) is highly recommended as both PHP 8.0 and 8.1 support will eventually be removed the future.[/notice]
+[notice=tip]For UserFrosting 5.0, PHP 8.2 is officially recommended. While you can still use UserFrosting 5 with PHP 8.0 and 8.1, upgrading to PHP 8.2 (or above) is highly recommended as both PHP 8.0 and 8.1 support will eventually be removed the future.[/notice]
 
 ### Third-party components? Why don't you write all your own code?
 

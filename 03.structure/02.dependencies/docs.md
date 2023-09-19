@@ -31,5 +31,5 @@ Eloquent is one of the most powerful and easy to use tool available to interact 
 ## Symfony Console 5
 **[Symfony Console](https://symfony.com/doc/5.4/components/console.html)** eases the creation of beautiful and testable command line interfaces. This is used to power the **Bakery** command line interfaces tool used by UserFrosting. 
 
-## Webpack Encore 1.7
+## Webpack Encore 4
 **[Webpack Encore](https://symfony.com/doc/current/frontend.html)** wraps Webpack, providing a clean & powerful API for bundling JavaScript modules, pre-processing CSS & JS and compiling and minifying assets. Encore is a professional asset system that's a delight to use. It is used by UserFrosting to serve all CSS and Javascript files, while enabling the use of other Framework, like Vue.js, in the future.
