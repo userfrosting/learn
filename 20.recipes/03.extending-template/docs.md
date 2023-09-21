@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 [notice]This recipe assumes that the reader is familiar with [Twig templating](/templating-with-twig).[/notice]
 

@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 A typical application feature is to display a table of entities from a server-side data source (e.g., a database). For example, the `admin` Sprinkle generates client-side tables for admins to view and manage users, groups, roles, activities, and permissions:
 

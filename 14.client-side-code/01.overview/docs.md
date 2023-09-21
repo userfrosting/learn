@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 UserFrosting uses jQuery and Bootstrap to provide a rich, intuitive, and modern user interface.
 
