@@ -7,7 +7,7 @@ taxonomy:
 ---
 [plugin:content-inject](/modular/_update5.0)
 
-#### Chapter 7
+#### Chapter 9
 
 # Configuration
 

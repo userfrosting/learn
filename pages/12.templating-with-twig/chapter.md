@@ -7,7 +7,7 @@ taxonomy:
 ---
 [plugin:content-inject](/modular/_update5.0)
 
-#### Chapter 11
+#### Chapter 12
 
 # Pages and Twig Templating
 

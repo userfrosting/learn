@@ -7,7 +7,7 @@ taxonomy:
 ---
 [plugin:content-inject](/modular/_update5.0)
 
-#### Chapter 10
+#### Chapter 8
 
 # Routes and Controllers
 
