@@ -5,7 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
+[plugin:content-inject](/modular/_updateRequired)
 
 [notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
 
@@ -131,7 +131,7 @@ sudo setfacl -d -m g::rwx /var/www/<repo name>/app/cache
 We can use Bakery again to compile our asset bundles for production, and copy all assets from our Sprinkles to the `public/` directory so they may be served more efficiently by the webserver:
 
 ```bash
-php bakery build-assets -c
+php bakery webpack -p
 ```
 
 If everything worked out successfully, you should now be able to access the `http` version of your live site in your browser! The next step is to [install an SSL certificate](/going-live/vps-production-environment/ssl).

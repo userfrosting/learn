@@ -5,10 +5,8 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
-<!-- This page has been updated, but might require further updates -->
 
-If you already have a local environment and you're familiar with tools like **composer**, this page will guide you in installing UserFrosting on your existing local environment. If you're don't already have a local environment set up, or you don't want to install the required software natively, you may instead want to consider setting up [Homestead](/installation/environment/homestead) or [Docker]() as a pre-configured virtual environment.
+If you already have a local environment and you're familiar with tools like **composer**, this page will guide you in installing UserFrosting on your existing local environment. If you're don't already have a local environment set up, or you don't want to install the required software natively, you may instead want to consider setting up [Homestead](/installation/environment/homestead) or [Docker](/installation/environment/docker) as a pre-configured virtual environment.
 
 ## Environment
 
@@ -48,9 +46,11 @@ $ php -v
 You should then see a message like:
 
 ```bash
-PHP 8.2.0 (cli) (built: Dec  9 2022 16:55:44) (NTS)
+PHP 8.2.9 (cli) (built: Aug 16 2023 21:20:30) (NTS)
 Copyright (c) The PHP Group
-Zend Engine v4.2.0, Copyright (c) Zend Technologies
+Zend Engine v4.2.9, Copyright (c) Zend Technologies
+    with Xdebug v3.2.0, Copyright (c) 2002-2022, by Derick Rethans
+    with Zend OPcache v8.2.9, Copyright (c), by Zend Technologies
 ```
 
 This is the version of PHP which will be used by Composer. Make sure it meets the minimum required version for UserFrosting!
@@ -72,7 +72,7 @@ Before installing, you'll need to create a database and database user account. C
 Use Composer to create an empty project with the latest version of UserFrosting skeleton into a new `UserFrosting` folder:
 
 ```bash
-$ composer create-project userfrosting/userfrosting UserFrosting "^5.0.0@dev"
+$ composer create-project userfrosting/userfrosting UserFrosting "^5.0@dev"
 ```
 <!-- TODO : Change this for release -->
 
@@ -116,49 +116,6 @@ At this point, you should be able to access the basic pages for your application
 
 ![Basic front page of a UserFrosting installation](/images/front-page.png)
 
-<!-- Shouldn't be needed as we use create-project now -->
-<!-- ## Changing git remote
-
-At this point, you should also change your **remotes**. Since you are starting your own project at this point, rather than working on changes that would eventually be merged into the main UserFrosting repository on GitHub, we'll give the GitHub remote a different, more meaningful name. First, use `git remote -v` to see the current remotes:
-
-```bash
-$ git remote -v
-origin	https://github.com/userfrosting/UserFrosting.git (fetch)
-origin	https://github.com/userfrosting/UserFrosting.git (push)
-```
-
-This basically means that `origin` is a shortcut for pushing and pulling to the official UserFrosting repository on GitHub. Let's change that:
-
-```bash
-$ git remote rename origin upstream
-$ git remote -v
-upstream	https://github.com/userfrosting/UserFrosting.git (fetch)
-upstream	https://github.com/userfrosting/UserFrosting.git (push)
-```
-
-This renames the `origin` remote to `upstream`. Let's also disable the `push` part of this remote (don't worry, you won't have push rights for the official repo anyway, but this will help us stay organized):
-
-```bash
-$ git remote set-url --push upstream no-pushing
-$ git remote -v
-upstream	https://github.com/userfrosting/UserFrosting.git (fetch)
-upstream	no-pushing (push)
-```
-
-Now, if we were to try and push to `upstream` for some reason, we'll get a useful error instead of being prompted for credentials.
-
-For future reference (you don't have to do this right now) with the `upstream` remote set up, you will be able to pull any updates from the official UserFrosting repository into your project:
-
-```bash
-$ git fetch upstream
-$ git checkout master
-$ git merge upstream/master
-```
-
-See GitHub's article on [syncing a fork](https://help.github.com/articles/syncing-a-fork/) for more information.
-
-If you are developing as part of a team, you may wish to set up a _new_ `origin` remote, for example one that points to a private repo on Bitbucket. When you are ready to deploy, you may also set up yet another `deploy` remote, which will allow you to push your code directly to the production server. See [deployment](/going-live/vps-production-environment/git-for-deployment) for more information. -->
-
 ## Star the project and follow us on Twitter
 
 It will help us a lot if you could star [the UserFrosting project on GitHub](https://github.com/userfrosting/UserFrosting). Just look for the button in the upper right-hand corner!
@@ -170,4 +127,3 @@ You should also follow us on Twitter for real-time news and updates:
 <a class="twitter-follow-button" href="https://twitter.com/userfrosting" data-size="large">Follow @userfrosting</a>
 
 Congratulations! Now that this is complete, you're ready to start developing your application by [creating your first Sprinkle](/sprinkles).
-<!-- TODO : Update last link -->
