@@ -52,3 +52,4 @@ redirects:
     /recipes/hosting-with-iis: /installation/other-situations/iis
     /contributing/supporting-userfrosting: /contributing
     /advanced/i18n: /i18n
+    /services: /dependency-injection

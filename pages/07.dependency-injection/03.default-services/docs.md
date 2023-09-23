@@ -7,8 +7,11 @@ taxonomy:
 ---
 [plugin:content-inject](/modular/_update5.0)
 
-As mentioned in the last section, each Sprinkle can set up its own services through a **service provider** class. The default `core` and `account` Sprinkles set up many services that are essential to UserFrosting's functionality. These classes can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory.
+As mentioned in the last section, each Sprinkle can set up its own services through **services providers**. The [bundled sprinkles](/structure/sprinkles#bundled-sprinkles) set up many services that are essential to UserFrosting's functionality. These services can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory. 
 
+But this is just the tip of the iceberg, since _Autowiring_ is also used throughout the source code to inject other types of classes pretty much everywhere. This is a short list of the most important services defined in each Sprinkle.
+
+<!-- TODO -->
 ## Core Services
 
 ### alerts

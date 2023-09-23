@@ -16,7 +16,7 @@ While UserFrosting uses dozens of dependencies, here's a rundown of the most imp
 Except for the Bakery system, which uses _Symfony Console_ (more on that later), UserFrosting uses Slim at every level to perform middleware management, routes collections and everything else needed to actually display a web page.
 
 ## PHP-DI 7
-**[PHP-DI](https://php-di.org)** is a _dependency injection container_. Dependency injection is one of the fundamental pillars of modern object-oriented software design. It is used extensively throughout UserFrosting to glue all services together while maintaining . We'll explain dependency injection in detail in a later chapter. For now, it's only important to note **PHP-DI** is the dependency used by UserFrosting 5 to handle all dependency injection.
+**[PHP-DI](https://php-di.org)** is a _dependency injection container_. Dependency injection is one of the fundamental pillars of modern object-oriented software design. It is used extensively throughout UserFrosting to glue all services together while maintaining great flexibility to extend the basics functionalities of UserFrosting to create your own project. We'll explain dependency injection in detail in a later chapter. For now, it's only important to note **PHP-DI** is the dependency manager used by UserFrosting 5 to handle all dependency injection.
 
 ## Eloquent 8
 **[Eloquent](https://laravel.com/docs/8.x/eloquent)** is part of the Laravel Framework. Eloquent makes it enjoyable to interact with a database. When using Eloquent, each database table has a corresponding "Model" that is used to interact with that table. In addition to retrieving records from the database table, Eloquent models allow you to insert, update, and delete records from the table as well.
