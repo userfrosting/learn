@@ -182,7 +182,7 @@ This lets you display an error report when an exception is thrown during the AJA
 [notice=warning]By default, both `settings.displayErrorDetails` and `site.debug.ajax` are disabled in the production configuration environment. Do not change this! Displaying detailed exception traces in production is an extreme security risk and could leak sensitive passwords to your users and/or the public.[/notice]
 
 ## Custom exceptions
-
+<!-- TODO : Require updating -->
 UserFrosting comes with the following exceptions already built-in:
 
 ```bash
