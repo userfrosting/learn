@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 ## RESTful Responses
 
@@ -21,34 +20,30 @@ The default status code used by the `Response` object. You should use this code 
 
 You should use this whenever you permanently rename a route - especially for pages! You want the old route to automatically resolve to your new URL, otherwise this could hurt your search engine rankings.
 
-Recommended practice is to create a new route file in your Sprinkle, `routes/redirects.php`, and keep your redirect routes there:
+Recommended practice is to create a new route definition class in your Sprinkle and keep your redirect routes together. The [redirect helper](https://www.slimframework.com/docs/v4/objects/routing.html#redirect-helper) can help to perform the actual link between the old and the new route :
 
 ```php
 <?php
 
-    $app->get('/old/dumb/url', function (Request $request, Response $response) {
-        $target = $this->router->pathFor('newUrl');
-        return $response->withRedirect($target, 301);
-    });
+    $app->redirect('/old/dumb/url', '/newUrl', 301);
 
-    ...
+    // ...
 ```
-
-Note that most major browsers perform the redirect automatically.
 
 ### 302 (Found)
 
 This is typically used for temporary redirects; for example, to redirect your users after they log out of the site. The logout route returns a 302 status code along with a `Location` header, to tell the client's browser where to redirect:
 
 ```php
-    public function logout(Request $request, Response $response, array $args)
+    public function logout(Response $response, Authenticator $authenticator, Config $config)
     {
         // Destroy the session
-        $this->ci->authenticator->logout();
+        $authenticator->logout();
 
         // Return to home page
-        $config = $this->ci->config;
-        return $response->withStatus(302)->withHeader('Location', $config['site.uri.public']);
+        return $response
+            ->withStatus(302)
+            ->withHeader('Location', $config->get('site.uri.public'));
     }
 ```
 
@@ -64,7 +59,7 @@ Respond with this code when the client has submitted an "invalid" request. In mo
 
 Technically, this code is meant to be used with [HTTP Basic](https://en.wikipedia.org/wiki/Basic_access_authentication) and [HTTP Digest Authentication](https://en.wikipedia.org/wiki/Digest_access_authentication), which UserFrosting doesn't use.
 
-However in lieu of a better alternative, UserFrosting has co-opted this code for its own authentication checks. If an AJAX request fails because the user is **not logged in**, UserFrosting's `AuthGuard` middleware will return a 401 status code.
+However in lieu of a better alternative, UserFrosting has co-opted this code for its own authentication checks. If an AJAX request fails because the user is **not logged in**, UserFrosting's **AuthGuard** middleware will return a 401 status code.
 
 For non-AJAX requests (i.e., when visiting a page), if a request fails because the user is not logged in, a 302 status code will be returned instead, and the user will be redirected to the login page.
 
@@ -75,31 +70,35 @@ For non-AJAX requests (i.e., when visiting a page), if a request fails because t
 This code is almost always returned because a user has failed a `checkAccess` call. Controller methods will commonly have a check like:
 
 ```php
+use UserFrosting\Sprinkle\Account\Exceptions\ForbiddenException;
+
+// ...
+
 if (!$authorizer->checkAccess($currentUser, 'uri_users')) {
     throw new ForbiddenException();
 }
 ```
 
-The default `ForbiddenExceptionHandler` that handles `ForbiddenException`s will automatically generate an error message/page response with a 403 response code.
+The default exception handler that handles `ForbiddenException`s will automatically generate an error message/page response with a 403 response code.
 
 In some cases, you may not want to disclose to unauthorized users that the resource even _exists_. In this case, you can [override](/advanced/error-handling) the `ForbiddenExceptionHandler` with your own handler and have it return a 404 error instead.
 
 ### 404 (Not Found)
 
-This code is your classic "could not find the thing you're looking for" error. To trigger this code manually in UserFrosting, you'll need to throw a `NotFoundException`:
+This code is your classic "could not find the thing you're looking for" error. To trigger this code manually in UserFrosting, you'll need to throw a `UserFrosting\Sprinkle\Core\Exceptions\NotFoundException`:
 
 ```php
-use Slim\Exception\NotFoundException;
+use UserFrosting\Sprinkle\Core\Exceptions\NotFoundException;
 
 ...
 
-    public function updateField(Request $request, Response $response, array $args)
+    public function updateField()
     {
-        $user = $this->getUserFromParams($args);
-
+        $user = // ...
+        
         // Will cause a 404 response
-        if (!$user) {
-            throw new NotFoundException($request, $response);
+        if ($user === null) {
+            throw new NotFoundException();
         }
 
         ...
@@ -108,7 +107,7 @@ use Slim\Exception\NotFoundException;
 
 ### 405 (Method Not Allowed)
 
-This code is [automatically returned by Slim](https://www.slimframework.com/docs/v3/handlers/not-allowed.html), when a route exists for a given URL, but not for the requested method. For example, if someone tries to `POST` to a URL, but there is only a `GET` route defined.
+This code is automatically returned by the router when a route exists for a given URL, but not for the requested method. For example, if someone tries to `POST` to a URL, but there is only a `GET` route defined.
 
 ### 429 (Too Many Requests)
 
@@ -120,7 +119,7 @@ This code is a generic "something didn't work right, but it's not your fault" er
 
 For example, the client probably doesn't care whether your database is down, your mail server stopped working, or there is a missing semicolon in your last commit.
 
-By default when an exception is thrown and no registered exception handler is found, UserFrosting invokes the base `ExceptionHandler`.  This handler returns a 500 status code.
+By default when an exception is thrown and no registered exception handler is found, UserFrosting invokes the base `ExceptionHandler`. This handler returns a 500 status code.
 
 ### 503 (Service Unavailable)
 

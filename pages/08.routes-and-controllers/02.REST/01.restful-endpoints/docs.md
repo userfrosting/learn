@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 A RESTful url should represent a _thing_, not an _action_. We want to avoid putting any verbs in the name of the url. Instead, the action should be defined by the HTTP method. For example:
 
