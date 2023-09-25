@@ -6,6 +6,8 @@ taxonomy:
     category: docs
 ---
 
+<!-- TODO : List all Interfaces, explain them, the concept -->
+
 ## Basic concept
 
 A basic recipe has some methods which are used to define some Sprinkle properties.
