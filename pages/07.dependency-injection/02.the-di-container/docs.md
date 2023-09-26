@@ -136,13 +136,13 @@ You'll notice that the callable used to create a `Logger` object takes two param
 
 ### Binding Interfaces
 
-Earlier we discussed the benefits of using interfaces, as the constructor can accept any class that implement the correct interface. 
+Earlier we discussed the benefits of using interfaces, as the constructor can accept any class that implement the correct interface:
 
 ```php
 public function __construct(NestInterface $nest) // Accept both `Nest` and `ImprovedNest`
 ```
 
-In this case, _Autowiring_ can't help us since the `NestInterface` cannot be instantiated: it's not a class, it's an interface. In this case, PHP Definitions can be used to match the interface with the correct class we want, using either a factory, or the [Autowired object](https://php-di.org/doc/php-definitions.html#autowired-objects) syntax: 
+In this case, _Autowiring_ can't help us since the `NestInterface` cannot be instantiated: it's not a class, it's an interface! In this case, PHP Definitions can be used to match the interface with the correct class we want, using either a factory, or the [Autowired object](https://php-di.org/doc/php-definitions.html#autowired-objects) syntax: 
 
 ```php
 return [
@@ -165,6 +165,36 @@ return [
 ];
 ```
 
-[notice]But why are interface really needed? If `ImprovedNest` extends `Nest`, wouldn't the constructor accept an `ImprovedNest` anyway if you typed-hinted against `Nest`? Well, yes... But it's considered "best practice" to type-hint against interfaces.[/notice]
+But why are interface really needed? If `ImprovedNest` extends `Nest`, wouldn't the constructor accept an `ImprovedNest` anyway if you typed-hinted against `Nest`? Well, yes... But it won't work the other way around. For example : 
+
+
+```php
+// This will work
+
+class AcceptNest {
+    public function __construct(protected Nest $nest)
+    {
+        // ...
+    }
+}
+
+$improvedNest = $this->ci->get(Nest::class); // Return `ImprovedNest`, because service is configured this way
+$test = new AcceptNest($improvedNest); // Works, ImprovedNest is a subtype of Nest
+
+// This wont 
+
+class AcceptImprovedNest {
+    public function __construct(protected ImprovedNest $nest)
+    {
+        // ...
+    }
+}
+
+$nest = $this->ci->get(Nest::class); // Return `Nest`
+$test = new AcceptImprovedNest($nest); // Throws TypeError Exception, Nest is not a subtype of ImprovedNest
+```
+
+In most case it's considered "best practice" to type-hint against interfaces, unless you explicitly required an
+
 
 The next page shows a small list the **default services** that ship with UserFrosting, as well as tips and trick to replace. After that, we talk about how you can **add** your own services, **extend** existing services, or completely **replace** certain services in your own Sprinkle.
