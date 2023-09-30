@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 There is no such thing as a `$_GET` array or a `$_POST` array - at least, not according to the [HTTP specifications](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Message_Format). These superglobals are merely constructs offered by PHP to make your life more "convenient".
 
@@ -17,15 +16,15 @@ Fortunately, Slim saves the day by providing a more HTTP-friendly way of accessi
 
 There are really two places in the URL that could contain information we'd want to retrieve - the path itself, and the query string.
 
-Variables that we'd want to retrieve from the path itself are typically declared in the [route definition](/routes-and-controllers/front-controller). These can be retrieved directly from the `$args` array by indexing it with the name of the placeholder. For example, suppose we have a route defined as:
+Variables that we'd want to retrieve from the path itself are typically declared in the [route definition](/routes-and-controllers/front-controller). These can be retrieved using [Route Placeholder Injection](https://php-di.org/doc/frameworks/slim.html#route-placeholder-injection) by simply adding a parameter with the same name to the controller. PHP-DI will directly inject it by indexing it with the name of the placeholder. For example, suppose we have a route defined as:
 
 ```php
-$app->get('/api/users/u/{user_name}', function (Request $request, Response $response, array $args) {
+$app->get('/api/users/u/{username}', function (string $username, Request $request, Response $response) {
     ...
 });
 ```
 
-If someone submits a request to `/api/users/u/david`, then the value `'david'` will be available at `$args['user_name']`.
+If someone submits a request to `/api/users/u/david`, then the value `'david'` will be available at `$username`.
 
 The other place where we'd typically find client-supplied data is in the query string (the part of the URL after the `?`). In this case, we can access these variables through the `$request` parameter, using the `getQueryParams` method:
 
@@ -42,19 +41,19 @@ echo $params['format'];
 
 ## Retrieving Body Parameters
 
-Slim [provides a number of methods](https://www.slimframework.com/docs/v3/objects/request.html#the-request-body) for retrieving data from the body. The two most common scenarios involve retrieving data that was submitted from a form, and uploaded files.
+Slim [provides a number of methods](https://www.slimframework.com/docs/v4/objects/request.html#the-request-body) for retrieving data from the body. The two most common scenarios involve retrieving data that was submitted from a form, and uploaded files.
 
 ### Form Data
 
 To get client-submitted form data, simply use the `getParsedBody()` method on `$request`:
 
 ```php
-// request was POST /api/users, with form values user_name => 'kevin' and password => 'hunter2'
+// request was POST /api/users, with form values username => 'kevin' and password => 'hunter2'
 
 $params = $request->getParsedBody();
 
 // Displays 'kevin'
-echo $params['user_name'];
+echo $params['username'];
 ```
 
 [notice=note]Again, browsers typically send data from `POST` requests through the message body, but this does not mean that message body and POST are equivalent concepts.[/notice]
@@ -69,12 +68,12 @@ $files = $request->getUploadedFiles();
 
 ## Retrieving Headers
 
-To retrieve request headers, use `$request->getHeaders()`, `$request->getHeader()`, or `$request->getHeaderLine()`. See [Slim's documentation](https://www.slimframework.com/docs/objects/request.html#the-request-headers) for more information.
+To retrieve request headers, use `$request->getHeaders()`, `$request->getHeader()`, or `$request->getHeaderLine()`. See [Slim's documentation](https://www.slimframework.com/docs/v4/objects/request.html#the-request-headers) for more information.
 
 ## Retrieving the Method
 
 Usually, you'll already know the HTTP method by the time you've started executing code in your controller, because it will be explicitly mentioned in your route definition. Nonetheless, there are circumstances when you need to determine the HTTP method dynamically:
 
-```
+```php
 $method = $request->getMethod();
 ```
