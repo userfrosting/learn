@@ -20,7 +20,7 @@ Third party services are also used directly throughout the code. They can be inj
 
 This service handles the [alert message stream](/routes-and-controllers/alert-stream), sometimes known as "flash messages". See [Section 9](/routes-and-controllers/alert-stream) for more information.
 
-### `UserFrosting\Cache\Cache`
+### `Illuminate\Cache\Repository as Cache`
 
 Creates an instance of a Laravel [Cache](https://laravel.com/docs/8.x/cache). See [Chapter 17](/advanced/caching) for more information.
 

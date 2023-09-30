@@ -63,6 +63,8 @@ return [
 ];
 ```
 
+More details about this will be explored in [Chapter 8](/routes-and-controllers/registering-routes).
+
 ### getServices
 
 Return an array of routes classes.
