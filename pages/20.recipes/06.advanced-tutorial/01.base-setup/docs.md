@@ -103,14 +103,9 @@ Finally, we need to *create* the template file. We use the same file name as the
                 <div class="box-body">
                     <tr>
                         <th>Name</th>
+                        <th>Origin</th>
                         <th>Description</th>
                     </tr>
-                    {% for pastry in pastries %}
-                        <tr>
-                            <td>{{pastry.name}}</td>
-                            <td>{{pastry.description}}</td>
-                        </tr>
-                    {% endfor %}
                 </div>
             </div>
         </div>
