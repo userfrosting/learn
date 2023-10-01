@@ -1,11 +1,10 @@
 ---
-title: Integrating the database
+title: Integrating the Database
 metadata:
     description: Customizing our UserFrosting controller to retrieve dynamic data from the database and display it in our page.
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 Now that we have a sprinkle with an empty page to work with, it's time to get started with our database integration. Our data structures for the database table will be straightforward. We'll store pastries in a `pastries` table using the following columns:
 
@@ -18,32 +17,21 @@ Now that we have a sprinkle with an empty page to work with, it's time to get st
 
 First, we create the [data model](/database/overview#data-models). In this model, we define the table name, list the columns we want to be [mass assignable](https://laravel.com/docs/8.x/eloquent#mass-assignment) and enable automatic timestamp creation.
 
-**app/sprinkles/pastries/src/Database/Models/Pastry.php**:
+**app/src/Database/Models/Pastries.php**:
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\Pastries\Database\Models;
+namespace UserFrosting\App\Database\Models;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
 use UserFrosting\Sprinkle\Core\Database\Models\Model;
 
-class Pastry extends Model
+class Pastries extends Model
 {
-    /**
-     * @var string The name of the table for the current model.
-     */
-    protected $table = 'pastries';
-
     protected $fillable = [
         'name',
         'description',
-        'origin'
+        'origin',
     ];
-
-    /**
-     * @var bool Enable timestamps for this class.
-     */
-    public $timestamps = true;
 }
 ```
 
@@ -51,21 +39,21 @@ class Pastry extends Model
 
 Next we create a migration class. This migration will create the database table for us. Migrations are located in `src/Database/Migrations`. Since this is the first version of our Sprinkle, we'll add them to the `v100` sub directory. Finally, since the migration's purpose is to create the `pastries` table, we'll name the migration class `PastriesTable`.
 
-**app/sprinkles/pastries/src/Database/Migrations/v100/PastriesTable.php**:
+**app/src/Database/Migrations/V100/PastriesTable.php**:
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\Pastries\Database\Migrations\v100;
+namespace UserFrosting\App\Database\Migrations\V100;
 
-use UserFrosting\System\Bakery\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use UserFrosting\Sprinkle\Core\Database\Migration;
 
 class PastriesTable extends Migration
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function up()
+    public function up(): void
     {
         $this->schema->create('pastries', function (Blueprint $table) {
             $table->increments('id');
@@ -81,9 +69,9 @@ class PastriesTable extends Migration
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function down()
+    public function down(): void
     {
         $this->schema->drop('pastries');
     }
@@ -96,21 +84,21 @@ As described in the [Migration](/database/migrations) chapter, the `up` method c
 
 Next we'll populate our newly created table with some default data. To do this, we'll create a [**seed**](/database/seeding). While this could be done in a migration, it is recommended to create default database values using a seed as it enabled the data to be recreated if it get deleted. We call this seed `DefaultPastries`:
 
-**app/sprinkles/pastries/src/Database/Seeds/DefaultPastries.php**:
+**app/src/Database/Seeds/DefaultPastries.php**:
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\Pastries\Database\Seeds;
+namespace UserFrosting\App\Database\Seeds;
 
-use UserFrosting\Sprinkle\Core\Database\Seeder\BaseSeed;
+use UserFrosting\Sprinkle\Core\Seeder\SeedInterface;
 use UserFrosting\Sprinkle\Pastries\Database\Models\Pastries;
 
-class DefaultPastries extends BaseSeed
+class DefaultPastries implements SeedInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function run()
+    public function run(): void
     {
         foreach ($this->pastries() as $pastry) {
             $pastry = new Pastries($pastry);
@@ -118,57 +106,59 @@ class DefaultPastries extends BaseSeed
         }
     }
 
-    protected function pastries()
+    protected function pastries(): array
     {
         return [
             [
-                'name' => 'Apple strudel',
+                'name'        => 'Apple strudel',
                 'description' => 'Sliced apples and other fruit are wrapped and cooked in layers of filo pastry. The earliest known recipe is in Vienna, but several countries in central and eastern Europe claim this dish.',
-                'origin' => 'Central Europe'
+                'origin'      => 'Central Europe',
             ],
             [
-                'name' => 'Pain au chocolat',
+                'name'        => 'Pain au chocolat',
                 'description' => '"Chocolate bread", also called a chocolatine in southern France and in French Canada, is a French pastry consisting of a cuboid-shaped piece of yeast-leavened laminated dough, similar to puff pastry, with one or two pieces of chocolate in the centre.',
-                'origin' => 'France'
+                'origin'      => 'France',
             ],
             [
-                'name' => 'Baklava',
+                'name'        => 'Baklava',
                 'description' => 'A Turkish pastry that is rich and sweet, made of layers of filo pastry filled with chopped nuts and sweetened with syrup or honey.',
-                'origin' => 'Turkish/Greek'
-            ]
+                'origin'      => 'Turkish/Greek',
+            ],
         ];
     }
 }
 ```
 
-## Integrating the seed into the migration and applying changes
+## Integrating the seed into the migration
 
-Notice at this point how we haven't run our migration and seed yet. This means the table and the default data doesn't exist. Before doing so, we'll make one small change to the `PastriesTable` migration. We'll tell the migration to execute the `DefaultPastries` seed after the table is created. Let's edit the `PastriesTable` up method (down method isn't affected) and add the following :
+Notice at this point how we haven't run our migration and seed yet. This means the table and the default data doesn't exist. Before doing so, we'll make one small change to the *PastriesTable* migration. We'll tell the migration to execute the *DefaultPastries* seed after the table is created. Let's edit the *PastriesTable* `up()` method (down method isn't affected) and add the following at the bottom of the method :
 
 ```php
-Seeder::execute('DefaultPastries');
+// Run Seed for default pastries
+$seed = new DefaultPastries();
+$seed->run();
 ```
 
-We'll also need to declare the `Seeder` facade class usage by adding `use UserFrosting\Sprinkle\Core\Facades\Seeder;` to the top of our class.
+We'll also need to import the `DefaultPastries` class by adding `use UserFrosting\App\Database\Seeds\DefaultPastries;` to the top of our class.
 
 Our `PastriesTable` class should now look like this :
 
-**app/sprinkles/pastries/src/Database/Migrations/v100/PastriesTable.php**:
+**app/src/Database/Migrations/V100/PastriesTable.php**:
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\Pastries\Database\Migrations\v100;
+namespace UserFrosting\App\Database\Migrations\V100;
 
-use UserFrosting\System\Bakery\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use UserFrosting\Sprinkle\Core\Facades\Seeder;
+use UserFrosting\Sprinkle\Core\Database\Migration;
+use UserFrosting\Sprinkle\Pastries\Database\Seeds\DefaultPastries;
 
 class PastriesTable extends Migration
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function up()
+    public function up(): void
     {
         $this->schema->create('pastries', function (Blueprint $table) {
             $table->increments('id');
@@ -182,18 +172,75 @@ class PastriesTable extends Migration
             $table->charset = 'utf8';
         });
 
-        Seeder::execute('DefaultPastries');
+        // Run Seed for default pastries
+        $seed = new DefaultPastries();
+        $seed->run();
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function down()
+    public function down(): void
     {
         $this->schema->drop('pastries');
     }
 }
 ```
+
+## Registering the Migration and Seed in the Sprinkle Recipe
+
+<!-- TODO ! -->
+<!-- MigrationRecipe, SeedRecipe -->
+
+```php
+namespace UserFrosting\App;
+
+use UserFrosting\Sprinkle\Account\Account;
+use UserFrosting\Sprinkle\Admin\Admin;
+use UserFrosting\Sprinkle\Core\Core;
+use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\MigrationRecipe; // <-- Add here !
+use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\SeedRecipe; // <-- Add here !
+use UserFrosting\Sprinkle\Pastries\Database\Migrations\V100\PastriesPermissions; // <-- Add here !
+use UserFrosting\Sprinkle\Pastries\Database\Migrations\V100\PastriesTable; // <-- Add here !
+use UserFrosting\Sprinkle\Pastries\Database\Seeds\DefaultPastries; // <-- Add here !
+use UserFrosting\Sprinkle\SprinkleRecipe;
+use UserFrosting\Theme\AdminLTE\AdminLTE;
+
+class MyApp implements 
+    SprinkleRecipe, 
+    MigrationRecipe, // <-- Add here !
+    SeedRecipe // <-- Add here !
+{
+    // ...
+
+    /**
+     * Return an array of all registered Migrations.
+     *
+     * @return string[]
+     */
+    public function getMigrations(): array
+    {
+        return [
+            PastriesTable::class,
+            PastriesPermissions::class,
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSeeds(): array
+    {
+        return [
+            DefaultPastries::class,
+        ];
+    }
+    
+    // ...
+}
+```
+
+<!-- END TODO -->
 
 We are now ready to run our migration. From the command line, use the [Bakery migrate command](/cli/commands#migrate) to run the migration up: `php bakery migrate`. You should now see the newly created table with the default rows in your database (using _phpMyAdmin_ or the database CLI, for instance).
 

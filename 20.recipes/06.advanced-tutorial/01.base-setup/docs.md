@@ -5,83 +5,87 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
-## The sprinkle
+## The Base Sprinkle
 
-First thing to do is to create an empty sprinkle for our code to live in. We'll call this sprinkle `Pastries`. As described in the [Sprinkles](/sprinkles/first-site) chapter, start by creating an empty `pastries/` directory under `app/sprinkles`. We now have to create the `composer.json` file for our sprinkle:
+First thing to do is to create an empty sprinkle for our code to live in from the UserFrosting 5 Skeleton. We'll call this sprinkle `Pastries`. As described in the [Installation Chapter](/installation) chapter, start by creating an empty base using the Skeleton template:
 
-**app/sprinkles/pastries/composer.json**:
-```json
+```bash
+$ composer create-project userfrosting/userfrosting UserFrosting "^5.0.0"
+```
+
+Make sure the default skeleton app is working. Once the base website is created and working, we can start creating our new page.
+
+## The Route Class
+
+We can create the [route definition](/routes-and-controllers) for the `/pastries` page. We'll *edit* the default `app/src/MyRoutes.php` file. 
+
+**app/src/MyRoutes.php**:
+```php
+<?php
+
+namespace UserFrosting\App;
+
+use Slim\App;
+use Slim\Routing\RouteCollectorProxy; // <-- Add this
+use UserFrosting\App\Controller\AppController;
+use UserFrosting\Routes\RouteDefinitionInterface;
+use UserFrosting\Sprinkle\Account\Authenticate\AuthGuard; // <-- Add this
+use UserFrosting\App\Controller\PastriesPageAction; // <-- Add this
+
+class MyRoutes implements RouteDefinitionInterface
 {
-    "name": "owlfancy/pastries",
-    "type": "userfrosting-sprinkle",
-    "description": "Pastries list for UserFrosting.",
-    "autoload": {
-        "psr-4": {
-            "UserFrosting\\Sprinkle\\Pastries\\": "src/"
-        }
+    public function register(App $app): void
+    {
+        $app->get('/', [AppController::class, 'pageIndex'])->setName('index');
+        $app->get('/about', [AppController::class, 'pageAbout'])->setName('about');
+        $app->get('/legal', [AppController::class, 'pageLegal'])->setName('legal');
+        $app->get('/privacy', [AppController::class, 'pagePrivacy'])->setName('privacy');
+
+        // Add this -->
+        $app->group('/pastries', function (RouteCollectorProxy $group) {
+            $group->get('', PastriesPageAction::class)->setName('pastries');
+        })->add(AuthGuard::class);
+        // <-- End Add
     }
 }
 ```
 
-Next we need to add our `Pastries` sprinkle to the `sprinkles.json` list and update **Composer** so our new [PSR4 mapping](http://www.php-fig.org/psr/psr-4/#3-examples) is picked up. From the command line, run `composer update` in the **root directory** of your UserFrosting project.
+We now have a `/pastries` route set up, which point to a (future) `PastriesPageAction` controller class. We defined that route inside a route group for later use, if we wish to add additional routes whose URLs also begin with `/pastries`. As you can see this route has the `pastries` name and will invoke the `AuthGuard` middleware, which requires a user to be logged in to see this page.
 
-[notice=tip]Don't forget to always run any composer command from the project root directory (`/`).[/notice]
+## The Controller Class
 
-## The route
+Now that we have a route, we need to create the `PastriesPageAction` controller:
 
-We now create the [route](/routes-and-controllers) for the "pastries" page. Create the empty `routes/` directory inside your sprinkle directory structure and create the `pastries.php` file:
-
-**app/sprinkles/pastries/routes/pastries.php**:
+**src/Controller/PastriesPageAction.php**:
 ```php
 <?php
 
-/**
- * Routes for pastry-related pages.
- */
-$app->group('/pastries', function () {
-    $this->get('', 'UserFrosting\Sprinkle\Pastries\Controller\PastriesController:pageList')
-         ->setName('pastries');
-})->add('authGuard');
-```
-
-We now have a `/pastries` route set up. We also define a route group for later use, if we wish to add additional routes whose URLs also begin with `/pastries/`. As you can see this route has the `pastries` name and will invoke the `authGuard` middleware, which requires a user to be logged in to see this page.
-
-## The controller class
-
-Now that we have a route, we need to create the `PastriesController` controller with the `pageList` method:
-
-**app/sprinkles/pastries/src/Controller/PastriesController.php**:
-```php
-<?php
-
-namespace UserFrosting\Sprinkle\Pastries\Controller;
+namespace UserFrosting\App\Controller;
 
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Exception\NotFoundException;
-use UserFrosting\Sprinkle\Core\Controller\SimpleController;
-use UserFrosting\Support\Exception\ForbiddenException;
+use Slim\Views\Twig;
 
-class PastriesController extends SimpleController
+class PastriesPageAction
 {
-    public function pageList(Request $request, Response $response, $args)
+    public function __invoke(Response $response, Twig $view): Response
     {
-        return $this->ci->view->render($response, 'pages/pastries.html.twig', [
+        $pastries = [];
 
+        return $view->render($response, 'pages/pastries.html.twig', [
+            'pastries' => $pastries,
         ]);
     }
 }
 ```
 
-[notice=tip]Later on, we can add methods for other pastry-related pages to this same class as a way to logically organize our code.[/notice]
+For now, the pastries array is empty. In the next page, we'll replace this empty array with a database model. 
 
-## The template file
+## The Template File
 
-Finally, we need to create the template file. We use the same file as the one defined in your controller:
+Finally, we need to *create* the template file. We use the same file name as the one defined in your controller:
 
-****app/sprinkles/pastries/templates/pages/pastries.html.twig**:
+****app/templates/pages/pastries.html.twig**:
 ```html
 {% extends 'pages/abstract/dashboard.html.twig' %}
 
@@ -97,7 +101,16 @@ Finally, we need to create the template file. We use the same file as the one de
                     <h3 class="box-title"><i class="fa fa-cutlery fa-fw"></i> List of Pastries</h3>
                 </div>
                 <div class="box-body">
-
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                    {% for pastry in pastries %}
+                        <tr>
+                            <td>{{pastry.name}}</td>
+                            <td>{{pastry.description}}</td>
+                        </tr>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -111,4 +124,4 @@ You should now be able to manually go to the `/pastries` page in your browser an
 
 ![Pastries page](/images/pastries/01.png)
 
-You'll notice that at this point, we're not actually displaying any useful content on the page.  In the next section, we'll discuss how to display content dynamically retrieved from the database.
+You'll notice that at this point, we're not actually displaying any useful content on the page. In the next section, we'll discuss how to display content dynamically retrieved from the database.
