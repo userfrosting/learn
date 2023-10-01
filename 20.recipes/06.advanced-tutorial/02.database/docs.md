@@ -187,11 +187,17 @@ class PastriesTable extends Migration
 }
 ```
 
-## Registering the Migration and Seed in the Sprinkle Recipe
+## Registering the migration and seed in the sprinkle recipe
 
-<!-- TODO ! -->
-<!-- MigrationRecipe, SeedRecipe -->
+We also need to tell our Recipe that it will be providing migrations and seeds. To do so, your recipe class must implement, on top of `SprinkleRecipe`, `UserFrosting\Sprinkle\Core\Sprinkle\Recipe\MigrationRecipe` and `use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\SeedRecipe`. 
 
+We'll then list our migration in the `getMigrations()` method, and our seed in the `getSeeds()` method. 
+
+[notice=note]Note the seed can still work if it's not registered because we're calling it directly in the migration. However, if the seed is not registered, it won't show up when running `php bakery seed`.[/notice]
+
+The **MyApp** recipe should now look like this : 
+
+**app/src/MyApp.php**
 ```php
 namespace UserFrosting\App;
 
@@ -221,8 +227,7 @@ class MyApp implements
     public function getMigrations(): array
     {
         return [
-            PastriesTable::class,
-            PastriesPermissions::class,
+            PastriesTable::class, // <-- Add this block
         ];
     }
 
@@ -232,7 +237,7 @@ class MyApp implements
     public function getSeeds(): array
     {
         return [
-            DefaultPastries::class,
+            DefaultPastries::class, // <-- Add this block
         ];
     }
     
@@ -240,36 +245,61 @@ class MyApp implements
 }
 ```
 
-<!-- END TODO -->
+We are now ready to run our migration. From the command line, use the [Bakery migrate command](/cli/commands#migrate) to run the migration up: 
 
-We are now ready to run our migration. From the command line, use the [Bakery migrate command](/cli/commands#migrate) to run the migration up: `php bakery migrate`. You should now see the newly created table with the default rows in your database (using _phpMyAdmin_ or the database CLI, for instance).
+```sh
+php bakery migrate
+```
+
+You should now see the newly created table with the default rows in your database (using _phpMyAdmin_ or the database CLI, for instance).
 
 ## Fetching data from the database
 
-Now it's time to go back to our controller and fetch the data from our new database table. The first thing we need to do is tell the controller to use the model we created. To do so, we add the fully qualified namespace of the `Pastry` model to the controller's list of [namespace aliases](http://php.net/manual/en/language.namespaces.importing.php). Right under `use UserFrosting\Support\Exception\ForbiddenException;`, add:
+Now it's time to go back to our controller and fetch the data from our new database table. The first thing we need to do is tell the controller to use the model we created. To do so, we add the fully qualified namespace of the `Pastries` model to the controller's list of [namespace aliases](http://php.net/manual/en/language.namespaces.importing.php). Right before `class PastriesPageAction`, add:
 
 ```php
-use UserFrosting\Sprinkle\Pastries\Database\Models\Pastry;
+use UserFrosting\Sprinkle\Pastries\Database\Models\Pastries;
 ```
 
-Now that we've defined this convenient alias for our model, it's time to interact with it and select all the available rows:
+Now that we've defined this convenient alias for our model, it's time to interact with it and select all the available rows. Replace : 
 
+```php
+$pastries = [];
+```
+
+With : 
 ```php
 $pastries = Pastry::all();
 ```
 
-[notice=note]Fetching all the available rows is not an ideal solution since in production, it can involve an arbitrarily large number of rows. This can clutter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server resource usage). It is recommended to use AJAX and [**Sprunging**](/database/data-sprunjing) to display paginated data in this situation.[/notice]
+[notice=note]Fetching all the available rows is not an ideal solution since, in production, it can involve an arbitrarily large number of rows. This can clutter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server resource usage). It is recommended to use AJAX and [**Sprunging**](/database/data-sprunjing) to display paginated data in this situation.[/notice]
 
-The `$pastries` variable should now contains an [Eloquent Collection](https://laravel.com/docs/8.x/eloquent-collections) of `Pastry` objects. At this point, it's a good idea to use [**debugging**](/troubleshooting/debugging#debug-statements) to make sure everything works as it should. We'll use the `Debug` facade to do so. Start by adding the facade class to the usage declaration of your class:
+The `$pastries` variable should now contains an [Eloquent Collection](https://laravel.com/docs/8.x/eloquent-collections) of `Pastry` objects. 
+
+### Debugging
+
+At this point, it's a good idea to use [**debugging**](/troubleshooting/debugging#debug-statements) to make sure everything works as it should. We'll use the `DebugLogger` service to do so. 
+
+Start by adding the facade class to the usage declaration of your class:
 
 ```php
-use UserFrosting\Sprinkle\Core\Facades\Debug;
+use UserFrosting\Sprinkle\Core\Log\DebugLogger;
 ```
 
-...and pass the `$pastries` variable to the debugger (right under the `$pastries = ...` line) :
+...next, inject the `DebugLogger` inside the `__invoke` method:
+```php
+public function __invoke(
+    Response $response,
+    Authenticator $authenticator,
+    Twig $view,
+    DebugLogger $logger, // <-- Add here
+): Response {
+```
+
+...and finally pass the `$pastries` variable to the debugger (right under the `$pastries = ...` line) :
 
 ```php
-Debug::debug($pastries);
+$logger->debug($pastries);
 ```
 
 The next time we run this code, the UserFrosting log (`app/logs/userfrosting.log`) should contain something similar to this:
@@ -298,50 +328,11 @@ debug.DEBUG: [{
 }]
 ```
 
-As you can see, it successfully listed our three default pastries along with their description and origin. You can now comment out the `Debug` line as we don't require it anymore, but might need it later.
-
-The only thing left to do is to send the collection to Twig. To do so, we simply add the `$pastries` variable to render arguments:
-
-```php
-return $this->ci->view->render($response, 'pages/pastries.html.twig', [
-    'pastries' => $pastries
-]);
-```
-
-Our controller should now look like this:
-
-**app/sprinkles/pastries/src/Controller/PastriesController.php**:
-```php
-<?php
-
-namespace UserFrosting\Sprinkle\Pastries\Controller;
-
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Exception\NotFoundException;
-use UserFrosting\Sprinkle\Core\Controller\SimpleController;
-use UserFrosting\Support\Exception\ForbiddenException;
-use UserFrosting\Sprinkle\Pastries\Database\Models\Pastry;
-use UserFrosting\Sprinkle\Core\Facades\Debug;
-
-class PastriesController extends SimpleController
-{
-    public function pageList(Request $request, Response $response, $args)
-    {
-        $pastries = Pastry::all();
-
-        //Debug::debug($pastries);
-
-        return $this->ci->view->render($response, 'pages/pastries.html.twig', [
-            'pastries' => $pastries
-        ]);
-    }
-}
-```
+As you can see, it successfully listed our three default pastries along with their description and origin. You can now comment out the logger line as we don't require it anymore, but might need it later.
 
 ## Displaying the data in Twig
 
-Back in our template file, we'll use Twig's [`for`](https://twig.symfony.com/doc/2.x/tags/for.html) construct to loop through the `pastries` variable and render a new HTML table row for each pastry:
+The only thing left to do is to send the collection to Twig. Back in our template file, we'll use Twig's [`for`](https://twig.symfony.com/doc/3.x/tags/for.html) construct to loop through the `pastries` variable and render a new HTML table row for each pastry:
 
 ```html
 {% extends 'pages/abstract/dashboard.html.twig' %}
@@ -358,20 +349,18 @@ Back in our template file, we'll use Twig's [`for`](https://twig.symfony.com/doc
                     <h3 class="box-title"><i class="fa fa-cutlery fa-fw"></i> List of Pastries</h3>
                 </div>
                 <div class="box-body">
-                    <table class="table table-bordered">
+                    <tr>
+                        <th>Name</th>
+                        <th>Origin</th>
+                        <th>Description</th>
+                    </tr>
+                    {% for pastry in pastries %}
                         <tr>
-                            <th>Name</th>
-                            <th>Origin</th>
-                            <th>Description</th>
+                            <td>{{pastry.name}}</td>
+                            <td>{{pastry.origin}}</td>
+                            <td>{{pastry.description}}</td>
                         </tr>
-                        {% for pastry in pastries %}
-                            <tr>
-                                <td>{{pastry.name}}</td>
-                                <td>{{pastry.origin}}</td>
-                                <td>{{pastry.description}}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -379,7 +368,7 @@ Back in our template file, we'll use Twig's [`for`](https://twig.symfony.com/doc
 {% endblock %}
 ```
 
-What we are interested in here is what's inside the `box-body` div, especially the `{% for pastry in pastries %}` loop. In the controller, we passed the rows from the database, contained in an Eloquent Collection, to the `pastries` key in the render arguments array. Those rows from the database, the same ones displayed in our debug output, are now available in our Twig template as an array. This means we can use [Twig's tags, filters and functions](https://twig.symfony.com/doc/2.x/) to manipulate that array, or any other data passed to the Twig template.
+What we are interested in here is what's inside the `box-body` div, especially the `{% for pastry in pastries %}` loop. In the controller, we passed the rows from the database, contained in an Eloquent Collection, to the `pastries` key in the render arguments array. Those rows from the database, the same ones displayed in our debug output, are now available in our Twig template as an array. This means we can use [Twig's tags, filters and functions](https://twig.symfony.com/doc/3.x/) to manipulate that array, or any other data passed to the Twig template.
 
 Let's get a closer look at our `for` block:
 
@@ -392,6 +381,7 @@ Let's get a closer look at our `for` block:
     </tr>
 {% endfor %}
 ```
+
 This is the same as using `foreach` in PHP to loop through all the items available in an array. The `{% for pastry in pastries %}` will loop through `pastries` and create a HTML table row for each item. If you refresh the page, you should now see this in your browser:
 
 ![Pastries page](/images/pastries/02.png)
