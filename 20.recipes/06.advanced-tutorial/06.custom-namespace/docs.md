@@ -1,62 +1,26 @@
 ---
-title: Custom Namespace
+title: Customizing the Skeleton
 metadata:
-    description: Setting up the basic sprinkle
+    description: The default skeleton can easily be changed
 taxonomy:
     category: docs
 ---
 
-## The Base Sprinkle
+## Custom Namespace
 
-First thing to do is to create an empty sprinkle for our code to live in from the UserFrosting 5 Skeleton. We'll call this sprinkle `Pastries`. As described in the [Installation Chapter](/installation) chapter, start by creating an empty base using the Skeleton template:
+The default namespace provided in the Skeleton, `UserFrosting\App\{Path}`, can easily be changed in your app. 
 
-```bash
-$ composer create-project userfrosting/userfrosting UserFrosting "^5.0.0"
-```
+Previous version of UserFrosting required a strict namespace (`UserFrosting\Sprinkle\{SprinkleName}\{Path}`). Starting with UserFrosting 5, the namespace can be whatever you want. It doesn't event need to include **UserFrosting** or **Sprinkle**. It *can* still be like this, but it could also be `YourName/YourApp/{Path}` or `App/{Path}`.
 
-Once the base website is created and working, the first step is to edit the base **composer.json** schema. The main part to edit here are the `autoload` and `autoload-dev` properties. This will change the PSR-4 namespace from the default namespace to a custom once. We'll map the `UserFrosting\Sprinkle\Pastries` namespace to the `app/src/` directory for this Sprinkle.
+In this example, we'll replace the default namespace for `UserFrosting\Sprinkle\Pastries`.
 
-Meta properties (name, description, homepage, authors, etc.) can be edited to fit your project. The default `require` and `required-dev` can be kept as-is for now.
+### composer.json
 
-The complete file should look similar to this : 
+First thing to do is to replace the namespace in your `composer.json` in **autoload** and **autoload-dev**: 
 
-<!-- TODO : We might have a better way to use the default one, and move this to another page at the end? -->
 **composer.json**:
 ```json
-{
-    "name": "userfrosting/pastries",
-    "type": "userfrosting-sprinkle",
-    "description": "Pastries list for UserFrosting.",
-    "keywords": ["UserFrosting", "Sprinkle", "Pastries"],
-    "homepage": "https://github.com/userfrosting/pastries",
-    "license" : "MIT",
-    "authors" : [
-        {
-            "name": "Your Name Here",
-            "homepage": "https://yourUrlHere.com"
-        }
-    ],
-    "require": {
-        "php": "^8.0",
-        "ext-gd": "*",
-        "userfrosting/framework": "^5.0",
-        "userfrosting/sprinkle-core": "^5.0",
-        "userfrosting/sprinkle-account": "^5.0",
-        "userfrosting/sprinkle-admin": "^5.0",
-        "userfrosting/theme-adminlte": "^5.0"
-    },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "phpstan/phpstan": "^1.1",
-        "phpstan/phpstan-mockery": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0",
-        "phpunit/phpunit": "^9.5",
-        "mockery/mockery": "^1.2",
-        "league/factory-muffin": "^3.0",
-        "league/factory-muffin-faker": "^2.0"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+//...
     "autoload": {
         "psr-4": {
             "UserFrosting\\Sprinkle\\Pastries\\": "app/src"
@@ -67,120 +31,166 @@ The complete file should look similar to this :
             "UserFrosting\\Tests\\Sprinkle\\Pastries\\": "app/tests/"
         }
     }
-}
+// ...
 ```
 
 Now we need to update **Composer** so our new [PSR4 mapping](http://www.php-fig.org/psr/psr-4/#3-examples) is picked up. From the command line, run `composer update` in the **root directory** of your UserFrosting project.
 
-[notice=tip]Don't forget to always run any composer command from the project root directory (`/`).[/notice]
+### Class reference
 
-<!-- ## Cleanup
+You can now find and replace every reference of `UserFrosting\App\` for `UserFrosting\Sprinkle\Pastries` in your classes. Don't forget that you'll need to replace it in : 
 
-The Skeleton comes with some default pages and code we won't need or use. Theses can be savefly deleted : -->
+- Namespace at the top of every classes (`namespace UserFrosting\App\{...};` -> `namespace UserFrosting\Sprinkle\Pastries\{...};`);
+- Every class importation (`use UserFrosting\App\{...};` -> `use UserFrosting\Sprinkle\Pastries\{...};`);
+- Some files:
+  - `/public/index.php`;
+  - `/bakery`;
+- Etc.
 
-## The Sprinkle Recipe
+## Cleanup unused code
 
+The Skeleton comes with some default pages and code we won't necessary need. Theses files and directory can (***optionally***) be safely deleted :
 
-<!-- ### Update index -->
+- `app/assets/images/`
+- `app/src/Bakery/`
+- `app/src/Controller/AppController.php`
+- `app/src/MyServices.php`
+- `app/templates/footer-nav.html.twig`
+- `app/templates/legal.html.twig`
+- `app/templates/main-nav.html.twig`
+- `app/templates/privacy.html.twig`
+- `app/pages/about.html.twig`
+- `app/pages/index.html.twig`
+- `app/pages/legal.html.twig`
+- `app/pages/privacy.html.twig`
+- `tests/Controller/AppControllerTest.php`
 
+### Recipe
 
-## The Route Class
+The default Recipe can also be edited to remove the `MyServices` service from `getServices()`, remove `BakeryRecipe` implementation and remove `getBakeryCommands()` method.
 
-We now create the [route class](/routes-and-controllers) for the "pastries" page. We'll edit the default `app/src/MyRoutes.php` file. First, we'll need 
+The final version of `app/src/MyApp.php` will look similar to this :
+```php
+<?php
+
+namespace UserFrosting\Sprinkle\Pastries;
+
+use UserFrosting\Sprinkle\Account\Account;
+use UserFrosting\Sprinkle\Admin\Admin;
+use UserFrosting\Sprinkle\Core\Core;
+use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\MigrationRecipe;
+use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\SeedRecipe;
+use UserFrosting\Sprinkle\Pastries\Database\Migrations\V100\PastriesPermissions;
+use UserFrosting\Sprinkle\Pastries\Database\Migrations\V100\PastriesTable;
+use UserFrosting\Sprinkle\Pastries\Database\Seeds\DefaultPastries;
+use UserFrosting\Sprinkle\SprinkleRecipe;
+use UserFrosting\Theme\AdminLTE\AdminLTE;
+
+class MyApp implements SprinkleRecipe, MigrationRecipe, SeedRecipe
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getName(): string
+    {
+        return 'Pastries';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPath(): string
+    {
+        return __DIR__ . '/../';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSprinkles(): array
+    {
+        return [
+            Core::class,
+            Account::class,
+            Admin::class,
+            AdminLTE::class,
+        ];
+    }
+
+    /**
+     * Returns a list of routes definition in PHP files.
+     *
+     * @return string[]
+     */
+    public function getRoutes(): array
+    {
+        return [
+            MyRoutes::class,
+        ];
+    }
+
+    /**
+     * Returns a list of all PHP-DI services/container definitions files.
+     *
+     * @return string[]
+     */
+    public function getServices(): array
+    {
+        return [];
+    }
+
+    /**
+     * Return an array of all registered Migrations.
+     *
+     * @return string[]
+     */
+    public function getMigrations(): array
+    {
+        return [
+            PastriesTable::class,
+            PastriesPermissions::class,
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @codeCoverageIgnore
+     */
+    public function getSeeds(): array
+    {
+        return [
+            DefaultPastries::class,
+        ];
+    }
+}
+```
+
+### Routes
+One caveat of removing the default Skeleton pages, the index page won't exist anymore. Your app won't have an entry page (eg. https://yourapp/) and an error will be thrown. One way to get around this problem is to replace the default routes with a redirect, from `/` to the `/dashboard`. For example : 
 
 **app/src/MyRoutes.php**:
 ```php
 <?php
 
-namespace UserFrosting\App;
+namespace UserFrosting\Sprinkle\Pastries;
 
 use Slim\App;
-use UserFrosting\App\Controller\AppController;
+use Slim\Routing\RouteCollectorProxy;
 use UserFrosting\Routes\RouteDefinitionInterface;
-use UserFrosting\Sprinkle\Account\Authenticate\AuthGuard; // <-- Add this
-use UserFrosting\App\Controller\PastriesPageAction; // <-- Add this
+use UserFrosting\Sprinkle\Account\Authenticate\AuthGuard;
+use UserFrosting\Sprinkle\Pastries\Controller\PastriesPageAction;
 
 class MyRoutes implements RouteDefinitionInterface
 {
     public function register(App $app): void
     {
-        $app->get('/', [AppController::class, 'pageIndex'])->setName('index');
-        $app->get('/about', [AppController::class, 'pageAbout'])->setName('about');
-        $app->get('/legal', [AppController::class, 'pageLegal'])->setName('legal');
-        $app->get('/privacy', [AppController::class, 'pagePrivacy'])->setName('privacy');
-
-        // Add this -->
         $app->group('/pastries', function (RouteCollectorProxy $group) {
             $group->get('', PastriesPageAction::class)->setName('pastries');
         })->add(AuthGuard::class);
-        // <-- End Add
+
+        // Redirect root to dashboard
+        $app->redirect('/', '/dashboard', 301)->setName('index'); // <-- Add this
     }
 }
 ```
-
-We now have a `/pastries` route set up. We also define a route group for later use, if we wish to add additional routes whose URLs also begin with `/pastries`. As you can see this route has the `pastries` name and will invoke the `AuthGuard` middleware, which requires a user to be logged in to see this page.
-
-## The Controller Class
-
-Now that we have a route, we need to create the `PastriesPageAction` controller:
-
-**src/Controller/PastriesPageAction.php**:
-```php
-<?php
-
-namespace UserFrosting\App\Controller;
-
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Exception\NotFoundException;
-use UserFrosting\Sprinkle\Core\Controller\SimpleController;
-use UserFrosting\Support\Exception\ForbiddenException;
-
-class PastriesPageAction
-{
-    public function pageList(Request $request, Response $response, $args)
-    {
-        return $this->ci->view->render($response, 'pages/pastries.html.twig', [
-
-        ]);
-    }
-}
-```
-
-[notice=tip]Later on, we can add methods for other pastry-related pages to this same class as a way to logically organize our code.[/notice]
-
-## The template file
-
-Finally, we need to create the template file. We use the same file as the one defined in your controller:
-
-****app/sprinkles/pastries/templates/pages/pastries.html.twig**:
-```html
-{% extends 'pages/abstract/dashboard.html.twig' %}
-
-{# Overrides blocks in head of base template #}
-{% block page_title %}Pastries{% endblock %}
-{% block page_description %}This page provides a yummy list of pastries{% endblock %}
-
-{% block body_matter %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h3 class="box-title"><i class="fa fa-cutlery fa-fw"></i> List of Pastries</h3>
-                </div>
-                <div class="box-body">
-
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
-```
-
-## Testing the page skeleton
-
-You should now be able to manually go to the `/pastries` page in your browser and see the result:
-
-![Pastries page](/images/pastries/01.png)
-
-You'll notice that at this point, we're not actually displaying any useful content on the page.  In the next section, we'll discuss how to display content dynamically retrieved from the database.
