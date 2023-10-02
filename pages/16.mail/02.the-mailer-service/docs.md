@@ -22,12 +22,12 @@ For more advanced configuration, you can override the `mail` configuration value
 ```php
 'mail'    => [
     'mailer'          => 'smtp', // Set to one of 'smtp', 'mail', 'qmail', 'sendmail'
-    'host'            => getenv('SMTP_HOST') ?: null,
+    'host'            => env('SMTP_HOST') ?: null,
     'port'            => 587,
     'auth'            => true,
     'secure'          => 'tls', // Enable TLS encryption. Set to `tls`, `ssl` or `false` (to disabled)
-    'username'        => getenv('SMTP_USER') ?: null,
-    'password'        => getenv('SMTP_PASSWORD') ?: null,
+    'username'        => env('SMTP_USER') ?: null,
+    'password'        => env('SMTP_PASSWORD') ?: null,
     'smtp_debug'      => 4,
     'message_options' => [
         'CharSet'   => 'UTF-8',

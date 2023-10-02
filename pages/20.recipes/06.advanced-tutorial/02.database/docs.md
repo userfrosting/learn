@@ -247,8 +247,8 @@ class MyApp implements
 
 We are now ready to run our migration. From the command line, use the [Bakery migrate command](/cli/commands#migrate) to run the migration up: 
 
-```sh
-php bakery migrate
+```bash
+$ php bakery migrate
 ```
 
 You should now see the newly created table with the default rows in your database (using _phpMyAdmin_ or the database CLI, for instance).

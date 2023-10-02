@@ -190,10 +190,10 @@ Last thing to do is to create a disk using the `gdrive` driver in your sprinkle 
 ```php
     'google' => [
         'driver' => 'gdrive', // For help finding the client ID : https://developers.google.com/drive/api/v3/enable-sdk
-        'clientID' => getenv('GOOGLE_CLIENT_ID') ?: '', // [app client id].apps.googleusercontent.com
-        'clientSecret' => getenv('GOOGLE_CLIENT_SECRET') ?: '',
-        'refreshToken' => getenv('GOOGLE_REFRESH_TOKEN') ?: '',
-        'rootPath' => getenv('GOOGLE_ROOT_PATH') ?: ''
+        'clientID' => env('GOOGLE_CLIENT_ID') ?: '', // [app client id].apps.googleusercontent.com
+        'clientSecret' => env('GOOGLE_CLIENT_SECRET') ?: '',
+        'refreshToken' => env('GOOGLE_REFRESH_TOKEN') ?: '',
+        'rootPath' => env('GOOGLE_ROOT_PATH') ?: ''
     ]
 
 ```

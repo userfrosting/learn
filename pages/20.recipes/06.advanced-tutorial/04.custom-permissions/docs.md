@@ -194,8 +194,8 @@ class PastriesPermissions extends Migration
 
 You can now run the migration using :
 
-```sh
-php bakery migrate
+```bash
+$ php bakery migrate
 ```
 
 You can make sure the migration was successful by logging in as the root user and going to the permissions page:

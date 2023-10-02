@@ -5,15 +5,14 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
-Configuration files allow you to customize the default behavior of UserFrosting - for example to toggle debugging, caching, and logging behavior and to set other sitewide settings.  Configuration files are found in the `config/` directory of Sprinkles.
+Configuration files allow you to customize the default behavior of UserFrosting - for example to toggle debugging, caching, and logging behavior and to set other sitewide settings. Configuration files are found in the `config/` directory of Sprinkles.
 
 ## File Structure
 
-At runtime, UserFrosting will merge the `default.php` configuration files in each Sprinkle based on the Sprinkle order specified in `sprinkles.json`.
+At runtime, UserFrosting will merge the `default.php` configuration files in each Sprinkle based on the Sprinkle order specified in your Sprinkle Recipe and the dependency tree.
 
-A UserFrosting configuration file is nothing more than a PHP script that returns an associative array.  For example:
+A UserFrosting configuration file is nothing more than a PHP script that returns an associative array. For example:
 
 ```php
 <?php
@@ -31,7 +30,7 @@ A UserFrosting configuration file is nothing more than a PHP script that returns
     ];
 ```
 
-Sprinkle config files are merged according to the rules of [`array_replace_recursive`](http://php.net/manual/en/function.array-replace-recursive.php), inserting any new array keys and replacing any keys that are the same as a previously loaded Sprinkle.  So for example, if I have a `mysite2` Sprinkle with its own `config/default.php` file:
+Sprinkle config files are merged according to the rules of [`array_replace_recursive`](http://php.net/manual/en/function.array-replace-recursive.php), inserting any new array keys and replacing any keys that are the same as a previously loaded Sprinkle. So for example, if I have a `mysite2` Sprinkle with its own `config/default.php` file:
 
 ```php
 <?php
@@ -61,9 +60,9 @@ And I load it after the `mysite` Sprinkle, the resulting configuration array cre
 
 ## Environment Modes
 
-You can define separate configuration files for different **environment modes** - for example development, testing, production, etc.  At runtime, UserFrosting will decide which mode to use based on the `UF_MODE` environment variable (this can be set either directly in your operating system's environment variables, or in the `/app/.env` file.)
+You can define separate configuration files for different **environment modes** - for example development, testing, production, etc. At runtime, UserFrosting will decide which mode to use based on the `UF_MODE` environment variable (this can be set either directly in your operating system's environment variables, or in the `/app/.env` file.)
 
-If `UF_MODE` has been set, it will look for a configuration file of the same name in each Sprinkle and recursively merge that in on top of the Sprinkle's `default.php` before moving on to the next Sprinkle.  For example, if `UF_MODE="development"`, then it will look for a `development.php` configuration file as it merges each Sprinkle.
+If `UF_MODE` has been set, it will look for a configuration file of the same name in each Sprinkle and recursively merge that in on top of the Sprinkle's `default.php` before moving on to the next Sprinkle. For example, if `UF_MODE="development"`, then it will look for a `development.php` configuration file as it merges each Sprinkle.
 
 To summarize, Sprinkle configuration files are loaded using the following algorithm:
 
@@ -76,24 +75,24 @@ To summarize, Sprinkle configuration files are loaded using the following algori
 
 If `UF_MODE` is empty or not set, UserFrosting will only load the `default.php` configuration files in each Sprinkle.
 
-[notice=tip]Use environment variables to easily set the appropriate configuration parameters for different environments.  In addition to setting the `UF_MODE` environment variable to select different configuration files, you can assign sensitive information like database passwords and API keys directly to environment variables, and then reference them in your configuration files using `getenv()`.
+[notice=tip]Use environment variables to easily set the appropriate configuration parameters for different environments. In addition to setting the `UF_MODE` environment variable to select different configuration files, you can assign sensitive information like database passwords and API keys directly to environment variables, and then reference them in your configuration files using `env()`.
 
 See [the Twelve-Factor App](https://12factor.net/config) for more information on why this is a good idea.[/notice]
 
-The default environement mode includes:
+The default environment mode includes:
 
 |    Mode    | Description                                                                   |
 | :--------: | ----------------------------------------------------------------------------- |
-|  default   | The default mode. Should be used only for developement.                       |
+|  default   | The default mode. Should be used only for development.                        |
 | production | Serve optimized assets and error management the front user facing application |
 |   debug    | Enables all debugging options                                                 |
 |  testing   | Mode used for [automated testing](/testing)                                   |
 
-[notice=tip]The Bakery command `php bakery setup:env` can be used to switch from one envrionement to the other.[/notice]
+[notice=tip]The Bakery command `php bakery setup:env` can be used to switch from one environment to the other.[/notice]
 
 ## Accessing Config Values
 
-To access values from the final, merged configuration array during runtime, use the `config` service.  Subkeys can be accessed using [array dot notation](https://medium.com/@assertchris/dot-notation-3fd3e42edc61).  For example, if your configuration array ends up looking like:
+To access values from the final, merged configuration array during runtime, use the `config` service. Subkeys can be accessed using [array dot notation](https://medium.com/@assertchris/dot-notation-3fd3e42edc61). For example, if your configuration array ends up looking like:
 
 ```php
     [
@@ -106,11 +105,11 @@ To access values from the final, merged configuration array during runtime, use 
     ]
 ```
 
-then you can access the `twitter` value in a controller using `$this->ci->config['site.twitter']`.  Of course, you may place additional custom configuration values/subarrays in your Sprinkle's configuration files and they will get merged into the final configuration array as well.
+then you can access the `twitter` value in a controller using `$config->get('site.twitter')`. Of course, you may place additional custom configuration values/subarrays in your Sprinkle's configuration files and they will get merged into the final configuration array as well.
 
 ### In Twig Templates
 
-Any configuration values under the `site` subarray are automatically passed to Twig as the `site` global variable.  This means you can easily access them in Twig:
+Any configuration values under the `site` subarray are automatically passed to Twig as the `site` global variable. This means you can easily access them in Twig:
 
 ```twig
 <a href="https://twitter.com/{{site.twitter}}">Follow me on Twitter!</a>
