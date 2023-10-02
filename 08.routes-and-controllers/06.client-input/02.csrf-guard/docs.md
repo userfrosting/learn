@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 Cross-site request forgeries (CSRF) are a type of social engineering attack in which a malicious agent tricks a user into submitting a valid, but unintended request to your server. This can happen, for example, when a user opens a malicious email or website while they are still signed in to your website.
 
@@ -26,7 +25,7 @@ UserFrosting uses the [Slim CSRF Guard](https://github.com/slimphp/Slim-Csrf) mi
 The easiest way to add the CSRF tokens to a form is by including the partial Twig template `pages/partials/csrf.html.twig`. Simply add this after the opening `<form>` tag:
 
 ```twig
-<form id="sign-in" role="form" action="{{site.uri.public}}/account/login" method="post">
+<form id="sign-in" role="form" action="{{ urlFor('login') }}" method="post">
     {% include "forms/csrf.html.twig" %}
 
     ...
@@ -35,7 +34,7 @@ The easiest way to add the CSRF tokens to a form is by including the partial Twi
 
 This will automatically add the hidden input fields `csrf_name` and `csrf_value` to your form, along with their values.
 
-### Injecting the Tokens Into AJAX Requests
+### Injecting the tokens into AJAX requests
 
 Not all requests that require CSRF protection originate from HTML forms. To inject the tokens into AJAX requests, you may access them via the global `site` Javascript variable.
 
@@ -58,7 +57,7 @@ $.ajax({
 
 [notice=note]The Javascript `site` variable is declared in the `pages/partials/config.js.twig` template.[/notice]
 
-### Blacklisting Routes
+### Blacklisting routes
 
 Sometimes, you need to bypass CSRF protection for certain requests. For example, if you want to avoid opening the session to retrieve the CSRF token, or if you are creating an API that is not meant for consumption by a user via a browser, but rather by some other application.
 
