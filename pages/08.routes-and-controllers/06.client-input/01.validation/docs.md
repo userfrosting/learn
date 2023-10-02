@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 The number one security rule in web development is: **never trust client input!**
 
@@ -29,7 +28,7 @@ However, they *do* improve the experience of your everyday, non-malicious user. 
 
 In summary, to build an application that is both secure **and** offers a smooth user experience, we need to perform both client- and server-side validation. Unfortunately, this creates a lot of duplicate logic.
 
-Fortress solves this problem by providing a uniform interface for validating raw user input on both the client side (in Javascript) and on the server side (in PHP) using a single unified set of rules. It does this with a **request schema**, which defines what fields you're expecting the user to submit, and [rules](https://github.com/userfrosting/wdvss) for how to handle the contents of those fields. The request schema, which is a simple [YAML](http://symfony.com/doc/current/components/yaml/yaml_format.html) or JSON file, makes it easy to manipulate these rules in one place.
+UserFrosting Fortress solves this problem by providing a uniform interface for validating raw user input on both the client side (in Javascript) and on the server side (in PHP) using a single unified set of rules. It does this with a **request schema**, which defines what fields you're expecting the user to submit, and [rules](https://github.com/userfrosting/wdvss) for how to handle the contents of those fields. The request schema, which is a simple [YAML](http://symfony.com/doc/current/components/yaml/yaml_format.html) or JSON file, makes it easy to manipulate these rules in one place.
 
 This process is summarized in the following flowchart:
 
@@ -106,7 +105,8 @@ To automatically generate a set of client-side rules compatible with the [jQuery
 // This line goes at the top of your file
 use UserFrosting\Fortress\Adapter\JqueryValidationAdapter;
 
-$validator = new JqueryValidationAdapter($schema, $this->ci->translator);
+// This assume $translator as been properly injected into the class or method.
+$validator = new JqueryValidationAdapter($schema, $this->translator);
 ```
 
 The rules can then be retrieved via the `rules()` method, and the resulting array can be passed to a Twig template to be rendered as a Javascript variable:
@@ -114,7 +114,7 @@ The rules can then be retrieved via the `rules()` method, and the resulting arra
 ```php
 $rules = $validator->rules();
 
-return $this->ci->view->render($response, 'pages/contact.html.twig', [
+return $this->view->render($response, 'pages/contact.html.twig', [
     'page' => [
         'validators' => [
             'contact' => $rules
@@ -125,7 +125,7 @@ return $this->ci->view->render($response, 'pages/contact.html.twig', [
 
 If your page includes the `pages/partials/page.js.twig` partial template, then the validation rules will become available via the Javascript variable `page.validators.contact`.
 
-[notice=tip]For an example of how this all fits together, see the controller method `AccountController::pageRegister`, and the template `pages/register.html.twig`. At the bottom of the template you will see the include for `pages/partials/page.js.twig`.
+[notice=tip]For an example of how this all fits together, see the `UserFrosting\Theme\AdminLTE\Controller\RegisterPageAction` controller, and the template `pages/register.html.twig` from the AdminLTE sprinkle. At the bottom of the template you will see the include for `pages/partials/page.js.twig`.
 
 If you visit the page `/account/register` and use "View Source", you can see how the validation rules have been injected into the page. See [exporting variables](/client-side-code/exporting-variables#page-specific-variables) for more details on exporting server-side variables to Javascript variables on a page.[/notice]
 
@@ -141,7 +141,7 @@ use UserFrosting\Fortress\RequestDataTransformer;
 use UserFrosting\Fortress\RequestSchema;
 use UserFrosting\Fortress\ServerSideValidator;
 
-// Get submitted data
+// Get submitted data (in POST)
 $params = $request->getParsedBody();
 
 // Load the request schema
@@ -165,20 +165,20 @@ Once you have filtered and whitelisted the input data, you can perform validatio
 use UserFrosting\Fortress\RequestDataTransformer;
 use UserFrosting\Fortress\RequestSchema;
 use UserFrosting\Fortress\ServerSideValidator;
+use UserFrosting\Sprinkle\Core\Exceptions\ValidationException;
 
-/** @var UserFrosting\Sprinkle\Core\MessageStream $ms */
-$ms = $this->ci->alerts;
-
-$validator = new ServerSideValidator($schema, $this->ci->translator);
+$validator = new ServerSideValidator($schema, $this->translator);
 
 // Add error messages and halt if validation failed
-if (!$validator->validate($data)) {
-    $ms->addValidationErrors($validator);
-    return $response->withStatus(400);
+if ($validator->validate($data) === false && is_array($validator->errors())) {
+    $e = new ValidationException();
+    $e->addErrors($validator->errors());
+
+    throw $e;
 }
 ```
 
-The `validate` method will return `false` if any fields fail any of their validation rules. Notice that we use the `alerts` service to store any error messages that we wish to display to the client.
+The `validate` method will return `false` if any fields fail any of their validation rules. Notice that we throw an exception to handle any error messages that we wish to display to the client, and stop the execution of the controller code.
 
 [notice=info]Internally, UserFrosting uses the [Valitron](https://github.com/vlucas/valitron) validation package to perform server-side validation.[/notice]
 
