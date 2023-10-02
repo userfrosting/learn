@@ -28,10 +28,10 @@ return [
         ],
         'nestdb' => [
             'driver'    => 'sqlite',
-            'host'      => getenv('NESTDB_HOST'),
-            'database'  => getenv('NESTDB_NAME'),
-            'username'  => getenv('NESTDB_USER'),
-            'password'  => getenv('NESTDB_PASSWORD'),
+            'host'      => env('NESTDB_HOST'),
+            'database'  => env('NESTDB_NAME'),
+            'username'  => env('NESTDB_USER'),
+            'password'  => env('NESTDB_PASSWORD'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => ''

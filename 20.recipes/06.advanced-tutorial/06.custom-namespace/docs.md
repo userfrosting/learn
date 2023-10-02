@@ -34,7 +34,11 @@ First thing to do is to replace the namespace in your `composer.json` in **autol
 // ...
 ```
 
-Now we need to update **Composer** so our new [PSR4 mapping](http://www.php-fig.org/psr/psr-4/#3-examples) is picked up. From the command line, run `composer update` in the **root directory** of your UserFrosting project.
+Now we need to update **Composer** so our new [PSR4 mapping](http://www.php-fig.org/psr/psr-4/#3-examples) is picked up. From the command line, run in the **root directory** of your UserFrosting project: 
+
+```bash
+$ composer update
+```
 
 ### Class reference
 
