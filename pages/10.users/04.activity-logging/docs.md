@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 By default, user activities are logged to the `activities` database table. Logged information includes the activity time and an activity type, the `user_id`, the user's IP address, and a description of the activity. The administrative interface provides convenient tables for viewing these logs:
 
@@ -41,8 +40,8 @@ The following activity types are logged by the core UserFrosting features:
 In your controller methods, simply call the `info` method on the `userActivityLogger` service to log additional activities:
 
 ```php
-// Create activity record
-$this->ci->userActivityLogger->info("User {$currentUser->user_name} adopted a new owl '{$owl->name}'.", [
+/** @var \UserFrosting\Sprinkle\Account\Log\UserActivityLogger $userActivityLogger */
+$userActivityLogger->info("User {$currentUser->user_name} adopted a new owl '{$owl->name}'.", [
     'type' => 'adopt_owl'
 ]);
 ```
@@ -75,17 +74,17 @@ $lastActivity = $user->lastActivity;
 
 ### Getting a user's last activity by type
 
-If you want to get the last activity _of a specific type_, use the `lastActivityOfType` method:
+If you want to get the last activity _of a specific type_, use the `lastActivity` method, with the type as argument:
 
 ```php
-$lastSignIn = $user->lastActivityOfType('sign_in')->get();
+$lastSignIn = $user->lastActivity('sign_in')->get();
 ```
 
-Since `lastActivityOfType` returns a `Builder` object, we need to call `get` to return the actual result.
+[notice=note]Since `lastActivity(...)` returns a `Builder` object, we need to call `get` to return the actual result.[/notice]
 
 ### Getting the time of a user's last activity
 
-If we only want the timestamp of a user's last activity, we can can call `lastActivityTime`:
+If we only want the timestamp of a user's last activity, we can can call `lastActivityTime`, with optional *type* as argument.
 
 ```php
 $lastSignInTime = $user->lastActivityTime('sign_in');
@@ -111,20 +110,15 @@ $usersWithActivities = User::joinLastActivity()->get();
 
 By default, UserFrosting implements a [custom Monolog handler](https://github.com/Seldaek/monolog/blob/master/doc/04-extending.md), `UserFrosting\Sprinkles\Account\Log\UserActivityDatabaseHandler`, that sends user activity logs to the `activities` database table.
 
-This is all assembled in the `userActivityLogger` service. If you'd prefer, you can [extend or override](/services/extending-services) the `userActivityLogger` service to add additional handlers, or even completely replace the custom handler altogether.
+This is all assembled in the `LoggersService` service. If you'd prefer, you can [extend or override](/services/extending-services) the `\UserFrosting\Sprinkle\Account\Log\UserActivityLogger` class reference in the DI Container to add additional handlers, or even completely replace the custom handler altogether. For example, to replace the `UserActivityDatabaseHandler` with `StreamHandler` :
 
 ```php
-$container->extend('userActivityLogger', function ($logger, $c) {
-    $logFile = $c->get('locator')->findResource('log://activities.log', true, true);
-
-    $handler = new StreamHandler($logFile);
-
-    $logger->pushHandler($handler);
+UserActivityLogger::class => function () {
+    $handler = new StreamHandler('log://activities.log');
+    $logger = new UserActivityLogger('userActivity', [$handler]);
 
     return $logger;
-};
+},
 ```
-
-In either case you should always retain the custom `UserActivityProcessor`, which assembles the information to be logged such as the `user_id` and the user's IP address.
 
 See the [Monolog documentation](https://seldaek.github.io/monolog/) for more details.
