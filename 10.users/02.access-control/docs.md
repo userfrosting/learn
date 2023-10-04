@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 ## Roles
 
@@ -40,16 +39,32 @@ A permission is a rule that associates an **action** with a set of **conditions*
 
 In your code, access is controlled through the use of access checks on permission slugs. Often times, you will want to perform these checks in your controller methods, and throw a `ForbiddenException` if the current user fails the check.
 
-This can be done by calling the `checkAccess` method of the `authorizer` service. For example:
+This can be done by calling the `checkAccess` method of the `AuthorizationManager` service. For example:
 
 ```php
-/** @var UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager */
-$authorizer = $this->ci->authorizer;
+#[Inject]
+protected Authenticator $authenticator
 
-/** @var UserFrosting\Sprinkle\Account\Model\User $currentUser */
-$currentUser = $this->ci->currentUser;
+#[Inject]
+protected AuthorizationManager $authorizer
 
-if (!$authorizer->checkAccess($currentUser, 'uri_users')) {
+// ...
+
+$currentUser = $this->authorizer->user();
+
+if (!$this->authorizer->checkAccess($currentUser, 'uri_users')) {
+    throw new ForbiddenException();
+}
+```
+
+Or simply use the `checkAccess` method of the `Authenticator` service, which is a shortcut for the above code (the current user will be automatically passed to `AuthorizationManager` behind the scene). For example:
+
+```php
+#[Inject]
+protected Authenticator $authenticator
+
+// ...
+if (!$this->authenticator->checkAccess('uri_users')) {
     throw new ForbiddenException();
 }
 ```
@@ -59,7 +74,7 @@ If the current user does not have any permissions for the slug `uri_users`, then
 You can, of course, use `checkAccess` to control the behavior of your controller methods in other ways. For example, you might build a data API that is available to the public, but that returns more specialized information to authorized users:
 
 ```php
-if ($authorizer->checkAccess($currentUser, 'uri_owls')) {
+if ($authenticator->checkAccess('uri_owls')) {
     return $response->withJson($secretOwls);
 } else {
     return $response->withJson($publicOwls);
@@ -79,7 +94,7 @@ In your code, if you call:
 ```php
 $requestedActivity = Activity::find($requestedActivityId);
 
-if (!$authorizer->checkAccess($currentUser, 'uri_activity', [
+if (!$authenticator->checkAccess('uri_activity', [
     'activity' => $requestedActivity
 ])) {
     throw new ForbiddenException();
@@ -96,7 +111,7 @@ Then, the `equals_num` condition will be used to compare the current user's `id`
 
 ### Callbacks
 
-UserFrosting ships with a number of predefined access condition callbacks, which are defined in `sprinkles/account/src/ServicesProvider/ServicesProvider.php`:
+UserFrosting ships with a number of predefined access condition callbacks, which are defined in `UserFrosting\Sprinkle\Account\Authorize\AccessConditions`:
 
 | Callback                          | Description                                                                                  |
 | --------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -112,27 +127,54 @@ UserFrosting ships with a number of predefined access condition callbacks, which
 
 ### Custom callbacks
 
-To add your own access condition callbacks, simply [extend](/services/extending-services#extending-existing-services) the `authorizer` service in your Sprinkle's `ServicesProvider`:
+To add your own access condition callbacks, simply extend `UserFrosting\Sprinkle\Account\Authorize\AccessConditions` and replace it in a custom Service Provider. For example : 
 
-```
-$container->extend('authorizer', function ($authorizer, $c) {
-    $authorizer->addCallback('in_organization',
-        /**
-         * Check if the specified user (by id) is in a particular organization.
-         *
-         * @param int $user_id the id of the user.
-         * @param int $organization_id the id of the organization.
-         * @return bool true if the user is in the organization, false otherwise.
-         */
-        function ($user_id, $organization_id) use ($c) {
-           $user = $c->classMapper->staticMethod('user', 'find', $user_id);
-           return ($user->organization_id == $organization_id);
-        }
-    );
+```php
+use UserFrosting\ServicesProvider\ServicesProviderInterface;
+use UserFrosting\Sprinkle\Account\Authorize\AccessConditionsInterface;
+use MyApp\Authorize\MyCustomAccessConditions;
 
-    return $authorizer;
-});
+// ...
+
+final class CustomAccessConditionsService implements ServicesProviderInterface
+{
+    public function register(): array
+    {
+        return [
+            AccessConditionsInterface::class => \DI\autowire(MyCustomAccessConditions::class),
+        ];
+    }
+}
 ```
+<!-- TODO : Requires update in Account Sprinkle (UserFrosting\Sprinkle\Account\Authorize\AccessConditions) -->
+<!-- 
+Alternatively, to add your own access condition callbacks, simply [decorate](/dependency-injection/extending-services) the `AccessConditions` service:
+
+```php
+public function register(): array
+{
+    return [
+        AccessConditionsInterface::class => \DI\decorate(function (AccessConditionsInterface $authorizer, UserInterface $userModel) {
+            $authorizer['in_organization'] =>
+                /**
+                 * Check if the specified user (by id) is in a particular organization.
+                 *
+                 * @param int $user_id the id of the user.
+                 * @param int $organization_id the id of the organization.
+                 * @return bool true if the user is in the organization, false otherwise.
+                 */
+                function ($user_id, $organization_id) use ($userModel) {
+                    $user = $userModel->find($user_id);
+                    return ($user->organization_id == $organization_id);
+                }
+            );
+
+            return $authorizer;
+        }),
+    ];
+}
+```
+-->
 
 ## Creating new permissions
 
@@ -142,9 +184,9 @@ Think about it this way - for a permission to have any effect on your applicatio
 
 Instead, you should think of permissions as hardcoded parts of your application that just happen to be stored in the database. Permissions can be **added, removed, or modified** using a [database migration](/database/migrations) or a [database seed](/database/seeding).
 
-Both methods can be used to create or manipulate permissions. **Migrations** are better suited to edit or remove existing permissions since they assure you permissions stays constant in time, but won't help you restore a permission if one gets deleted by accident, since a migration can only be run once. **Seeds** on the other hand can be run more than once, so they can be used to restore a deleted permission, but can't be relied on to edit a permission the same way you can with a migration, since a seed can be run in any order, and can't be automatically reverted.
+Both methods can be used to create or manipulate permissions. **Migrations** are better suited to edit or remove existing permissions since they assure your permissions stays constant in time, but won't help you restore a permission if one gets deleted by accident, since a migration can only be run once. **Seeds** on the other hand can be run more than once, so they can be used to restore a deleted permission, but can't be relied on to edit a permission the same way you can with a migration, since a seed can be run in any order, you can't keep track which one have been run, don't have dependencies and can't be automatically rolled down.
 
-With that in mind, it is recommended to use a **seed** to create permissions as it will make it easier to restore a deleted permission and the consistency can be checked manually. However, since both methods are valid and can be used depending on the developer choice, both are shown below.
+With this in mind, it is recommended to use a **migration** to create permissions. However, since both methods are valid and can be used depending on the developer choice, both are shown below.
 
 ### Using a Seed
 
@@ -154,11 +196,11 @@ namespace UserFrosting\Sprinkle\Site\Database\Seeds;
 
 use UserFrosting\Sprinkle\Account\Database\Models\Permission;
 use UserFrosting\Sprinkle\Account\Database\Models\Role;
-use UserFrosting\Sprinkle\Core\Database\Seeder\BaseSeed;
+use UserFrosting\Sprinkle\Core\Seeder\SeedInterface;
 
-class CustomPermissions extends BaseSeed
+class CustomPermissions implements SeedInterface
 {
-    public function run()
+    public function run(): void
     {
         // Add default permissions
         $permissions = [
@@ -197,24 +239,32 @@ class CustomPermissions extends BaseSeed
 }
 ```
 
+Don't forget to add the seed to your Sprinkle Recipe. Then, it can be run using the following Bakery command, and select your seed:
+
+```bash
+$ php bakery seed
+```
+
 ### Using a Migration
 
 ```php
 <?php
-namespace UserFrosting\Sprinkle\Site\Database\Migrations\v100;
+namespace UserFrosting\Sprinkle\Site\Database\Migrations;
 
+use UserFrosting\Sprinkle\Account\Database\Migrations\v400\PermissionsTable;
+use UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable;
 use UserFrosting\Sprinkle\Account\Database\Models\Permission;
 use UserFrosting\Sprinkle\Account\Database\Models\Role;
-use UserFrosting\System\Bakery\Migration;
+use UserFrosting\Sprinkle\Core\Database\Migration;
 
 class CustomPermissions extends Migration
 {
     public static $dependencies = [
-        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\PermissionsTable',
-        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable'
+        PermissionsTable::class,
+        RolesTable::class,
     ];
 
-    public function up()
+    public function up(): void
     {
         // Add default permissions
         $permissions = $this->getPermissions();
@@ -238,7 +288,7 @@ class CustomPermissions extends Migration
         }
     }
 
-    public function down()
+    public function down(): void
     {
         foreach ($this->getPermissions() as $id => $permissionData) {
             $permission = Permission::where($permissionData)->first();
@@ -246,7 +296,7 @@ class CustomPermissions extends Migration
         }
     }
 
-    protected function getPermissions()
+    protected function getPermissions(): array
     {
         return [
             'uri_members' => new Permission([
@@ -264,4 +314,10 @@ class CustomPermissions extends Migration
         ];
     }
 }
+```
+
+Don't forget to add the migration to your Sprinkle Recipe. Then, it can be run using the following Bakery command:
+
+```bash
+$ php bakery migrate
 ```

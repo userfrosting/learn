@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 You were probably attracted to UserFrosting because you wanted to "make a site where users can sign in", or you already have a project in progress and your boss asked you to "put it behind a login," or you need to have some "protected pages." These are nontechnical terms. It will be easier for us to communicate if we first establish a common vocabulary, so that we can explain the concepts with more precision.
 
@@ -17,14 +16,17 @@ As we've [explained before](/background/the-client-server-conversation), a web a
 
 To do this, the client tells the server their **identity** (email or username) and their password, and in exchange the server associates that identity with their current session (since session data cannot be directly manipulated by the client, this is secure). This is the process of authentication.
 
-When the server receives a subsequent request, it simply needs to check that the client's session is associated with a valid user identity. In UserFrosting, this can be easily handled by applying the `authGuard` middleware to the protected route:
+When the server receives a subsequent request, it simply needs to check that the client's session is associated with a valid user identity. In UserFrosting, this can be easily handled by applying the `AuthGuard` middleware to the protected route:
 
-```
-$app->get('/account/settings', 'UserFrosting\Sprinkle\Account\Controller\AccountController:pageSettings')
-    ->add('authGuard');
+```php
+use use UserFrosting\Sprinkle\Account\Authenticate\AuthGuard;
+
+// ...
+
+$app->get('/account/settings', SettingsPageAction::class)->add(AuthGuard::class);
 ```
 
-UserFrosting will throw an `AuthExpiredException` if the client is not authenticated, or if their account has been disabled or deleted in the time since they were authenticated. This exception can then be caught by an [exception handler](/advanced/error-handling) to display an error page or perform some other appropriate action.
+UserFrosting will throw an `AuthGuardException` if the client is not authenticated, or if their account has been disabled or deleted in the time since they were authenticated. This exception can then be caught by an [exception handler](/advanced/error-handling) to display an error page or perform some other appropriate action.
 
 Of course, not all authenticated users should have the same permissions on your site. Determining whether a given authenticated user has permission to access a particular resource or perform a specific action is called **authorization**. Together with **roles**, **permissions**, and **conditions**, authorization constitutes UserFrosting's **access control** system. To learn more about UserFrosting's powerful access control features, see the [next section](/users/access-control).
 
@@ -54,12 +56,6 @@ UserFrosting supports a rich set of [multi-language](/i18n) features. If your au
 
 User passwords are salted and hashed using PHP's [`password_hash`](http://php.net/manual/en/function.password-hash.php) function and the `CRYPT_BLOWFISH` algorithm.
 
-### Theme
-
-**Partially implemented**. You may specify the name of a Sprinkle to be dynamically loaded for this user on each request. This can effectively be used to provide per-user theming options.
-
-[notice=tip]The preferred way to add additional user fields is by creating a separate table that is linked to the `users` table as a one-to-one relationship. See the recipe ["extending the user model"](/recipes/extending-the-user-model) for a guide on how to do this in your Sprinkle.[/notice]
-
 ## Account creation
 
 UserFrosting comes with two built-in mechanisms for creating new accounts: public self-registration, and administrative creation.
@@ -70,7 +66,7 @@ In many instances, you will want people to be able to register for your website 
 
 ![Account registration form](/images/registration.png)
 
-When the registration form is submitted, it will `POST` to the `/account/register` endpoint (which invokes the `AccountController::register` method).
+When the registration form is submitted, it will `POST` to the `/account/register` endpoint (which invokes the `RegisterAction` method).
 
 #### Disabling registration
 
@@ -87,7 +83,7 @@ Of course, neither of these will protect you from malevolent targeted attacks. F
 
 #### Account verification
 
-By default, new accounts must be **verified** through email before they can be used. This ensures that new accounts are associated with a reachable email address, and helps to limit the number of fake accounts that are created on your site. A token is sent to the registered email address in the form of a link (`/account/verify`, which invokes `AccountController::verify`), and the account is activated when the user clicks the link.
+By default, new accounts must be **verified** through email before they can be used. This ensures that new accounts are associated with a reachable email address, and helps to limit the number of fake accounts that are created on your site. A token is sent to the registered email address in the form of a link (`/account/verify`, which invokes `VerifyAction`), and the account is activated when the user clicks the link.
 
 To disable this behavior, set the `site.registration.require_email_verification` configuration setting to `false`.
 
@@ -103,22 +99,26 @@ You can then fill out details for the user. After you create the user, an email 
 
 ## Login form
 
-By default, the login form is available at `/account/sign-in`. The user provides their email or username as their identity, along with their password. The form is submitted to `/account/login`, which invokes `AccountController::login`. This processes the authentication request.
+By default, the login form is available at `/account/sign-in`. The user provides their email or username as their identity, along with their password. The form is submitted to `/account/login`, which invokes `LoginAction`. This processes the authentication request.
 
 ![User sign-in](/images/login.png)
 
 The `/account/login` route is throttled via the `throttles.sign_in_attempt` throttle rule. This mitigates against the possibility of brute-force attempts to guess your users' passwords.
 
-The sign-in form can automatically redirect users to a specific landing page after authentication via two different mechanisms:
+The sign-in form can automatically redirect users to a specific landing page after authentication via different mechanisms:
 
 1. By setting a `redirect` query parameter in the URL of the page that the form appears on, or;
 2. By setting a `UF-Redirect` header in the response from the login submission route (`/account/login`).
 
+<!-- TODO : UserRedirectedAfterLoginEvent ?? -->
+
 The first method is typically used with users whose sessions have expired, to automatically redirect them to the last page they were on after they re-authenticate. For example, if a user was on `/users` when their session expired, the `AuthExpiredExceptionHandler` will take them to the URL `/account/sign-in?redirect=users`. This gives them the opportunity to sign in again, but this time it tells UF to automatically redirect to the `/users` page after successfully re-authenticating.
 
+<!-- TODO : Replace with, UserRedirectedAfterLoginEvent, once event pages are written -->
 The second method is for "regular" sign-ins, to determine how to redirect the user based on some server-side criteria. This is used when you want different users to have different landing pages, depending on their roles and/or permissions. The `AccountController::login` method will invoke the [`redirect.onLogin` service](/services/default-services#redirectonlogin) after the user has been successfully authenticated, which sets the `UF-Redirect` header in the response.
 
 After the page containing the sign-in form receives a response from the server that authentication has succeeded, it will attempt to perform the redirect. The `redirectOnLogin` Javascript function in `sprinkles/account/assets/local/pages/js/sign-in.js` will first check for a `redirect` query string parameter. If none is present, it will check for the `UF-Redirect` header in the login response. It will then perform a redirect to the appropriate URL by using the `window.location.replace` Javascript function.
+<!-- END TODO -->
 
 ## Other self-service account features
 
@@ -150,7 +150,7 @@ Users can update certain attributes of their accounts through the account settin
 
 As a security measure, users are required to verify their current password before they can update their email address or password. Other fields, like name and locale, do not require the authenticated user to re-enter their password.
 
-The settings and profile forms are posted to the `/account/settings` or `/account/settings/profile` endpoints (`AccountController::settings` and `AccountController::profile` methods).
+The settings and profile forms are posted to the `/account/settings` or `/account/settings/profile` endpoints (`SettingsAction` and `ProfileAction` methods).
 
 ### Account avatar
 
@@ -161,13 +161,15 @@ Built-in avatar uploading is not yet implemented.
 
 ## Activity logging
 
-User activities are automatically logged via the `userActivityLogger` service. By default, they are logged to the `activities` table.
+User activities are automatically logged via the `UserFrosting\Sprinkle\Account\Log\UserActivityLogger` service. By default, they are logged to the `activities` table.
 
 Many of UserFrosting's built-in routes already log activities like sign-in/sign-out, registration, account settings updates, and administrative activities for you. For example, the "update profile" event is logged via:
 
 ```php
-$this->ci->userActivityLogger->info("User {$currentUser->user_name} updated their profile settings.", [
-    'type' => 'update_profile_settings'
+// Inject UserActivityLogger into $logger property.
+$this->logger->info("User {$currentUser->user_name} updated their profile settings.", [
+    'type'    => 'update_profile_settings',
+    'user_id' => $currentUser->id,
 ]);
 ```
 
@@ -179,7 +181,7 @@ Depending on the permissions you have assigned, users with the "Administrator" r
 
 ### View a list of users
 
-The user listing page is available at `/users` (`UserController::pageList`). The actual table of users is implemented through a combination of the page itself, which generates the "skeleton" of the table, and AJAX calls to the `/api/users` route, which fetches the actual data as a JSON object (`UserController::getList`). This allows the page to efficiently retrieve paginated, filtered, sorted results without needing to reload the page.
+The user listing page is available at `/users` (`UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction`). The actual table of users is implemented through a combination of the page itself, which generates the "skeleton" of the table, and AJAX calls to the `/api/users` route, which fetches the actual data as a JSON object (`UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction::sprunje`). This allows the page to efficiently retrieve paginated, filtered, sorted results without needing to reload the page.
 
 See [Data Sprunjing](/database/data-sprunjing) for more details on how this works.
 
