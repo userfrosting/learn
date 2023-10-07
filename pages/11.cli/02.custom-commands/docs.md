@@ -5,107 +5,120 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 While the Bakery CLI tool comes with great built-in commands, your Sprinkles can also take advantage of the Bakery by adding their own cli commands.
 
 ## Writing custom commands
 
-Any class defined in your sprinkle `src/Bakery` directory will be picked up by Bakery and automatically added to the list of available commands. Your custom command should extend the `UserFrosting\System\Bakery\BaseCommand` class and implement the `configure` and `execute` methods.
+Your Sprinkle Recipe can register any class extending the `\Symfony\Component\Console\Command\Command` class and implementing the `configure` and `execute` methods. Each registered command will then be automatically added to the list of available commands.
 
 The `configure` method takes care of defining your command name and description. See [Configuring the Command](http://symfony.com/doc/current/console.html#configuring-the-command) from the Symfony documentation for more details. Arguments and options can also be defined in the `configure` method. Again, the [Symfony documentation](http://symfony.com/doc/current/components/console/console_arguments.html) is the place to look for more information on this.
 
-The `execute` method is the one called when the command is executed. From there you can interact with the user, interact with UserFrosting or do whatever else you want to do. You can also add your own methods inside this class and access them from the execute method.
+The `execute` method is the one called when the command is executed. From there you can interact with the user, interact with UserFrosting or do whatever else you want to do. You can also add your own methods inside this class and access them from the _execute_ method.
 
 ### Interacting with the user
 
-Interacting with the user can be done with the `SymfonyStyle` instance defined in `$this->io`. For a complete list of available IO methods, check out the [Symfony documentation](http://symfony.com/doc/current/console/style.html#helper-methods).
+Interacting with the user can be done with the `SymfonyStyle` instance defined in `$this->io` when the `\UserFrosting\Bakery\WithSymfonyStyle` trait is used. For a complete list of available IO methods, check out the [Symfony documentation](http://symfony.com/doc/current/console/style.html#helper-methods).
 
 ### Interacting with UserFrosting
 
-The UserFrosting service providers can be accessed by using `$this->ci` which holds an instance of the [The DI Container](/services/the-di-container). The project root directory path is also available in the `\UserFrosting\ROOT_DIR` constant.
+The UserFrosting service providers can be injected using the PHP-DI `#[Inject]` [PHP Attribute](https://php-di.org/doc/attributes.html#inject) or via the constructor method with Autowiring.
+
+[notice=warning]Because all Bakery commands extend a base class originating from Symfony, don't forget to call the parent constructor when injecting dependency through autowiring in the constructor. For example, to inject `EventDispatcherInterface`:
+```php
+public function __construct(
+    protected EventDispatcherInterface $eventDispatcher
+) {
+    parent::__construct(); // <-- Don't forget to add this !
+}
+```
+[/notice]
+
+In all cases, Bakery command classes will be instantiated by the DI Container, and all dependency will be properly injected at run time.
+
 
 ## Command Class Template
 
-This template can be used to create new commands. Substitute `SprinkleName` in the namespace with your sprinkle name and `CommandName` with your command name in the class name.
+This template can be used to create new commands. Don't forget to substitute the namespace with your own.
 
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\SprinkleName\Bakery;
+namespace UserFrosting\App\Bakery;
 
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use UserFrosting\System\Bakery\BaseCommand;
+use UserFrosting\Bakery\WithSymfonyStyle;
 
-class CommandName extends BaseCommand
+/**
+ * Sample Bakery command.
+ */
+class HelloCommand extends Command
 {
-    protected function configure()
-    {
-        // the name of the command (the part after "php bakery")
-        $this->setName("my-command");
+    use WithSymfonyStyle;
 
-        // the short description shown while running "php bakery list"
-        $this->setDescription("My command description");
+    protected function configure(): void
+    {
+        $this->setName('hello')
+             ->setDescription('Show hello world message');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // outputs your command name as a title
-        $this->io->title("My Command");
-
-        // do something !
-        $this->io->writeln("Hello World !");
+        $this->io->title('Hello !');
+        $this->io->success('Hello world');
 
         return self::SUCCESS;
     }
 }
 ```
 
-## Adding Custom Commands to the `bake` command
-
-The [`bake` command](/cli/commands#bake) combines many CLI commands into a one and is meant to be used as a "setup" process. Sprinkles can add new commands to `bake` by extending the main command class. For example, to add a new `foo:bar` command :
+Now, you simply need to register your command in your [Sprinkle Recipe](/sprinkles/recipe). First, declare your recipe implement Bakery feature by adding the `BakeryRecipe` implementation. Then, register your command in the `getBakeryCommands()` method. Don't forget to import your class :
 
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\MySite\Bakery;
+namespace UserFrosting\App;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use UserFrosting\Sprinkle\Account\Bakery\BakeCommand as AccountBakeCommand;
+// ... 
+use UserFrosting\App\Bakery\HelloCommand; // <-- Add this
+// ...
+use UserFrosting\Sprinkle\BakeryRecipe; // <-- Add this
+// ...
 
-class BakeCommand extends AccountBakeCommand
+class MyApp implements
+    SprinkleRecipe,
+    BakeryRecipe // <-- Add this
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function executeConfiguration(InputInterface $input, OutputInterface $output)
+    // ...
+
+    // Add this -->
+    public function getBakeryCommands(): array
     {
-        parent::executeConfiguration($input, $output);
-
-        $command = $this->getApplication()->find('foo:bar');
-        $command->run($input, $output);
-
-        self::SUCCESS;
+        return [
+            HelloCommand::class,
+        ];
     }
+    //<--
+    
+    // ...
 }
+
 ```
 
-[notice=note]Because of PHP class inheritance, you must extend the last class in the chain. Since the `Account` sprinkle extend the class from the `Core` sprinkle, your sprinkle should typically extend the class from the `account` sprinkle, aka `UserFrosting\Sprinkle\Account\Bakery\BakeCommand`.[/notice]
+The command can now be used:
 
-The main `BakeCommand` class contains many methods you can use to insert your command in the right place in the _baking_ process.
+**Command:**
+```bash
+$ php bakery hello
+```
 
-Available methods / inclusion points for your custom commands are, in order of execution :
+**Result:**
+```txt
+Hello !
+=======
 
-| Method                 | Description                                        |
-| ---------------------- | -------------------------------------------------- |
-| `executeSetup`         | Execute database setup commands                    |
-| `executeDebug`         | Execute commands displaying debugging information  |
-| `executeConfiguration` | Execute commands that ask for configuration values |
-| `executeAsset`         | Execute assets related commands                    |
-| `executeCleanup`       | Execute cache clearing operations                  |
-
-For example, the `foo:bar` command above is added in the `executeConfiguration` method, which means it will be executed after the `executeSetup` and `executeDebug` method / commands. This is useful if your command requires to be run after the database setup for example, but before the assets installation.
+ [OK] Hello world                                                                                                       
+                                                                                                                        
+```
