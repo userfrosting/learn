@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 UserFrosting's CLI, or [*Command-line Interface*](https://en.wikipedia.org/wiki/Command-line_interface), is called the **Bakery**. It provides a number of helpful commands that can assist you while you build, manage and install your application. To view a list of all available Bakery commands, you may use the `list` command from your UserFrosting root directory:
 
@@ -31,31 +30,15 @@ $ php bakery help
 
 ### bake
 
-Bake is the general installation command. It combines `setup:db`, `setup:mail`, `debug`, `migrate`, `create-admin` and `build-assets` into a single command:
+Bake is the general installation command. It combines `setup:db`, `setup:mail`, `debug`, `migrate`, `create:admin-user`, `webpack` and `clear-cache` into a single command:
 
 ```bash
 $ php bakery bake
 ```
 
-[notice=tip]This command should be executed every time you run `composer update`, change assets, create a new sprinkle or install a [community sprinkle](/sprinkles/community).[/notice]
+[notice=tip]This command should be executed every time you run `composer update`, change assets, create a new migration, create a new sprinkle or install a [community sprinkle](/sprinkles/community).[/notice]
 
-
-### build-assets
-
-The `build-assets` command is an alias for the node.js scripts used for asset management. The `/build` directory contains the scripts and configuration files required to download Javascript, CSS, and other assets used by UserFrosting. This command will install all required build dependencies locally (e.g. Gulp and Yarn), and then automatically download frontend dependencies to `/app/assets`.
-
-See the [Asset Management](/asset-management) chapter for more information about asset bundles and the `compile` option.
-
-```bash
-$ php bakery build-assets [options]
-```
-
-| Option        | Description                                                      |
-| ------------- | ---------------------------------------------------------------- |
-| -c, --compile | Compile the assets and asset bundles for production environment  |
-| -f, --force   | Force fresh install by deleting cached data and installed assets |
-
-[notice=note]The compile option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.[/notice]
+[notice=tip]It is possible and easy to add your own command to the `bake` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
 
 
 ### clear-cache
@@ -69,18 +52,18 @@ $ php bakery clear-cache
 [notice=note]You might need to run this command as administrator or using `sudo` to avoid file permission issues when using the `file` cache store.[/notice]
 
 
-### create-admin
+### create:admin-user
 
-The `create-admin` command is used to create the root user. This command will self-abort if the root user already exists.
+The `create:admin-user` command is used to create a new root user. This command will self-abort if the root user already exists.
 
 ```bash
-$ php bakery create-admin [options]
+$ php bakery create:admin-user [options]
 ```
 
 Options can also be used to create the admin user without interaction (See the table below for the list of available options). For example :
 
 ```bash
-$ php bakery create-admin --username="admin" --email="admin@userfrosting.test" --password="adminadmin12" --firstName="Admin" --lastName="istrator"
+$ php bakery create:admin-user --username="admin" --email="admin@userfrosting.test" --password="adminadmin12" --firstName="Admin" --lastName="istrator"
 ```
 
 | Option                  | Description               |
@@ -91,6 +74,13 @@ $ php bakery create-admin --username="admin" --email="admin@userfrosting.test" -
 | --firstName[=FIRSTNAME] | The admin user first name |
 | --lastName[=LASTNAME]   | The admin user last name  |
 
+### create:user
+
+This command is the same as `create:admin-user`, but will create a non-root user.
+
+```bash
+$ php bakery create:user [options]
+```
 
 ### debug
 
@@ -101,6 +91,27 @@ The information displayed by this command can also be useful to other people whe
 ```bash
 $ php bakery debug
 ```
+
+The verbose option can be used with this command to display even more information.
+
+```bash
+$ php bakery debug -v
+```
+
+The debug command is in fact an aggregator of sub-commands, similar to `bake`. It include the following command by default:
+
+| Command       | Description                                                                    |
+| ------------- | ------------------------------------------------------------------------------ |
+| debug:config  | Test the UserFrosting database config                                          |
+| debug:db      | Test the UserFrosting database connection                                      |
+| debug:events  | List all currently registered events listener for each events.                 |
+| debug:locator | List all locations and streams, with their respective path, to help debugging. |
+| debug:version | Test the UserFrosting version dependencies                                     |
+| sprinkle:list | List all available sprinkles and their params                                  |
+
+Some will be only displayed when the verbose mode is active.
+
+[notice=tip]It is also possible (and easy) to add your own command to the `debug` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
 
 ### locale:compare
 
@@ -113,10 +124,10 @@ $ php bakery locale:compare [options]
 This command is interactive, which mean it will ask for which locales to compare. Options can also be used to automatically compare the two locales without user interaction (See the table below for the list of available options).
 
 This command will display :
- - Comparaison between _Right_ and _Left_ locales : Returns al list of all differences in both locales using [`array_diff_assoc`](https://www.php.net/manual/en/function.array-diff-assoc.php). This can be used to compare the two locales.
+ - Comparison between _Right_ and _Left_ locales : Returns al list of all differences in both locales using [`array_diff_assoc`](https://www.php.net/manual/en/function.array-diff-assoc.php). This can be used to compare the two locales.
  - Missing keys from _Right_ found in _Left_ : This can be used to see which keys are missing in the _Right_ locale, but that can be found in the _Left_ locale, so they can be added.
  - Same values found in both _Left_ and _Right_ locale : This can be used to find strings in the _right_ locale that is the same in the _left_ locale. When two locale have the same string value, it may means the string is not translated in the _right_ locale.
- - Empty values for _Right_ locale : List keys with empty string for the _right_ locale. Thoses string might need to be filled in.
+ - Empty values for _Right_ locale : List keys with empty string for the _right_ locale. Theses strings might need to be filled in.
 
 | Option            | Description                                           |
 | ----------------- | ----------------------------------------------------- |
@@ -132,12 +143,12 @@ $ php bakery locale:compare -l en_US -r fr_FR
 
 ### locale:dictionary
 
-This command shows the compiled dictionnary for the selected locale.
+This command shows the compiled dictionary for the selected locale.
 
 ```bash
 $ php bakery locale:dictionary [options]
 ```
-This command is interactive, which mean it will ask to select the locale to show the dictionnary from. Options can also be used to automatically select the locale without user interaction (See the table below for the list of available options).
+This command is interactive, which mean it will ask to select the locale to show the dictionary from. Options can also be used to automatically select the locale without user interaction (See the table below for the list of available options).
 
 | Option              | Description                                           |
 | ------------------- | ----------------------------------------------------- |
@@ -152,7 +163,7 @@ $ php bakery locale:dictionary -l fr_FR
 
 ### locale:info
 
-This command list all available locale as well as the defaut locale.
+This command list all available locale as well as the default locale.
 
 ```bash
 $ php bakery locale:info
@@ -226,20 +237,31 @@ $ php bakery migrate:rollback [options]
 
 ### migrate:reset
 
-The `migrate:reset` command is the same as the _rollback_ command, but it will revert **every** migration. Without options, this is the same as wiping the database to a clean state. **_Use this command with caution!_**.
+The `migrate:reset` command is the same as the _rollback_ command, but it will revert **every** migration. Without options, this is the same as wiping the database to a clean state. 
+
+[notice=warning]**Use this command with caution!**[/notice]
 
 ```bash
 $ php bakery migrate:reset [options]
 ```
 
-| Option                  | Description                                                            |
-| ----------------------- | ---------------------------------------------------------------------- |
-| -p, --pretend           | Run migrations in "dry run" mode                                       |
-| -f, --force             | Force the operation to run when in production                          |
-| --hard                  | Hard reset the whole database to an empty state by dropping all tables |
-| -d, --database=DATABASE | The database connection to use                                         |
+| Option                  | Description                                   |
+| ----------------------- | --------------------------------------------- |
+| -p, --pretend           | Run migrations in "dry run" mode              |
+| -f, --force             | Force the operation to run when in production |
+| -d, --database=DATABASE | The database connection to use                |
 
-[notice=warning]The `--hard` option will bypass all migrations and drop all tables from the database. This can be used as a last resort when a specific migration won't allow you to reset the whole stack. Use **extreme** caution with this option ![/notice]
+
+### migrate:reset:hard
+
+The `migrate:reset:hard` command is the same as the `migrate:reset` command, but it will bypass all migrations and drop all tables from the database. This can be used as a last resort when a specific migration won't allow you to reset the whole stack.
+
+[notice=warning]**Use this command with _extreme_ caution!**[/notice]
+
+```bash
+$ php bakery migrate:reset:hard [options]
+```
+
 
 ### migrate:refresh
 
@@ -258,7 +280,7 @@ $ php bakery migrate:refresh [options]
 
 ### migrate:status
 
-The `migrate:status` command will show what migration have been run and which one can be run. It will also display if a ran migration is available, in other words if this migration class was found so it can be rolledback.
+The `migrate:status` command will show what migration have been run and which one can be run. It will also display if a ran migration is available, in other words if this migration class was found so it can be rollback.
 
 ```bash
 $ php bakery migrate:status [options]
@@ -311,11 +333,13 @@ Registered Routes
 
 ### seed
 
-The `seed` command will run the `<class>` seed classes. See [Chapter 12](/database/seeding) for more info on database seeds.
+The `seed` command can be used to run any registered seeds classes. See [Chapter 12](/database/seeding) for more info on database seeds.
 
 ```bash
 $ php bakery seed [options] [--] <class> (<class>)...
 ```
+
+If no `<class>` is specified, an invite will be displayed, prompting you to select one or many registered seed to run.
 
 Multiple seeds classes can be run at one by separating multiple seed classes with a space. For example, to run `Class1` and `Class2` :
 
@@ -339,15 +363,11 @@ $ php bakery seed:list
 Example result:
 
 ```txt
-Database Seeds List
-===================
-
- ---------- -------------------------------------------------------- ----------
-  Name       Namespace                                                Sprinkle
- ---------- -------------------------------------------------------- ----------
-  TestSeed   \UserFrosting\Sprinkle\Core\Database\Seeds\TestSeed      Core
-  TestSeed   \UserFrosting\Sprinkle\Account\Database\Seeds\TestSeed   Account
- ---------- -------------------------------------------------------- ----------
+Seeds List
+==========
+ * UserFrosting\Sprinkle\Account\Database\Seeds\DefaultGroups
+ * UserFrosting\Sprinkle\Account\Database\Seeds\DefaultPermissions
+ * UserFrosting\Sprinkle\Account\Database\Seeds\DefaultRoles
 ```
 
 
@@ -428,6 +448,8 @@ The `setup` command combines the `setup:db`, `setup:mail` and `setup:env` comman
 $ php bakery setup
 ```
 
+[notice=tip]It is also possible (and easy) to add your own command to the `debug` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
+
 ### sprinkle:list
 
 Display the list of all loaded sprinkles. It will also display the base namespace classes from the sprinkle is expected to have, as weel as the expected path.
@@ -438,17 +460,19 @@ $ php bakery sprinkle:list
 
 Example result:
 
-```txt
-Loaded Sprinkles
+```txt 
+ Loaded Sprinkles
 ================
 
- ---------- -------------------------------- ------------------------------------------
-  Sprinkle   Calculated Namespace             Calculated Path
- ---------- -------------------------------- ------------------------------------------
-  core       UserFrosting\Sprinkle\Core       /home/UserFrosting/app/sprinkles/core
-  account    UserFrosting\Sprinkle\Account    /home/UserFrosting/app/sprinkles/account
-  admin      UserFrosting\Sprinkle\Admin      /home/UserFrosting/app/sprinkles/admin
- ---------- -------------------------------- ------------------------------------------
+ ------------------ --------------------------------------- ---------------------------------------------------------------------- 
+  Sprinkle           Namespace                               Path                                                                
+ ------------------ --------------------------------------- ---------------------------------------------------------------------- 
+  Core Sprinkle      UserFrosting\Sprinkle\Core\Core         /home/UserFrosting/vendor/userfrosting/sprinkle-core/app/src/../     
+  Account Sprinkle   UserFrosting\Sprinkle\Account\Account   /home/UserFrosting/vendor/userfrosting/sprinkle-account/app/src/../  
+  AdminLTE Theme     UserFrosting\Theme\AdminLTE\AdminLTE    /home/UserFrosting/vendor/userfrosting/theme-adminlte/app/src/../    
+  Admin Sprinkle     UserFrosting\Sprinkle\Admin\Admin       /home/UserFrosting/vendor/userfrosting/sprinkle-admin/app/src/../    
+  My Application     UserFrosting\App\MyApp                  /home/UserFrosting/app/src/../                                       
+ ------------------ --------------------------------------- ---------------------------------------------------------------------- 
 ```
 
 
@@ -486,3 +510,20 @@ $ php bakery test:mail [options]
 | Option  | Description                                                        |
 | ------- | ------------------------------------------------------------------ |
 | --to=TO | Email address to send test email to. Use admin contact if omitted. |
+
+
+### webpack
+
+The `webpack` (alias : `build-assets`) command is an alias for the **NPM** and **Webpack Encore** scripts used for asset management. The `package.json` and `webpack.config.js` files contains the configuration required to download Javascript, CSS, and other assets used by UserFrosting. This command will install all required frontend dependencies locally, and then automatically compile frontend dependencies to `/app/assets`.
+
+See the [Asset Management](/asset-management) chapter for more information about asset bundles and the `production` option.
+
+```bash
+$ php bakery webpack [options]
+```
+
+| Option           | Description                                                     |
+| ---------------- | --------------------------------------------------------------- |
+| -p, --production | Compile the assets and asset bundles for production environment |
+
+<!-- [notice=note]The compile option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.[/notice] -->
