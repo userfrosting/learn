@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 ## Configuration
 
@@ -80,12 +79,25 @@ You'll notice that the message contains two separate blocks for the `subject` an
 To load your message in your controllers, create a new `TwigMailMessage` object:
 
 ```php
+use Slim\Views\Twig;
 use UserFrosting\Sprinkle\Core\Mail\EmailRecipient;
+use UserFrosting\Sprinkle\Core\Mail\Mailer;
 use UserFrosting\Sprinkle\Core\Mail\TwigMailMessage;
 
-...
+// ...
 
-$message = new TwigMailMessage($this->ci->view, "mail/confirm-owl.html.twig");
+/**
+ * Inject dependencies.
+ */
+public function __construct(
+    protected Twig $twig,
+    protected Mailer $mailer,
+) {
+}    
+
+// ...
+
+$message = new TwigMailMessage($this->view, "mail/confirm-owl.html.twig");
 ```
 
 ### Senders, recipients, and customized content
@@ -148,7 +160,7 @@ All methods for `TwigMailMessage` can be fluently chained together into a single
 To actually send your message, pass your `TwigMailMessage` into the `sendDistinct` method of your `mailer` service:
 
 ```php
-$this->ci->mailer->sendDistinct($message);
+$this->mailer->sendDistinct($message);
 ```
 
 `sendDistinct` will send a **separate** email to each recipient, passing in any custom data that was defined in the `EmailRecipient` constructor. If you are trying to send a single message to a list of recipients, just use `send` instead. Note that in the case of `send`, any recipient-specific Twig parameters will be ignored.
