@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 Now that we've [seen the basics](/i18n/introduction), it's time to actually use the translator in code, and learn a little bit more about special features the translator offers, mainly **placeholder**, **pluralization** and **nested keys**.
 
@@ -14,21 +13,21 @@ Now that we've [seen the basics](/i18n/introduction), it's time to actually use 
 Translating strings is just a matter of asking the `Translator`, via the `translator` service, to return the localized version of a key based on the site or user locale as follows:
 
 ```php
-$this->ci->translator->translate($key);
+$this->translator->translate($key);
 ```
 
-Where `$this->ci` is the [DI container](/services/the-di-container) and `$key` the _language keys_ you want to display. For example:
+Where `$this->translator` is an instance of `\UserFrosting\I18n\Translator` (probably injected) and `$key` the _language keys_ you want to display. For example:
 
 ```php
-echo $this->ci->translator->translate("ACCOUNT_SPECIFY_USERNAME");
+echo $this->translator->translate("ACCOUNT_SPECIFY_USERNAME");
 
 // RESULT:
 // Please enter your user name.
 ```
 
-The current locale will be automatically defined and the associated dictionnary automatically loaded by UserFrosting.
+The current locale will be automatically defined and the associated dictionary automatically loaded by UserFrosting.
 
-[notice=tip]The translator service contains others public methods that can be useful for you. For example, you can use it to retreive the associated dictionary and locale. See the [i18n API Guide](https://github.com/userfrosting/i18n/tree/master/docs) for more information.[/notice]
+[notice=tip]The translator service contains others public methods that can be useful for you. For example, you can use it to retrieve the associated dictionary and locale. See the [i18n API Guide](https://github.com/userfrosting/i18n/tree/master/docs) for more information.[/notice]
 
 ### In Twig
 
@@ -40,7 +39,7 @@ The translator service is also available as a [Twig function](/templating-with-t
 
 ### In Javascript
 
-Since the translator is written in PHP, it cannot be used with Javascript yet. In fact, providing dynamic translation with Javascript can be problematic. In most cases, it simpler to either have all your interface text pre-loaded in the page HTML (or Twig) template, or thought a separate AJAX query like the [alert stream](/routes-and-controllers/alert-stream). [Handlebar templates](/client-side-code/client-side-templating) can also be really helpful when deadling with dynamic content.
+Since the translator is written in PHP, it cannot be used with Javascript yet. In fact, providing dynamic translation with Javascript can be problematic. In most cases, it simpler to either have all your interface text pre-loaded in the page HTML (or Twig) template, or thought a separate AJAX query like the [alert stream](/routes-and-controllers/alert-stream). [Handlebar templates](/client-side-code/client-side-templating) can also be really helpful when dealing with dynamic content.
 
 ## Placeholders
 
@@ -55,7 +54,7 @@ return [
 Just like Twig and Handlebar, placeholders are represented using the `{{double-mustache}}` notation. To fill in the variables, we can pass an array to the second, optional, parameter of the _translate_ method. For example:
 
 ```php
-echo $this->ci->translator->translate("ACCOUNT_USER_CHAR_LIMIT", [
+echo $this->translator->translate("ACCOUNT_USER_CHAR_LIMIT", [
     "min" => 4,
     "max" => 200
 ]);
@@ -83,25 +82,25 @@ In the dictionary, messages keys that support a plural form will have an array a
 	2 => "hungry cats",
 ]
 
-echo $this->ci->translator->translate("HUNGRY_CATS", 0); // Return "hungry cats"
-echo $this->ci->translator->translate("HUNGRY_CATS", 1); // Return "hungry cat"
-echo $this->ci->translator->translate("HUNGRY_CATS", 2); // Return "hungry cats"
-echo $this->ci->translator->translate("HUNGRY_CATS", 5); // Return "hungry cats"
+echo $this->translator->translate("HUNGRY_CATS", 0); // Return "hungry cats"
+echo $this->translator->translate("HUNGRY_CATS", 1); // Return "hungry cat"
+echo $this->translator->translate("HUNGRY_CATS", 2); // Return "hungry cats"
+echo $this->translator->translate("HUNGRY_CATS", 5); // Return "hungry cats"
 ```
 
-The plural value used to select the right form is defined by default as the `plural` placeholder. This means thoses two are equivalent :
+The plural value used to select the right form is defined by default as the `plural` placeholder. This means these two are equivalent :
 
 ```php
-$this->ci->translator->translate("HUNGRY_CATS", 5);
-$this->ci->translator->translate("HUNGRY_CATS", ['plural' => 5]);
+$this->translator->translate("HUNGRY_CATS", 5);
+$this->translator->translate("HUNGRY_CATS", ['plural' => 5]);
 ```
 
 If no placeholder value is defined, `1` will be used by default. For example, theses will return the same result :
 
 ```php
-$this->ci->translator->translate("HUNGRY_CATS");
-$this->ci->translator->translate("HUNGRY_CATS", 1);
-$this->ci->translator->translate("HUNGRY_CATS", ['plural' => 1]);
+$this->translator->translate("HUNGRY_CATS");
+$this->translator->translate("HUNGRY_CATS", 1);
+$this->translator->translate("HUNGRY_CATS", ['plural' => 1]);
 ```
 
 The `plural` placeholder can also be used in the localized messages. Note that in this case, it is recommended to add the `X_` prefix to the key to indicate that the plural will be displayed :
@@ -113,11 +112,11 @@ The `plural` placeholder can also be used in the localized messages. Note that i
 	2 => "{{plural}} hungry cats",
 ]
 
-echo $this->ci->translator->translate("X_HUNGRY_CATS", 0); // Return "No hungry cats"
-echo $this->ci->translator->translate("X_HUNGRY_CATS", 1); // Return "1 hungry cat"
-echo $this->ci->translator->translate("X_HUNGRY_CATS", 2); // Return "2 hungry cats"
-echo $this->ci->translator->translate("X_HUNGRY_CATS", 5); // Return "5 hungry cats"
-echo $this->ci->translator->translate("X_HUNGRY_CATS", ['plural': 5]); // Return "5 hungry cats" (equivalent to the previous one)
+echo $this->translator->translate("X_HUNGRY_CATS", 0); // Return "No hungry cats"
+echo $this->translator->translate("X_HUNGRY_CATS", 1); // Return "1 hungry cat"
+echo $this->translator->translate("X_HUNGRY_CATS", 2); // Return "2 hungry cats"
+echo $this->translator->translate("X_HUNGRY_CATS", 5); // Return "5 hungry cats"
+echo $this->translator->translate("X_HUNGRY_CATS", ['plural': 5]); // Return "5 hungry cats" (equivalent to the previous one)
 ```
 
 [notice=tip]Note that the `plural` placeholder can be overwritten using [handles](#-plural-special-handle).[/notice]
@@ -139,7 +138,7 @@ For example :
 With :
 
 ```php
-echo $this->ci->translator->translate("X_HUNGRY_CATS", 5);
+echo $this->translator->translate("X_HUNGRY_CATS", 5);
 ```
 
 Will display "**5 hungry cats**", not "A lot of hungry cats" !
@@ -155,8 +154,8 @@ If you have more than one placeholder, you must pass the plural value in the pla
  2 => "{{plural}} {{emotion}} cats",
 ]
 
-echo $this->ci->translator->translate("X_EMOTION_CATS", ['plural': 2, 'emotion': 'hungry']); // Return "2 hungry cats"
-echo $this->ci->translator->translate("X_EMOTION_CATS", ['plural': 5, 'emotion': 'angry']); // Return "5 angry cats"
+echo $this->translator->translate("X_EMOTION_CATS", ['plural': 2, 'emotion': 'hungry']); // Return "2 hungry cats"
+echo $this->translator->translate("X_EMOTION_CATS", ['plural': 5, 'emotion': 'angry']); // Return "5 angry cats"
 ```
 
 ### Multiple plural in a string
@@ -179,9 +178,9 @@ If a localized string contains more than more plural, for example **X guest(s) a
 
 [...]
 
-$online_guest => $this->ci->translator->translate("ONLINE_GUEST", 1);
-$online_friend => $this->ci->translator->translate("ONLINE_FRIEND", 4);
-echo $this->ci->translator->translate("ONLINE_USERS", ["guest" => $online_guest, "friend" => $online_friend]);
+$online_guest => $this->translator->translate("ONLINE_GUEST", 1);
+$online_friend => $this->translator->translate("ONLINE_FRIEND", 4);
+echo $this->translator->translate("ONLINE_USERS", ["guest" => $online_guest, "friend" => $online_friend]);
 
 // RESULT :
 // 1 guest and 4 friends currently online
@@ -200,8 +199,8 @@ The default `plural` default placeholder can be overwritten by the `@PLURAL` han
 	2 => "{{nb}} hungry cats",
 ]
 
-echo $this->ci->translator->translate("NB_HUNGRY_CATS", 2); // Return "2 hungry cats"
-echo $this->ci->translator->translate("NB_HUNGRY_CATS", ['nb': 5]); // Return "5 hungry cats"
+echo $this->translator->translate("NB_HUNGRY_CATS", 2); // Return "2 hungry cats"
+echo $this->translator->translate("NB_HUNGRY_CATS", ['nb': 5]); // Return "5 hungry cats"
 ```
 
 ### One last thing about pluralization...
@@ -231,7 +230,7 @@ return [
 ];
 ```
 
-Nested keys can be accessed using _dot notiation_, eg. `translate('COLOR.BLACK')` will return `black`. Nested keys are also useful when multiple *master keys* share the same context. For example, let's consider :
+Nested keys can be accessed using _dot notation_, eg. `translate('COLOR.BLACK')` will return `black`. Nested keys are also useful when multiple *master keys* share the same context. For example, let's consider :
 
 ```php
 return [
@@ -246,7 +245,7 @@ return [
 ];
 
 $method = Input::get(); // return $method = "A";
-echo $this->ci->translator->translate("METHOD_$method.TITLE"); // Print "Scénario A"
+echo $this->translator->translate("METHOD_$method.TITLE"); // Print "Scénario A"
 ```
 
 In this case, it would be cleaner to define everything this way :
@@ -266,10 +265,10 @@ return [
 ];
 
 $method = Input::get(); // return $method = "A";
-echo $this->ci->translator->translate("METHOD.$method.TITLE"); // Print "Scénario A"
+echo $this->translator->translate("METHOD.$method.TITLE"); // Print "Scénario A"
 ```
 
-In the future, if `METHOD` where to change to something else, or if you want add a `METHOD.CHOOSE` key, it would make it easier to navigate your dictionnary code.
+In the future, if `METHOD` where to change to something else, or if you want add a `METHOD.CHOOSE` key, it would make it easier to navigate your dictionary code.
 
 ### Nested keys and plural forms
 
@@ -287,9 +286,9 @@ Of courses, nested keys and plural rules can live together inside the same maste
     2 => "colors"
 ]
 
-echo $this->ci->translator->translate("COLOR.BLACK");    // black
-echo $this->ci->translator->translate("COLOR", 2);       // colors
-echo $this->ci->translator->translate("COLOR.WHITE", 2); // white
+echo $this->translator->translate("COLOR.BLACK");    // black
+echo $this->translator->translate("COLOR", 2);       // colors
+echo $this->translator->translate("COLOR.WHITE", 2); // white
 ```
 
 ### `@TRANSLATION` handle
@@ -305,12 +304,12 @@ return [
 ];
 
 
-$this->ci->translator->translate('ACCOUNT')              // Return "Account"
-$this->ci->translator->translate('ACCOUNT.@TRANSLATION') // Return "Account"
-$this->ci->translator->translate('ACCOUNT.ALT');         // Return "Profile"
+$this->translator->translate('ACCOUNT')              // Return "Account"
+$this->translator->translate('ACCOUNT.@TRANSLATION') // Return "Account"
+$this->translator->translate('ACCOUNT.ALT');         // Return "Profile"
 ```
 
-When `@TRANSLATION` is used with plural forms, omiting the second argument of the `translate` function will change the default behaviour. Instead of returning the correct form for a value of **1**, the `@TRANSLATION` value will be returned instead. For example:
+When `@TRANSLATION` is used with plural forms, omitting the second argument of the `translate` function will change the default behavior. Instead of returning the correct form for a value of **1**, the `@TRANSLATION` value will be returned instead. For example:
 
 ```php
 "X_HUNGRY_CATS" => [
@@ -321,15 +320,15 @@ When `@TRANSLATION` is used with plural forms, omiting the second argument of th
 	2 => "{{plural}} hungry cats",
 ];
 
-$this->ci->translator->translate("X_HUNGRY_CATS");      // Hungry cats
-$this->ci->translator->translate("X_HUNGRY_CATS", 1);   // 1 hungry cat
+$this->translator->translate("X_HUNGRY_CATS");      // Hungry cats
+$this->translator->translate("X_HUNGRY_CATS", 1);   // 1 hungry cat
 ```
 
 ## The `&` placeholder
 
 When a placeholder identifier starts with the `&` character, it tells the translator to directly replace the placeholder with the right language key (if found). Note that this is CASE SENSITIVE and, as with the other handles, all placeholders defined in the main translation function are passed to all child translations.
 
-This behaviour is useful when you don't want to translate the same word over and over again. It can also be used in complex translations with plural forms, but be careful when using this with plurals as the plural value is passed to all child translation and can cause conflict (See [Example of a complex translation](#example-of-a-complex-translation)).
+This behavior is useful when you don't want to translate the same word over and over again. It can also be used in complex translations with plural forms, but be careful when using this with plurals as the plural value is passed to all child translation and can cause conflict (See [Example of a complex translation](#example-of-a-complex-translation)).
 
 
 ```php
@@ -340,16 +339,16 @@ This behaviour is useful when you don't want to translate the same word over and
 
 "I_LOVE_MY_CATS" => "I love {{&MY_CATS}}";
 
-$this->ci->translator->translate('I_LOVE_MY_CATS', 3); //Return "I love my 3 cats"
+$this->translator->translate('I_LOVE_MY_CATS', 3); //Return "I love my 3 cats"
 ```
 
 In this example, `{{&MY_CATS}}` gets replaced with the value of `MY_CATS` to create `I love my {{plural}} cats`. Since there are 3 cats, the rule #2 is selected. So the string becomes `I love my 3 cats`.
 
 
-[notice=note]This behaviour can be overwritten if you pass a placeholder with the same key to the translate function :
+[notice=note]This behavior can be overwritten if you pass a placeholder with the same key to the translate function :
 
 ```php
-$this->ci->translator->translate('I_LOVE_MY_CATS', [
+$this->translator->translate('I_LOVE_MY_CATS', [
     "plural" => 3,
     "&MY_CATS" => "my dogs"
 ]);
@@ -364,8 +363,8 @@ $this->ci->translator->translate('I_LOVE_MY_CATS', [
 Since the other placeholders, including the plural value(s), are also being passed to the sub translation, it can be useful for languages like French where the adjectives can also be pluralizable. For example, the sentence "**I have 3 white catS**" would become "**J'ai 3 chatS blancS**" in French. Notice the **S** on both the color **blanc** and the animal **chatS**? One developer could be tempted to do this:
 
 ```php
-$colorString = $this->ci->translator->translate('COLOR.WHITE'); // blanc
-echo $this->ci->translator->translate('MY_CATS', [
+$colorString = $this->translator->translate('COLOR.WHITE'); // blanc
+echo $this->translator->translate('MY_CATS', [
     "plural" => 3,
     "color" => $colorString
 );
@@ -376,7 +375,7 @@ While this would work in English because the color isn't pluralizable, it won't 
 To make it work in both language, we need to call the translation and pass the color key as a placeholder using the `&` prefix :
 
 ```php
-$this->ci->translator->translate('MY_CATS', [
+$this->translator->translate('MY_CATS', [
     "plural" => 3,
     "color" => "&COLOR.WHITE"
 ]);
@@ -466,7 +465,7 @@ return [
     	1 => "un adulte",
     	2 => "{{nb_adult}} adultes",
     ],
-    // CAR can be ommitted as same in French and english
+    // CAR can be omitted as same in French and english
     "COLOR" => [
         "BLACK" => "noir",
         "RED"   => "rouge",
