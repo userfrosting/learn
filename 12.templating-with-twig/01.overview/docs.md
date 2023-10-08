@@ -5,11 +5,10 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 Twig is a [templating engine](http://twig.sensiolabs.org/), which is designed to help maintain a clean separation between your application's logic and its content.
 
-If you recall the spaghetti code example from Chapter 8:
+If you recall the spaghetti code example from [Chapter 8](/routes-and-controllers/introduction):
 
 ```php
 if (isset($_POST)) {
