@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 ## Template organization
 
@@ -13,6 +12,7 @@ Any Sprinkle that works with Twig templates will contain a `templates/` director
 
 ```txt
 templates/
+├── content/
 ├── forms/
 ├── mail/
 ├── modals/
@@ -144,9 +144,9 @@ For example, The base template `pages/abstract/base.html.twig`, found in the `co
 {% endblock %}
 ```
 
-You'll notice that this template is composed almost entirely of `block` blocks. The [`block` tag](http://twig.sensiolabs.org/doc/2.x/tags/extends.html) allows us to define named blocks of code that can be overridden in our child templates. In many cases, these blocks are completely empty in our base template, and serve mainly as a way to define placeholders that we can fill in with content in our child templates.
+You'll notice that this template is composed almost entirely of `block` blocks. The [`block` tag](https://twig.symfony.com/doc/3.x/tags/extends.html) allows us to define named blocks of code that can be overridden in our child templates. In many cases, these blocks are completely empty in our base template, and serve mainly as a way to define placeholders that we can fill in with content in our child templates.
 
-To define a child template, we use the [`extends` tag](http://twig.sensiolabs.org/doc/tags/extends.html) at the top of a new file, and then define the blocks we wish to override:
+To define a child template, we use the [`extends` tag](https://twig.symfony.com/doc/3.x/tags/extends.html) at the top of a new file, and then define the blocks we wish to override:
 
 ```twig
 {# This is a child template, which inherits from base.html.twig. #}
@@ -164,7 +164,7 @@ When we render this template, Twig will use `base.html.twig`, but then replace a
 
 ### Partial templates
 
-Sometimes, we want to reuse a snippet across multiple different templates - for example, a footer or a message box that needs to appear in multiple different types of pages. We refer to these types of templates as **partial templates**. Partial templates can be included in another template via Twig's [`include` tag](http://twig.sensiolabs.org/doc/2.x/tags/include.html). Suppose, for example, we have a page template:
+Sometimes, we want to reuse a snippet across multiple different templates - for example, a footer or a message box that needs to appear in multiple different types of pages. We refer to these types of templates as **partial templates**. Partial templates can be included in another template via Twig's [`include` tag](https://twig.symfony.com/doc/3.x/tags/include.html). Suppose, for example, we have a page template:
 
 ```twig
 <!DOCTYPE html>
@@ -203,6 +203,7 @@ Templates in the following directories are all "partial" templates:
 
 ```txt
 templates/
+├── content/
 ├── forms/
 ├── navigation/
 ├── pages/

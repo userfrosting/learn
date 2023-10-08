@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 ### checkAccess
 
@@ -14,7 +13,7 @@ You can perform permission checks in your Twig templates using the `checkAccess`
 ```twig
 {% if checkAccess('uri_users') %}
 <li>
-    <a href="{{site.uri.public}}/users"><i class="fa fa-user fa-fw"></i> {{ translate("USER", 2) }}</a>
+    <a href="{% urlFor('uri_users') %}"><i class="fa fa-user fa-fw"></i> {{ translate("USER", 2) }}</a>
 </li>
 {% endif %}
 ```
@@ -27,15 +26,16 @@ You can perform permission checks in your Twig templates using the `checkAccess`
 {{ translate("ACCOUNT_USER_CHAR_LIMIT", {min: 4, max: 200}) }}
 ```
 
-### path_for
+### urlFor
 
-You can use `path_for` in your Twig templates to get the URL for a named route. This Twig function is simply mapped to the Slim router `pathFor(string $name, array $data, array $queryParams)` instance method.
+You can use `urlFor` in your Twig templates to get the URL for a named route. This Twig function is simply mapped to the Slim routeParser `urlFor(string $routeName, array $data, array $queryParams): string` instance method.
 
 ```html
 <li>
-    <a href="{{ path_for('awesome-owls' )}}">Owls</a>
+    <a href="{{ urlFor('awesome-owls' )}}">Owls</a>
 </li>
 ```
+
 ## Extending Twig Extensions
 
 The `view` service loads UserFrosting's [Twig extensions](/templating-with-twig/filters-and-functions) to expose additional functions, filters, and variables in our templates. If we want to define more global Twig variables in our site Sprinkle, we can create a new Twig extension and then add it to our `view` service by extending it in our service provider class. An extension which adds globals like this must also implement Twig's `GlobalsInterface`.
@@ -44,126 +44,64 @@ First, create your new Twig extension class in `src/Twig/Extension.php`:
 
 ```php
 <?php
-/**
- * Owl Fancy (https://owlfancy.com)
- *
- * @license   All rights reserved.
- */
+
 namespace UserFrosting\Sprinkle\Site\Twig;
 
-use Psr\Container\ContainerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
+use UserFrosting\Config\Config;
 
-/**
- * Extends Twig functionality for my site sprinkle.
- *
- * @author David Attenborough
- */
 class Extension extends AbstractExtension implements GlobalsInterface
 {
-
     /**
-     * @var ContainerInterface The global container object, which holds all your services.
+     * Inject required services.
+     * 
+     * @param Config $config The config service
      */
-    protected $services;
-
-    /**
-     * Constructor.
-     *
-     * @param ContainerInterface $services The global container object, which holds all your services.
-     */
-    public function __construct(ContainerInterface $services)
-    {
-        $this->services = $services;
+    public function __construct(
+        protected Config $config,
+    ) {
     }
 
     /**
-     * Get the name of this extension.
+     * Adds Twig global variables `site`.
      *
-     * @return string
+     * @return mixed[]
      */
-    public function getName()
+    public function getGlobals(): array
     {
-        return 'userfrosting/site';
-    }
-
-    /**
-     * Adds Twig global variable `nest`.
-     *
-     * @return array[mixed]
-     */
-    public function getGlobals()
-    {
-        return array(
-            'nest'   => $this->services->mapBuilder->getNest()
-        );
+        return [
+            'owls' => $this->config->get('owls'),
+        ];
     }
 }
-
 ```
 
-Now, back in `ServicesProvider.php`, we can extend the `view` service to load this extension:
+Now, back in your Sprinkle Recipe, we can register the `Extension` class, via the `TwigExtensionRecipe` sub-recipe.
 
 ```php
 <?php
-/**
- * Owl Fancy (https://owlfancy.com)
- *
- * @license   All rights reserved.
- */
-namespace UserFrosting\Sprinkle\Site\ServicesProvider;
 
-use Psr\Container\ContainerInterface;
-use UserFrosting\Sprinkle\Core\Facades\Debug;
-use UserFrosting\Sprinkle\Site\GoogleMaps\MapBuilder;
-use UserFrosting\Sprinkle\Site\Twig\Extension;
+namespace UserFrosting\Sprinkle\Site;
 
-/**
- * Registers services for my site Sprinkle
- */
-class ServicesProvider
+// ...
+use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\TwigExtensionRecipe; // <-- Add this
+use UserFrosting\Sprinkle\Site\Twig\Extension; // <-- Add this
+// ...
+
+class Core implements
+    SprinkleRecipe,
+    TwigExtensionRecipe, // <-- Add this
 {
-    /**
-     * Register my site services.
-     *
-     * @param ContainerInterface $container
-     */
-    public function register(ContainerInterface $container)
+    // ...
+
+    public function getTwigExtensions(): array
     {
-        /**
-         * Extends the 'view' service with the SiteExtension for Twig.
-         *
-         * Adds global variables to Twig for my site Sprinkle.
-         */
-        $container->extend('view', function ($view, $c) {
-            $twig = $view->getEnvironment();
-            $extension = new Extension($c);
-            $twig->addExtension($extension);
-
-            return $view;
-        });
-
-        /**
-         * Map builder service.
-         *
-         * Needed to find our owls and track down those delicious voles.
-         */
-        $container['mapBuilder'] = function ($c) {
-            // Do what you need before building the object
-            ...
-
-            // Now, actually build the object
-            $mapBuilder = new MapBuilder(...);
-            return $mapBuilder;
-        };
+        return [
+            Extension::class,
+        ];
     }
+    
+    // ...
 }
-
 ```
-
-When our Sprinkle is loaded, Pimple will use the callback defined in `$container->extend('view', ...` to load our extension **on top of** the `view` service that was originally defined in the core Sprinkle, as well as any modifications made in other Sprinkles' service providers. This is summarized in the following diagram:
-
-![Extending a service multiple times](/images/extending-services.png)
-
-To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
