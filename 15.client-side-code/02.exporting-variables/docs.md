@@ -46,18 +46,16 @@ Alternatively, you can override `config.js.twig` in your Sprinkle. `config.js.tw
 For your convenience, the `core/templates/pages/partials/page.js.twig` template will generate a `page` JSON object. This is similar to `site`, but is populated by passing an array of data to the `page` key when rendering a template:
 
 ```php
-// In account/src/Controller/AccountController.php
-
-public function pageRegister(Request $request, Response $response, array $args)
+public function __invoke(Request $request, Response $response): Response
 {
     // ...
 
     // Load validation rules
     $schema = new RequestSchema("schema://requests/register.yaml");
-    $validatorRegister = new JqueryValidationAdapter($schema, $this->ci->translator);
+    $validatorRegister = new JqueryValidationAdapter($schema, $this->translator);
 
     // Pass them to the `page` key of the template placeholders
-    return $this->ci->view->render($response, 'pages/register.html.twig', [
+    return $this->view->render($response, 'pages/register.html.twig', [
         "page" => [
             "validators" => [
                 "register" => $validatorRegister->rules()
@@ -70,16 +68,11 @@ public function pageRegister(Request $request, Response $response, array $args)
 You can then include the `page.js.twig` component in your page template's `scripts_page` block, before any page-specific asset bundles:
 
 ```twig
-{# In account/templates/pages/register.html.twig #}
-
 {% block scripts_page %}
     <!-- Include page-specific variables -->
     <script>
         {% include "pages/partials/page.js.twig" %}
     </script>
-
-    <!-- Include page-specific asset bundles -->
-    {{ assets.js('js/pages/register') | raw }}
 {% endblock %}
 ```
 
