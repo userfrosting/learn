@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 When you install UserFrosting with the [Bakery CLI](/cli), a number of tables will automatically added to your database. These tables are required for UserFrosting's built-in features, such as user accounts, request throttling, persistent sessions, and access control.
 

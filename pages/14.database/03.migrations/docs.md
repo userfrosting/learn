@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 When you start building your application with UserFrosting, you'll no doubt be adding your own tables to the data model. After all, what's the point of having users if there's nothing in your application for them to use?
 
@@ -19,38 +18,90 @@ Migrations are also very useful when dealing with [Automated Test](/testing). Te
 
 A migration is nothing more than a PHP class that uses Eloquent's [Schema Builder](https://laravel.com/docs/8.x/migrations#tables) to create, remove, and modify tables in your database. Migrations can also be used to perform additional setup tasks like seeding your tables with some default values.
 
+When you run the main UserFrosting migration script (`php bakery migrate`), it will first check a special `migration` table to see which migrations have been run before. If the migration class has a record in this table, the migrate script will simply skip it.
 
-When you run the main UserFrosting install script (`php bakery migrate`), it will first check a special `migration` table to see which migrations have been run before. If the migration class has a record in this table, the migrate script will simply skip it.
+### Base class
 
-### Class namespace
+Each migration class needs to extend the base `UserFrosting\Sprinkle\Core\Database\Migration` class. A migration class must contains two methods: `up` and `down`. The `up` method is used to add new tables, columns, or indexes to your database, while the `down` method should simply reverse the operations performed by the `up` method.
 
-To be picked up by the `migrate` bakery command, migration class files must be located in the `src/Database/Migrations/` directory of your Sprinkle and have the appropriate PSR-4 namespace.
+The base class for a `MyTable` migration looks like this : 
 
-Recall that [PSR-4](http://www.php-fig.org/psr/psr-4/#examples) requires that classes have a namespace that corresponds to their file path, i.e. `UserFrosting\Sprinkle\{sprinkleName}\Database\Migrations`(where `{sprinkleName}` is the name of your sprinkle). **Crucially**, namespaces are case-sensitive and **must** match the case of the corresponding directories. Also note that dots (`.`) and dashes (`-`) are not included in the directories (and namespace) as per PSR-4 rules. The class names must also correspond to these file names; e.g. `MembersTable.php` must contain a single `MembersTable` class.
+**app/src/Database/Migrations/MyTable.php**
+```php
+<?php
 
+namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations;
 
-You can also optionally organize your migrations in subdirectories so it's easier to find and manage them. For example:
+use Illuminate\Database\Schema\Blueprint;
+use UserFrosting\Sprinkle\Core\Database\Migration;
 
-```bash
-src/Database/Migrations/v400/
-    ├── MembersTable.php
-    └── OwlsTable.php
+class MyTable extends Migration
+{
+    public function up(): void
+    {
+        // ...
+    }
+
+    public function down(): void
+    {
+        // ...
+    }
+}
+```
+
+[notice=note]Recall that [PSR-4](http://www.php-fig.org/psr/psr-4/#examples) requires that classes have a namespace that corresponds to their file path, i.e. `UserFrosting\Sprinkle\{sprinkleName}\Database\Migrations`(where `{sprinkleName}` is the name of your sprinkle). **Crucially**, namespaces are case-sensitive and **must** match the case of the corresponding directories. Also note that dots (`.`) and dashes (`-`) are not included in the directories (and namespace) as per PSR-4 rules. The class names must also correspond to these file names; e.g. `MembersTable.php` must contain a single `MembersTable` class.[/notice]
+
+You can optionally organize your migrations in subdirectories so it's easier to find and manage them. For example:
+
+```txt
 src/Database/Migrations/SneksNStuff/
     ├── SneksTable.php
     └── VolesTable.php
-src/Database/Migrations/v500/
+src/Database/Migrations/V4/
+    ├── MembersTable.php
+    └── OwlsTable.php
+src/Database/Migrations/V5/
     ├── OwlsTable.php
     └── MembersTable.php
 ```
 
 While multiple operations _can_ be done in the same migration class, it is recommended to use **one class per table (or operation)**. This way, if something goes wrong while creating one of the tables for example, the table previously created won't be created again when running the migrate command again. Plus, every change made before the error occurred can even be reverted using the `migrate:rollback` command.
 
+### Sprinkle Recipe
+
+To be picked up by the `migrate` bakery command, migration class files must be registered in the *Sprinkle Recipe*, using the `MigrationRecipe` sub-recipe and the `getMigrations():array` method:
+
+```php
+<?php
+
+namespace UserFrosting\Sprinkle\MySprinkle;
+
+// ...
+use UserFrosting\Sprinkle\MySprinkle\Database\Migrations\MyTable; // <-- Add this
+use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\MigrationRecipe; // <-- Add this
+// ...
+
+class MyApp implements
+    SprinkleRecipe,
+    MigrationRecipe, // <-- Add this
+{
+    // ...
+
+    public function getMigrations(): array
+    {
+        return [
+            MyTable::class,
+        ];
+    }
+
+    // ...
+}
+
+```
 
 ### Up and down we go
 
-Each migration class needs to extend the base `UserFrosting\Sprinkle\Core\Database\Migration` class. A migration class must contains two methods: `up` and `down`. The `up` method is used to add new tables, columns, or indexes to your database, while the `down` method should simply reverse the operations performed by the `up` method.
-
-Within both of these methods you may use the [Laravel schema builder](https://laravel.com/docs/8.x/migrations) (available in the `$this->schema` property) to expressively create and modify tables. To learn about all of the methods available on the Schema builder, [check out Laravel documentation](https://laravel.com/docs/8.x/migrations#creating-tables).
+Within both of the `up` and `down` methods you may use the [Laravel schema builder](https://laravel.com/docs/8.x/migrations) (available in the `$this->schema` property) to expressively create and modify tables. To learn about all of the methods available on the Schema builder, [check out Laravel documentation](https://laravel.com/docs/8.x/migrations#creating-tables).
 
 For a simple example, suppose that you want to create a `members` table, which will be used to add application-specific fields for our users:
 
@@ -60,7 +111,6 @@ For a simple example, suppose that you want to create a `members` table, which w
 namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations;
 
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Schema\Builder;
 use UserFrosting\Sprinkle\Core\Database\Migration;
 
 class MembersTable extends Migration
@@ -90,7 +140,7 @@ class MembersTable extends Migration
 }
 ```
 
-`$this->schema` is a variable created by the base migration class, which models your database structure. In this example, we call `hasTable` to check if the `members` table already exists, and then create it if it doesn't.
+`$this->schema` is a variable created by the base `\UserFrosting\Sprinkle\Core\Database\Migration` class, which models your database structure. In this example, we call `hasTable` to check if the `members` table already exists, and then create it if it doesn't.
 
 [notice=note]Using `hasTable` to make sure the table doesn't already exist is not strictly required since [Dependencies](#dependencies) could also be used to prevent any duplicate, but it can still be useful in case another sprinkle already created a table with the same name.[/notice]
 
@@ -115,31 +165,25 @@ To define which migrations are required to be executed before your own migration
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations\v400;
+namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations;
 
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Schema\Builder;
 use UserFrosting\Sprinkle\Core\Database\Migration;
+use UserFrosting\Sprinkle\Account\Database\Migrations\V400\UsersTable;
+use UserFrosting\Sprinkle\Account\Database\Migrations\V400\RolesTable;
+use UserFrosting\Sprinkle\Account\Database\Migrations\V400\RoleUsersTable;
 
 class MembersTable extends Migration
 {
     public static $dependencies = [
-        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\UsersTable',
-        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable',
-        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\RoleUsersTable'
+        UsersTable::class,
+        RolesTable::class,
+        RoleUsersTable::class,
     ];
 
-    public function up()
-    { ... }
+    // ...
 }
 ```
-
-[notice=note]Don't forget to start your fully qualified class names with `\`. If you're using `class` to get the fully qualified class name you can do the following :
-
-```php
-'\\' . MyClass::class
-```
-[/notice]
 
 The above example tells the bakery `migrate` command that the `UsersTable`, `RolesTable` and `RoleUsersTable` migrations from the `Account` Sprinkle need to be already executed before executing the `MembersTable` migration from the `MySprinkle` sprinkle. If those migrations are not yet executed and are pending execution, the `migrate` command will take care of the order automatically. If a migration's dependencies cannot be met, the `migrate` command will abort.
 
@@ -154,36 +198,3 @@ $ php bakery migrate
 ```
 
 If you want to do a "fresh install" of your migration or cancel the changes made, you can **rollback** the previous migration. You can also do a dry run of your migrations using the `pretend` option. See [Chapter 8](/cli/commands) for more details.
-
-## Migrating using a different database connection
-
-When building your application with UserFrosting, you may run into situations where you need or want to use a database other than the default instance to keep data. When migrating these tables, you will need to control which connection is used to create the tables so that they are created in the correct databse. Here is one easily extensible approach to doing so.
-
-We will start by creating a new abstract Migrations class in the `src/Database/Migrations` folder of your Sprinkle that will extend the default migration abstract class and be the basis for all of your migration classes that requires the different database connection.
-
-```php
-<?php
-
-namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations;
-
-use UserFrosting\Sprinkle\Core\Database\Migration as UF_Migration;
-use UserFrosting\Sprinkle\Core\Facades\Config;
-
-abstract class Migration extends UF_Migration
-{
-    /**
-     * Create a new migration instance.
-     *
-     * @param \Illuminate\Database\Schema\Builder|null $schema
-     */
-    public function __construct(Builder $schema = null)
-    {
-        // Hack to get the needed database connection
-        // Change `my_new_conection` to reflect the db connection you need.
-        $myconnect = Config::getFacadeContainer()->db->getConnection('my_new_conection');
-        $schema->setConnection($myconnect);
-        $this->schema = $schema;
-    }
-}
-```
-Now when you create your migrations, extend `UserFrosting\Sprinkle\MySprinkle\Database\Migrations\Migration` instead of `UserFrosting\Sprinkle\Core\Database\Migration` and it will use your named database connection `my_new_conection` instead of the default one.

@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 Once your users log in, you'll probably want to have them interact with your data models in some way. One very common UI pattern is to present a list or table of data to a user, and allow them to **sort**, **paginate**, and **search/filter** the data. For example, the [tablesorter](https://mottie.github.io/tablesorter/docs/) and [select2](http://select2.github.io/) plugins follow this pattern.
 
@@ -14,7 +13,7 @@ In cases where you could potentially have thousands of retrievable rows, it woul
 Instead it's best to perform sorting, filtering, and pagination (which we will collectively refer to as **constraints**) on the server, directly in your SQL queries. The client passes in a set of parameters through your API endpoints to indicate how the data should be constrained. For example:
 
 ```bash
-GET http://localhost/userfrosting/public/api/users?size=5&page=0&sorts%5Bname%5D=asc
+GET http://example.com/api/users?size=5&page=0&sorts%5Bname%5D=asc
 ```
 
 This tells the server that we want a list of users sorted by their `name`, in ascending order (`sorts[name]=asc`). We then want them chunked into blocks of 5 results at a time (`size=5`), and for this request we want the first chunk (`page=0`).
@@ -35,32 +34,26 @@ Every Sprunje can accept the following parameters. Typically, they are passed in
 
 By implementing a custom `Sprunje` class, you can pass parameters directly from the client request and they will be used to safely construct the appropriate query.
 
-A custom Sprunje is simply a class that extends the base `UserFrosting\Sprinkle\Core\Sprunje\Sprunje` class. At the minimum you must define the `name` property and implement the `baseQuery` class, which specifies the Eloquent query to be performed before any additional constraints are applied. By convention, you should place your Sprunje classes in `src/Sprunje/` in your Sprinkle.
+A custom Sprunje is simply a class that extends the base `UserFrosting\Sprinkle\Core\Sprunje\Sprunje` class. At the minimum you must implement the `baseQuery` class, which specifies the Eloquent query to be performed before any additional constraints are applied. By convention, you should place your Sprunje classes in `src/Sprunje/` in your Sprinkle.
 
 **OwlSprunje.php**
 
 ```php
 <?php
-namespace UserFrosting\Sprinkle\Site\Sprunje;
+namespace UserFrosting\Sprinkle\MySprinkle\Sprunje;
 
-use UserFrosting\Sprinkle\Core\Facades\Debug;
 use UserFrosting\Sprinkle\Core\Sprunje\Sprunje;
-
 use UserFrosting\Sprinkle\Site\Database\Models\Owl;
 
 class OwlSprunje extends Sprunje
 {
-    protected $name = 'owls';
-
     /**
      * Set the initial query used by your Sprunje.
      */
     protected function baseQuery()
     {
+        // TIP: The Owl class can also be injected in the constructor
         $instance = new Owl();
-
-        // Alternatively, if you have defined a class mapping, you can use the classMapper:
-        // $instance = $this->classMapper->createInstance('owl');
 
         return $instance->newQuery();
     }
@@ -71,6 +64,7 @@ class OwlSprunje extends Sprunje
 - `Illuminate\Database\Eloquent\Builder`
 - `Illuminate\Database\Query\Builder`
 - `Illuminate\Database\Eloquent\Relations\Relation`
+- `Illuminate\Database\Eloquent\Model`
 - and child classes of these.
 
 If you want your Sprunje to automatically join other tables or load related objects, `baseQuery` is a good place to do this.
@@ -83,23 +77,23 @@ However, before you can sort or filter on a particular column name, you must add
 
 ```php
 <?php
-namespace UserFrosting\Sprinkle\Site\Sprunje;
+namespace UserFrosting\Sprinkle\MySprinkle\Sprunje;
 
-use UserFrosting\Sprinkle\Core\Facades\Debug;
 use UserFrosting\Sprinkle\Core\Sprunje\Sprunje;
 
 class OwlSprunje extends Sprunje
 {
-    protected $sortable = [
+    protected array $sortable = [
         'name',
         'species'
     ];
 
-    protected $filterable = [
+    protected array $filterable = [
         'name',
         'species'
     ];
-    ...
+    
+    // ...
 }
 ```
 
@@ -109,9 +103,30 @@ This whitelisting is done to prevent consumers of your API from sorting/filterin
 
 ## Using your Sprunje
 
-With your Sprunje defined, you can use the `toResponse` method in your controller to automatically append the query results to the response:
+With your Sprunje defined, you can use the `toResponse` method in your controller to automatically append the query results to the response. `toResponse` will handle all the necessary code to return JSON encoded data.
 
 ```php
+<?php
+
+namespace UserFrosting\Sprinkle\MySprinkle\Controller;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use UserFrosting\Sprinkle\Account\Authenticate\Authenticator;
+use UserFrosting\Sprinkle\Account\Exceptions\ForbiddenException;
+use UserFrosting\Sprinkle\MySprinkle\Sprunje\OwlSprunje;
+
+class OwlsSprunjeAction
+{
+    /** 
+     * Inject Sprunje and other services using DI
+     */
+    public function __construct(
+        protected Authenticator $authenticator,
+        protected OwlSprunje $sprunje,
+    ) {
+    }
+
     /**
      * Returns a list of Owls
      *
@@ -119,34 +134,24 @@ With your Sprunje defined, you can use the `toResponse` method in your controlle
      * This page requires authentication.
      * Request type: GET
      */
-    public function getList(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response): Response
     {
-        // GET parameters
-        $params = $request->getQueryParams();
-
-        /** @var UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager */
-        $authorizer = $this->ci->authorizer;
-
-        /** @var UserFrosting\Sprinkle\Account\Database\Models\User $currentUser */
-        $currentUser = $this->ci->currentUser;
-
         // Access-controlled page
-        if (!$authorizer->checkAccess($currentUser, 'uri_owls')) {
+        if (!$this->authenticator->checkAccess('uri_owls')) {
             throw new ForbiddenException();
         }
 
-        /** @var UserFrosting\Sprinkle\Core\Util\ClassMapper $classMapper */
-        $classMapper = $this->ci->classMapper;
-
-        $sprunje = new OwlSprunje($classMapper, $params);
+        // GET parameters and pass to Sprunje
+        $params = $request->getQueryParams();
+        $this->sprunje->setOptions($params);
 
         // Be careful how you consume this data - it has not been escaped and contains untrusted user-supplied content.
         // For example, if you plan to insert it into an HTML DOM, you must escape it on the client side (or use client-side templating).
-        return $sprunje->toResponse($response);
+        return $this->sprunje->toResponse($response);
     }
 ```
 
-Supposing that we make a request like `GET http://localhost/userfrosting/public/api/owls?size=5&page=0&sorts%5Bgenus%5D=asc`, we might get a response like:
+Supposing that we make a request like `GET http://example.com/api/owls?size=5&page=0&sorts%5Bgenus%5D=asc`, we might get a response like:
 
 ```json
 {
@@ -194,14 +199,16 @@ To do this, you can define custom methods in your Sprunje:
     /**
      * Filter LIKE the genus OR species
      *
-     * @param Builder $query
-     * @param mixed $value
-     * @return $this
+     * @param EloquentBuilder|QueryBuilder|Relation $query
+     * @param string                                $value
+     * 
+     * @return static
      */
-    protected function filterScientificName($query, $value)
+    protected function filterScientificName($query, string $value): static
     {
         $query->like('genus', $value)
                 ->orLike('species', $value);
+
         return $this;
     }
 ```
@@ -215,9 +222,15 @@ Thus, in this example a request parameter of `filters[scientific_name]=mega` wil
 Sometimes, you will want to transform the dataset after executing the query, but before returning the results to the client. For example, you might want to remove the `password` field from a list of users. To have your Sprunje do this every time it is invoked, simply implement the `applyTransformations` method in your Sprunje:
 
 ```php
-// In UserSprunje.php
-
-protected function applyTransformations($collection)
+/**
+ * Set any transformations you wish to apply to the collection, after the query is executed.
+ * This method is meant to be customized in child class.
+ *
+ * @param \Illuminate\Support\Collection $collection
+ *
+ * @return \Illuminate\Support\Collection
+ */
+protected function applyTransformations(Collection $collection): Collection
 {
     // Exclude password field from results
     $collection->transform(function ($item, $key) {
@@ -234,10 +247,8 @@ protected function applyTransformations($collection)
 You might want to further modify your Sprunje's base query in certain endpoints. For example, you might want to retrieve the owner of each Owl in your result set, but only in your `/api/owls` endpoint. In this case, you can modify your Sprunje by passing a callback to the `extendQuery` method:
 
 ```php
-// In OwlController::getList method
-
-$sprunje = new OwlSprunje($classMapper, $params);
-$sprunje->extendQuery(function ($query) {
+// In OwlsSprunjeAction
+$this->sprunje->extendQuery(function ($query) {
     return $query->with('owner');
 });
 ```
@@ -247,20 +258,14 @@ $sprunje->extendQuery(function ($query) {
 Sprunjes can also be used to enumerate a unique list of values for fields in the target model. This is useful, for example, when you want to present a dropdown list of values for the user to choose among. To make a field listable, simply add it to a `listable` member variable in your Sprunje class:
 
 ```php
-<?php
-namespace UserFrosting\Sprinkle\Site\Sprunje;
-
-use UserFrosting\Sprinkle\Core\Facades\Debug;
-use UserFrosting\Sprinkle\Core\Sprunje\Sprunje;
-
 class OwlSprunje extends Sprunje
 {
     protected $listable = [
         'species'
     ];
 
-    ...
-
+    // ...
+}
 ```
 
 An array mapping each listable field to a list of possible values can be obtained by calling the `getListable` method on your Sprunje. For each listable field, by default `getListable` will look for a corresponding table column of the same name, and generate sub-arrays containing `value` and `text` fields, each of which will contain the given value:
@@ -292,30 +297,31 @@ An array mapping each listable field to a list of possible values can be obtaine
 }
 ```
 
-[notice=warning]It is recommended to use strings for both the `value` and `text` for compatability purposes with the TableSorter plugin. You can cast your value to a string by wrapping it in double quotation marks or with `(string)` prefix of the value. See [this thread](https://github.com/userfrosting/UserFrosting/issues/966#issuecomment-483245033) for an example.[/notice]
+[notice=warning]It is recommended to use strings for both the `value` and `text` for compatibility purposes with the TableSorter plugin. You can cast your value to a string by wrapping it in double quotation marks or with `(string)` prefix of the value. See [this thread](https://github.com/userfrosting/UserFrosting/issues/966#issuecomment-483245033) for an example.[/notice]
 
 Of course you can override the default listing behavior for a field by defining a custom method. This method must consist of the field name (converted to StudlyCase) prefixed with `list`:
 
 ```php
 /**
  * Return a list of possible user statuses.
+ * Uses the Translator service, injected in the constructor.
  *
- * @return array
+ * @return array{value: string, text: string}[]
  */
-protected function listStatus()
+protected function listStatus(): array
 {
     return [
         [
             'value' => 'active',
-            'text' => Translator::translate('ACTIVE')
+            'text' => $this->translator->translate('ACTIVE')
         ],
         [
             'value' => 'unactivated',
-            'text' => Translator::translate('UNACTIVATED')
+            'text' => $this->translator->translate('UNACTIVATED')
         ],
         [
             'value' => 'disabled',
-            'text' => Translator::translate('DISABLED')
+            'text' => $this->translator->translate('DISABLED')
         ]
     ];
 }

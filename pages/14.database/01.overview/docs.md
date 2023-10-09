@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 Even in relatively simple applications, writing out the same types of database queries over and over can get tedious. To make things easier and your code [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself)er, UserFrosting takes advantage of Laravel's excellent object-relation mapper, **[Eloquent](https://laravel.com/docs/8.x/eloquent#introduction)**.
 
@@ -20,25 +19,25 @@ These values are, in turn, retrieved through the `db` key in your [configuration
 
 // In your custom config file
 return [
-    ...
+    // ...
 
-    'db'      =>  [
-        'default' => [
-            'driver'    => 'postgres'
+    'db' => [
+        'default' => 'nestdb',
+        'connections' => [
+            'nestdb' => [
+                'driver'    => 'sqlite',
+                'host'      => env('NESTDB_HOST'),
+                'database'  => env('NESTDB_NAME'),
+                'username'  => env('NESTDB_USER'),
+                'password'  => env('NESTDB_PASSWORD'),
+                'charset'   => 'utf8',
+                'collation' => 'utf8_unicode_ci',
+                'prefix'    => ''
+            ]
         ],
-        'nestdb' => [
-            'driver'    => 'sqlite',
-            'host'      => env('NESTDB_HOST'),
-            'database'  => env('NESTDB_NAME'),
-            'username'  => env('NESTDB_USER'),
-            'password'  => env('NESTDB_PASSWORD'),
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => ''
-        ]
     ],
 
-    ...
+    // ...
 ];
 ```
 
@@ -71,7 +70,7 @@ To insert a new row into a table, you create an instance of the corresponding ob
 
 use UserFrosting\Sprinkle\Account\Database\Models\User;
 
-...
+// ...
 
 $user = new User([
     'user_name' => 'david',
@@ -93,7 +92,7 @@ Records can be fetched from the database using Eloquent's sophisticated [query b
 
 use UserFrosting\Sprinkle\Account\Database\Models\User;
 
-...
+// ...
 
 // Returns a Collection of User objects
 
@@ -114,7 +113,7 @@ If our model implements a [relationship](https://laravel.com/docs/8.x/eloquent-r
 
 use UserFrosting\Sprinkle\Account\Database\Models\User;
 
-...
+// ...
 
 // Returns a Collection of User objects, each of which contains its own Collection of Owls
 
@@ -133,7 +132,7 @@ To update a row, simply fetch it from the database, modify the desired propertie
 
 use UserFrosting\Sprinkle\Account\Database\Models\User;
 
-...
+// ...
 
 $david = User::where('user_name', 'david')->first();
 $david->email = 'owlman@example.com';
@@ -150,7 +149,7 @@ Call `delete` on the active record object:
 
 use UserFrosting\Sprinkle\Account\Database\Models\User;
 
-...
+// ...
 
 $user = User::where('user_name', 'chuck703')->first();
 $user->delete();
