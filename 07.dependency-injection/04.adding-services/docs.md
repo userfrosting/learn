@@ -66,7 +66,7 @@ class MapBuilderService implements ServicesProviderInterface
 
 The next step is to tell UserFrosting to load your service in your [recipe](/sprinkles/recipe#getservices). To do so, you only need to list all the services providers you want to automatically register inside the `$servicesproviders` property of your sprinkle class :
 
-**app/src/Site.php** :
+**app/src/MyApp.php** :
 ```php
 <?php
 
@@ -76,7 +76,7 @@ use UserFrosting\Sprinkle\Site\ServicesProvider\MapBuilderService;
 use UserFrosting\Sprinkle\Site\ServicesProvider\FooService;
 use UserFrosting\System\Sprinkle\Sprinkle;
 
-class Site implements SprinkleRecipe
+class MyApp implements SprinkleRecipe
 {
     // ...
 
