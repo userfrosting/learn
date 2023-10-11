@@ -3,9 +3,8 @@ title: File Storage
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
-The filesystem service provides access to locally and remotely stored files using the [Flysystem](https://github.com/thephpleague/flysystem) PHP package by Frank de Jonge. Based on [Laravel Flysystem integration](https://laravel.com/docs/8.x/filesystem), UserFrosting integration provides simple to use drivers for working with local filesystems, Amazon S3, and Rackspace Cloud Storage. Even better, it's amazingly simple to switch between these storage options as the API remains the same for each system. You can even [add your own adapter] in your sprinkle if you need access to the many adapter supported by Flysystem.
+The filesystem service provides access to locally and remotely stored files using the [Flysystem](https://github.com/thephpleague/flysystem) PHP package by Frank de Jonge. Based on [Laravel Flysystem integration](https://laravel.com/docs/8.x/filesystem), UserFrosting integration provides simple to use drivers for working with local filesystems, Amazon S3, and Rackspace Cloud Storage. Even better, it's amazingly simple to switch between these storage options as the API remains the same for each system. You can even [add your own adapter](/advanced/storage#custom-driver-setup) in your sprinkle if you need access to the many adapter supported by Flysystem.
 
 ## Disks Configuration
 
@@ -18,9 +17,7 @@ The **local** disk stores files in `app/storage`. This is also the **default dis
 #### The _public_ disk
 The **public** disk, on the other hand, store files directly in your project public folder, under `public/files/`. This means any files saved in this disk will be **publicly available**. It's the perfect disk for user generated assets (think images), as they will be directly handled by the web server. For example, if you store a file named `cats.jpg` in the public disk, you'll be able to access this image by typing `https://localhost/files/cats.jpg` in your browser.
 
-[notice=note]The package required to use S3 disk is not included with a default install. You must include `league/flysystem-aws-s3-v3` inside a custom Sprinkles `composer.json`.[/notice]
-
-#### The _S3_ disk
+#### The _Amazon S3_ disk
 The **S3** disk provides an example configuration to access an [Amazon S3](https://aws.amazon.com/s3/) bucket from your app. Because of the sensitive information, we recommend storing your S3 credential in the `app/.env` file. This will avoid committing your private keys to your git repo, for example.
 
 Simply add the necessary entries to your `app/.env` file if they don't already exist :
@@ -35,7 +32,7 @@ AWS_URL=""
 
 See [Amazon S3 Support Page](https://aws.amazon.com/en/blogs/security/wheres-my-secret-access-key/) if you need help finding your access keys. The region code can be found [here](http://docs.aws.amazon.com/general/latest/gr/rande.html).
 
-[notice=note]The package required to use rackspace disk is not included with a default install. You must include `league/flysystem-rackspace` inside a custom Sprinkles `composer.json`.[/notice]
+[notice=note]The package required to use S3 disk is not included with a default install. You must include `league/flysystem-aws-s3-v3` inside a custom Sprinkles `composer.json`.[/notice]
 
 #### The _rackspace_ disk
 The **rackspace** disk provides an example configuration to access [rackspace](https://www.rackspace.com) storage solution. Because of the sensitive information, we recommend storing your rackspace credential in the `app/.env` file.
@@ -48,6 +45,8 @@ RACKSPACE_ENDPOINT=""
 RACKSPACE_REGION=""
 RACKSPACE_URL_TYPE=""
 ```
+
+[notice=note]The package required to use rackspace disk is not included with a default install. You must include `league/flysystem-rackspace` inside a custom Sprinkles `composer.json`.[/notice]
 
 ### Adding your own disk
 
@@ -83,47 +82,44 @@ The following drivers have built-in support in UserFrosting :
 
 ## Using the filesystem service
 
+You can inject the service in your class through Autowiring or Annotation injection on the `UserFrosting\Sprinkle\Core\Filesystem\FilesystemManager` class:
+
+```php
+use DI\Attribute\Inject;
+use UserFrosting\Sprinkle\Core\Filesystem\FilesystemManager;
+
+// ...
+
+#[Inject]
+protected FilesystemManager $filesystem;
+```
+
 ### Obtaining Disk Instances
 
-The filesystem service may be used to interact with any of your configured disks. For example, you may use the put method on the facade to store an avatar on the default disk. If you call methods on the Storage facade without first calling the disk method, the method call will automatically be passed to the default disk:
+The filesystem service may be used to interact with any of your configured disks. If you call methods without first calling the disk method, the method call will automatically be passed to the default disk:
 
 ```php
-$this->ci->filesystem->put('avatars/1', $fileContents);
+$this->filesystem->put('avatars/1', $fileContents);
 ```
 
-If your applications interact with multiple disks, you may use the disk method on the Storage facade to work with files on a particular disk:
+If your applications interact with multiple disks, you may use the disk method to work with files on a particular disk:
 
 ```php
-$this->ci->filesystem->disk('s3')->put('avatars/1', $fileContents);
-```
-
-
-The Storage facade may also be used to interact with any of your configured disks the same way the filesystem service is :
-
-```php
-use UserFrosting\Sprinkle\Core\Facades\Storage;
-
-Storage::put('avatars/1', $fileContents);
-```
-
-You may also use the disk method on the Storage facade to work with files on a particular disk:
-
-```php
-Storage::disk('s3')->put('avatars/1', $fileContents);
+$this->filesystem->disk('s3')->put('avatars/1', $fileContents);
 ```
 
 ### Retrieving Files
 
-The get method may be used to retrieve the contents of a file. The raw string contents of the file will be returned by the method. Remember, all file paths should be specified relative to the "root" location configured for the disk:
+The `get` method may be used to retrieve the contents of a file. The raw string contents of the file will be returned by the method. Remember, all file paths should be specified relative to the "root" location configured for the disk:
 
 ```php
-$contents = $this->ci->filesystem->get('file.jpg');
+$contents = $this->filesystem->get('file.jpg');
 ```
 
 The exists method may be used to determine if a file exists on the disk:
 
 ```php
-$exists = $this->ci->filesystem->disk('s3')->exists('file.jpg');
+$exists = $this->filesystem->disk('s3')->exists('file.jpg');
 ```
 
 ### Storing Files
@@ -131,9 +127,9 @@ $exists = $this->ci->filesystem->disk('s3')->exists('file.jpg');
 The `put` method may be used to store raw file contents on a disk. You may also pass a PHP `resource` to the `put` method, which will use Flysystem's underlying stream support. Using streams is greatly recommended when dealing with large files:
 
 ```php
-$this->ci->filesystem->put('file.jpg', $contents);
+$this->filesystem->put('file.jpg', $contents);
 
-$this->ci->filesystem->put('file.jpg', $resource);
+$this->filesystem->put('file.jpg', $resource);
 ```
 
 ### Deleting Files
@@ -141,9 +137,9 @@ $this->ci->filesystem->put('file.jpg', $resource);
 The delete method accepts a single filename or an array of files to remove from the disk:
 
 ```php
-$this->ci->filesystem->delete('file.jpg');
+$this->filesystem->delete('file.jpg');
 
-$this->ci->filesystem->delete(['file1.jpg', 'file2.jpg']);
+$this->filesystem->delete(['file1.jpg', 'file2.jpg']);
 ```
 
 ### Going Further
@@ -160,27 +156,23 @@ In order to set up the custom filesystem you will need a Flysystem adapter. Let'
 "nao-pon/flysystem-google-drive": "~1.1"
 ```
 
-Next, you should [extend the `filesystem` service](/services/extending-services#extending-existing-services) in your sprinkle. There you can use the filesystem service `extend` method to define the custom driver:
+Next, you should [decorate the `UserFrosting\Sprinkle\Core\Filesystem\FilesystemManager` service](/services/extending-services#extending-existing-services) in your sprinkle. There you can use the filesystem `extend` method to define the custom driver:
 
 ```php
-    $container->extend('filesystem', function ($filesystem, $c) {
-        $filesystem->extend('gdrive', function ($config, $diskConfig) {
+$filesystem->extend('gdrive', function ($config, $diskConfig) {
 
-            $client = new \Google_Client();
-            $client->setClientId($diskConfig['clientID']);
-            $client->setClientSecret($diskConfig['clientSecret']);
-            $client->refreshToken($diskConfig['refreshToken']);
+    $client = new \Google_Client();
+    $client->setClientId($diskConfig['clientID']);
+    $client->setClientSecret($diskConfig['clientSecret']);
+    $client->refreshToken($diskConfig['refreshToken']);
 
-            $driveRoot = $diskConfig['rootPath'] ?: '';
+    $driveRoot = $diskConfig['rootPath'] ?: '';
 
-            $service = new \Google_Service_Drive($client);
-            $adapter = new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, $driveRoot);
+    $service = new \Google_Service_Drive($client);
+    $adapter = new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, $driveRoot);
 
-            return new \League\Flysystem\Filesystem($adapter);
-        });
-
-        return $filesystem;
-    });
+    return new \League\Flysystem\Filesystem($adapter);
+});
 ```
 
 The first argument of the `extend` method is the name of the driver and the second is a Closure that receives the config service (`$config`) and the disk configuration array (`$diskConfig`). The resolver Closure must return an instance of `League\Flysystem\Filesystem`.

@@ -5,23 +5,35 @@ description:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 ## The Cache service
 
-The UserFrosting cache service instantiates the [Laravel Cache](https://laravel.com/docs/8.x/cache) component for global caching. The [Laravel documentation](https://laravel.com/docs/8.x/cache#cache-usage) provides excellent examples on how to use the caching API. The only difference is that UserFrosting provides the required setup for you. Plus, instead of using a `Cache` facade, you simply use the **cache service** from the [The DI Container](/services/the-di-container):
+The UserFrosting cache service instantiates the [Laravel Cache](https://laravel.com/docs/8.x/cache) component for global caching. The [Laravel documentation](https://laravel.com/docs/8.x/cache#cache-usage) provides excellent examples on how to use the caching API. The only difference is that UserFrosting provides the required setup for you. Plus, instead of using a `Cache` facade, you simply inject the **cache service** using the [The DI Container](/services/the-di-container):
 
 ```php
-$value = $this->ci->cache->get('users', function () {
-    return Users::get();
-});
+use Illuminate\Cache\Repository as Cache;
+
+class MyClass
+{
+    public function __construct(
+        protected Cache $cache
+    ) {
+    }
+    
+    public function users(): UserInterface
+    {
+        return $this->cache->get('users', function () {
+            return Users::get();
+        });
+    }
+}
 ```
 
 Every method documented for the Laravel Cache is accessible inside the cache service: `get`, `has`, `increment`, `decrement`, `remember`, `pull`, `put`, `forever`, `rememberForever`, `tags`, etc.
 
 ## User cache
 
-While the cache service provides caching for the entire website, that is when the data is shared across all users, UserFrosting also provides a handy way to cache data specifically to each user. Simply use the `getCache()` method of the user object to get a cache instance tied to that user :
+While the cache service provides caching for the entire website, that is, when the data is shared across all users, UserFrosting also provides a handy way to cache data specifically to each user. Simply use the `getCache()` method of the user object to get a cache instance tied to that user :
 
 ```php
 $userCache = User::find(1)->getCache();
@@ -53,7 +65,7 @@ The driver used by UserFrosting can be defined in the configuration files under 
 
 The file driver is the one enabled by default. Cached data is stored in text files located in `app/cache/`. While slower and less efficient than memory based drivers, the file driver is ideal for a development environment.
 
-[notice=note]The default Laravel File Driver doesn't support `tags`. UserFrosing uses a custom version of this driver that enabled tagging. Still, Memecached and Redis are more optimized for this and should be used in a production environment for better performance.[/notice]
+[notice=note]The default Laravel File Driver doesn't support `tags`. UserFrosting uses a custom version of this driver that enabled tagging. Still, Memcached and Redis are more optimized for this and should be used in a production environment for better performance.[/notice]
 
 ### Memcached
 
@@ -69,7 +81,7 @@ In contrast with the file driver, the **Memcached** driver stores the cached dat
 ]
 ```
 
-[notice=warning]**Memcached** shoudn't be confused with **memcache**. Those are two differents clients ![/notice]
+[notice=warning]**Memcached** shouldn't be confused with **memcache**. Those are [two different clients](https://stackoverflow.com/questions/1442411/when-should-i-use-memcache-instead-of-memcached) ![/notice]
 
 ### Redis
 
@@ -77,7 +89,7 @@ Similar to Memcached, **Redis** uses in-memory data structure to store the cache
 
 ```php
 'cache' => [
-    "redis" => [
+    'redis' => [
         'host' => '127.0.0.1',
         'password' => null,
         'port' => 6379,

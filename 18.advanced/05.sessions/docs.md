@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 HTTP itself is stateless - you may recall that we compare a web application to a [conversation between two agents with very poor memory](/background/the-client-server-conversation). This presents a problem if we want to implement a "login" functionality - the server needs to be able to remember that someone has already authenticated in an earlier request!
 
@@ -19,7 +18,7 @@ The session itself is nothing more than an associative array, which PHP stores i
 
 To actually associate a user's PHP session with their user account in the database, UserFrosting stores the user's `user_id` in their session after they [authenticate](/users/user-accounts#login-form). This is stored in the `account.current_user_id` key of the session.
 
-UserFrosting uses this stored `user_id` to retrieve the current user's complete account information when it is needed - for example, to determine the user's permissions or display personalized information to the user. Since the session is only stored on the _server side_, and users **do not** have direct access to read or modify their sessions, this prevents one user from impersonating another user (for example, the root user).
+UserFrosting uses this stored `user_id` to retrieve the current user's complete account information when it is needed - for example, to determine the user's permissions or display personalized information to the user. Since the session is only stored on the _server side_, and users **do not** have direct access to read or modify their sessions, this prevents one user from impersonating another user (for example, the root user or someone with admin role).
 
 ## The session service
 
@@ -27,14 +26,25 @@ _Users_ may not have direct access to their session, but _your server-side code_
 
 [notice=warning]It is preferred to use the `session` service over PHP's `$_SESSION` superglobal.[/notice]
 
+You can inject the service in your class through Autowiring or Annotation injection on the `UserFrosting\Session\Session` class:
+
+```php
+use DI\Attribute\Inject;
+use UserFrosting\Session\Session;
+
+class MyClass
+{
+    #[Inject]
+    protected Session $session;
+}
+```
+
 ### Accessing session values
 
 We can access session data using [array dot notation](https://medium.com/@assertchris/dot-notation-3fd3e42edc61):
 
 ```php
-$session = $this->ci->session;
-
-echo $session['account.current_user_id'];
+echo $this->session['account.current_user_id'];
 ```
 
 ### Storing session values
@@ -42,7 +52,7 @@ echo $session['account.current_user_id'];
 You can store additional data in the session simply by using the assignment operator:
 
 ```php
-$this->ci->session['secret.api.key'] = $customerApiKey;
+$this->session['secret.api.key'] = $customerApiKey;
 ```
 
 ### Checking for existence
@@ -50,10 +60,8 @@ $this->ci->session['secret.api.key'] = $customerApiKey;
 You can determine if a particular session key exists using the `has` method:
 
 ```php
-$session = $this->ci->session;
-
-if ($session->has('secret.api.key')) {
-    ...
+if ($this->session->has('secret.api.key')) {
+    // ...
 }
 ```
 
@@ -62,9 +70,7 @@ if ($session->has('secret.api.key')) {
 Sometimes you will want to regenerate the session id, for example to prevent [session fixation attacks](https://en.wikipedia.org/wiki/Session_fixation). To do this, use the `regenerateId` method:
 
 ```php
-$session = $this->ci->session;
-
-$session->regenerateId();
+$this->session->regenerateId();
 ```
 
 If you pass a value of `true` to this method, it will delete the old session record before creating the new session. Internally, this is just a wrapper for [`session_regenerate_id`](http://php.net/manual/en/function.session-regenerate-id.php). UserFrosting uses `regenerateId(true)` when logging a user in.
@@ -74,9 +80,7 @@ If you pass a value of `true` to this method, it will delete the old session rec
 To completely destroy the current session and its data, use the `destroy` method:
 
 ```php
-$session = $this->ci->session;
-
-$session->destroy();
+$this->session->destroy();
 ```
 
 UserFrosting uses this method to destroy the session when a user logs out.
