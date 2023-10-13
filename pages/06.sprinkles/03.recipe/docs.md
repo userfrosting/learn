@@ -20,7 +20,7 @@ Returns the name of the Sprinkle.
 
 Returns the path of the Sprinkle. 
 
-For example, if your recipe is in `app/src/YourSprinkle.php` : 
+For example, if your recipe is in `app/src/YourSprinkle.php` and your Sprinkle structure looks like this...
 
 ```
 ├── app/
@@ -37,7 +37,9 @@ For example, if your recipe is in `app/src/YourSprinkle.php` :
 └── webpack.config.js
 ```
 
-This should point to `/app`. 
+...`getPath()` should point to `/app`. 
+
+[notice=note]Reminder, `app/` can actually be named whatever you want.[/notice]
 
 ### getSprinkles
 

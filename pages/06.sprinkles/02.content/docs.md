@@ -35,6 +35,8 @@ Within each sprinkle, you will find any or all of the following directories and 
 └── webpack.config.js
 ```
 
+[notice=note]The file structure, is *somewhat* flexible. For example, `app/` can actually be named whatever you want. All content of `app/src/` can also be customized. However, the other directory inside `app/` (or whatever you call it) should be named the same, to allow your sprinkle to overwrite other sprinkles resources.[/notice]
+
 Each of these directories corresponds to specific types of entities that make up your application. UserFrosting has different rules for how each type of entity can extend the entities of the same type loaded in previous Sprinkles. A brief description of each one is listed below.
 
 ### /composer.json
@@ -89,6 +91,8 @@ The `schema` directory contains the [request schema](/routes-and-controllers/cli
 
 The `src` directory contains the (preferably) [PSR-4](http://www.php-fig.org/psr/psr-4/) compatible PHP code for your Sprinkle. This directory will contain your controllers, database models, [migrations](/database/migrations), [routes](/routes-and-controllers), [service providers](/services), [data sprunjers](/database/data-sprunjing), and any other custom classes that your Sprinkle uses. This is where your Sprinkle Recipe will be found.
 
+[notice=note]The content of `app/src/` can be customized and doesn't need to follow any strict convention.[/notice]
+
 ### /app/storage
 
 The `storage` directory is used to store files managed by Filesystem service. This directory is only required when the sprinkle is used a main Sprinkle.
@@ -108,6 +112,8 @@ The `.env` file is used to store your local [environnement variables](/configura
 ### /public
 
 The `public` directory is the web server's document / web root. The `index.php` in this directory serves as the front controller for all HTTP requests. This directory is only required when the sprinkle is used a main Sprinkle.
+
+[notice=warning]The public directory *can* technically be renamed to something else. However, some features requires this path to be hardcoded. For example, the asset compiler and locator have this reference hardcoded. To customized the public directory name, further customization would be required in the code and other configuration values.[/notice]
 
 ### /vendor
 
