@@ -8,7 +8,7 @@ taxonomy:
 
 While UserFrosting 4 introduced the **Sprinkle system** as a way to completely isolate the code and content that you and your team produce from the core UserFrosting installation, **UserFrosting 5** take this concept a step further. So much, that this chapter was added to go through the basic structure of a UserFrosting based project, before even talking about downloading any code!
 
-It's important to understand how UserFrosting 5 is structured, as this will be key to understand the installation process, the tool required to do so and how all the parts fits together to create your own project.
+It's important to understand how UserFrosting 5 is structured, as this will be key to understand the installation process, the tools required to do so and how all the parts fits together to create your own project.
 
 If you're familiar with UserFrosting 4, most of your code used to live along UserFrosting's code. Parts where separated in **Sprinkles**, but everything was located in your project folder. This meant if you where to host you project on Github, most of UserFrosting's code was also hosted in your repo. This was fine, but at the cost of modularity and making upgrades more difficult.
 

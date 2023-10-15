@@ -54,3 +54,4 @@ redirects:
     /advanced/i18n: /i18n
     /services: /dependency-injection
     /advanced/class-mapper: /advanced/custom-models
+    /sprinkles/first-site: /sprinkles/customize
