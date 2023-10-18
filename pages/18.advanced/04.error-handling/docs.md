@@ -349,8 +349,83 @@ Since `MissingOwlException` inherits from `MissingBirdException`, UserFrosting w
 
 ## Creating a custom Exception Renderer
 
-<!-- TODO -->
+It is possible for a Sprinkle to create and register it's own Exception Renderer. The only requirement is for the renderer to implement `UserFrosting\Sprinkle\Core\Error\Renderer\ErrorRendererInterface` and thus the `render` method. For example:
 
-### Registering
+```php
+<?php
 
-<!-- TODO -->
+namespace UserFrosting\Sprinkle\Site\Error\Renderer;
+
+use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
+use UserFrosting\Sprinkle\Core\Util\Message\Message;
+use UserFrosting\Sprinkle\Core\Error\Renderer\ErrorRendererInterface;
+
+class SimplePlainTextRenderer implements ErrorRendererInterface
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function render(
+        ServerRequestInterface $request,
+        Throwable $exception,
+        Message $userMessage,
+        int $statusCode,
+        bool $displayErrorDetails = false
+    ): string {
+        return $exception->getMessage();
+    }
+}
+```
+
+Your custom renderer now need to be registered using one of three methods: 
+1. In a custom handler;
+2. By decorating an existing handler;
+3. By replacing a global renderer through dependency injection;
+
+To use your renderer in your handler, replace the `$errorRenderers` and/or `$logFormatter` property of the base `ExceptionHandler`: 
+```php
+class MyExceptionHandler implements ExceptionHandler
+{
+    protected array $errorRenderers = [
+        'application/json' => JsonRenderer::class,
+        'application/xml'  => XmlRenderer::class,
+        'text/xml'         => XmlRenderer::class,
+        'text/html'        => PrettyPageRenderer::class,
+        'text/plain'       => SimplePlainTextRenderer::class, // <-- Here
+    ];
+
+    /**
+     * @var string Renderer for log messages
+     */
+    protected string $logFormatter = SimplePlainTextRenderer::class; // <-- And here
+
+    // ...
+
+}
+```
+
+A renderer can be registered using the `registerErrorRenderer` method of the `ExceptionHandler`. For example, by decorating an existing class/service : 
+```php
+public function register(): array
+{
+    return [
+        ExceptionHandler::class => \DI\decorate(function (ExceptionHandler $handler) {
+            $handler->registerErrorRenderer('text/plain', SimplePlainTextRenderer::class);
+
+            return $handler;
+        }),
+    ];
+}
+```
+
+It's also possible to replace a default renderer globally through Dependency Injection. Simply replace the definition of one renderer with your renderer in your service. For example, to replace `PlainTextRenderer` with `SimplePlainTextRenderer`.
+
+```php
+public function register(): array
+{
+    return [
+        PlainTextRenderer::class => \DI\autowire(SimplePlainTextRenderer::class),
+    ];
+}
+```
