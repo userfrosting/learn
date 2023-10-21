@@ -106,6 +106,7 @@ The debug command is in fact an aggregator of sub-commands, similar to `bake`. I
 | debug:db      | Test the UserFrosting database connection                                      |
 | debug:events  | List all currently registered events listener for each events.                 |
 | debug:locator | List all locations and streams, with their respective path, to help debugging. |
+| debug:mail    | Display Mail Configuration                                                     |
 | debug:version | Test the UserFrosting version dependencies                                     |
 | sprinkle:list | List all available sprinkles and their params                                  |
 
