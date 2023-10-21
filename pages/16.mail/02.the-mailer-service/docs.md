@@ -10,23 +10,27 @@ taxonomy:
 
 Once you have selected a mail service provider, you can configure your host, username, and password in your environment variables (or `.env` file):
 
-| Varible         | Description                                        |
-| --------------- | -------------------------------------------------- |
-| `SMTP_HOST`     | Your mail host (e.g., `smtp.gmail.com`)            |
-| `SMTP_USER`     | Your account username (e.g., `owlfancy@gmail.com`) |
-| `SMTP_PASSWORD` | Your account password                              |
+| Variable        | Description                                                         |
+|-----------------|---------------------------------------------------------------------|
+| `SMTP_HOST`     | Your mail host (e.g., `smtp.gmail.com`)                             |
+| `SMTP_USER`     | Your account username (e.g., `owlfancy@gmail.com`)                  |
+| `SMTP_PASSWORD` | Your account password                                               |
+| `SMTP_PORT`     | SMTP server port                                                    |
+| `SMTP_AUTH`     | SMTP server authentication enabled (true or false)                  |
+| `SMTP_SECURE`   | Enable TLS encryption. Set to `tls`, `ssl` or `false` (to disabled) |
+
 
 For more advanced configuration, you can override the `mail` configuration values in your site sprinkle configuration :
 
 ```php
-'mail'    => [
-    'mailer'          => 'smtp', // Set to one of 'smtp', 'mail', 'qmail', 'sendmail'
-    'host'            => env('SMTP_HOST') ?: null,
-    'port'            => 587,
-    'auth'            => true,
-    'secure'          => 'tls', // Enable TLS encryption. Set to `tls`, `ssl` or `false` (to disabled)
-    'username'        => env('SMTP_USER') ?: null,
-    'password'        => env('SMTP_PASSWORD') ?: null,
+'mail' => [
+    'mailer'          => env('MAIL_MAILER', 'smtp'), // Set to one of 'smtp', 'mail', 'qmail', 'sendmail'
+    'host'            => env('SMTP_HOST'),
+    'port'            => env('SMTP_PORT', 587),
+    'auth'            => env('SMTP_AUTH', true),
+    'secure'          => env('SMTP_SECURE', 'tls'), // Enable TLS encryption. Set to `tls`, `ssl` or `false` (to disabled)
+    'username'        => env('SMTP_USER'),
+    'password'        => env('SMTP_PASSWORD'),
     'smtp_debug'      => 4,
     'message_options' => [
         'CharSet'   => 'UTF-8',
