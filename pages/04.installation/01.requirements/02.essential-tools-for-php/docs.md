@@ -5,111 +5,70 @@ metadata:
 taxonomy:
     category: docs
 ---
-<!-- TODO : Might be useful to move to "Background" chapter? Or split in two, make only installation here? -->
+
+On the previous page, we saw the softwares required to run UserFrosting. Now it's time to look at tools you'll need during development to build your UserFrosting application. Theses tools are not strictly required to be installed on your production server, which we'll cover in a [later chapter](/going-live).
+
+During development, and before you're ready to deploy, you'll want to have the following tools installed:
+
+1. [The Command Line](#the-command-line-cli)
+2. [Git](#git)
+3. [Composer 2](#composer-2)
+4. [Node.js](#nodejs)
+5. [npm](#npm)
+6. [A code editor](#code-editor)
+
+[notice=note]Again, if you're using or plan on using Docker, most of theses tools will be provided for your. However, it's important to understand what they are, since you'll need to interact with them.[/notice]
+
+## The Command Line (CLI)
+
+The command line interface, or CLI, is [program that accepts text input to execute operating system functions](https://www.w3schools.com/whatis/whatis_cli.asp). If you're using MacOS or Linux, you might already be familiar with the CLI or Terminal, as it's been built-in your operating system for decades. If you're using Windows, chances are you never used the CLI.
+
+But no worries! Regardless of the dev environment chosen, the next pages will guide you how to open or install the appropriate CLI.
 
 ## Git
 
-Git is one of the most popular [version control systems](https://en.wikipedia.org/wiki/Version_control), originally created for aiding development of the Linux kernel.
-
-To start working with UserFrosting, you will need to use **git**. Git is important to use with UserFrosting for four reasons:
+Git is one of the most popular [version control systems](https://en.wikipedia.org/wiki/Version_control), originally created for aiding development of the Linux kernel. To start working with UserFrosting, you won't need to use **git** right away. However, Git is an important part of UserFrosting for many reasons:
 
 1. Many of the [asset management tools](#npm) that UserFrosting depends on, use git;
-2. It makes it easier to merge updates in UserFrosting into your project;
-3. It makes it easier for you and your team to keep track of changes in your code, and allows your team to work simultaneously on different features;
-4. It makes it easy to deploy and update your code on your production server (if you're using a VPS or dedicated hosting).
+2. It makes it easier for you and your team to keep track of changes in your code, and allows your team to work simultaneously on different features;
+3. It makes it easy to deploy and update your code on your production server (if you're using a VPS or dedicated hosting).
 
-**git is not the same as GitHub!** GitHub is a "social coding" company, while git is the open-source software around which GitHub was built. Many open source projects choose to use GitHub to host their git repositories, because GitHub offers free hosting for public repositories. However, you should be aware that there are other companies that offer free git hosting such as Atlassian (Bitbucket). Both also offers free _private_ repositories. You can also [set up your own server to host repositories](http://stackoverflow.com/a/5507556/2970321), or use a third-party package such as Gitlab, which has GitHub/Bitbucket-like features such as issue tracking, code review, etc.
+**Git is not the same as GitHub!** GitHub is a "social coding" company, while git is the open-source software around which GitHub was built. Many open source projects choose to use GitHub to host their git repositories, because GitHub offers free hosting for public repositories. However, you should be aware that there are other companies that offer free git hosting such as Atlassian (Bitbucket). Both also offers free _private_ repositories. You can also [set up your own server to host repositories](http://stackoverflow.com/a/5507556/2970321), or use a third-party package such as Gitlab, which has GitHub/Bitbucket-like features such as issue tracking, code review, etc.
 
-### Installing git (MacOS)
+## Composer 2
 
-By default, MacOS and other *nix operating systems should come with git preinstalled. If you would like to update your version of git, you can do so with their [installer](https://git-scm.com/download/mac).
-
-### Installing git (Windows)
-
-Git has an installer that you can use for Windows - [Git Download](https://git-scm.com/download/win).
-
-## Composer
-
-Up until March of 2012, PHP didn't really have a good project-level package manager. There was PEAR, but it [failed to keep up with the evolution of the PHP community](https://benramsey.com/blog/2013/11/the-fall-of-pear-and-the-rise-of-composer/). In March of 2012, on the heels of the [PHP Standard Recommendations (PSR)](http://www.php-fig.org/psr/) project, Composer was released and a new era of PHP began.
+Up until March of 2012, PHP didn't really have a good project-level package manager. There was PEAR, but it [failed to keep up with the evolution of the PHP community](https://benramsey.com/blog/2013/11/the-fall-of-pear-and-the-rise-of-composer/). In March of 2012, on the heels of the [PHP Standard Recommendations (PSR)](http://www.php-fig.org/psr/) project, [Composer](https://getcomposer.org) was released and a new era of PHP began.
 
 If you've been out of the PHP world for a while, you might have missed this critical shift. Over the past few years, Composer has risen to become the *de facto* package manager for PHP, with [Packagist](https://packagist.org/) as its main public package repository. This means that the best way to incorporate third-party code (which you [definitely should do](/background/dont-reinvent-the-wheel)) is by installing and using Composer - at the very least, in your development environment.
 
 Composer also handles autoloading, which means that the days of needing long blocks of `include` or `require` statements in your code are over. It fully implements the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/) for autoloading, which further helps the PHP community develop a consistent approach to releasing and consuming packages.
 
-To check if Composer is already installed:
-
-```bash
-$ composer --version
-Composer version 2.5.4 2023-02-15 13:10:06
-```
-
-The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx). We **strongly recommend that you install Composer globally** on your system. This will let you run Composer using the `composer` command. <!--For convenience, we recap the global installation instructions here:-->
-
-<!-- Removing this part. Best to not _reinvent the wheel_ -->
-<!-- ### Installing Composer (MacOS and *nix)
-
-1. Download and run the installer as per the instructions on the [downloads page](https://getcomposer.org/download/).
-2. Run `mv composer.phar /usr/local/bin/composer` to make `composer` available as a shell command.
-
-[notice=tip]You may need to run the above command(s) with `sudo`.
-
-On some versions of MacOS the `/usr` directory does not exist by default. If you receive the error "/usr/local/bin/composer: No such file or directory" then you must create the directory manually before proceeding: `mkdir -p /usr/local/bin`.[/notice]
-
-### Installing Composer (Windows)
-
-Composer has a special installer that you can use for Windows - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe). If this gives you trouble, you can try the [manual installation instructions](https://getcomposer.org/doc/00-intro.md#manual-installation). -->
+[notice=note]Following it's release in October 2020, UserFrosting 5 now requires [**Composer 2**](https://getcomposer.org).[/notice]
 
 ## Node.js
 
-**Node.js** is an an extremely popular JavaScript runtime built on Chrome's V8 JavaScript Engine. In recent years it has become extremely popular for creating multiplatform applications, and for its role in providing a means to run the platform independent build tools, like `gulp` and `grunt`, to name just a few. Node.js also includes `npm` (Node.js Package Manager).
+**[Node.js](https://nodejs.org/en/)** is an an extremely popular JavaScript runtime built on Chrome's V8 JavaScript Engine. In recent years it has become extremely popular for creating multiplatform applications, and for its role in providing a means to run the platform independent build tools, like `gulp` and `grunt`, to name just a few. Node.js also includes `npm` (Node.js Package Manager).
 
 Although UserFrosting does not _run_ on Node.js, it does use several Node-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
 
-The [Node.js website](https://nodejs.org/en/) provides easy-to-use installers for most operating systems. We recommend using the latest version of Node.js (18.16 LTS as of May 2023).
-
-To check if Node.js is installed:
-
-```bash
-$ node -v
-v18.17.1
-```
-
 [notice]Even though we'll be using these tools to get our application ready for deployment, you don't actually need to install Node.js on your live server. You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.[/notice]
 
-### Installing Node.js (MacOS and Windows)
-
-Node.js has an installer that you can use for MacOS and Windows - [Node.js Download](https://nodejs.org/en/download/current/).
+[notice=note]UserFrosting 5 requires **Node 18** or above.[/notice]
 
 ## npm
 
-npm stands for **N**ode **P**ackage **M**anager. npm is to Node.js as Composer is to PHP - it is used to grab the various Node packages that are required by UserFrosting's installation and build tools. When you installed Node, it should have automatically installed npm as well. However, we still recommend updating npm (if unable to update, any version later than 7 should work):
+[npm](https://www.npmjs.com) stands for **N**ode **P**ackage **M**anager. npm is to Node.js what Composer is to PHP. It is used to grab the various Node packages that are required by UserFrosting's installation and build tools. 
 
-```bash
-$ npm install npm@latest -g
-```
+[notice=note]UserFrosting 5 requires **NPM 9** or above.[/notice]
 
-UserFrosting build scripts will automatically install all other Node and NPM dependencies for you !
+## Code Editor
 
-## Coding and style standards
+The final tool you'll need to develop your own application or website using UserFrosting is a good *Code Editor*, or IDE. While it's still possible to write your code in *Notepad*, a code editor will provide advanced features to make it easier for your to write, understand and debug your code.
 
-Standards are boring. But guess what? "Boring" == "predictable" - a good thing when it comes to writing code. Most of your time spent as a developer is actually spent [reading, not writing](https://blog.codinghorror.com/when-understanding-means-rewriting/) code. Without a clean set of standards and good comments, it can be difficult to read your own code 3 months after you wrote it, let alone someone else's code.
+The most popular editors to write PHP today, and the one recommended by the UserFrosting teams is [Visual Studio Code, or **VSCode**](https://code.visualstudio.com). VSCode was first released by Microsoft in 2015 and is partly Open Source. It's available for Windows, Linux and MacOS and even the web! It support pretty much every language you'll need, and it's extension system is really awesome, backed by a very large marketplace. Be sure to check out [PHP Intelephense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client)!
 
-The increasingly modular and community-driven nature of software development means that it is important not just to have internal coding standards, but community-wide standards as well. We **strongly recommend** that you familiarize yourself with some basic standards for PHP, Javascript, and CSS:
-
-- **PHP**: [PHP-FIG](http://www.php-fig.org/)
-- **HTML and CSS**: [Code Guide by @mdo](http://codeguide.co)
-- **Javascript**: The Javascript community (which, let's face it, is HUGE) has so far failed to adopt a single set of coding standards. Over the past few years, [Airbnb's coding guidelines](https://github.com/airbnb/javascript) have started to gain a lot of traction. It is extremely thorough and widely used, and for these reasons we recommend it. <!-- Is this still true? -->
-
-## Comments and API documentation generators
-
-Sooner or later, you may want to generate some low-level documentation for every class and function in your application. **Don't try to do this by hand!**
-
-Instead, by following a specific set of standards for in-code comments ("doc blocks"), you can use automated tools that will scan your codebase and generate the appropriate documentation.
-
-### PHP
-
-For PHP code, use the [phpDoc standard](https://docs.phpdoc.org/3.0/guide/getting-started/what-is-a-docblock.html#what-is-a-docblock) to document your classes, methods, and member variables. You can then use [phpDocumentor](https://docs.phpdoc.org/guide/getting-started/installing.html) to automatically generate clean, attractive, fully searchable API documentation for your application.
-
-### Javascript
-
-For Javascript, use the [JSDoc](https://jsdoc.app/about-getting-started.html) standard and tool to comment your code and generate an attractive set of API documentation. <!-- It is consistent with Airbnb's commenting standards.  --> <!-- Is this still true? -->
+Other popular IDE includes :
+- [PHPStorm](https://www.jetbrains.com/phpstorm/) (Paid)
+- [Eclipse](https://projects.eclipse.org/projects/tools.pdt)
+- [Komodo](https://www.activestate.com/products/komodo-ide/)
+- Etc.

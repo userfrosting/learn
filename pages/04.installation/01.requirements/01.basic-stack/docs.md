@@ -1,105 +1,83 @@
 ---
 title: Basic Stack Requirements
 metadata:
-    description: UserFrosting requires a web server, PHP 8.0 or higher, and some sort of database.
+    description: UserFrosting requires a web server, PHP, and some sort of database.
 taxonomy:
     category: docs
 process:
     twig: true
 ---
 
-The basic requirements for running UserFrosting are pretty typical of any web framework or CMS. You'll need:
+The basic stack requirements for running UserFrosting are pretty typical of any web framework or CMS. Those requirements are the software required to _run_ UserFrosting, usually on a "server". Theses are different from the developer tools, used to build your website, which we'll see on the next page.
 
-- Web server software (Apache, Nginx, IIS, etc)
-- **PHP 8.0** or higher (**8.2** or higher recommended)
-- Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
+To run UserFrosting, you'll need four things :
 
-[notice=tip]MariaDB is just an open-source fork of MySQL. The reason it exists is because of [numerous concerns](https://www2.computerworld.com.au/article/457551/dead_database_walking_mysql_creator_why_future_belongs_mariadb/) that Oracle would not do a good job honoring the open-source nature of the MySQL community. For all technical purposes, MariaDB and MySQL are more or less perfectly interoperable.[/notice]
+1. [Web Server Software Requirements](#web-server-software-requirements)
+2. [PHP Requirements](#php-requirements)
+3. [Database](#database)
+4. [SMTP (Mail) Server](#smtp-mail-server)
 
-### Web Server Requirements
+[notice=note]If you're using or plan on using Docker, all of the necessary stack will already be configured for your. However, it's important to understand what is required to run UserFrosting, so you can understand which service Docker does provides for you![/notice]
 
-#### Special requirements for Apache users
+## Web Server Software Requirements
 
-If you are using Apache, check that you have the Rewrite Engine module (`mod_rewrite.c`) installed and enabled. Some distributions may not have this module automatically enabled, and you will need to do so manually. In a shared hosting environment, you may need to have your hosting service do this for you.
+To run any website, you need a *web server software*. It's task is to receive clients requests, executing them and sending a reply. In the case of a PHP website, the web server softwares won't be executing the PHP code itself, but instead pass it to PHP which will interpret it and return a response for the web server to display.
 
-**In addition**, make sure that the `Directory` block in your `VirtualHost` configuration is set up to allow `.htaccess` files. For example:
+The most popular web server todays are : 
 
-```txt
-# Allow .htaccess override
-<Directory /var/www/userfrosting/public/>
-    Options Indexes FollowSymLinks MultiViews
-    AllowOverride All
-    Order allow,deny
-</Directory>
-```
+- [Nginx](https://www.nginx.com)
+- [Apache](https://httpd.apache.org)
+- [IIS](https://www.iis.net)
 
-For more information, see [this troubleshooting page](/troubleshooting/common-problems#installation-went-fine-except-i-don-t-see-any-styling-on-my-home-page-i-am-using-apache-).
+Anyone of theses can be used to run UserFrosting. However, when developing locally (on your computer), it's also possible to use [PHP Built-in web server](https://www.php.net/manual/en/features.commandline.webserver.php). This option isn't suited for production websites (the ones people on the internet can access), but it's a perfectly viable option when testing your application. The biggest benefit is you don't have to install anything else if you already have PHP installed !
 
-### PHP Requirements
+## PHP Requirements
 
-UserFrosting requires the following PHP modules to be installed and enabled:
+You're probably here because you already know what PHP is. Great! The only thing left to say is UserFrosting requires **PHP 8.0** or higher. However, it's highly recommended you use the latest supported version, which is *PHP 8.2*.
 
-#### GD
-
-Occasionally, people use web hosting services that do not provide the GD library, or provide it but do not have it enabled. The GD library is an image processing module for PHP. UserFrosting uses it to generate the captcha code for new account registration.
-
-If you are having trouble with `gd` on **Windows**, you should first check your `php.ini` file to make sure it is enabled. You'll include the GD2 DLL `php_gd2.dll` as an extension in `php.ini`. See [http://php.net/manual/en/image.installation.php](http://php.net/manual/en/image.installation.php).
-
-On **Ubuntu/Debian**, you can install GD as a separate module. Replace the php version you actually need :
-```bash
-sudo apt-get install php8.2-gd
-sudo service apache2 restart
-```
-
-<!-- TODO: Need to make sure this is still relevant? Could be replaced with Homebrew? -->
-For **MacOS** users, you might have GD installed but `imagepng` isn't available. In this case, you need to upgrade the default version of GD that ships with these versions of MacOS. See [this answer on Stack Overflow](http://stackoverflow.com/a/26505558/2970321) for a complete guide.
-
-### File System Permissions
-
-UserFrosting needs to be able to write to the file system for a few directories:
-
-- `/app/cache` - This is where UF will cache rendered Twig templates for faster processing, as well as other objects;
-- `/app/logs` - UF writes error, debugging, and mail logs to this directory;
-- `/app/sessions` - If you're using file-based sessions, UF writes to this directory instead of PHP's default session directory.
-- `/app/storage`
-
-You should make sure that the group under which your webserver runs (for example, `www-data`, `apache`, `_www`, `nobody`) has read and write permissions for these directories. You may need to use `chgrp` to ensure that these directories are owned by the webserver's group.
-
-To determine the user under which, for example, Apache runs, try this command:
-
-`ps aux | egrep '(apache|httpd)'`
-
-Once you know the user, you can determine the group(s) to which the web server user belongs by using the `groups` command:
-
-`groups <username>`
-
-For all other directories, you should make sure that they are *not* writable by the webserver. We also recommend keeping the `/app` directory out of your web server's document root entirely, to prevent it from inadvertently serving any files in that directory. Only the contents of `/public` need to be in the document root.
-
-[notice=tip]For detailed help with file permissions in Unix/Linux environments, please see our [Unix Primer for Ubuntu](/going-live/unix-primer-ubuntu#Filepermissions).[/notice]
-
-### Other software (local development environment only)
-
-During development, and before you're ready to deploy, you'll also want to have the following tools installed:
-
-- [Composer 2](https://getcomposer.org) - PHP package manager
-- [Node.js](https://nodejs.org/en/) - Javascript runtime environment and package manager
-
-See the [next section](/installation/requirements/essential-tools-for-php) for more information on these tools.
-
-## But my host only supports PHP 7.x! Why do I need PHP 8.0?
+### But my host only supports PHP 7.x! Why do I need PHP 8.0?
 
 Look, programming languages evolve, and PHP is no exception. Actually, PHP (and other web languages) have it particularly tough because they have so many responsibilities. PHP is the bouncer at the door and it has to be prepared to defend against the constantly evolving security threats to your server. At the same time it has to keep up with the demand for faster performance, and satisfy the demand for new features from the [enormous](https://w3techs.com/technologies/overview/programming_language/all) PHP community.
 
 Honestly, PHP 8.0 isn't exactly cutting edge - in fact, **PHP 8.0 is no longer in active support as of [November 26th, 2022](http://php.net/supported-versions.php) and will be declared "End of Life" as of [November 26th, 2023](http://php.net/supported-versions.php)**.
 
-And the truth is, we didn't make this decision directly. UserFrosting depends on a lot of third-party components, and *those* components require a minimum PHP version of _8.0_. Thus, UserFrosting does too, and the whole community moves forward. And fast too! PHP 8.2 will only be supported until [December 8th, 2024](http://php.net/supported-versions.php) !
+And the truth is, we didn't make this decision directly. UserFrosting depends on a lot of third-party components, and *those* components require a minimum PHP version of _8.0_. Thus, UserFrosting does too, as the whole community moves forward. And fast too! PHP 8.2 will only be supported until [December 8th, 2024](http://php.net/supported-versions.php) !
 
-If your hosting service doesn't have PHP 8 installed, call them and ask them to upgrade. If they refuse, point out that PHP 7 has been out of support for {{ date("now").diff(date("2022-11-08")).m }} months! To be honest, there is little reason to use a shared hosting (e.g. cPanel) service these days, especially when VPS providers like DigitalOcean and Amazon EC2 are so inexpensive. Unless you're stuck with shared hosting for some reason another (fussy boss), [there's no real reason not to switch to a VPS](https://www.hostt.com/still-use-shared-hosting-theres-vps/).
+If your hosting service doesn't have PHP 8 installed, call them and ask them to upgrade. If they refuse, point out that PHP 7.4 has been out of life for {{ date("now").diff(date("2022-11-28")).m }} months! To be honest, there is little reason to use a shared hosting (e.g. cPanel) service these days, especially when VPS providers like DigitalOcean and Amazon EC2 are so inexpensive. Unless you're stuck with shared hosting for some reason another (fussy boss), [there's no real reason not to switch to a VPS](https://www.hostt.com/still-use-shared-hosting-theres-vps/).
 
 As for your local development environment ([You _do_ have a local development environment, right ?](/background/develop-locally-serve-globally)), if it's that much of a burden then... I don't know what to tell you. So what are you waiting for? Upgrade!
 
-[notice=tip]For UserFrosting 5.0, PHP 8.2 is officially recommended. While you can still use UserFrosting 5 with PHP 8.0 and 8.1, upgrading to PHP 8.2 (or above) is highly recommended as both PHP 8.0 and 8.1 support will eventually be removed the future.[/notice]
+[notice=note]As a reminder, as of UserFrosting 5.0, **PHP 8.2** is officially recommended. While you can still use UserFrosting 5 with PHP 8.0 and 8.1, upgrading to PHP 8.2 is highly recommended as both PHP 8.0 and 8.1 support will eventually be removed the future.[/notice]
 
-### Third-party components? Why don't you write all your own code?
+### PHP Extensions
 
-Before you run away because you are against dependencies as a matter of principle, read [this section](/background/dont-reinvent-the-wheel).
+UserFrosting and it's dependencies requires some PHP Libraries and Extensions to be installed and enabled : 
+
+- [GD](https://www.php.net/manual/en/book.image.php)
+- [DOM](https://www.php.net/manual/en/book.dom.php)
+- [ZIP](https://www.php.net/manual/en/book.zip.php)
+
+Occasionally, people use web hosting services that do not provide the GD library, or provide it but do not have it enabled. The GD library is an image processing module for PHP. UserFrosting uses it to generate the captcha code for new account registration. The DOM and ZIP extensions are used by Composer itself.
+
+## Database
+
+To store data, UserFrosting requires a [relational database](https://www.techtarget.com/searchdatamanagement/definition/database) provider. UserFrosting support the following database providers:
+- [MySQL 8](https://www.mysql.com/)
+- [MariaDB](https://mariadb.org)
+- [SQLite 3](https://www.sqlite.org/index.html)
+- [PostgreSQL 14](https://www.postgresql.org)
+- [Microsoft SQL Server 2019](https://en.wikipedia.org/wiki/Microsoft_SQL_Server)
+
+[notice]MariaDB is an open-source fork of MySQL. The reason it exists is because of [numerous concerns](https://www2.computerworld.com.au/article/457551/dead_database_walking_mysql_creator_why_future_belongs_mariadb/) that Oracle would not do a good job honoring the open-source nature of the MySQL community. For all technical purposes, MariaDB and MySQL are more or less perfectly interoperable.[/notice]
+
+[notice=warning]Support for SQL Server on Windows is **experimental**. Contact the UserFrosting team if you want to help improve support for SQL Server ![/notice]
+
+MySQL and MariaDB are the most popular choice of database provider. However, when developing locally, you can skip installing any additional software by using **SQLite** as your database provider. SQLite support is built-in PHP and the data is store in a file within the UserFrosting directory structure. This option isn't suited for production websites as it's slower than other solution, but it's a perfectly viable option when testing your application locally.
+
+[notice=tip]It is not required to develop with the same database provider as the one you'll be using in production. It's totally fine to develop locally using SQLite and use MySQL on your production server. [Testing environment](/testing) can be used to make sure your code run smoothly on both.[/notice]
+
+## SMTP (Mail) Server
+
+The final piece of software you'll require on your server is a *SMTP Server*. The *Simple Mail Transfer Protocol* (SMTP) is an application used by mail servers to send, receive, and relay outgoing email between senders and receivers. UserFrosting requires you provide a SMTP server for sending email to your user, especially registration emails.
+
+Again, when developing locally it's possible to use third-party services and applications to handle emails, like *Mailpit*, *Mailtrap* or even *Gmail*. However, keep in mind a complete SMTP server will be required when going into production.
