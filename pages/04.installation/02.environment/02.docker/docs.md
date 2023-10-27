@@ -47,7 +47,7 @@ Now it's simply a matter of navigating to the directory containing the source co
 2. Build each the Docker Containers (this might take a while):
    
    ```bash
-   docker-compose build
+   docker-compose build --no-cache
    ```
 
 3. Start each Docker Containers:
@@ -88,9 +88,17 @@ UserFrosting's default `docker-compose.yml` file contains a service entry for [M
 
 When UserFrosting is running, you may access the Mailpit web interface at: [http://localhost:8025](http://localhost:8025).
 
-## Executing Commands
+## Working with UserFrosting
 
-### Working with the Containers
+Every Bakery command need to be wrapped in docker-compose syntax, since you need to run theses commands on the containers, not your computer.
+
+For example : 
+
+```bash
+docker-compose exec app sh -c "php bakery ..."
+```
+
+## Working with the Containers
 
 If you need to stop the UserFrosting docker containers, just change to your userfrosting directory and run:
 
@@ -112,16 +120,18 @@ docker-compose down --remove-orphans
 
 And then start the installation process again.
 
-### Working with UserFrosting
+## Advanced configuration
 
-Every Bakery command need to be wrapped in docker-compose syntax, since you need to run theses commands on the containers, not your computer.
+At the heart of everything is the `docker-compose.yml` file. If you're experienced with Docker and Docker compose, this is where you can customized your Docker experience. For example, you can customize the port each service runs on. And since the file is located in *your Sprinkle*, aka your app, it's possible to save this file on your repo. 
 
-For example : 
-```bash
-docker-compose exec app sh -c "php bakery ..."
-```
+[notice=warning]If you have **two** instances of UserFrosting on your computer, **they will share the same config**. This means a couple of things:
 
-<!-- TODO : Complete this -->
+1. You can't run both Docker instance of UserFrosting *at the same time* with default config, as port will overlap.
+2. Both instance will share the same database.
+
+If you wish to run multiple instance of UserFrosting on the same computer with Docker, you'll need to edit `docker-compose.yml` of one instance and change the default ports and database volumes / database name.[/notice]
+
+[notice]A "*address already in use*" error can be thrown if a port defined in `docker-compose.yml` is in use used on your system. For example, if Mailpit is installed locally and running on the default port, you'll get a "address already in use" error when running Docker. This can be solved by changing the port in `docker-compose.yml`.[/notice]
 
 ## Production environnement
 
@@ -133,13 +143,7 @@ You may be tempted to run with this in production but this setup has not been se
   the way Docker exposes this actually bypasses common firewalls like `ufw` so this should not be exposed in production.
 - Database credentials are hard-coded so obviously not secure.
 - File permissions may be more open than necessary.
-- HTTPS not implemented fully
+- HTTPS not implemented
 - It just hasn't been thoroughly tested in the capacity of being a production system.
 
-## Advanced configuration
-
-<!-- At its heart, Sail is the docker-compose.yml file and the sail script that is stored at the root of your project -->
-
-<!-- If you're experienced with Docker and Docker compose,  -->
-
--- TODO --
+If you're experienced with Docker in a production environment, don't hesitate to reach out and contribute to this documentation.
