@@ -70,7 +70,7 @@ For more information, see [this guide](https://www.digitalocean.com/community/tu
 
 ### Zoho Mail
 
-[Zoho mail](https://www.zoho.com/mail/) provides a simple [paid](https://www.zoho.com/mail/zohomail-pricing.html) mail hosting solution for buiseness, but they also offers a free plan. The free plan gives you up to five users, 5GB/User and 25MB attachment limit for single domain.
+[Zoho mail](https://www.zoho.com/mail/) provides a simple [paid](https://www.zoho.com/mail/zohomail-pricing.html) mail hosting solution for business, but they also offers a free plan. The free plan gives you up to five users, 5GB/User and 25MB attachment limit for single domain.
 
 ### Paid services
 
@@ -84,4 +84,4 @@ If you choose to run your own mail server, we highly recommend [Mail-in-a-box](h
 
 Mail-in-a-box will not only set up an SMTP server, but IMAP/POP as well so that you can receive mail for user accounts on a domain associated with your server. It even runs its own web server, to provide a web-based client for these email accounts.
 
-If you are already running UserFrosting in a Docker container you might also use [Mailcow-dockerized](https://mailcow.email), as it doesn't require a seperate server.
+If you are already running UserFrosting in a Docker container you might also use [Mailcow-dockerized](https://mailcow.email), as it doesn't require a separate server.
