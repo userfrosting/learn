@@ -55,3 +55,4 @@ redirects:
     /services: /dependency-injection
     /advanced/class-mapper: /advanced/custom-models
     /sprinkles/first-site: /sprinkles/customize
+    /mail/mail-providers: /going-live/mail-providers
