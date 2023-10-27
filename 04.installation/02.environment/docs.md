@@ -15,4 +15,4 @@ The links below will guide you to the right installation guide for you, which ca
 - [I don't have a local environment - I wan't to setup one](/installation/environment/native)
 - [I don't have a local environment - I want the easiest solution](/installation/environment/docker)
 - [I have a local environment set up already, I'll do everything myself](/installation/environment/native/install)
-- [I'm familiar with *Docker*, let's use this](/installation/environment/docker)
+- [I'm familiar with *Docker*, let's use this](/installation/environment/docker#get-userfrosting)
