@@ -56,13 +56,19 @@ Now it's simply a matter of navigating to the directory containing the source co
    docker-compose up -d
    ```
 
-4. Install PHP dependencies:
+4. Set some directory permissions
+   
+   ```bash
+   sudo chmod 777 app/{logs,cache,sessions}
+   ```
+
+5. Install PHP dependencies:
    
    ```bash
    docker-compose exec app sh -c "composer update"
    ```
 
-5. Install UserFrosting (database configuration and migrations, creation of admin user, ...). You'll need to provide info to create the admin user:
+6. Install UserFrosting (database configuration and migrations, creation of admin user, ...). You'll need to provide info to create the admin user:
    
    ```bash
    docker-compose exec app sh -c "php bakery bake"
