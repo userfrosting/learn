@@ -56,22 +56,23 @@ Now it's simply a matter of navigating to the directory containing the source co
    docker-compose up -d
    ```
 
-4. Set some directory permissions
+4. Set some directory permissions (your may have to enter your root password):
    
    ```bash
+   sudo chown -R $USER: .
    sudo chmod 777 app/{logs,cache,sessions}
    ```
 
 5. Install PHP dependencies:
    
    ```bash
-   docker-compose exec app sh -c "composer update"
+   docker-compose exec app composer update
    ```
 
 6. Install UserFrosting (database configuration and migrations, creation of admin user, ...). You'll need to provide info to create the admin user:
    
    ```bash
-   docker-compose exec app sh -c "php bakery bake"
+   docker-compose exec app php bakery bake
    ```
 
 Now visit [http://localhost:8080](http://localhost:8080) to see your UserFrosting homepage!
@@ -101,7 +102,7 @@ Every Bakery command need to be wrapped in docker-compose syntax, since you need
 For example : 
 
 ```bash
-docker-compose exec app sh -c "php bakery ..."
+docker-compose exec app php bakery ...
 ```
 
 ## Working with the Containers
