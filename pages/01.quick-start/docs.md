@@ -14,11 +14,11 @@ UserFrosting is a free, open-source jumping-off point for building user-centered
 
 ## Requirements
 
-UserFrosting has a few system requirements. Of course, all of these requirements are satisfied by the [Docker](/installation/environment/docker) virtual machine, so it's highly recommended that you use Docker as your local UserFrosting development environment. 
+[notice=tip]Using Docker? [Check out the Docker Documentation](/installation/environment/docker) to install UserFrosting through it's native Docker integration.[/notice]
 
-However, if you are not using Docker, you will need to make sure your local UserFrosting development environment meets the following requirements:
+UserFrosting has a few system requirements. You need to make sure your local UserFrosting development environment meets the following requirements:
 
-- PHP **8.0 or higher** (*8.2* recommended) 
+- PHP **8.0 or higher** (*8.2* recommended)
 - [Composer 2](https://getcomposer.org/)
 - [Node.js](https://nodejs.org/en/) **18.0** or higher, and [npm](https://www.npmjs.com) **9.0** or higher
 
