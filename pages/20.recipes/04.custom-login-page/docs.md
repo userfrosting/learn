@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 [notice]This recipe assumes that you've already setup your own sprinkle and you're familiar with the basics of UserFrosting.[/notice]
 
@@ -14,9 +13,9 @@ This recipe will guide you in customizing the UserFrosting login screen. Specifi
 - Change the destination the user is taken to after a successful login
 - Changing the visual style of the login page
 
-If you haven't already, set up your site Sprinkle as per the instructions in ["Your First UserFrosting Site"](/sprinkles/first-site). For the purposes of this tutorial, we will call our Sprinkle `site`.
+If you haven't already, set up your site Sprinkle as per the instructions in ["Your First UserFrosting Site"](/sprinkles/first-site). For the purposes of this tutorial, we will call our Sprinkle `site` with `App\Site` as a base namespace..
 
-[notice]This recipe was sponsored by [adm.ninja](https://adm.ninja). [Get in touch with the UserFrosting team](https://chat.userfrosting.com) if you want to sponsor a custom recipe for your organization![/notice]
+[notice]This recipe was originally sponsored by [adm.ninja](https://adm.ninja). [Get in touch with the UserFrosting team](https://chat.userfrosting.com) if you want to sponsor a custom recipe for your organization![/notice]
 
 ## Disabling registration
 
@@ -49,150 +48,94 @@ See the [Configuration Files](/configuration/config-files) chapter for more info
 
 ## Changing the post-login destination
 
-When a successful login occurs, the user will be taken to the `/dashboard` page by default. This can be customized by overwriting the [`redirect.onLogin` service](/services/default-services). Just like the configuration options, this should be done in your own sprinkle by [overwriting that service](/services/extending-services#overriding-existing-services). In this tutorial, we'll change the default behaviour to redirect the user to the index page (`/` route) upon login.
+When a successful login occurs, by default, the user will be taken to the `/dashboard` page if it has access to this page, or `/settings` otherwise. To understand how this redirect works, when the user is logging in, the `UserRedirectedAfterLoginEvent` event will be dispatched. The Admin Sprinkle listen to this event, through the `UserRedirectedToSettings` and `UserRedirectedToDashboard` listeners : 
 
-First, create a class `src/ServicesProvider/ServicesProvider.php` in your Sprinkle with the following content:
+```php
+/**
+ * N.B.: Last listeners will be executed first.
+ */
+public function getEventListeners(): array
+{
+    return [
+        UserRedirectedAfterLoginEvent::class => [
+            UserRedirectedToSettings::class,
+            UserRedirectedToDashboard::class,
+        ],
+    ];
+}
+```
+
+You'll notice two listeners are listening to the event. First `UserRedirectedToDashboard` will be executed and if the user has access to the Dashboard, the redirect will be set to `/dashboard`. If the user doesn't have access (via the authenticator checkAccess method), `UserRedirectedToSettings` will be called. 
+
+This process can be easily customized by adding our own event listener. Let's change the default behavior to redirect every user to the index page (`/` route) upon login.
+
+First, create a class `src/Listener/UserRedirectedToIndex.php` in your Sprinkle with the following content:
 
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\Site\ServicesProvider;
+namespace App\Site\Listener;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use UserFrosting\Sprinkle\Core\Facades\Debug;
+use Psr\EventDispatcher\StoppableEventInterface;
+use Slim\Interfaces\RouteParserInterface;
+use UserFrosting\Sprinkle\Core\Event\Contract\RedirectingEventInterface;
 
 /**
- * Registers services for my site Sprinkle
+ * Set redirect to index.
  */
-class ServicesProvider
+class UserRedirectedToIndex
 {
-    /**
-     * Register my site services.
-     *
-     * @param Container $container A DI container implementing ArrayAccess and psr-container.
-     */
-    public function register($container)
-    {
+    public function __construct(
+        protected RouteParserInterface $routeParser,
+    ) {
+    }
 
+    /**
+     * @param RedirectingEventInterface&StoppableEventInterface $event
+     */
+    public function __invoke($event): void
+    {
+        $path = $this->routeParser->urlFor('index');
+        $event->setRedirect($path);
+        $event->isPropagationStopped();
     }
 }
 ```
 
-[notice]Don't forget to change `Site` for your sprinkle name in the namespace definition![/notice]
+[notice=note]Note that we use Slim's route parser `urlFor` method to get the route definition from it's name. This is the same as hardcoding `'/'`. Check out [Slim's documentation](https://www.slimframework.com/docs/objects/router.html#route-names) for more info on named routes.[/notice]
 
-Your sprinkle now has a basic service provider. Now it's time to override the default service. The process here is the same as [adding a service](/services/extending-services#adding-services). First, let's copy to our service provider the service we want to overwrite. You'll find the `redirect.onLogin` service in `app/sprinkles/admin/src/ServicesProvider/ServicesProvider.php` and it should look similar to this:
-
-```php
-/**
- * Returns a callback that handles setting the `UF-Redirect` header after a successful login.
- *
- * Overrides the service definition in the account Sprinkle.
- */
-$container['redirect.onLogin'] = function ($c) {
-    /**
-     * This method is invoked when a user completes the login process.
-     *
-     * Returns a callback that handles setting the `UF-Redirect` header after a successful login.
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface      $response
-     * @param array $args
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    return function (Request $request, Response $response, array $args) use ($c) {
-        // Backwards compatibility for the deprecated determineRedirectOnLogin service
-        if ($c->has('determineRedirectOnLogin')) {
-            $determineRedirectOnLogin = $c->determineRedirectOnLogin;
-
-            return $determineRedirectOnLogin($response)->withStatus(200);
-        }
-
-        /** @var UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager */
-        $authorizer = $c->authorizer;
-
-        $currentUser = $c->authenticator->user();
-
-        if ($authorizer->checkAccess($currentUser, 'uri_dashboard')) {
-            return $response->withHeader('UF-Redirect', $c->router->pathFor('dashboard'));
-        } elseif ($authorizer->checkAccess($currentUser, 'uri_account_settings')) {
-            return $response->withHeader('UF-Redirect', $c->router->pathFor('settings'));
-        } else {
-            return $response->withHeader('UF-Redirect', $c->router->pathFor('index'));
-        }
-    };
-};
-```
-
-The important part here is this:
+The last step is to register the new listener in your Sprinkle Recipe. The recipe itself will also need to implement the `UserFrosting\Event\EventListenerRecipe`.
 
 ```php
-if ($authorizer->checkAccess($currentUser, 'uri_dashboard')) {
-    return $response->withHeader('UF-Redirect', $c->router->pathFor('dashboard'));
-} elseif ($authorizer->checkAccess($currentUser, 'uri_account_settings')) {
-    return $response->withHeader('UF-Redirect', $c->router->pathFor('settings'));
-} else {
-    return $response->withHeader('UF-Redirect', $c->router->pathFor('index'));
-}
-```
+namespace App;
 
-This uses the [authorizer](/users/access-control) to decide where to redirect the user. First, it will redirect to the `dashboard` [named route](https://www.slimframework.com/docs/v3/objects/router.html#route-names) if the user has access to it. If they don't, it will try the `settings` named route. Finally, if the user doesn't have access to that either, it'll redirect the user to the `index` named route. Since in our case, we always want to redirect to the `index` route, we'll change that part to:
+use App\Site\Listener\UserRedirectedToIndex; // <-- Add here !
+use UserFrosting\Event\EventListenerRecipe; // <-- Add here !
+use UserFrosting\Sprinkle\Account\Event\UserRedirectedAfterLoginEvent; // <-- Add here !
+use UserFrosting\Sprinkle\SprinkleRecipe;
 
-```php
-return $response->withHeader('UF-Redirect', $c->router->pathFor('index'));
-```
-
-[notice=note]Note that we use the Slim router's `pathFor` method here to get the route definition from it's name. This is the same as doing `return $response->withHeader('UF-Redirect', '/');`. Check out [Slim's documentation](https://www.slimframework.com/docs/objects/router.html#route-names) for more info on named routes.[/notice]
-
-
-Our complete `src/ServicesProvider/ServicesProvider.php` file should now look like this:
-
-```php
-<?php
-
-namespace UserFrosting\Sprinkle\Site\ServicesProvider;
-
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use UserFrosting\Sprinkle\Core\Facades\Debug;
-
-/**
- * Registers services for my site Sprinkle
- */
-class ServicesProvider
+class Site implements 
+    SprinkleRecipe, 
+    EventListenerRecipe, // <-- Add here !
 {
-    /**
-     * Register my site services.
-     *
-     * @param Container $container A DI container implementing ArrayAccess and psr-container.
-     */
-    public function register($container)
+    // ...
+
+    public function getEventListeners(): array
     {
-        /**
-         * Returns a callback that handles setting the `UF-Redirect` header after a successful login.
-         *
-         * Overrides the service definition in the account Sprinkle.
-         */
-        $container['redirect.onLogin'] = function ($c) {
-            /**
-             * This method is invoked when a user completes the login process.
-             *
-             * Returns a callback that handles setting the `UF-Redirect` header after a successful login.
-             * @param \Psr\Http\Message\ServerRequestInterface $request
-             * @param \Psr\Http\Message\ResponseInterface      $response
-             * @param array $args
-             * @return \Psr\Http\Message\ResponseInterface
-             */
-            return function (Request $request, Response $response, array $args) use ($c) {
-                return $response->withHeader('UF-Redirect', $c->router->pathFor('index'));
-            };
-        };
+        return [
+            UserRedirectedAfterLoginEvent::class => [
+                UserRedirectedToIndex::class,
+            ],
+        ];
     }
+    
+    // ...
 }
 ```
 
-[notice=note]Since we don't need them anymore, the portion of the code for backwards-compatibility with `determineRedirectOnLogin` doesn't need to be included in our service definition. The same goes for the `$authorizer` and `$currentUser` references.[/notice]
+Since the last listener registered is called first, your sprinkle's listener will be called first. Plus, since your listener calls `$event->isPropagationStopped();`, the other listeners won't be called.
 
-From now on, when a user logs in, they will be taken to the index page (`/` route). From there, you can change the redirect value to any route you want. You can also use other services, like [authorizer](/users/access-control) in the default behaviour, to add more logic to your redirect strategy.
+From now on, when a user logs in, they will be taken to the index page (`/` route). From there, you can change the redirect value to any route you want. You can also inject other services, like [authorizer](/users/access-control) in the default behavior, to add more logic to your redirect strategy.
 
 ## Custom style
 
@@ -244,6 +187,7 @@ Customizing the CSS is similar to overriding the template, except that it involv
 
 First, let's create a new `assets/css/login-page.css` file and add the following code to that file. This will invert the colors of the background and login box on the login page. Feel free to make whatever styling changes you want on that page here.
 
+**app/assets/css/login-page.css**
 ```css
 .login-page {
     background-color: #ffffff;
@@ -254,31 +198,43 @@ First, let's create a new `assets/css/login-page.css` file and add the following
 }
 ```
 
-We now need to add our new `login-page.css` file to the `css/main` bundle. In the root directory of your sprinkle, create a `asset-bundles.json` file and add the following code:
+Second, we need to create the page ES module, to add our custom CSS file. Note the page Javascript, from AdminLTE theme, need to be defined here:
 
-```json
-{
-    "bundle": {
-        "css/main": {
-            "styles" : [
-                "css/login-page.css"
-            ],
-            "options": {
-                "result": {
-                    "type": {
-                        "styles": "plain"
-                    }
-                },
-                "sprinkle": {
-                    "onCollision": "merge"
-                }
-            }
-        }
-    }
+**app/assets/login-page.js**
+```js
+import 'theme-adminlte/app/assets/userfrosting/js/pages/sign-in';
+import './css/login-page.css';
+```
+
+[notice=note]It could also be possible to define a separate entry, and load both the default entry and our custom entry on the same page[/notice]
+
+Next, we need to replace the `page.sign-in` webpack entry. In your Sprinkle's `/webpack.entries.js`, add this entry:
+
+**webpack.entries.js**
+```js
+module.exports = {
+    // ...
+    'page.sign-in': './app/assets/sign-in',
+    // ...
 }
 ```
 
-[notice=note]See [Extending and overriding bundles](/asset-management/asset-bundles#extending-and-overriding-bundles) for more information on how asset bundles work.[/notice]
+Next, the login page doesn't have a page CSS by default. We need to fix this by extending the default page template:
+
+**app/templates/pages/sign-in.html.twig**
+```html
+{% extends "@adminlte-theme/pages/sign-in.html.twig" %}
+
+{% block stylesheets_page %}
+    {{ encore_entry_link_tags('page.sign-in') }}
+{% endblock %}
+```
+
+Last, we need to rebuild the assets, by running the bakery bake command : 
+
+```bash
+php bakery bake
+```
 
 Your new CSS file should be loaded when you refresh the page and you should see the result:
 
