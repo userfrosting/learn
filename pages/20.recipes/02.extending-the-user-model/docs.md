@@ -5,11 +5,10 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 One of the most common questions we get from new UserFrosting developers is "how do I add new user fields?"
 
-Since every aspect of UF is extendable, there are a number of ways to go about this. This tutorial just outlines one approach - you should consider the specific requirements of your application and users before deciding if this would be the best approach for you.
+Since every aspect of UserFrosting is extendable, there are a number of ways to go about this. This tutorial just outlines one approach - you should consider the specific requirements of your application and users before deciding if this would be the best approach for you.
 
 Our general constraints are:
 
@@ -18,9 +17,7 @@ Our general constraints are:
 
 [notice=tip]Don't forget to check out the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). Some may provide easy ways to add custom profile fields to your users and groups.[/notice]
 
-## Set up your site Sprinkle
-
-If you haven't already, set up your site Sprinkle, as per the instructions in [Your First UserFrosting Site](/sprinkles/first-site). For the purposes of this tutorial, we will call our Sprinkle `extend-user`.
+If you haven't already, set up your site Sprinkle. For the purposes of this tutorial, we will call our Sprinkle `extend-user` with `App\ExtendUser` as a base namespace.
 
 ## Implement the data layer
 
@@ -32,19 +29,19 @@ Follow the directions in [Database Migrations](/database/migrations) for creatin
 
 ```php
 <?php
-namespace UserFrosting\Sprinkle\ExtendUser\Database\Migrations\v400;
+namespace App\ExtendUser\Database\Migrations\v400;
 
-use UserFrosting\Sprinkle\Core\Database\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Schema\Builder;
+use UserFrosting\Sprinkle\Core\Database\Migration;
+use UserFrosting\Sprinkle\Account\Database\Migrations\V400\UsersTable;
 
 class MembersTable extends Migration
 {
     public static $dependencies = [
-        '\UserFrosting\Sprinkle\Account\Database\Migrations\v400\UsersTable'
+        UsersTable::class,
     ];
 
-    public function up()
+    public function up(): void
     {
         if (!$this->schema->hasTable('members')) {
             $this->schema->create('members', function (Blueprint $table) {
@@ -60,7 +57,7 @@ class MembersTable extends Migration
         }
     }
 
-    public function down()
+    public function down(): void
     {
         $this->schema->drop('members');
     }
@@ -76,19 +73,26 @@ We'll also need to create a data model that corresponds to our new `members` tab
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\ExtendUser\Database\Models;
+namespace App\ExtendUser\Database\Models;
 
 use UserFrosting\Sprinkle\Core\Database\Models\Model;
 
 class MemberAux extends Model
 {
+    /** 
+     * The table doesn't have timestamps columns
+     */
     public $timestamps = false;
 
     /**
-     * @var string The name of the table for the current model.
+     * @var string The name of the table for the current model. We defined it, 
+     * because the table name is different than the model name
      */
     protected $table = 'members';
 
+    /** 
+     * Define the fillable columns
+     */
     protected $fillable = [
         'city',
         'country'
@@ -106,20 +110,18 @@ To bring the two entities together we'll create a third model, `Member`, which e
 
 ```php
 <?php
-namespace UserFrosting\Sprinkle\ExtendUser\Database\Models;
+namespace App\ExtendUser\Database\Models;
 
 use UserFrosting\Sprinkle\Account\Database\Models\User;
-use UserFrosting\Sprinkle\ExtendUser\Database\Models\MemberAux;
-use UserFrosting\Sprinkle\ExtendUser\Database\Scopes\MemberAuxScope;
+use App\ExtendUser\Database\Models\MemberAux;
+use App\ExtendUser\Database\Scopes\MemberAuxScope;
 
 trait LinkMemberAux
 {
     /**
      * The "booting" method of the trait.
-     *
-     * @return void
      */
-    protected static function bootLinkMemberAux()
+    protected static function bootLinkMemberAux(): void
     {
         /**
          * Create a new MemberAux if necessary, and save the associated member data every time.
@@ -160,7 +162,7 @@ class Member extends User
         'country'
     ];
 
-    protected $auxType = 'UserFrosting\Sprinkle\ExtendUser\Database\Models\MemberAux';
+    protected string $auxType = MemberAux::class;
 
     /**
      * Required to be able to access the `aux` relationship in Twig without needing to do eager loading.
@@ -252,7 +254,7 @@ A global scope allows us to customize the query that Laravel issues under the ho
 ```php
 <?php
 
-namespace UserFrosting\Sprinkle\ExtendUser\Database\Scopes;
+namespace App\ExtendUser\Database\Scopes;
 
 use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Database\Eloquent\Model;
@@ -294,49 +296,55 @@ This class only has one method, `apply`, which takes the base query builder obje
 
 The problem, of course, is that all of the controllers in the Sprinkle that _defined_ the `User` model, are still _using_ the `User` model (this is simply how inheritance works).
 
-Fortunately, the default Sprinkles never directly reference the `User` class. Instead, they use the [class mapper](/advanced/class-mapper). All we need to do, then, is remap the class mapper's `user` identifier to our new class, `Member`. This can be done by extending the `classMapper` service in a custom [service provider](/services/extending-services).
+Fortunately, the default Sprinkles never directly reference the `User` class. Instead, they **[inject](/dependency-injection)** the `UserInterface`. All we need to do, then, is remap the `UserInterface` to our new class, `Member`. This can be done via [Autowire](/dependency-injection/the-di-container#binding-interfaces) in a [service provider](/services/extending-services).
 
-Create a class `ServicesProvider/ServicesProvider`, if you don't already have one:
+Create a class `src/ServicesProvider/ModelsService.php` : 
 
 ```php
 <?php
 
-// In /app/sprinkles/site/src/ServicesProvider/ServicesProvider.php
+namespace App\ExtendUser\ServicesProvider;
 
-namespace UserFrosting\Sprinkle\ExtendUser\ServicesProvider;
+use App\ExtendUser\Database\Models\Member;
+use UserFrosting\ServicesProvider\ServicesProviderInterface;
+use UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface;
 
-class ServicesProvider
+class ModelsService implements ServicesProviderInterface
 {
-    /**
-     * Register extended user fields services.
-     *
-     * @param Container $container A DI container implementing ArrayAccess and psr-container.
-     */
-    public function register($container)
+    public function register(): array
     {
-        /**
-         * Extend the 'classMapper' service to register model classes.
-         *
-         * Mappings added: Member
-         */
-        $container->extend('classMapper', function ($classMapper, $c) {
-            $classMapper->setClassMapping('user', 'UserFrosting\Sprinkle\ExtendUser\Database\Models\Member');
-            return $classMapper;
-        });
+        return [
+            UserInterface::class => \DI\autowire(Member::class),
+        ];
     }
 }
 ```
 
-Now, **anywhere** that the `user` identifier is used with the class mapper, for example:
+Plus, add `ModelsService` to your Sprinkle recipe:
 
-```php
-$user = $classMapper->staticMethod('user', 'where', 'email', 'admin@example.com')->first();
-$city = $user->city;
+```php 
+public function getServices(): array
+{
+    return [
+        ModelsService::class,
+    ];
+}
 ```
 
-The class mapper will call the method or property on the `Member` class instead.
+Now, **anywhere** that the `UserInterface` is injected, for example:
 
-[notice=note]You might want your _own_ references to be overrideable by other Sprinkles that might be loaded later on. In this case, you should use the class mapper in your own controllers as well.[/notice]
+```php
+public function __construct(UserInterface $user)
+{
+    // ...
+    $city = $user->city;
+    // ...
+}
+```
+
+The dependency injection container will reference the method or property on the `Member` class instead.
+
+[notice=tip]You might want your _own_ references to be overridable by other Sprinkles that might be loaded later on. In this case, you should inject the `UserInterface` in your own classes as well.[/notice]
 
 ## Extend the interface layer (controller and views)
 
@@ -371,45 +379,55 @@ Notice that we wrap them in a single `if` block. By doing this, we are grouping 
 
 ### Override (just a few) controllers
 
-I know that we said that we didn't want to modify controllers, but in some cases it is unavoidable. For example, the `UserController::pageInfo` method explicitly states the fields that should be displayed in the form. So, we will need to copy and modify it to display the `city` and `country` fields. Create a new `Controller/MemberController.php` class:
+I know that we said that we didn't want to modify controllers, but in some cases it is unavoidable. For example, the `UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction` action explicitly states the fields that should be displayed in the form. So, we will need to extend it to display the `city` and `country` fields. Create a new `src/Controller/MemberPageAction.php` class:
 
 ```php
 <?php
-namespace UserFrosting\Sprinkle\ExtendUser\Controller;
+namespace App\ExtendUser\Controller;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use UserFrosting\Sprinkle\Admin\Controller\UserController;
-use UserFrosting\Sprinkle\Core\Facades\Debug;
-use UserFrosting\Support\Exception\ForbiddenException;
+use UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface;
+use UserFrosting\Sprinkle\Account\Exceptions\ForbiddenException;
+use UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction;
 
-class MemberController extends UserController
+class MemberPageAction extends UserPageAction
 {
 
 }
 ```
 
-and copy into it the `pageInfo` method from `Controller/UserController.php` in the `admin` Sprinkle. The full method is too long to show here, but you should find the line that says:
+There's different ways to add the required information in an existing action. For example, you could replace the whole `handle` method or intercept the data it returns an modify it. We'll go for the first option now. Copy the `handle` method from `UserPageAction` of the admin Sprinkle. The full method is too long to show here, but you should find the line that says:
 
 ```php
 // Determine fields that currentUser is authorized to view
 $fieldNames = ['user_name', 'name', 'email', 'locale', 'group', 'roles'];
 ```
 
-and add the `address` field in your copied method.
+...and add the `city` and `country` fields in your copied method.
 
-We'll also need to link our endpoints up to this new controller method. To do this, we'll create a new route file, `members.php`, in our Sprinkle's `routes/` directory:
+We'll also need to link the route endpoints to this new class. To do this, we'll once again use the dependency injector to remap the `UserPageAction` to our new `MemberPageAction` class : 
 
 ```php
 <?php
-/**
- * Routes for administrative user management. Overrides routes defined in routes://admin/users.php
- */
-$app->group('/admin/users', function () {
-    $this->get('/u/{user_name}', 'UserFrosting\Sprinkle\ExtendUser\Controller\MemberController:pageInfo');
-})->add('authGuard');
+
+namespace App\ExtendUser\ServicesProvider;
+
+use App\ExtendUser\Controller\MemberPageAction;
+use UserFrosting\ServicesProvider\ServicesProviderInterface;
+use UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction;
+
+class ControllerService implements ServicesProviderInterface
+{
+    public function register(): array
+    {
+        return [
+            UserPageAction::class => \DI\autowire(MemberPageAction::class),
+        ];
+    }
+}
 ```
+
+[notice=note]Don't forget to register this new service class in your Sprinkle Recipe ![/notice]
 
 ### Override schemas
 
@@ -432,4 +450,4 @@ country:
       message: VALIDATE.LENGTH_RANGE
 ```
 
-That's it! A full implementation of this can be found in the [`extend-user`](https://github.com/userfrosting/extend-user) repository. Check it out!
+[notice]A full implementation of this can be found in the [`extend-user`](https://github.com/userfrosting/extend-user) repository. However, this guide as not been updated yet for UserFrosting 5. Don't hesitate to contribute to this repo![/notice]
