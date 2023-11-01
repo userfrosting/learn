@@ -3,14 +3,13 @@ title: Running Tests
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
-You can execute tests using the `test` Bakery command.
+You can execute tests using [Phpunit](https://phpunit.de) directly : 
 
 ```bash
-$ php bakery test
+./vendor/bin/phpunit
 ```
 
-[notice=warning]UserFrosting's built-in integration tests use a temporary in-memory SQLite database. For testing to run successfully, you must have the `php-sqlite3` package installed and enabled. Alternatively, you can create a separate testing database and override the `test_integration` database settings in the `testing.php` [environment mode](/configuration/config-files) from your site sprinkle.[/notice]
+UserFrosting's built-in integration tests use a temporary in-memory SQLite database. For testing to run successfully, you must have the `php-sqlite3` package installed and enabled. Alternatively, you can create a separate testing database and override the `test_integration` database settings in the `testing.php` [environment mode](/configuration/config-files) from your site sprinkle.
 
-The `test` command will fire all tests define in UserFrosting base system along with any tests defined by the sprinkles found in your app. Those tests are executed by [PHPUnit](https://phpunit.de/).
+When testing, only the tests define in your Sprinkle will be run. UserFrosting base system tests are run in their own repository.
