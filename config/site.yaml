@@ -56,3 +56,4 @@ redirects:
     /advanced/class-mapper: /advanced/custom-models
     /sprinkles/first-site: /sprinkles/customize
     /mail/mail-providers: /going-live/mail-providers
+    /5.0-beta/(.*): /5.0/$1
