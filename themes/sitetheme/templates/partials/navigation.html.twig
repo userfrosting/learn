@@ -29,7 +29,9 @@
                     </a>
                     <ul id="dropdown2" class="dropdown-content">
                         {% for version in config.versions.branches %}
-                            <li><a href="{{ uri.rootUrl }}{{ version.path }}{{ uri.path }}">{{ version.label }}</a></li>
+                            {% if version.visible %}
+                                <li><a href="{{ uri.rootUrl }}{{ version.path }}{{ uri.path }}">{{ version.label }}</a></li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </li>

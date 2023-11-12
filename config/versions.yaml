@@ -1,28 +1,38 @@
 branches:
     'latest':
         path: ''
-        label: 'Latest'
-    '4.0':
-        path: '/4.0'
-        label: '4.0'
-    '4.1':
-        path: '/4.1'
-        label: '4.1'
-    '4.2':
-        path: '/4.2'
-        label: '4.2'
-    '4.3':
-        path: '/4.3'
-        label: '4.3'
-    '4.4':
-        path: '/4.4'
-        label: '4.4'
-    '4.5':
-        path: '/4.5'
-        label: '4.5'
+        label: '5.0'
+        visible: true
+    '5.0':
+        path: '/5.0'
+        label: '5.0'
+        visible: false
     '4.6':
         path: '/4.6'
         label: '4.6'
-    '5.0-beta':
-        path: '/5.0-beta'
-        label: '5.0 Beta'
+        visible: true
+    '4.5':
+        path: '/4.5'
+        label: '4.5'
+        visible: true
+    '4.4':
+        path: '/4.4'
+        label: '4.4'
+        visible: true
+    '4.3':
+        path: '/4.3'
+        label: '4.3'
+        visible: true
+    '4.2':
+        path: '/4.2'
+        label: '4.2'
+        visible: true
+    '4.1':
+        path: '/4.1'
+        label: '4.1'
+        visible: true
+    '4.0':
+        path: '/4.0'
+        label: '4.0'
+        visible: true
+

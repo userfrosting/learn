@@ -2,9 +2,11 @@
     <label>Version: </label>
     <select>
         {% for label, version in config.versions.branches %}
-            <option {% if config.environment == label %}selected="selected" {% endif %}value="{{ uri.rootUrl }}{{ version.path }}{{ uri.path }}">
-                {{ version.label }}
-            </option>
+            {% if version.visible %}
+                <option {% if config.environment == label %}selected="selected" {% endif %}value="{{ uri.rootUrl }}{{ version.path }}{{ uri.path }}">
+                    {{ version.label }}
+                </option>
+            {% endif %}
         {% endfor %}
     </select>
 </div>

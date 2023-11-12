@@ -1,7 +1,4 @@
-[submodule "sites/develop"]
-	path = sites/develop
-	url = https://github.com/userfrosting/learn.git
-	branch = develop
+
 [submodule "sites/4.0"]
 	path = sites/4.0
 	url = https://github.com/userfrosting/learn.git
@@ -30,7 +27,7 @@
 	path = sites/4.6
 	url = https://github.com/userfrosting/learn.git
 	branch = 4.6
-[submodule "sites/5.0-beta"]
-	path = sites/5.0-beta
+[submodule "sites/5.0"]
+	path = sites/5.0
 	url = https://github.com/userfrosting/learn.git
-	branch = 5.0-beta
+	branch = 5.0
