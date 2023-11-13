@@ -12,7 +12,7 @@ taxonomy:
 2. [setup](/cli/commands#setup)
 3. [debug](/cli/commands#debug)
 
-Those commands are typically used as "installation" steps. It this situation, it's much more simpler to run one command than run multiple ones. You can easily add your own command to any of those using [_event listeners_](#TODO). 
+Those commands are typically used as "installation" steps. It this situation, it's much more simpler to run one command than run multiple ones. You can easily add your own command to any of those using [_event listeners_](/advanced/events). 
 
 ## Adding Custom Commands to the `bake` command
 
@@ -87,7 +87,7 @@ The same command event can be listened by many sprinkle. In this case, dependent
 
 If you need to place your command at a specific place in the stack, you can use the `getCommands` method to retrieve the current list of array, modify it, and place it back using `setCommands` method. This method can also be used to **remove** commands.
 
-[notice]You can learn more about Event Listening in [Chapter 18](#TODO).[/notice]
+[notice]You can learn more about Event Listening in [Chapter 18](/advanced/events).[/notice]
 
 ## Adding Custom Commands to the `setup` command
 

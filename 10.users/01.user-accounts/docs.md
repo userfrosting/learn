@@ -110,15 +110,13 @@ The sign-in form can automatically redirect users to a specific landing page aft
 1. By setting a `redirect` query parameter in the URL of the page that the form appears on, or;
 2. By setting a `UF-Redirect` header in the response from the login submission route (`/account/login`).
 
-<!-- TODO : UserRedirectedAfterLoginEvent ?? -->
-
 The first method is typically used with users whose sessions have expired, to automatically redirect them to the last page they were on after they re-authenticate. For example, if a user was on `/users` when their session expired, the `AuthExpiredExceptionHandler` will take them to the URL `/account/sign-in?redirect=users`. This gives them the opportunity to sign in again, but this time it tells UF to automatically redirect to the `/users` page after successfully re-authenticating.
 
-<!-- TODO : Replace with, UserRedirectedAfterLoginEvent, once event pages are written -->
-The second method is for "regular" sign-ins, to determine how to redirect the user based on some server-side criteria. This is used when you want different users to have different landing pages, depending on their roles and/or permissions. The `AccountController::login` method will invoke the [`redirect.onLogin` service](/services/default-services#redirectonlogin) after the user has been successfully authenticated, which sets the `UF-Redirect` header in the response.
+The second method is for "regular" sign-ins, to determine how to redirect the user based on some server-side criteria. This is used when you want different users to have different landing pages, depending on their roles and/or permissions. The `AccountController::login` method will dispatch the [`UserRedirectedAfterLoginEvent` event](/advanced/events) after the user has been successfully authenticated, which sets the `UF-Redirect` header in the response.
 
 After the page containing the sign-in form receives a response from the server that authentication has succeeded, it will attempt to perform the redirect. The `redirectOnLogin` Javascript function in `sprinkles/account/assets/local/pages/js/sign-in.js` will first check for a `redirect` query string parameter. If none is present, it will check for the `UF-Redirect` header in the login response. It will then perform a redirect to the appropriate URL by using the `window.location.replace` Javascript function.
-<!-- END TODO -->
+
+[notice=tip]Checkout [this recipe](/recipes/custom-login-page#changing-the-post-login-destination) for an example on how to customize the post login destination.[/notice]
 
 ## Other self-service account features
 
