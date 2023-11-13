@@ -1,11 +1,11 @@
 branches:
     'latest':
         path: ''
-        label: '5.0'
+        label: '5.0 RC'
         visible: true
     '5.0':
         path: '/5.0'
-        label: '5.0'
+        label: '5.0 RC'
         visible: false
     '4.6':
         path: '/4.6'
