@@ -131,6 +131,8 @@ And then start the installation process again.
 
 At the heart of everything is the `docker-compose.yml` file. If you're experienced with Docker and Docker compose, this is where you can customized your Docker experience. For example, you can customize the port each service runs on. And since the file is located in *your Sprinkle*, aka your app, it's possible to save this file on your repo. 
 
+The `docker-compose.yml` file also contain the MySQL database and Mail environment variables. Since theses variables are defined globally inside the container, they don't need to be redefined inside `.env` file.
+
 [notice=warning]If you have **two** instances of UserFrosting on your computer, **they will share the same config**. This means a couple of things:
 
 1. You can't run both Docker instance of UserFrosting *at the same time* with default config, as port will overlap.
