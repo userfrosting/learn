@@ -6,25 +6,44 @@ taxonomy:
     category: docs
 ---
 
-<!-- TODO : List all Interfaces, explain them, the concept -->
+The Sprinkle Recipe dictate how your Sprinkle is built, like a blueprint. UserFrosting services and framework will use the information from the recipe to initiate some services, and expose classes your sprinkle provides for other service to use.
 
-## Basic concept
+Each Sprinkle **must have** a recipe. It's not possible for a sprinkle to exist without a recipe, as it won't be possible to expose it's class and service to the framework. It's possible however to customize other Sprinkle, as we'll see later on this page. 
 
-A basic recipe has some methods which are used to define some Sprinkle properties.
+## The Sprinkle Recipe
+
+The Sprinkle recipe is a simple PHP class that provides standard methods which will be called by services to retrieve information about your Sprinkle structure and the class it's registering. Every sprinkle recipes **MUST** implement the `UserFrosting\Sprinkle\SprinkleRecipe` interface. If you started from the [Skeleton](/structure/introduction#the-app-skeleton-your-project-s-template), you already have a basic recipe.
+
+This interface requires you to implement the following method in your recipe:  
+- [`getName`](#getname): Returns the name of the Sprinkle.
+- [`getPath`](#getpath): Returns the path of the Sprinkle. 
+- [`getSprinkles`](#getsprinkles): Returns an array of dependent sub-sprinkles recipe. 
+- [`getRoutes`](#getroutes): Return an array of routes classes.
+- [`getServices`](#getservices): Return an array of services classes.
+
+[notice=note]Since the class must implement the `SprinkleRecipe` interface, all of those methods are mandatory. Failure to implement the interface will result in an exception being thrown. However, it doesn't mean a method must return data. It's perfectly fine for some method to return an empty string or empty array.[/notice]
 
 ### getName
 
-Returns the name of the Sprinkle.
+This method returns the name identifier of the Sprinkle. This name is mostly used in debug interfaces to identify resources and class registered by the sprinkle. 
+
+The method should return a string. For example: 
+
+```php
+public function getName(): string
+{
+    return 'My Application';
+}
+```
 
 ### getPath
 
-Returns the path of the Sprinkle. 
-
-For example, if your recipe is in `app/src/YourSprinkle.php` and your Sprinkle structure looks like this...
+This method returns the path of the Sprinkle. This path should point where the `src/`, `assets/`, etc. folder are located, typically `app/`. For example, if your recipe is in `app/src/YourSprinkle.php` and your Sprinkle structure looks like this...
 
 ```
 ├── app/
     ├── assets/
+    ├── logs/
     ├── [...]
     ├── src/
         ├── [...]
@@ -37,197 +56,151 @@ For example, if your recipe is in `app/src/YourSprinkle.php` and your Sprinkle s
 └── webpack.config.js
 ```
 
-...`getPath()` should point to `/app`. 
-
-[notice=note]Reminder, `app/` can actually be named whatever you want.[/notice]
-
-### getSprinkles
-
-Returns an array of dependent sub-sprinkles recipe. The order the sprinkle are listed is important. See [#Dependencies](#dependencies).
-
-For example:
-```php
-return [
-    Core::class,
-    Account::class,
-    Admin::class,
-    AdminLTE::class,
-];
-```
-
-### getRoutes
-
-Return an array of routes classes.
+...`getPath()` should point to `/app`, or in this case the parent directory of where the recipe file is located :
 
 ```php
-return [
-    MyRoutes::class,
-];
-```
-
-More details about this will be explored in [Chapter 8](/routes-and-controllers/registering-routes).
-
-### getServices
-
-Return an array of routes classes.
-
-```php
-return [
-    MyRoutes::class,
-];
-```
-
-## Full Example
-
-```php
-<?php
-
-namespace UserFrosting\App;
-
-use UserFrosting\App\Bakery\HelloCommand;
-use UserFrosting\Sprinkle\Account\Account;
-use UserFrosting\Sprinkle\Admin\Admin;
-use UserFrosting\Sprinkle\BakeryRecipe;
-use UserFrosting\Sprinkle\Core\Core;
-use UserFrosting\Sprinkle\SprinkleRecipe;
-use UserFrosting\Theme\AdminLTE\AdminLTE;
-
-class YourSprinkle implements SprinkleRecipe
+public function getPath(): string
 {
-    public function getName(): string
-    {
-        return 'My Application';
-    }
-
-    public function getPath(): string
-    {
-        return __DIR__ . '/../';
-    }
-
-    public function getSprinkles(): array
-    {
-        return [
-            Core::class,
-            Account::class,
-            Admin::class,
-            AdminLTE::class,
-        ];
-    }
-
-    public function getRoutes(): array
-    {
-        return [
-            MyRoutes::class,
-        ];
-    }
-
-    public function getServices(): array
-    {
-        return [
-            MyServices::class,
-        ];
-    }
+    return __DIR__ . '/../';
 }
 ```
 
-## Dependencies
+[notice=note]`app/` can actually be named whatever you want. As long as the recipe point to the folder containing all the sprinkle static resources.[/notice]
 
-[notice=warning]The order in which we load our Sprinkles is important. Files in one Sprinkle may override files with the same name and path in previously loaded Sprinkles. For example, if we created `site/templates/pages/about.html.twig`, this would override `core/templates/pages/about.html.twig` because we load the `site` Sprinkle *after* the `core` Sprinkle.[/notice]
+### getSprinkles
+
+This methods returns the sub-sprinkles your sprinkle depends on. This makes it easier to integrate other sprinkles classes and resources into your app without having to copy everything inside your own recipe.
+
+The order the Sprinkles are loaded is important. Files in one Sprinkle may override files with the same name and path in previously loaded Sprinkles. For example, if we created `site/templates/pages/about.html.twig`, this would override `core/templates/pages/about.html.twig` because we load the `site` Sprinkle *after* the `core` Sprinkle.
+
+The Sprinkles will be loaded in the order you list them (top one first), but also based on their respective dependencies. For example:
+```php
+public function getSprinkles(): array
+{
+    return [
+        Core::class,
+        Account::class,
+        Admin::class,
+        AdminLTE::class,
+    ];
+}
+```
+
+Since `Admin` depends on `Core`, `Account` and `AdminLTE`, it's not mandatory to relist them in your recipe. In fact, the code above is equivalent to this, since the other one will be registered by `Admin` already : 
+```php
+public function getSprinkles(): array
+{
+    return [
+        Admin::class,
+    ];
+}
+```
+
+This also mean removing `AdminLTE` as a dependency for example **cannot be done by simply removing it from your recipe**! It's impossible to remove `AdminLTE` without removing `Admin`, since `Admin` cannot work without it's dependency.
+
+However, it also means the next example **is also equivalent**:
+```php
+public function getSprinkles(): array
+{
+    return [
+        AdminLTE::class,
+        Admin::class,
+        Account::class,
+        Core::class,
+    ];
+}
+```
+
+Let's look at the process for the above code : 
+
+1. AdminLTE will be loaded first. AdminLTE depends on Core first, and Account second. Core doesn't depend on anything. So **Core** is the first sprinkle loaded;
+2. Account is then observed. It depends on Core, which is already loaded, so **Account** is the second loaded sprinkle;
+3. AdminLTE doesn't have any more dependencies, so **AdminLTE** is loaded in third;
+4. Admin is now observed. It depends on Core, Account and AdminLTE. All are already loaded, so everything is good. **Admin** is loaded fourth;
+5. Your sprinkle's dependencies are all good, so your Sprinkle is loaded last;
+
+Because of every sprinkle dependencies, in all three examples the order will be `Core -> Account -> AdminLTE -> Admin -> YOUR APP`.
+
+[notice=tip]An easy way to see the final order sprinkles are loaded is via the command line `php bakery sprinkle:list` command. The registered sprinkles will be displayed in the order they are registered.[/notice]
+
+### getRoutes
+
+Return an array of routes classes. More details about this will be explored in [Chapter 8 - Routes and Controllers](/routes-and-controllers). 
+
+For example, to register `MyRoutes` class:
+```php
+public function getRoutes(): array
+{
+    return [
+        MyRoutes::class,
+    ];
+}
+```
+
+### getServices
+
+Return an array of services definitions. Theses will be explored in [Chapter 7 - Dependency Injection](/dependency-injection)
+
+Example: 
+```php
+public function getServices(): array
+{
+    return [
+        AlertStreamService::class,
+        CacheService::class,
+    ];
+}
+```
+
+## The main sprinkle
+
+Since your sprinkle is the last loaded sprinkle, it becomes ***the main sprinkle***. This is important, as the **main sprinkle** is the entry point to the app. The main sprinkle class must be referenced in two files : `/public/index.php` (web app/page entry) and `/bakery` (CLI App).
+
+For example, if your Main Sprinkle class fully qualified name is `UserFrosting\App\MyApp` :
+
+**/public/index.php**
+```php
+// [...]
+
+use UserFrosting\App\MyApp; // <--- Import here
+use UserFrosting\UserFrosting;
+
+$uf = new UserFrosting(MyApp::class); // <-- Reference here
+$uf->run();
+```
+
+**/bakery**
+```php
+// [...]
+
+use UserFrosting\App\MyApp; // <--- Import here
+use UserFrosting\Bakery\Bakery;
+
+$bakery = new Bakery(MyApp::class); // <-- Reference here
+$bakery->run();
+```
+
+[notice]The main sprinkle class can be names whatever you want. You can rename the default one from App Skeleton, but it's important to remember to also update it's reference in both location.[/notice]
 
 ## Optional recipes
 
-## Wrapping up 
+The sprinkle recipe power comes from it's modularity. To avoid having one huge recipe with empty content, optional features can be added only when necessary. 
+
+The available sub-recipes includes: 
+
+| Recipe                                      | Features                                                                                            |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| [BakeryRecipe](#bakeryrecipe)               | Registering [Bakery commands](/cli/custom-commands)                                                 |
+| [MigrationRecipe](#migrationrecipe)         | Registering [Migrations](/database/migrations)                                                      |
+| [SeedRecipe](#seedrecipe)                   | Registering [Seeds](database/seeding)                                                               |
+| [MiddlewareRecipe](#middlewarerecipe)       | Registering [Middlewares](advanced/middlewares)                                                     |
+| [EventListenerRecipe](#eventlistenerrecipe) | Registering [Event Listeners](/advanced/events)                                                     |
+| [TwigExtensionRecipe](#twigextensionrecipe) | Registering [Twig Extension](/templating-with-twig/filters-and-functions#extending-twig-extensions) |
+
+Your recipe simply need to implement the corresponding interface. Classes may implement more than one interface if desired by separating each interface with a comma. For example :
 
 ```php
-<?php
-
-declare(strict_types=1);
-
-/*
- * UserFrosting Core Sprinkle (http://www.userfrosting.com)
- *
- * @link      https://github.com/userfrosting/sprinkle-core
- * @copyright Copyright (c) 2021 Alexander Weissman & Louis Charette
- * @license   https://github.com/userfrosting/sprinkle-core/blob/master/LICENSE.md (MIT License)
- */
-
-namespace UserFrosting\Sprinkle\Core;
-
-use Lcharette\WebpackEncoreTwig\EntrypointsTwigExtension;
-use Lcharette\WebpackEncoreTwig\VersionedAssetsTwigExtension;
-use UserFrosting\Event\AppInitiatedEvent;
-use UserFrosting\Event\BakeryInitiatedEvent;
-use UserFrosting\Event\EventListenerRecipe;
-use UserFrosting\Sprinkle\BakeryRecipe;
-use UserFrosting\Sprinkle\Core\Bakery\BakeCommand;
-use UserFrosting\Sprinkle\Core\Bakery\ClearCacheCommand;
-use UserFrosting\Sprinkle\Core\Bakery\DebugCommand;
-use UserFrosting\Sprinkle\Core\Bakery\DebugConfigCommand;
-use UserFrosting\Sprinkle\Core\Bakery\DebugDbCommand;
-use UserFrosting\Sprinkle\Core\Bakery\DebugEventsCommand;
-use UserFrosting\Sprinkle\Core\Bakery\DebugLocatorCommand;
-use UserFrosting\Sprinkle\Core\Bakery\DebugVersionCommand;
-use UserFrosting\Sprinkle\Core\Bakery\LocaleCompareCommand;
-use UserFrosting\Sprinkle\Core\Bakery\LocaleDictionaryCommand;
-use UserFrosting\Sprinkle\Core\Bakery\LocaleInfoCommand;
-use UserFrosting\Sprinkle\Core\Bakery\MigrateCleanCommand;
-use UserFrosting\Sprinkle\Core\Bakery\MigrateCommand;
-use UserFrosting\Sprinkle\Core\Bakery\MigrateRefreshCommand;
-use UserFrosting\Sprinkle\Core\Bakery\MigrateResetCommand;
-use UserFrosting\Sprinkle\Core\Bakery\MigrateResetHardCommand;
-use UserFrosting\Sprinkle\Core\Bakery\MigrateRollbackCommand;
-use UserFrosting\Sprinkle\Core\Bakery\MigrateStatusCommand;
-use UserFrosting\Sprinkle\Core\Bakery\RouteListCommand;
-use UserFrosting\Sprinkle\Core\Bakery\SeedCommand;
-use UserFrosting\Sprinkle\Core\Bakery\SeedListCommand;
-use UserFrosting\Sprinkle\Core\Bakery\SetupCommand;
-use UserFrosting\Sprinkle\Core\Bakery\SetupDbCommand;
-use UserFrosting\Sprinkle\Core\Bakery\SetupEnvCommand;
-use UserFrosting\Sprinkle\Core\Bakery\SetupMailCommand;
-use UserFrosting\Sprinkle\Core\Bakery\SprinkleListCommand;
-use UserFrosting\Sprinkle\Core\Bakery\TestMailCommand;
-use UserFrosting\Sprinkle\Core\Bakery\WebpackCommand;
-use UserFrosting\Sprinkle\Core\Csrf\CsrfGuardMiddleware;
-use UserFrosting\Sprinkle\Core\Database\Migrations\v400\SessionsTable;
-use UserFrosting\Sprinkle\Core\Database\Migrations\v400\ThrottlesTable;
-use UserFrosting\Sprinkle\Core\Error\ExceptionHandlerMiddleware;
-use UserFrosting\Sprinkle\Core\Error\RegisterShutdownHandler;
-use UserFrosting\Sprinkle\Core\Event\ResourceLocatorInitiatedEvent;
-use UserFrosting\Sprinkle\Core\Listeners\ModelInitiated;
-use UserFrosting\Sprinkle\Core\Listeners\ResourceLocatorInitiated;
-use UserFrosting\Sprinkle\Core\Listeners\SetRouteCaching;
-use UserFrosting\Sprinkle\Core\Middlewares\LocaleMiddleware;
-use UserFrosting\Sprinkle\Core\Middlewares\SessionMiddleware;
-use UserFrosting\Sprinkle\Core\Middlewares\URIMiddleware;
-use UserFrosting\Sprinkle\Core\Routes\AlertsRoutes;
-use UserFrosting\Sprinkle\Core\ServicesProvider\AlertStreamService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\CacheService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\ConfigService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\DatabaseService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\ErrorHandlerService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\I18nService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\LocatorService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\LoggersService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\MailService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\MigratorService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\RoutingService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\SeedService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\SessionService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\ThrottlerService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\TwigService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\VersionsService;
-use UserFrosting\Sprinkle\Core\ServicesProvider\WebpackService;
-use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\MigrationRecipe;
-use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\TwigExtensionRecipe;
-use UserFrosting\Sprinkle\Core\Twig\Extensions\AlertsExtension;
-use UserFrosting\Sprinkle\Core\Twig\Extensions\CoreExtension;
-use UserFrosting\Sprinkle\Core\Twig\Extensions\CsrfExtension;
-use UserFrosting\Sprinkle\Core\Twig\Extensions\I18nExtension;
-use UserFrosting\Sprinkle\Core\Twig\Extensions\RoutesExtension;
-use UserFrosting\Sprinkle\MiddlewareRecipe;
-use UserFrosting\Sprinkle\SprinkleRecipe;
-
-class Core implements
+class MyApp implements
     SprinkleRecipe,
     TwigExtensionRecipe,
     MigrationRecipe,
@@ -235,143 +208,35 @@ class Core implements
     MiddlewareRecipe,
     BakeryRecipe
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getName(): string
-    {
-        return 'Core Sprinkle';
-    }
+```
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPath(): string
-    {
-        return __DIR__ . '/../';
-    }
+[notice=tip]Your sprinkle could even define it's own recipe that you or other sprinkles could implements![/notice]
 
-    /**
-     * {@inheritdoc}
-     *
-     * @codeCoverageIgnore
-     */
+### BakeryRecipe
+Interface : `UserFrosting\Sprinkle\BakeryRecipe`
+
+Methods to implements : 
+- `getBakeryCommands` : Return a list of [Bakery commands](/cli/custom-commands) classes
+
+    **Example:**
+    ```php
     public function getBakeryCommands(): array
     {
         return [
             BakeCommand::class,
             ClearCacheCommand::class,
-            DebugCommand::class,
-            DebugConfigCommand::class,
-            DebugDbCommand::class,
-            DebugEventsCommand::class,
-            DebugLocatorCommand::class,
-            DebugVersionCommand::class,
-            LocaleCompareCommand::class,
-            LocaleDictionaryCommand::class,
-            LocaleInfoCommand::class,
-            MigrateCommand::class,
-            MigrateCleanCommand::class,
-            MigrateRefreshCommand::class,
-            MigrateResetCommand::class,
-            MigrateResetHardCommand::class,
-            MigrateRollbackCommand::class,
-            MigrateStatusCommand::class,
-            RouteListCommand::class,
-            SeedCommand::class,
-            SeedListCommand::class,
-            SetupCommand::class,
-            SetupDbCommand::class,
-            SetupEnvCommand::class,
-            SetupMailCommand::class,
-            SprinkleListCommand::class,
-            TestMailCommand::class,
-            WebpackCommand::class,
         ];
     }
+    ```
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSprinkles(): array
-    {
-        return [];
-    }
+### MigrationRecipe
+Interface : `UserFrosting\Sprinkle\Core\Sprinkle\Recipe\MigrationRecipe`
 
-    /**
-     * Returns a list of routes definition in PHP files.
-     *
-     * @return string[]
-     */
-    public function getRoutes(): array
-    {
-        return [
-            AlertsRoutes::class,
-        ];
-    }
+Methods to implements :
+- `getMigrations` : Return a list of [Migrations](/database/migrations) classes
 
-    /**
-     * Returns a list of all PHP-DI services/container definitions files.
-     *
-     * @return string[]
-     */
-    public function getServices(): array
-    {
-        return [
-            AlertStreamService::class,
-            CacheService::class,
-            ConfigService::class,
-            DatabaseService::class,
-            ErrorHandlerService::class,
-            I18nService::class,
-            LocatorService::class,
-            LoggersService::class,
-            MailService::class,
-            MigratorService::class,
-            RoutingService::class,
-            SeedService::class,
-            SessionService::class,
-            ThrottlerService::class,
-            TwigService::class,
-            VersionsService::class,
-            WebpackService::class,
-        ];
-    }
-
-    /**
-     * Returns a list of all Middlewares classes.
-     *
-     * @return \Psr\Http\Server\MiddlewareInterface[]
-     */
-    public function getMiddlewares(): array
-    {
-        return [
-            LocaleMiddleware::class,
-            CsrfGuardMiddleware::class,
-            SessionMiddleware::class,
-            URIMiddleware::class,
-            ExceptionHandlerMiddleware::class,
-        ];
-    }
-
-    /**
-     * Return an array of all registered Twig Extensions.
-     *
-     * @return \Twig\Extension\ExtensionInterface[]
-     */
-    public function getTwigExtensions(): array
-    {
-        return [
-            CoreExtension::class,
-            CsrfExtension::class,
-            I18nExtension::class,
-            AlertsExtension::class,
-            RoutesExtension::class,
-            EntrypointsTwigExtension::class,
-            VersionedAssetsTwigExtension::class,
-        ];
-    }
-
+    **Example:**
+    ```php
     public function getMigrations(): array
     {
         return [
@@ -379,26 +244,123 @@ class Core implements
             ThrottlesTable::class,
         ];
     }
+    ```
 
+### SeedRecipe
+Interface : `UserFrosting\Sprinkle\Core\Sprinkle\Recipe\SeedRecipe`
+
+Methods to implements : 
+- `getSeeds` : Return a list of [Seeds](database/seeding) classes
+
+    **Example:**
+    ```php 
+    public function getSeeds(): array
+    {
+        return [
+            DefaultGroups::class,
+            DefaultPermissions::class,
+            DefaultRoles::class,
+        ];
+    }
+    ```
+
+### MiddlewareRecipe
+Interface : `UserFrosting\Sprinkle\MiddlewareRecipe`
+
+Methods to implements : 
+- `getMiddlewares` : Return a list of [Middlewares](advanced/middlewares) classes
+
+    **Example:**
+    ```php
+    public function getMiddlewares(): array
+    {
+        return [
+            CsrfGuardMiddleware::class,
+            SessionMiddleware::class,
+        ];
+    }
+    ```
+
+### EventListenerRecipe
+Interface : `UserFrosting\Event\EventListenerRecipe`
+
+Methods to implements : 
+- `getEventListeners` : Allows to register [Event Listeners](/advanced/events)
+
+    **Example:**
+    ```php
+    public function getEventListeners(): array
+        {
+            return [
+                AppInitiatedEvent::class => [
+                    RegisterShutdownHandler::class,
+                    ModelInitiated::class,
+                    SetRouteCaching::class,
+                ],
+                BakeryInitiatedEvent::class => [
+                    ModelInitiated::class,
+                    SetRouteCaching::class,
+                ],
+                ResourceLocatorInitiatedEvent::class => [
+                    ResourceLocatorInitiated::class,
+                ],
+            ];
+        }
+    ```
+
+### TwigExtensionRecipe
+Interface : `UserFrosting\Sprinkle\Core\Sprinkle\Recipe\TwigExtensionRecipe`
+
+Methods to implements : 
+- `getTwigExtensions` : Return a list of [Twig Extension](/templating-with-twig/filters-and-functions#extending-twig-extensions) classes
+
+    **Example:**
+    ```php
+    public function getTwigExtensions(): array
+    {
+        return [
+            CoreExtension::class,
+            AlertsExtension::class,
+        ];
+    }
+    ```
+
+## Customizing a dependent Sprinkle
+
+Sometime you may want to customize one of the dependent sprinkle. For example, you may want to remove all routes defined in the Account sprinkle. Or use only one migrations from the `AwesomeStuff` Sprinkle. There's two easy way to customize the dependent sprinkles, either by cherry picking resources or extending the dependent sprinkle recipe.
+
+### Cherry picking resources
+
+This method is best when you want a small number of resources from a dependent sprinkle. For example, when you want one migrations from the `AwesomeStuff` Sprinkle. The drawback is if the dependent sprinkle is updated, you might not have the most up to date code. If you want to import many resources (but not all of them) from a dependent sprinkle, it's best to use the other method.
+
+In this case, instead of adding the dependent sprinkle as a simple (in `getSprinkles`), you simply open the dependent sprinkle recipe and copy the code you want into your recipe.
+
+### Extending dependent recipe
+
+This method is best used when you want to *remove* a small number of resource from a dependent sprinkle. The drawback is if the dependent sprinkle is updated, you might not have the most up to date code. If you want to only one resource from a dependent sprinkle, it's best to use the previous method to import one, than to remove everything. 
+
+For example, you may want to remove all routes defined in the Account sprinkle : 
+```php
+
+namespace UserFrosting\App;
+
+use UserFrosting\Sprinkle\Account\Account;
+
+/**
+ * Overwrite main Account Sprinkle Class, to remove routes.
+ */
+class CustomAccount extends Account
+{
     /**
      * {@inheritDoc}
      */
-    public function getEventListeners(): array
+    public function getRoutes(): array
     {
-        return [
-            AppInitiatedEvent::class             => [
-                RegisterShutdownHandler::class,
-                ModelInitiated::class,
-                SetRouteCaching::class,
-            ],
-            BakeryInitiatedEvent::class          => [
-                ModelInitiated::class,
-                SetRouteCaching::class,
-            ],
-            ResourceLocatorInitiatedEvent::class => [
-                ResourceLocatorInitiated::class,
-            ],
-        ];
+        return [];
     }
 }
 ```
+
+In this case, instead of depending on `Account` in `getSprinkles`, you'll add `CustomAccount` in your sprinkle `getSprinkles`. All other methods from `Account` will be included via `CustomAccount`. 
+
+You'll then have **two recipes** in your sprinkle, e.g.: `MyApp` and `CustomAccount`, side by side. `MyApp` will still be *main sprinkle*, referenced in `index.php` and `bakery`, since `CustomAccount` is still a dependency of `MyApp`.
