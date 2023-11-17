@@ -273,32 +273,3 @@ This customizes some basic properties for our application - set your site title,
 This is because the template for this page is dynamically pulling that particular piece of text from your new configuration file. Note that your value for `site.title` overrides the value of `site.title` in the core Sprinkle's configuration file.
 
 [notice=tip]You can [override configuration values](/configuration/config-files) from any previously loaded Sprinkles, including the default Sprinkles that ship with UserFrosting. Check the Core Sprinkle and the Account Sprinkle `/app/config/default.php` for a complete list.[/notice]
-
-## Removing default Sprinkles
-
-A default install, from the Skeleton, enables every [default Sprinkles](/structure/sprinkles#bundled-sprinkles). But it's not said your app requires every features provided by theses default sprinkles. For example, you might not need the Admin and Account Sprinkle if you don't need any of the user management feature. 
-
-In this case, two files need to be edited : `composer.json` and the Sprinkle Recipe.
-
-1. In **/composer.json**, remove those two lines :
-    ```json
-    "userfrosting/sprinkle-account": "^5.0",
-    "userfrosting/sprinkle-admin": "^5.0",
-    ```
-
-2. Since changes were made to *composer.json*, composer need to be updated (`composer update`).
-
-3. In the Sprinkle Recipe, both `Account::class` and `Admin:class` can be removed from the `getSprinkles()` method:
-    ```php 
-    public function getSprinkles(): array
-    {
-        return [
-            Core::class,
-            //Account::class,
-            //Admin::class,
-            AdminLTE::class,
-        ];
-    }
-    ```
-
-[notice]Technically, the **Core** sprinkle IS optional. However, remember it provides pretty much every base feature of UserFrosting, including database support. Without any sprinkles, i.e. only the UserFrosting Framework, your app would be a very basic Slim Application with routes support.[/notice]
