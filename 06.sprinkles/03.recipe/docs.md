@@ -23,7 +23,7 @@ This interface requires you to implement the following method in your recipe:
 
 [notice=note]Since the class must implement the `SprinkleRecipe` interface, all of those methods are mandatory. Failure to implement the interface will result in an exception being thrown. However, it doesn't mean a method must return data. It's perfectly fine for some method to return an empty string or empty array.[/notice]
 
-### getName
+### Name
 
 This method returns the name identifier of the Sprinkle. This name is mostly used in debug interfaces to identify resources and class registered by the sprinkle. 
 
@@ -36,7 +36,7 @@ public function getName(): string
 }
 ```
 
-### getPath
+### Path
 
 This method returns the path of the Sprinkle. This path should point where the `src/`, `assets/`, etc. folder are located, typically `app/`. For example, if your recipe is in `app/src/YourSprinkle.php` and your Sprinkle structure looks like this...
 
@@ -67,7 +67,7 @@ public function getPath(): string
 
 [notice=note]`app/` can actually be named whatever you want. As long as the recipe point to the folder containing all the sprinkle static resources.[/notice]
 
-### getSprinkles
+### Dependent sprinkles
 
 This methods returns the sub-sprinkles your sprinkle depends on. This makes it easier to integrate other sprinkles classes and resources into your app without having to copy everything inside your own recipe.
 
@@ -123,7 +123,7 @@ Because of every sprinkle dependencies, in all three examples the order will be 
 
 [notice=tip]An easy way to see the final order sprinkles are loaded is via the command line `php bakery sprinkle:list` command. The registered sprinkles will be displayed in the order they are registered.[/notice]
 
-### getRoutes
+### Routes
 
 Return an array of routes classes. More details about this will be explored in [Chapter 8 - Routes and Controllers](/routes-and-controllers). 
 
@@ -137,7 +137,7 @@ public function getRoutes(): array
 }
 ```
 
-### getServices
+### Services
 
 Return an array of services definitions. Theses will be explored in [Chapter 7 - Dependency Injection](/dependency-injection)
 
@@ -154,7 +154,7 @@ public function getServices(): array
 
 ## The main sprinkle
 
-Since your sprinkle is the last loaded sprinkle, it becomes ***the main sprinkle***. This is important, as the **main sprinkle** is the entry point to the app. The main sprinkle class must be referenced in two files : `/public/index.php` (web app/page entry) and `/bakery` (CLI App).
+Since your sprinkle is the last loaded sprinkle, it becomes ***the main sprinkle***. This is important, as the **main sprinkle** is the entry point to the app. The main sprinkle class must be referenced in two *entry files* : `/public/index.php` (web app/page entry) and `/bakery` (CLI App).
 
 For example, if your Main Sprinkle class fully qualified name is `UserFrosting\App\MyApp` :
 
@@ -324,6 +324,34 @@ Methods to implements :
         ];
     }
     ```
+
+## Removing default Sprinkles
+
+A default install, from the Skeleton, enables every [default Sprinkles](/structure/sprinkles#bundled-sprinkles). But it's not said your app requires every features provided by theses default sprinkles. For example, you might not need the Admin Sprinkle if you don't need any of the user management feature. 
+
+In this case, two files need to be edited : `composer.json` and the Sprinkle Recipe.
+
+1. In **/composer.json**, remove the sprinkle from the Composer required :
+    ```json
+    "userfrosting/sprinkle-admin": "^5.0",
+    ```
+
+2. Since changes were made to *composer.json*, composer need to be updated (`composer update`).
+
+3. In the Sprinkle Recipe, `Admin:class` can be removed from the `getSprinkles()` method:
+    ```php 
+    public function getSprinkles(): array
+    {
+        return [
+            Core::class,
+            Account::class,
+            //Admin::class,
+            AdminLTE::class,
+        ];
+    }
+    ```
+
+[notice=note]Technically, the **Core** sprinkle IS optional. However, remember it provides pretty much every base feature of UserFrosting, including database support. Without any sprinkles, i.e. only the UserFrosting Framework, your app would be a very basic Slim Application with routes support.[/notice]
 
 ## Customizing a dependent Sprinkle
 
