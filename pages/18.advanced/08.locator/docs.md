@@ -19,7 +19,7 @@ Two types of streams are available within the locator : **shared** and **non-sha
 The following streams are defined by default by UserFrosting :
 
 | Stream    |  Defined By   | Path              | Shared | Description / Use                                                                |
-| --------- | :-----------: | ----------------- | :----: | -------------------------------------------------------------------------------- |
+|-----------|:-------------:|-------------------|:------:|----------------------------------------------------------------------------------|
 | sprinkles | Core Sprinkle | `./`              |   No   | Generic path to each sprinkles                                                   |
 | config    | Core Sprinkle | `./config`        |   No   | [Config files](/configuration/config-files) location                             |
 | extra     | Core Sprinkle | `./extra`         |   No   | Misc directory, used to store files unrelated to any other stream                |
@@ -28,11 +28,11 @@ The following streams are defined by default by UserFrosting :
 | templates | Core Sprinkle | `./templates`     |   No   | [Templates files](/templating-with-twig/sprinkle-templates)                      |
 | cache     | Core Sprinkle | `./cache`         |  Yes   | Shared [cache](/advanced/caching) directory                                      |
 | database  | Core Sprinkle | `./database`      |  Yes   | Location of any file based database, for example SQLite database                 |
-| log       | Core Sprinkle | `./log`           |  Yes   | Shared log directory                                                             |
-| session   | Core Sprinkle | `./session`       |  Yes   | Shared [sessions](/advanced/sessions#file-driver) directory                      |
+| logs      | Core Sprinkle | `./logs`          |  Yes   | Shared log directory                                                             |
+| sessions  | Core Sprinkle | `./sessions`      |  Yes   | Shared [sessions](/advanced/sessions#file-driver) directory                      |
 | storage   | Core Sprinkle | `./storage`       |  Yes   | The [local disk](/advanced/storage#the-local-disk) file storage                  |
 | public    | Core Sprinkle | `/public`         |  Yes   | Absolute path to the [public directory](/sprinkles/content#-public)              |
-| storage   | Core Sprinkle | `public://assets` |  Yes   | Path to the public [assets](/asset-management) directory. Sub-stream of *public* |
+| assets    | Core Sprinkle | `public://assets` |  Yes   | Path to the public [assets](/asset-management) directory. Sub-stream of *public* |
 
 The paths for non-shared streams are calculated relatively from each [sprinkle path](/sprinkles/recipe#getpath), usually `./app`. The paths for shared streams are relative from the Main Sprinkle path only, unless otherwise noted.
 
