@@ -13,7 +13,7 @@ Now that your local development environment is setup and ready to go, it's final
 Use Composer to create an empty project with the latest version of UserFrosting skeleton into a new `UserFrosting` folder:
 
 ```bash
-composer create-project userfrosting/userfrosting UserFrosting "^5.0@dev"
+composer create-project userfrosting/userfrosting UserFrosting "^5.0"
 ```
 
 [notice=tip]Note the `UserFrosting` at the end of the command. This means `composer` will create new `UserFrosting` subdirectory inside the current location. You can change `UserFrosting` to whatever you like.[/notice]

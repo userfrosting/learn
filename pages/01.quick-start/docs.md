@@ -27,9 +27,8 @@ UserFrosting has a few system requirements. You need to make sure your local Use
 Use Composer to create an empty project with the latest version of UserFrosting skeleton into a new `UserFrosting` folder. This will clone the skeleton repository and run the installation process.
 
 ```bash
-composer create-project userfrosting/userfrosting UserFrosting "^5.0@dev"
+composer create-project userfrosting/userfrosting UserFrosting "^5.0"
 ```
-<!-- TODO : Change this for release -->
 
 [notice=tip]During installation, you can choose **sqlite** as database provider if you don't have a database provider available.[/notice]
 
