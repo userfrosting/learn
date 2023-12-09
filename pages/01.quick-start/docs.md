@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-[notice=note]This quick start guide is aimed at experienced PHP developers who already have a development environment set up. If it's not your case, head over to the [First Chapter](/background) to start your journey.[/notice]
+[notice=note]This quick start guide is aimed at experienced PHP developers who already have a development environment set up. If that's not your case, head over to the [First Chapter](/background) to start your journey.[/notice]
 
 UserFrosting is a free, open-source jumping-off point for building user-centered web applications with PHP and Javascript. It comes with a sleek, modern interface, basic user account features, and an administrative user management system - all fully functioning out of the box.
 
