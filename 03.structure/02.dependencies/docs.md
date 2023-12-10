@@ -13,7 +13,7 @@ While UserFrosting uses dozens of dependencies, here's a rundown of the most imp
 ## Slim 4
 **[Slim](https://www.slimframework.com)** is a PHP _micro framework_ that helps you quickly write simple yet powerful web applications and APIs. Slim is the backbone of UserFrosting. To be more precise, **UserFrosting _is_ a Slim Application**! 
 
-Except for the Bakery system (which uses _[Symfony Console](#symfony-console-5)_, more on that later), UserFrosting uses Slim at every level to perform middleware management, route collections, and everything else needed to actually display a web page.
+Except for the Bakery system (which uses _[Symfony Console](#symfony-console-5)_), UserFrosting uses Slim at every level to perform middleware management, route collections, and everything else needed to actually display a web page.
 
 ## PHP-DI 7
 **[PHP-DI](https://php-di.org)** is a _dependency injection container_. Dependency injection is one of the fundamental pillars of modern object-oriented software design. It is used extensively throughout UserFrosting to glue all services together while maintaining great flexibility to extend the basics functionalities of UserFrosting to create your own project. We'll explain dependency injection in detail in a later chapter. For now, it's only important to note **PHP-DI** is the dependency manager used by UserFrosting 5 to handle all dependency injection.
