@@ -18,11 +18,11 @@ $name = Folder::shift($path);
 
 // If no sites is selected, default to latest
 if (!$name || !is_dir(ROOT_DIR . "user/sites/{$name}")) {
-    $name = 'latest';
+    $name = '5.0';
 }
 
 // Prefix all pages with the name of the subsite
-$prefix = ($name === 'latest') ? '' : "/{$name}";
+$prefix = ($name === '5.0') ? '' : "/{$name}";
 $container['pages']->base($prefix);
 
 return [
