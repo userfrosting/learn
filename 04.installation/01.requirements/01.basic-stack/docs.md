@@ -8,7 +8,7 @@ process:
     twig: true
 ---
 
-The basic stack requirements for running UserFrosting are pretty typical of any web framework or CMS. Those requirements are the software required to _run_ UserFrosting, usually on a "server". Theses are different from the [developer tools used to build your website](/installation/requirements/essential-tools-for-php) which we'll see on the next page.
+The basic stack requirements for running UserFrosting are pretty typical of any web framework or CMS. Those requirements are the software required to _run_ UserFrosting, usually on a "server". These are different from the [developer tools used to build your website](/installation/requirements/essential-tools-for-php) which we'll see on the next page.
 
 To run UserFrosting, you'll need four things :
 
