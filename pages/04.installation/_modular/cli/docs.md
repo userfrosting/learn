@@ -1,4 +1,4 @@
-The [command line interface](/installation/requirements/essential-tools-for-php#the-command-line-cli-) will be required to perform mosts tasks in this guide. It's usage depend on your OS : 
+The [command line interface](/installation/requirements/essential-tools-for-php#the-command-line-cli) will be required to perform mosts tasks in this guide. It's usage depend on your OS : 
 
 #### MacOS 
 If you're using MacOS, the **Terminal** is already installed on your computer. You'll find the app in `/System/Applications/Utilities/Terminal`.
