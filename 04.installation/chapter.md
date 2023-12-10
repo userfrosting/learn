@@ -10,4 +10,4 @@ taxonomy:
 
 # Installation
 
-Now that we've gone over the basic structure of a UserFrosting based application, it's time to get thing started. This chapter covers the necessary environment dependencies for UserFrosting, and how to use your essentials developer tools to get started on your first UserFrosting project.
+Now that we've gone over the basic structure of a UserFrosting based application, it's time to get things started. This chapter covers UserFrosting's environment dependencies and how to use your essential developer tools to start a UserFrosting project.
