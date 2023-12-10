@@ -13,7 +13,7 @@ During development, and before you're ready to deploy, you'll want to have the f
 1. [The Command Line](#the-command-line-cli)
 2. [Git](#git)
 3. [Composer 2](#composer-2)
-4. [Node.js](#node-js)
+4. [Node.js](#nodejs)
 5. [npm](#npm)
 6. [A code editor](#code-editor)
 
