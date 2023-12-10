@@ -15,7 +15,7 @@ If your local development environment doesn't already have the [required stack a
 - [Npm 9 or higher](#npm)
 - [Mail Server](#mail)
 
-If you followed the previous pages, you probably notice two required software are missing : The *web server software* and the *database*. This is on purpose, as this guide uses the built-in PHP Server and SQLite, which doesn't require any additional installation. Optionally, you may want to install a web server software (e.g.: Apache, Nginx, etc) and a database (MariaDB, MySQL, Postgres or SQL Server). The "optional" part of this guide will cover the required setup for those.
+If you followed the previous pages, you probably noticed two pieces of software absent from that list: The *web server software* and the *database*. This is on purpose. This guide uses the built-in PHP Server and SQLite, which don't require additional installation. Optionally, you may want to install a web server (e.g.: Apache, Nginx, etc) and a database (MariaDB, MySQL, Postgres or SQL Server). The "optional" part of this guide will cover setup for those.
 
 [notice]Please **make sure** that you have these installed **before** attempting to install UserFrosting![/notice]
 
@@ -27,7 +27,7 @@ If you followed the previous pages, you probably notice two required software ar
 
 ### PHP
 
-Installing PHP 8.2 locally will make it easier to develop locally, as it will allow you to run Composer locally too. 
+Installing PHP 8.2 locally will make it easier to develop locally, as it will allow you to run Composer locally, too. 
 
 #### MacOS
 The easiest way to install PHP on MacOS is through Homebrew:
@@ -35,7 +35,7 @@ The easiest way to install PHP on MacOS is through Homebrew:
 2. Install [Homebrew](https://brew.sh) using their guide
 3. Install PHP 8.2, from the terminal : `brew install shivammathur/php/php@8.2` 
 
-[notice=tip]It's possible to use multiple version of PHP on MacOS. See [shivammathur/php documentation](https://github.com/shivammathur/homebrew-php#switch-between-php-versions).[/notice]
+[notice=tip]It's possible to use multiple versions of PHP on MacOS. See [shivammathur/php documentation](https://github.com/shivammathur/homebrew-php#switch-between-php-versions).[/notice]
 
 #### Linux & Windows WSL2
 Install PHP through the package manager. For example, on Ubuntu : 
@@ -52,7 +52,7 @@ Install PHP through the package manager. For example, on Ubuntu :
    ```
 
 #### Preflight checks
-Before going further, you should check which version of PHP will be run **in the command line**. It is very common for a single environment to have multiple different versions of PHP installed. If you've never run PHP from the command line before, you may not realize that the version of PHP run by the *webserver* (Apache, nginx, etc) can be different from the one that would get run in the *command line*.
+Before going further, you should check which version of PHP will be run **in the command line**. It is very common for a single environment to have multiple different versions of PHP installed. If you've never run PHP from the command line before, you may not realize that the version of PHP run by the *webserver* (Apache, nginx, etc.) can be different from the one that will run in the *command line*.
 
 To check the "command line" version, use the command:
 
@@ -84,13 +84,13 @@ php -m
 
 ### Composer
 
-Next step is to install [Composer 2](/installation/requirements/essential-tools-for-php#Composer). At this point, the installation is the same for MacOS, Linux and Windows WSL2. The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx). We **strongly recommend that you install [Composer globally](https://getcomposer.org/doc/00-intro.md#globally)** on your system. This will let you run Composer using the `composer` command.
+Next step is to install [Composer 2](/installation/requirements/essential-tools-for-php#composer-2). At this point, the installation is the same for MacOS, Linux and Windows WSL2. The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx). We **strongly recommend that you install [Composer globally](https://getcomposer.org/doc/00-intro.md#globally)** on your system. This will let you run Composer using the `composer` command.
 
 ```bash
 mv composer.phar /usr/local/bin/composer
 ```
 
-[notice=warning]Composer has a special installer that you can use for **Windows** - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe). However, since we're using WSL2 and it's linux backend, this installer **won't work** and won't be available in the command line.[/notice]
+[notice=warning]Composer has a special installer that you can use for **Windows** - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe). However, since we're using WSL2 (a Linux backend), this installer **won't work** and won't be available in the command line.[/notice]
 
 #### Preflight checks
 
@@ -141,21 +141,21 @@ UserFrosting build scripts will automatically install all other Node and NPM dep
 
 ### Mail
 
-As we've seen [in previous pages](/installation/requirements/basic-stack#smtp-mail-server), UserFrosting requires an SMTP server for sending email to your user, especially registration emails. However, in a local environment you don't want "test" emails to be sent to your user. You also don't want to fill your inbox with test emails.
+As we've seen [in previous pages](/installation/requirements/basic-stack#smtp-mail-server), UserFrosting requires an SMTP server for sending email to your users, especially registration emails. However, in a local environment you don't want "test" emails to be sent to your users. You also don't want to fill your inbox with test emails.
 
-This is where email testing tools comes in. When an email is sent by UserFrosting, instead of sending the email to a real mailbox, the email testing tool will capture the email and makes it available to you to read, regardless of the recipient of the email. In other words, if UserFrosting send five emails to five different email address, all five email will be capture and displayed in the same "test" inbox.
+This is where email testing tools come in. When an email is sent by UserFrosting, instead of sending the email to a real mailbox, the email testing tool will capture the email and makes it available to you to read, regardless of the recipient of the email. In other words, if UserFrosting send five emails to five different email address, all five email will be captured and displayed in the same "test" inbox.
 
-While multiple solutions are available, two are recommended by UserFrosting : **Mailpit** and **Mailtrap**. Each, and it's up to you to choose the one you prefer.
+While multiple solutions are available, two are recommended by UserFrosting : **Mailpit** and **Mailtrap**. It's up to you to choose the one you prefer.
 
-[notice]Please note that in production, you _will_ need to have a real, working SMTP service. If you do not already have a mail provider, please see our section on [mail providers](/mail/mail-providers) for our recommendations including both free and paid third-party mail services. While it's not recommended, a real SMTP server *can* be used in a development environment.[/notice]
+[notice]Please note that in production, you _will_ need to have a real, working SMTP service. If you do not already have a mail provider, please see our section on [mail providers](/going-live/mail-providers#choosing-a-mail-service-provider) for our recommendations including both free and paid third-party mail services. While it's not recommended, a real SMTP server *can* also be used in a development environment.[/notice]
 
 #### Mailpit
 
-[Mailpit](https://github.com/axllent/mailpit) is a small, fast, low memory, zero-dependency, multi-platform email testing tool & API for developers.Mailpit runs locally, acts as a *fake* SMTP server and provides a modern web interface to view & test captured emails. Oh, and **it's free and Open Source**!
+[Mailpit](https://github.com/axllent/mailpit) is a small, fast, low memory, zero-dependency, multi-platform email testing tool & API for developers. Mailpit runs locally, acts as a *fake* SMTP server and provides a modern web interface to view & test captured emails. Oh, and **it's free and Open Source**!
 
-Mailpit can be installed on [MacOS through Homebrew](https://github.com/axllent/mailpit#install-via-package-managers), on Linux/WSL2 through their Bash Script](https://github.com/axllent/mailpit#install-via-bash-script-linux--mac), or through [Docker](https://github.com/axllent/mailpit/wiki/Docker-images). By default, Mailpit UI can be access at [http://0.0.0.0:8025](http://0.0.0.0:8025).
+Mailpit can be installed on [MacOS through Homebrew](https://github.com/axllent/mailpit#install-via-package-managers), on Linux/WSL2 through their [Bash Script](https://github.com/axllent/mailpit#install-via-bash-script-linux--mac), or through [Docker](https://github.com/axllent/mailpit/wiki/Docker-images). By default, Mailpit UI can be access at [http://0.0.0.0:8025](http://0.0.0.0:8025).
 
-When using Mailpit with UserFrosting, the following params will need to be provided during UserFrosting installation, which we'll see on the next page : 
+When using Mailpit with UserFrosting, the following parameters will need to be provided during UserFrosting installation, which we'll see on the next page : 
 
 | Param       | Value     |
 |-------------|-----------|
@@ -166,11 +166,11 @@ When using Mailpit with UserFrosting, the following params will need to be provi
 
 #### Mailtrap
 
-[Mailtrap](https://mailtrap.io/) is similar to Mailpit, but it run in the cloud, so nothing to install. However, Mailtrap is not open source. Mailtrap features a forever free plan that offers the basic functionality for personal use. The *Free Sandbox* provides one inbox and 100 emails per month. It's a great way to get a started, as it's super easy and fast to setup. For a more permanent solution however, Mailpit should be preferred. 
+[Mailtrap](https://mailtrap.io/) is similar to Mailpit, but it runs in the cloud, so there's nothing to install. However, Mailtrap is not open source. Mailtrap features a forever free plan that offers basic functionality for personal use. The *Free Sandbox* provides one inbox and up to 100 emails per month. It's a great way to get started, as it's super easy and fast to setup. For a more permanent solution however, Mailpit should be preferred. 
 
-To get started, simply create your account on [Mailtrap website](https://mailtrap.io/register/signup). 
+To get started, simply create your account on [Mailtrap's website](https://mailtrap.io/register/signup). 
 
-When using Mailtrap with UserFrosting, the following params will need to be provided during UserFrosting installation, which we'll see on the next page : 
+When using Mailtrap with UserFrosting, the following parameters will need to be provided during UserFrosting installation, which we'll see on the next page : 
 
 | Param         | Value                    |
 |---------------|--------------------------|
@@ -179,21 +179,21 @@ When using Mailtrap with UserFrosting, the following params will need to be prov
 | SMTP_USER     | *See below*              |
 | SMTP_PASSWORD | *See below*              |
 
-The *user* and *password* is unique to your Mailtrap inbox, and can be found in your Mailtrap account.
+The *user* and *password* are unique to your Mailtrap inbox, and can be found in your Mailtrap account.
 
 ## Optional Installation
 
-The next tools are not required in your local development environment to run UserFrosting. However you may be interested in installing them anyway, or on the instructions for them if they apply to you. 
+The next tools are not required in your local development environment to run UserFrosting. However, you may be interested in installing them anyway; or the instructions may be helpful for those tools which apply to you. 
 
 ### Git
 
-By default, MacOS and other Linux operating systems should come with git preinstalled. On MacOS, Apple also ships a binary package of Git with Xcode. It might not be required to install it manually. If you would like to update your version of git, you can do so with their [installer](https://git-scm.com/downloads).
+By default, MacOS and other Linux operating systems should come with git preinstalled. On MacOS, Apple also ships a binary package of Git with Xcode. You may not need to install it manually. If you would like to update your version of git, you can do so with their [installer](https://git-scm.com/downloads).
 
 [notice=tip]If you're looking for a Git GUI and are working with Github, you might be interested in [Github Desktop](https://desktop.github.com).[/notice]
 
 ### Web Server Config
 
-As mentioned at the beginning of this page, it's not required to install a web server in your local stack, as we'll use the PHP Built-in Server. However, if you prefer to install Apache or Nginx, it's still possible to do so.
+As mentioned at the beginning of this page, it's not required to install a web server on your local stack, as we'll use the PHP Built-in Server. However, if you prefer to install Apache or Nginx, it's certainly possible to do so.
 
 To serve UserFrosting with a web server, you should configure your web server's document / web root to be the `/public` directory. The `index.php` in this directory serves as the front controller for all HTTP requests.
 
@@ -230,9 +230,9 @@ location / {
 
 ### Database
 
-As mentioned at the beginning of this page, it's not required to install a database provider in your local stack, as we'll use a file based SQLite database. However, if you prefer to install MySQL or Progress, it's still possible to do so.
+As mentioned at the beginning of this page, it's not required to install a database provider in your local stack, as we'll use the file-based SQLite database. However, if you prefer to install MySQL or Progress, you may do so.
 
-For example, MySQL can be installed natively on Linux. If you're interested, check out *Digital Ocean's* [*How To Install MySQL on Ubuntu 22.04*](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04) guide. On MacOS, it can obviously be installed through [Homebrew](https://formulae.brew.sh/formula/mysql).
+For example, MySQL can be installed natively on Linux. If you're interested, check out *Digital Ocean's [How To Install MySQL on Ubuntu 22.04]*(https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04) guide. On MacOS, it can obviously be installed through [Homebrew](https://formulae.brew.sh/formula/mysql).
 
 It's also possible to install each database provider with Docker:
 - [MySQL](https://hub.docker.com/_/mysql)
@@ -242,4 +242,4 @@ It's also possible to install each database provider with Docker:
 
 Before installing UserFrosting, you'll need to create a database and database user account. Consult your database documentation for more details. If you use [_phpmyadmin_](https://hub.docker.com/_/phpmyadmin) or a similar tool, you can create your database and database user through their interface. Otherwise, you can do it via the command line.
 
-[notice=note]"Database user account" and "UserFrosting user account" are not the same thing. The "database user account" is independent of UserFrosting. See your database technology's documentation for information on creating a database user. Make sure that your database user has all read and write permissions for your database.[/notice]
+[notice=note]"Database user account" and "UserFrosting user account" are not the same thing. The "database user account" is independent of UserFrosting. See your database's documentation for information on creating a database user. Make sure that your database user has all read and write permissions for your database.[/notice]
