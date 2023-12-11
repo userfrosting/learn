@@ -153,7 +153,7 @@ While multiple solutions are available, two are recommended by UserFrosting : **
 
 [Mailpit](https://github.com/axllent/mailpit) is a small, fast, low memory, zero-dependency, multi-platform email testing tool & API for developers. Mailpit runs locally, acts as a *fake* SMTP server and provides a modern web interface to view & test captured emails. Oh, and **it's free and Open Source**!
 
-Mailpit can be installed on [MacOS through Homebrew](https://github.com/axllent/mailpit#install-via-package-managers), on Linux/WSL2 through their [Bash Script](https://github.com/axllent/mailpit#install-via-bash-script-linux--mac), or through [Docker](https://github.com/axllent/mailpit/wiki/Docker-images). By default, Mailpit UI can be access at [http://0.0.0.0:8025](http://0.0.0.0:8025).
+Mailpit can be installed on [MacOS through Homebrew](https://github.com/axllent/mailpit#install-via-package-managers), on Linux/WSL2 through their Bash Script](https://github.com/axllent/mailpit#install-via-bash-script-linux--mac), or through [Docker](https://mailpit.axllent.org/docs/install/docker/). By default, Mailpit UI can be access at [http://0.0.0.0:8025](http://0.0.0.0:8025).
 
 When using Mailpit with UserFrosting, the following parameters will need to be provided during UserFrosting installation, which we'll see on the next page : 
 
