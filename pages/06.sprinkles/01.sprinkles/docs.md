@@ -25,14 +25,14 @@ Each Sprinkle can contain any or all of the following entities:
 - templates (Twig files)
 - "extra" content that does not fit into any of these categories
 
-As seen in the [App Structure Chapter](/structure), sprinkles can be located anywhere. The only requirement is it's **recipe** need to be accessible by PSR-4 compatible namespace.
+As seen in the [App Structure Chapter](/structure), sprinkles can be located anywhere. The only requirement is its **recipe** needs to be accessible through a PSR-4 compatible namespace.
 
 ### The Main Sprinkle
 
-Sprinkles are loaded in a specific order, defined by their dependencies, and entities of each type in one sprinkle can extend entities of the same type in other sprinkles. The topmost sprinkle, usually your own project, is called the **main sprinkle**. Every other sprinkles are called **depends sprinkles**. 
+Sprinkles are loaded in a specific order, defined by their dependencies, and entities of a given type in one sprinkle can extend entities of the same type in other sprinkles. The topmost sprinkle, usually your own project, is called the **main sprinkle**. All other sprinkles are called **depends sprinkles**. 
 
 ### Default Sprinkles
 
-A basic UserFrosting installation comes with fours sprinkles. A description of them can be found [in a previous chapter](/structure/sprinkles#bundled-sprinkles).
+A basic UserFrosting installation comes with four sprinkles. A description of them can be found [in a previous chapter](/structure/sprinkles#bundled-sprinkles).
 
 Now that we're familiar with the basic concept, let's dig into the [contents of a Sprinkle](/sprinkles/content)!
