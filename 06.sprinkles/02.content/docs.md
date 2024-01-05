@@ -35,7 +35,7 @@ Within each sprinkle, you will find any or all of the following directories and 
 └── webpack.config.js
 ```
 
-[notice=note]The file structure, is *somewhat* flexible. For example, `app/` can actually be named whatever you want. All content of `app/src/` can also be customized. However, the other directory inside `app/` (or whatever you call it) should be named the same, to allow your sprinkle to overwrite other sprinkles resources.[/notice]
+[notice=note]The file structure is *somewhat* flexible. For example, `app/` can be named whatever you want. All contents of `app/src/` can also be customized. However, other directories inside `app/` (or whatever you call it) should use the above naming system to allow your sprinkle to overwrite other sprinkles' resources.[/notice]
 
 Each of these directories corresponds to specific types of entities that make up your application. UserFrosting has different rules for how each type of entity can extend the entities of the same type loaded in previous Sprinkles. A brief description of each one is listed below.
 
@@ -69,7 +69,7 @@ The `cache` directory is used by the [Cache system](/advanced/caching) to store 
 
 ### /app/config
 
-`config` contains the configuration parameters for your Sprinkle. You can define configuration files for different environments (development, testing, production, etc). For each environment, the configuration files in each Sprinkle will be merged together at runtime. See [Chapter 6](/configuration/config-files) for more information.
+`config` contains the configuration parameters for your Sprinkle. You can define configuration files for different environments (development, testing, production, etc). For each environment, the configuration files in each Sprinkle will be merged together at runtime. See [Chapter 9](/configuration/config-files) for more information.
 
 ### /app/locale
 
@@ -77,7 +77,7 @@ The `locale` directory contains [translation files](/i18n) for your Sprinkle. Li
 
 Just as with configuration files, UserFrosting will recursively merge translation files for the currently selected language(s) from each loaded Sprinkle. This means that each subsequently loaded Sprinkle can override translations from previous Sprinkles, or define new ones entirely.
 
-See [Chapter 16](/i18n) for more information on UserFrosting's internationalization and localization system.
+See [Chapter 17](/i18n) for more information on UserFrosting's internationalization and localization system.
 
 ### /app/logs
 
@@ -99,7 +99,7 @@ The `storage` directory is used to store files managed by Filesystem service. Th
 
 ### /app/templates
 
-To separate content and logic, UserFrosting uses the popular [Twig](http://twig.sensiolabs.org/) templating engine. Since Twig has its own system for [loading templates](http://twig.sensiolabs.org/doc/api.html#built-in-loaders), UserFrosting builds upon this to allow overriding templates in Sprinkles. See [Templating with Twig](/templating-with-twig) for more information on how Twig is integrated into UserFrosting.
+To separate content and logic, UserFrosting uses the popular [Twig](http://twig.symfony.com/) templating engine. Since Twig has its own system for [loading templates](http://twig.symfony.com/doc/api.html#built-in-loaders), UserFrosting builds upon this to allow overriding templates in Sprinkles. See [Templating with Twig](/templating-with-twig) for more information on how Twig is integrated into UserFrosting.
 
 ### /app/test
 
