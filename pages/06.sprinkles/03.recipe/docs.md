@@ -15,11 +15,11 @@ Each Sprinkle **must have** a recipe. It's not possible for a sprinkle to exist 
 The Sprinkle recipe is a simple PHP class that provides standard methods which will be called by services to retrieve information about your Sprinkle structure and the class it's registering. Every sprinkle recipes **MUST** implement the `UserFrosting\Sprinkle\SprinkleRecipe` interface. If you started from the [Skeleton](/structure/introduction#the-app-skeleton-your-project-s-template), you already have a basic recipe.
 
 This interface requires you to implement the following method in your recipe:  
-- [`getName`](#getname): Returns the name of the Sprinkle.
-- [`getPath`](#getpath): Returns the path of the Sprinkle. 
-- [`getSprinkles`](#getsprinkles): Returns an array of dependent sub-sprinkles recipe. 
-- [`getRoutes`](#getroutes): Return an array of routes classes.
-- [`getServices`](#getservices): Return an array of services classes.
+- [`getName`](#name): Returns the name of the Sprinkle.
+- [`getPath`](#path): Returns the path of the Sprinkle. 
+- [`getSprinkles`](#dependent-sprinkles): Returns an array of dependent sub-sprinkles recipe. 
+- [`getRoutes`](#routes): Return an array of routes classes.
+- [`getServices`](#services): Return an array of services classes.
 
 [notice=note]Since the class must implement the `SprinkleRecipe` interface, all of those methods are mandatory. Failure to implement the interface will result in an exception being thrown. However, it doesn't mean a method must return data. It's perfectly fine for some method to return an empty string or empty array.[/notice]
 
@@ -250,7 +250,7 @@ Methods to implements :
 Interface : `UserFrosting\Sprinkle\Core\Sprinkle\Recipe\SeedRecipe`
 
 Methods to implements : 
-- `getSeeds` : Return a list of [Seeds](database/seeding) classes
+- `getSeeds` : Return a list of [Seeds](/database/seeding) classes
 
     **Example:**
     ```php 
@@ -268,7 +268,7 @@ Methods to implements :
 Interface : `UserFrosting\Sprinkle\MiddlewareRecipe`
 
 Methods to implements : 
-- `getMiddlewares` : Return a list of [Middlewares](advanced/middlewares) classes
+- `getMiddlewares` : Return a list of [Middlewares](/advanced/middlewares) classes
 
     **Example:**
     ```php
@@ -285,7 +285,7 @@ Methods to implements :
 Interface : `UserFrosting\Event\EventListenerRecipe`
 
 Methods to implements : 
-- `getEventListeners` : Allows to register [Event Listeners](/advanced/events)
+- `getEventListeners` : Allows to register [Event Listeners](/advanced/events#listener)
 
     **Example:**
     ```php
