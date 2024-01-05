@@ -35,4 +35,4 @@ Sprinkles are loaded in a specific order, defined by their dependencies, and ent
 
 A basic UserFrosting installation comes with fours sprinkles. A description of them can be found [in a previous chapter](/structure/sprinkles#bundled-sprinkles).
 
-Now that we're familiar with the basic concept, let's dig into the [contents of a Sprinkle](/sprinkles/contents)!
+Now that we're familiar with the basic concept, let's dig into the [contents of a Sprinkle](/sprinkles/content)!
