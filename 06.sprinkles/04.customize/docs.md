@@ -10,15 +10,15 @@ This guide assumes that you've already completed the [installation guide](/insta
 
 ## Custom Namespace and Name
 
-The Skeleton application used as a base installation for every new installation since UserFrosting 5 is a great way to start your UserFrosting project. It comes with some default values which you can change to make your App yours, starting with the PHP Namespace, info in the `composer.json` and the sprinkle name in the Sprinkle Recipe.
+The Skeleton application, used as a base installation for every new installation since UserFrosting 5, is a great way to start your UserFrosting project. It comes with some default values which you can change to make your App yours, starting with the PHP Namespace, info in the `composer.json`, and the sprinkle name in the Sprinkle Recipe.
 
 ### composer.json
 
-The most important part to edit here is the Namespace. The namespace tells Composer where to look for source code in a PHP application. By default, the base namespace in the Skeleton is `UserFrosting\App`. You can change this to whatever you want. The usual scheme is `{Vendor}\{Project}`, where *Vendor* is your brand and *Project* your project name, but there's no *law* you have to follow here.
+The most important part to edit here is the Namespace. The namespace tells Composer where to look for source code in a PHP application. By default, the base namespace in the Skeleton is `UserFrosting\App`, but you can change this to whatever you want. The usual scheme is `{Vendor}\{Project}`, where *Vendor* is your brand and *Project* your project name, but there's no *law* you have to follow here.
 
 [notice]Compared to previous version of UserFrosting, **starting from UserFrosting 5**, the namespace isn't strict anymore. There's no more convention to follow.[/notice]
 
-The namespace is defined in the `composer.json` file in the base directory of our sprinkle. The default file looks like this : 
+The namespace is defined in the `composer.json` file in the base directory of your sprinkle. The default file looks like this : 
 
 Original **composer.json**
 ```json
@@ -83,7 +83,7 @@ Original **composer.json**
 }
 ```
 
-Let's changes thing up. All the metadata can be customized to reflect your project, and we'll define the new namespace to `Owlfancy\Site` : 
+Let's change thing up. All the metadata can be customized to reflect your project, and we'll define the new namespace to `Owlfancy\Site` : 
 
 Modified **composer.json**
 ```json
@@ -178,7 +178,7 @@ class Owlfancy implements
 
 ### The entry files
 
-There's still one last thing to edit. Since we change the recipe from `UserFrosting\App\MyApp` to `Owlfancy\Site\Owlfancy` in the entry files, which are `public/index.php` and `bakery`:
+There's still one last thing to edit. Since we changed the recipe from `UserFrosting\App\MyApp` to `Owlfancy\Site\Owlfancy`, we also need to update that in the entry files, which are `public/index.php` and `bakery`:
 
 **/public/index.php**
 ```php
@@ -266,10 +266,10 @@ In `default.php`, add the following:
     ];
 ```
 
-This customizes some basic properties for our application - set your site title, author, author's URL, and timezone. Reload the page, and you should see the new site title appear in the upper left corner:
+This customizes some basic properties for our application - you can set your site title, author, author's URL, and timezone. Reload the page, and you should see the new site title appear in the upper left corner:
 
 ![Overriding site settings in config file](/images/site-title.png)
 
-This is because the template for this page is dynamically pulling that particular piece of text from your new configuration file. Note that your value for `site.title` overrides the value of `site.title` in the core sprinkle's configuration file.
+The template for this page dynamically pulls that particular piece of text from your new configuration file. Note that your value for `site.title` overrides the value of `site.title` in the core sprinkle's configuration file.
 
 [notice=tip]You can [override configuration values](/configuration/config-files) from any previously loaded sprinkles, including the default sprinkles that ship with UserFrosting. Check the Core sprinkle and the Account sprinkle `/app/config/default.php` for a complete list.[/notice]
