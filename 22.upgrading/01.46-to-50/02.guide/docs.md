@@ -295,8 +295,8 @@ Not must as changed regarding the Resource Locator. Refer to the [Locator Servic
 
 Two points are to be considered when working with templates:
 
-1. Sprinkles have been renamed. If your extending a bundle sprinkle, you need to update the reference : `{% extends "@admin/pages/activities.html.twig" %}` => `{% extends "@admin-sprinkle/pages/activities.html.twig" %}`
-2. In a similar way, templates have been moved to the "AdminLTE" sprinkle. Be sure to check the new structure if your extending templates.
+1. Sprinkles have been renamed. If you're extending a default sprinkle, you'll need to update the sprinkle reference in the `extends` tag. For  `{% extends "@admin/pages/activities.html.twig" %}` => `{% extends "@admin-sprinkle/pages/activities.html.twig" %}`
+2. In a similar way, some Twig templates have been moved to the "AdminLTE" sprinkle. Be sure to check the new structure if you're extending templates with the `extends` tag. Some templates file previously in the Admin Sprinkle might be in the AdminLTE sprinkle now.
 3. FontAwesome has been updated, and references to icon must also be updated : `fa` -> `fas`
 
 ### Misc
