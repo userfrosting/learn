@@ -222,7 +222,6 @@ A few other key point to know:
 2. Controller resolution should be updated to make use of [PHP’s `::class` operator](https://www.slimframework.com/docs/v4/objects/routing.html#container-resolution)
 3. Middleware must now be called by their class name. For example, `authGuard` must be updated to `UserFrosting\Sprinkle\Account\Authenticate\AuthGuard::class`
 
-
 ### Sprunje
 
 The sprunje class used to accept options in the constructor. To make it easier to [inject dependencies](/dependency-injection/the-di-container), options should now be defined using the `setOptions` method. Sprunje should now be injected into controllers, 
@@ -270,6 +269,8 @@ Simple changes have been made to controller classes :
    1. For example, to use the `view` service, inject `Slim\Views\Twig;` 
 
 See [Controller classes](/routes-and-controllers/controller-classes) guide for more information.
+
+[note]If your sprinkle extends a controller class from a default sprinkle instead of `SimpleController`, note that **every** controller classes from default sprinkles have been moved, renamed and rewritten as *Action classes*. Make sure to check out the sprinkle source code to find out how to update your sprinkle.[/note]
 
 ### Bakery
 
