@@ -32,7 +32,7 @@ $owl = new Owl();
 
 This might seem like a nice, convenient way of packaging things - after all, `Nest` seems like an implementation detail that we shouldn't have to worry about. However, what happens if we come along later with an `ImprovedNest`, and we want our `Owl` to use that instead?
 
-Unfortunately we can't. Our classes `Owl` and `Nest` are what we would call **tightly coupled** - Owls can use Nests and _only_ Nests. Dependency injection solves this problem:
+Unfortunately, we can't. Our classes `Owl` and `Nest` are what is called **tightly coupled** - Owls can use Nests and _only_ Nests. Dependency injection solves this problem:
 
 ```php
 class Owl
@@ -104,10 +104,10 @@ class Owl
 }
 ```
 
-In the above example, it doesn't matter if `Owl` received a `Nest` or an `ImprovedNest`, or even a `SuperDuperNest`, as long as they all obey the same definition defined by the `NestInterface`. Moreover, the Owl class can confidently call the `getSize` method of the injected `$nest` property, because interface make sure that method is available, no matter which implementation of the `NestInterface` it receive. 
+In the above example, it doesn't matter if `Owl` received a `Nest` or an `ImprovedNest`, or even a `SuperDuperNest`, as long as they all obey the same definition defined by the `NestInterface`. Moreover, the Owl class can confidently call the `getSize` method of the injected `$nest` property, because the interface makes sure that method is available, no matter which implementation of the `NestInterface` it receives. 
 
-Using interfaces to declare what kind of object a class is expected to receive, even if you don't plan to have multiple "nests" types, is a key element in *Autowiring* that we'll see shortly.
+Using interfaces to declare what kind of object a class is expected to receive, even if you don't plan to have multiple "nest" types, is a key element in *Autowiring* that we'll see shortly.
 
 This is of course a contrived example, but the general strategy of keeping your classes loosely coupled is a good way to make your code more reusable and easily tested.
 
-[notice=tip]You can learn more, and see other examples on the [PHP-DI Website : Understanding Dependency Injection](https://php-di.org/doc/understanding-di.html).[/notice]
+[notice=tip]You can learn more, and see other examples, on the [PHP-DI Website : Understanding Dependency Injection](https://php-di.org/doc/understanding-di.html).[/notice]
