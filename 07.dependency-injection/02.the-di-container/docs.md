@@ -151,7 +151,7 @@ return [
 ];
 ```
 
-The "nest of choice" can now be selected in the service provider. It could also be selected using another kind of logic, for example using a `Config` service (and the new for PHP 8.0 [match expression](https://www.php.net/manual/en/control-structures.match.php)): 
+The "nest of choice" can now be selected in the service provider. It could also be selected using another kind of logic, for example using a `Config` service and the new for PHP 8.0 [match expression](https://www.php.net/manual/en/control-structures.match.php): 
 ```php
 return [
     // Inject Config to decide which nest to use, and the Container to get the actual class
@@ -194,7 +194,6 @@ $nest = $this->ci->get(Nest::class); // Return `Nest`
 $test = new AcceptImprovedNest($nest); // Throws TypeError Exception, Nest is not a subtype of ImprovedNest
 ```
 
-In most case it's considered "best practice" to type-hint against interfaces, unless you explicitly required an
-
+[notice=info]In most cases it's considered "best practice" to type-hint against interfaces, unless you explicitly required a specific class to fit a very specific need, said class is very basic and it's not worth it, or you don't plan on ever extending or distributing your code.[/notice]
 
 The next page shows a small list the **default services** that ship with UserFrosting, as well as tips and trick to replace. After that, we talk about how you can **add** your own services, **extend** existing services, or completely **replace** certain services in your own Sprinkle.
