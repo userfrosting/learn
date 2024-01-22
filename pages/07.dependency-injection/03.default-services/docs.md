@@ -18,7 +18,7 @@ Third party services are also used directly throughout the code. They can be inj
 
 ### `UserFrosting\Alert\AlertStream`
 
-This service handles the [alert message stream](/routes-and-controllers/alert-stream), sometimes known as "flash messages". See [Section 9](/routes-and-controllers/alert-stream) for more information.
+This service handles the [alert message stream](/advanced/alert-stream)), sometimes known as "flash messages". (See Chapter 18 for more information.)
 
 ### `Illuminate\Cache\Repository as Cache`
 
@@ -64,7 +64,7 @@ Creates a `Throttler` object, which handles [request throttling](/routes-and-con
 
 ### `Slim\Interfaces\RouteParserInterface`
 
-See [Chapter 9](/routes-and-controllers) for more information about defining routes and [Slim Documentation](https://www.slimframework.com/docs/v4/objects/routing.html#route-names) on how to use the Route Parser.
+See [Chapter 8](/routes-and-controllers) for more information about defining routes and [Slim Documentation](https://www.slimframework.com/docs/v4/objects/routing.html#route-names) on how to use the Route Parser.
 
 ### `UserFrosting\Session\Session`
 
@@ -83,13 +83,13 @@ See [Templating with Twig](/templating-with-twig) for more information about Twi
 
 ### `UserFrosting\I18n\Translator`
 
-Sets up the `Translator` object (`UserFrosting\I18n\Translator`) for translation, localization, and internationalization of your site's contents. See [Chapter 16](/i18n) for more information.
+Sets up the `Translator` object (`UserFrosting\I18n\Translator`) for translation, localization, and internationalization of your site's contents. See [Chapter 17](/i18n) for more information.
 
 ### `UserFrosting\UniformResourceLocator\ResourceLocatorInterface`
 
-An instance of our own [Uniform Resource Locator class](https://github.com/userfrosting/framework/tree/develop-5.0/src/UniformResourceLocator#readme), which provides a unified method of accessing Sprinkle entities via [streams](https://webmozart.io/blog/2013/06/19/the-power-of-uniform-resource-location-in-php/).
+An instance of our own [Uniform Resource Locator class](https://github.com/userfrosting/framework/tree/develop-5.0/src/UniformResourceLocator#readme), which provides a unified method of accessing Sprinkle entities via streams.
 
-See [Chapter 17](/advanced/locator) for more information.
+See [Chapter 18](/advanced/locator) for more information.
 
 ### `UserFrosting\Sprinkle\SprinkleManager`
 
@@ -99,25 +99,25 @@ The `SprinkleManager` can be used to get a list of all sprinkles currently loade
 
 ### `UserFrosting\Sprinkle\Account\Authenticate\Authenticator`
 
-Creates an instance of `Authenticator`, which handles authenticating and logging in users. See [Chapter 7](/users/user-accounts#authentication-and-authorization) for more information.
+Creates an instance of `Authenticator`, which handles authenticating and logging in users. See [Chapter 10](/users/user-accounts#authentication-and-authorization) for more information.
 
 ### `UserFrosting\Sprinkle\Account\Authenticate\AuthGuard`
 
-The `AuthGuard` middleware, which is bound to routes that require authentication to access ("protected routes"). See [Chapter 7](/users/user-accounts#authentication-and-authorization) for more information.
+The `AuthGuard` middleware, which is bound to routes that require authentication to access ("protected routes"). See [Chapter 10](/users/user-accounts#authentication-and-authorization) for more information.
 
 ### `UserFrosting\Sprinkle\Account\Authenticate\GuestGuard`
 
-The `GuestGuard` middleware, which is bound to routes that require a guest (non logged-in user). See [Chapter 7](/users/user-accounts#authentication-and-authorization) for more information.
+The `GuestGuard` middleware, which is bound to routes that require a guest (non logged-in user). See [Chapter 10](/users/user-accounts#authentication-and-authorization) for more information.
 
 ### `UserFrosting\Sprinkle\Account\Log\AuthLogger`
 
-Monolog `Logger` object for logging detailed information about access control checks. See [Chapter 7](/users/access-control) for more information about access control. Note that access control checks will only be logged if `debug.auth` is set to `true` in the configuration.
+Monolog `Logger` object for logging detailed information about access control checks. See [Chapter 10](/users/access-control) for more information about access control. Note that access control checks will only be logged if `debug.auth` is set to `true` in the configuration.
 
 ### `UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager` 
 
 *Associated Interface : `UserFrosting\Sprinkle\Account\Authorize\AuthorizationManagerInterface`*
 
-Creates an instance of `AuthorizationManager`, which handles access control checks via the `checkAccess` method. This service also defines several default access condition callbacks. More information, and a complete list of default access condition callbacks, can be found in [Chapter 7](/users/access-control).
+Creates an instance of `AuthorizationManager`, which handles access control checks via the `checkAccess` method. This service also defines several default access condition callbacks. More information, and a complete list of default access condition callbacks, can be found in [Chapter 10](/users/access-control).
 
 ### `UserFrosting\Sprinkle\Account\Authenticate\Hasher`
 
