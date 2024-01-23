@@ -6,11 +6,11 @@ taxonomy:
     category: docs
 ---
 
-As mentioned in the last section, each Sprinkle can set up its own services through **services providers**. The [bundled sprinkles](/structure/sprinkles#bundled-sprinkles) set up many services that are essential to UserFrosting's functionality. These services can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory. 
+As mentioned in the last section, each sprinkle can set up its own services through **service providers**. The [bundled sprinkles](/structure/sprinkles#bundled-sprinkles) set up many services that are essential to UserFrosting's functionality. These services can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory. 
 
 But this is just the tip of the iceberg, since _Autowiring_ is also used throughout the source code to inject other types of classes pretty much everywhere.
 
-This is a short list of the most important services defined in each Sprinkle. The fully qualified class names are use, so you can easily **inject** them in your controller or other classes.
+This is a short list of the most important services defined in each sprinkle. The fully qualified class names are used, so you can easily **inject** them in your controller or other classes.
 
 Third party services are also used directly throughout the code. They can be injected using their original fully qualified class name, while still being configured in a sprinkle.
 
@@ -26,7 +26,7 @@ Creates an instance of a Laravel [Cache](https://laravel.com/docs/8.x/cache). Se
 
 ### `UserFrosting\Config\Config`
 
-Constructs a `Config` object, which [processes and provides a merged repository for the configuration files](/configuration/config-files) across all loaded Sprinkles. Additionally, it imports the [Dotenv](https://github.com/vlucas/phpdotenv) to allow automatically loading environment variables from `.env` file.
+Constructs a `Config` object, which [processes and provides a merged repository for configuration files](/configuration/config-files) across all loaded sprinkles. Additionally, it imports [Dotenv](https://github.com/vlucas/phpdotenv) to allow automatically loading environment variables from `.env` file.
 
 The `config` service also builds the `site.uri.public` config variable from the component values specified in the configuration.
 
@@ -64,7 +64,7 @@ Creates a `Throttler` object, which handles [request throttling](/routes-and-con
 
 ### `Slim\Interfaces\RouteParserInterface`
 
-See [Chapter 8](/routes-and-controllers) for more information about defining routes and [Slim Documentation](https://www.slimframework.com/docs/v4/objects/routing.html#route-names) on how to use the Route Parser.
+See [Chapter 8](/routes-and-controllers) for more information about defining routes, and the [Slim Documentation](https://www.slimframework.com/docs/v4/objects/routing.html#route-names) on how to use the Route Parser.
 
 ### `UserFrosting\Session\Session`
 
@@ -99,11 +99,11 @@ The `SprinkleManager` can be used to get a list of all sprinkles currently loade
 
 ### `UserFrosting\Sprinkle\Account\Authenticate\Authenticator`
 
-Creates an instance of `Authenticator`, which handles authenticating and logging in users. See [Chapter 10](/users/user-accounts#authentication-and-authorization) for more information.
+Creates an instance of `Authenticator`, which handles user authentication and logins. See [Chapter 10](/users/user-accounts#authentication-and-authorization) for more information.
 
 ### `UserFrosting\Sprinkle\Account\Authenticate\AuthGuard`
 
-The `AuthGuard` middleware, which is bound to routes that require authentication to access ("protected routes"). See [Chapter 10](/users/user-accounts#authentication-and-authorization) for more information.
+The `AuthGuard` middleware, which is bound to routes which require authentication to access ("protected routes"). See [Chapter 10](/users/user-accounts#authentication-and-authorization) for more information.
 
 ### `UserFrosting\Sprinkle\Account\Authenticate\GuestGuard`
 
@@ -125,4 +125,4 @@ Creates an instance of `Hasher`, which handles password hashing and validation.
 
 ### `UserFrosting\Sprinkle\Account\Log\UserActivityLogger`
 
-Sets up a Monolog logger, which uses `UserFrosting\Sprinkle\Account\Log\UserActivityDatabaseHandler` and `UserFrosting\Sprinkle\Account\Log\UserActivityProcessor` to allow logging of user activities to the `activities` database table. By using Monolog, it makes it easy to swap other storage solutions such as Redis or Elastic Search.
+Sets up a Monolog `Logger` object, which uses `UserFrosting\Sprinkle\Account\Log\UserActivityDatabaseHandler` and `UserFrosting\Sprinkle\Account\Log\UserActivityProcessor` to allow logging of user activities to the `activities` database table. Monolog makes it easy to swap to other storage solutions such as Redis or Elastic Search.
