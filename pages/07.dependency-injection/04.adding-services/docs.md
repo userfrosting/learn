@@ -8,7 +8,7 @@ taxonomy:
 
 You'll probably want to create your own services to modularize certain aspects of your own project. For example, if your application needs to interact with some third-party API like Google Maps, you might create a `MapBuilder` class that encapsulates all of that functionality. This is a cleaner and more manageable alternative to simply stuffing all of your code directly into your controller classes.
 
-If you want to use a single instance of `MapBuilder` throughout your application, you'll probably end up defining it as a service. To do this, you'll need to create a new  `MapBuilderService` class in your site Sprinkle and register it in your Sprinkle [recipe](/sprinkles/recipe#getservices).
+If you want to use a single instance of `MapBuilder` throughout your application, you'll probably end up defining it as a service. To do this, you'll need to create a new  `MapBuilderService` class in your site Sprinkle and register it in your Sprinkle [recipe](/sprinkles/recipe#services).
 
 You can actually create one big service provider for all your services, but it's best to create different provider classes for each services. This makes it easier to test and debug each of your services. It also makes things easier if you need to extend or disable a service in another sprinkle down the road. With this setup, each service reside in it's own provider class instead of the global `ServiceProvider` class. For example :
 
@@ -92,4 +92,4 @@ class MyApp implements SprinkleRecipe
 }
 ```
 
-That's it! Behind the scenes, UserFrosting will register every definition from each service provider with the DI container, following the sprinkle [dependency tree](/sprinkles/recipe#getsprinkles) during the [application lifecycle](/advanced/application-lifecycle).
+That's it! Behind the scenes, UserFrosting will register every definition from each service provider with the DI container, following the sprinkle [dependency tree](/sprinkles/recipe#dependent-sprinkles) during the [application lifecycle](/advanced/application-lifecycle).
