@@ -10,7 +10,7 @@ The Sprinkle Recipe dictates how your sprinkle is built, like a blueprint. UserF
 
 Each sprinkle **must have** a recipe. It's not possible for a sprinkle to exist without a recipe, as it won't be possible to expose its class and service to the framework. It's possible however to customize other sprinkles, as we'll see later on this page. 
 
-## The Sprinkle Recipe
+## The `SprinkleRecipe` Interface
 
 The Sprinkle Recipe is a simple PHP class that provides standard methods which will be called by services to retrieve information about your sprinkle structure and the class it's registering. Every sprinkle recipe **MUST** implement the `UserFrosting\Sprinkle\SprinkleRecipe` interface. If you started from the [Skeleton](/structure/introduction#the-app-skeleton-your-project-s-template), you already have a basic recipe.
 
