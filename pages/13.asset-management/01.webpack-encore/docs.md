@@ -59,14 +59,14 @@ Where Composer has it's `composer.json` file to defines the project dependencies
 2. **devDependencies** : Theses are CLI dependencies. They are required to run the building process;
 3. **scripts** : npm command alias for dependencies commands.
 
-In the example above, you can see both the *Admin Sprinkle* and *AdminLTE Theme* are included as dependencies. While theses are also included by Composer, it's necessary to include them also here, so their assets can be accessed by npm and Webpack Encore. The dev dependencies includes, among others, Webpack Encore. It will then be installed when running `npm install`. Finally, the *scripts* section expose the encore build tasks.
+In the example above, you can see both the *Admin Sprinkle* and *AdminLTE Theme* are included as dependencies. While theses are also included by Composer, it's necessary to include them also here, so their assets can be accessed by npm and Webpack Encore. The dev dependencies includes, among others, Webpack Encore. It will then be installed when running `npm install`, `php bakery assets:build` or `php bakery assets:install`. Finally, the *scripts* section expose the encore build tasks.
 
-Dependencies installation will be automatically handled by the `php bakery bake` command. Alternatively, you can still uses the typical npm commands from the command line:
+Dependencies installation will be automatically handled by the `php bakery bake` or `php bakery assets:build` commands. Alternatively, you can still uses the typical npm commands from the command line:
 
 ```bash
 $ npm install
 
-# Or
+# or
 
 $ npm update
 ```
@@ -173,10 +173,10 @@ module.exports = Encore.getWebpackConfig();
 
 ## Compiling assets
 
-To build the assets, run the following [Bakery command](/cli/commands#build-assets) : 
+To build the assets, run the following [Bakery command](/cli/commands#assets:build) : 
 
 ```bash
-$ php bakery build-assets
+$ php bakery assets:build
 ```
 
 The resulting compiled assets will be stored in `/public/assets/`, as defined in `webpack.config.js`.
@@ -184,7 +184,11 @@ The resulting compiled assets will be stored in `/public/assets/`, as defined in
 The watch option can be used when actively working on a file. It will compile assets and automatically re-compile when a file change:
 
 ```bash
-$ php bakery build-assets --watch
+$ php bakery assets:build --watch
+
+# or 
+
+$ php bakery assets:webpack --watch
 ```
 
 [notice=warning]Whenever you make changes in your `webpack.config.js` file, you must stop and restart encore when using the "watch" option.[/notice]
@@ -192,7 +196,11 @@ $ php bakery build-assets --watch
 To compile assets for a **production** environment, simply use:
 
 ```bash
-$ php bakery build-assets --production
+$ php bakery assets:build --production
+
+# or 
+
+$ php bakery assets:webpack --production
 ```
 
 [notice=tip]If you have shell access (for example, [using a VPS](/going-live/vps-production-environment)), you can build production assets directly on your host server as part of your deployment process. Otherwise, you can build them locally before transferring your application to the host server. Unlike Composer, frontend dependencies doesn't depend on any server configuration, so it is safe to build locally and upload the resulting build.[/notice]
@@ -200,13 +208,15 @@ $ php bakery build-assets --production
 Alternatively, the underlying npm scripts can also be executed directly. However, be aware some preflight check are executed by Bakery (e.g.: make sure `webpack.config.js` exist), and won't be executed if running the scripts directly.
 
 ```bash
-# Compile assets once
+# Compile assets once (Same as `php bakery assets:webpack`)
 npm run dev
 
 # Compile assets and automatically re-compile when files change
+# (Same as php bakery assets:webpack --watch)
 npm run watch
 
 # Compile for production
+# (Same as php bakery assets:webpack --production)
 npm run build
 ```
 
