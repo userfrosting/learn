@@ -5,11 +5,11 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
-
-[notice]To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
 
 ## Installation
+
+### Route error
+<!-- TODO -->
 
 ### I get a Node/npm error when running `php bakery bake`.
 
@@ -20,6 +20,8 @@ If installation of npm dependencies fails, see [npm](/basics/requirements/essent
 When trying to view your site you get an error similar to this :
 
 > An exception has been thrown during the rendering of a template ("The asset 'vendor/font-awesome/css/font-awesome.css' could not be found. Referenced in '/home/vagrant/userfrosting/app/sprinkles/core/asset-bundles.json [css/main]'.").
+
+<!-- TODO : The above error needs to be updated ! -->
 
 This is an indication that asset build failed or you missed a step in the installation process. Try [running the installer](/installation/environment/native#run-the-installer) again with `php bakery bake` and check for any error messages.
 
@@ -62,7 +64,7 @@ For more information, see [this blog article](http://seventhsoulmountain.blogspo
 
 ## Sprinkles
 
-### I get an error like "There is no class mapped" or "class not found" when using the class mapper or running my migrations.
+<!-- ### I get an error like "There is no class mapped" or "class not found" when using the class mapper or running my migrations.
 
 The "There is no class mapped" error occurs when you attempt to use the [dynamic class mapper](/advanced/class-mapper) with an identifier that has not been successfully mapped to a class name. If you are sure that you defined the mapping in your Sprinkle's `ServicesProvider` class, it is likely that UserFrosting is simply not even finding your `ServicesProvider` class itself. This is usually due to using an incorrect namespace for your Sprinkle.
 
@@ -90,7 +92,7 @@ Some examples:
 
 We **strongly recommend** using only lowercase words separated with `-` for Sprinkle directory names.
 
-[notice=note]You may need to re-run Composer if you change your Sprinkle directory path or namespace. On certain operating systems with case-insensitive filesystems, Composer may not update the directory -> namespace mappings correctly. You may need to completely erase your `app/vendor` directory and re-run `composer install` in these cases.[/notice]
+[notice=note]You may need to re-run Composer if you change your Sprinkle directory path or namespace. On certain operating systems with case-insensitive filesystems, Composer may not update the directory -> namespace mappings correctly. You may need to completely erase your `app/vendor` directory and re-run `composer install` in these cases.[/notice] -->
 
 ## Deployment/Production
 
