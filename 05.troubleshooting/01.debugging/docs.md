@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 As we mentioned in [Chapter 2](/background/the-client-server-conversation), a web application is not a single piece of software. It consists of the server running PHP code, the client (browser) running Javascript and rendering the web page, and the conversation between the two parties. Things can go wrong in any of these three places.
 
@@ -71,7 +70,7 @@ Then, to open Safari's Web Inspector:
 
 <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>C</kbd>
 
-#### Internet Explorer (and Edge)
+#### Edge
 
 To open Internet Explorer's Developer Tools, simply press <kbd>F12</kbd>.
 
@@ -125,7 +124,7 @@ If a user encounters a runtime error in production (hopefully this will never ha
 
 You can read more about how the error-handling system as a whole works in the [Advanced](/advanced/error-handling) chapter.
 
-[notice=warning]Some runtime errors cannot be caught by the error-handling system - for example, PHP fatal errors and syntax errors. If these occur, a plainly formatted error message will be generated. Depending on your settings for PHP's `log_errors` and `display_errors` settings, you can determine whether the fatal error message is displayed and/or logged. Both `display_errors` and `log_errors` are automatically set by UserFrosting under the `php` key in your [configuration files](/configuration/config-files). If UF detects that `display_errors` is disabled, it will display a generic "server error" message instead of the actual error. If `log_errors` is enabled, the actual error message will be logged with PHP's [native error logging](http://php.net/manual/en/book.errorfunc.php). You should make sure that you have specified a path to an error log file (what we will call the **php error log**) with the `error_log` directive.[/notice]
+[notice=warning]Some runtime errors cannot be caught by the error-handling system - for example, PHP fatal errors, syntax errors or exception in the error handling system itself. If these occur, a plainly formatted error message will be generated. Depending on your settings for PHP's `log_errors` and `display_errors` settings, you can determine whether the fatal error message is displayed and/or logged. Both `display_errors` and `log_errors` are automatically set by UserFrosting under the `php` key in your [configuration files](/configuration/config-files). If UF detects that `display_errors` is disabled, it will display a generic "server error" message instead of the actual error. If `log_errors` is enabled, the actual error message will be logged with PHP's [native error logging](http://php.net/manual/en/book.errorfunc.php). You should make sure that you have specified a path to an error log file (what we will call the **php error log**) with the `error_log` directive.[/notice]
 
 ### Logic Errors
 
@@ -135,9 +134,9 @@ Aside from writing [unit tests](http://www.phptherightway.com/#test_driven_devel
 
 #### Query debugging
 
-Query debugging allows you to view the raw SQL queries that are executed in your [Eloquent](/database/overview) data models and queries. To enable query debugging, set the `debug.queries` setting to `true` in your [configuration file](/configuration/config-files). All successful SQL queries will be logged to `app/logs/userfrosting.log`:
+Query debugging allows you to view the raw SQL queries that are executed in your [Eloquent](/database/overview) data models and queries. To enable query debugging, set the `debug.queries` config to `true` in your [configuration file](/configuration/config-files). All successful SQL queries will be logged to `app/logs/userfrosting.log`:
 
-```
+```txt
 [2017-06-16 03:41:42] query.DEBUG: Query executed on database [default]: {
     "query": "select * from `users` where `users`.`id` = ? and `users`.`deleted_at` is null limit 1",
     "bindings": [
@@ -149,9 +148,9 @@ Query debugging allows you to view the raw SQL queries that are executed in your
 
 #### Authorization debugging
 
-Authorization debugging shows you a detailed breakdown of how UserFrosting's [authorization component](/users/access-control) determines whether or not a user passes a particular access control check. To enable authorization debugging, set the `debug.auth` setting to `true` in your [configuration file](/configuration/config-files). Detailed evaluation information will be logged to `userfrosting.log`:
+Authorization debugging shows you a detailed breakdown of how UserFrosting's [authorization component](/users/access-control) determines whether or not a user passes a particular access control check. To enable authorization debugging, set the `debug.auth` config to `true` in your [configuration file](/configuration/config-files). Detailed evaluation information will be logged to `app/logs/userfrosting.log`:
 
-```
+```txt
 [2017-05-22 13:41:11] auth.DEBUG: Evaluating access condition '!has_role(user.id,2) && subset(fields,['name','email','locale','group','flag_enabled','flag_verified','password'])' with parameters: {
     "user": "[object] (UserFrosting\\Sprinkle\\Account\\Model\\User: {
         ...
@@ -184,7 +183,7 @@ Authorization debugging shows you a detailed breakdown of how UserFrosting's [au
 
 #### Mail debugging
 
-The underlying [phpMailer](https://github.com/PHPMailer/PHPMailer) instance that we use can generate _very_ detailed information on the low-level processes involved when your code attempts to send email via SMTP. To have PHPMailer send this information to `userfrosting.log`, set `debug.smtp` to `true` in your configuration file.
+The underlying [phpMailer](https://github.com/PHPMailer/PHPMailer) instance that we use can generate _very_ detailed information on the low-level processes involved when your code attempts to send email via SMTP. To have PHPMailer send this information to `app/logs/userfrosting.log`, set `debug.smtp` to `true` in your configuration file.
 
 The level of detail can be specified with the `mail.smtp_debug` configuration value, using the values specified in the [PHPMailer documentation](https://github.com/PHPMailer/PHPMailer/blob/239d0ef38c1eea3e9f40bb949a9683aee9ca5c28/class.phpmailer.php#L318-L325):
 
@@ -194,7 +193,7 @@ The level of detail can be specified with the `mail.smtp_debug` configuration va
 - `3` As 2 plus connection status
 - `4` Low-level data output
 
-```
+```txt
 [2017-06-09 02:05:52] mail.DEBUG: Connection: opening to smtp.example.com:587, timeout=15, options=array (
 ) [] []
 [2017-06-09 02:05:52] mail.DEBUG: Connection: opened [] []
@@ -213,19 +212,24 @@ The level of detail can be specified with the `mail.smtp_debug` configuration va
 
 #### Debug statements
 
-We can also arbitrarily send manual debugging messages to `userfrosting.log`. This is useful when you want to inspect the value of a server-side variable at a particular point in your code ("dumping the variable") or determine if a particular method or function is being called. To do this, simply use the `Debug` facade:
+We can also arbitrarily send manual debugging messages to `app/logs/userfrosting.log`. This is useful when you want to inspect the value of a server-side variable at a particular point in your code ("dumping the variable") or determine if a particular method or function is being called. To do this, simply use the `DebugLogger` :
 
 ```php
-\UserFrosting\Sprinkle\Core\Facades\Debug::debug("Fetching owls from database...");
+// Inject `\UserFrosting\Sprinkle\Core\Log\DebugLogger` with attributes, or through constructor
+#[\DI\Attribute\Inject]
+protected DebugLogger $logger;
 
-\UserFrosting\Sprinkle\Core\Facades\Debug::debug("Owls found:", $owls);
+// ... 
+
+$this->logger->debug("Fetching owls from database...");
+$this->logger->debug("Owls found:", $owls);
 ```
 
-[notice]`Debug` is a facade for a [Monolog](https://github.com/Seldaek/monolog) logger instance, whose `debug` method takes a string as the first parameter and an optional array as a second parameter, and writes them to a log file. Monolog also supports more advanced logging capabilities - check their documentation for more details.[/notice]
+[notice]`DebugLogger` is a wrapper for a [Monolog](https://github.com/Seldaek/monolog) logger instance, whose `debug` method takes a string as the first parameter and an optional array as a second parameter, and writes them to a log file. Monolog also supports more advanced logging capabilities - check their documentation for more details.[/notice]
 
 #### Native PHP logging
 
-If you prefer, you can use the [`error_log`](http://php.net/manual/en/function.error-log.php) function to log to the PHP error log instead of `userfrosting.log`:
+If you prefer, you can use the [`error_log`](http://php.net/manual/en/function.error-log.php) function to log to the PHP error log instead of `app/logs/userfrosting.log`:
 
 ```php
 // Print a simple string to the log
@@ -235,7 +239,7 @@ error_log("Fetching owls from database...");
 error_log(print_r($owls, true));
 ```
 
-Some developers may find this simpler and more flexible than invoking the `Debug` facade.
+Some developers may find this simpler and more flexible than invoking the `DebugLogger`.
 
 ## Data APIs and AJAX Requests
 
@@ -256,7 +260,7 @@ This is hardly a convenient and predictable way to get at debugging and error me
 
 To solve this problem, UserFrosting's [client-side components](/client-side-code/components) can automatically replace the current window's contents with the contents of the response body when an error (4xx or 5xx) code is returned during an AJAX request.
 
-To enable this behavior, set `site.debug.ajax` to `true` in your Sprinkle's [configuration file](/configuration/config-files).
+To enable this behavior, set `site.debug.ajax` to `true` in your sprinkle's [configuration file](/configuration/config-files).
 
 ### Debugging APIs
 
@@ -278,6 +282,6 @@ Your browser is a great way to make and check the response of `GET` requests, bu
 
 Here are some popular options:
 
+- [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop), a plugin for Chrome and standalone app
 - [Fiddler](https://www.telerik.com/download/fiddler), the free web debugging proxy (desktop app)
-- [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop), a plugin for Chrome
 - [RESTClient](http://restclient.net/), a plugin for Firefox
