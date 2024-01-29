@@ -27,7 +27,7 @@ First, you'll need to install Docker. Just follow the installation instructions 
 For the next part, you'll need to use the command line. We'll use Composer (through a Docker image) to create an empty project, with the latest version of the UserFrosting skeleton, into a new `UserFrosting/` folder:
 
 ```bash
-docker run --rm -it -v "$(pwd):/app" composer create-project userfrosting/userfrosting UserFrosting "^5.0" --no-scripts --no-install --ignore-platform-reqs
+docker run --rm -it -v "$(pwd):/app" composer create-project userfrosting/userfrosting UserFrosting "^5.1" --no-scripts --no-install --ignore-platform-reqs
 ```
 
 [notice=tip]Note the `UserFrosting` in the command. This means Composer will create a new `UserFrosting/` subdirectory inside the current location. You may change `UserFrosting` to anything you like.[/notice]

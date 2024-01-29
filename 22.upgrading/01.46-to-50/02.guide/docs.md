@@ -10,7 +10,7 @@ Upgrading an existing sprinkle from UserFrosting 4 to UserFrosting 5 can unfortu
 
 [notice=warning]This guide contains the most important changes and action you need to take to upgrade your UserFrosting 4 Sprinkle. However, **it's far from complete**, as there are too many changes to document. Make sure you have a backup of your existing application and your **development database** before starting. 
 
-If you spot anything missing, don't hesitate to contribute to this page via the [*edit this page*](https://github.com/userfrosting/learn/blob/5.0-beta/pages/22.upgrading/01.46-to-50/02.guide/docs.md) button at the top.[/notice]
+If you spot anything missing, don't hesitate to contribute to this page via the [*edit this page*](https://github.com/userfrosting/learn/blob/5.1/pages/22.upgrading/01.46-to-50/02.guide/docs.md) button at the top.[/notice]
 
 ## Before you start
 

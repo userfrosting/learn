@@ -87,7 +87,7 @@ Sets up the `Translator` object (`UserFrosting\I18n\Translator`) for translation
 
 ### `UserFrosting\UniformResourceLocator\ResourceLocatorInterface`
 
-An instance of our own [Uniform Resource Locator class](https://github.com/userfrosting/framework/tree/develop-5.0/src/UniformResourceLocator#readme), which provides a unified method of accessing Sprinkle entities via streams.
+An instance of our own [Uniform Resource Locator class](https://github.com/userfrosting/framework/tree/5.1/src/UniformResourceLocator#readme), which provides a unified method of accessing Sprinkle entities via streams.
 
 See [Chapter 18](/advanced/locator) for more information.
 

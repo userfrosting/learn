@@ -103,16 +103,16 @@ To automatically generate a set of client-side rules compatible with the [jQuery
 
 ```php
 // This line goes at the top of your file
-use UserFrosting\Fortress\Adapter\JqueryValidationAdapter;
+use UserFrosting\Fortress\Adapter\JqueryValidationJsonAdapter;
 
 // This assume $translator as been properly injected into the class or method.
-$validator = new JqueryValidationAdapter($schema, $this->translator);
+$validator = new JqueryValidationJsonAdapter($this->translator);
 ```
 
 The rules can then be retrieved via the `rules()` method, and the resulting array can be passed to a Twig template to be rendered as a Javascript variable:
 
 ```php
-$rules = $validator->rules();
+$rules = $validator->rules($schema);
 
 return $this->view->render($response, 'pages/contact.html.twig', [
     'page' => [
@@ -137,9 +137,9 @@ To process data on the server, use the `RequestDataTransformer` and `ServerSideV
 
 ```php
 // These lines goes at the top of your file
-use UserFrosting\Fortress\RequestDataTransformer;
 use UserFrosting\Fortress\RequestSchema;
-use UserFrosting\Fortress\ServerSideValidator;
+use UserFrosting\Fortress\Transformer\RequestDataTransformer;
+use UserFrosting\Fortress\Validator\ServerSideValidator;
 
 // Get submitted data (in POST)
 $params = $request->getParsedBody();
@@ -148,8 +148,8 @@ $params = $request->getParsedBody();
 $schema = new RequestSchema('schema://requests/contact.yaml');
 
 // Whitelist and set parameter defaults
-$transformer = new RequestDataTransformer($schema);
-$data = $transformer->transform($params);
+$transformer = new RequestDataTransformer();
+$data = $transformer->transform($schema, $params);
 ```
 
 `$data` will now contain your filtered, whitelisted data.
@@ -162,17 +162,18 @@ Once you have filtered and whitelisted the input data, you can perform validatio
 
 ```php
 // These lines goes at the top of your file
-use UserFrosting\Fortress\RequestDataTransformer;
 use UserFrosting\Fortress\RequestSchema;
-use UserFrosting\Fortress\ServerSideValidator;
+use UserFrosting\Fortress\Transformer\RequestDataTransformer;
+use UserFrosting\Fortress\Validator\ServerSideValidator;
 use UserFrosting\Sprinkle\Core\Exceptions\ValidationException;
 
-$validator = new ServerSideValidator($schema, $this->translator);
+$validator = new ServerSideValidator($this->translator);
 
 // Add error messages and halt if validation failed
-if ($validator->validate($data) === false && is_array($validator->errors())) {
+$errors = $validator->validate($schema, $data);
+if (count($errors) !== 0) {
     $e = new ValidationException();
-    $e->addErrors($validator->errors());
+    $e->addErrors($errors);
 
     throw $e;
 }
