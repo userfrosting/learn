@@ -333,7 +333,7 @@ In this case, two files need to be edited : `composer.json` and the Sprinkle Rec
 
 1. In **/composer.json**, remove the sprinkle from the Composer requirements :
     ```json
-    "userfrosting/sprinkle-admin": "^5.0",
+    "userfrosting/sprinkle-admin": "^5.1",
     ```
 
 2. Since changes were made to *composer.json*, composer need to be updated (`composer update`).

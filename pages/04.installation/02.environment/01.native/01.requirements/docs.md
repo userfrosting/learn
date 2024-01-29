@@ -9,7 +9,7 @@ taxonomy:
 If your local development environment doesn't already have the [required stack and tools](/installation/requirements), we'll now set them up. We'll go through the following:
 
 - [Command Line Interface](#cli)
-- [PHP 8.0 or higher](#php)
+- [PHP 8.1 or higher](#php)
 - [Composer 2](#composer)
 - [Node.js 18.0 or higher](#node)
 - [Npm 9 or higher](#npm)
@@ -103,7 +103,7 @@ Composer version 2.5.4 2023-02-15 13:10:06
 
 ### Node
 
-It's now time to install [Node.js](https://nodejs.org/en/). Any version above **18.0** will work with UserFrosting 5.0, however we recommend using the latest LTS version of Node.js (18.18.2 LTS as of October 2023).
+It's now time to install [Node.js](https://nodejs.org/en/). Any version above **18.0** will work with UserFrosting 5, however we recommend using the latest LTS version of Node.js (18.18.2 LTS as of October 2023).
 
 #### MacOS
 
