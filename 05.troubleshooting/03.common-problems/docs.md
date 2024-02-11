@@ -8,7 +8,7 @@ taxonomy:
 
 ## Installation
 
-### Route error
+<!-- ### Route error -->
 <!-- TODO -->
 
 ### I get a Node/npm error when running `php bakery bake`.
@@ -62,7 +62,7 @@ If you get an error stating rewrite module is not found, then your `userdir` mod
 
 For more information, see [this blog article](http://seventhsoulmountain.blogspot.com/2014/02/wordpress-permalink-ubuntu-problem-solutions.html).
 
-## Sprinkles
+<!-- ## Sprinkles -->
 
 <!-- ### I get an error like "There is no class mapped" or "class not found" when using the class mapper or running my migrations.
 
@@ -98,4 +98,4 @@ We **strongly recommend** using only lowercase words separated with `-` for Spri
 
 ### My routes don't seem to work when I switch to `UF_MODE='production'`.
 
-The `production` mode, by default, enables [FastRoute's route caching](https://www.slimframework.com/docs/objects/application.html#slim-default-settings). This can result in route definitions not being updated in the cache during production. To resolve this, you should clear the route cache in `app/cache/routes.cache`.
+The `production` mode, by default, enables [route caching](https://www.slimframework.com/docs/v4/objects/routing.html#route-expressions-caching). This can result in route definitions not being updated in the cache during production. To resolve this, you should clear the route cache in `app/cache/routes.cache`.
