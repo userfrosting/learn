@@ -18,7 +18,7 @@ Third party services are also used directly throughout the code. They can be inj
 
 ### `UserFrosting\Alert\AlertStream`
 
-This service handles the [alert message stream](/advanced/alert-stream)), sometimes known as "flash messages". (See Chapter 18 for more information.)
+This service handles the [alert message stream](/advanced/alert-stream), sometimes known as "flash messages". (See Chapter 18 for more information.)
 
 ### `Illuminate\Cache\Repository as Cache`
 
