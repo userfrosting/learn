@@ -49,14 +49,15 @@ Now that the "entry" files have been created, we need to register them with Enco
 
 **webpack.entries.js**
 ```js
+const path = require('path');
 module.exports = {
-    'main': "./app/assets/main.js",
-    'page.checkout': "./app/assets/checkout.js",
-    'page.account': "./app/assets/account.js",
+    'main': path.resolve(__dirname), './app/assets/main.js',
+    'page.checkout': path.resolve(__dirname), './app/assets/checkout.js',
+    'page.account': path.resolve(__dirname), './app/assets/account.js',
 };
 ```
 
-This tells Encore to load the `assets/assets/main.js` file (for example) and follow all of the `require()` statements. It will then package everything together and - thanks to the first `main` argument - output final `public/assets/main.js` and `public/assets/main.css` files.
+This tells Encore to load the `app/assets/main.js` file (for example) and follow all of the `require()` statements. It will then package everything together and - thanks to the first `main` argument - output final `public/assets/main.js` and `public/assets/main.css` files.
 
 Sprinkle's overriding properties also applies to the entries themselves. In other words, naming an entry `page.account` in your own sprinkle will replace the one defined in the `account` sprinkle with yours, for example. In the process, it will probably break core user management functionality. In general, be careful to provide your entries with a unique name to avoid difficult to diagnose runtime errors. 
 
