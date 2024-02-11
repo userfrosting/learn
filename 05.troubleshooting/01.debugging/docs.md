@@ -72,7 +72,7 @@ Then, to open Safari's Web Inspector:
 
 #### Edge
 
-To open Internet Explorer's Developer Tools, simply press <kbd>F12</kbd>.
+To open Edge's Developer Tools, press <kbd>F12</kbd>. You may then need to click "Open DevTools".
 
 *Credit to [this answer](http://webmasters.stackexchange.com/a/77337/50865) on Stack Overflow*.
 
