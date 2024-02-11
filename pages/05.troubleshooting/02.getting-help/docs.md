@@ -119,7 +119,7 @@ Tag your question as `userfrosting`, as well as any other relevant tags (`twig`,
 You may also find the following communities useful in certain cases:
 
 - [Information Security](http://security.stackexchange.com/)
-- [User Experience](http://http://ux.stackexchange.com/)
+- [User Experience](http://ux.stackexchange.com/)
 - [Webmasters](http://webmasters.stackexchange.com/)
 - [Code Review](http://codereview.stackexchange.com/)
 - [Unix & Linux](http://unix.stackexchange.com/)
