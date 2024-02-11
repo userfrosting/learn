@@ -8,9 +8,9 @@ taxonomy:
 
 You'll probably want to create your own services to modularize certain aspects of your own project. For example, if your application needs to interact with some third-party API like Google Maps, you might create a `MapBuilder` class that encapsulates all of that functionality. This is a cleaner and more manageable alternative to simply stuffing all of your code directly into your controller classes.
 
-If you want to use a single instance of `MapBuilder` throughout your application, you'll probably end up defining it as a service. To do this, you'll need to create a new  `MapBuilderService` class in your site Sprinkle and register it in your Sprinkle [recipe](/sprinkles/recipe#getservices).
+If you want to use a single instance of `MapBuilder` throughout your application, you'll probably end up defining it as a service. To do this, you'll need to create a new  `MapBuilderService` class in your site sprinkle and register it in your [Sprinkle Recipe](/sprinkles/recipe#services).
 
-You can actually create one big service provider for all your services, but it's best to create different provider classes for each services. This makes it easier to test and debug each of your services. It also makes things easier if you need to extend or disable a service in another sprinkle down the road. With this setup, each service reside in it's own provider class instead of the global `ServiceProvider` class. For example :
+You can actually create one big service provider for all your services, but it's best to create different provider classes for each service. This makes it easier to test and debug each of your services. It also makes things easier if you need to extend or disable a service in another sprinkle down the road. With this setup, each service resides in its own provider class instead of the global `ServiceProvider` class. For example :
 
 ```
 app
@@ -23,7 +23,7 @@ app
 
 ### Create your service
 
-First, we'll create the service class. This class **must** implement the `UserFrosting\ServicesProvider\ServicesProviderInterface` interface. It must contain the `register` method, which return an array of [service definitions](/dependency-injection/the-di-container#service-providers-definitions). 
+First, we'll create the service class. This class **must** implement the `UserFrosting\ServicesProvider\ServicesProviderInterface` interface. It must contain the `register` method, which returns an array of [service definitions](/dependency-injection/the-di-container#service-providers-definitions). 
 
 **app/src/ServicesProvider/MapBuilderService.php**:
 
@@ -62,9 +62,9 @@ class MapBuilderService implements ServicesProviderInterface
 
 [notice=tip]You'll notice that we've added `use UserFrosting\Sprinkle\Site\GoogleMaps\MapBuilder;` to the top of the file. This means that we don't have to use the fully qualified class name (with the entire namespace) every time we want to refer to the `MapBuilder` class.[/notice]
 
-### Register your Service
+### Register your service
 
-The next step is to tell UserFrosting to load your service in your [recipe](/sprinkles/recipe#getservices). To do so, you only need to list all the services providers you want to automatically register inside the `$servicesproviders` property of your sprinkle class :
+The next step is to tell UserFrosting to load your service in your [Sprinkle Recipe](/sprinkles/recipe#getservices). To do so, you only need to list all the service providers you want to automatically register inside the `$getServices` property of your sprinkle class :
 
 **app/src/MyApp.php** :
 ```php
@@ -92,4 +92,4 @@ class MyApp implements SprinkleRecipe
 }
 ```
 
-That's it! Behind the scenes, UserFrosting will register every definition from each service provider with the DI container, following the sprinkle [dependency tree](/sprinkles/recipe#getsprinkles) during the [application lifecycle](/advanced/application-lifecycle).
+That's it! Behind the scenes, UserFrosting will register every definition from each service provider with the DI container, following the sprinkle [dependency tree](/sprinkles/recipe#dependent-sprinkles) during the [application lifecycle](/advanced/application-lifecycle).

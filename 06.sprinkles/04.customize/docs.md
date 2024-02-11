@@ -1,24 +1,24 @@
 ---
 title: Customizing Your Sprinkle
 metadata:
-    description: This guide walks you though the process of setting up your application by implementing a new Sprinkle.
+    description: This guide walks you though the process of setting up your application by implementing a new sprinkle.
 taxonomy:
     category: docs
 ---
 
-This guide assumes that you've already completed the [installation guide](/installation) and successfully managed to get UserFrosting working in your [local development environment](/background/develop-locally-serve-globally) using the [Skeleton](structure/introduction#the-app-skeleton-your-project-s-template). If not, please do that now - feel free to [ask for help](/troubleshooting/getting-help) if you're running into trouble!
+This guide assumes that you've already completed the [installation guide](/installation) and successfully managed to get UserFrosting working in your [local development environment](/background/develop-locally-serve-globally) using the [Skeleton](/structure/introduction#the-app-skeleton-your-project-s-template). If not, please do that now - feel free to [ask for help](/troubleshooting/getting-help) if you're running into trouble!
 
 ## Custom Namespace and Name
 
-The Skeleton application used as a base installation for every new installation since UserFrosting 5 is a great way to start your UserFrosting project. It comes with some default values which you can change to make your App yours, starting with the PHP Namespace, info in the `composer.json` and the Sprinkle name in the Sprinkle Recipe.
+The Skeleton application, used as a base installation for every new installation since UserFrosting 5, is a great way to start your UserFrosting project. It comes with some default values which you can change to make your App yours, starting with the PHP Namespace, info in the `composer.json`, and the sprinkle name in the Sprinkle Recipe.
 
 ### composer.json
 
-The most important part to edit here is the Namespace. The namespace tells Composer where to look for source code in a PHP application. By default, the base namespace in the Skeleton is `UserFrosting\App`. You can change this to whatever you want. The usual scheme is `{Vendor}\{Project}`, where *Vendor* is your brand and *Project* your project name, but there's no *law* you have to follow here.
+The most important part to edit here is the Namespace. The namespace tells Composer where to look for source code in a PHP application. By default, the base namespace in the Skeleton is `UserFrosting\App`, but you can change this to whatever you want. The usual scheme is `{Vendor}\{Project}`, where *Vendor* is your brand and *Project* your project name, but there's no *law* you have to follow here.
 
 [notice]Compared to previous version of UserFrosting, **starting from UserFrosting 5**, the namespace isn't strict anymore. There's no more convention to follow.[/notice]
 
-The namespace is defined in the `composer.json` file in the base directory of our Sprinkle. The default file looks like this : 
+The namespace is defined in the `composer.json` file in the base directory of your sprinkle. The default file looks like this : 
 
 Original **composer.json**
 ```json
@@ -83,7 +83,7 @@ Original **composer.json**
 }
 ```
 
-Let's changes thing up. All the metadata can be customized to reflect your project, and we'll define the new namespace to `Owlfancy\Site` : 
+Let's change thing up. All the metadata can be customized to reflect your project, and we'll define the new namespace to `Owlfancy\Site` : 
 
 Modified **composer.json**
 ```json
@@ -134,7 +134,7 @@ Modified **composer.json**
 }
 ```
 
-The important part here is the `autoload.psr-4` key. This tells Composer to map the root `src/` directory of your Sprinkle to the root **namespace** `Owlfancy\Site\`.
+The important part here is the `autoload.psr-4` key. This tells Composer to map the root `src/` directory of your sprinkle to the root **namespace** `Owlfancy\Site\`.
 
 [notice]If you're not familiar with PSR-4, it is a standard that says we should map a base directory to a base namespace, and then the relative namespaces of classes in that directory should correspond to the relative paths of their class files. For example, the directory `/app/src/Controller/OwlController.php` would be mapped to the fully qualified class name `\Owlfancy\Site\Controller\OwlController`.[/notice]
 
@@ -144,7 +144,7 @@ The next step is to run Composer from your project directory, so that it can det
 $ composer update
 ```
 
-[notice=note]If after running these steps, UserFrosting fails to find new classes that you add to `src/`, make sure that that the user running Composer had read permissions for your Sprinkle. You can check that the path to your Sprinkle's `src/` directory was actually added in `app/vendor/composer/autoload_psr4.php` You can also try running Composer with the `-vvv` flag for more detailed reporting.[/notice]
+[notice=note]If after running these steps, UserFrosting fails to find new classes that you add to `src/`, make sure that that the user running Composer had read permissions for your sprinkle. You can check that the path to your sprinkle's `src/` directory was actually added in `app/vendor/composer/autoload_psr4.php` You can also try running Composer with the `-vvv` flag for more detailed reporting.[/notice]
 
 ### The recipe
 
@@ -178,7 +178,7 @@ class Owlfancy implements
 
 ### The entry files
 
-There's still one last thing to edit. Since we change the recipe from `UserFrosting\App\MyApp` to `Owlfancy\Site\Owlfancy` in the entry files, which are `public/index.php` and `bakery`:
+There's still one last thing to edit. Since we changed the recipe from `UserFrosting\App\MyApp` to `Owlfancy\Site\Owlfancy`, we also need to update that in the entry files, which are `public/index.php` and `bakery`:
 
 **/public/index.php**
 ```php
@@ -266,10 +266,10 @@ In `default.php`, add the following:
     ];
 ```
 
-This customizes some basic properties for our application - set your site title, author, author's URL, and timezone. Reload the page, and you should see the new site title appear in the upper left corner:
+This customizes some basic properties for our application - you can set your site title, author, author's URL, and timezone. Reload the page, and you should see the new site title appear in the upper left corner:
 
 ![Overriding site settings in config file](/images/site-title.png)
 
-This is because the template for this page is dynamically pulling that particular piece of text from your new configuration file. Note that your value for `site.title` overrides the value of `site.title` in the core Sprinkle's configuration file.
+The template for this page dynamically pulls that particular piece of text from your new configuration file. Note that your value for `site.title` overrides the value of `site.title` in the core sprinkle's configuration file.
 
-[notice=tip]You can [override configuration values](/configuration/config-files) from any previously loaded Sprinkles, including the default Sprinkles that ship with UserFrosting. Check the Core Sprinkle and the Account Sprinkle `/app/config/default.php` for a complete list.[/notice]
+[notice=tip]You can [override configuration values](/configuration/config-files) from any previously loaded sprinkles, including the default sprinkles that ship with UserFrosting. Check the Core sprinkle and the Account sprinkle `/app/config/default.php` for a complete list.[/notice]
