@@ -98,4 +98,4 @@ We **strongly recommend** using only lowercase words separated with `-` for Spri
 
 ### My routes don't seem to work when I switch to `UF_MODE='production'`.
 
-The `production` mode, by default, enables [FastRoute's route caching](https://www.slimframework.com/docs/objects/application.html#slim-default-settings). This can result in route definitions not being updated in the cache during production. To resolve this, you should clear the route cache in `app/cache/routes.cache`.
+The `production` mode, by default, enables [route caching](https://www.slimframework.com/docs/v4/objects/routing.html#route-expressions-caching). This can result in route definitions not being updated in the cache during production. To resolve this, you should clear the route cache in `app/cache/routes.cache`.
