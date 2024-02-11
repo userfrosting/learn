@@ -222,7 +222,6 @@ A few other key point to know:
 2. Controller resolution should be updated to make use of [PHP’s `::class` operator](https://www.slimframework.com/docs/v4/objects/routing.html#container-resolution)
 3. Middleware must now be called by their class name. For example, `authGuard` must be updated to `UserFrosting\Sprinkle\Account\Authenticate\AuthGuard::class`
 
-
 ### Sprunje
 
 The sprunje class used to accept options in the constructor. To make it easier to [inject dependencies](/dependency-injection/the-di-container), options should now be defined using the `setOptions` method. Sprunje should now be injected into controllers, 
@@ -271,6 +270,8 @@ Simple changes have been made to controller classes :
 
 See [Controller classes](/routes-and-controllers/controller-classes) guide for more information.
 
+[note]If your sprinkle extends a controller class from a default sprinkle instead of `SimpleController`, note that **every** controller classes from default sprinkles have been moved, renamed and rewritten as *Action classes*. Make sure to check out the sprinkle source code to find out how to update your sprinkle.[/note]
+
 ### Bakery
 
 Simple changes have been made to bakery commands : 
@@ -293,11 +294,20 @@ Not must as changed regarding the Resource Locator. Refer to the [Locator Servic
 
 ### Template
 
-Two points are to be considered when working with templates:
+Three points are to be considered when working with templates:
 
-1. Sprinkles have been renamed. If your extending a bundle sprinkle, you need to update the reference : `{% extends "@admin/pages/activities.html.twig" %}` => `{% extends "@admin-sprinkle/pages/activities.html.twig" %}`
-2. In a similar way, templates have been moved to the "AdminLTE" sprinkle. Be sure to check the new structure if your extending templates.
-3. FontAwesome has been updated, and references to icon must also be updated : `fa` -> `fas`
+First, sprinkles have been renamed. If you're extending a default sprinkle, you'll need to update the sprinkle reference in the `extends` tag. For example: `{% extends "@admin/pages/activities.html.twig" %}` => `{% extends "@admin-sprinkle/pages/activities.html.twig" %}`. Check the table below for a list of sprinkle identifier.
+   
+ | Name             | Slug             |
+ |------------------|------------------|
+ | Admin Sprinkle   | admin-sprinkle   |
+ | AdminLTE Theme   | adminlte-theme   |
+ | Account Sprinkle | account-sprinkle |
+ | Core Sprinkle    | core-sprinkle    |
+
+In a similar way, some Twig templates have been moved to the "AdminLTE" sprinkle. Be sure to check the new structure if you're extending templates with the `extends` tag. Some templates file previously in the Admin Sprinkle might be in the AdminLTE sprinkle now.
+
+FontAwesome has also been updated, and references to icon must also be updated : `fa` -> `fas`
 
 ### Misc
 
