@@ -25,15 +25,6 @@ When trying to view your site you get an error similar to this :
 
 This is an indication that asset build failed or you missed a step in the installation process. Try [running the installer](/installation/environment/native/install#clone-the-userfrosting-repository) again with `php bakery bake` and check for any error messages.
 
-<!-- Homestead is no longer supported, can remove this mention?
-If you're using the [Homestead dev environment](/installation/environment/homestead), you'll need to login to the VM first to run the bake command inside the UserFrosting directory :
-
-```bash
-vagrant ssh
-cd userfrosting
-php bakery bake
-```
--->
 ### Installation went fine, except I don't see any styling on my home page. I am using Apache.
 
 UserFrosting uses a [dynamic routing system](/asset-management/basic-usage) for serving assets in a development environment. For this to work on an Apache webserver, `mod_rewrite` needs to be enabled, **and** you need to give Apache permission to use the `.htaccess` file in `public/`.
