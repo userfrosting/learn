@@ -110,7 +110,7 @@ If your sprinkle includes any Javascript, you'll need to show npm how to install
     "repository": "@owlfancy/sprinkle-owlery",
 ```
 
-[notice=tip]Consider including a ["files" section](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#files), so that only Javascript files are included in `/node_modules`--npm doesn't typically need PHP or Twig files! Different sprinkles may need npm to be aware of different files or folders.[notice]
+[notice=tip]Consider including a ["files" section](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#files), so that only Javascript files are included in `/node_modules`--npm doesn't typically need PHP or Twig files! Different sprinkles may need npm to be aware of different files or folders.[/notice]
 
 #### Npmjs
 [Npmjs](https://www.npmjs.com/about) is a registry of JS projects, similar to Packagist for Composer.
