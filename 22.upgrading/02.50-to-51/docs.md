@@ -84,6 +84,12 @@ $ php bakery bake
 
 ### Migrating your Sprinkles
 
+#### `urlFor` service change
+
+When calling [`urlFor`](/templating-with-twig/filters-and-functions#urlfor) **in PHP** (not Twig) to generate a route from it's name, the service as been replace. Find and replace the following import to upgrade: 
+- Find : `use Slim\Interfaces\RouteParserInterface;`
+- Replace : `use UserFrosting\Sprinkle\Core\Util\RouteParserInterface;`
+
 #### Fortress
 
 - `UserFrosting\Fortress\RequestSchema` constructor first argument now accept the schema data as an array, as well as a string representing a path to the schema json or yaml file. The argument can still be omitted to create an empty schema. This change makes `UserFrosting\Fortress\RequestSchema\RequestSchemaRepository` obsolete and and such been ***deprecated***. For example:

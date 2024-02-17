@@ -62,7 +62,7 @@ Creates an instance of `Mailer`, which serves as a UF-compatible wrapper for a [
 
 Creates a `Throttler` object, which handles [request throttling](/routes-and-controllers/client-input/throttle) for different routes. This service will automatically register any throttling rules defined in the `throttles` key of your configuration.
 
-### `Slim\Interfaces\RouteParserInterface`
+### `UserFrosting\Sprinkle\Core\Util\RouteParserInterface`
 
 See [Chapter 8](/routes-and-controllers) for more information about defining routes, and the [Slim Documentation](https://www.slimframework.com/docs/v4/objects/routing.html#route-names) on how to use the Route Parser.
 
