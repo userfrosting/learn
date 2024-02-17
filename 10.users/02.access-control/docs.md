@@ -50,7 +50,7 @@ protected AuthorizationManager $authorizer
 
 // ...
 
-$currentUser = $this->authorizer->user();
+$currentUser = $this->authenticator->user();
 
 if (!$this->authorizer->checkAccess($currentUser, 'uri_users')) {
     throw new ForbiddenException();
