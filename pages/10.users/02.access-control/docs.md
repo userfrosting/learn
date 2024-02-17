@@ -42,15 +42,15 @@ In your code, access is controlled through the use of access checks on permissio
 This can be done by calling the `checkAccess` method of the `AuthorizationManager` service. For example:
 
 ```php
-#[Inject]
+#[\DI\Attribute\Inject]
 protected Authenticator $authenticator
 
-#[Inject]
+#[\DI\Attribute\Inject]
 protected AuthorizationManager $authorizer
 
 // ...
 
-$currentUser = $this->authorizer->user();
+$currentUser = $this->authenticator->user();
 
 if (!$this->authorizer->checkAccess($currentUser, 'uri_users')) {
     throw new ForbiddenException();
@@ -60,7 +60,7 @@ if (!$this->authorizer->checkAccess($currentUser, 'uri_users')) {
 Or simply use the `checkAccess` method of the `Authenticator` service, which is a shortcut for the above code (the current user will be automatically passed to `AuthorizationManager` behind the scene). For example:
 
 ```php
-#[Inject]
+#[\DI\Attribute\Inject]
 protected Authenticator $authenticator
 
 // ...
