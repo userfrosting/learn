@@ -312,7 +312,7 @@ FontAwesome has also been updated, and references to icon must also be updated :
 ### Misc
 
 1. Facades (Translator, etc.) are no longer available. The corresponding service should be injected properly now.
-2. Router `PathFor` has been changed. To generate a route based on it's name, inject `Slim\Interfaces\RouteParserInterface` and use `urlFor` method.  
+2. Router `PathFor` has been changed. To generate a route based on it's name, inject `UserFrosting\Sprinkle\Core\Util\RouteParserInterface` and use `urlFor` method.  
 3. Exceptions have changed, especially HTTP ones. For example : `use UserFrosting\Support\Exception\ForbiddenException;` => `use UserFrosting\Sprinkle\Account\Exceptions\ForbiddenException;` Check out [Exception and Error Handling](/advanced/error-handling#default-exceptions) guide for more information.
 
 ### Login redirect

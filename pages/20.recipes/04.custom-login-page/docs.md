@@ -77,8 +77,8 @@ First, create a class `src/Listener/UserRedirectedToIndex.php` in your Sprinkle 
 namespace App\Site\Listener;
 
 use Psr\EventDispatcher\StoppableEventInterface;
-use Slim\Interfaces\RouteParserInterface;
 use UserFrosting\Sprinkle\Core\Event\Contract\RedirectingEventInterface;
+use UserFrosting\Sprinkle\Core\Util\RouteParserInterface;
 
 /**
  * Set redirect to index.
