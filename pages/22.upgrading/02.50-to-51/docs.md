@@ -84,6 +84,16 @@ $ php bakery bake
 
 ### Migrating your Sprinkles
 
+#### Missing default permissions
+
+Some build-in permissions [were missing from the database](https://github.com/userfrosting/UserFrosting/issues/1225). Run `php bakery seed` and select `UserFrosting\Sprinkle\Account\Database\Seeds\DefaultPermissions` to install them. You can now add them to existing roles if desired. 
+
+Added permissions :
+ - `uri_role`
+ - `uri_roles`
+ - `uri_permissions`
+ - `view_role_field`
+
 #### `urlFor` service change
 
 When calling [`urlFor`](/templating-with-twig/filters-and-functions#urlfor) **in PHP** (not Twig) to generate a route from it's name, the service as been replace. Find and replace the following import to upgrade: 
