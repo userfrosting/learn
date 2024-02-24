@@ -41,6 +41,9 @@ UserFrosting 5.1 add official support for PHP 8.3 and remove support for PHP ver
 
 See [Assets Chapter](/asset-management) and [Bakery commands](/cli/commands) for more details.
 
+### Account sprinkle
+- Add missing permissions slugs to the database ([#1225](https://github.com/userfrosting/UserFrosting/issues/1225))
+
 ## Upgrading to 5.1.x
 
 Upgrading UserFrosting to `5.1.x` is as simple as updating your `composer.json` file and fetching updated dependencies! First, you'll need to edit your `composer.json`.
@@ -86,13 +89,24 @@ $ php bakery bake
 
 #### Missing default permissions
 
-Some build-in permissions [were missing from the database](https://github.com/userfrosting/UserFrosting/issues/1225). Run `php bakery seed` and select `UserFrosting\Sprinkle\Account\Database\Seeds\DefaultPermissions` to install them. You can now add them to existing roles if desired. 
+Some build-in permissions [were missing from the database](https://github.com/userfrosting/UserFrosting/issues/1225). Run `php bakery seed` and select `UserFrosting\Sprinkle\Account\Database\Seeds\DefaultPermissions` to install them. Theses will also be added to the `site-admin` role when running the seed.
 
 Added permissions :
  - `uri_role`
  - `uri_roles`
  - `uri_permissions`
  - `view_role_field`
+ - `create_role`
+ - `delete_role`
+ - `update_user_field_role`
+ - `update_role_field`
+ - `view_user_field_permissions`
+ - `view_system_info`
+ - `clear_cache`
+
+The `site-admin` role is now on par with the root user permission by default, except for the last two permissions added, `view_system_info` & `clear_cache`. Theses can be added to the role if desired using the UI.
+
+[notice=warning]If your application defines custom permissions to the `site-admin` role or you customized this role, **do not run the seed** unless you want to lose any custom changes. Running the seed will revert back that role to it's default state.[/notice]
 
 #### `urlFor` service change
 
