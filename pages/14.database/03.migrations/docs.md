@@ -156,7 +156,7 @@ As for the `down` method, it simply tells the database structure to delete the t
 
 ## Dependencies
 
-An important aspect of migrations is **data consistency**. Since migrations are like recipes used to create a database, the order in which theses migrations are executed is very important. You don't want to drop those cupcakes in the oven before mixing the flour and eggs, the same way you don't want to add a column to a table before said table is created! UserFrosting uses **dependencies** to make sure migrations are run in the correct order.
+An important aspect of migrations is **data consistency**. Since migrations are like recipes used to create a database, the order in which these migrations are executed is very important. You don't want to drop those cupcakes in the oven before mixing the flour and eggs, the same way you don't want to add a column to a table before said table is created! UserFrosting uses **dependencies** to make sure migrations are run in the correct order.
 
 Some situations require a more complex way to make sure migrations are run in the correct order. This is the case when a Sprinkle requires that a migration from another Sprinkle is executed before its own migration. It can also be the case when two tables inside the same Sprinkle are dependent on one another.
 

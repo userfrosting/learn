@@ -139,7 +139,7 @@ public function getRoutes(): array
 
 ### Services
 
-Return an array of services definitions. Theses will be explored in [Chapter 7 - Dependency Injection](/dependency-injection)
+Return an array of services definitions. These will be explored in [Chapter 7 - Dependency Injection](/dependency-injection)
 
 Example: 
 ```php
