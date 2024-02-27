@@ -85,7 +85,7 @@ class OwlController
 }
 ```
 
-[notice=tip]The `Response` and `Request` service are not required to be injected into the method. While most of the time the `Response` is required to write to the page (except when throwing an exception, for example), the `Request` might not always be useful. In theses cases, it's perfectly fine to omit it.[/notice]
+[notice=tip]The `Response` and `Request` service are not required to be injected into the method. While most of the time the `Response` is required to write to the page (except when throwing an exception, for example), the `Request` might not always be useful. In these cases, it's perfectly fine to omit it.[/notice]
 
 When writing controllers, which often handles multiple routes, sometimes service needs to be shared between methods. Those can be injected into the class constructor instead of each individual methods, and will be properly injected :
 

@@ -95,7 +95,7 @@ $this->translator->translate("HUNGRY_CATS", 5);
 $this->translator->translate("HUNGRY_CATS", ['plural' => 5]);
 ```
 
-If no placeholder value is defined, `1` will be used by default. For example, theses will return the same result :
+If no placeholder value is defined, `1` will be used by default. For example, these will return the same result :
 
 ```php
 $this->translator->translate("HUNGRY_CATS");

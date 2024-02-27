@@ -53,7 +53,7 @@ You can now find and replace every reference of `UserFrosting\App\` for `UserFro
 
 ## Cleanup unused code
 
-The Skeleton comes with some default pages and code we won't necessary need. Theses files and directory can (***optionally***) be safely deleted :
+The Skeleton comes with some default pages and code we won't necessary need. These files and directory can (***optionally***) be safely deleted :
 
 - `app/assets/images/`
 - `app/src/Bakery/`

@@ -11,7 +11,7 @@ UserFrosting makes uses of *Event Dispatching* to enable customization of some b
 3. User is authenticated, i.e. it's password is verified
 4. User is written to the session, ready to be used on subsequent requests
 
-It's understandable that your would want to step in during this process that is the core feature of UserFrosting to implement an additional step specific to your project. That is why after step #2 is done, the `UserValidatedEvent` event will be dispatched, after step #3, `UserAuthenticatedEvent` event will be dispatched, and after step #4, the `UserLoggedInEvent` event will be dispatched. Each sprinkle can intercept theses events and act upon then to change the default behavior. For example, the `UserLoggedInEvent` could be intercept to log the user activity.
+It's understandable that your would want to step in during this process that is the core feature of UserFrosting to implement an additional step specific to your project. That is why after step #2 is done, the `UserValidatedEvent` event will be dispatched, after step #3, `UserAuthenticatedEvent` event will be dispatched, and after step #4, the `UserLoggedInEvent` event will be dispatched. Each sprinkle can intercept these events and act upon then to change the default behavior. For example, the `UserLoggedInEvent` could be intercept to log the user activity.
 
 The process of intercepting events and acting upon them is called **listening** to events through an **Event Dispatcher**. The [PSR-14 Standard](https://www.php-fig.org/psr/psr-14/) defines each part of an event dispatching system like this : 
 
@@ -175,7 +175,7 @@ php bakery debug:events
 
 ## Built-in events
 
-Theses are the events the Framework and default sprinkles uses. You can easily listen to them in your Sprinkle to customize the behavior of the built-in sprinkle.
+These are the events the Framework and default sprinkles uses. You can easily listen to them in your Sprinkle to customize the behavior of the built-in sprinkle.
 
 | Event                                                            | Description                                                                                                       |
 |------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|

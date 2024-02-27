@@ -56,7 +56,7 @@ return [
 ];
 ```
 
-This information is stored in **languages files**. Theses are normal PHP files typically located in `app/sprinkles/{sprinkleName}/locale/{locale}/messages.php` and grouped into folders named after the locale code, as pictured below. Each locale can have as many files as needed (eg. `messages.php`, `foo.php`, `bar.php`, etc.) for easier maintenance. Those files will be merged together at runtime to create a **compiled dictionary** of all the keys available for the translator to use.
+This information is stored in **languages files**. These are normal PHP files typically located in `app/sprinkles/{sprinkleName}/locale/{locale}/messages.php` and grouped into folders named after the locale code, as pictured below. Each locale can have as many files as needed (eg. `messages.php`, `foo.php`, `bar.php`, etc.) for easier maintenance. Those files will be merged together at runtime to create a **compiled dictionary** of all the keys available for the translator to use.
 
 **locale/es_ES/example.php**
 
