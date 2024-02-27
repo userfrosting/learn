@@ -5,7 +5,6 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
 
 Search Engine Optimization (SEO) is an integral part of the design and development process. Getting the public side of your website to rank well in search results should be something you consider from the very beginning, and not an afterthought once you're getting ready to deploy.
 
@@ -66,17 +65,17 @@ Make your image files exactly the size at which you intend to display them (in s
 
 ### Use compiled assets in production
 
-The way UserFrosting [serves raw assets](/asset-management/basic-usage) is great for development and debugging, but not so much for production. Each asset comes with the usual [round trip overhead](https://en.wikipedia.org/wiki/Handshaking#TCP_three-way_handshake) of an HTTP request. On top of that, raw assets are served through the underlying Slim application, which adds a considerable amount of overhead with each request. Finally, the asset files themselves (Javascript and CSS) are larger than they need to be to perform their function.
+The way UserFrosting [serves assets](/asset-management) is great for development and debugging, but not so much for production. The asset files themselves (Javascript and CSS) are larger than they need to be to perform their function.
 
-Using UserFrosting's `uf-bundle-build` and `uf-bundle` commands solves all three of these problems:
+Using Webpack solves all of these problems:
 
 1. It **minifies** your Javascript and CSS files, making files smaller by making variable names shorter and removing comments and whitespace;
 2. It **concatenates** Javascript and CSS files, reducing the number of requests needed by the page;
-3. It copies the assets to the `public/` directory, so that they can be served directly by your webserver instead of going through the Slim application lifecycle.
+3. It copies the assets to the `public/` directory, so that they can be served directly by your webserver instead of going through the application lifecycle.
 
 ### Caching
 
-Caching should happen on a number of levels throughout your application, on both the server and client sides. On the server, UserFrosting automatically caches route resolutions and fully-rendered Twig templates when you use the `production` configuration profile. You can also configure the webserver itself to cache entire responses. For example, see [nginx's caching documentation](https://www.nginx.com/resources/admin-guide/content-caching/).
+[Caching](/advanced/caching/intro) should happen on a number of levels throughout your application, on both the server and client sides. On the server, UserFrosting automatically caches route resolutions and fully-rendered Twig templates when you use the `production` configuration profile. You can also configure the webserver itself to cache entire responses. For example, see [nginx's caching documentation](https://www.nginx.com/resources/admin-guide/content-caching/).
 
 Caching can also happen in the client's browser. For example, you don't want the client to have to retrieve images and Javascript files each time they visit your page, if those assets haven't changed since their last visit. Browser caching is handled by the `Cache-Control` response header, which is the server's way of telling the client's browser how long they should cache the response of a particular request.
 
@@ -99,7 +98,7 @@ Nowadays search engines still take links into account, but they are careful to e
 1. The [domain authority](https://en.wikipedia.org/wiki/Domain_Authority) of the linking site;
 2. The [anchor text](https://moz.com/learn/seo/anchor-text) of the link;
 3. The relevance of the linking page's content to the content of your page;
-4. The prominance of the link on the linking page (position, number of other links, etc).
+4. The prominence of the link on the linking page (position, number of other links, etc).
 
 All in all, this means you should focus on getting **good** links to your site, rather than **many** links.
 

@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-On the previous page, we saw the softwares required to run UserFrosting. Now it's time to look at tools you'll need during development to build your UserFrosting application. Theses tools are not strictly required to be installed on your production server, which we'll cover in a [later chapter](/going-live).
+On the previous page, we saw the softwares required to run UserFrosting. Now it's time to look at tools you'll need during development to build your UserFrosting application. These tools are not strictly required to be installed on your production server, which we'll cover in a [later chapter](/going-live).
 
 During development, and before you're ready to deploy, you'll want to have the following tools installed:
 
@@ -72,3 +72,23 @@ Other popular IDE includes :
 - [Eclipse](https://projects.eclipse.org/projects/tools.pdt)
 - [Komodo](https://www.activestate.com/products/komodo-ide/)
 - Etc.
+
+### (Optional) Database GUI
+
+In the past, PhpMyAdmin was the *de facto* tool used to view and edit databases content. It still "does the job", but can be hard to setup (unless you do through Docker!) and proper GUI desktop apps are much nicer to use for most database stuff. Desktop app can be useful to experiment with queries in a nice editor, can display your tables structure visually, allow you to save your query scripts to files, etc.
+
+Popular database GUI app includes :
+- [Table Plus](https://tableplus.com) - A free perpetual trial is available
+- [MySQL Workbench](https://www.mysql.com/products/workbench/)
+- [DBeaver](https://dbeaver.io)
+
+### Other optional tools
+
+These tools are optional, but can be useful for any serious developer:
+
+- [PHP Intelephense](https://intelephense.com) - plugin for most editors that provides an essential set of code intelligence features for a productive and rich PHP development experience.
+- [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) - fixes your code to follow standards
+- [PHPStan](https://phpstan.org) - scans your whole codebase and looks for both obvious & tricky bugs
+- [XDebug](https://xdebug.org) - an extension for PHP, and provides a range of features to improve the PHP development experience, like step debugging
+- [Postman](https://www.postman.com) - API platform useful to build and debug REST API;
+- [GitHub Copilot](https://github.com/features/copilot) - AI powered autocompletion for VSCode

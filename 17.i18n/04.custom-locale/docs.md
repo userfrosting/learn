@@ -10,7 +10,7 @@ Whether to add an unsupported language (Klingon anyone?), to create a new dialec
 
 Two things required to make a new locale available in UserFrosting. The first it to create a **locale configuration file**. The second is to add your locale identifier to the available locale config. While the second part should be pretty straightforward at this point, the locale file has some require information it need to provide for your new locale to work.
 
-Theses information need to be stored in a `locale.yaml` file, located in the locale folder and accessible accessible using the `locale://XX_YY/locale.yaml` URI, where `XX_YY` is your locale **language-country** code.
+These information need to be stored in a `locale.yaml` file, located in the locale folder and accessible accessible using the `locale://XX_YY/locale.yaml` URI, where `XX_YY` is your locale **language-country** code.
 
 The configuration file can contain multiple options. For example, to create a French Canadian (fr_CA) locale :
 

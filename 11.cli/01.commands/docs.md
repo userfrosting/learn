@@ -164,12 +164,12 @@ $ php bakery locale:compare [options]
 ```
 
 This command is interactive, which mean it will ask for which locales to compare. Options can also be used to automatically compare the two locales without user interaction (See the table below for the list of available options).
-
+à
 This command will display :
  - Comparison between _Right_ and _Left_ locales : Returns al list of all differences in both locales using [`array_diff_assoc`](https://www.php.net/manual/en/function.array-diff-assoc.php). This can be used to compare the two locales.
  - Missing keys from _Right_ found in _Left_ : This can be used to see which keys are missing in the _Right_ locale, but that can be found in the _Left_ locale, so they can be added.
  - Same values found in both _Left_ and _Right_ locale : This can be used to find strings in the _right_ locale that is the same in the _left_ locale. When two locale have the same string value, it may means the string is not translated in the _right_ locale.
- - Empty values for _Right_ locale : List keys with empty string for the _right_ locale. Theses strings might need to be filled in.
+ - Empty values for _Right_ locale : List keys with empty string for the _right_ locale. These strings might need to be filled in.
 
 | Option            | Description                                           |
 | ----------------- | ----------------------------------------------------- |
