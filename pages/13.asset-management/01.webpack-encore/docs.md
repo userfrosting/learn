@@ -55,8 +55,8 @@ Where Composer has it's `composer.json` file to defines the project dependencies
 }
 ```
 
-1. **dependencies** : Theses are the client dependencies, which are will eventually be passed to the Browser. For example, _JQuery_ is a dependencies, as it will be used by the browser;
-2. **devDependencies** : Theses are CLI dependencies. They are required to run the building process;
+1. **dependencies** : These are the client dependencies, which are will eventually be passed to the Browser. For example, _JQuery_ is a dependencies, as it will be used by the browser;
+2. **devDependencies** : These are CLI dependencies. They are required to run the building process;
 3. **scripts** : npm command alias for dependencies commands.
 
 In the example above, you can see both the *Admin Sprinkle* and *AdminLTE Theme* are included as dependencies. While theses are also included by Composer, it's necessary to include them also here, so their assets can be accessed by npm and Webpack Encore. The dev dependencies includes, among others, Webpack Encore. It will then be installed when running `npm install`, `php bakery assets:build` or `php bakery assets:install`. Finally, the *scripts* section expose the encore build tasks.

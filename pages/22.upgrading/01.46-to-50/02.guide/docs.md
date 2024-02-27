@@ -123,7 +123,7 @@ Remember, this guide will give you only the big picture of what changed, pointin
 
 ### Global changes
 
-It's important to note some changes have been applied at large, and affect pretty much every PHP class, based on PHP 8 new features. Theses changes include:
+It's important to note some changes have been applied at large, and affect pretty much every PHP class, based on PHP 8 new features. These changes include:
 
 - Extensive use of type declaration and [return types](https://dev.to/karleb/return-types-in-php-3fip)
 - [Named Arguments](https://www.php.net/releases/8.0/en.php#named-arguments)
@@ -131,7 +131,7 @@ It's important to note some changes have been applied at large, and affect prett
 - [Union type](https://www.php.net/releases/8.0/en.php#union-types)
 - [Etc.](https://www.php.net/releases/8.0/en.php)
 
-Keep this in mind, especially if you've extended built-in classes. Not only may theses classes been renamed or moved, the method declaration might have changed even if the code of theses method haven't.
+Keep this in mind, especially if you've extended built-in classes. Not only may these classes been renamed or moved, the method declaration might have changed even if the code of these method haven't.
 
 ### Services -> Dependency Injection
 
