@@ -114,3 +114,9 @@ Any configuration values under the `site` subarray are automatically passed to T
 ```twig
 <a href="https://twitter.com/{{site.twitter}}">Follow me on Twitter!</a>
 ```
+
+Alternatively, the [config function](/templating-with-twig/filters-and-functions#config) can be used to access any configuration values:
+
+```twig
+<a href="https://twitter.com/{{ config('site.twitter') }}">Follow me on Twitter!</a>
+```

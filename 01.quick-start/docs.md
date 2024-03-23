@@ -37,7 +37,10 @@ If any dependencies are not met, an error will occur. Simply try again after fix
 At this point you can run locally using the PHP Server : 
 
 ```bash
-php -S localhost:8080 -t public
+cd UserFrosting
+```
+```bash
+php bakery serve
 ```
 
 You can now access UserFrosting at : [http://localhost:8080](http://localhost:8080)

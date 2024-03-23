@@ -6,6 +6,16 @@ taxonomy:
     category: docs
 ---
 
+### config
+
+You can access any [configuration value](/configuration/config-files) directly in your Twig templates using the `config` helper function. For example, to display `site.title`:
+
+```twig
+{{ config('site.title') }}
+```
+
+[notice=warning]Use this carefully, as sensitive information (ie. passwords) could be stored in config ![/notice]
+
 ### checkAccess
 
 You can perform permission checks in your Twig templates using the `checkAccess` helper function. This is useful when you want to render a portion of a page's content conditioned on whether or not a user has a certain permission. For example, this can be used to hide a navigation menu item for pages that the current user does not have access to:

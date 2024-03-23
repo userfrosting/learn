@@ -49,7 +49,7 @@ If the database connection is successful, the installer will then check that the
 At this point you can run locally using the PHP Built-in server : 
 
 ```bash
-php -S localhost:8080 -t public
+php bakery serve
 ```
 
 You can now access UserFrosting at [http://localhost:8080](http://localhost:8080). You should see the default UserFrosting pages and login with the newly created master account. 

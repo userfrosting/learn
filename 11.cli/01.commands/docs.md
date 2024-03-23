@@ -141,15 +141,16 @@ $ php bakery debug -v
 
 The debug command is in fact an aggregator of sub-commands, similar to `bake`. It include the following command by default:
 
-| Command       | Description                                                                    |
-| ------------- | ------------------------------------------------------------------------------ |
-| debug:config  | Test the UserFrosting database config                                          |
-| debug:db      | Test the UserFrosting database connection                                      |
-| debug:events  | List all currently registered events listener for each events.                 |
-| debug:locator | List all locations and streams, with their respective path, to help debugging. |
-| debug:mail    | Display Mail Configuration                                                     |
-| debug:version | Test the UserFrosting version dependencies                                     |
-| sprinkle:list | List all available sprinkles and their params                                  |
+| Command       | Description                                                                    | Require verbose |
+|---------------|--------------------------------------------------------------------------------|:---------------:|
+| debug:config  | Test the UserFrosting database config                                          |                 |
+| debug:db      | Test the UserFrosting database connection                                      |                 |
+| debug:events  | List all currently registered events listener for each events.                 | ✓               |
+| debug:locator | List all locations and streams, with their respective path, to help debugging. | ✓               |
+| debug:mail    | Display Mail Configuration                                                     | ✓               |
+| debug:twig    | List all twig namespaces to help debugging                                     | ✓               |
+| debug:version | Test the UserFrosting version dependencies                                     |                 |
+| sprinkle:list | List all available sprinkles and their params                                  |                 |
 
 Some will be only displayed when the verbose mode is active.
 
@@ -516,6 +517,21 @@ Example result:
   My Application     UserFrosting\App\MyApp                  /home/UserFrosting/app/src/../                                       
  ------------------ --------------------------------------- ---------------------------------------------------------------------- 
 ```
+
+
+### serve
+
+The `serve` command is used to execute [PHP Built-in web server](https://www.php.net/manual/en/features.commandline.webserver.php). This is a simple way to test your application without having to configure a full web server.
+
+```bash
+$ php bakery serve [options]
+```
+
+Hit `ctrl+c` to quit.
+
+| Option                            | Description                                             |
+| --------------------------------- | ------------------------------------------------------- |
+| -p, --port=PORT                   | The port to serve the application on [default: "8080"]. |
 
 
 ### test
