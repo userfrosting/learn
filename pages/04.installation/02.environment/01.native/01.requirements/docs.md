@@ -27,13 +27,13 @@ If you followed the previous pages, you probably noticed two pieces of software 
 
 ### PHP
 
-Installing PHP 8.2 locally will make it easier to develop locally, as it will allow you to run Composer locally, too. 
+Installing PHP 8.3 locally will make it easier to develop locally, as it will allow you to run Composer locally, too. 
 
 #### MacOS
 The easiest way to install PHP on MacOS is through Homebrew:
 1. Install XCode Command Line Tools : `xcode-select --install`
 2. Install [Homebrew](https://brew.sh) using their guide
-3. Install PHP 8.2, from the terminal : `brew install shivammathur/php/php@8.2` 
+3. Install PHP 8.3, from the terminal : `brew install shivammathur/php/php@8.3` 
 
 [notice=tip]It's possible to use multiple versions of PHP on MacOS. See [shivammathur/php documentation](https://github.com/shivammathur/homebrew-php#switch-between-php-versions).[/notice]
 
@@ -48,7 +48,7 @@ Install PHP through the package manager. For example, on Ubuntu :
 
 2. Install PHP and the necessary extensions : 
    ```bash
-   sudo apt install php8.2 php8.2-gd php8.2-dom php8.2-zip php8.2-sqlite3 php8.2-pdo_mysql php8.2-curl php8.2-mbstring unzip
+   sudo apt install php8.3 php8.3-gd php8.3-dom php8.3-zip php8.3-sqlite3 php8.3-pdo_mysql php8.3-curl php8.3-mbstring unzip
    ```
 
 #### Preflight checks
@@ -63,11 +63,11 @@ php -v
 You should then see a message like:
 
 ```txt
-PHP 8.2.9 (cli) (built: Aug 16 2023 21:20:30) (NTS)
+PHP 8.3.0 (cli) (built: Nov 21 2023 14:40:35) (NTS)
 Copyright (c) The PHP Group
-Zend Engine v4.2.9, Copyright (c) Zend Technologies
-    with Xdebug v3.2.0, Copyright (c) 2002-2022, by Derick Rethans
-    with Zend OPcache v8.2.9, Copyright (c), by Zend Technologies
+Zend Engine v4.3.0, Copyright (c) Zend Technologies
+    with Xdebug v3.3.0, Copyright (c) 2002-2023, by Derick Rethans
+    with Zend OPcache v8.3.0, Copyright (c), by Zend Technologies
 ```
 
 This is the version of PHP which will be used by Composer. Make sure it meets the minimum required version for UserFrosting!
