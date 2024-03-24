@@ -6,6 +6,9 @@ taxonomy:
     category: docs
 ---
 
+## Dependencies
+### Composer
+
 Upgrading UserFrosting to `5.1.x` from `5.0.x` is as simple as updating your `composer.json` file and fetching updated dependencies! First, you'll need to edit your `composer.json`.
 
 Update from : 
@@ -38,20 +41,53 @@ To:
 // ...
 ```
 
-Now, simply use composer and [Bakery](/cli) to get up to date with everything else:
+Now, simply use composer to get up to date with everything :
 
 ```bash
 $ composer update
+```
+
+### NPM
+
+Open `package.json` and update from : 
+
+```json
+// ...
+"dependencies": {
+    "@userfrosting/sprinkle-admin": "^5.0",
+    "@userfrosting/theme-adminlte": "^5.0"
+},
+// ...
+```
+
+To:
+```json
+// ...
+"dependencies": {
+    "@userfrosting/sprinkle-admin": "~5.1.0",
+    "@userfrosting/theme-adminlte": "~5.1.0"
+},
+// ...
+```
+
+Now, simply use npm and [Bakery](/cli) to get up to date with everything else:
+
+```bash
+$ npm update
 $ php bakery bake
 ```
 
-### Migrating your Sprinkles
+## Migrating your Sprinkles
 
-#### Missing default permissions
+### Font Awesome
 
-Some build-in permissions [were missing from the database](https://github.com/userfrosting/UserFrosting/issues/1225). Run `php bakery seed` and select `UserFrosting\Sprinkle\Account\Database\Seeds\DefaultPermissions` to install them. Theses will also be added to the `site-admin` role when running the seed.
+UserFrosting 5.1 now ship with Font Awesome 6 in the AdminLTE theme. While Font Awesome 6 is backward compatible with Font Awesome 5, some icons [have been renamed](https://docs.fontawesome.com/web/setup/upgrade/whats-changed#icons-renamed-in-version-6) and you might need to manually update these in your sprinkle. 
 
-Added permissions :
+Checkout Font Awesome guide for more information : [https://docs.fontawesome.com/web/setup/upgrade/whats-changed](https://docs.fontawesome.com/web/setup/upgrade/whats-changed)
+
+### Missing default permissions
+
+Some build-in permissions [were missing from the database](https://github.com/userfrosting/UserFrosting/issues/1225) :
  - `uri_role`
  - `uri_roles`
  - `uri_permissions`
@@ -64,91 +100,188 @@ Added permissions :
  - `view_system_info`
  - `clear_cache`
 
-The `site-admin` role is now on par with the root user permission by default, except for the last two permissions added, `view_system_info` & `clear_cache`. Theses can be added to the role if desired using the UI.
+To add them to the database, run `php bakery seed` and select `UserFrosting\Sprinkle\Account\Database\Seeds\DefaultPermissions`. Theses will also be added to the `site-admin` role when running the seed.
 
 [notice=warning]If your application defines custom permissions to the `site-admin` role or you customized this role, **do not run the seed** unless you want to lose any custom changes. Running the seed will revert back that role to it's default state.[/notice]
 
-#### `urlFor` service change
+The `site-admin` role is now on par with the root user permission by default, except for the last two permissions added, `view_system_info` & `clear_cache`. Theses can be added to the role if desired using the UI.
 
-When calling [`urlFor`](/templating-with-twig/filters-and-functions#urlfor) **in PHP** (not Twig) to generate a route from it's name, the service as been replace. Find and replace the following import to upgrade: 
+### `urlFor` service change
+
+When calling [`urlFor`](/templating-with-twig/filters-and-functions#urlfor) **in PHP** (not Twig) to generate a route from it's name, the service as been replaced. Find and replace the following import to upgrade: 
 - Find : `use Slim\Interfaces\RouteParserInterface;`
 - Replace : `use UserFrosting\Sprinkle\Core\Util\RouteParserInterface;`
 
-#### Fortress
+### Alerts
 
-addValidationErrors
+When using the [alerts](/advanced/alert-stream) service, replace `addMessageTranslated(...);` with `addMessage(...);`. The old method is still available, but deprecated and will be removed in a future version.
 
-- `UserFrosting\Fortress\RequestSchema` constructor first argument now accept the schema data as an array, as well as a string representing a path to the schema json or yaml file. The argument can still be omitted to create an empty schema. This change makes `UserFrosting\Fortress\RequestSchema\RequestSchemaRepository` obsolete and and such been ***deprecated***. For example:
-  ```php
-  // Before
-  $schemaFromFile = new \UserFrosting\Fortress\RequestSchema('path/to/schema.json');
-  $schemaFromArray = new \UserFrosting\Fortress\RequestSchema\RequestSchemaRepository([
+### Fortress
+
+Fortress has been complexly rewritten for UserFrosting 5.1. Most class have been kept and will continue working, but these have been marked deprecated and will be removed in future version. It is recommended to upgrade your code now to avoid issues later.
+
+#### RequestSchema
+`UserFrosting\Fortress\RequestSchema` constructor first argument now accept the schema data as an array, as well as a string representing a path to the schema json or yaml file. The argument can still be omitted to create an empty schema. This change makes `UserFrosting\Fortress\RequestSchema\RequestSchemaRepository` obsolete and and such been ***deprecated***. For example:
+
+```php
+// Before
+$schemaFromArray = new \UserFrosting\Fortress\RequestSchema\RequestSchemaRepository([
     // ...
-  ]);
+]);
 
-  // After
-  $schemaFromFile = new \UserFrosting\Fortress\RequestSchema('path/to/schema.json');
-  $schemaFromArray = new \UserFrosting\Fortress\RequestSchema([
+// After
+$schemaFromArray = new \UserFrosting\Fortress\RequestSchema([
     // ...
-  ]);
-  ```
+]);
+```
 
-- `UserFrosting\Fortress\RequestSchema\RequestSchemaInterface` now extends `\Illuminate\Contracts\Config\Repository`. The interface itself is otherwise unchanged.
+#### RequestDataTransformer
+`UserFrosting\Fortress\RequestDataTransformer` is ***deprecated*** and replaced by `\UserFrosting\Fortress\Transformer\RequestDataTransformer` (*notice the difference in the namespace !*). 
 
-- `UserFrosting\Fortress\RequestDataTransformer` is ***deprecated*** and replaced by `\UserFrosting\Fortress\Transformer\RequestDataTransformer` (*notice the difference in the namespace!*). `\UserFrosting\Fortress\RequestDataTransformerInterface` is also ***deprecated*** and replaced by `\UserFrosting\Fortress\Transformer\RequestDataTransformerInterface`. When using the new class, instead of passing the schema in the constructor, you pass it directly to `transform()` or `transformField()`. For example : 
-  ```php
-  // Before
-  $transformer = new \UserFrosting\Fortress\RequestDataTransformer($schema);
-  $result = $transformer->transform($data, 'skip');
+When using the new class, instead of passing the schema in the constructor, you pass it directly to `transform()` or `transformField()`. For example : 
 
-  // After
-  $transformer = new \UserFrosting\Fortress\Transformer\RequestDataTransformer();
-  $result = $transformer->transform($schema, $data, 'skip');
-  ```
+```php
+// Before
+$transformer = new \UserFrosting\Fortress\RequestDataTransformer($schema);
+$result = $transformer->transform($data, 'skip');
 
-- `\UserFrosting\Fortress\ServerSideValidator` is ***deprecated*** and replaced by `\UserFrosting\Fortress\Validator\ServerSideValidator` (*notice the difference in the namespace!*). `\UserFrosting\Fortress\ServerSideValidatorInterface` is also ***deprecated*** and replaced by `\UserFrosting\Fortress\Validator\ServerSideValidatorInterface`. When using the new class, instead of passing the schema in the constructor, you pass it directly to `validate()`. For example : 
-  ```php
-  // Before
-  $validator = new \UserFrosting\Fortress\ServerSideValidator($schema, $this->translator);
-  $result = $validator->validate($data);
+// After
+$transformer = new \UserFrosting\Fortress\Transformer\RequestDataTransformer();
+$result = $transformer->transform($schema, $data, 'skip');
+```
 
-  // After
-  $adapter = new \UserFrosting\Fortress\Validator\ServerSideValidator($this->translator);
-  $result = $validator->validate($schema, $data);
-  ```
+`\UserFrosting\Fortress\RequestDataTransformerInterface` is also ***deprecated*** and replaced by `\UserFrosting\Fortress\Transformer\RequestDataTransformerInterface`. 
+
+[notice=tip]Before, `RequestDataTransformer` was typically created inside the controllers each time it was needed. It now can be injected using `RequestDataTransformerInterface`.[/notice]
+
+#### ServerSideValidator
+`\UserFrosting\Fortress\ServerSideValidator` is ***deprecated*** and replaced by `\UserFrosting\Fortress\Validator\ServerSideValidator` (*notice the difference in the namespace !*). 
+
+When using the new class, instead of passing the schema in the constructor, you pass it directly to `validate()`. For example : 
+
+```php
+// Before
+$validator = new \UserFrosting\Fortress\ServerSideValidator($schema, $this->translator);
+$result = $validator->validate($data);
+
+// After
+$adapter = new \UserFrosting\Fortress\Validator\ServerSideValidator($this->translator);
+$result = $validator->validate($schema, $data);
+```
+
+`\UserFrosting\Fortress\ServerSideValidatorInterface` is also ***deprecated*** and replaced by `\UserFrosting\Fortress\Validator\ServerSideValidatorInterface`. 
   
-- `UserFrosting\Fortress\Adapter\FormValidationAdapter` is ***deprecated***. 
-  Instead of defining the format in the `rules` method, you simply use of the appropriate class for the associated format.
-  | `rules(...)`                               | Replacement class                                          |
-  |--------------------------------------------|------------------------------------------------------------|
-  | `$format = json` & `$stringEncode = true`  | `UserFrosting\Fortress\Adapter\FormValidationJsonAdapter`  |
-  | `$format = json` & `$stringEncode = false` | `UserFrosting\Fortress\Adapter\FormValidationArrayAdapter` |
-  | `$format = html5`                          | `UserFrosting\Fortress\Adapter\FormValidationHtml5Adapter` |
+[notice=tip]Before, `ServerSideValidator` was typically created inside the controllers each time it was needed. It now can be injected using `ServerSideValidatorInterface`. The translator will be "sub-injected" at the same time.[/notice]
 
-  `UserFrosting\Fortress\Adapter\JqueryValidationAdapter` is ***deprecated***. 
-  Instead of defining the format in the `rules` method, you simply use of the appropriate class for the associated format.
-  | `rules(...)`                               | Replacement class                                            |
-  |--------------------------------------------|--------------------------------------------------------------|
-  | `$format = json` & `$stringEncode = true`  | `UserFrosting\Fortress\Adapter\JqueryValidationJsonAdapter`  |
-  | `$format = json` & `$stringEncode = false` | `UserFrosting\Fortress\Adapter\JqueryValidationArrayAdapter` |
+#### FormValidationAdapter
+`UserFrosting\Fortress\Adapter\FormValidationAdapter` is ***deprecated***. Instead of defining the format in the `rules` method, you simply use of the appropriate class for the associated format.
 
-  All adapters above now implements `UserFrosting\Fortress\Adapter\ValidationAdapterInterface` for easier type-hinting. 
-  
-  Finally, instead of passing the schema in the constructor, you now pass it directly to `rules()`. 
-  
-  For example : 
-  ```php
-  // Before
-  $adapter = new FormValidationAdapter($schema, $this->translator);
-  $result = $adapter->rules('json', false);
+| Arguments                                  | Code                                                  | Replacement class                                          |
+| ------------------------------------------ | ----------------------------------------------------- | ---------------------------------------------------------- |
+| `$format = json` & `$stringEncode = true`  | `rules()` or `rules('json')` or `rules('json', true)` | `UserFrosting\Fortress\Adapter\FormValidationJsonAdapter`  |
+| `$format = json` & `$stringEncode = false` | `rules('json', false)`                                | `UserFrosting\Fortress\Adapter\FormValidationArrayAdapter` |
+| `$format = html5`                          | `rules('html5')`                                      | `UserFrosting\Fortress\Adapter\FormValidationHtml5Adapter` |
 
-  // After
-  $adapter = new FormValidationArrayAdapter($this->translator);
-  $result = $adapter->rules($schema);
-  ```
+Finally, instead of passing the schema in the constructor, you now pass it directly to `rules()`. 
 
-- `ClientSideValidationAdapter` abstract class replaced with `FromSchemaTrait` trait + `ValidationAdapterInterface` interface.
+For example : 
+```php
+// Before
+$adapter = new FormValidationAdapter($schema, $this->translator);
+$result = $adapter->rules('json', false);
 
-- `FormValidationHtml5Adapter` Will now throw an exception on missing field param, instead of returning null.
+// After
+$adapter = new FormValidationArrayAdapter($this->translator);
+$result = $adapter->rules($schema);
+```
 
-- In `FormValidationHtml5Adapter`, when using `identical` rule, the validation used to be applied to the "confirmation" field. It will now be applied to the source field, making it consistent with array|json format. For example, if `password` requires to be identical to `passwordc`, the validation was added to the `passwordc` field. Now it's applied to `password`.
+```php
+// Before
+$adapter = new FormValidationAdapter($schema, $this->translator);
+$result = $adapter->rules(); // Or $result = $adapter->rules('json');
+
+// After
+$adapter = new FormValidationJsonAdapter($this->translator);
+$result = $adapter->rules($schema);
+```
+
+[notice=tip]Again, the required adapter can now be injected into your class.[/notice]
+
+#### JqueryValidationAdapter
+`UserFrosting\Fortress\Adapter\JqueryValidationAdapter` is ***deprecated***. Instead of defining the format in the `rules` method, you simply use of the appropriate class for the associated format.
+
+| Arguments                                  | Code                                                   | Replacement class                                            |
+| ------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------------ |
+| `$format = json` & `$stringEncode = false` | `rules()` or `rules('json')` or `rules('json', false)` | `UserFrosting\Fortress\Adapter\JqueryValidationArrayAdapter` |
+| `$format = json` & `$stringEncode = true`  | `rules('json', true)`                                  | `UserFrosting\Fortress\Adapter\JqueryValidationJsonAdapter`  |
+
+```php
+// Before
+$validator = new JqueryValidationAdapter($schema, $this->translator);
+$result = $validator->rules();
+
+// After
+$validator = new JqueryValidationAdapter($this->translator);
+$result = $validator->rules($schema);
+```
+
+#### Validation errors
+
+`FormValidationAdapter` and `JqueryValidationAdapter` used to have an `errors()` method to fetch validation errors messages and `validate` used to return true if errors where found, an  false otherwise. These messages are now directly returned as an array when calling `validate`. An empty array means no error. Therefor, the way to handle them has changed :  
+
+Old : 
+```php
+if ($validator->validate($data) === false && is_array($validator->errors())) {
+    $e = new ValidationException();
+    $e->addErrors($validator->errors());
+}
+```
+
+New : 
+```php
+$errors = $this->validator->validate($schema, $data);
+if (count($errors) !== 0) {
+    $e = new ValidationException();
+    $e->addErrors($errors);
+}
+```
+
+This change affect alert's `addValidationErrors`, which can't be used anymore. 
+
+Old :
+```php
+$validator = new \UserFrosting\Fortress\ServerSideValidator($schema, $this->translator);
+if ($validator->validate($data) === false && is_array($validator->errors())) {
+    $this->alert->addValidationErrors($validator);
+        return;
+}
+```
+
+New :
+```php
+$validator = new \UserFrosting\Fortress\Validator\ServerSideValidator($this->translator);
+$errors = $this->validator->validate($schema, $data);
+if (count($errors) !== 0) {
+    foreach ($errors as $idx => $field) {
+        foreach ($field as $eidx => $error) {
+            $this->alert->addMessage('danger', $error);
+        }
+    }
+    return;
+}
+```
+
+### UserActivityLogger
+
+If using `UserActivityLogger` service, the default constants have been moved to the `UserActivityTypes` enum. 
+
+| Old                                        | New                                  |
+| ------------------------------------------ | ------------------------------------ |
+| UserActivityLogger::TYPE_REGISTER          | UserActivityTypes::REGISTER          |
+| UserActivityLogger::TYPE_VERIFIED          | UserActivityTypes::VERIFIED          |
+| UserActivityLogger::TYPE_PASSWORD_RESET    | UserActivityTypes::PASSWORD_RESET    |
+| UserActivityLogger::TYPE_LOGGED_IN         | UserActivityTypes::LOGGED_IN         |
+| UserActivityLogger::TYPE_LOGGED_OUT        | UserActivityTypes::LOGGED_OUT        |
+| UserActivityLogger::TYPE_PASSWORD_UPGRADED | UserActivityTypes::PASSWORD_UPGRADED |
+
+Plus, injections can be replaced from `UserActivityLogger` to `UserActivityLoggerInterface`.
