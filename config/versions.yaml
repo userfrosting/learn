@@ -1,7 +1,7 @@
 branches:
     '5.1':
         path: '/5.1'
-        label: '5.1 (Beta)'
+        label: '5.1'
         visible: true
     '':
         path: ''
