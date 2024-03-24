@@ -1,16 +1,16 @@
 branches:
+    '':
+        path: ''
+        label: '5.1'
+        visible: true
     '5.1':
         path: '/5.1'
         label: '5.1'
-        visible: true
-    '':
-        path: ''
-        label: '5.0'
-        visible: true
+        visible: false
     '5.0':
         path: '/5.0'
         label: '5.0'
-        visible: false
+        visible: true
     '4.6':
         path: '/4.6'
         label: '4.6'
