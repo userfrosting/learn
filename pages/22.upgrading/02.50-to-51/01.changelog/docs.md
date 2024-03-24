@@ -62,7 +62,7 @@ See [Assets Chapter](/asset-management) and [Bakery commands](/cli/commands) for
 The different loggers now implement their own interface, for more flexibility with dependency injection. Debuggers should now be injected using their interface, instead of their class name.
 
 | Class name         | Interface                   |
-|--------------------|-----------------------------|
+| ------------------ | --------------------------- |
 | DebugLogger        | DebugLoggerInterface        |
 | ErrorLogger        | ErrorLoggerInterface        |
 | MailLogger         | MailLoggerInterface         |
@@ -92,7 +92,7 @@ Missing permissions slugs were missing from the original seed, and thus from to 
 No significant changes.
 
 ### AdminLTE theme
-- Add fallback routes when 'index' is not defined (Fix [#1244](https://github.com/userfrosting/UserFrosting/issues/1244))
+Add fallback routes when 'index' is not defined (Fix [#1244](https://github.com/userfrosting/UserFrosting/issues/1244))
 
 ## Complete change Log
 
