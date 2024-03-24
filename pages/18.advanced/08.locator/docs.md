@@ -117,7 +117,7 @@ $this->locator->getResource('schema://default.json');
 // 'app/sprinkles/MySite/schema/default.json',
 ```
 
-The locator will return an instance of the `Resource` object (or an array of `Resource` objects). These objects can be cast as string and will return the absolute path to the resource (file or directory). Further [public methods](https://github.com/userfrosting/framework/tree/5.0/src/UniformResourceLocator/docs#resource-instance) can be used on the Resource object to get more information about the returned resource. For example, to return the sprinkle name where it was found :
+The locator will return an instance of the `Resource` object (or an array of `Resource` objects). These objects can be cast as string and will return the absolute path to the resource (file or directory). Further [public methods](https://github.com/userfrosting/framework/tree/5.1/src/UniformResourceLocator/docs#resource-instance) can be used on the Resource object to get more information about the returned resource. For example, to return the sprinkle name where it was found :
 
 ```php
 $schema = $this->locator->getResource('schema://default.json');
