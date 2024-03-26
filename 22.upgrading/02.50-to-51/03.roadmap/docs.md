@@ -10,7 +10,6 @@ taxonomy:
 
 The main focus of UserFrosting 5.2 will be :
 
-- Replace webpack commonJS definition with ESM
 - Update locales (translations), move them to their custom sprinkle
 - Improve Docker support
 - Add Redis/Memecache session driver
