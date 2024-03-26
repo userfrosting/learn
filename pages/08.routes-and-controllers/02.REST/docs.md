@@ -17,7 +17,7 @@ When HTTP was first designed, it was meant to reflect the transactional nature o
 
 A url is simply a way of identifying a resource. The HTTP method then tells the server what the client wants to _do_ with that resource. You can think of this as the grammar of a natural language, with the method acting as the verb and the url as the object of a sentence. Together, a specific url and method are commonly referred to as an **endpoint**.
 
-In the years since, there has been a tendency to build more abstractions on top of this very basic language. However, we have been seeing lately an effort to get back to the roots of HTTP as it was intended to be used - this is what people are commonly referring to when they talk about [REST](https://en.wikipedia.org/wiki/Representational_state_transfer).
+In the years since, there has been a tendency to build more abstractions on top of this very basic language. However, we have been seeing lately an effort to get back to the roots of HTTP as it was intended to be used - this is what people are commonly referring to when they talk about [REST](https://en.wikipedia.org/wiki/REST).
 
 ## REST and PHP
 
@@ -45,5 +45,3 @@ Within each file, you'd also need control structures (if/else) to have it do dif
 UserFrosting, and most other modern frameworks and content management systems, use a [front controller](/routes-and-controllers/front-controller) to solve this problem. With a front controller, the web server is configured to pass all requests to a single script - `index.php`. From there, the request endpoint is interpreted, and a matching **route** is invoked. These routes do not need to be defined in PHP files that match the name of the url. Thus, we've **decoupled** the endpoints from the directory structure of our application.
 
 Having done this, we are now free to choose any url and method for any request - whether it's a page, form submission, API request, or whatever. This allows us to design our endpoints according to the principles of REST. The next section explains how we should think when we're choosing the urls and methods that our application exposes to the client.
-
-In the [next section](/routes-and-controllers/front-controller), we'll talk about how and where routes are defined in UserFrosting, so you can start implementing your endpoints.
