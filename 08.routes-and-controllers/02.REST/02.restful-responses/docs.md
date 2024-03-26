@@ -81,7 +81,7 @@ if (!$authorizer->checkAccess($currentUser, 'uri_users')) {
 
 The default exception handler that handles `ForbiddenException`s will automatically generate an error message/page response with a 403 response code.
 
-In some cases, you may not want to disclose to unauthorized users that the resource even _exists_. In this case, you can [override](/advanced/error-handling) the `ForbiddenExceptionHandler` with your own handler and have it return a 404 error instead.
+In some cases, you may not want to disclose to unauthorized users that the resource even _exists_. In this case, you can [override](/advanced/error-handling#creating-a-custom-exception-handler) the `ForbiddenExceptionHandler` with your own handler and have it return a 404 error instead.
 
 ### 404 (Not Found)
 
