@@ -6,11 +6,11 @@ taxonomy:
     category: docs
 ---
 
-There is no such thing as a `$_GET` array or a `$_POST` array - at least, not according to the [HTTP specifications](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Message_Format). These superglobals are merely constructs offered by PHP to make your life more "convenient".
+There is no such thing as a `$_GET` array or a `$_POST` array - at least, not according to the [HTTP specifications](https://en.wikipedia.org/wiki/HTTP#Message_Format). These superglobals are merely constructs offered by PHP to make your life more "convenient".
 
 The problem with `$_GET` and `$_POST` is that despite their names, they don't actually have anything to do with the request methods `GET` and `POST` at all. Rather, `$_GET` retrieves variables from the [URL query string](http://php.net/manual/en/reserved.variables.get.php), while `$_POST` retrieves variables submitted as part of a form. For some reason, PHP has arbitrarily tangled up the *data representation* with the request method. Not to mention that [global variables are a terrible idea](http://softwareengineering.stackexchange.com/questions/148108/why-is-global-state-so-evil) in general!
 
-Fortunately, Slim saves the day by providing a more HTTP-friendly way of accessing data supplied by the request. Rather than thinking in terms of "GET parameters" and "POST parameters", we should think in terms of the different components of the HTTP request. [Recall](/routes-and-controllers/rest) that a request consists of a **url**, **method**, **headers**, and optionally, a **body** - any of these could potentially contain data that we'd want to get at in one of our controller methods.
+Fortunately, Slim saves the day by providing a more HTTP-friendly way of accessing data supplied by the request. Rather than thinking in terms of "GET parameters" and "POST parameters", we should think in terms of the different components of the HTTP request. [Recall](/routes-and-controllers/rest) that a request consists of a **url**, **method**, **headers**, and optionally, a **body** - any of these could potentially contain data that we'd want to use in one of our controller methods.
 
 ## Retrieving URL Parameters
 
@@ -45,7 +45,7 @@ Slim [provides a number of methods](https://www.slimframework.com/docs/v4/object
 
 ### Form Data
 
-To get client-submitted form data, simply use the `getParsedBody()` method on `$request`:
+To get client-submitted form data, use the `getParsedBody()` method on `$request`:
 
 ```php
 // request was POST /api/users, with form values username => 'kevin' and password => 'hunter2'
@@ -60,7 +60,7 @@ echo $params['username'];
 
 ### Uploaded Files
 
-To get at files that have been [encoded in the HTTP request body](http://stackoverflow.com/a/26791188/2970321) (for example using an HTML `<input type='file' ...` element), use the `getUploadedFiles()` method:
+To get files that have been [encoded in the HTTP request body](http://stackoverflow.com/a/26791188/2970321) (for example using an HTML `<input type='file' ...` element), use the `getUploadedFiles()` method:
 
 ```
 $files = $request->getUploadedFiles();
