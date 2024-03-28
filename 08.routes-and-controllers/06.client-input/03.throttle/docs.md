@@ -10,7 +10,7 @@ People tend to be bad at picking strong passwords. [Publicly available lists of 
 
 Complicated password policies (other than password length) [tend to backfire spectacularly](http://security.stackexchange.com/questions/6095/xkcd-936-short-complex-password-or-long-dictionary-passphrase/6116#6116). A good alternative then, is to slow down brute-force attackers to the point where it would take an inordinate amount of time to crack all but the easiest passwords.
 
-This strategy is known as **throttling**, and should be employed in any route that could allow an attacker to gain unauthorized access or otherwise affect other users' accounts, such as the login and password recovery routes. UserFrosting supports throttling based on either IP address, or some other chosen pieces of information (e.g. username).
+This strategy is known as **throttling**, and should be employed in any route that could allow an attacker to gain unauthorized access or otherwise affect other users' accounts, such as the login and password recovery routes. UserFrosting supports throttling based on either IP address or some other chosen pieces of information (e.g. username).
 
 ## Defining throttles
 
