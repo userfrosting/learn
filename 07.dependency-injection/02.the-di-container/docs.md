@@ -136,7 +136,7 @@ You'll notice that the callable used to create a `Logger` object takes two param
 
 ### Binding Interfaces
 
-Earlier we discussed the benefits of using interfaces, as the constructor can accept any class that implement the correct interface:
+Earlier we discussed the benefits of using interfaces, as the constructor can accept any class that implements the correct interface:
 
 ```php
 public function __construct(NestInterface $nest) // Accept both `Nest` and `ImprovedNest`
