@@ -74,7 +74,7 @@ use UserFrosting\Sprinkle\Account\Exceptions\ForbiddenException;
 
 // ...
 
-if (!$this->authenticator->checkAccess($currentUser, 'uri_users')) {
+if (!$authorizer->checkAccess($currentUser, 'uri_users')) {
     throw new ForbiddenException();
 }
 ```
