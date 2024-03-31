@@ -35,6 +35,10 @@ To enable [Sass/SCSS](https://sass-lang.com) support, first enable Sass loader i
 
 3. Restart Encore
     ```bash
+    php bakery assets:webpack
+
+    # or
+
     npm run dev
     ```
 
@@ -73,6 +77,10 @@ To enable [Less](https://lesscss.org) support, first enable Less loader inside `
 
 3. Restart Encore
     ```bash
+    php bakery assets:webpack
+
+    # or
+
     npm run dev
     ```
 

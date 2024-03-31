@@ -14,7 +14,7 @@ Data from the outside world is the Achilles' heel of modern interactive web serv
 
 ### Server-side
 
-Many new developers [fail to realize](http://security.stackexchange.com/questions/147216/hacker-used-picture-upload-to-get-php-code-into-my-site) that a malicious user could submit any type of request, with any content they like, to your server at any time. This is possible regardless of the forms and widgets that your web application presents to the client - it is a trivial matter to change their behavior using the [browser console](/troubleshooting/debugging), or bypass them completely using a command line tool such as [cURL](https://curl.haxx.se/docs/httpscripting.html).
+Many new developers [fail to realize](http://security.stackexchange.com/questions/147216/hacker-used-picture-upload-to-get-php-code-into-my-site) that a malicious user could submit any type of request, with any content they like, to your server at any time. This is possible regardless of the forms and widgets that your web application presents to the client - it is a trivial matter to change their behavior using the [browser console](/troubleshooting/debugging#client-side-debugging), or bypass them completely using a command line tool such as [cURL](https://curl.haxx.se/docs/httpscripting.html).
 
 For this reason, it is **imperative** to validate user input on the server side - *after* the request has left the control of the submitter.
 
@@ -95,7 +95,7 @@ use UserFrosting\Fortress\RequestSchema;
 $schema = new RequestSchema('schema://requests/contact.yaml');
 ```
 
-Notice that we've used the `schema://` stream wrapper, rather than having to hardcode an absolute file path. This allows UserFrosting to automatically scan the `schema/` subdirectories of each loaded Sprinkle for `contact.yaml`, and using the version found in the most recently loaded Sprinkle.
+Notice that we've used the `schema://` stream wrapper, rather than having to hardcode an absolute file path. This tells UserFrosting to automatically scan the `schema/` subdirectories of each loaded Sprinkle for `contact.yaml`, and use the version found in the most recently loaded Sprinkle.
 
 ### Generating Client-side Rules
 
@@ -103,16 +103,16 @@ To automatically generate a set of client-side rules compatible with the [jQuery
 
 ```php
 // This line goes at the top of your file
-use UserFrosting\Fortress\Adapter\JqueryValidationAdapter;
+use UserFrosting\Fortress\Adapter\JqueryValidationJsonAdapter;
 
-// This assume $translator as been properly injected into the class or method.
-$validator = new JqueryValidationAdapter($schema, $this->translator);
+// This assume $translator has been properly injected into the class or method.
+$validator = new JqueryValidationJsonAdapter($this->translator);
 ```
 
 The rules can then be retrieved via the `rules()` method, and the resulting array can be passed to a Twig template to be rendered as a Javascript variable:
 
 ```php
-$rules = $validator->rules();
+$rules = $validator->rules($schema);
 
 return $this->view->render($response, 'pages/contact.html.twig', [
     'page' => [
@@ -133,13 +133,13 @@ If you visit the page `/account/register` and use "View Source", you can see how
 
 To process data on the server, use the `RequestDataTransformer` and `ServerSideValidator` classes.
 
-`RequestDataTransformer` will filter out any submitted fields that are not defined in the request schema (whitelisting), and perform any field [transformations](#transformations) as defined in your schema:
+`RequestDataTransformer` will filter out any submitted fields that are not defined in the request schema (whitelisting), and perform any field [transformations](#transformations) defined in your schema:
 
 ```php
 // These lines goes at the top of your file
-use UserFrosting\Fortress\RequestDataTransformer;
 use UserFrosting\Fortress\RequestSchema;
-use UserFrosting\Fortress\ServerSideValidator;
+use UserFrosting\Fortress\Transformer\RequestDataTransformer;
+use UserFrosting\Fortress\Validator\ServerSideValidator;
 
 // Get submitted data (in POST)
 $params = $request->getParsedBody();
@@ -148,8 +148,8 @@ $params = $request->getParsedBody();
 $schema = new RequestSchema('schema://requests/contact.yaml');
 
 // Whitelist and set parameter defaults
-$transformer = new RequestDataTransformer($schema);
-$data = $transformer->transform($params);
+$transformer = new RequestDataTransformer();
+$data = $transformer->transform($schema, $params);
 ```
 
 `$data` will now contain your filtered, whitelisted data.
@@ -161,18 +161,19 @@ It's worth pointing out that we do not do any sort of "sanitization" on submitte
 Once you have filtered and whitelisted the input data, you can perform validation using `ServerSideValidator`:
 
 ```php
-// These lines goes at the top of your file
-use UserFrosting\Fortress\RequestDataTransformer;
+// These lines go at the top of your file
 use UserFrosting\Fortress\RequestSchema;
-use UserFrosting\Fortress\ServerSideValidator;
+use UserFrosting\Fortress\Transformer\RequestDataTransformer;
+use UserFrosting\Fortress\Validator\ServerSideValidator;
 use UserFrosting\Sprinkle\Core\Exceptions\ValidationException;
 
-$validator = new ServerSideValidator($schema, $this->translator);
+$validator = new ServerSideValidator($this->translator);
 
 // Add error messages and halt if validation failed
-if ($validator->validate($data) === false && is_array($validator->errors())) {
+$errors = $validator->validate($schema, $data);
+if (count($errors) !== 0) {
     $e = new ValidationException();
-    $e->addErrors($validator->errors());
+    $e->addErrors($errors);
 
     throw $e;
 }
@@ -192,7 +193,7 @@ A field consists of a unique **field name**, along with a set of attributes. The
 | ----------------- | :------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `transformations` |   Yes    | The `transformations` attribute specifies an ordered list of **data transformations** to be applied to the field.                                                                                                              |
 | `validators`      |   Yes    | The `validators` attribute specifies an ordered list of **validators** to be applied to the field.                                                                                                                             |
-| `default`         |   Yes    | The `default` attribute specifies a default value to be used if the field has not been specified in the HTTP request. When a default value is applied, the data transformations and validators for the field shall be ignored. |
+| `default`         |   Yes    | The `default` attribute specifies a default value to be used if the field is not specified in the HTTP request. When a default value is applied, the data transformations and validators for the field shall be ignored. |
 
  **Example:**
 
@@ -291,7 +292,7 @@ The following validators are available:
 | `not_matches`            | Specifies that the value of the field must **not** be equivalent to the value of `field`.                                                                                    |
 | `not_member_of`          | Specifies that the value of the field must **not** appear in the specified `values` array.                                                                                   |
 | `numeric`                | Specifies that the value of the field must represent a numeric (floating-point or integer) value.                                                                            |
-| `range`                  | Specifies a numeric interval bound on the field's value.  The `range` validator supports the following attributes:                                                           |
+| `range`                  | Specifies a numeric interval bound on the field's value.                                                                                                                    |
 | `regex`                  | Specifies that the value of the field must match a specified Javascript- and PCRE-compliant regular expression.                                                              |
 | `required`               | Specifies that the field is a required field. If the field is not present in the HTTP request, validation will fail unless a default value has been specified for the field. |
 | `telephone`              | Specifies that the value of the field must represent a valid telephone number.                                                                                               |
@@ -363,11 +364,11 @@ screech:
       message: You did not provide a valid screech.
 ```
 
-[notice=warning]Regular expressions should _not_ be wrapped in quotes in YAML. Also the jQuery Validation plugin, for some unholy reason, wraps regular expressions on the client side with `^...$`. Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).[/notice]
+[notice=warning]Regular expressions should _not_ be wrapped in quotes in YAML. Also the jQuery Validation plugin wraps regular expressions on the client side with `^...$`. Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).[/notice]
 
 ### Limit rules to server or client only
 
-Sometimes, you only want a validation rule to be applied server-side but not in Javascript on the client side, or vice versa. For example, there may be forms that contain hidden data that needs to be validated on the server-side, but is not directly manipulated by the user in the browser. Thus, these fields would not need client-side validation rules.
+Sometimes, you want a validation rule to be only applied server-side but not in Javascript on the client side, or vice versa. For example, there may be forms that contain hidden data that needs to be validated on the server-side, but is not directly manipulated by the user in the browser. Thus, these fields would not need client-side validation rules.
 
 Alternatively, there might be fields that appear in the form that should be validated for the sake of user experience, but are not actually used by (or even sent to) the server.
 

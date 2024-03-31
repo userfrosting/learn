@@ -52,13 +52,13 @@ public function __invoke(Request $request, Response $response): Response
 
     // Load validation rules
     $schema = new RequestSchema("schema://requests/register.yaml");
-    $validatorRegister = new JqueryValidationAdapter($schema, $this->translator);
+    $validatorRegister = new JqueryValidationJsonAdapter($this->translator);
 
     // Pass them to the `page` key of the template placeholders
     return $this->view->render($response, 'pages/register.html.twig', [
         "page" => [
             "validators" => [
-                "register" => $validatorRegister->rules()
+                "register" => $validatorRegister->rules($schema)
             ]
         ]
     ]);

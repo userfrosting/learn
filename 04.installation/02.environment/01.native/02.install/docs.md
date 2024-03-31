@@ -13,7 +13,7 @@ Now that your local development environment is setup and ready to go, it's final
 Use Composer to create an empty project with the latest version of UserFrosting skeleton into a new `UserFrosting` folder:
 
 ```bash
-composer create-project userfrosting/userfrosting UserFrosting "^5.0"
+composer create-project userfrosting/userfrosting UserFrosting "^5.1"
 ```
 
 [notice=tip]Note the `UserFrosting` at the end of the command. This means `composer` will create new `UserFrosting` subdirectory inside the current location. You can change `UserFrosting` to whatever you like.[/notice]
@@ -49,7 +49,7 @@ If the database connection is successful, the installer will then check that the
 At this point you can run locally using the PHP Built-in server : 
 
 ```bash
-php -S localhost:8080 -t public
+php bakery serve
 ```
 
 You can now access UserFrosting at [http://localhost:8080](http://localhost:8080). You should see the default UserFrosting pages and login with the newly created master account. 
