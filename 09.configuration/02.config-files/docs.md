@@ -1,12 +1,12 @@
 ---
 title: Configuration Files
 metadata:
-    description: Configuration files allow you to customize the default behavior of UserFrosting - for example to toggle debugging, caching, and logging behavior and to set other sitewide settings.
+    description: Configuration files allow you to customize the default behavior of UserFrosting - for example, to toggle debugging, caching, and logging behaviors and to set other sitewide settings.
 taxonomy:
     category: docs
 ---
 
-Configuration files allow you to customize the default behavior of UserFrosting - for example to toggle debugging, caching, and logging behavior and to set other sitewide settings. Configuration files are found in the `config/` directory of Sprinkles.
+Configuration files allow you to customize the default behavior of UserFrosting - for example, to toggle debugging, caching, and logging behaviors and to set other sitewide settings. Configuration files are found in the `config/` directory of each Sprinkle.
 
 ## File Structure
 
@@ -84,7 +84,7 @@ The default environment mode includes:
 |    Mode    | Description                                                                   |
 | :--------: | ----------------------------------------------------------------------------- |
 |  default   | The default mode. Should be used only for development.                        |
-| production | Serve optimized assets and error management the front user facing application |
+| production | Serve optimized assets and error management for the front user facing application |
 |   debug    | Enables all debugging options                                                 |
 |  testing   | Mode used for [automated testing](/testing)                                   |
 
