@@ -9,7 +9,7 @@ taxonomy:
 
 [notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
 
-We recommend that you start with a $4/month Droplet and [install a LEMP stack](https://marketplace.digitalocean.com/apps/lemp) (Ubuntu 20.04, nginx, MariaDB, and PHP 8.0). If you prefer you may [install Apache instead](https://marketplace.digitalocean.com/apps/lamp), but nginx offers superior performance and requires less configuration.
+We recommend that you start with a $4/month Droplet and [install a LEMP stack](https://marketplace.digitalocean.com/apps/lemp) (Ubuntu 20.04, nginx, MariaDB, and PHP 8.1). If you prefer you may [install Apache instead](https://marketplace.digitalocean.com/apps/lamp), but nginx offers superior performance and requires less configuration.
 
 When you go to create your Droplet, DigitalOcean will ask you some initial configuration questions. Choose Ubuntu 22.04 as your distribution, and select a datacenter that is nearest to you and your customers. **Do NOT set up SSH keys at this time** - if you do, DigitalOcean won't email you a root user password. We will set up SSH later, after we've logged in with a password first.
 
@@ -79,7 +79,7 @@ Some notes:
 Install gd and curl:
 
 ```bash
-sudo apt-get install php8.0-gd
+sudo apt-get install php8.3-gd
 sudo apt-get install php-curl
 sudo service nginx restart
 ```
@@ -91,9 +91,9 @@ PHP's [`get_browser()`](http://php.net/manual/en/function.get-browser.php) funct
 Assuming that your PHP installation is in `/etc/php/8.0`, do the following:
 
 ```bash
-cd /etc/php/8.0/fpm
+cd /etc/php/8.3/fpm
 sudo mkdir extra
-sudo curl -o /etc/php/8.0/fpm/extra/browscap.ini https://browscap.org/stream?q=Lite_PHP_BrowsCapINI
+sudo curl -o /etc/php/8.3/fpm/extra/browscap.ini https://browscap.org/stream?q=Lite_PHP_BrowsCapINI
 ```
 
 This will download the "lite" browscap database, which is supposed to be adequate for most websites. Visit [Browscap Project](https://browscap.org) for other options.
@@ -147,7 +147,7 @@ Notes:
 
 ```bash
 sudo phpenmod mcrypt
-sudo service php8.0-fpm restart
+sudo service php8.3-fpm restart
 ```
 
 To disable root login and restrict access to specific users:

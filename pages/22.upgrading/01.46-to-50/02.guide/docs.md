@@ -10,7 +10,7 @@ Upgrading an existing sprinkle from UserFrosting 4 to UserFrosting 5 can unfortu
 
 [notice=warning]This guide contains the most important changes and action you need to take to upgrade your UserFrosting 4 Sprinkle. However, **it's far from complete**, as there are too many changes to document. Make sure you have a backup of your existing application and your **development database** before starting. 
 
-If you spot anything missing, don't hesitate to contribute to this page via the [*edit this page*](https://github.com/userfrosting/learn/blob/5.0-beta/pages/22.upgrading/01.46-to-50/02.guide/docs.md) button at the top.[/notice]
+If you spot anything missing, don't hesitate to contribute to this page via the [*edit this page*](https://github.com/userfrosting/learn/blob/5.1/pages/22.upgrading/01.46-to-50/02.guide/docs.md) button at the top.[/notice]
 
 ## Before you start
 
@@ -312,7 +312,7 @@ FontAwesome has also been updated, and references to icon must also be updated :
 ### Misc
 
 1. Facades (Translator, etc.) are no longer available. The corresponding service should be injected properly now.
-2. Router `PathFor` has been changed. To generate a route based on it's name, inject `Slim\Interfaces\RouteParserInterface` and use `urlFor` method.  
+2. Router `PathFor` has been changed. To generate a route based on it's name, inject `UserFrosting\Sprinkle\Core\Util\RouteParserInterface` and use `urlFor` method.  
 3. Exceptions have changed, especially HTTP ones. For example : `use UserFrosting\Support\Exception\ForbiddenException;` => `use UserFrosting\Sprinkle\Account\Exceptions\ForbiddenException;` Check out [Exception and Error Handling](/advanced/error-handling#default-exceptions) guide for more information.
 
 ### Login redirect
