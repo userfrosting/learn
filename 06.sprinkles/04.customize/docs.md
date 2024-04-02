@@ -45,13 +45,13 @@ Original **composer.json**
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-gd": "*",
-        "userfrosting/framework": "^5.0",
-        "userfrosting/sprinkle-core": "^5.0",
-        "userfrosting/sprinkle-account": "^5.0",
-        "userfrosting/sprinkle-admin": "^5.0",
-        "userfrosting/theme-adminlte": "^5.0"
+        "userfrosting/framework": "^5.1",
+        "userfrosting/sprinkle-core": "^5.1",
+        "userfrosting/sprinkle-account": "^5.1",
+        "userfrosting/sprinkle-admin": "^5.1",
+        "userfrosting/theme-adminlte": "^5.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -99,13 +99,13 @@ Modified **composer.json**
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-gd": "*",
-        "userfrosting/framework": "^5.0",
-        "userfrosting/sprinkle-core": "^5.0",
-        "userfrosting/sprinkle-account": "^5.0",
-        "userfrosting/sprinkle-admin": "^5.0",
-        "userfrosting/theme-adminlte": "^5.0"
+        "userfrosting/framework": "^5.1",
+        "userfrosting/sprinkle-core": "^5.1",
+        "userfrosting/sprinkle-account": "^5.1",
+        "userfrosting/sprinkle-admin": "^5.1",
+        "userfrosting/theme-adminlte": "^5.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",

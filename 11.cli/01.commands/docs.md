@@ -28,9 +28,50 @@ $ php bakery help
 
 ## Available commands
 
+### assets:build
+
+The `assets:build` (alias : `webpack` & `build-assets`) command is the general assets building command. It combines `assets:install` and `assets:webpack` into a single command:
+
+```bash
+$ php bakery assets:build [options]
+```
+
+| Option           | Description                                                     |
+|------------------|-----------------------------------------------------------------|
+| -p, --production | Compile the assets and asset bundles for production environment |
+| -w, --watch      | Watch for changes and recompile automatically                   |
+
+[notice=note]The `production` option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.[/notice]
+
+See the [Asset Management](/asset-management) chapter for more information about asset bundles and the options.
+
+### assets:install
+
+The `assets:install` command is an alias for the **NPM** scripts used to install all required frontend dependencies locally, based on `packages.lock`. The versions defined in the lock file will be downloaded. Behind the scene, it's an alias for `npm install` npm command.
+
+### assets:update
+
+The `assets:update` command is an alias for the **NPM** scripts used to update all frontend dependencies, ignoring version defined in `packages.lock`. Behind the scene, it's an alias for `npm update` npm command.
+
+### assets:webpack
+
+The `assets:webpack` command is an alias for the **Webpack Encore** scripts used to compile frontend dependencies to `/public/assets`. Behind the scene, it's an alias for npm commands `npm run dev`, `npm run build` and `npm run watch`. See the table below for more information.
+
+| Option           | Description                                                                               | Alias of        |
+|------------------|-------------------------------------------------------------------------------------------|-----------------|
+| _no options_     | Compile the assets fo development environment                                             | `npm run dev`   |
+| -p, --production | Compile the assets for production environment                                             | `npm run build` |
+| -w, --watch      | Watch for changes and recompile automatically. Only available for development environment | `npm run watch` |
+
+[notice=note]The `production` option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.[/notice]
+
+[notice=note]If both `watch` and `production` options are used, _watch_ will be ignored and assets will be build for production.[/notice]
+
+See the [Asset Management](/asset-management) chapter for more information about asset bundles and the options.
+
 ### bake
 
-Bake is the general installation command. It combines `setup:db`, `setup:mail`, `debug`, `migrate`, `create:admin-user`, `webpack` and `clear-cache` into a single command:
+Bake is the general installation command. It combines `setup:db`, `setup:mail`, `debug`, `migrate`, `create:admin-user`, `assets:build` and `clear-cache` into a single command:
 
 ```bash
 $ php bakery bake
@@ -100,15 +141,16 @@ $ php bakery debug -v
 
 The debug command is in fact an aggregator of sub-commands, similar to `bake`. It include the following command by default:
 
-| Command       | Description                                                                    |
-| ------------- | ------------------------------------------------------------------------------ |
-| debug:config  | Test the UserFrosting database config                                          |
-| debug:db      | Test the UserFrosting database connection                                      |
-| debug:events  | List all currently registered events listener for each events.                 |
-| debug:locator | List all locations and streams, with their respective path, to help debugging. |
-| debug:mail    | Display Mail Configuration                                                     |
-| debug:version | Test the UserFrosting version dependencies                                     |
-| sprinkle:list | List all available sprinkles and their params                                  |
+| Command       | Description                                                                    | Require verbose |
+|---------------|--------------------------------------------------------------------------------|:---------------:|
+| debug:config  | Test the UserFrosting database config                                          |                 |
+| debug:db      | Test the UserFrosting database connection                                      |                 |
+| debug:events  | List all currently registered events listener for each events.                 | ✓               |
+| debug:locator | List all locations and streams, with their respective path, to help debugging. | ✓               |
+| debug:mail    | Display Mail Configuration                                                     | ✓               |
+| debug:twig    | List all twig namespaces to help debugging                                     | ✓               |
+| debug:version | Test the UserFrosting version dependencies                                     |                 |
+| sprinkle:list | List all available sprinkles and their params                                  |                 |
 
 Some will be only displayed when the verbose mode is active.
 
@@ -477,6 +519,21 @@ Example result:
 ```
 
 
+### serve
+
+The `serve` command is used to execute [PHP Built-in web server](https://www.php.net/manual/en/features.commandline.webserver.php). This is a simple way to test your application without having to configure a full web server.
+
+```bash
+$ php bakery serve [options]
+```
+
+Hit `ctrl+c` to quit.
+
+| Option                            | Description                                             |
+| --------------------------------- | ------------------------------------------------------- |
+| -p, --port=PORT                   | The port to serve the application on [default: "8080"]. |
+
+
 ### test
 
 The `test` command is used to execute [PHPUnit](https://phpunit.de/) tests.
@@ -511,20 +568,3 @@ $ php bakery test:mail [options]
 | Option  | Description                                                        |
 | ------- | ------------------------------------------------------------------ |
 | --to=TO | Email address to send test email to. Use admin contact if omitted. |
-
-
-### webpack
-
-The `webpack` (alias : `build-assets`) command is an alias for the **NPM** and **Webpack Encore** scripts used for asset management. The `package.json` and `webpack.config.js` files contains the configuration required to download Javascript, CSS, and other assets used by UserFrosting. This command will install all required frontend dependencies locally, and then automatically compile frontend dependencies to `/app/assets`.
-
-See the [Asset Management](/asset-management) chapter for more information about asset bundles and the `production` option.
-
-```bash
-$ php bakery webpack [options]
-```
-
-| Option           | Description                                                     |
-| ---------------- | --------------------------------------------------------------- |
-| -p, --production | Compile the assets and asset bundles for production environment |
-
-<!-- [notice=note]The compile option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.[/notice] -->
