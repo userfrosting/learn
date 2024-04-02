@@ -10,6 +10,6 @@ taxonomy:
 
 # Bakery CLI
 
-UserFrosting provide it's own Command-line Interface tool, or CLI. That tool is called the **Bakery**.
+UserFrosting provides its own Command-line Interface tool, or CLI, called the **Bakery**.
 
-This tool allows you to run administrative commands like setting up your database, run tests or debug an existing installation.
+This tool allows you to run administrative commands like setting up your database, running tests, or debugging an existing installation.
