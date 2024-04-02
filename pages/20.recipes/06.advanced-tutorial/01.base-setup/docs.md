@@ -11,7 +11,7 @@ taxonomy:
 First thing to do is to create an empty sprinkle for our code to live in from the UserFrosting 5 Skeleton. We'll call this sprinkle `Pastries`. As described in the [Installation Chapter](/installation) chapter, start by creating an empty base using the Skeleton template:
 
 ```bash
-$ composer create-project userfrosting/userfrosting UserFrosting "^5.0"
+$ composer create-project userfrosting/userfrosting UserFrosting "^5.1"
 ```
 
 Make sure the default skeleton app is working. Once the base website is created and working, we can start creating our new page.
