@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-UserFrosting's CLI, or [*Command-line Interface*](https://en.wikipedia.org/wiki/Command-line_interface), is called the **Bakery**. It provides a number of helpful commands that can assist you while you build, manage and install your application. To view a list of all available Bakery commands, you may use the `list` command from your UserFrosting root directory:
+UserFrosting's CLI, or [*Command-line Interface*](https://en.wikipedia.org/wiki/Command-line_interface), is called the **Bakery**. It provides a number of helpful commands that can assist you while you build, manage, and install your application. To view a list of all available Bakery commands, you may use the `list` command from your UserFrosting root directory:
 
 ```bash
 $ php bakery list
@@ -43,31 +43,31 @@ $ php bakery assets:build [options]
 
 [notice=note]The `production` option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.[/notice]
 
-See the [Asset Management](/asset-management) chapter for more information about asset bundles and the options.
+See the [Asset Management](/asset-management) chapter for more information about asset bundles and these options.
 
 ### assets:install
 
-The `assets:install` command is an alias for the **NPM** scripts used to install all required frontend dependencies locally, based on `packages.lock`. The versions defined in the lock file will be downloaded. Behind the scene, it's an alias for `npm install` npm command.
+The `assets:install` command is an alias for the **NPM** scripts used to install all required frontend dependencies locally, based on `packages.lock`. The versions defined in the lock file will be downloaded. Behind the scene, it's an alias for the `npm install` npm command.
 
 ### assets:update
 
-The `assets:update` command is an alias for the **NPM** scripts used to update all frontend dependencies, ignoring version defined in `packages.lock`. Behind the scene, it's an alias for `npm update` npm command.
+The `assets:update` command is an alias for the **NPM** scripts used to update all frontend dependencies, ignoring the versions defined in `packages.lock`. Behind the scenes, it's an alias for the `npm update` npm command.
 
 ### assets:webpack
 
-The `assets:webpack` command is an alias for the **Webpack Encore** scripts used to compile frontend dependencies to `/public/assets`. Behind the scene, it's an alias for npm commands `npm run dev`, `npm run build` and `npm run watch`. See the table below for more information.
+The `assets:webpack` command is an alias for the **Webpack Encore** scripts used to compile frontend dependencies to `/public/assets`. Behind the scenes, it's an alias for the npm commands `npm run dev`, `npm run build` and `npm run watch`. See the table below for more information.
 
 | Option           | Description                                                                               | Alias of        |
 |------------------|-------------------------------------------------------------------------------------------|-----------------|
-| _no options_     | Compile the assets fo development environment                                             | `npm run dev`   |
+| _no options_     | Compile the assets for development environment                                            | `npm run dev`   |
 | -p, --production | Compile the assets for production environment                                             | `npm run build` |
-| -w, --watch      | Watch for changes and recompile automatically. Only available for development environment | `npm run watch` |
+| -w, --watch      | Watch for changes and recompile automatically. Only available in development environment. | `npm run watch` |
 
 [notice=note]The `production` option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.[/notice]
 
 [notice=note]If both `watch` and `production` options are used, _watch_ will be ignored and assets will be build for production.[/notice]
 
-See the [Asset Management](/asset-management) chapter for more information about asset bundles and the options.
+See the [Asset Management](/asset-management) chapter for more information about asset bundles and these options.
 
 ### bake
 
@@ -84,13 +84,13 @@ $ php bakery bake
 
 ### clear-cache
 
-The `clear-cache` command takes care of deleting all the cached data. See [Chapter 17](/advanced/caching) for more information.
+The `clear-cache` command takes care of deleting all cached data. See [Chapter 17](/advanced/caching) for more information.
 
 ```bash
 $ php bakery clear-cache
 ```
 
-[notice=note]You might need to run this command as administrator or using `sudo` to avoid file permission issues when using the `file` cache store.[/notice]
+[notice=note]When using the `file` cache store, you might need to run this command as administrator or using `sudo` to avoid file permission issues.[/notice]
 
 
 ### create:admin-user
@@ -127,7 +127,7 @@ $ php bakery create:user [options]
 
 The `debug` command will run a series of tests to make sure everything is ready to run UserFrosting on your system. If you have trouble accessing your UserFrosting installation, you should run this command first to make sure basic requirements are met.
 
-The information displayed by this command can also be useful to other people when [asking for help](/troubleshooting/getting-help) and submitting new issues on GitHub.
+The information displayed by this command can also be useful to other people when [asking for help](/troubleshooting/getting-help) or submitting new issues on GitHub.
 
 ```bash
 $ php bakery debug
@@ -139,7 +139,7 @@ The verbose option can be used with this command to display even more informatio
 $ php bakery debug -v
 ```
 
-The debug command is in fact an aggregator of sub-commands, similar to `bake`. It include the following command by default:
+The debug command is in fact an aggregator of sub-commands, similar to `bake`. It include the following commands by default:
 
 | Command       | Description                                                                    | Require verbose |
 |---------------|--------------------------------------------------------------------------------|:---------------:|
@@ -150,27 +150,27 @@ The debug command is in fact an aggregator of sub-commands, similar to `bake`. I
 | debug:mail    | Display Mail Configuration                                                     | ✓               |
 | debug:twig    | List all twig namespaces to help debugging                                     | ✓               |
 | debug:version | Test the UserFrosting version dependencies                                     |                 |
-| sprinkle:list | List all available sprinkles and their params                                  |                 |
+| sprinkle:list | List all available sprinkles and their parameters                              |                 |
 
-Some will be only displayed when the verbose mode is active.
+Some results will be only displayed when the verbose mode is active.
 
 [notice=tip]It is also possible (and easy) to add your own command to the `debug` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
 
 ### locale:compare
 
-This command compare two locales dictionaries. A list of all locale keys found in the left locale and not found in the right locale will be generated, as well as a list of all keys with empty values and/or duplicate values. This can be helpful to list all values in a specific languages that are present, but might need translation.
+This command compare two locale dictionaries. A list of all locale keys found in the left locale but not found in the right locale will be generated, as well as a list of all keys with empty values and/or duplicate values. This can be helpful to list all values in a specific languages that are present, but might need translation.
 
 ```bash
 $ php bakery locale:compare [options]
 ```
 
-This command is interactive, which mean it will ask for which locales to compare. Options can also be used to automatically compare the two locales without user interaction (See the table below for the list of available options).
+This command is interactive, which means it will ask for which locales to compare. Options can also be used to automatically compare the two locales without user interaction (See the table below for the list of available options).
 à
 This command will display :
- - Comparison between _Right_ and _Left_ locales : Returns al list of all differences in both locales using [`array_diff_assoc`](https://www.php.net/manual/en/function.array-diff-assoc.php). This can be used to compare the two locales.
+ - Comparison between _Right_ and _Left_ locales : Returns a list of all differences in both locales using [`array_diff_assoc`](https://www.php.net/manual/en/function.array-diff-assoc.php). This can be used to compare the two locales.
  - Missing keys from _Right_ found in _Left_ : This can be used to see which keys are missing in the _Right_ locale, but that can be found in the _Left_ locale, so they can be added.
- - Same values found in both _Left_ and _Right_ locale : This can be used to find strings in the _right_ locale that is the same in the _left_ locale. When two locale have the same string value, it may means the string is not translated in the _right_ locale.
- - Empty values for _Right_ locale : List keys with empty string for the _right_ locale. These strings might need to be filled in.
+ - Same values found in both _Left_ and _Right_ locale : This can be used to find strings in the _right_ locale that is the same in the _left_ locale. When two locales have the same string value, it may means the string is not translated in the _right_ locale.
+ - Empty values for _Right_ locale : Lists keys with empty string for the _right_ locale. These strings might need to be filled in.
 
 | Option            | Description                                           |
 | ----------------- | ----------------------------------------------------- |
@@ -206,7 +206,7 @@ $ php bakery locale:dictionary -l fr_FR
 
 ### locale:info
 
-This command list all available locale as well as the default locale.
+This command list all available locales as well as the default locale.
 
 ```bash
 $ php bakery locale:info
@@ -323,7 +323,7 @@ $ php bakery migrate:refresh [options]
 
 ### migrate:status
 
-The `migrate:status` command will show what migration have been run and which one can be run. It will also display if a ran migration is available, in other words if this migration class was found so it can be rollback.
+The `migrate:status` command will show what migration have been run and which one can be run. It will also display if a previously run migration is available to be rolled back.
 
 ```bash
 $ php bakery migrate:status [options]
@@ -376,15 +376,15 @@ Registered Routes
 
 ### seed
 
-The `seed` command can be used to run any registered seeds classes. See [Chapter 12](/database/seeding) for more info on database seeds.
+The `seed` command can be used to run any registered seed classes. See [Chapter 12](/database/seeding) for more info on database seeds.
 
 ```bash
 $ php bakery seed [options] [--] <class> (<class>)...
 ```
 
-If no `<class>` is specified, an invite will be displayed, prompting you to select one or many registered seed to run.
+If no `<class>` is specified, an interactive list will be displayed, prompting you to select which registered seed(s) to run.
 
-Multiple seeds classes can be run at one by separating multiple seed classes with a space. For example, to run `Class1` and `Class2` :
+Multiple seed classes can be run at once by separating them with a space. For example, to run `Class1` and `Class2` :
 
 ```bash
 $ php bakery seed Class1 Class2
@@ -416,13 +416,13 @@ Seeds List
 
 ### setup:db
 
-The `setup:db` command can be used to setup the database configuration. This configuration will be saved in the `app/.env` file. This can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
+The `setup:db` command can be used to setup the database configuration interactively. This configuration will be saved in the `app/.env` file. This can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
 
 ```bash
 $ php bakery setup:db [options]
 ```
 
-Options can be used to defined each info individually in a non-interactive way (See the table below for the list of available options). For example :
+Options can be used to define each variable individually in a non-interactive way. (See the table below for the list of available options.) For example:
 
 ```bash
 php bakery setup:db --db_driver=mysql --db_name=userfrosting --db_port=3306 --db_host=localhost --db_user=userfrosting --db_password=secret
@@ -442,7 +442,7 @@ php bakery setup:db --db_driver=mysql --db_name=userfrosting --db_port=3306 --db
 
 ### setup:mail
 
-The `setup:mail` command can be used to setup the outgoing email configuration. Different setup method can be selected to guide you into configuring outgoing email support. This configuration will be saved in the `app/.env` file.
+The `setup:mail` command can be used to setup the outgoing email configuration. Different setup methods can be selected to guide you into configuring outgoing email support. This configuration will be saved in the `app/.env` file.
 
 As with the database setup, this can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
 
@@ -450,7 +450,7 @@ As with the database setup, this can also be done manually by editing the `app/.
 $ php bakery setup:mail [options]
 ```
 
-Options can also be used to defined each info individually in a non-interactive way. When using one or more option, the "SMTP Server" method will automatically be selected.
+Options can also be used to defined each variable individually in a non-interactive way. When using one or more options, the "SMTP Server" method will automatically be selected.
 
 | Option                          | Description                                          |
 | ------------------------------- | ---------------------------------------------------- |
@@ -485,17 +485,17 @@ php bakery setup:env --mode=production
 
 ### setup
 
-The `setup` command combines the `setup:db`, `setup:mail` and `setup:env` commands. This command can't accept any of the option of it's child command.
+The `setup` command combines the `setup:db`, `setup:mail`, and `setup:env` commands using interactive mode only. This command doesn't accept any options.
 
 ```bash
 $ php bakery setup
 ```
 
-[notice=tip]It is also possible (and easy) to add your own command to the `debug` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
+[notice=tip]It is also possible (and easy) to add your own command to the `asetup` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
 
 ### sprinkle:list
 
-Display the list of all loaded sprinkles. It will also display the base namespace classes from the sprinkle is expected to have, as weel as the expected path.
+Display the list of all loaded sprinkles. It will also display the base namespace that classes from the sprinkle are expected to have, as well as the sprinkle's base path.
 
 ```bash
 $ php bakery sprinkle:list
@@ -521,7 +521,7 @@ Example result:
 
 ### serve
 
-The `serve` command is used to execute [PHP Built-in web server](https://www.php.net/manual/en/features.commandline.webserver.php). This is a simple way to test your application without having to configure a full web server.
+The `serve` command is used to execute [PHP's Built-in web server](https://www.php.net/manual/en/features.commandline.webserver.php). This is a simple way to test your application without having to configure a full web server.
 
 ```bash
 $ php bakery serve [options]
@@ -538,7 +538,7 @@ Hit `ctrl+c` to quit.
 
 The `test` command is used to execute [PHPUnit](https://phpunit.de/) tests.
 
-Tests from a specific sprinkle can optionally be run using the 'testscope' argument (eg. `php bakery test SprinkleName`). A specific test class can also be run using the testscope argument (eg. `php bakery test 'UserFrosting\Sprinkle\SprinkleName\Tests\TestClass'`), as a specific test method (eg. `php bakery test 'UserFrosting\Sprinkle\SprinkleName\Tests\TestClass::method'`).
+Tests from a specific sprinkle can optionally be run using the 'testscope' argument (eg. `php bakery test SprinkleName`). This argument can also run a specific test class (eg. `php bakery test 'UserFrosting\Sprinkle\SprinkleName\Tests\TestClass'`) or a specific test method (eg. `php bakery test 'UserFrosting\Sprinkle\SprinkleName\Tests\TestClass::method'`).
 
 See the [Automated Testing](/testing) section for more information.
 
@@ -549,17 +549,17 @@ $ php bakery test [options] [--] [<testscope>]
 | Option                            | Description                                                                                          |
 | --------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | -c, --coverage                    | Enable code coverage report.                                                                         |
-| --coverage-format=COVERAGE-FORMAT | Select test coverage format. Choose from html, clover, crap4j, php, text, xml, etc. Default to HTML. |
+| --coverage-format=COVERAGE-FORMAT | Select test coverage format. Choose from html, clover, crap4j, php, text, xml, etc. Defaults to HTML. |
 | --coverage-path=COVERAGE-PATH     | Code coverage report saving location. Default to `_meta/coverage`.                                   |
 
 [notice=warning]UserFrosting's built-in integration tests use a temporary in-memory SQLite database.  For testing to run successfully, you must have the `php-sqlite3` package installed and enabled.
 
-Alternatively, you can create a separate testing database and override the `test_integration` database settings in the `testing.php` [environment mode](/configuration/config-files).[/notice]
+Alternatively, you can create a separate testing database and override the `test_integration` database settings in `testing.php` [environment mode](/configuration/config-files).[/notice]
 
 
 ### test:mail
 
-The `test:mail` command lets you test the email sending capability of your UserFrosting setup by sending a test email. By default, it will send the test email to the admin contact defined the configuration file, but this can be changed using the provided `--to` options.
+The `test:mail` command lets you test the email sending capability of your UserFrosting setup by sending a test email. By default, it will send the test email to the admin contact defined in the configuration file, but this can be changed using the provided `--to` options.
 
 ```bash
 $ php bakery test:mail [options]
