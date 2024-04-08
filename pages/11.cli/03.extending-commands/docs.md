@@ -12,7 +12,7 @@ taxonomy:
 2. [setup](/cli/commands#setup)
 3. [debug](/cli/commands#debug)
 
-Those commands are typically used as "installation" steps. It this situation, it's much more simpler to run one command than run multiple ones. You can easily add your own command to any of those using [_event listeners_](/advanced/events). 
+Those commands are typically used as "installation" steps. It this situation, it's much more simpler to run one command than run multiple ones. You can easily add your own command to any of those using [event listeners](/advanced/events#listener). 
 
 ## Adding Custom Commands to the `bake` command
 
