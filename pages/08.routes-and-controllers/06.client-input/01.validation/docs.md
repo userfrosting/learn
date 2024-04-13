@@ -229,9 +229,9 @@ comment:
 
 #### Validators
 
-A validator consists of a **validator name**, and a set of validator attributes. In addition to the rule-specific attributes described below, each validator may contain a **validation message** assigned to a `message` attribute.
+A validator consists of a **validator name**, and a set of validator **attributes**. Each validator must have at least one attribute.
 
-The validation message will be recorded during the call to `ServerSideValidator::validate` in the event that the field fails the validation rule. This can be a simple text message, or you may [reference a translatable string key](/i18n#the-placeholder) using the `&` prefix.
+In addition to the rule-specific attributes described below, each validator may contain a **validation message** assigned to a `message` attribute. The validation message will be recorded during the call to `ServerSideValidator::validate` in the event that the field fails the validation rule. This can be a simple text message, or you may [reference a translatable string key](/i18n#the-placeholder) using the `&` prefix.
 
 **Example:**
 ```yaml
@@ -245,7 +245,9 @@ talons:
       max: 120
       message: "Talons must be less than {{max}} characters."
 ```
-Note there are two validators for `talons`. The `required` validator requires a value to be in this field and the `length` validator sets a maximum of 120 characters. The `message` key for each validator is simply the message that will be displayed if the validator parameters are not met. E.g. if a value of over 120 characters is provided, the user will see the validation message `Talons must be less than 120 characters.`
+Note there are two validators for `talons`. The `required` validator fails if the field has no value. The `length` validator sets a maximum of 120 characters.
+
+The `message` key for each validator is simply the message that will be displayed if the validator parameters are not met. E.g. if a value of over 120 characters is provided, the user will see an alert message `Talons must be less than 120 characters.`
 
 To integrate a translatable string key simply add your key using the `&` prefix. For example, your [translation file](/i18n#the-translation-files) might look like:
 
@@ -280,24 +282,24 @@ The following validators are available:
 
 | Name                     | Description                                                                                                                                                                  |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `email`                  | Specifies that the value of the field must represent a valid email address.                                                                                                  |
-| `equals`                 | Specifies that the value of the field must be equivalent to `value`.                                                                                                         |
-| `integer`                | Specifies that the value of the field must represent an integer value.                                                                                                       |
-| `length`                 | Specifies `min` and `max` bounds on the length, in characters, of the field's value.                                                                                         |
-| `matches`                | Specifies that the value of the field must be equivalent to the value of `field`.                                                                                            |
-| `member_of`              | Specifies that the value of the field must appear in the specified `values` array.                                                                                           |
-| `no_leading_whitespace`  | Specifies that the value of the field must not have any leading whitespace characters.                                                                                       |
-| `no_trailing_whitespace` | Specifies that the value of the field must not have any trailing whitespace characters.                                                                                      |
-| `not_equals`             | Specifies that the value of the field must **not** be equivalent to `value`.                                                                                                 |
-| `not_matches`            | Specifies that the value of the field must **not** be equivalent to the value of `field`.                                                                                    |
-| `not_member_of`          | Specifies that the value of the field must **not** appear in the specified `values` array.                                                                                   |
-| `numeric`                | Specifies that the value of the field must represent a numeric (floating-point or integer) value.                                                                            |
-| `range`                  | Specifies a numeric interval bound on the field's value.                                                                                                                    |
-| `regex`                  | Specifies that the value of the field must match a specified Javascript- and PCRE-compliant regular expression.                                                              |
-| `required`               | Specifies that the field is a required field. If the field is not present in the HTTP request, validation will fail unless a default value has been specified for the field. |
-| `telephone`              | Specifies that the value of the field must represent a valid telephone number.                                                                                               |
-| `uri`                    | Specifies that the value of the field must represent a valid Uniform Resource Identifier (URI).                                                                              |
-| `username`               | Specifies that the value of the field must be a valid username (lowercase letters, numbers, `.`, `-`, and `_`).                                                              |
+| `email`                  | Specifies that the value of this field must represent a valid email address.                                                                                                |
+| `equals`                 | Specifies that the value of this field must be equivalent to a `value` attribute. (See example below)                                                                       |
+| `integer`                | Specifies that the value of this field must represent an integer value.                                                                                                     |
+| `length`                 | Specifies `min` and `max` attributes as bounds on the length (in characters) of this field's value. (See example below)                                                     |
+| `matches`                | Specifies that the value of this field must be equivalent to the value of another field, named by the `field` attribute. (See example below)                                  |
+| `member_of`              | Specifies that the value of this field must appear in the specified `values` array. (See example below)                                                                      |
+| `no_leading_whitespace`  | Specifies that the value of this field must not have any leading whitespace characters.                                                                                     |
+| `no_trailing_whitespace` | Specifies that the value of this field must not have any trailing whitespace characters.                                                                                    |
+| `not_equals`             | Specifies that the value of this field must **not** be equivalent to the `value` attribute.                                                                                 |
+| `not_matches`            | Specifies that the value of this field must **not** be equivalent the value of another field, named by the `field` attribute.                                                 |
+| `not_member_of`          | Specifies that the value of this field must **not** appear in the specified `values` array.                                                                                  |
+| `numeric`                | Specifies that the value of this field must represent a numeric (floating-point or integer) value.                                                                           |
+| `range`                  | Specifies that the value of this field is greater than or equal to any `min` attribute, and less than or equal to any `max` attribute. (See example below)             |
+| `regex`                  | Specifies that the value of this field must match a specified Javascript- and PCRE-compliant regular expression. (See example below)                                         |
+| `required`               | Specifies that this field is a required field. If this field is not present in the HTTP request, validation will fail unless a default value has been specified for the field. |
+| `telephone`              | Specifies that the value of this field must represent a valid US telephone number.                                                                                          |
+| `uri`                    | Specifies that the value of this field must represent a valid Uniform Resource Identifier (URI).                                                                             |
+| `username`               | Specifies that the value of this field must be a valid username (lowercase letters, numbers, `.`, `-`, and `_`).                                                            |
 
 **Example - Equals:**
 ```yaml
@@ -352,8 +354,8 @@ owls:
       max: 10
       message: "Please provide {{min}} - {{max}} owls."
 ```
-
-[notice=tip]You can use `min_exclusive` instead of `min`, and `max_exclusive` instead of `max` to create open intervals.[/notice]
+{#
+[notice=tip]You can use `min_exclusive` instead of `min`, and `max_exclusive` instead of `max` to create open intervals.[/notice]#}
 
 **Example - Regex:**
  ```yaml
