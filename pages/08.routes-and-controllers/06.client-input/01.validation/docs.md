@@ -354,8 +354,8 @@ owls:
       max: 10
       message: "Please provide {{min}} - {{max}} owls."
 ```
-{#
-[notice=tip]You can use `min_exclusive` instead of `min`, and `max_exclusive` instead of `max` to create open intervals.[/notice]#}
+<!-- This next line is from the old [Web Data Validation Standard Schema (WDVSS)](https://github.com/userfrosting/wdvss) document, but I don't see these tags in UF or Valitron code.
+[notice=tip]You can use `min_exclusive` instead of `min`, and `max_exclusive` instead of `max` to create open intervals.[/notice] -->
 
 **Example - Regex:**
  ```yaml
