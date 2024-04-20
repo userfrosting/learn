@@ -76,6 +76,8 @@ MySQL and MariaDB are the most popular choice of database provider. However, whe
 
 [notice=tip]It is not required to develop with the same database provider as the one you'll be using in production. It's totally fine to develop locally using SQLite and use MySQL on your production server. A [testing environment](/testing) can be used to make sure your code runs smoothly on both.[/notice]
 
+[notice=tip]One additional reason not to use SQLite in production: it does not fully support `ALTER TABLE` operations, and [the official workaround is twelve steps long](https://www.sqlite.org/lang_altertable.html#otheralter).  This is most likely to cause issues when [rolling back a migration](/cli/commands#migrate-rollback), or if you decide to [remove foreign keys or columns (or tables!)](https://www.sqlite.org/lang_altertable.html#altertabdropcol) in a later migration. There is an easier [workaround for dropping entire tables](/database/migrations#running-your-migration), but this is usually not acceptable in production. In development, it's much easier to drop a table if needed, re-run any needed migrations, and restore any missing (test) data.[/notice]
+
 ## SMTP (Mail) Server
 
 The final piece of software required on your server is an *SMTP Server*. The *Simple Mail Transfer Protocol* (SMTP) is an application used by mail servers to send, receive, and relay outgoing email between senders and receivers. UserFrosting requires you provide a SMTP server for sending email to your users (especially registration emails).
