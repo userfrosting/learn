@@ -491,7 +491,7 @@ The `setup` command combines the `setup:db`, `setup:mail`, and `setup:env` comma
 $ php bakery setup
 ```
 
-[notice=tip]It is also possible (and easy) to add your own command to the `asetup` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
+[notice=tip]It is also possible (and easy) to add your own command to the `setup` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
 
 ### sprinkle:list
 
