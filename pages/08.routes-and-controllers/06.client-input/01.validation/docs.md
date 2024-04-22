@@ -84,35 +84,6 @@ message:
 
 Notice that the schema consists of a number of field names, which should correspond to the `name` attributes of the fields in your form. These map to objects containing `validators` and `transformations`. See [below](#schema-specifications) for complete specifications for the validation schema.
 
-#### Input arrays
-If your form uses [input arrays](https://stackoverflow.com/questions/4688880/html-element-array-name-something-or-name-something) such as `<input name='SomeInput[]'...`, you can reference the array itself in your schema as `SomeInput` and each element of the array as `SomeInput.*`
-Please check [Valitron's usage directions](https://github.com/vlucas/valitron#usage) for more information on arrays and [multidimensional arrays](https://mattstauffer.com/blog/a-little-trick-for-grouping-fields-in-an-html-form/).
-
-A useful schema for a phonebook might look like this:
-```yaml
-nameList:
-  validators:
-    required:
-      message: Your input left out the names.
-
-nameList.*:
-  validators:
-    length:
-      min: 1
-      max: 50
-      message: "Names must be between {{min}} and {{max}} characters."
-
-phoneList:
-  validators:
-    required:
-      message: Your input left out the telephone numbers.
-
-phoneList.*:
-  validators:
-    telephone:
-      message: The phone number you provided is not a valid US phone number.
-```
-
 #### Loading Schema
 
 To load a schema in your route callbacks and controller methods, simply pass the path to your schema to the `RequestSchema` constructor:
@@ -211,6 +182,38 @@ if (count($errors) !== 0) {
 The `validate` method will return `false` if any fields fail any of their validation rules. Notice that we throw an exception to handle any error messages that we wish to display to the client, and stop the execution of the controller code.
 
 [notice=info]Internally, UserFrosting uses the [Valitron](https://github.com/vlucas/valitron) validation package to perform server-side validation.[/notice]
+
+### Input arrays
+If your form uses [input arrays](https://stackoverflow.com/questions/4688880/html-element-array-name-something-or-name-something) such as `<input name='SomeInput[]'...`, you can reference the array itself in your validation schema as `SomeInput` and each element of the array as `SomeInput.*`
+Please check [Valitron's usage directions](https://github.com/vlucas/valitron#usage) for more information on arrays and [multidimensional arrays](https://mattstauffer.com/blog/a-little-trick-for-grouping-fields-in-an-html-form/).
+
+[notice=warning]This works only for validations, not transformations. If you need to use transformations, either do not use an input array or be careful to transform the input yoursel![/notice]
+
+A useful schema for a phonebook might look like this:
+```yaml
+nameList:
+  validators:
+    required:
+      message: Your input left out the names.
+
+nameList.*:
+  validators:
+    length:
+      min: 1
+      max: 50
+      message: "Names must be between {{min}} and {{max}} characters."
+# Remember we can't apply transformations to this text input! Any we try to add here will be skipped.
+
+phoneList:
+  validators:
+    required:
+      message: Your input left out the telephone numbers.
+
+phoneList.*:
+  validators:
+    telephone:
+      message: The phone number you provided is not a valid US phone number.
+```
 
 ### Schema Specifications
 
