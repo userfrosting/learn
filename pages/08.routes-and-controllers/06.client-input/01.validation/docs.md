@@ -185,9 +185,9 @@ The `validate` method will return `false` if any fields fail any of their valida
 
 ### Input arrays
 If your form uses [input arrays](https://stackoverflow.com/questions/4688880/html-element-array-name-something-or-name-something) such as `<input name='SomeInput[]'...`, you can reference the array itself in your validation schema as `SomeInput` and each element of the array as `SomeInput.*`
-Please check [Valitron's usage directions](https://github.com/vlucas/valitron#usage) for more information on arrays and [multidimensional arrays](https://mattstauffer.com/blog/a-little-trick-for-grouping-fields-in-an-html-form/).
 
-[notice=warning]This works only for validations, not transformations. If you need to use transformations, either do not use an input array or be careful to transform the input yoursel![/notice]
+Transformations will only run if palced under the base array `SomeInput`, while most validators are run against each element `SomeInput.*` instead.
+Please check [Valitron's usage directions](https://github.com/vlucas/valitron#usage) for more information on arrays and [multidimensional arrays](https://mattstauffer.com/blog/a-little-trick-for-grouping-fields-in-an-html-form/).
 
 A useful schema for a phonebook might look like this:
 ```yaml
@@ -195,6 +195,9 @@ nameList:
   validators:
     required:
       message: Your input left out the names.
+  transformations:
+  - purge
+  - trim
 
 nameList.*:
   validators:
@@ -202,12 +205,14 @@ nameList.*:
       min: 1
       max: 50
       message: "Names must be between {{min}} and {{max}} characters."
-# Remember we can't apply transformations to this text input! Any we try to add here will be skipped.
 
 phoneList:
   validators:
     required:
       message: Your input left out the telephone numbers.
+  transformations:
+  - purge
+  - trim
 
 phoneList.*:
   validators:
