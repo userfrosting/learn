@@ -1,0 +1,39 @@
+name: Bug Report
+description: "Report something that's broken."
+body:
+  - type: markdown
+    attributes:
+      value: "Please read [our contribution guide](https://github.com/userfrosting/.github/blob/main/.github/CONTRIBUTING.md) and our chapter on [common problems](https://learn.userfrosting.com/troubleshooting/common-problems) before submitting bug reports."
+  - type: input
+    attributes:
+      label: UserFrosting or package Version
+      description: Provide the UserFrosting or package version that you are using.
+      placeholder: 5.x.x
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Debug Data
+      description: Run `php bakery debug` and paste the result here
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Chat Discussion (optional)
+      description: Provide a link the Chat discussion about this issue
+      placeholder: https://chat.userfrosting.com/...
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Description
+      description: Provide a detailed description of the issue you are facing.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps To Reproduce
+      description: Provide detailed steps to reproduce your issue.
+    validations:
+      required: false
+      
