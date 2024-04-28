@@ -8,8 +8,8 @@ body:
       placeholder: 5.x.x
     validations:
       required: true
-   - type: input
-      attributes:
+  - type: input
+    attributes:
       label: Affected page
       description: Provide a link to the page this is related to
       placeholder: https://learn.userfrosting.com/...
@@ -27,8 +27,3 @@ body:
       description: Provide details about the suggested changes
     validations:
       required: true
-      
-
-
-
-
