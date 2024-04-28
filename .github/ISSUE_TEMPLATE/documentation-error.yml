@@ -1,0 +1,23 @@
+name: Documentation error
+description: Something is wrong in the doc
+body:
+  - type: input
+    attributes:
+      label: UserFrosting Version
+      description: Provide the UserFrosting affected
+      placeholder: 5.x.x
+    validations:
+      required: true
+   - type: input
+      attributes:
+      label: Affected page
+      description: Provide a link to the page this is related to
+      placeholder: https://learn.userfrosting.com/...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Description
+      description: Provide a detailed description of the error.
+    validations:
+      required: true
