@@ -8,6 +8,12 @@ This is the repository for the documentation for UserFrosting 5. It is built wit
 
 This site is built using [Grav](https://learn.getgrav.org/) CMS, which like UserFrosting v4 has combined framework and project skeleton code. To permit easier content management, this repository only includes Grav's `user/` directory, which is where all of our custom content, themes, and assets live. See [Grav Development with GitHub - Part 2](https://getgrav.org/blog/developing-with-github-part-2) for more on this approach.
 
+## Syntax
+
+Grav uses Markdown to format text. Additionally, this site uses the [Grav Shortcode Core Plugin](https://github.com/getgrav/grav-plugin-shortcode-core) plugin to enable more non-standard Markdown code, like `[notice]`.
+
+See [Grav Shortcode Plugin](https://github.com/getgrav/grav-plugin-shortcode-core?tab=readme-ov-file#available-shortcodes) for a list of available markdown code.
+
 ## Installation
 
 ### Complete Local Installation
