@@ -91,7 +91,7 @@ Alternatively, you may choose to store alerts in the [user cache](/advanced/cach
 
 In your client-side code, alerts are primarily handled by the `ufAlerts` jQuery plugin. The `/core/assets/userfrosting/js/uf-init.js` Javascript asset, which is loaded as part of the `js/main` [asset bundle](/asset-management/asset-bundles), will look for an element with an `id` of `alerts-page` and automatically fetch and render any alerts into this element when a page is first loaded.
 
-A `div` element with `id="alerts-page"` is already included in the `core/templates/pages/abstract/default.html.twig` template, so any pages that extend this template will already have this included. For pages that do not extend this template, you will need to include the following wherever you want alerts to appear:
+A `div` element with `id="alerts-page"` is already included in the Admin-LTE sprinkle via the `/pages/abstract/default.html.twig` template and in the Admin sprinkle via the `/pages/abstract/base.html.twig` template. Any pages that extend one of these templates will already have this included. For pages that do not extend either template, you will need to include the following wherever you want alerts to appear:
 
 ```html
 <div id="alerts-page"></div>
