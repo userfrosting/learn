@@ -183,43 +183,6 @@ The `validate` method will return `false` if any fields fail any of their valida
 
 [notice=info]Internally, UserFrosting uses the [Valitron](https://github.com/vlucas/valitron) validation package to perform server-side validation.[/notice]
 
-### Input arrays
-If your form uses [input arrays](https://stackoverflow.com/questions/4688880/html-element-array-name-something-or-name-something) such as `<input name='SomeInput[]'...`, you can reference the array itself in your validation schema as `SomeInput` and each element of the array as `SomeInput.*`
-
-Transformations will only run if placed under the base array `SomeInput`, while most validators are run against each element `SomeInput.*` instead.
-Please check [Valitron's usage directions](https://github.com/vlucas/valitron#usage) for more information on arrays and [multidimensional arrays](https://mattstauffer.com/blog/a-little-trick-for-grouping-fields-in-an-html-form/).
-
-A useful schema for a phonebook might look like this:
-```yaml
-nameList:
-  validators:
-    required:
-      message: Your input left out the names.
-  transformations:
-  - purge
-  - trim
-
-nameList.*:
-  validators:
-    length:
-      min: 1
-      max: 50
-      message: "Names must be between {{min}} and {{max}} characters."
-
-phoneList:
-  validators:
-    required:
-      message: Your input left out the telephone numbers.
-  transformations:
-  - purge
-  - trim
-
-phoneList.*:
-  validators:
-    telephone:
-      message: The phone number you provided is not a valid US phone number.
-```
-
 ### Schema Specifications
 
 #### Fields
@@ -391,8 +354,6 @@ owls:
       max: 10
       message: "Please provide {{min}} - {{max}} owls."
 ```
-<!-- This next line is from the old [Web Data Validation Standard Schema (WDVSS)](https://github.com/userfrosting/wdvss) document, but I don't see these tags in UF or Valitron code.
-[notice=tip]You can use `min_exclusive` instead of `min`, and `max_exclusive` instead of `max` to create open intervals.[/notice] -->
 
 **Example - Regex:**
  ```yaml
@@ -404,6 +365,101 @@ screech:
 ```
 
 [notice=warning]Regular expressions should _not_ be wrapped in quotes in YAML. Also the jQuery Validation plugin wraps regular expressions on the client side with `^...$`. Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).[/notice]
+
+### Input arrays, multidimensional arrays & associative arrays
+If your form uses [input arrays](https://stackoverflow.com/a/42969920/445757) such as `<input name='nameList[]'...`, you can reference the array itself in your validation schema as `nameList` and each element of the array as `nameList.*`. This can be useful with dynamic form with a variable or unknown number of input of the same nature. For example, a list of names : 
+
+```html
+<input name="nameList[]" type="text" />
+<input name="nameList[]" type="text" />
+```
+
+The same principle can be applied to associative arrays. For example, it's possible to target both inputs in the example below with `nameList.first` & `nameList.last`.
+
+```html
+<input name="nameList['first']" type="text" />
+<input name="nameList['last']" type="text" />
+```
+
+Both can be mixed together. For example, in the example below, `first` and `last` can be defined in the schema as `nameList.*.first` and `nameList.*.last`. The same transformation and validation rules will be applied to both instance of `nameList[][first]` for example.
+
+```html
+<tr>
+  <td><input name="nameList[][first]" type="text" /></td>
+  <td><input name="nameList[][last]" type="text" /></td>
+</tr>
+<tr>
+  <td><input name="nameList[][first]" type="text" /></td>
+  <td><input name="nameList[][last]" type="text" /></td>
+</tr>
+```
+
+Note when using arrays, **transformations** can be can be applied to each element, or all elements at once. The two transformations below are equivalent:
+
+```yaml
+nameList:
+  transformations:
+  - purge
+  - trim
+
+nameList.*:
+  transformations:
+  - purge
+  - trim
+```
+
+However, with associative arrays, this is useful if different rules are required for each associations. For example, the schema below will apply the `purge` transformation to `nameList.*.first` only, `escape` will be only apply to `nameList.*.last`, but `trim` will be applied to both. 
+
+```yaml
+nameList:
+  transformations:
+  - trim
+
+nameList.*.first:
+  transformations:
+  - purge
+
+nameList.*.last:
+  transformations:
+  - escape
+```
+
+As for **validators**, it's a little different. Any validators rules for `nameList` will be validated against the array itself. Rules defined for `nameList.*` will be applied to each element of an array individually. For example, the schema bellow will make sure the `nameList` array is there, and apply the length rule to each element of the array.
+
+```yaml
+nameList:
+  validators:
+    required:
+      message: Your input left out the names.
+
+nameList.*:
+  validators:
+    length:
+      min: 1
+      max: 50
+      message: "Names must be between {{min}} and {{max}} characters."
+```
+
+Another example for a phone list with both validations and transformations might look like this:
+
+```yaml
+phoneList:
+  validators:
+    required:
+      message: Your input left out the telephone numbers.
+  transformations:
+  - purge
+  - trim
+
+phoneList.*:
+  validators:
+    telephone:
+      message: The phone number you provided is not a valid US phone number.
+```
+
+Please check [Valitron's usage directions](https://github.com/vlucas/valitron#usage) for more information on arrays and [multidimensional arrays](https://mattstauffer.com/blog/a-little-trick-for-grouping-fields-in-an-html-form/). 
+
+Keep in mind, each field **not** in the schema will be removed from the transformed data by default. If your schema contains `nameList.*.first` and `nameList.*.last`, and the associative array / form contains an `email` key, it will be removed as the schema doesn't contains `nameList.*.email`.
 
 ### Limit rules to server or client only
 
