@@ -229,9 +229,9 @@ comment:
 
 #### Validators
 
-A validator consists of a **validator name**, and a set of validator attributes. In addition to the rule-specific attributes described below, each validator may contain a **validation message** assigned to a `message` attribute.
+A validator consists of a **validator name**, and a set of validator **attributes**. Each validator must have at least one attribute.
 
-The validation message will be recorded during the call to `ServerSideValidator::validate` in the event that the field fails the validation rule. This can be a simple text message, or you may [reference a translatable string key](/i18n#the-placeholder) using the `&` prefix.
+In addition to the rule-specific attributes described below, each validator may contain a **validation message** assigned to a `message` attribute. The validation message will be recorded during the call to `ServerSideValidator::validate` in the event that the field fails the validation rule. This can be a simple text message, or you may [reference a translatable string key](/i18n#the-placeholder) using the `&` prefix.
 
 **Example:**
 ```yaml
@@ -245,7 +245,9 @@ talons:
       max: 120
       message: "Talons must be less than {{max}} characters."
 ```
-Note there are two validators for `talons`. The `required` validator requires a value to be in this field and the `length` validator sets a maximum of 120 characters. The `message` key for each validator is simply the message that will be displayed if the validator parameters are not met. E.g. if a value of over 120 characters is provided, the user will see the validation message `Talons must be less than 120 characters.`
+Note there are two validators for `talons`. The `required` validator fails if the field has no value. The `length` validator sets a maximum of 120 characters.
+
+The `message` key for each validator is simply the message that will be displayed if the validator parameters are not met. E.g. if a value of over 120 characters is provided, the user will see an alert message `Talons must be less than 120 characters.`
 
 To integrate a translatable string key simply add your key using the `&` prefix. For example, your [translation file](/i18n#the-translation-files) might look like:
 
@@ -280,24 +282,24 @@ The following validators are available:
 
 | Name                     | Description                                                                                                                                                                  |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `email`                  | Specifies that the value of the field must represent a valid email address.                                                                                                  |
-| `equals`                 | Specifies that the value of the field must be equivalent to `value`.                                                                                                         |
-| `integer`                | Specifies that the value of the field must represent an integer value.                                                                                                       |
-| `length`                 | Specifies `min` and `max` bounds on the length, in characters, of the field's value.                                                                                         |
-| `matches`                | Specifies that the value of the field must be equivalent to the value of `field`.                                                                                            |
-| `member_of`              | Specifies that the value of the field must appear in the specified `values` array.                                                                                           |
-| `no_leading_whitespace`  | Specifies that the value of the field must not have any leading whitespace characters.                                                                                       |
-| `no_trailing_whitespace` | Specifies that the value of the field must not have any trailing whitespace characters.                                                                                      |
-| `not_equals`             | Specifies that the value of the field must **not** be equivalent to `value`.                                                                                                 |
-| `not_matches`            | Specifies that the value of the field must **not** be equivalent to the value of `field`.                                                                                    |
-| `not_member_of`          | Specifies that the value of the field must **not** appear in the specified `values` array.                                                                                   |
-| `numeric`                | Specifies that the value of the field must represent a numeric (floating-point or integer) value.                                                                            |
-| `range`                  | Specifies a numeric interval bound on the field's value.                                                                                                                    |
-| `regex`                  | Specifies that the value of the field must match a specified Javascript- and PCRE-compliant regular expression.                                                              |
-| `required`               | Specifies that the field is a required field. If the field is not present in the HTTP request, validation will fail unless a default value has been specified for the field. |
-| `telephone`              | Specifies that the value of the field must represent a valid telephone number.                                                                                               |
-| `uri`                    | Specifies that the value of the field must represent a valid Uniform Resource Identifier (URI).                                                                              |
-| `username`               | Specifies that the value of the field must be a valid username (lowercase letters, numbers, `.`, `-`, and `_`).                                                              |
+| `email`                  | Specifies that the value of this field must represent a valid email address.                                                                                                |
+| `equals`                 | Specifies that the value of this field must be equivalent to a `value` attribute. (See example below)                                                                       |
+| `integer`                | Specifies that the value of this field must represent an integer value.                                                                                                     |
+| `length`                 | Specifies `min` and `max` attributes as bounds on the length (in characters) of this field's value. (See example below)                                                     |
+| `matches`                | Specifies that the value of this field must be equivalent to the value of another field, named by the `field` attribute. (See example below)                                  |
+| `member_of`              | Specifies that the value of this field must appear in the specified `values` array. (See example below)                                                                      |
+| `no_leading_whitespace`  | Specifies that the value of this field must not have any leading whitespace characters.                                                                                     |
+| `no_trailing_whitespace` | Specifies that the value of this field must not have any trailing whitespace characters.                                                                                    |
+| `not_equals`             | Specifies that the value of this field must **not** be equivalent to the `value` attribute.                                                                                 |
+| `not_matches`            | Specifies that the value of this field must **not** be equivalent the value of another field, named by the `field` attribute.                                                 |
+| `not_member_of`          | Specifies that the value of this field must **not** appear in the specified `values` array.                                                                                  |
+| `numeric`                | Specifies that the value of this field must represent a numeric (floating-point or integer) value.                                                                           |
+| `range`                  | Specifies that the value of this field is greater than or equal to any `min` attribute, and less than or equal to any `max` attribute. (See example below)             |
+| `regex`                  | Specifies that the value of this field must match a specified Javascript- and PCRE-compliant regular expression. (See example below)                                         |
+| `required`               | Specifies that this field is a required field. If this field is not present in the HTTP request, validation will fail unless a default value has been specified for the field. |
+| `telephone`              | Specifies that the value of this field must represent a valid US telephone number.                                                                                          |
+| `uri`                    | Specifies that the value of this field must represent a valid Uniform Resource Identifier (URI).                                                                             |
+| `username`               | Specifies that the value of this field must be a valid username (lowercase letters, numbers, `.`, `-`, and `_`).                                                            |
 
 **Example - Equals:**
 ```yaml
@@ -353,8 +355,6 @@ owls:
       message: "Please provide {{min}} - {{max}} owls."
 ```
 
-[notice=tip]You can use `min_exclusive` instead of `min`, and `max_exclusive` instead of `max` to create open intervals.[/notice]
-
 **Example - Regex:**
  ```yaml
 screech:
@@ -365,6 +365,101 @@ screech:
 ```
 
 [notice=warning]Regular expressions should _not_ be wrapped in quotes in YAML. Also the jQuery Validation plugin wraps regular expressions on the client side with `^...$`. Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).[/notice]
+
+### Input arrays, multidimensional arrays & associative arrays
+If your form uses [input arrays](https://stackoverflow.com/a/42969920/445757) such as `<input name='nameList[]'...`, you can reference the array itself in your validation schema as `nameList` and each element of the array as `nameList.*`. This can be useful with dynamic form with a variable or unknown number of input of the same nature. For example, a list of names : 
+
+```html
+<input name="nameList[]" type="text" />
+<input name="nameList[]" type="text" />
+```
+
+The same principle can be applied to associative arrays. For example, it's possible to target both inputs in the example below with `nameList.first` & `nameList.last`.
+
+```html
+<input name="nameList['first']" type="text" />
+<input name="nameList['last']" type="text" />
+```
+
+Both can be mixed together. For example, in the example below, `first` and `last` can be defined in the schema as `nameList.*.first` and `nameList.*.last`. The same transformation and validation rules will be applied to both instance of `nameList[][first]` for example.
+
+```html
+<tr>
+  <td><input name="nameList[][first]" type="text" /></td>
+  <td><input name="nameList[][last]" type="text" /></td>
+</tr>
+<tr>
+  <td><input name="nameList[][first]" type="text" /></td>
+  <td><input name="nameList[][last]" type="text" /></td>
+</tr>
+```
+
+Note when using arrays, **transformations** can be can be applied to each element, or all elements at once. The two transformations below are equivalent:
+
+```yaml
+nameList:
+  transformations:
+  - purge
+  - trim
+
+nameList.*:
+  transformations:
+  - purge
+  - trim
+```
+
+However, with associative arrays, this is useful if different rules are required for each associations. For example, the schema below will apply the `purge` transformation to `nameList.*.first` only, `escape` will be only apply to `nameList.*.last`, but `trim` will be applied to both. 
+
+```yaml
+nameList:
+  transformations:
+  - trim
+
+nameList.*.first:
+  transformations:
+  - purge
+
+nameList.*.last:
+  transformations:
+  - escape
+```
+
+As for **validators**, it's a little different. Any validators rules for `nameList` will be validated against the array itself. Rules defined for `nameList.*` will be applied to each element of an array individually. For example, the schema bellow will make sure the `nameList` array is there, and apply the length rule to each element of the array.
+
+```yaml
+nameList:
+  validators:
+    required:
+      message: Your input left out the names.
+
+nameList.*:
+  validators:
+    length:
+      min: 1
+      max: 50
+      message: "Names must be between {{min}} and {{max}} characters."
+```
+
+Another example for a phone list with both validations and transformations might look like this:
+
+```yaml
+phoneList:
+  validators:
+    required:
+      message: Your input left out the telephone numbers.
+  transformations:
+  - purge
+  - trim
+
+phoneList.*:
+  validators:
+    telephone:
+      message: The phone number you provided is not a valid US phone number.
+```
+
+Please check [Valitron's usage directions](https://github.com/vlucas/valitron#usage) for more information on arrays and [multidimensional arrays](https://mattstauffer.com/blog/a-little-trick-for-grouping-fields-in-an-html-form/). 
+
+Keep in mind, each field **not** in the schema will be removed from the transformed data by default. If your schema contains `nameList.*.first` and `nameList.*.last`, and the associative array / form contains an `email` key, it will be removed as the schema doesn't contains `nameList.*.email`.
 
 ### Limit rules to server or client only
 
