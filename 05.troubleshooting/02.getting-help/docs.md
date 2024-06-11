@@ -129,4 +129,4 @@ You may also find the following communities useful in certain cases:
 
 ## Forums
 
-Our forums, built on the excellent [Discourse](https://www.discourse.org/) project and hosted courtesy of [Nextgi](https://nextgi.com/), can be found at [`https://forums.userfrosting.com`](https://forums.userfrosting.com).
+Our forums can be found on [GitHub Discussions](https://github.com/orgs/userfrosting/discussions) for more in-dept and personalized questions.
