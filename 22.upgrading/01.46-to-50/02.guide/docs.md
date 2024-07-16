@@ -197,7 +197,7 @@ Migration are mostly the same, only the class structure as changed, as well as t
 
 1. Up/Down return type : The `up()` and `down()` method [must now return `void`](/database/migrations#base-class)
    
-2. Migration must [now implement](/database/migrations#base-class) `UserFrosting\Sprinkle\Core\Database\Migration`. Change `use UserFrosting\System\Bakery\Migration;` to `use UserFrosting\Sprinkle\Core\Database\Migration;` in every one of your migrations.
+2. Migration must [now extend](/database/migrations#base-class) `UserFrosting\Sprinkle\Core\Database\Migration`. Change `use UserFrosting\System\Bakery\Migration;` to `use UserFrosting\Sprinkle\Core\Database\Migration;` in every one of your migrations.
    
 3. [Dependencies](/database/migrations#dependencies) must now be declared in a static property. Change `public $dependencies = [];` to `public static $dependencies = [];` in every one of your migrations.
    
