@@ -6,33 +6,33 @@ taxonomy:
     category: docs
 ---
 
-Upgrading an existing sprinkle from UserFrosting 4 to UserFrosting 5 can unfortunately be a difficult task. It all depends of how must customization of the core code you have done. Very basic sites will be easy to upgrade, very complex one could be a nightmare. However, it's for the greater good. UserFrosting 5 is more modern and uses new techniques 
+Upgrading an existing sprinkle from UserFrosting 4 to UserFrosting 5 can unfortunately be a difficult task. It all depends of how much customization of the core code you have done. Very basic sites will be easy to upgrade, very complex one could be a nightmare. However, it's for the greater good; UserFrosting 5 is more modern and uses new techniques. 
 
-[notice=warning]This guide contains the most important changes and action you need to take to upgrade your UserFrosting 4 Sprinkle. However, **it's far from complete**, as there are too many changes to document. Make sure you have a backup of your existing application and your **development database** before starting. 
+[notice=warning]This guide contains the most important changes and the actions you need to take to upgrade your UserFrosting 4 Sprinkle. However, **it's far from complete**, as there are too many changes to document. Make sure you have a backup of your existing application and your **development database** before starting. 
 
 If you spot anything missing, don't hesitate to contribute to this page via the [*edit this page*](https://github.com/userfrosting/learn/blob/5.1/pages/22.upgrading/01.46-to-50/02.guide/docs.md) button at the top.[/notice]
 
 ## Before you start
 
-The upgrade path for your UserFrosting 4 sprinkle will depend on how many features you're using. The good new is, the database structure is the same, and the frontend is 90% the same. 
+The upgrade path for your UserFrosting 4 sprinkle will depend on how many features you're using. The good news is, the database structure is the same, and the frontend is 90% the same. 
 
-To begin the upgrade journey, **the first you should do is a [fresh install](/installation) of UserFrosting 5**. This is important, as it will allow you to familiarize yourself with the new structure, as well as validate that your [local development environment](/background/develop-locally-serve-globally) is up to date and meet the [minimum requirements](/installation/requirements).
+To begin the upgrade journey, **the first you should do is a [fresh install](/installation) of UserFrosting 5**. This is important, as it will allow you to familiarize yourself with the new structure, as well as validate that your [local development environment](/background/develop-locally-serve-globally) is up to date and meets the [minimum requirements](/installation/requirements).
 
-Once you have a functioning vanilla version of UserFrosting 5, you can begin upgrading your sprinkle.
+Once you have a functioning vanilla version of UserFrosting 5, you can begin to upgrade your sprinkle.
 
 [notice]While the database structure is mostly the same between V4 and V5, it is highly recommended you keep a backup of your existing application and your **development database**.[/notice]
 
 ## Upgrading your sprinkle structure
 
-As seen on the [previous page](/upgrading/46-to-50/changelog), one of the biggest change is the app structure. It's recommended before you start to head over to [Chapter 3 - App Structure](/structure), to learn more about this new structure. 
+As seen on the [previous page](/upgrading/46-to-50/changelog), one of the biggest changes is the app structure. It's recommended before you start to head over to [Chapter 3 - App Structure](/structure), to learn more about this new structure. 
 
-Once you're familiar with the new structure, it's time to move thing around so your sprinkle meet the new structure. There's two options here : You can either start from scratch from the [Skeleton repo](/structure/introduction#the-app-skeleton-your-project-s-template), *or* you can manually upgrade in place.
+Once you're familiar with the new structure, it's time to move thing around so your sprinkle meets the new structure. There's two options here: You can either start from scratch from the [Skeleton repo](/structure/introduction#the-app-skeleton-your-project-s-template), *or* you can manually upgrade in place.
 
 The first option is easier as the base has been setup for you, and you can start right away moving your code into the skeleton created from the sprinkle template, in a new git repository. However, it's drawback is you'll probably lose your Git History. The second option is harder, but since you're starting from your existing code, you'll keep your git history if your code is saved on Github for example.
 
 ### Option 1 - Start over from the Skeleton
 
-To start with this option, the first step is to create a [fresh install](/installation) from the app skeleton. You'll then have an empty sprinkle with the new structure, ready to copy your code into it. However there's some step you need to follow before going further.
+To start with this option, the first step is to create a [fresh install](/installation) from the app skeleton. You'll then have an empty sprinkle with the new structure, ready to copy your code into it. However there's some steps you need to follow before going further.
 
 #### Update `composer.json`
 
@@ -46,7 +46,7 @@ Once this is done, you can run `composer update` to fetch dependencies.
 
 #### Edit the Recipe
 
-Next up you should familiarize yourself with the [Sprinkle Recipe](/sprinkles/recipe#name). Right now, the only thing you must update is the sprinkle name, but we'll come back later to the recipe.
+Next up, you should familiarize yourself with the [Sprinkle Recipe](/sprinkles/recipe#name). Right now, the only thing you must update is the sprinkle name, but we'll come back later to the recipe.
 
 #### Moving your code
 
@@ -56,7 +56,7 @@ At this point you can skip to [Upgrading components](/upgrading/46-to-50/guide#u
 
 ### Option 2 - Upgrade in place
 
-To start with this option, you should already be familiar with UserFrosting 5 directory structure, as it involves moving some directory around and editing some files. It also assume your code (your sprinkle) was located (and not as a community Sprinkle for example) You should have UserFrosting 5 Skeleton repo on hand to copy some files.
+To start with this option, you should already be familiar with UserFrosting 5 directory structure, as it involves moving some directories around and editing some files. It also assumes your code (your sprinkle) was located (and not as a community sprinkle for example) You should have a UserFrosting 5 skeleton repo on hand to copy some files.
 
 #### Moving files and directory
 
@@ -113,13 +113,13 @@ We'll update the rest of your recipe later.
 
 #### The entry files
 
-Finally, you'll need to update both *entry files*, aka `/bakery` and `/public/index.php`, with the correct reference to your recipe. Open both files, and replace `UserFrosting\App\MyApp` and `MyApp` with the correct reference to your recipe. See [this page](/sprinkles/customize#the-entry-files) for more information and example.
+Finally, you'll need to update both *entry files*, aka `/bakery` and `/public/index.php`, with the correct reference to your recipe. Open both files, and replace `UserFrosting\App\MyApp` and `MyApp` with the correct reference to your recipe. See [this page](/sprinkles/customize#the-entry-files) for more information and examples.
 
 ## Upgrading components
 
-At this point your UserFrosting 5 app is _kind of ready_ to work. You simply need to upgrade every component your use. The following list might contains stuff you're not using, but you should still go through them as they contains links and tip you may need later.
+At this point your UserFrosting 5 app is _kind of ready_ to work. You simply need to upgrade every component you use. The following list might contain stuff you're not using, but you should still go through them as they contain links and tips you may need later.
 
-Remember, this guide will give you only the big picture of what changed, pointing you to other part of the guide that goes in details with all the features. 
+Remember, this guide will give you only the big picture of what changed, but it will point you to the relevant parts of the documentation where more detail can be found.
 
 ### Global changes
 
@@ -135,7 +135,7 @@ Keep this in mind, especially if you've extended built-in classes. Not only may 
 
 ### Services -> Dependency Injection
 
-Services have been updated for UserFrosting 5. While the principle is the same, the way to register service is different. Services are now served by the new dependency injection container, PHP-DI. You should head over to the [Dependency Injection Chapter](/dependency-injection) to learn more about PHP-DI integration in UserFrosting 5 before going further. 
+Services have been updated for UserFrosting 5. While the principle is the same, the way to register a service is different. Services are now served by the new dependency injection container, PHP-DI. You should head over to the [Dependency Injection Chapter](/dependency-injection) to learn more about PHP-DI integration in UserFrosting 5 before going further. 
 
 Your services definition must first be updated to implement `UserFrosting\ServicesProvider\ServicesProviderInterface`. For example:
 
@@ -167,7 +167,7 @@ class ServicesProvider implements ServicesProviderInterface
 
 You'll also need to **register your service** in your recipe. Checkout [Adding Services](/dependency-injection/adding-services) for more information.
 
-Finally, instead or injecting the whole container and retrieving your service from it, your should inject the service directly into the class using [autowiring](/dependency-injection/the-di-container#autowiring) in the class constructor or thought [route service injection](/routes-and-controllers/controller-classes#service-injection) for example.
+Finally, instead of injecting the whole container and retrieving your service from it, you should inject the service directly into the class using [autowiring](/dependency-injection/the-di-container#autowiring) in the class constructor or thought [route service injection](/routes-and-controllers/controller-classes#service-injection) for example.
 
 For example:
 
