@@ -203,6 +203,12 @@ Migrations are mostly the same, only the class structure as changed, as well as 
    
 4. Migrations are not auto-discovered anymore. You need to add them to your sprinkle recipe, using `MigrationRecipe`. See [the migration chapter](/database/migrations#sprinkle-recipe) for more information and a detailed guide.
 
+### Seeds
+
+Seeds are also mostly the same, they just need to implement `\UserFrosting\Sprinkle\Core\Seeder\SeedInterface`, and have a `run()` function with a return type of `void`. They are also not auto-discovered, so need to be added to your sprinkle recipe using `SeedRecipe`. 
+
+See [the seeding chapter](/database/seeding) for more details.
+
 ### Models
 
 The only change in database model is the `$timestamps` property is not `true` by default. It used to be `false`. ` public $timestamps = true;` can be removed from your models, unless you're **not** using timestamps where you should add `public $timestamps = false;`.
