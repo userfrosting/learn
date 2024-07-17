@@ -195,7 +195,7 @@ The classmapper has been removed in UF5. PHP-DI should be used instead, via the 
 
 Migrations are mostly the same, only the class structure as changed, as well as the need to register migration in your Sprinkle Recipe. The key points regarding migration are as follow: 
 
-1. Up/Down return type : The `up()` and `down()` method [must now return `void`](/database/migrations#base-class)
+1. Up/Down return type : The `up()` and `down()` method [must now have a return type of `void`](/database/migrations#base-class)
    
 2. Migrations must [now extend](/database/migrations#base-class) `UserFrosting\Sprinkle\Core\Database\Migration`. Change `use UserFrosting\System\Bakery\Migration;` to `use UserFrosting\Sprinkle\Core\Database\Migration;` in every one of your migrations.
    
