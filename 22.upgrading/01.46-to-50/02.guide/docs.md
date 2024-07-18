@@ -215,16 +215,16 @@ The only change in database model is the `$timestamps` property is not `true` by
 
 ### Routes
 
-The way to register route as changed. The definition is mostly the same, however the routes are now a real PHP classes, instead of static php resources. Check out the [Registering routes](/routes-and-controllers/registering-routes) guide for more information.
+The way to register routes has changed. The definition is mostly the same, however the routes are now real PHP classes, instead of static php resources. Check out the [Registering routes](/routes-and-controllers/registering-routes) guide for more information.
 
-To updated your routes, you should start by :
+To updated your routes, you should start by:
 
 1. Move your routes from `app/routes/*` to `app/src/Routes/*`;
 2. Update your routes definitions so it's a class [implementing RouteDefinitionInterface](/routes-and-controllers/registering-routes)
 3. Register your routes in your Sprinkle Recipe.
 
-A few other key point to know:
-1. Route groups definition has changed. See [Slim Documentation](https://www.slimframework.com/docs/v4/objects/routing.html#route-groups) for more information
+A few other key points to know:
+1. Definitions for route groups has changed. See [Slim Documentation](https://www.slimframework.com/docs/v4/objects/routing.html#route-groups) for more information
 2. Controller resolution should be updated to make use of [PHP’s `::class` operator](https://www.slimframework.com/docs/v4/objects/routing.html#container-resolution)
 3. Middleware must now be called by their class name. For example, `authGuard` must be updated to `UserFrosting\Sprinkle\Account\Authenticate\AuthGuard::class`
 
@@ -266,21 +266,21 @@ This also mean the **Classmapper** is not available anymore in sprunjes. You sho
 
 ### Controllers
 
-Simple changes have been made to controller classes : 
+Simple changes have been made to controller classes: 
 
 1. Remove `extends SimpleController`, no extension is required anymore.
 2. `use Slim\Http\Request;` must be changed to `use Psr\Http\Message\ServerRequestInterface as Request;`
 3. `use Slim\Http\Response;` must be changed to `use Psr\Http\Message\ResponseInterface as Response;`
-4. Since the DI container is not available globally in controllers, the services you requires must be [injected in constructor](/routes-and-controllers/controller-classes#service-injection)
+4. Since the DI container is not available globally in the controllers, the services you require must be [injected via the constructor](/routes-and-controllers/controller-classes#service-injection)
    1. For example, to use the `view` service, inject `Slim\Views\Twig;` 
 
 See [Controller classes](/routes-and-controllers/controller-classes) guide for more information.
 
-[note]If your sprinkle extends a controller class from a default sprinkle instead of `SimpleController`, note that **every** controller classes from default sprinkles have been moved, renamed and rewritten as *Action classes*. Make sure to check out the sprinkle source code to find out how to update your sprinkle.[/note]
+[note]If your sprinkle extends a controller class from a default sprinkle instead of `SimpleController`, note that **every** controller class from the default sprinkles have been moved, renamed and rewritten as *Action classes*. You will need to check out the sprinkle source code to find out how to update your sprinkle.[/note]
 
 ### Bakery
 
-Simple changes have been made to bakery commands : 
+Simple changes have been made to bakery commands: 
 
 1. Command must extend `Symfony\Component\Console\Command\Command` instead of `UserFrosting\System\Bakery\BaseCommand`
 2. Service should be injected through the class constructor (don't forget to call the parent constructor) or via [attribute injection](https://php-di.org/doc/attributes.html#inject).
@@ -293,7 +293,7 @@ Also note that the `create-admin` command has been renamed `create:admin-user`. 
 
 ### Resources Stream / Locator
 
-Not must as changed regarding the Resource Locator. Refer to the [Locator Service](/advanced/locator) page for more information. Note however that the two stream below have been renamed:
+Not must has changed regarding the Resource Locator. Refer to the [Locator Service](/advanced/locator) page for more information. Note however that the two streams below have been renamed:
 
 1. log -> logs
 2. session -> sessions
