@@ -62,6 +62,21 @@ class MapBuilderService implements ServicesProviderInterface
 
 [notice=tip]You'll notice that we've added `use UserFrosting\Sprinkle\Site\GoogleMaps\MapBuilder;` to the top of the file. This means that we don't have to use the fully qualified class name (with the entire namespace) every time we want to refer to the `MapBuilder` class.[/notice]
 
+If you need to pull in another service, for example the config to retrieve an API key, you can add them as the parameter, and the dependency injector will automatically pick it up.
+
+```php
+...
+MapBuilder::class => function (Config $config) {
+    $apiKey = $config['api.key'];
+
+    // Now, actually build the object
+    $mapBuilder = new MapBuilder($apiKey);
+
+    return $mapBuilder;
+},
+...
+```
+
 ### Register your service
 
 The next step is to tell UserFrosting to load your service in your [Sprinkle Recipe](/sprinkles/recipe#getservices). To do so, you only need to list all the service providers you want to automatically register inside the `$getServices` property of your sprinkle class :
