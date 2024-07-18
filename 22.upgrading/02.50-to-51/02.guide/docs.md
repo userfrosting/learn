@@ -81,13 +81,13 @@ $ php bakery bake
 
 ### Font Awesome
 
-UserFrosting 5.1 now ship with Font Awesome 6 in the AdminLTE theme. While Font Awesome 6 is backward compatible with Font Awesome 5, some icons [have been renamed](https://docs.fontawesome.com/web/setup/upgrade/whats-changed#icons-renamed-in-version-6) and you might need to manually update these in your sprinkle. 
+UserFrosting 5.1 now ships with Font Awesome 6 in the AdminLTE theme. While Font Awesome 6 is backward compatible with Font Awesome 5, some icons [have been renamed](https://docs.fontawesome.com/web/setup/upgrade/whats-changed#icons-renamed-in-version-6) and you might need to manually update these in your sprinkle. 
 
-Checkout Font Awesome guide for more information : [https://docs.fontawesome.com/web/setup/upgrade/whats-changed](https://docs.fontawesome.com/web/setup/upgrade/whats-changed)
+Checkout the Font Awesome guide for more information : [https://docs.fontawesome.com/web/setup/upgrade/whats-changed](https://docs.fontawesome.com/web/setup/upgrade/whats-changed)
 
 ### Missing default permissions
 
-Some build-in permissions [were missing from the database](https://github.com/userfrosting/UserFrosting/issues/1225) :
+Some built-in permissions [were missing from the database](https://github.com/userfrosting/UserFrosting/issues/1225) :
  - `uri_role`
  - `uri_roles`
  - `uri_permissions`
@@ -100,28 +100,28 @@ Some build-in permissions [were missing from the database](https://github.com/us
  - `view_system_info`
  - `clear_cache`
 
-To add them to the database, run `php bakery seed` and select `UserFrosting\Sprinkle\Account\Database\Seeds\DefaultPermissions`. Theses will also be added to the `site-admin` role when running the seed.
+To add them to the database, run `php bakery seed` and select `UserFrosting\Sprinkle\Account\Database\Seeds\DefaultPermissions`. These will also be added to the `site-admin` role when running the seed.
 
-[notice=warning]If your application defines custom permissions to the `site-admin` role or you customized this role, **do not run the seed** unless you want to lose any custom changes. Running the seed will revert back that role to it's default state.[/notice]
+[notice=warning]If your application defines custom permissions to the `site-admin` role or you customized this role, **do not run the seed** unless you want to lose any custom changes. Running the seed will revert back the role to it's default state.[/notice]
 
 The `site-admin` role is now on par with the root user permission by default, except for the last two permissions added, `view_system_info` & `clear_cache`. Theses can be added to the role if desired using the UI.
 
 ### `urlFor` service change
 
-When calling [`urlFor`](/templating-with-twig/filters-and-functions#urlfor) **in PHP** (not Twig) to generate a route from it's name, the service as been replaced. Find and replace the following import to upgrade: 
+When calling [`urlFor`](/templating-with-twig/filters-and-functions#urlfor) **in PHP** (not Twig) to generate a route from its name, the service has been replaced. Find and replace the following import to upgrade: 
 - Find : `use Slim\Interfaces\RouteParserInterface;`
 - Replace : `use UserFrosting\Sprinkle\Core\Util\RouteParserInterface;`
 
 ### Alerts
 
-When using the [alerts](/advanced/alert-stream) service, replace `addMessageTranslated(...);` with `addMessage(...);`. The old method is still available, but deprecated and will be removed in a future version.
+When using the [alerts](/advanced/alert-stream) service, replace `addMessageTranslated(...);` with `addMessage(...);`. The old method is still available, but it is deprecated and will be removed in a future version.
 
 ### Fortress
 
-Fortress has been complexly rewritten for UserFrosting 5.1. Most class have been kept and will continue working, but these have been marked deprecated and will be removed in future version. It is recommended to upgrade your code now to avoid issues later.
+Fortress has been completely rewritten for UserFrosting 5.1. Most classes have been kept and will continue working, but these have been marked deprecated and will be removed in future version. It is recommended to upgrade your code now to avoid issues later.
 
 #### RequestSchema
-`UserFrosting\Fortress\RequestSchema` constructor first argument now accept the schema data as an array, as well as a string representing a path to the schema json or yaml file. The argument can still be omitted to create an empty schema. This change makes `UserFrosting\Fortress\RequestSchema\RequestSchemaRepository` obsolete and and such been ***deprecated***. For example:
+The `UserFrosting\Fortress\RequestSchema` constructor's first argument now accepts the schema data as an array, as well as a string representing a path to the schema json or yaml file. The argument can still be omitted to create an empty schema. This change makes `UserFrosting\Fortress\RequestSchema\RequestSchemaRepository` obsolete and and such been ***deprecated***. For example:
 
 ```php
 // Before
@@ -243,6 +243,8 @@ $errors = $this->validator->validate($schema, $data);
 if (count($errors) !== 0) {
     $e = new ValidationException();
     $e->addErrors($errors);
+
+    throw $e;
 }
 ```
 
