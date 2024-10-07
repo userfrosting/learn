@@ -219,5 +219,23 @@ User accounts can be deleted from the user profile page, or the user dropdown me
 
 Deleting user accounts presents a problem because the user may have related data in the database that would become orphaned, potentially breaking other functionality in your site. For this reason, UserFrosting performs [soft deletes](https://laravel.com/docs/8.x/eloquent#soft-deleting) by default. The user record is not actually deleted, but instead a `deleted_at` timestamp is added to the record and the user is no longer able to sign in. Deleted users are also excluded from all queries unless the `withTrashed` method is added to the Eloquent query. Related entities (activities, roles, etc) are left alone.
 
-If you really want to completely remove the user from the database, you can call `User::delete` method in your controller and set
-the `$hardDelete` parameter to `true`. This will detach the user from all of their roles, and delete the user's activity records.
+If you really want to completely remove the user from the database, you can call the `User::forceDelete` method in your controller logic. 
+
+Here's an example using `User::forceDelete` in a custom UserActions class:
+
+```php
+<?php
+use UserFrosting\Sprinkle\Account\Database\Models\User;
+
+class UserActions {
+    public function __construct() {}
+
+    public function delete($userId) {
+        $userModel = new User();
+        $user = $userModel->find($userId);
+
+        if(!$user) return;
+        $user->forceDelete();
+    }
+}
+```
