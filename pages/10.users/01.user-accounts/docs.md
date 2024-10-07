@@ -232,7 +232,9 @@ class UserActions {
 
     public function delete($userId) {
         $userModel = new User();
-        $user = $userModel->find($userId);
+        
+        //includes soft-deleted users
+        $user = $userModel->withTrashed()->find($userId);
 
         if(!$user) return;
         $user->forceDelete();
