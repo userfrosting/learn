@@ -348,6 +348,19 @@ An object containing tablesorter's [configuration options](https://mottie.github
 
 An object containing any additional key-value pairs that you want appended to the AJAX requests made by the table. Useful when implementing, for example, site-wide filters or using data sources that require additional context.
 
+When sending an AJAX request to a Sprunje, there are some hoops to jump through:
+1. Remember that sprunjes only accept [certain parameters](/database/data-sprunjing#sprunje-parameters). If, for instance, you want to filter by "UserID" that's set outside of the table, you'll need to pass `filters[UserID]` in the AJAX request rather than simply `UserID`.
+2. Additionally, sprunjes only accept [whitelisted fields](/database/data-sprunjing#sorts-and-filters), so you'll need to ensure that `UserID` is in the appropriate array in the sprunje--in this case, `$filterable`.
+3. Optional: Unless you're hardcoding the parameter value, you may need to [export it to JS](/client-side-code/exporting-variables).
+
+In this Javascript sample, we've already asked the user for a Genus name and exported it to the variable `page.owl.genus`.
+```javascript
+$("#myUserTable").ufTable({
+    dataUrl: site.uri.public + "/api/owls",
+    addParams: {"filters[species]" : page.owl.genus}
+});
+```
+
 ### filterAllField
 
 The special filter name that should be sent in AJAX requests when a global search (as opposed to column-specific searches) is performed. Defaults to `_all`.
