@@ -1,0 +1,29 @@
+name: Documentation improvement suggestion
+description: Something in the doc needs improvement
+body:
+  - type: input
+    attributes:
+      label: UserFrosting Version
+      description: Provide the UserFrosting affected
+      placeholder: 5.x.x
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Affected page
+      description: Provide a link to the page this is related to
+      placeholder: https://learn.userfrosting.com/...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Description
+      description: Provide a detailed description of the problem
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Suggested Changes
+      description: Provide details about the suggested changes
+    validations:
+      required: true

@@ -19,15 +19,8 @@ UserFrosting documentation is written in Markdown. Usual Markdown syntax is avai
 
 ## Pull Requests
 
-Pull Requests for this repository should be created against the appropriate branch as per the table below. If you're unsure, just pick the branch that fits best and someone will take it from there.
-
-| Change should be published | Branch to make PR against |
-|---|---|
-| current release | `master` |
-| next patch release | `hotfix` |
-| next breaking change release | `develop` |
-| previous release | `previous.vesion.branch` |
+Each minor version of UserFrosting has a corresponding branch on this repository. Pull Requests for this repository should be created against the appropriate branch/version. If you're unsure, just pick the main branch.
 
 ## Code contributions
 
-Please direct your attention to the [UserFrosting contribution guide](https://github.com/userfrosting/UserFrosting/blob/master/.github/CONTRIBUTING.md)
+Please direct your attention to the [UserFrosting contribution guide](https://github.com/userfrosting/.github/blob/main/.github/CONTRIBUTING.md)

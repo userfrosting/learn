@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Docker Build",
+            "type": "shell",
+            "command": "docker build -t learn:latest .",
+            "problemMatcher": [],
+            "group": "build"
+		},
+        {
+            "label": "Launch Docker",
+            "type": "shell",
+            "command": "docker run -d --rm --name=learn -p 8888:80 -v \"$(pwd):/var/www/grav/user\" learn:latest",
+            "problemMatcher": [],
+            "group": "build"
+		},
+        {
+            "label": "Launch Docker (No Destroy)",
+            "type": "shell",
+            "command": "docker run -d --name=learn -p 8080:80 -v \"$(pwd):/var/www/grav/user\" learn:latest",
+            "problemMatcher": [],
+            "group": "build"
+		},
+		{
+            "label": "Stop Docker",
+            "type": "shell",
+            "command": "docker stop learn",
+            "problemMatcher": [],
+            "group": "build"
+        },
+		{
+            "label": "Access Docker",
+            "type": "shell",
+            "command": "docker exec -it learn bash",
+            "problemMatcher": [],
+            "group": "build"
+        }
+    ]
+}

@@ -260,7 +260,7 @@ Sprunjes can also be used to enumerate a unique list of values for fields in the
 ```php
 class OwlSprunje extends Sprunje
 {
-    protected $listable = [
+    protected array $listable = [
         'species'
     ];
 

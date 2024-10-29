@@ -2,11 +2,17 @@
 
 https://learn.userfrosting.com
 
-This is the repository for the documentation for UserFrosting 4. It is built with the flat-file CMS [Grav](http://getgrav.org), using their [RTFM skeleton](https://github.com/getgrav/grav-skeleton-rtfm-site#rtfm-skeleton).
+This is the repository for the documentation for UserFrosting 5. It is built with the flat-file CMS [Grav](http://getgrav.org), using their [RTFM skeleton](https://github.com/getgrav/grav-skeleton-rtfm-site#rtfm-skeleton).
 
 ## Getting started
 
 This site is built using [Grav](https://learn.getgrav.org/) CMS, which like UserFrosting v4 has combined framework and project skeleton code. To permit easier content management, this repository only includes Grav's `user/` directory, which is where all of our custom content, themes, and assets live. See [Grav Development with GitHub - Part 2](https://getgrav.org/blog/developing-with-github-part-2) for more on this approach.
+
+## Syntax
+
+Grav uses Markdown to format text. Additionally, this site uses the [Grav Shortcode Core Plugin](https://github.com/getgrav/grav-plugin-shortcode-core) plugin to enable more non-standard Markdown code, like `[notice]`.
+
+See [Grav Shortcode Plugin](https://github.com/getgrav/grav-plugin-shortcode-core?tab=readme-ov-file#available-shortcodes) for a list of available markdown code.
 
 ## Installation
 
@@ -17,8 +23,7 @@ This site is built using [Grav](https://learn.getgrav.org/) CMS, which like User
 To install a single copy of this branch (without multiple versions available), multiple installation methods are available:
 
 1. [Local Installation](#local-installation)
-2. [Lando](#lando)
-3. [Docker](#docker)
+2. [Docker](#docker)
 
 ### Local Installation
 
@@ -53,25 +58,6 @@ htdocs/
    └── ...
 ```
 
-### Lando
-
-1. Clone repo
-   ```
-   git clone https://github.com/userfrosting/learn.git userfrosting-learn
-   cd userfrosting-learn
-   ```
-
-2. Start Lando
-   ```
-   lando start
-   ```
-
-To stop the container:
-
-```bash
-lando stop
-```
-
 ### Docker
 
 1. Clone repo
@@ -87,10 +73,10 @@ lando stop
 
 3. Start Grav container
    ```
-   docker run -d --rm --name=learn -p 8080:80 -v "$(pwd):/var/www/grav/user" learn:latest
+   docker run -d --rm --name=learn -p 8888:80 -v "$(pwd):/var/www/grav/user" learn:latest
    ```
 
-It will take a couples of second for the site to be up and running while the base Grav installation is done. Once this is complete, you can access the documentation at [http://localhost:8080/](http://localhost:8080/).
+It will take a couples of second for the site to be up and running while the base Grav installation is done. Once this is complete, you can access the documentation at [http://localhost:8888/](http://localhost:8888/).
 
 To stop the container:
 
