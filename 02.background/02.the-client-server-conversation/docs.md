@@ -39,7 +39,7 @@ Again, clients can't run PHP in their browsers. If you want to pass along the va
 ```html
 <?php
 
-    // This is a PHP variable
+    // This is a PHP variable - (note the leading $)
     $baseUrl = "https://owlfancy.com";
 
 ?>
@@ -47,8 +47,8 @@ Again, clients can't run PHP in their browsers. If you want to pass along the va
 <button id="updateButton" type="button">Update My Owl</button>
 
 <script>
-    // This is a Javascript variable
-    var baseUrl = <?php echo $baseUrl; ?> ;
+    // This is a Javascript variable - (note no leading $)
+    let baseUrl = <?php echo $baseUrl; ?> ;
 
     // Our Javascript code can now reference the Javascript variable baseUrl
     $("#updateButton").on("click", function () {
@@ -63,27 +63,25 @@ For more complex PHP code that needs to be run in the middle of a block of Javas
 
 Fortunately, modern browsers support something called AJAX, which allows Javascript code to automatically make requests to the server. Thus, you might see something like:
 
-```html
+```php
 <?php
-
     $baseUrl = "https://owlfancy.com";
     $owlId = getUserOwlId();
-
 ?>
 
 <button id="seeVoleHuntResults" type="button">See Vole Hunt Results</button>
 
 <script>
-    var baseUrl = <?php echo $baseUrl; ?> ;
-    var owlId = <?php echo $owlId; ?> ;
+    let baseUrl = "<?php echo $baseUrl; ?>";
+    let owlId = "<?php echo $owlId; ?>";
 
     $("#seeVoleHuntResults").on("click", function () {
-        // This is an AJAX function that makes another request to the server!
+        // This is a jQuery AJAX function that generates another request to the server!
         $.getJSON(baseUrl + "/vole-hunt/today",
         {
             "owl_id": owlId
         }).done(function(data) {
-            // This is what the browser does when the request is complete.
+            // This is what the browser does when the request is complete successfuly.
             alert(data['voles_caught']);
         });
     });

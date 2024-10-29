@@ -17,7 +17,7 @@ When HTTP was first designed, it was meant to reflect the transactional nature o
 
 A url is simply a way of identifying a resource. The HTTP method then tells the server what the client wants to _do_ with that resource. You can think of this as the grammar of a natural language, with the method acting as the verb and the url as the object of a sentence. Together, a specific url and method are commonly referred to as an **endpoint**.
 
-In the years since, there has been a tendency to build more abstractions on top of this very basic language. However, we have been seeing lately an effort to get back to the roots of HTTP as it was intended to be used - this is what people are commonly referring to when they talk about [REST](https://en.wikipedia.org/wiki/Representational_state_transfer).
+In the years since, there has been a tendency to build more abstractions on top of this very basic language. However, we have been seeing lately an effort to get back to the roots of HTTP as it was intended to be used - this is what people are commonly referring to when they talk about [REST](https://en.wikipedia.org/wiki/REST).
 
 ## REST and PHP
 
@@ -36,7 +36,7 @@ www/
 
 Then you would be able to access the page at `http://example.com/myNewbieProject/owls/barn_owl.php`. Most web servers are configured to automatically map the portion of the url after the scheme (`http://example.com/`) to an actual file in the document root directory, where each slash represents a subdirectory and the last portion corresponds to the name of a PHP script.
 
-This system is easy for newbies to understand, but it has a lot of limitations. First, it requires you to have a separate file for each web page that you want to generate. In a real application, you may want to have hundreds of thousands of very similar web pages, and it doesn't make sense to require a separate file for each page. Also, it couples the structure of your **code** to the structure of your **urls**. To generate semantically useful urls, we'd have to have a messy and complicated maze of directories on our server.
+This system is easy to understand, but it has a lot of limitations. First, it requires you to have a separate PHP file for each web page that you want to generate. In a real application, you may want to have hundreds of thousands of very similar web pages, and it doesn't make sense to require a separate file for each page. Also, it couples the structure of your **code** to the structure of your **urls**. To generate semantically useful urls, we'd have to have a messy and complicated maze of directories on our server.
 
 Within each file, you'd also need control structures (if/else) to have it do different things depending on which HTTP method was used. All of this makes it very cumbersome to implement a RESTful design for your endpoints.
 
@@ -44,6 +44,4 @@ Within each file, you'd also need control structures (if/else) to have it do dif
 
 UserFrosting, and most other modern frameworks and content management systems, use a [front controller](/routes-and-controllers/front-controller) to solve this problem. With a front controller, the web server is configured to pass all requests to a single script - `index.php`. From there, the request endpoint is interpreted, and a matching **route** is invoked. These routes do not need to be defined in PHP files that match the name of the url. Thus, we've **decoupled** the endpoints from the directory structure of our application.
 
-Having done this, we are now free to choose any url and method for any request - whether it's a page, form submission, API request, or whatever. This allows us to design our endpoints according to the principles of REST. The next section explains how we should think when we're choosing the urls and methods that our application exposes to the client.
-
-In the [next section](/routes-and-controllers/front-controller), we'll talk about how and where routes are defined in UserFrosting, so you can start implementing your endpoints.
+Having done this, we are now free to choose any url and method for any request - whether it's a page, form submission, API request, or whatever. This allows us to more easily design our endpoints according to the principles of REST. The next section explains how we should think when we're choosing the urls and methods that our application exposes to the client.

@@ -220,7 +220,7 @@ UserFrosting includes a `public/.htaccess` file that is used to provide URLs wit
 
 Nginx can be installed natively on Linux using most package managers. Some [very useful guides](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04) can be found online with instructions for Ubuntu. It can also be installed through [Homebrew on MacOS](https://formulae.brew.sh/formula/nginx).
 
-When using Apache to serve UserFrosting, make sure to include this directive in your site config.
+When using Nginx to serve UserFrosting, make sure to include this directive in your site config.
 
 ```txt
 location / {

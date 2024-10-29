@@ -6,7 +6,7 @@ taxonomy:
     category: docs
 ---
 
-While the Bakery CLI tool comes with great built-in commands, your Sprinkles can also take advantage of the Bakery by adding their own cli commands.
+While the Bakery CLI tool comes with great built-in commands, your sprinkles can also take advantage of the Bakery by adding their own cli commands.
 
 ## Writing custom commands
 
@@ -14,7 +14,7 @@ Your Sprinkle Recipe can register any class extending the `\Symfony\Component\Co
 
 The `configure` method takes care of defining your command name and description. See [Configuring the Command](http://symfony.com/doc/current/console.html#configuring-the-command) from the Symfony documentation for more details. Arguments and options can also be defined in the `configure` method. Again, the [Symfony documentation](http://symfony.com/doc/current/components/console/console_arguments.html) is the place to look for more information on this.
 
-The `execute` method is the one called when the command is executed. From there you can interact with the user, interact with UserFrosting or do whatever else you want to do. You can also add your own methods inside this class and access them from the _execute_ method.
+Executing the command calls the `execute` method. From there you can interact with the user, interact with UserFrosting, or do whatever else you want to do. You can also add your own methods inside this class and access them from the _execute_ method.
 
 ### Interacting with the user
 
@@ -29,12 +29,12 @@ The UserFrosting service providers can be injected using the PHP-DI `#[Inject]` 
 public function __construct(
     protected EventDispatcherInterface $eventDispatcher
 ) {
-    parent::__construct(); // <-- Don't forget to add this !
+    parent::__construct(); // <-- Don't forget to add this!
 }
 ```
 [/notice]
 
-In all cases, Bakery command classes will be instantiated by the DI Container, and all dependency will be properly injected at run time.
+In all cases, Bakery command classes will be instantiated by the DI Container, and all dependencies will be properly injected at runtime.
 
 
 ## Command Class Template
@@ -74,7 +74,7 @@ class HelloCommand extends Command
 }
 ```
 
-Now, you simply need to register your command in your [Sprinkle Recipe](/sprinkles/recipe). First, declare your recipe implement Bakery feature by adding the `BakeryRecipe` implementation. Then, register your command in the `getBakeryCommands()` method. Don't forget to import your class :
+Now, you simply need to register your command in your [Sprinkle Recipe](/sprinkles/recipe). First, add the `BakeryRecipe` implementation. Then, register your command in the `getBakeryCommands()` method. Don't forget to import your class:
 
 ```php
 <?php

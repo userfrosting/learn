@@ -57,7 +57,7 @@ if (!$this->authorizer->checkAccess($currentUser, 'uri_users')) {
 }
 ```
 
-Or simply use the `checkAccess` method of the `Authenticator` service, which is a shortcut for the above code (the current user will be automatically passed to `AuthorizationManager` behind the scene). For example:
+Or simply use the `checkAccess` method of the `Authenticator` service, which is a shortcut for the above code (the current user will be automatically passed to `AuthorizationManager` behind the scenes). For example:
 
 ```php
 #[\DI\Attribute\Inject]
@@ -184,9 +184,9 @@ Think about it this way - for a permission to have any effect on your applicatio
 
 Instead, you should think of permissions as hardcoded parts of your application that just happen to be stored in the database. Permissions can be **added, removed, or modified** using a [database migration](/database/migrations) or a [database seed](/database/seeding).
 
-Both methods can be used to create or manipulate permissions. **Migrations** are better suited to edit or remove existing permissions since they assure your permissions stays constant in time, but won't help you restore a permission if one gets deleted by accident, since a migration can only be run once. **Seeds** on the other hand can be run more than once, so they can be used to restore a deleted permission, but can't be relied on to edit a permission the same way you can with a migration, since a seed can be run in any order, you can't keep track which one have been run, don't have dependencies and can't be automatically rolled down.
+Both methods can be used to create or manipulate permissions. **Migrations** are better suited to edit or remove existing permissions since they assure your permissions stay constant in time. They won't help you restore a permission if one gets deleted by accident, since a migration can only be run once. **Seeds** on the other hand can be run more than once, so they can be used to restore deleted permissions, but can't be relied on to edit a permission the same way you can with a migration. Seeds can be run in any order, don't have dependencies, can't be automatically rolled down, and the system tracks neither *when* they run nor *whether* they have been run.
 
-With this in mind, it is recommended to use a **migration** to create permissions. However, since both methods are valid and can be used depending on the developer choice, both are shown below.
+With this in mind, it is recommended to use a **migration** to create permissions. However, since both methods are valid and can be used depending on the developer's choice, both are shown below.
 
 ### Using a Seed
 

@@ -20,7 +20,7 @@ The default status code used by the `Response` object. You should use this code 
 
 You should use this whenever you permanently rename a route - especially for pages! You want the old route to automatically resolve to your new URL, otherwise this could hurt your search engine rankings.
 
-Recommended practice is to create a new route definition class in your Sprinkle and keep your redirect routes together. The [redirect helper](https://www.slimframework.com/docs/v4/objects/routing.html#redirect-helper) can help to perform the actual link between the old and the new route :
+Recommended practice is to create a new route definition class in your Sprinkle and keep your redirect routes together. Slim's [redirect helper](https://www.slimframework.com/docs/v4/objects/routing.html#redirect-helper) assists in performing the actual link between the old and the new route :
 
 ```php
 <?php
@@ -51,15 +51,15 @@ Note that most major browsers perform the redirect automatically when they recei
 
 ### 400 (Bad Request)
 
-Respond with this code when the client has submitted an "invalid" request. In most cases where the user's request has failed validation, `400` is the appropriate code to return.
+Respond with this code when the client has submitted an "invalid" request. In most cases where the user's request has failed [validation](/routes-and-controllers/client-input/validation), `400` is the appropriate code to return.
 
 [notice=note]Don't return a 400 code if the error isn't the client's fault, or if the request was valid but refused for some other reason (like failing authorization, or a CSRF token check).[/notice]
 
 ### 401 (Unauthorized)
 
-Technically, this code is meant to be used with [HTTP Basic](https://en.wikipedia.org/wiki/Basic_access_authentication) and [HTTP Digest Authentication](https://en.wikipedia.org/wiki/Digest_access_authentication), which UserFrosting doesn't use.
+Technically, this code is meant to be used with [HTTP Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) and [HTTP Digest Authentication](https://en.wikipedia.org/wiki/Digest_access_authentication), which UserFrosting doesn't use.
 
-However in lieu of a better alternative, UserFrosting has co-opted this code for its own authentication checks. If an AJAX request fails because the user is **not logged in**, UserFrosting's **AuthGuard** middleware will return a 401 status code.
+In lieu of a better alternative, UserFrosting has co-opted this code for its own authentication checks. If an AJAX request fails because the user is **not logged in**, UserFrosting's **AuthGuard** middleware will return a 401 status code.
 
 For non-AJAX requests (i.e., when visiting a page), if a request fails because the user is not logged in, a 302 status code will be returned instead, and the user will be redirected to the login page.
 
@@ -81,7 +81,7 @@ if (!$authorizer->checkAccess($currentUser, 'uri_users')) {
 
 The default exception handler that handles `ForbiddenException`s will automatically generate an error message/page response with a 403 response code.
 
-In some cases, you may not want to disclose to unauthorized users that the resource even _exists_. In this case, you can [override](/advanced/error-handling) the `ForbiddenExceptionHandler` with your own handler and have it return a 404 error instead.
+In some cases, you may not want to disclose to unauthorized users that the resource even _exists_. In this case, you can [override](/advanced/error-handling#creating-a-custom-exception-handler) the `ForbiddenExceptionHandler` with your own handler and have it return a 404 error instead.
 
 ### 404 (Not Found)
 
@@ -111,7 +111,7 @@ This code is automatically returned by the router when a route exists for a give
 
 ### 429 (Too Many Requests)
 
-This code is returned by the [throttler](/routes-and-controllers/client-input/throttle), when a request's rate limit has been exceeded.
+This code is returned by the [throttler](/routes-and-controllers/client-input/throttle) when a request's rate limit has been exceeded.
 
 ### 500 (Internal Server Error)
 
@@ -123,4 +123,4 @@ By default when an exception is thrown and no registered exception handler is fo
 
 ### 503 (Service Unavailable)
 
-You should return this code, for example, if you absolutely need to have your application down for a period of time (for example, for maintenance).
+You should return this code when you absolutely need to have your application down for a period of time (for example, for maintenance).
