@@ -22,7 +22,7 @@ Building queries that can handle all of these request parameters correctly, for 
 
 ## Sprunje parameters
 
-Every Sprunje can accept the following parameters. Typically, they are passed in as a query string in a `GET` request, then passed as the second argument in your Sprunje's constructor.
+Every Sprunje can accept the following parameters. Typically, they are passed in the query string of a `GET` request, then passed along as the second argument of your Sprunje's constructor.
 
 - `sorts`: an associative array of field names mapped to sort directions. Sort direction can be either `asc` or `desc`.
 - `filters`: an associative array of field names mapped to queries. For example, `name: Attenb` will search for names that contain "Attenb."
