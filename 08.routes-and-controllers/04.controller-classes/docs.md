@@ -22,6 +22,9 @@ namespace UserFrosting\Sprinkle\Site\Controller;
 
 use UserFrosting\Sprinkle\Site\Model\Owl;
 
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+
 class OwlController
 {
     public function getOwls(string $genus, Request $request, Response $response): Response
@@ -74,6 +77,9 @@ namespace UserFrosting\Sprinkle\Site\Controller;
 use UserFrosting\Sprinkle\Site\Model\Owl;
 use UserFrosting\Sprinkle\Site\Finder\VoleFinder;
 
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+
 class OwlController
 {
     public function getOwls(string $genus, Request $request, Response $response, VoleFinder $voleFinder): Response
@@ -96,6 +102,9 @@ namespace UserFrosting\Sprinkle\Site\Controller;
 
 use UserFrosting\Sprinkle\Site\Model\Owl;
 use UserFrosting\Sprinkle\Site\Finder\VoleFinder;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class OwlController
 {
@@ -147,6 +156,9 @@ namespace UserFrosting\Sprinkle\Site\Controller;
 
 use UserFrosting\Sprinkle\Site\Model\Owl;
 use UserFrosting\Sprinkle\Site\Finder\VoleFinder;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class GetOwlsAction
 {
