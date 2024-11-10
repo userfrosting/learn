@@ -272,6 +272,7 @@ Simple changes have been made to controller classes:
 3. `use Slim\Http\Response;` must be changed to `use Psr\Http\Message\ResponseInterface as Response;`
 4. Since the DI container is not available globally in the controllers, the services you require must be [injected via the constructor](/routes-and-controllers/controller-classes#service-injection).
    1. For example, to use the `view` service, inject `Slim\Views\Twig`.
+5. Routes placeholder, usually in the `$args` variables, should now [be directly injected](https://php-di.org/doc/frameworks/slim.html#route-placeholder-injection). See [Retrieving URL Parameters](https://learn.userfrosting.com/routes-and-controllers/client-input#retrieving-url-parameters) for more information.
 
 See the [Controller classes](/routes-and-controllers/controller-classes) guide for more information.
 
