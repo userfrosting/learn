@@ -320,6 +320,8 @@ $ php bakery migrate:refresh [options]
 | -d, --database=DATABASE | The database connection to use                |
 | -s, --steps=STEPS       | Number of steps to rollback [default: 1]      |
 
+[notice=warning]Using the `-s` option will rollback that number of steps, but will migrate them back up in a single step.[/notice]
+[notice=info]Unlike other migrate commands, `migrate:refresh` does NOT accept the `-p` or `--pretend` option.[/notice]
 
 ### migrate:status
 
