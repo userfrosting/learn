@@ -189,7 +189,7 @@ However for some types of exceptions, you may wish to display a debugging page i
 
 ### Custom Exception
 
-You can define your own exceptions, of course, optionally inheriting from any of the [existing exception types](advanced/error-handling#default-exceptions). Every exception you define must eventually inherit back to PHP's base `Exception` class.
+You can define your own exceptions, of course, optionally inheriting from any of the [existing exception types](advanced/error-handling#exceptions). Every exception you define must eventually inherit back to PHP's base `Exception` class.
 
 You'll notice that a large portion of UserFrosting's exception types inherit from the `UserFacingException` class. This is an interesting exception (no pun intended) - it acknowledges that the _exception_ message (which you would want your developers and sysadmins to see), and the _client_ messages (which are displayed to the user to let them know that something went wrong), are generally different things.
 
