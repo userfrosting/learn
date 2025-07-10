@@ -212,12 +212,12 @@ The level of detail can be specified with the `mail.smtp_debug` configuration va
 
 #### Debug statements
 
-We can also arbitrarily send manual debugging messages to `app/logs/userfrosting.log`. This is useful when you want to inspect the value of a server-side variable at a particular point in your code ("dumping the variable") or determine if a particular method or function is being called. To do this, simply use the `DebugLogger` :
+We can also arbitrarily send manual debugging messages to `app/logs/userfrosting.log`. This is useful when you want to inspect the value of a server-side variable at a particular point in your code ("dumping the variable") or determine if a particular method or function is being called. To do this, simply inject a `DebugLoggerInterface` :
 
 ```php
-// Inject `\UserFrosting\Sprinkle\Core\Log\DebugLogger` with attributes, or through constructor
+// Inject `\UserFrosting\Sprinkle\Core\Log\DebugLoggerInterface` with attributes, or through constructor
 #[\DI\Attribute\Inject]
-protected DebugLogger $logger;
+protected DebugLoggerInterface $logger;
 
 // ... 
 
@@ -225,7 +225,7 @@ $this->logger->debug("Fetching owls from database...");
 $this->logger->debug("Owls found:", $owls);
 ```
 
-[notice]`DebugLogger` is a wrapper for a [Monolog](https://github.com/Seldaek/monolog) logger instance, whose `debug` method takes a string as the first parameter and an optional array as a second parameter, and writes them to a log file. Monolog also supports more advanced logging capabilities - check their documentation for more details.[/notice]
+[notice]`DebugLoggerInterface` represents `\UserFrosting\Sprinkle\Core\Log\DebugLogger`, a wrapper for a [Monolog](https://github.com/Seldaek/monolog) logger instance, whose `debug` method takes a string as the first parameter and an optional array as a second parameter, and writes them to a log file. Monolog also supports more advanced logging capabilities - check their documentation for more details.[/notice]
 
 #### Native PHP logging
 
