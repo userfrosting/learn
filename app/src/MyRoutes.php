@@ -8,10 +8,10 @@
  * @license   https://github.com/userfrosting/UserFrosting/blob/master/LICENSE.md (MIT License)
  */
 
-namespace UserFrosting\App;
+namespace UserFrosting\Learn;
 
 use Slim\App;
-use UserFrosting\App\Controller\AppController;
+use UserFrosting\Learn\Controller\AppController;
 use UserFrosting\Routes\RouteDefinitionInterface;
 
 class MyRoutes implements RouteDefinitionInterface

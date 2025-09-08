@@ -8,7 +8,7 @@
  * @license   https://github.com/userfrosting/UserFrosting/blob/master/LICENSE.md (MIT License)
  */
 
-namespace UserFrosting\App;
+namespace UserFrosting\Learn;
 
 use UserFrosting\ServicesProvider\ServicesProviderInterface;
 

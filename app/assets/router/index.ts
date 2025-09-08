@@ -1,5 +1,3 @@
-import AccountRoutes from '@userfrosting/sprinkle-account/routes'
-import AdminRoutes from '@userfrosting/sprinkle-admin/routes'
 import ErrorRoutes from '@userfrosting/sprinkle-core/routes'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -9,7 +7,7 @@ const router = createRouter({
         {
             path: '',
             redirect: { name: 'home' },
-            component: () => import('../layouts/LayoutPage.vue'),
+            component: () => import('../layouts/LayoutDashboard.vue'),
             children: [
                 {
                     path: '/',
@@ -25,17 +23,8 @@ const router = createRouter({
                     component: () => import('../views/AboutView.vue')
                 },
                 // Include sprinkles routes
-                ...AccountRoutes,
                 ...ErrorRoutes
             ]
-        },
-        {
-            path: '/admin',
-            component: () => import('../layouts/LayoutDashboard.vue'),
-            children: [...AdminRoutes],
-            meta: {
-                title: 'ADMIN_PANEL'
-            }
         }
     ]
 })

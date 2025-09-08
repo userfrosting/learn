@@ -23,8 +23,8 @@ if (PHP_SAPI == 'cli-server') {
     $_SERVER['SCRIPT_NAME'] = '/index.php';
 }
 
-use UserFrosting\App\MyApp;
+use UserFrosting\Learn\Recipe;
 use UserFrosting\UserFrosting;
 
-$uf = new UserFrosting(MyApp::class);
+$uf = new UserFrosting(Recipe::class);
 $uf->run();

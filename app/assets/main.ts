@@ -18,14 +18,6 @@ app.use(router)
 import CoreSprinkle from '@userfrosting/sprinkle-core'
 app.use(CoreSprinkle)
 
-/** Setup Account Sprinkle */
-import AccountSprinkle from '@userfrosting/sprinkle-account'
-app.use(AccountSprinkle, { router })
-
-/** Setup Admin Sprinkle */
-import AdminSprinkle from '@userfrosting/sprinkle-admin'
-app.use(AdminSprinkle)
-
 /** Setup Theme */
 import '@userfrosting/theme-pink-cupcake/less/main.less'
 import PinkCupcake from '@userfrosting/theme-pink-cupcake'

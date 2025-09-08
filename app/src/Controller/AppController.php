@@ -8,7 +8,7 @@
  * @license   https://github.com/userfrosting/UserFrosting/blob/master/LICENSE.md (MIT License)
  */
 
-namespace UserFrosting\App\Controller;
+namespace UserFrosting\Learn\Controller;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;

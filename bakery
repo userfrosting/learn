@@ -26,11 +26,11 @@ if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
-use UserFrosting\App\MyApp;
+use UserFrosting\Learn\Recipe;
 use UserFrosting\Bakery\Bakery;
 
 /**
  * Get and run CLI App
  */
-$bakery = new Bakery(MyApp::class);
+$bakery = new Bakery(Recipe::class);
 $bakery->run();

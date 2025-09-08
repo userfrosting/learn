@@ -1,41 +1,24 @@
 {
-    "name": "userfrosting/userfrosting",
+    "name": "userfrosting/learn",
     "type": "project",
-    "description": "A secure, modern user management system for PHP.",
+    "description": "The documentation website for UserFrosting.",
     "keywords": [
-        "php user management",
         "userfrosting",
-        "php",
-        "login",
-        "web-framework",
-        "user-management",
-        "login-system",
-        "login"
+        "documentation"
     ],
     "homepage": "https://github.com/userfrosting/UserFrosting",
     "license": "MIT",
     "authors": [
         {
-            "name": "Alexander Weissman",
-            "homepage": "https://alexanderweissman.com"
-        },
-        {
             "name": "Louis Charette",
             "homepage": "https://bbqsoftwares.com"
-        },
-        {
-            "name": "Jordan Mele",
-            "email": "SiliconSoldier@outlook.com.au",
-            "homepage": "https://djmm.me"
         }
     ],
     "require": {
         "php": "^8.1",
         "ext-gd": "*",
         "userfrosting/framework": "^6.0",
-        "userfrosting/sprinkle-core": "^6.0",
-        "userfrosting/sprinkle-account": "^6.0",
-        "userfrosting/sprinkle-admin": "^6.0"
+        "userfrosting/sprinkle-core": "^6.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -53,12 +36,12 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "UserFrosting\\App\\": "app/src"
+            "UserFrosting\\Learn\\": "app/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "UserFrosting\\Tests\\App\\": "app/tests/"
+            "UserFrosting\\Tests\\Learn\\": "app/tests/"
         }
     },
     "scripts": {

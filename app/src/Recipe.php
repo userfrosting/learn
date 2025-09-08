@@ -8,7 +8,7 @@
  * @license   https://github.com/userfrosting/UserFrosting/blob/master/LICENSE.md (MIT License)
  */
 
-namespace UserFrosting\App;
+namespace UserFrosting\Learn;
 
 use UserFrosting\App\Bakery\HelloCommand;
 use UserFrosting\Sprinkle\Account\Account;
@@ -22,7 +22,7 @@ use UserFrosting\Sprinkle\SprinkleRecipe;
  *
  * @see https://learn.userfrosting.com/sprinkles/recipe
  */
-class MyApp implements
+class Recipe implements
     SprinkleRecipe,
     BakeryRecipe
 {
@@ -35,7 +35,7 @@ class MyApp implements
      */
     public function getName(): string
     {
-        return 'My Application';
+        return 'Learn';
     }
 
     /**
@@ -63,9 +63,7 @@ class MyApp implements
     public function getSprinkles(): array
     {
         return [
-            Core::class,
-            Account::class,
-            Admin::class,
+            Core::class
         ];
     }
 
@@ -108,8 +106,6 @@ class MyApp implements
      */
     public function getBakeryCommands(): array
     {
-        return [
-            HelloCommand::class,
-        ];
+        return [];
     }
 }

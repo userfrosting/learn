@@ -15,8 +15,4 @@ declare(strict_types=1);
  */
 return [
     'ABOUT' => 'About',
-
-    'READ_MORE' => 'Read more',
-
-    'WELCOME_TO' => 'Welcome to {{title}}, {{user}}!',
 ];

@@ -1,11 +1,9 @@
 {
-    "name": "userfrosting",
-    "version": "6.0.0-beta.4",
+    "name": "learn",
+    "version": "2.0.0",
     "private": true,
     "type": "module",
     "dependencies": {
-        "@userfrosting/sprinkle-account": "^6.0.0-beta",
-        "@userfrosting/sprinkle-admin": "^6.0.0-beta",
         "@userfrosting/sprinkle-core": "^6.0.0-beta",
         "@userfrosting/theme-pink-cupcake": "^6.0.0-beta",
         "axios": "^1.8.2",
@@ -48,10 +46,6 @@
         "webpack-notifier": "^1.15.0"
     },
     "scripts": {
-        "webpack:server": "encore dev-server --port 9000",
-        "webpack:dev": "encore dev",
-        "webpack:watch": "encore dev --watch",
-        "webpack:build": "encore production --progress",
         "vite:dev": "vite",
         "vite:build": "vue-tsc && vite build",
         "test": "vitest",
