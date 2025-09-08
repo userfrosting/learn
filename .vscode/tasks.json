@@ -1,0 +1,142 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        /**
+         * Main task - Serve the UserFrosting instance for development
+         */
+        {
+            "label": "==> Serve",
+            "dependsOn": [
+                "Bakery - Serve",
+                "Frontend - Vite Dev"
+            ],
+            "problemMatcher": []
+        },
+
+        /**
+         * NPM Tasks
+         */
+        {
+            "label": "Frontend - npm install",
+            "type": "shell",
+            "command": "npm install"
+        },
+        {
+            "label": "Frontend - npm update",
+            "type": "shell",
+            "command": "npm update"
+        },
+        {
+            "label": "Frontend - Vite Dev",
+            "type": "shell",
+            "command": "npm run vite:dev"
+        },
+        {
+            "label": "Frontend - Vite Build",
+            "type": "shell",
+            "command": "npm run vite:build"
+        },
+        {
+            "label": "Frontend - Format Code",
+            "type": "shell",
+            "command": "npm run format"
+        },
+        {
+            "label": "Frontend - Type Check",
+            "type": "shell",
+            "command": "npm run typecheck"
+        },
+        {
+            "label": "Frontend - Eslint",
+            "type": "shell",
+            "command": "npm run lint"
+        },
+        {
+            "label": "Frontend - Tests",
+            "type": "shell",
+            "command": "npm run test"
+        },
+        {
+            "label": "Frontend - Coverage",
+            "type": "shell",
+            "command": "npm run coverage"
+        },
+        {
+            "label": "Frontend - webpack:dev",
+            "type": "shell",
+            "options": {},
+            "command": "npm run webpack:dev",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "Frontend - webpack:server (HMR)",
+            "type": "shell",
+            "options": {},
+            "command": "npm run webpack:server",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "Frontend - webpack:watch",
+            "type": "shell",
+            "options": {},
+            "command": "npm run webpack:watch",
+            "problemMatcher": []
+        },
+        {
+            "label": "Frontend - webpack:build",
+            "type": "shell",
+            "options": {},
+            "command": "npm run webpack:build",
+            "problemMatcher": []
+        },
+
+        /**
+         * PHP Tasks
+         */
+        {
+            "label": "Bakery - Bake",
+            "type": "shell",
+            "options": {},
+            "command": "php bakery bake",
+            "problemMatcher": [],
+        },
+        {
+            "label": "Bakery - Serve",
+            "type": "shell",
+            "command": "php bakery serve"
+        },
+        {
+            "label": "Backend - Composer Update",
+            "type": "shell",
+            "command": "composer update"
+        },
+        {
+            "label": "Backend - PHPUnit",
+            "type": "shell",
+            "options": {
+                "env": {
+                    "XDEBUG_CONFIG": "idekey=VSCODE"
+                }
+            },
+            "command": "printf '\\33c\\e[3J' && vendor/bin/phpunit",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Backend - PHP CS Fixer",
+            "type": "shell",
+            "command": "vendor/bin/php-cs-fixer fix"
+        },
+        {
+            "label": "Backend - PHPStan",
+            "type": "shell",
+            "command": "vendor/bin/phpstan analyse"
+        },
+    ]
+}
