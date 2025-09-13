@@ -33,6 +33,6 @@ class AppController
      */
     public function pageIndex(Response $response, Twig $view): Response
     {
-        return $view->render($response, 'pages/spa.html.twig');
+        return $view->render($response, 'pages/doc.html.twig');
     }
 }

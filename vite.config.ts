@@ -1,17 +1,8 @@
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueDevTools from 'vite-plugin-vue-devtools'
-import ViteYaml from '@modyfi/vite-plugin-yaml'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [
-        vue(),
-        ViteYaml(),
-        vueDevTools({
-            appendTo: 'app/assets/main.ts'
-        })
-    ],
+    plugins: [],
     server: {
         strictPort: true,
         port: 3000,

@@ -1,0 +1,12 @@
+{% import "macros/navbar.html.twig" as navbar %}
+
+{{ navbar.link('Features', 'https://www.userfrosting.com/features') }}
+{{ navbar.link('Demo', 'https://demo.userfrosting.com/') }}
+{{ navbar.link('Docs', '', true) }}
+{{ navbar.link('Forums', 'https://github.com/orgs/userfrosting/discussions') }}
+{{ navbar.link('Chat', 'https://chat.userfrosting.com/') }}
+{{ navbar.link('Github', 'https://github.com/userfrosting') }}
+{{ navbar.link('Donate', 'https://www.userfrosting.com/donate') }}
+{{ navbar.dropdown('6.0', {
+    '5.1': '/5.1',
+}) }}

@@ -1,0 +1,18 @@
+{% macro link(label, href = '#', active = false) %}
+    <li class="{% if active %}uk-active{% endif %}">
+        <a href="{{ href }}">{{ label }}</a>
+    </li>
+{% endmacro %}
+
+{% macro dropdown(label, items = []) %}
+    <li>
+        <a href="#">{{ label }} <span uk-navbar-parent-icon></span></a>
+        <div class="uk-navbar-dropdown" uk-dropdown="offset: 0px">
+            <ul class="uk-nav uk-navbar-dropdown-nav" data-test="slot">
+                {% for label, href in items %}
+                    {{ _self.link(label, href) }}
+                {% endfor %}
+            </ul>
+        </div>
+    </li>
+{% endmacro %}
