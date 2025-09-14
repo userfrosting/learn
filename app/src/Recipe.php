@@ -10,7 +10,16 @@
 
 namespace UserFrosting\Learn;
 
+use UserFrosting\Event\EventListenerRecipe;
+use UserFrosting\Learn\Bakery\BakeCommandListener;
+use UserFrosting\Learn\Bakery\DebugCommandListener;
+use UserFrosting\Learn\Bakery\DebugVerboseCommandListener;
+use UserFrosting\Learn\Bakery\SetupCommandListener;
 use UserFrosting\Learn\Twig\Extensions\VersionExtension;
+use UserFrosting\Sprinkle\Core\Bakery\Event\BakeCommandEvent;
+use UserFrosting\Sprinkle\Core\Bakery\Event\DebugCommandEvent;
+use UserFrosting\Sprinkle\Core\Bakery\Event\DebugVerboseCommandEvent;
+use UserFrosting\Sprinkle\Core\Bakery\Event\SetupCommandEvent;
 use UserFrosting\Sprinkle\Core\Core;
 use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\TwigExtensionRecipe;
 use UserFrosting\Sprinkle\SprinkleRecipe;
@@ -22,7 +31,8 @@ use UserFrosting\Sprinkle\SprinkleRecipe;
  */
 class Recipe implements
     SprinkleRecipe,
-    TwigExtensionRecipe
+    TwigExtensionRecipe,
+    EventListenerRecipe
 {
     /**
      * Return the Sprinkle name.
@@ -61,7 +71,8 @@ class Recipe implements
     public function getSprinkles(): array
     {
         return [
-            Core::class
+            // Use our custom Core recipe
+            CoreRecipe::class
         ];
     }
 
@@ -102,6 +113,27 @@ class Recipe implements
     {
         return [
             VersionExtension::class
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getEventListeners(): array
+    {
+        return [
+            BakeCommandEvent::class       => [
+                BakeCommandListener::class,
+            ],
+            DebugVerboseCommandEvent::class => [
+                DebugVerboseCommandListener::class,
+            ],
+            DebugCommandEvent::class        => [
+                DebugCommandListener::class,
+            ],
+            SetupCommandEvent::class        => [
+                SetupCommandListener::class,
+            ],
         ];
     }
 }
