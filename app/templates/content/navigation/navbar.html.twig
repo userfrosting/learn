@@ -7,6 +7,4 @@
 {{ navbar.link('Chat', 'https://chat.userfrosting.com/') }}
 {{ navbar.link('Github', 'https://github.com/userfrosting') }}
 {{ navbar.link('Donate', 'https://www.userfrosting.com/donate') }}
-{{ navbar.dropdown('6.0', {
-    '5.1': '/5.1',
-}) }}
+{{ navbar.dropdown(versions.latest, versions.available) }}

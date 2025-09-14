@@ -52,5 +52,13 @@ return [
             'publisher' => '',
             'public'    => null,
         ],
+        'versions' => [
+            'available' => [
+                '6.0' => '6.0 Beta',
+                '5.1' => '5.1',
+                '5.0' => '5.0',
+            ],
+            'latest' => '6.0',
+        ],
     ],
 ];

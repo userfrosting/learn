@@ -10,11 +10,9 @@
 
 namespace UserFrosting\Learn;
 
-use UserFrosting\App\Bakery\HelloCommand;
-use UserFrosting\Sprinkle\Account\Account;
-use UserFrosting\Sprinkle\Admin\Admin;
-use UserFrosting\Sprinkle\BakeryRecipe;
+use UserFrosting\Learn\Twig\Extensions\VersionExtension;
 use UserFrosting\Sprinkle\Core\Core;
+use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\TwigExtensionRecipe;
 use UserFrosting\Sprinkle\SprinkleRecipe;
 
 /**
@@ -24,7 +22,7 @@ use UserFrosting\Sprinkle\SprinkleRecipe;
  */
 class Recipe implements
     SprinkleRecipe,
-    BakeryRecipe
+    TwigExtensionRecipe
 {
     /**
      * Return the Sprinkle name.
@@ -96,16 +94,14 @@ class Recipe implements
     }
 
     /**
-     * Return an array of all registered Bakery Commands.
+     * Return an array of all registered Twig Extensions.
      *
-     * @see https://learn.userfrosting.com/sprinkles/recipe#bakeryrecipe
-     *
-     * @return class-string<\Symfony\Component\Console\Command\Command>[]
-     *
-     * @codeCoverageIgnore
+     * {@inheritDoc}
      */
-    public function getBakeryCommands(): array
+    public function getTwigExtensions(): array
     {
-        return [];
+        return [
+            VersionExtension::class
+        ];
     }
 }
