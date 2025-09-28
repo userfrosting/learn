@@ -1,12 +1,25 @@
 import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueDevTools from 'vite-plugin-vue-devtools'
+import ViteYaml from '@modyfi/vite-plugin-yaml'
+
+// Get vite port from env, default to 3000
+const vitePort = parseInt(process.env.VITE_PORT || '5173', 10)
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [],
+    plugins: [
+        vue(),
+        ViteYaml(),
+        vueDevTools({
+            appendTo: 'app/assets/main.ts'
+        })
+    ],
     server: {
+        host: true, // Allows external access (needed for Docker)
         strictPort: true,
-        port: 3000,
-        origin: 'http://localhost:3000'
+        port: vitePort,
+        origin: `http://localhost:${vitePort}`,
     },
     root: 'app/assets/',
     base: '/assets/',
