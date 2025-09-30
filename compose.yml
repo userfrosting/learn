@@ -22,7 +22,6 @@ services:
       - .:/app
     depends_on:
       - app
-      - mailpit
     networks:
       - frontend
       - backend
@@ -40,29 +39,6 @@ services:
       - .:/app
     networks:
       - frontend
-  mysql:
-    restart: unless-stopped
-    tty: true
-    build:
-      context: ./docker/mysql
-    env_file:
-      - ./app/.env
-    ports:
-      - "8503:3306"
-    volumes:
-      - userfrosting-db:/var/lib/mysql
-    networks:
-      - backend
-  mailpit:
-    image: 'axllent/mailpit:latest'
-    ports:
-      - '1025:1025'
-      - '8025:8025'
-    networks:
-      - backend
-volumes:
-  userfrosting-db:
-    driver: local
 networks:
   frontend:
   backend:

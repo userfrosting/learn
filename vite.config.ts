@@ -49,7 +49,7 @@ export default defineConfig({
     // Also, treat all sprinkles as source code (not prebuilt) and tell Vite 
     // not to prebundle them.
     optimizeDeps: {
-        include: ['uikit', 'uikit/dist/js/uikit-icons', 'limax'],
+        include: ['uikit', 'uikit/dist/js/uikit-icons'],
         exclude: [
             '@userfrosting/sprinkle-core',
             '@userfrosting/sprinkle-account',
