@@ -122,7 +122,7 @@
                     "XDEBUG_CONFIG": "idekey=VSCODE"
                 }
             },
-            "command": "printf '\\33c\\e[3J' && vendor/bin/phpunit --filter='PagesDirectoryTest'",
+            "command": "printf '\\33c\\e[3J' && vendor/bin/phpunit",
             "group": {
                 "kind": "build",
                 "isDefault": true

@@ -1,0 +1,88 @@
+<?php
+
+/*
+ * UserFrosting (http://www.userfrosting.com)
+ *
+ * @link      https://github.com/userfrosting/UserFrosting
+ * @copyright Copyright (c) 2013-2024 Alexander Weissman & Louis Charette
+ * @license   https://github.com/userfrosting/UserFrosting/blob/master/LICENSE.md (MIT License)
+ */
+
+namespace UserFrosting\Tests\Learn\Documentation;
+
+use UserFrosting\Config\Config;
+use UserFrosting\Learn\Documentation\PagesDirectory;
+use UserFrosting\Learn\PagesManager;
+use UserFrosting\Learn\Recipe;
+use UserFrosting\Testing\TestCase;
+use UserFrosting\UniformResourceLocator\ResourceLocatorInterface;
+use UserFrosting\UniformResourceLocator\ResourceStream;
+
+/**
+ * Tests for PagesManager.
+ */
+class PagesDirectoryTest extends TestCase
+{
+    protected string $mainSprinkle = Recipe::class;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        // Load test config to force the default version
+        /** @var Config $config */
+        $config = $this->ci->get(Config::class);
+        $config->set('learn.documentation.default_version', '6.0');
+
+        // Use the test pages directory
+        /** @var ResourceLocatorInterface $locator */
+        $locator = $this->ci->get(ResourceLocatorInterface::class);
+        $locator->removeStream('pages');
+        $locator->addStream(new ResourceStream('pages', shared: true, readonly: true, path: __DIR__ . '/../pages'));
+
+        // Make sure setup is ok
+        $this->assertCount(9, $locator->listResources('pages://'));
+    }
+
+    public function testGetFiles(): void
+    {
+        $pagesManager = $this->ci->get(PagesDirectory::class);
+        $files = $pagesManager->getTree();
+
+        // Assert tree structure contains 3 top level files
+        $this->assertCount(3, $files);
+        $this->assertSame([
+            'first',
+            'second',
+            'third'
+        ], array_values(array_map(fn ($p) => $p->getSlug(), (array) $files)));
+        $this->assertSame(['', '', ''], array_values(array_map(fn ($p) => $p->getParentSlug(), (array) $files)));
+
+        // Assert children count of each top-level file
+        $this->assertCount(0, $files[0]->children);
+        $this->assertCount(2, $files[1]->children);
+        $this->assertCount(2, $files[2]->children);
+
+        // Check children of "second"
+        // It has two children: "second/child1" and "second/child2", that don't
+        // have children of their own
+        $secondChildren = $files[1]->children;
+        $this->assertCount(2, $secondChildren);
+        $this->assertCount(0, $secondChildren[0]->children);
+        $this->assertCount(0, $secondChildren[1]->children);
+        $this->assertSame('second/alpha', $secondChildren[0]->getSlug());
+        $this->assertSame('second/beta', $secondChildren[1]->getSlug());
+
+        // Check children of "third"
+        // It has two children: "third/foo" and "third/bar". foo has two children
+        // of its own: "third/foo/grandchild1" and "third/foo/grandchild2"
+        $thirdChildren = $files[2]->children;
+        $this->assertCount(2, $thirdChildren);
+        $this->assertSame('third/foo', $thirdChildren[0]->getSlug());
+        $this->assertSame('third/bar', $thirdChildren[1]->getSlug());
+        $this->assertCount(2, $thirdChildren[0]->children);
+        $this->assertCount(0, $thirdChildren[1]->children);
+        $this->assertSame('third/foo/grandchild1', $thirdChildren[0]->children[0]->getSlug());
+        $this->assertSame('third/foo/grandchild2', $thirdChildren[0]->children[1]->getSlug());
+    }
+}

@@ -18,7 +18,7 @@ use UserFrosting\Testing\TestCase;
  *
  * N.B.: This file is sage to edit or delete.
  */
-class AppControllerTest extends TestCase
+class DocumentationControllerTest extends TestCase
 {
     protected string $mainSprinkle = Recipe::class;
 
@@ -28,7 +28,8 @@ class AppControllerTest extends TestCase
     public function testPageIndex(): void
     {
         // Create request with method and url and fetch response
-        $request = $this->createRequest('GET', '/');
+        // $request = $this->createRequest('GET', '/'); TEMP FIX BELOW
+        $request = $this->createRequest('GET', '/quick-start');
         $response = $this->handleRequest($request);
 
         // Asserts

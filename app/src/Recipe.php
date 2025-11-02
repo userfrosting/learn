@@ -16,6 +16,7 @@ use UserFrosting\Learn\Bakery\DebugCommandListener;
 use UserFrosting\Learn\Bakery\DebugVerboseCommandListener;
 use UserFrosting\Learn\Bakery\SetupCommandListener;
 use UserFrosting\Learn\Listeners\ResourceLocatorInitiated;
+use UserFrosting\Learn\Twig\Extensions\FileTreeExtension;
 use UserFrosting\Learn\Twig\Extensions\VersionExtension;
 use UserFrosting\Sprinkle\Core\Bakery\Event\BakeCommandEvent;
 use UserFrosting\Sprinkle\Core\Bakery\Event\DebugCommandEvent;
@@ -112,6 +113,7 @@ class Recipe implements
     public function getTwigExtensions(): array
     {
         return [
+            FileTreeExtension::class,
             VersionExtension::class
         ];
     }

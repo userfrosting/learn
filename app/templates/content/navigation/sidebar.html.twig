@@ -1,6 +1,6 @@
 {% import "macros/sidebar.html.twig" as sidebar %}
 
-{{ sidebar.label('Contact') }}
-{{ sidebar.link('Home', '/') }}
-{{ sidebar.link('About', '/about') }}
-{{ sidebar.link('Contact', '/contact') }}
+<!-- TODO : Add Version (Not available in parent of doc.html.twig) -->
+{% for item in pagesTree() %}
+    {{ sidebar.link(item.getSlug(), item.getRoute()) }}
+{% endfor %}
