@@ -31,7 +31,7 @@ class VersionValidator
      */
     public function isValid(?string $version): bool
     {
-        if ($version === null) {
+        if ($version === null || $version === '') {
             $version = $this->getLatestVersion();
         }
 
@@ -41,13 +41,13 @@ class VersionValidator
     /**
      * Get the Version object for the given version string.
      *
-     * @param  string|null              $version
+     * @param  string|null              $version Null or empty string to get the latest version
      * @throws InvalidArgumentException
      * @return Version
      */
     public function getVersion(?string $version): Version
     {
-        if ($version === null) {
+        if ($version === null || $version === '') {
             $version = $this->getLatestVersion();
         }
 

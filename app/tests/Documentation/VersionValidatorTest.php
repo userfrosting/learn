@@ -41,20 +41,14 @@ class VersionValidatorTest extends TestCase
         $validator = new VersionValidator($this->configMock);
         $this->assertTrue($validator->isValid('1.0'));
         $this->assertTrue($validator->isValid('2.0'));
-        $this->assertTrue($validator->isValid(null));
+        $this->assertTrue($validator->isValid(null)); // Alias for latest
+        $this->assertTrue($validator->isValid('')); // Alias for latest
     }
 
     public function testIsValidReturnsFalseForInvalidVersion(): void
     {
         $validator = new VersionValidator($this->configMock);
         $this->assertFalse($validator->isValid('3.0'));
-        $this->assertFalse($validator->isValid(''));
-    }
-
-    public function testIsValidWithNullUsesLatest(): void
-    {
-        $validator = new VersionValidator($this->configMock);
-        $this->assertTrue($validator->isValid(null));
     }
 
     public function testGetVersionReturnsVersionObject(): void
@@ -75,6 +69,15 @@ class VersionValidatorTest extends TestCase
         $this->assertEquals('Version 2.0', $version->label);
         $this->assertTrue($version->latest);
         $this->assertEquals('', $version->uri());
+    }
+
+    public function testGetVersionWithEmptyStringReturnsLatest(): void
+    {
+        $validator = new VersionValidator($this->configMock);
+        $version = $validator->getVersion('');
+        $this->assertEquals('2.0', $version->id);
+        $this->assertEquals('Version 2.0', $version->label);
+        $this->assertTrue($version->latest);
     }
 
     public function testGetVersionWithNullReturnsLatest(): void

@@ -1,34 +1,30 @@
+{% macro tree(items) %}
+    {% for item in items %}
+        {% if item.children is not empty %}
+            {{ _self.dropdown(item) }}
+        {% else %}
+            {{ _self.link(item.getTitle(), item.getRoute()) }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
 {% macro link(label, href = '#', active = false) %}
     <li>
-        {#  <font-awesome-icon
-            class="uk-margin-small-right"
-            icon="truck"
-            fixed-width /> #}
         <a href="{{ href }}">{{ label }}</a>
     </li>
 {% endmacro %}
 
-<--{% macro dropdown(label, items = []) %}
-    <li class="uk-parent" :class="{ 'uk-open': isActive }">
-        <a v-bind="$attrs">
-            <span
-                v-if="icon"
-                :data-uk-icon="icon"
-                class="uk-margin-small-right"
-                data-test="icon"></span>
-            <font-awesome-icon
-                v-if="faIcon"
-                class="uk-margin-small-right"
-                :icon="faIcon"
-                data-test="faIcon" />
-            <slot name="label">{{ label }}</slot>
-            <span uk-nav-parent-icon v-if="!hideCaret" data-test="caret"></span>
+{% macro dropdown(item) %}
+    <li class="uk-parent">
+        <a href="{{ item.getRoute() }}">
+            {{ item.getTitle() }}
+            <span uk-nav-parent-icon></span>
         </a>
-        <ul class="uk-nav-sub" data-test="slot">
-            <slot></slot>
+        <ul class="uk-nav-sub">
+            {{ _self.tree(item.children) }}
         </ul>
     </li>
-{% endmacro %}-->
+{% endmacro %}
 
 {% macro label(label) %}
     <li class="uk-nav-header">{{ label }}</li>

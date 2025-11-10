@@ -11,7 +11,6 @@
 namespace UserFrosting\Learn\Documentation;
 
 use UserFrosting\Config\Config;
-use UserFrosting\Sprinkle\Core\Util\RouteParserInterface;
 use UserFrosting\UniformResourceLocator\ResourceInterface;
 use UserFrosting\UniformResourceLocator\ResourceLocatorInterface;
 
@@ -23,7 +22,7 @@ class PagesDirectory
     public function __construct(
         protected ResourceLocatorInterface $locator,
         protected VersionValidator $versionValidator,
-        protected RouteParserInterface $router,
+        protected PageFactory $pageFactory,
     ) {
     }
 
@@ -77,11 +76,33 @@ class PagesDirectory
         return $children;
     }
 
-    // TODO : getPage
+    /**
+     * Get a single page by version and slug.
+     *
+     * @param string|null $version
+     * @param string      $slug
+     *
+     *
+     * @throws PageNotFoundException
+     * @return PageResource
+     */
+    public function getPage(?string $version = null, string $slug = ''): PageResource
+    {
+        // Get version object (throws exception if invalid)
+        $versionObj = $this->versionValidator->getVersion($version);
 
-    // TODO : Get page by slug and version
+        // Get all pages for the version
+        $pages = $this->getPages($versionObj);
 
-    // TODO : Page not found exception
+        // Find the page with the matching slug
+        foreach ($pages as $page) {
+            if ($page->getSlug() === $slug) {
+                return $page;
+            }
+        }
+
+        throw new PageNotFoundException("Page not found: {$slug} (version: {$versionObj->id})");
+    }
 
     /**
      * Get a list of all the files found across all active sprinkles
@@ -93,16 +114,9 @@ class PagesDirectory
         // Get all pages
         $resources = $this->locator->listResources("pages://{$version->id}/");
 
-        // Convert each to our custom "PageResource" objects
+        // Convert each to our custom "PageResource" objects using the factory
         $resources = array_map(
-            fn (ResourceInterface $res) => new PageResource(
-                $version,
-                $this->router,
-                $res->getStream(),
-                $res->getLocation(),
-                $res->getPath(),
-                $res->getLocatorBasePath()
-            ),
+            fn (ResourceInterface $res) => $this->pageFactory->createFromResource($version, $res),
             $resources
         );
 

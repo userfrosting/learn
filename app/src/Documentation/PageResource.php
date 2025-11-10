@@ -10,7 +10,7 @@
 
 namespace UserFrosting\Learn\Documentation;
 
-use UserFrosting\Sprinkle\Core\Util\RouteParserInterface;
+use UserFrosting\Sprinkle\Core\Util\MarkdownFile;
 use UserFrosting\UniformResourceLocator\Resource;
 use UserFrosting\UniformResourceLocator\ResourceLocationInterface;
 use UserFrosting\UniformResourceLocator\ResourceStreamInterface;
@@ -26,19 +26,21 @@ class PageResource extends Resource
 
     /**
      * @param Version                        $version
-     * @param RouteParserInterface           $router
      * @param ResourceStreamInterface        $stream
      * @param null|ResourceLocationInterface $location
      * @param string                         $path
      * @param string                         $locatorBasePath
+     * @param MarkdownFile                   $markdownFile
+     * @param string                         $route
      */
     public function __construct(
         protected readonly Version $version,
-        protected RouteParserInterface $router,
         protected ResourceStreamInterface $stream,
         protected ?ResourceLocationInterface $location,
         protected string $path,
-        protected string $locatorBasePath = ''
+        protected string $locatorBasePath,
+        protected readonly MarkdownFile $markdownFile,
+        protected string $route = ''
     ) {
         parent::__construct($stream, $location, $path, $locatorBasePath);
     }
@@ -46,26 +48,22 @@ class PageResource extends Resource
     /**
      * Get the route to this page.
      *
-     * If the version is the latest, we use the unversioned route.
-     * Otherwise, we use the versioned route.
-     *
      * @return string The route to this page
      */
     public function getRoute(): string
     {
-        if ($this->version->latest) {
-            return $this->router->urlFor('documentation', ['path' => $this->getSlug()]);
-        }
-
-        return $this->router->urlFor('documentation.versioned', [
-            'version' => $this->version->id,
-            'path'    => $this->getSlug()
-        ]);
+        return $this->route;
     }
 
-    // TODO : Add label method to get the page title from the markdown file front-matter
-
-    // TODO : Make children property official with getter/setter
+    /**
+     * Set the route for this page.
+     *
+     * @param string $route The route to set
+     */
+    public function setRoute(string $route): void
+    {
+        $this->route = $route;
+    }
 
     /**
      * Return the parent of a given page slug.
@@ -105,5 +103,23 @@ class PageResource extends Resource
 
         // Glue the fragments back together
         return implode('/', $dirFragments);
+    }
+
+    public function getContent(): string
+    {
+        return $this->markdownFile->content;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getFrontMatter(): array
+    {
+        return $this->markdownFile->frontMatter;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->markdownFile->frontMatter['title'] ?? $this->getSlug();
     }
 }

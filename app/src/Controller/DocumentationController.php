@@ -12,12 +12,18 @@ namespace UserFrosting\Learn\Controller;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
+use UserFrosting\Learn\Documentation\PagesDirectory;
 
 /**
  * Documentation App Controller
  */
 class DocumentationController
 {
+    public function __construct(
+        protected PagesDirectory $pagesDirectory,
+    ) {
+    }
+
     /**
      * Render the documentation page.
      * Request type: GET.
@@ -42,11 +48,12 @@ class DocumentationController
      */
     public function pageVersioned(string $version, string $path, Response $response, Twig $view): Response
     {
-        // TODO : Load the actual page content from the PagesDirectory service
+        $page = $this->pagesDirectory->getPage($version, $path);
 
         return $view->render($response, 'pages/doc.html.twig', [
             'version' => $version,
-            'path'    => $path
+            'path'    => $path,
+            'page'    => $page,
         ]);
     }
 }
