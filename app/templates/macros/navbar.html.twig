@@ -4,13 +4,13 @@
     </li>
 {% endmacro %}
 
-{% macro dropdown(label, items = []) %}
+{% macro dropdown(active, items = []) %}
     <li>
-        <a href="#">{{ label }} <span uk-navbar-parent-icon></span></a>
+        <a href="#">{{ active }} <span uk-navbar-parent-icon></span></a>
         <div class="uk-navbar-dropdown" uk-dropdown="offset: 0px">
             <ul class="uk-nav uk-navbar-dropdown-nav" data-test="slot">
                 {% for label, href in items %}
-                    {{ _self.link(label, href) }}
+                    {{ _self.link(label, href, label == active) }}
                 {% endfor %}
             </ul>
         </div>

@@ -122,4 +122,9 @@ class PageResource extends Resource
     {
         return $this->markdownFile->frontMatter['title'] ?? $this->getSlug();
     }
+
+    public function getVersion(): Version
+    {
+        return $this->version;
+    }
 }

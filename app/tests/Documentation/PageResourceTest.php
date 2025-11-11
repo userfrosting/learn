@@ -65,6 +65,7 @@ class PageResourceTest extends TestCase
         $this->assertSame('foo bar', $resource->getContent());
         $this->assertSame(['title' => 'Foo Bar'], $resource->getFrontMatter());
         $this->assertSame('Foo Bar', $resource->getTitle());
+        $this->assertSame($version, $resource->getVersion());
 
         // Set a new route and check it
         $newRoute = $expectedRoute . '/new';

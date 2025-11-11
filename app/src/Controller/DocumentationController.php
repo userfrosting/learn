@@ -51,9 +51,11 @@ class DocumentationController
         $page = $this->pagesDirectory->getPage($version, $path);
 
         return $view->render($response, 'pages/doc.html.twig', [
-            'version' => $version,
-            'path'    => $path,
-            'page'    => $page,
+            'version'  => $page->getVersion(),
+            'path'     => $path,
+            'page'     => $page,
+            'menu'     => $this->pagesDirectory->getTree($page->getVersion()->id),
+            'versions' => $this->pagesDirectory->getAlternateVersions($page),
         ]);
     }
 }

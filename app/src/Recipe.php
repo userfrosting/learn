@@ -16,15 +16,12 @@ use UserFrosting\Learn\Bakery\DebugCommandListener;
 use UserFrosting\Learn\Bakery\DebugVerboseCommandListener;
 use UserFrosting\Learn\Bakery\SetupCommandListener;
 use UserFrosting\Learn\Listeners\ResourceLocatorInitiated;
-use UserFrosting\Learn\Twig\Extensions\FileTreeExtension;
-use UserFrosting\Learn\Twig\Extensions\VersionExtension;
 use UserFrosting\Sprinkle\Core\Bakery\Event\BakeCommandEvent;
 use UserFrosting\Sprinkle\Core\Bakery\Event\DebugCommandEvent;
 use UserFrosting\Sprinkle\Core\Bakery\Event\DebugVerboseCommandEvent;
 use UserFrosting\Sprinkle\Core\Bakery\Event\SetupCommandEvent;
 use UserFrosting\Sprinkle\Core\Core;
 use UserFrosting\Sprinkle\Core\Event\ResourceLocatorInitiatedEvent;
-use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\TwigExtensionRecipe;
 use UserFrosting\Sprinkle\SprinkleRecipe;
 
 /**
@@ -34,7 +31,6 @@ use UserFrosting\Sprinkle\SprinkleRecipe;
  */
 class Recipe implements
     SprinkleRecipe,
-    TwigExtensionRecipe,
     EventListenerRecipe
 {
     /**
@@ -103,19 +99,6 @@ class Recipe implements
     public function getServices(): array
     {
         return [];
-    }
-
-    /**
-     * Return an array of all registered Twig Extensions.
-     *
-     * {@inheritDoc}
-     */
-    public function getTwigExtensions(): array
-    {
-        return [
-            FileTreeExtension::class,
-            VersionExtension::class
-        ];
     }
 
     /**

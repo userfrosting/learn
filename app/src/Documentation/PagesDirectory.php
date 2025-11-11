@@ -11,6 +11,7 @@
 namespace UserFrosting\Learn\Documentation;
 
 use UserFrosting\Config\Config;
+use UserFrosting\Sprinkle\Core\Util\RouteParserInterface;
 use UserFrosting\UniformResourceLocator\ResourceInterface;
 use UserFrosting\UniformResourceLocator\ResourceLocatorInterface;
 
@@ -23,6 +24,8 @@ class PagesDirectory
         protected ResourceLocatorInterface $locator,
         protected VersionValidator $versionValidator,
         protected PageFactory $pageFactory,
+        protected Config $config,
+        protected RouteParserInterface $router,
     ) {
     }
 
@@ -50,6 +53,31 @@ class PagesDirectory
         $tree = $this->getPagesChildren($pages);
 
         return $tree;
+    }
+
+    /**
+     * Return the list of all variables version, with the link to the provided
+     * page alternate versions.
+     *
+     * @param PageResource $page
+     *
+     * @return array<string, string> Array containing Label => Route
+     */
+    public function getAlternateVersions(PageResource $page): array
+    {
+        $available = $this->config->get('site.versions.available', []);
+
+        // $available contains a list of version => name
+        // We need for the dropdown to have name => path
+        $available = array_map(
+            fn ($v) => $this->router->urlFor('documentation.versioned', [
+                'version' => $v,
+                'path'    => $page->getSlug()
+            ]),
+            array_flip($available)
+        );
+
+        return $available;
     }
 
     /**
