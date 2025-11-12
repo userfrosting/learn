@@ -107,20 +107,27 @@ class PagesDirectory
     /**
      * Get a single page by version and slug.
      *
-     * @param string|null $version
      * @param string      $slug
+     * @param string|null $version
      *
      *
      * @throws PageNotFoundException
      * @return PageResource
      */
-    public function getPage(?string $version = null, string $slug = ''): PageResource
+    public function getPage(string $slug, ?string $version = null): PageResource
     {
         // Get version object (throws exception if invalid)
         $versionObj = $this->versionValidator->getVersion($version);
 
         // Get all pages for the version
         $pages = $this->getPages($versionObj);
+
+        // If page slug is empty, we want the "home" page, aka the first page found
+        if ($slug === '') {
+            return array_key_first($pages) !== null
+                ? $pages[array_key_first($pages)]
+                : throw new PageNotFoundException("Page not found: (version: {$versionObj->id})");
+        }
 
         // Find the page with the matching slug
         foreach ($pages as $page) {

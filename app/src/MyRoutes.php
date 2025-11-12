@@ -18,9 +18,8 @@ class MyRoutes implements RouteDefinitionInterface
 {
     public function register(App $app): void
     {
-        // TODO : Add to level for version (path is optional below, but throws an error because it can't invoke the class doesn't have a default value)
-        // TODO : Same for non-versioned top level route
-        $app->get('/{version:\d+\.\d+}/[{path:.*}]', [DocumentationController::class, 'pageVersioned'])->setName('documentation.versioned');
-        $app->get('/[{path:.*}]', [DocumentationController::class, 'page'])->setName('documentation');
+        // Route for versioned and non-versioned documentation pages
+        $app->get('/{version:\d+\.\d+}[/{path:.*}]', [DocumentationController::class, 'pageVersioned'])->setName('documentation.versioned');
+        $app->get('[/{path:.*}]', [DocumentationController::class, 'page'])->setName('documentation');
     }
 }

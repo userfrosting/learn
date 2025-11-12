@@ -48,7 +48,7 @@ class DocumentationController
      */
     public function pageVersioned(string $version, string $path, Response $response, Twig $view): Response
     {
-        $page = $this->pagesDirectory->getPage($version, $path);
+        $page = $this->pagesDirectory->getPage($path, $version);
 
         return $view->render($response, 'pages/doc.html.twig', [
             'version'  => $page->getVersion(),
