@@ -95,7 +95,7 @@ class PagesDirectory
 
         // For each child, get its own children
         foreach ($children as $child) {
-            $child->children = $this->getPagesChildren($pages, $child->getSlug());
+            $child->setChildren($this->getPagesChildren($pages, $child->getSlug()));
         }
 
         // Reset keys

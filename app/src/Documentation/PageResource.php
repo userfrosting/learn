@@ -20,9 +20,8 @@ use UserFrosting\UniformResourceLocator\ResourceStreamInterface;
  */
 class PageResource extends Resource
 {
-    // TODO : Make protected, and add getter and setter
     /** @var PageResource[] */
-    public ?array $children = null;
+    protected ?array $children = null;
 
     /**
      * @param Version                        $version
@@ -126,5 +125,25 @@ class PageResource extends Resource
     public function getVersion(): Version
     {
         return $this->version;
+    }
+
+    /**
+     * Get the children pages.
+     *
+     * @return PageResource[]|null
+     */
+    public function getChildren(): ?array
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set the children pages.
+     *
+     * @param PageResource[]|null $children
+     */
+    public function setChildren(?array $children): void
+    {
+        $this->children = $children;
     }
 }

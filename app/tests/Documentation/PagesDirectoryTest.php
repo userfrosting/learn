@@ -64,31 +64,31 @@ class PagesDirectoryTest extends TestCase
         $this->assertSame(['', '', ''], array_values(array_map(fn ($p) => $p->getParentSlug(), (array) $files)));
 
         // Assert children count of each top-level file
-        $this->assertCount(0, $files[0]->children);
-        $this->assertCount(2, $files[1]->children);
-        $this->assertCount(2, $files[2]->children);
+        $this->assertCount(0, $files[0]->getChildren());
+        $this->assertCount(2, $files[1]->getChildren());
+        $this->assertCount(2, $files[2]->getChildren());
 
         // Check children of "second"
         // It has two children: "second/child1" and "second/child2", that don't
         // have children of their own
-        $secondChildren = $files[1]->children;
+        $secondChildren = $files[1]->getChildren();
         $this->assertCount(2, $secondChildren);
-        $this->assertCount(0, $secondChildren[0]->children);
-        $this->assertCount(0, $secondChildren[1]->children);
+        $this->assertCount(0, $secondChildren[0]->getChildren());
+        $this->assertCount(0, $secondChildren[1]->getChildren());
         $this->assertSame('second/alpha', $secondChildren[0]->getSlug());
         $this->assertSame('second/beta', $secondChildren[1]->getSlug());
 
         // Check children of "third"
         // It has two children: "third/foo" and "third/bar". foo has two children
         // of its own: "third/foo/grandchild1" and "third/foo/grandchild2"
-        $thirdChildren = $files[2]->children;
+        $thirdChildren = $files[2]->getChildren();
         $this->assertCount(2, $thirdChildren);
         $this->assertSame('third/foo', $thirdChildren[0]->getSlug());
         $this->assertSame('third/bar', $thirdChildren[1]->getSlug());
-        $this->assertCount(2, $thirdChildren[0]->children);
-        $this->assertCount(0, $thirdChildren[1]->children);
-        $this->assertSame('third/foo/grandchild1', $thirdChildren[0]->children[0]->getSlug());
-        $this->assertSame('third/foo/grandchild2', $thirdChildren[0]->children[1]->getSlug());
+        $this->assertCount(2, $thirdChildren[0]->getChildren());
+        $this->assertCount(0, $thirdChildren[1]->getChildren());
+        $this->assertSame('third/foo/grandchild1', $thirdChildren[0]->getChildren()[0]->getSlug());
+        $this->assertSame('third/foo/grandchild2', $thirdChildren[0]->getChildren()[1]->getSlug());
     }
 
     public function testGetPage(): void
