@@ -1,5 +1,8 @@
 {% extends "layout/dashboard.html.twig" %}
 
+{% block page_title %} | {{ page.getTitle() }}{% endblock %}
+{% block page_description %}{% endblock %}
+
 {% block page_content %}
     <!-- TODO : Add breadcrumbs -->
     <!-- TODO : Add TOC -->

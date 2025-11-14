@@ -59,20 +59,22 @@ class PagesDirectory
      * Return the list of all variables version, with the link to the provided
      * page alternate versions.
      *
-     * @param PageResource $page
+     * @param string $path
      *
      * @return array<string, string> Array containing Label => Route
      */
-    public function getAlternateVersions(PageResource $page): array
+    public function getAlternateVersions(string $path): array
     {
         $available = $this->config->get('site.versions.available', []);
+
+        // TODO : Cache the result, with a config to turn off in non-production environments
 
         // $available contains a list of version => name
         // We need for the dropdown to have name => path
         $available = array_map(
             fn ($v) => $this->router->urlFor('documentation.versioned', [
                 'version' => $v,
-                'path'    => $page->getSlug()
+                'path'    => $path,
             ]),
             array_flip($available)
         );
@@ -119,6 +121,8 @@ class PagesDirectory
         // Get version object (throws exception if invalid)
         $versionObj = $this->versionValidator->getVersion($version);
 
+        // TODO : Cache the result, with a config to turn off in non-production environments
+
         // Get all pages for the version
         $pages = $this->getPages($versionObj);
 
@@ -148,6 +152,8 @@ class PagesDirectory
     {
         // Get all pages
         $resources = $this->locator->listResources("pages://{$version->id}/");
+
+        // TODO : Cache the result, with a config to turn off in non-production environments
 
         // Convert each to our custom "PageResource" objects using the factory
         $resources = array_map(

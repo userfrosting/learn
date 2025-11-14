@@ -10,12 +10,11 @@
 
 namespace UserFrosting\Learn\Documentation;
 
-use Exception;
+use UserFrosting\Sprinkle\Core\Exceptions\NotFoundException;
 
 /**
  * Exception thrown when a requested page is not found.
  */
-class PageNotFoundException extends Exception
+class PageNotFoundException extends NotFoundException
 {
-    // TODO : Add more specific message
 }
