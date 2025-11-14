@@ -26,6 +26,30 @@ return [
         ],
     ],
 
+    /**
+     * Disable cache
+     */
+    'cache' => [
+        'driver' => 'array',
+    ],
+
+    /**
+    * ----------------------------------------------------------------------
+    * Learn Settings
+    *
+    * Settings for the documentation application.
+    * - Cache : Enable/disable caching of documentation pages and menu.
+    * - Key   : Cache key prefix for cached documentation pages and menu.
+    * - TTL   : Time to live for cached documentation pages and menu, in seconds.
+    * ----------------------------------------------------------------------
+    */
+    'learn' => [
+        'cache' => [
+            'key'     => 'learn.%1$s.%2$s',
+            'ttl'     => 86400,
+        ],
+    ],
+
     /*
     * ----------------------------------------------------------------------
     * Site Settings

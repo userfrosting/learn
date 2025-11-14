@@ -10,6 +10,7 @@
 
 namespace UserFrosting\Learn\Documentation;
 
+use Illuminate\Cache\Repository as Cache;
 use UserFrosting\Config\Config;
 use UserFrosting\Sprinkle\Core\Util\RouteParserInterface;
 use UserFrosting\UniformResourceLocator\ResourceInterface;
@@ -25,12 +26,13 @@ class PagesDirectory
         protected VersionValidator $versionValidator,
         protected PageFactory $pageFactory,
         protected Config $config,
+        protected Cache $cache,
         protected RouteParserInterface $router,
     ) {
     }
 
     /**
-     * Undocumented function
+     * Return the documentation tree for a given version, using cache if enabled.
      *
      * @param string|null $version
      *
@@ -38,26 +40,28 @@ class PagesDirectory
      */
     public function getTree(?string $version = null): array
     {
-        // Get version object (throws exception if invalid)
-        $versionObj = $this->versionValidator->getVersion($version);
+        return $this->cache->remember(
+            $this->getCacheKey('tree', $version ?? 'latest'),
+            $this->getCacheTtl(),
+            function () use ($version) {
+                // Get version object (throws exception if invalid)
+                $versionObj = $this->versionValidator->getVersion($version);
 
-        // TODO : Cache the result, with a config to turn off in non-production environments
+                // Get all files for the version
+                $pages = $this->getPages($versionObj);
 
-        // Get all files for the version
-        $pages = $this->getPages($versionObj);
+                // Sort the files by relative path
+                usort($pages, fn ($a, $b) => strcmp($a->getBasePath(), $b->getBasePath()));
 
-        // Sort the files by relative path
-        usort($pages, fn ($a, $b) => strcmp($a->getBasePath(), $b->getBasePath()));
-
-        // Transform the flat list of pages into a tree structure
-        $tree = $this->getPagesChildren($pages);
-
-        return $tree;
+                // Transform the flat list of pages into a tree structure
+                return $this->getPagesChildren($pages);
+            }
+        );
     }
 
     /**
      * Return the list of all variables version, with the link to the provided
-     * page alternate versions.
+     * page alternate versions. Uses cache if enabled.
      *
      * @param string $path
      *
@@ -65,21 +69,23 @@ class PagesDirectory
      */
     public function getAlternateVersions(string $path): array
     {
-        $available = $this->config->get('site.versions.available', []);
+        return $this->cache->remember(
+            $this->getCacheKey('versions', $path),
+            $this->getCacheTtl(),
+            function () use ($path) {
+                $available = $this->config->get('site.versions.available', []);
 
-        // TODO : Cache the result, with a config to turn off in non-production environments
-
-        // $available contains a list of version => name
-        // We need for the dropdown to have name => path
-        $available = array_map(
-            fn ($v) => $this->router->urlFor('documentation.versioned', [
-                'version' => $v,
-                'path'    => $path,
-            ]),
-            array_flip($available)
+                // $available contains a list of version => name
+                // We need for the dropdown to have name => path
+                return array_map(
+                    fn ($v) => $this->router->urlFor('documentation.versioned', [
+                        'version' => $v,
+                        'path'    => $path,
+                    ]),
+                    array_flip($available)
+                );
+            }
         );
-
-        return $available;
     }
 
     /**
@@ -118,29 +124,33 @@ class PagesDirectory
      */
     public function getPage(string $slug, ?string $version = null): PageResource
     {
-        // Get version object (throws exception if invalid)
-        $versionObj = $this->versionValidator->getVersion($version);
+        return $this->cache->remember(
+            $this->getCacheKey('page', $slug . ($version ?? 'latest')),
+            $this->getCacheTtl(),
+            function () use ($slug, $version) {
+                // Get version object (throws exception if invalid)
+                $versionObj = $this->versionValidator->getVersion($version);
 
-        // TODO : Cache the result, with a config to turn off in non-production environments
+                // Get all pages for the version
+                $pages = $this->getPages($versionObj);
 
-        // Get all pages for the version
-        $pages = $this->getPages($versionObj);
+                // If page slug is empty, we want the "home" page, aka the first page found
+                if ($slug === '') {
+                    return array_key_first($pages) !== null
+                        ? $pages[array_key_first($pages)]
+                        : throw new PageNotFoundException("Page not found: (version: {$versionObj->id})");
+                }
 
-        // If page slug is empty, we want the "home" page, aka the first page found
-        if ($slug === '') {
-            return array_key_first($pages) !== null
-                ? $pages[array_key_first($pages)]
-                : throw new PageNotFoundException("Page not found: (version: {$versionObj->id})");
-        }
+                // Find the page with the matching slug
+                foreach ($pages as $page) {
+                    if ($page->getSlug() === $slug) {
+                        return $page;
+                    }
+                }
 
-        // Find the page with the matching slug
-        foreach ($pages as $page) {
-            if ($page->getSlug() === $slug) {
-                return $page;
+                throw new PageNotFoundException("Page not found: {$slug} (version: {$versionObj->id})");
             }
-        }
-
-        throw new PageNotFoundException("Page not found: {$slug} (version: {$versionObj->id})");
+        );
     }
 
     /**
@@ -150,17 +160,44 @@ class PagesDirectory
      */
     protected function getPages(Version $version): array
     {
-        // Get all pages
-        $resources = $this->locator->listResources("pages://{$version->id}/");
+        return $this->cache->remember(
+            $this->getCacheKey('pages', $version->id),
+            $this->getCacheTtl(),
+            function () use ($version) {
+                // Get all pages
+                $resources = $this->locator->listResources("pages://{$version->id}/");
 
-        // TODO : Cache the result, with a config to turn off in non-production environments
-
-        // Convert each to our custom "PageResource" objects using the factory
-        $resources = array_map(
-            fn (ResourceInterface $res) => $this->pageFactory->createFromResource($version, $res),
-            $resources
+                // Convert each to our custom "PageResource" objects using the factory
+                return array_map(
+                    fn (ResourceInterface $res) => $this->pageFactory->createFromResource($version, $res),
+                    $resources
+                );
+            }
         );
+    }
 
-        return $resources;
+    /**
+     * Get the cache key for documentation items.
+     *
+     * @param string $type       The type of item (e.g., 'tree', 'page', 'versions', 'pages')
+     * @param string $identifier The identifier for the item (e.g., version, slug)
+     *
+     * @return string The cache key
+     */
+    protected function getCacheKey(string $type, string $identifier): string
+    {
+        $keyFormat = $this->config->get('learn.cache.key', '%s.%s');
+
+        return sprintf($keyFormat, $type, $identifier);
+    }
+
+    /**
+     * Get the cache TTL for documentation items.
+     *
+     * @return int The cache TTL in seconds
+     */
+    protected function getCacheTtl(): int
+    {
+        return $this->config->get('learn.cache.ttl', 3600);
     }
 }

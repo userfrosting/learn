@@ -50,7 +50,7 @@ class DocumentationController
     {
         $page = $this->pagesDirectory->getPage($path, $version);
 
-        // TODO : Menu and versions should be done via middleware and injected 
+        // TODO : Menu and versions should be done via middleware and injected
         // into Twig globals, so it can be used in the error template.
         return $view->render($response, 'pages/doc.html.twig', [
             'page'     => $page,
