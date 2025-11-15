@@ -44,18 +44,16 @@ class DocumentationController
      * @param string   $version
      * @param string   $path
      * @param Response $response
-     * @param Twig     $view
+     * @param Twig     $twig
      */
-    public function pageVersioned(string $version, string $path, Response $response, Twig $view): Response
+    public function pageVersioned(string $version, string $path, Response $response, Twig $twig): Response
     {
         $page = $this->pagesDirectory->getPage($path, $version);
 
-        // TODO : Menu and versions should be done via middleware and injected
-        // into Twig globals, so it can be used in the error template.
-        return $view->render($response, 'pages/doc.html.twig', [
-            'page'     => $page,
-            'menu'     => $this->pagesDirectory->getTree($version),
-            'versions' => $this->pagesDirectory->getAlternateVersions($path),
+        // TODO : Add page template based on the file name or front-matter
+
+        return $twig->render($response, 'pages/doc.html.twig', [
+            'page' => $page,
         ]);
     }
 }

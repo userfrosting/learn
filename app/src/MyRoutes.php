@@ -12,6 +12,7 @@ namespace UserFrosting\Learn;
 
 use Slim\App;
 use UserFrosting\Learn\Controller\DocumentationController;
+use UserFrosting\Learn\Middleware\TwigGlobals;
 use UserFrosting\Routes\RouteDefinitionInterface;
 
 class MyRoutes implements RouteDefinitionInterface
@@ -19,7 +20,11 @@ class MyRoutes implements RouteDefinitionInterface
     public function register(App $app): void
     {
         // Route for versioned and non-versioned documentation pages
-        $app->get('/{version:\d+\.\d+}[/{path:.*}]', [DocumentationController::class, 'pageVersioned'])->setName('documentation.versioned');
-        $app->get('[/{path:.*}]', [DocumentationController::class, 'page'])->setName('documentation');
+        $app->get('/{version:\d+\.\d+}[/{path:.*}]', [DocumentationController::class, 'pageVersioned'])
+            ->add(TwigGlobals::class)
+            ->setName('documentation.versioned');
+        $app->get('[/{path:.*}]', [DocumentationController::class, 'page'])
+            ->add(TwigGlobals::class)
+            ->setName('documentation');
     }
 }
