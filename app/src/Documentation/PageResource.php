@@ -104,12 +104,30 @@ class PageResource extends Resource
         return implode('/', $dirFragments);
     }
 
+    /**
+     * Get the content of the page.
+     *
+     * @return string The page content
+     */
     public function getContent(): string
     {
         return $this->markdownFile->content;
     }
 
     /**
+     * Get the template to use for this page. It's defined in the 'template'
+     * front-matter. Falls back to the default template if not specified.
+     *
+     * @return string The page template
+     */
+    public function getTemplate(): string
+    {
+        return $this->markdownFile->frontMatter['template'] ?? $this->getFilename();
+    }
+
+    /**
+     * Get the front-matter of the page.
+     *
      * @return array<string, mixed>
      */
     public function getFrontMatter(): array
@@ -117,11 +135,21 @@ class PageResource extends Resource
         return $this->markdownFile->frontMatter;
     }
 
+    /**
+     * Get the title of the page from 'title' front-matter.
+     *
+     * @return string The page title
+     */
     public function getTitle(): string
     {
         return $this->markdownFile->frontMatter['title'] ?? $this->getSlug();
     }
 
+    /**
+     * Get the version of the page.
+     *
+     * @return Version The page version
+     */
     public function getVersion(): Version
     {
         return $this->version;

@@ -142,4 +142,22 @@ class PagesDirectoryTest extends TestCase
         $this->assertArrayNotHasKey('5.1', $alternates);
         $this->assertArrayHasKey('5.0', $alternates);
     }
+
+    /** Use the real file to test the getTemplate */
+    public function testGetTemplate(): void
+    {
+        $pagesManager = $this->ci->get(PagesDirectory::class);
+
+        // Uses the file name 'docs'
+        $page = $pagesManager->getPage('first');
+        $this->assertSame('docs', $page->getTemplate());
+
+        // Uses the file name 'chapter'
+        $page = $pagesManager->getPage('third');
+        $this->assertSame('chapter', $page->getTemplate());
+
+        // Uses the template from front-matter (foos) over the file name (chapter)
+        $page = $pagesManager->getPage('third/foo');
+        $this->assertSame('foos', $page->getTemplate());
+    }
 }

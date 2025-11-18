@@ -13,8 +13,10 @@
     <!-- TODO : Improve Code markdown -->
     <!-- TODO : Add Chapter template -->
 
-    <h1>{{ page.getTitle() }}</h1>
-    <div>
-        {{ page.getContent()|raw }}
+    <div id="body-inner">
+        <h1>{{ page.getTitle() }}</h1>
+        <p>
+            {{ page.getContent()|raw }}
+        </p>
     </div>
 {% endblock %}

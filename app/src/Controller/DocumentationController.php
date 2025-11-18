@@ -49,10 +49,9 @@ class DocumentationController
     public function pageVersioned(string $version, string $path, Response $response, Twig $twig): Response
     {
         $page = $this->pagesDirectory->getPage($path, $version);
+        $template = sprintf('pages/%s.html.twig', $page->getTemplate());
 
-        // TODO : Add page template based on the file name or front-matter
-
-        return $twig->render($response, 'pages/doc.html.twig', [
+        return $twig->render($response, $template, [
             'page' => $page,
         ]);
     }
