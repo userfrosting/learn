@@ -5,7 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_updateRequired)
+<!-- [plugin:content-inject](/modular/_updateRequired) -->
 
 ## Basic commands
 

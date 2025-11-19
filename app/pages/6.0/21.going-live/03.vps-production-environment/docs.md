@@ -5,7 +5,7 @@ metadata:
 taxonomy:
     category: docs
 ---
-[plugin:content-inject](/modular/_update5.0)
+<!-- [plugin:content-inject](/modular/_update5.0) -->
 
 This guide assumes that you've set up a VPS and installed a LAMP or LEMP stack, Git, Composer, and Node.js. If you're insistent on using shared hosting, this guide won't work for you - you'll have to copy your files over FTP instead.
 

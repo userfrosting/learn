@@ -1,1 +1,0 @@
-[notice=warning]**This documentation is outdated.** To contribute to this documentation, please consider submitting a pull request to our [learn repository](https://github.com/userfrosting/learn/).[/notice]
