@@ -1,7 +1,7 @@
 ---
 title: Web Dev, the Right Way
 metadata:
-    description: UserFrosting has a not-so-secret ulterior motive: to get you to become a better developer. 
+    description: "UserFrosting has a not-so-secret ulterior motive: to get you to become a better developer."
 taxonomy:
     category: docs
 ---
