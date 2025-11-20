@@ -170,6 +170,12 @@ class DocumentationRepository
                 // Get all pages
                 $resources = $this->locator->listResources("pages://{$version->id}/");
 
+                // Keep only markdown files
+                $resources = array_filter(
+                    $resources,
+                    fn (ResourceInterface $res) => $res->getExtension() === 'md'
+                );
+
                 // Convert each to our custom "PageResource" objects using the factory
                 return array_map(
                     fn (ResourceInterface $res) => $this->pageFactory->createFromResource($version, $res),
