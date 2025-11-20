@@ -12,7 +12,7 @@ namespace UserFrosting\Learn\Controller;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
-use UserFrosting\Learn\Documentation\PagesDirectory;
+use UserFrosting\Learn\Documentation\DocumentationRepository;
 
 /**
  * Documentation App Controller
@@ -20,7 +20,7 @@ use UserFrosting\Learn\Documentation\PagesDirectory;
 class DocumentationController
 {
     public function __construct(
-        protected PagesDirectory $pagesDirectory,
+        protected DocumentationRepository $pagesDirectory,
     ) {
     }
 

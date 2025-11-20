@@ -18,7 +18,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
-use UserFrosting\Learn\Documentation\PagesDirectory;
+use UserFrosting\Learn\Documentation\DocumentationRepository;
 use UserFrosting\Learn\Documentation\VersionValidator;
 
 /**
@@ -28,7 +28,7 @@ use UserFrosting\Learn\Documentation\VersionValidator;
 class TwigGlobals implements MiddlewareInterface
 {
     public function __construct(
-        protected PagesDirectory $pagesDirectory,
+        protected DocumentationRepository $pagesDirectory,
         protected VersionValidator $versionValidator,
         protected Twig $twig,
     ) {

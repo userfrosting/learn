@@ -17,9 +17,12 @@ use UserFrosting\UniformResourceLocator\ResourceInterface;
 use UserFrosting\UniformResourceLocator\ResourceLocatorInterface;
 
 /**
- * Manage pages.
+ * Repository for managing documentation pages across different versions.
+ * 
+ * Handles retrieval, caching, and organization of documentation content
+ * from various sources using the resource locator system.
  */
-class PagesDirectory
+class DocumentationRepository
 {
     public function __construct(
         protected ResourceLocatorInterface $locator,

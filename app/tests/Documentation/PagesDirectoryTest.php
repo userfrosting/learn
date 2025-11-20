@@ -12,7 +12,7 @@ namespace UserFrosting\Tests\Learn\Documentation;
 
 use UserFrosting\Config\Config;
 use UserFrosting\Learn\Documentation\PageNotFoundException;
-use UserFrosting\Learn\Documentation\PagesDirectory;
+use UserFrosting\Learn\Documentation\DocumentationRepository;
 use UserFrosting\Learn\PagesManager;
 use UserFrosting\Learn\Recipe;
 use UserFrosting\Testing\TestCase;
@@ -51,7 +51,7 @@ class PagesDirectoryTest extends TestCase
 
     public function testGetTree(): void
     {
-        $pagesManager = $this->ci->get(PagesDirectory::class);
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
         $files = $pagesManager->getTree();
 
         // Assert tree structure contains 3 top level files
@@ -93,7 +93,7 @@ class PagesDirectoryTest extends TestCase
 
     public function testGetPage(): void
     {
-        $pagesManager = $this->ci->get(PagesDirectory::class);
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
 
         // Test getting various pages by slug
         $page = $pagesManager->getPage('first');
@@ -112,7 +112,7 @@ class PagesDirectoryTest extends TestCase
 
     public function testGetPageForNotFound(): void
     {
-        $pagesManager = $this->ci->get(PagesDirectory::class);
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
 
         // Test getting a non-existing page
         $this->expectException(PageNotFoundException::class);
@@ -122,7 +122,7 @@ class PagesDirectoryTest extends TestCase
 
     public function testGetPageForNotFoundAndHomePage(): void
     {
-        $pagesManager = $this->ci->get(PagesDirectory::class);
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
 
         // Test getting a non-existing page
         $this->expectException(PageNotFoundException::class);
@@ -132,7 +132,7 @@ class PagesDirectoryTest extends TestCase
 
     public function testGetAlternateVersions(): void
     {
-        $pagesManager = $this->ci->get(PagesDirectory::class);
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
         $page = $pagesManager->getPage('first');
 
         // Test getting alternate versions for a page that exists in multiple versions
@@ -146,7 +146,7 @@ class PagesDirectoryTest extends TestCase
     /** Use the real file to test the getTemplate */
     public function testGetTemplate(): void
     {
-        $pagesManager = $this->ci->get(PagesDirectory::class);
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
 
         // Uses the file name 'docs'
         $page = $pagesManager->getPage('first');
