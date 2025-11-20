@@ -41,8 +41,12 @@ class FileTreeExtension extends AbstractExtension
      *
      * @return bool True if any child is active, false otherwise
      */
-    public function isChildActive(array $children, PageResource $currentPage): bool
+    public function isChildActive(array $children, ?PageResource $currentPage): bool
     {
+        if (is_null($currentPage)) {
+            return false;
+        }
+        
         foreach ($children as $child) {
             if ($currentPage->getSlug() == $child->getSlug()) {
                 return true;
