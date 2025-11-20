@@ -17,7 +17,7 @@ Once you've found a sprinkle you'd like to use in your own project, the first st
 ```json
     "require": {
 ...
-        "userfrosting/theme-adminlte": "^5.0",
+        "userfrosting/theme-adminlte": "~5.1.0",
         "owlfancy/owlery-sprinkle": "^0.1"
     },
 ```
@@ -44,8 +44,8 @@ use Owlfancy\Sprinkle\Owlery ; //don't forget to include the sprinkle's namespac
 If the sprinkle includes Javascript, you will need to add it to both the "dependencies" [in your `package.json`](/asset-management/webpack-encore#npm-and-packages-json)... 
 ```json
  "dependencies": {
-        "@userfrosting/sprinkle-admin": "^5.0",
-        "@userfrosting/theme-adminlte": "^5.0",
+        "@userfrosting/sprinkle-admin": "~5.1.0",
+        "@userfrosting/theme-adminlte": "~5.1.0",
         "sprinkle-owlery":"github:owlfancy/sprinkle-owlery"
     },
 ```

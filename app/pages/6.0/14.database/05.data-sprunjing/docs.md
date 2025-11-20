@@ -18,11 +18,11 @@ GET http://example.com/api/users?size=5&page=0&sorts%5Bname%5D=asc
 
 This tells the server that we want a list of users sorted by their `name`, in ascending order (`sorts[name]=asc`). We then want them chunked into blocks of 5 results at a time (`size=5`), and for this request we want the first chunk (`page=0`).
 
-Building queries that can handle all of these request parameters correctly, for every one of your endpoints, can be surprisingly tricky and very tedious. This is why UserFrosting introduces the **Sprunjer**, allowing you to easily define rules for how clients can retrieve constrained results from your database.
+Building queries that can handle all of these request parameters correctly, for every one of your endpoints, can be surprisingly tricky and very tedious. This is why UserFrosting introduces the **Sprunje**, allowing you to easily define rules for how clients can retrieve constrained results from your database.
 
 ## Sprunje parameters
 
-Every Sprunje can accept the following parameters. Typically, they are passed in as a query string in a `GET` request, and then passed as the second argument in your Sprunje's constructor.
+Every Sprunje can accept the following parameters. Typically, they are passed in the query string of a `GET` request, then passed along as the second argument of your Sprunje's constructor.
 
 - `sorts`: an associative array of field names mapped to sort directions. Sort direction can be either `asc` or `desc`.
 - `filters`: an associative array of field names mapped to queries. For example, `name: Attenb` will search for names that contain "Attenb."
@@ -34,7 +34,7 @@ Every Sprunje can accept the following parameters. Typically, they are passed in
 
 By implementing a custom `Sprunje` class, you can pass parameters directly from the client request and they will be used to safely construct the appropriate query.
 
-A custom Sprunje is simply a class that extends the base `UserFrosting\Sprinkle\Core\Sprunje\Sprunje` class. At the minimum you must implement the `baseQuery` class, which specifies the Eloquent query to be performed before any additional constraints are applied. By convention, you should place your Sprunje classes in `src/Sprunje/` in your Sprinkle.
+A custom Sprunje is simply a class that extends the base `UserFrosting\Sprinkle\Core\Sprunje\Sprunje` class. At the minimum you must implement the `baseQuery` function, which specifies the Eloquent query to be performed before any additional constraints are applied. By convention, you should place your Sprunje classes in `src/Sprunje/` in your Sprinkle.
 
 **OwlSprunje.php**
 
@@ -242,6 +242,8 @@ protected function applyTransformations(Collection $collection): Collection
 }
 ```
 
+[notice=warning]There are a few methods that do _not_ automatically apply transformations. Specifically `getColumnValues`--and methods such as [the default `getListable`](#sprunje-lists) which use `getColumnValues` as their datasource--skip this step. If your Sprunje depends on transformations, you may wish to override `getColumnValues` and/or use custom methods for all `listable` fields.[/notice]
+
 ## Extending a Sprunje query
 
 You might want to further modify your Sprunje's base query in certain endpoints. For example, you might want to retrieve the owner of each Owl in your result set, but only in your `/api/owls` endpoint. In this case, you can modify your Sprunje by passing a callback to the `extendQuery` method:
@@ -260,7 +262,7 @@ Sprunjes can also be used to enumerate a unique list of values for fields in the
 ```php
 class OwlSprunje extends Sprunje
 {
-    protected $listable = [
+    protected array $listable = [
         'species'
     ];
 
@@ -298,6 +300,8 @@ An array mapping each listable field to a list of possible values can be obtaine
 ```
 
 [notice=warning]It is recommended to use strings for both the `value` and `text` for compatibility purposes with the TableSorter plugin. You can cast your value to a string by wrapping it in double quotation marks or with `(string)` prefix of the value. See [this thread](https://github.com/userfrosting/UserFrosting/issues/966#issuecomment-483245033) for an example.[/notice]
+
+[notice]Remember that `getListable` does not apply [transformations](#custom-data-transformations). If your Sprunje uses transformations, consider writing custom methods for each listable field. [/notice]
 
 Of course you can override the default listing behavior for a field by defining a custom method. This method must consist of the field name (converted to StudlyCase) prefixed with `list`:
 

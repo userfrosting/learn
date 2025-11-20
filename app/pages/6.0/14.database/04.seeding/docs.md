@@ -42,7 +42,7 @@ class MySeed implements SeedInterface
 
 ## Registering Seeds
 
-To be picked up by the `seed` bakery command, a seed class files must first be registered in the the *Sprinkle Recipe*, using the `SeedRecipe` sub-recipe and the `getSeeds():array` method: 
+To be picked up by the `seed` bakery command, a seed class files must first be registered in the *Sprinkle Recipe*, using the `SeedRecipe` sub-recipe and the `getSeeds():array` method: 
 
 ```php
 <?php

@@ -198,3 +198,11 @@ $ php bakery migrate
 ```
 
 If you want to do a "fresh install" of your migration or cancel the changes made, you can **rollback** the previous migration. You can also do a dry run of your migrations using the `pretend` option. See [Chapter 8](/cli/commands) for more details.
+
+[notice=tip]If you have any trouble rolling back migrations under the SQLite driver, you may want to temporarily add this line to your [`.env` file](/configuration/environment-vars):
+```text
+DB_FOREIGN_KEYS=false
+```
+This will disable foreign keys, which [should allow SQLite to make changes more easily](https://github.com/laravel/framework/issues/23461#issuecomment-507799947). 
+Please be sure to re-enable foreign keys before running your migrations back up!
+[/notice]

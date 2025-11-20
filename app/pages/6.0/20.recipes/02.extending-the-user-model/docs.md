@@ -6,6 +6,8 @@ taxonomy:
     category: docs
 ---
 
+[notice=tip]A complete example of this guide can be found on GitHub : [https://github.com/userfrosting/extend-user](https://github.com/userfrosting/extend-user)[/notice]
+
 One of the most common questions we get from new UserFrosting developers is "how do I add new user fields?"
 
 Since every aspect of UserFrosting is extendable, there are a number of ways to go about this. This tutorial just outlines one approach - you should consider the specific requirements of your application and users before deciding if this would be the best approach for you.
@@ -13,11 +15,11 @@ Since every aspect of UserFrosting is extendable, there are a number of ways to 
 Our general constraints are:
 
 1. We will avoid modifying the `users` table directly. This will make it easier to integrate any future updates to UF that affect the `users` table. It will also help prevent collisions with any community Sprinkles that modify the `users` table. Instead, we will create a separate table, that has a one-to-one relationship with the `users` model.
-2. We will avoid overriding controller methods as much as possible. Controller methods tend to be longer and more complex than methods in our models, so again, it will be more work to integrate changes to controllers in future updates to UserFrosting. It will be much easier if instead we extend the data models whenever possible, implementing new methods that enhance the base models. We can also take advantage of Eloquent's [event handlers](https://laravel.com/docs/8.x/eloquent#events) for model classes to hook in additional functionality.
+2. We will avoid overriding controller methods as much as possible. Controller methods tend to be longer and more complex than methods in our models, so again, it will be more work to integrate changes to controllers in future updates to UserFrosting. It will be much easier if instead we extend the data models whenever possible, implementing new methods that enhance the base models. We can also take advantage of Eloquent's [event handlers](https://laravel.com/docs/10.x/eloquent#events) for model classes to hook in additional functionality.
 
 [notice=tip]Don't forget to check out the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). Some may provide easy ways to add custom profile fields to your users and groups.[/notice]
 
-If you haven't already, set up your site Sprinkle. For the purposes of this tutorial, we will call our Sprinkle `extend-user` with `App\ExtendUser` as a base namespace.
+If you haven't already, set up an empty UserFrosting install [using the Skeleton](https://learn.userfrosting.com/structure/introduction#the-app-skeleton-your-projects-template). For the purposes of this tutorial, we will call our Sprinkle `extend-user` with `App\ExtendUser` as a base namespace.
 
 ## Implement the data layer
 
@@ -32,8 +34,8 @@ Follow the directions in [Database Migrations](/database/migrations) for creatin
 namespace App\ExtendUser\Database\Migrations\v400;
 
 use Illuminate\Database\Schema\Blueprint;
+use UserFrosting\Sprinkle\Account\Database\Migrations\v400\UsersTable;
 use UserFrosting\Sprinkle\Core\Database\Migration;
-use UserFrosting\Sprinkle\Account\Database\Migrations\V400\UsersTable;
 
 class MembersTable extends Migration
 {
@@ -77,30 +79,35 @@ namespace App\ExtendUser\Database\Models;
 
 use UserFrosting\Sprinkle\Core\Database\Models\Model;
 
+/**
+ * @property int    $id
+ * @property string $city
+ * @property string $country
+ */
 class MemberAux extends Model
 {
-    /** 
+    /**
      * The table doesn't have timestamps columns
      */
     public $timestamps = false;
 
     /**
-     * @var string The name of the table for the current model. We defined it, 
-     * because the table name is different than the model name
+     * @var string The name of the table for the current model. We defined it,
+     *             because the table name is different than the model name
      */
     protected $table = 'members';
 
-    /** 
+    /**
      * Define the fillable columns
      */
     protected $fillable = [
         'city',
-        'country'
+        'country',
     ];
 }
 ```
 
-This should be placed in the `src/Database/Models/` directory in your own Sprinkle. Notice that we set three properties: `$timestamps`, to disable timestamps for this table (we already have them in our main `users` table), `$table`, which should contain the name of your table, and `$fillable`, which should be an array of column names that you want to allow to be [mass assignable](https://laravel.com/docs/8.x/eloquent#mass-assignment) when creating new instances of the model.
+This should be placed in the `src/Database/Models/` directory in your own Sprinkle. Notice that we set three properties: `$timestamps`, to disable timestamps for this table (we already have them in our main `users` table), `$table`, which should contain the name of your table, and `$fillable`, which should be an array of column names that you want to allow to be [mass assignable](https://laravel.com/docs/10.x/eloquent#mass-assignment) when creating new instances of the model.
 
 ### Extend the User model
 
@@ -112,46 +119,23 @@ To bring the two entities together we'll create a third model, `Member`, which e
 <?php
 namespace App\ExtendUser\Database\Models;
 
-use UserFrosting\Sprinkle\Account\Database\Models\User;
-use App\ExtendUser\Database\Models\MemberAux;
 use App\ExtendUser\Database\Scopes\MemberAuxScope;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use UserFrosting\Sprinkle\Account\Database\Models\User;
 
-trait LinkMemberAux
-{
-    /**
-     * The "booting" method of the trait.
-     */
-    protected static function bootLinkMemberAux(): void
-    {
-        /**
-         * Create a new MemberAux if necessary, and save the associated member data every time.
-         */
-        static::saved(function ($member) {
-            $member->createAuxIfNotExists();
-
-            if ($member->auxType) {
-                // Set the aux PK, if it hasn't been set yet
-                if (!$member->aux->id) {
-                    $member->aux->id = $member->id;
-                }
-
-                $member->aux->save();
-            }
-        });
-    }
-}
-
+/**
+ * @property MemberAux $aux
+ * @property string    $city
+ * @property string    $country
+ */
 class Member extends User
 {
-    use LinkMemberAux;
-
     protected $fillable = [
         'user_name',
         'first_name',
         'last_name',
         'email',
         'locale',
-        'theme',
         'group_id',
         'flag_verified',
         'flag_enabled',
@@ -159,25 +143,10 @@ class Member extends User
         'password',
         'deleted_at',
         'city',
-        'country'
+        'country',
     ];
 
     protected string $auxType = MemberAux::class;
-
-    /**
-     * Required to be able to access the `aux` relationship in Twig without needing to do eager loading.
-     * @see http://stackoverflow.com/questions/29514081/cannot-access-eloquent-attributes-on-twig/35908957#35908957
-     */
-    public function __isset($name)
-    {
-        if (in_array($name, [
-            'aux'
-        ])) {
-            return true;
-        } else {
-            return parent::__isset($name);
-        }
-    }
 
     /**
      * Globally joins the `members` table to access additional properties.
@@ -185,46 +154,61 @@ class Member extends User
     protected static function boot()
     {
         parent::boot();
-
-        static::addGlobalScope(new MemberAuxScope);
+        static::addGlobalScope(new MemberAuxScope());
     }
 
     /**
-     * Custom mutator for Member property
+     * Create a new MemberAux if necessary, and save the associated member data every time.
      */
-    public function setCityAttribute($value)
+    protected static function booted(): void
+    {
+        static::saved(function (Member $member) {
+            $member->createAuxIfNotExists();
+
+            // Set the aux PK, if it hasn't been set yet
+            if ($member->aux->id !== 0) {
+                $member->aux->id = $member->id;
+            }
+
+            $member->aux->save();
+        });
+    }
+
+    /**
+     * Custom mutator for Member property.
+     */
+    public function setCityAttribute(string $value): void
     {
         $this->createAuxIfNotExists();
-
         $this->aux->city = $value;
     }
 
     /**
-     * Custom mutator for Member property
+     * Custom mutator for Member property.
      */
-    public function setCountryAttribute($value)
+    public function setCountryAttribute(string $value): void
     {
         $this->createAuxIfNotExists();
-
         $this->aux->country = $value;
     }
 
     /**
      * Relationship for interacting with aux model (`members` table).
      */
-    public function aux()
+    public function aux(): HasOne
     {
         return $this->hasOne($this->auxType, 'id');
     }
 
     /**
-     * If this instance doesn't already have a related aux model (either in the db on in the current object), then create one
+     * If this instance doesn't already have a related aux model (either in the db on in the current object), then create one.
      */
-    protected function createAuxIfNotExists()
+    protected function createAuxIfNotExists(): void
     {
-        if ($this->auxType && !count($this->aux)) {
+        // @phpstan-ignore-next-line aux can be null is not initiated
+        if ($this->auxType != '' && is_null($this->aux)) {
             // Create aux model and set primary key to be the same as the main user's
-            $aux = new $this->auxType;
+            $aux = new $this->auxType();
 
             // Needed to immediately hydrate the relation.  It will actually get saved in the bootLinkMemberAux method.
             $this->setRelation('aux', $aux);
@@ -235,44 +219,41 @@ class Member extends User
 
 There's a lot going on here, so just a quick tour:
 
-1. `LinkMemberAux` is a [trait](http://php.net/manual/en/language.oop5.traits.php) used to attach handlers to events for our model. In this case, we use the `saved` event to tell Laravel to save the related `MemberAux` model any time the `Member` is saved. It will also call `createAuxIfNotExists` which...well, does exactly what the name says it does.
+1. The `booted()` method is used to attach a handler to the event for our model. In this case, we use the `saved` event to tell Laravel to save the related `MemberAux` model any time the `Member` is saved. It will also call `createAuxIfNotExists` which... well, does exactly what the name says it does.
 
 2. We add `city` and `country` to the model's `fillable` attributes, so that they can be directly passed in to the `Member` model's constructor.
 
-3. The `__isset` method is overridden to allow Twig to automatically fetch the related `MemberAux` object (e.g., `current_user.aux`). See [this answer](http://stackoverflow.com/questions/29514081/cannot-access-eloquent-attributes-on-twig/35908957#35908957) for an explanation of why this is needed.
+3. We override the model's booting method to automatically add the [global scope](https://laravel.com/docs/10.x/eloquent#global-scopes), `MemberAuxScope`. This will automatically join the `members` table whenever we make queries through the `Member` model, allowing us to access the additional fields. We'll explain how to create this scope next.
 
-4. We override the model's booting method to automatically add the [global scope](https://laravel.com/docs/8.x/eloquent#global-scopes), `MemberAuxScope`. This will automatically join the `members` table whenever we make queries through the `Member` model, allowing us to access the additional fields. We'll explain how to create this scope next.
+4. We have two [custom mutator methods](https://laravel.com/docs/10.x/eloquent-mutators), `setCityAttribute` and `setCountryAttribute`. These allow us to modify the new fields directly through the `Member` object (e.g., `$member->city` and `$member->country`), passing them through to the related `MemberAux` model.
 
-5. We have two [custom mutator methods](https://laravel.com/docs/8.x/eloquent-mutators), `setCityAttribute` and `setCountryAttribute`. These allow us to modify the new fields directly through the `Member` object (e.g., `$member->city` and `$member->country`), passing them through to the related `MemberAux` model.
-
-6. The `aux()` method defines the relationship with the underlying `MemberAux` object.
+5. The `aux()` method defines the relationship with the underlying `MemberAux` object.
 
 ### Define a global scope to automatically join the tables
 
-A global scope allows us to customize the query that Laravel issues under the hood when you use methods like `Member::all()`, `Member::where('city', 'Bloomington')->first()`, and other [Eloquent](https://laravel.com/docs/8.x/eloquent) features. To do this, we'll create a new class in `src/Database/Scopes/MemberAuxScope.php`:
+A global scope allows us to customize the query that Laravel issues under the hood when you use methods like `Member::all()`, `Member::where('city', 'Bloomington')->first()`, and other [Eloquent](https://laravel.com/docs/10.x/eloquent) features. To do this, we'll create a new class in `src/Database/Scopes/MemberAuxScope.php`:
 
 ```php
 <?php
 
 namespace App\ExtendUser\Database\Scopes;
 
-use Illuminate\Database\Eloquent\Scope;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Scope;
 
 class MemberAuxScope implements Scope
 {
     /**
      * Apply the scope to a given Eloquent query builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param \Illuminate\Database\Eloquent\Model   $model
      */
     public function apply(Builder $builder, Model $model)
     {
         $baseTable = $model->getTable();
-        // Hardcode the table name here, or you can access it using the classMapper and `getTable`
+        // Hardcode the table name here, or inject the model and use `getTable`
         $auxTable = 'members';
 
         // Specify columns to load from base table and aux table
@@ -298,7 +279,7 @@ The problem, of course, is that all of the controllers in the Sprinkle that _def
 
 Fortunately, the default Sprinkles never directly reference the `User` class. Instead, they **[inject](/dependency-injection)** the `UserInterface`. All we need to do, then, is remap the `UserInterface` to our new class, `Member`. This can be done via [Autowire](/dependency-injection/the-di-container#binding-interfaces) in a [service provider](/services/extending-services).
 
-Create a class `src/ServicesProvider/ModelsService.php` : 
+Create a class `src/ServicesProvider/MemberModelService.php` : 
 
 ```php
 <?php
@@ -309,24 +290,24 @@ use App\ExtendUser\Database\Models\Member;
 use UserFrosting\ServicesProvider\ServicesProviderInterface;
 use UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface;
 
-class ModelsService implements ServicesProviderInterface
+class MemberModelService implements ServicesProviderInterface
 {
     public function register(): array
     {
         return [
-            UserInterface::class => \DI\autowire(Member::class),
+            UserInterface::class  => \DI\autowire(Member::class),
         ];
     }
 }
 ```
 
-Plus, add `ModelsService` to your Sprinkle recipe:
+Plus, add `MemberModelService` to your Sprinkle recipe:
 
 ```php 
 public function getServices(): array
 {
     return [
-        ModelsService::class,
+        MemberModelService::class,
     ];
 }
 ```
@@ -358,7 +339,7 @@ If we want these new fields to actually show up in our application, we need to a
     <div class="form-group">
         <label>City</label>
         <div class="input-group js-copy-container">
-            <span class="input-group-addon"><i class="fa fa-map-pin"></i></span>
+            <span class="input-group-addon"><i class="fa-solid fa-map-pin fa-fw"></i></span>
             <input type="text" class="form-control" name="city" autocomplete="off" value="{{user.city}}" placeholder="City" {% if 'address' in form.fields.disabled %}disabled{% endif %}>
         </div>
     </div>
@@ -367,7 +348,7 @@ If we want these new fields to actually show up in our application, we need to a
     <div class="form-group">
         <label>Country</label>
         <div class="input-group js-copy-container">
-            <span class="input-group-addon"><i class="fa fa-map-pin"></i></span>
+            <span class="input-group-addon"><i class="fa-solid fa-map-pin fa-fw"></i></span>
             <input type="text" class="form-control" name="country" autocomplete="off" value="{{user.country}}" placeholder="Country" {% if 'address' in form.fields.disabled %}disabled{% endif %}>
         </div>
     </div>
@@ -379,15 +360,14 @@ Notice that we wrap them in a single `if` block. By doing this, we are grouping 
 
 ### Override (just a few) controllers
 
-I know that we said that we didn't want to modify controllers, but in some cases it is unavoidable. For example, the `UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction` action explicitly states the fields that should be displayed in the form. So, we will need to extend it to display the `city` and `country` fields. Create a new `src/Controller/MemberPageAction.php` class:
+I know that we've said before that we didn't want to modify controllers, but in some cases it is unavoidable. For example, the `UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction` action explicitly states the fields that should be displayed in the form. So, we will need to extend it to display the `city` and `country` fields. Create a new `src/Controller/MemberModelService.php` class:
 
 ```php
 <?php
 namespace App\ExtendUser\Controller;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
 use UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface;
-use UserFrosting\Sprinkle\Account\Exceptions\ForbiddenException;
+use UserFrosting\Sprinkle\Account\Exceptions\ForbiddenException as ExceptionsForbiddenException;
 use UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction;
 
 class MemberPageAction extends UserPageAction
@@ -412,16 +392,19 @@ We'll also need to link the route endpoints to this new class. To do this, we'll
 
 namespace App\ExtendUser\ServicesProvider;
 
-use App\ExtendUser\Controller\MemberPageAction;
+use App\ExtendUser\Controller\MemberPageAction; //<-- Add
+use App\ExtendUser\Database\Models\Member;
 use UserFrosting\ServicesProvider\ServicesProviderInterface;
-use UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction;
+use UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface;
+use UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction;  //<-- Add
 
-class ControllerService implements ServicesProviderInterface
+class MemberModelService implements ServicesProviderInterface
 {
     public function register(): array
     {
         return [
-            UserPageAction::class => \DI\autowire(MemberPageAction::class),
+            UserInterface::class  => \DI\autowire(Member::class),
+            UserPageAction::class => \DI\autowire(MemberPageAction::class),  //<-- Add
         ];
     }
 }
@@ -449,5 +432,3 @@ country:
       max: 255
       message: VALIDATE.LENGTH_RANGE
 ```
-
-[notice]A full implementation of this can be found in the [`extend-user`](https://github.com/userfrosting/extend-user) repository. However, this guide as not been updated yet for UserFrosting 5. Don't hesitate to contribute to this repo![/notice]
