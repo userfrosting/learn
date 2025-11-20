@@ -18,7 +18,7 @@ use UserFrosting\UniformResourceLocator\ResourceLocatorInterface;
 
 /**
  * Repository for managing documentation pages across different versions.
- * 
+ *
  * Handles retrieval, caching, and organization of documentation content
  * from various sources using the resource locator system.
  */

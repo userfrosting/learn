@@ -11,8 +11,8 @@
 namespace UserFrosting\Tests\Learn\Documentation;
 
 use UserFrosting\Config\Config;
-use UserFrosting\Learn\Documentation\PageNotFoundException;
 use UserFrosting\Learn\Documentation\DocumentationRepository;
+use UserFrosting\Learn\Documentation\PageNotFoundException;
 use UserFrosting\Learn\PagesManager;
 use UserFrosting\Learn\Recipe;
 use UserFrosting\Testing\TestCase;
