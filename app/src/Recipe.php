@@ -16,6 +16,7 @@ use UserFrosting\Learn\Bakery\DebugCommandListener;
 use UserFrosting\Learn\Bakery\DebugVerboseCommandListener;
 use UserFrosting\Learn\Bakery\SetupCommandListener;
 use UserFrosting\Learn\Listeners\ResourceLocatorInitiated;
+use UserFrosting\Learn\ServicesProvider\MarkdownService;
 use UserFrosting\Learn\Twig\Extensions\FileTreeExtension;
 use UserFrosting\Sprinkle\Core\Bakery\Event\BakeCommandEvent;
 use UserFrosting\Sprinkle\Core\Bakery\Event\DebugCommandEvent;
@@ -101,7 +102,9 @@ class Recipe implements
      */
     public function getServices(): array
     {
-        return [];
+        return [
+            MarkdownService::class,
+        ];
     }
 
     /**

@@ -349,6 +349,35 @@
     h5 + h6 {
         margin-top: @header-consecutive-spacing;
     }
+
+    // Anchors for headings
+    h2:has(> .heading-permalink),
+    h3:has(> .heading-permalink),
+    h4:has(> .heading-permalink),
+    h5:has(> .heading-permalink),
+    h6:has(> .heading-permalink) {
+        padding-right: @header-padding-horizontal - 1rem;
+    }
+
+    h2 > a.heading-permalink,
+    h3 > a.heading-permalink,
+    h4 > a.heading-permalink,
+    h5 > a.heading-permalink,
+    h6 > a.heading-permalink {
+        visibility: hidden;
+        margin-left: 0.5rem;
+        color: @global-theme-color;
+        text-decoration: none;
+        border: none;
+    }
+
+    h2:hover > a.heading-permalink,
+    h3:hover > a.heading-permalink,
+    h4:hover > a.heading-permalink,
+    h5:hover > a.heading-permalink,
+    h6:hover > a.heading-permalink {
+        visibility: visible;
+    }
 }
 
 /* Chapter Template Styles
@@ -391,5 +420,10 @@
     // Spacing applied between h4 and h1
     h4 + h1 {
         margin-top: @chapter-spacing-after-title;
+    }
+
+    // Hide anchors
+    .heading-permalink > a.heading-permalink {
+        display: none;
     }
 }
