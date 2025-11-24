@@ -1,5 +1,5 @@
 /** Setup Theme */
-import '@userfrosting/theme-pink-cupcake/less/main.less'
+import './theme.less'
 
 /**
  * Import UIkit and its icons.

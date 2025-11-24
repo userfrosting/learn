@@ -1,0 +1,395 @@
+/*
+ * Custom docs & chapter template styles. All styles scoped under .docs-content 
+ * and/or .chapter-content
+ */
+
+/* Common Pages Styles
+=====================*/
+@text-letter-spacing: -0.03rem;
+
+.docs-content,
+.chapter-content {
+    /* General Typography */
+    letter-spacing: @text-letter-spacing;
+    text-align: justify;
+
+    em {
+        color: inherit;
+    }
+
+    /* Links */
+    a {
+        color: inherit;
+        border-bottom: 1px solid @global-color;
+        padding-bottom: 1px;
+    }
+
+    a:hover {
+        color: @global-theme-color;
+        border-bottom: 2px solid @global-theme-color;
+        text-decoration: none;
+    }
+
+    // a.nav-next, a.nav-prev {
+    //     color: #f77e83;
+    // }
+
+    // a.nav-next:hover, a.nav-prev:hover {
+    //     color: #ff8b8e;
+    // }
+
+    /* Images */
+    img {
+        display: block;
+        margin: 1.5rem auto; /* Center images with vertical spacing */
+    }
+
+    /* Top bar */
+    // #top-bar {
+    //     background: #F6F6F6;
+    //     border-radius: 2px;
+    //     margin: 0rem -1rem 2rem;
+    //     padding: 0 1rem;
+    //     height: 0;
+    //     min-height: 3rem; }
+
+    //     #top-github-link {
+    //     position: relative;
+    //     z-index: 1;
+    //     float: right;
+    //     display: block; }
+
+    //     #body #breadcrumbs {
+    //     height: auto;
+    //     display: block;
+    //     margin-bottom: 0;
+    //     padding-left: 0;
+    //     line-height: 1.4; }
+    //     #body #breadcrumbs span {
+    //         padding: 0 0.1rem; }
+
+    // #top-bar {
+    //     background: inherit;
+    // }
+
+    // #top-bar {
+    //     height: auto;
+    //     padding: 22px 16px 12px 16px;
+    // }
+
+    /* TOC */
+    // .toc h1 {
+    //     margin-bottom: 1rem;
+    //     text-align: left;
+    //     font-size: 2rem;
+    //     border-bottom: 2px solid #38424d;
+    // }
+
+    // .toc ol {
+    //     list-style-type: none;
+    //     padding-left: 0px;
+    //     line-height: 1.5;
+    //     margin-top: 0px;
+    //     margin-bottom: 0px;
+    //     margin-left: 0em;
+    //     font-size: inherit;
+    // }
+
+    // .toc ol ol {
+    //     margin-left: 2rem;
+    //     font-weight: 100;
+    // }
+
+    // .toc li a:before {
+    //     content: '#';
+    //     padding-right: 5px;
+    // }
+
+    // #toc a:hover {
+    //     color: #f56c68;
+    //     border-bottom: 1px solid #f56c68;
+    // }
+
+    /* Breadcrumbs */
+    // #body #breadcrumbs span {
+    //     padding: 0px .1rem 0px 0px;
+    // }
+
+    // #breadcrumbs {
+    //     border-bottom: 1px solid #444;
+    //     padding-bottom: 3px;
+    // }
+
+    /* Github link */
+    // #top-github-link a {
+    //     color: #26a69a;
+    // }
+
+    // #top-github-link a:hover {
+    //     color: #33c1b3;
+    // }
+
+    // .github-link i {
+    //     position: relative;
+    //     left: -2px;
+    //     top: 1px;
+    // }
+
+    /* Code Blocks */
+    // code,
+    // kbd,
+    // pre,
+    // samp {
+    //     font-family: 'Inconsolata', monospace;
+    // }
+
+    // code {
+    //     background: #f9f2f4;
+    //     color: #9c1d3d;
+    //     padding: 0.2rem 0.4rem;
+    //     border-radius: 3px;
+    // }
+
+    // pre {
+    //     padding: 1rem;
+    //     margin: 2rem 0;
+    //     background: #f6f6f6;
+    //     border: 1px solid #ddd;
+    //     border-radius: 2px;
+    //     line-height: 1.15;
+    //     font-size: 1rem;
+    // }
+    // pre code {
+    //     color: #237794;
+    //     background: inherit;
+    //     font-size: 1rem;
+    // }
+
+    // pre {
+    //     border-color: #f6f6f6;
+    //     box-shadow: 0px 0px 11px 0px hsla(0, 0%, 71%, 0.04);
+    // }
+
+    // code {
+    //     background-color: rgba(206, 239, 239, 0.44);
+    //     color: #062938;
+    //     border-radius: 0px;
+    // }
+
+    // pre code {
+    //     color: #3a3e3d;
+    //     background: none;
+    //     font-size: 16.5px;
+    // }
+
+    // .copy-to-clipboard {
+    //     background-color: #e7f2f9;
+    //     margin-left: 0;
+    //     top: -1.25px;
+    //     width: 22px;
+    //     height: 23px;
+    //     padding-top: 0px;
+    //     padding-bottom: 0px;
+    // }
+
+    // .copy-to-clipboard:hover {
+    //     background-color: #cce3ec;
+    // }
+
+    // blockquote code, blockquote .copy-to-clipboard {
+    //     background-color: rgba(129, 136, 142, 0.13);
+    // }
+
+    // blockquote p {
+    //     color: #555;
+    //     padding-left: .5rem;
+    // }
+
+    // blockquote {
+    //     border-left: 10px solid #e5e6e6;
+    // }
+
+    // blockquote>blockquote>p,
+    // blockquote>blockquote>blockquote>p,
+    // blockquote>blockquote>blockquote>blockquote>p,
+    // blockquote>blockquote>blockquote>blockquote>blockquote>p,
+    // blockquote>blockquote>blockquote>blockquote>blockquote>blockquote>p {
+    //     /*border-top-color: rgba(247, 196, 198, 0.42);
+    //     background-color: #fbf1f1;
+    //     color: #555;
+    //     border-top-color: rgba(0, 128, 128, 0.74);
+    //     background: #e7f5f5;*/
+    //     border-top: 30px solid #6AB0DE;
+    //     background: #E7F2FA;
+    // }
+
+    // blockquote>blockquote>blockquote>blockquote>p {
+    //     /*border-top-color: rgba(238, 110, 115, 0.99);
+    //     background-color: rgb(253, 242, 243);*/
+    //     border-top: 30px solid #F0B37E;
+    //     background: #FFF2DB;
+    // }
+
+    // blockquote p:first-child:after,
+    // blockquote > blockquote p:first-child:after,
+    // blockquote > blockquote > blockquote p:first-child:after,
+    // blockquote > blockquote > blockquote > blockquote p:first-child:after,
+    // blockquote > blockquote > blockquote > blockquote > blockquote p:first-child:after,
+    // blockquote p:first-child:before,
+    // blockquote > blockquote p:first-child:before,
+    // blockquote > blockquote > blockquote p:first-child:before,
+    // blockquote > blockquote > blockquote > blockquote p:first-child:before,
+    // blockquote > blockquote > blockquote > blockquote > blockquote p:first-child:before {
+    //     color: white;
+    //     font-weight: inherit;
+    // }
+
+    /* Tables */
+    @table-padding: 0.5rem;
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: @global-border-width solid @global-border;
+    }
+
+    tr,
+    td,
+    th {
+        vertical-align: middle;
+    }
+
+    th {
+        background: @global-muted-background;
+        padding: @table-padding;
+        text-align: left;
+    }
+
+    td {
+        padding: @table-padding;
+        border: @global-border-width solid @global-border;
+    }
+}
+
+/* Docs Template Styles
+=====================*/
+@header-letter-spacing: -1px;
+@header-padding-horizontal: 1.375rem;
+@header-h1-font-size: 2rem;
+@header-h2-font-size: 1.75rem;
+@header-h3-font-size: 1.5rem;
+@header-h4-font-size: 1.33rem;
+@header-h5-font-size: 1.2rem;
+@header-h6-font-size: 1rem;
+@header-border-size: 2px;
+@header-border-color: @global-theme-color;
+@header-border-spacing: 0.25rem;
+@header-consecutive-spacing: 2.5rem;
+
+.docs-content {
+    /* Header Typography */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: @global-emphasis-color;
+        letter-spacing: @header-letter-spacing;
+        margin-bottom: 0px;
+        padding-left: @header-padding-horizontal;
+        padding-right: @header-padding-horizontal;
+        border-bottom: @header-border-size solid @header-border-color;
+        display: table;
+        padding-bottom: @header-border-spacing; /* Space between text and border */
+    }
+
+    h1 {
+        font-size: @header-h1-font-size;
+        border-bottom: @header-border-size solid @global-emphasis-color;
+        display: block;
+    }
+
+    h2 {
+        font-size: @header-h2-font-size;
+    }
+
+    h3 {
+        font-size: @header-h3-font-size;
+    }
+
+    h4 {
+        font-size: @header-h4-font-size;
+    }
+
+    h5 {
+        font-size: @header-h5-font-size;
+    }
+
+    h6 {
+        font-size: @header-h6-font-size;
+    }
+
+    // Spacing applied to elements following headers
+    h1 + *,
+    h2 + *,
+    h3 + *,
+    h4 + *,
+    h5 + *,
+    h6 + * {
+        margin-top: 0.95rem;
+    }
+
+    // Spacing applied to consecutive headers
+    h1 + h2,
+    h2 + h3,
+    h3 + h4,
+    h4 + h5,
+    h5 + h6 {
+        margin-top: @header-consecutive-spacing;
+    }
+}
+
+/* Chapter Template Styles
+=====================*/
+@chapter-padding-horizontal: 10%;
+@chapter-padding-vertical: 2rem;
+@chapter-header-size: 2.75rem;
+@chapter-title-size: 1.85rem;
+@chapter-font-size: 1.15rem;
+@chapter-header-border-spacing: 0.5rem;
+@chapter-border-size: 4px;
+@chapter-border-color: #d1d1d1;
+@chapter-spacing-after-title: 3.5rem;
+
+.chapter-content {
+    /* Page setup */
+    padding: @chapter-padding-vertical @chapter-padding-horizontal;
+    font-size: @chapter-font-size;
+
+    /* Header Typography */
+    h1,
+    h4 {
+        text-align: center;
+        display: block;
+        letter-spacing: @header-letter-spacing;
+    }
+
+    h1 {
+        font-size: @chapter-header-size;
+        color: @global-emphasis-color;
+        border-bottom: @chapter-border-size solid @chapter-border-color;
+        padding-bottom: @chapter-header-border-spacing; /* Space between text and border */
+    }
+
+    h4 {
+        font-size: @chapter-title-size;
+        color: inherit;
+    }
+
+    // Spacing applied between h4 and h1
+    h4 + h1 {
+        margin-top: @chapter-spacing-after-title;
+    }
+}

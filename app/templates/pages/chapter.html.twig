@@ -4,11 +4,7 @@
 {% block page_description %}{% endblock %}
 
 {% block page_content %}
-    <div id="chapter">
-        <div id="body-inner">
-            <p>
-                {{ page.getContent()|raw }}
-            </p>
-        </div>
+    <div class="chapter-content">
+        {{ page.getContent()|raw }}
     </div>
 {% endblock %}

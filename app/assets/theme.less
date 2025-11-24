@@ -1,0 +1,25 @@
+@import '@userfrosting/theme-pink-cupcake/less/main.less';
+@import 'css/docs.less';
+
+/**
+ * Custom Theme Overrides
+ */
+@sidebar-width: 300px;
+
+/*
+ * TEMP - Fix font smoothing issues until Beta 7 release
+ */
+.hook-base-body() {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.hook-navbar() {
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+}
+
+aside.uf-sidenav .uk-nav-default .uk-nav-sub a {
+    letter-spacing: -0.45px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
