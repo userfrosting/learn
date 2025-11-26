@@ -19,6 +19,7 @@ use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
+use League\CommonMark\Extension\TableOfContents\TableOfContentsExtension;
 use League\CommonMark\MarkdownConverter;
 use UserFrosting\Config\Config;
 use UserFrosting\ServicesProvider\ServicesProviderInterface;
@@ -49,6 +50,7 @@ class MarkdownService implements ServicesProviderInterface
                 $environment->addExtension(new FrontMatterExtension());
                 $environment->addExtension(new GithubFlavoredMarkdownExtension());
                 $environment->addExtension(new HeadingPermalinkExtension());
+                $environment->addExtension(new TableOfContentsExtension());
 
                 // Instantiate the converter engine and start converting some Markdown!
                 $converter = new MarkdownConverter($environment);
