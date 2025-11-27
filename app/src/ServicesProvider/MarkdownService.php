@@ -15,6 +15,7 @@ namespace UserFrosting\Learn\ServicesProvider;
 use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
@@ -51,6 +52,7 @@ class MarkdownService implements ServicesProviderInterface
                 $environment->addExtension(new GithubFlavoredMarkdownExtension());
                 $environment->addExtension(new HeadingPermalinkExtension());
                 $environment->addExtension(new TableOfContentsExtension());
+                $environment->addExtension(new FootnoteExtension());
 
                 // Instantiate the converter engine and start converting some Markdown!
                 $converter = new MarkdownConverter($environment);
