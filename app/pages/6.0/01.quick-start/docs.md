@@ -11,7 +11,7 @@ UserFrosting is a free, open-source jumping-off point for building user-centered
 > [!NOTE]
 > This quick start guide is aimed at experienced PHP developers who already have a development environment set up. If that's not your case, head over to the [First Chapter](/background) to start your journey.
 
-> [!WARNING] 
+> [!IMPORTANT] 
 > This is the documentation for **UserFrosting 5**. If you are looking for documentation for _UserFrosting 4_, [click here](https://learn.userfrosting.com/4.6/).
 
 ## Requirements
