@@ -5,15 +5,17 @@
  * Custom Theme Overrides
  */
 @sidebar-width: 300px;
-
-// TODO : Move to the theme package
-html {
-    scroll-padding-top: @navbar-nav-item-height + 5px; /* Adjust based on your header's height */
-}
+@alert-primary-title-background: #6ab0de;
 
 /*
  * TEMP - Fix font smoothing issues until Beta 7 release
  */
+@import 'css/alert.less';
+
+html {
+    scroll-padding-top: @navbar-nav-item-height + @global-medium-margin;
+}
+
 .hook-base-body() {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

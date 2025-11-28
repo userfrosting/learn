@@ -1,0 +1,42 @@
+.hook-alert-misc() {
+    // Custom style to the 'h3' element + remove 'h3' inherited margin
+    .uk-alert .uk-alert-title {
+        font-size: @base-body-font-size;
+        padding: @alert-title-vertical-padding @alert-title-horizontal-padding;
+        margin-bottom: 0px;
+
+        .uk-icon {
+            padding-right: 5px;
+        }
+    }
+
+    // Apply custom title bar background
+    .uk-alert-primary .uk-alert-title {
+        background-color: @alert-primary-title-background;
+        color: @alert-primary-title-color;
+    }
+    .uk-alert-success .uk-alert-title {
+        background-color: @alert-success-title-background;
+        color: @alert-success-title-color;
+    }
+    .uk-alert-warning .uk-alert-title {
+        background-color: @alert-warning-title-background;
+        color: @alert-warning-title-color;
+    }
+    .uk-alert-danger .uk-alert-title {
+        background-color: @alert-danger-title-background;
+        color: @alert-danger-title-color;
+    }
+    .uk-alert-info .uk-alert-title {
+        background-color: @alert-info-title-background;
+        color: @alert-info-title-color;
+    }
+    .uk-alert-secondary .uk-alert-title {
+        background-color: @alert-secondary-title-background;
+        color: @alert-secondary-title-color;
+    }
+    .uk-alert-muted .uk-alert-title {
+        background-color: @alert-muted-title-background;
+        color: @alert-muted-title-color;
+    }
+}

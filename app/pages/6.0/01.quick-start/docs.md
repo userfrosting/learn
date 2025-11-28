@@ -8,13 +8,16 @@ taxonomy:
 
 UserFrosting is a free, open-source jumping-off point for building user-centered web applications with PHP and Javascript. It comes with a sleek, modern interface, basic user account features, and an administrative user management system - all fully functioning out of the box.
 
-[notice=note]This quick start guide is aimed at experienced PHP developers who already have a development environment set up. If that's not your case, head over to the [First Chapter](/background) to start your journey.[/notice]
+> [!NOTE]
+> This quick start guide is aimed at experienced PHP developers who already have a development environment set up. If that's not your case, head over to the [First Chapter](/background) to start your journey.
 
-[notice]This is the documentation for **UserFrosting 5**. If you are looking for documentation for _UserFrosting 4_, [click here](https://learn.userfrosting.com/4.6/).[/notice]
+> [!WARNING] 
+> This is the documentation for **UserFrosting 5**. If you are looking for documentation for _UserFrosting 4_, [click here](https://learn.userfrosting.com/4.6/).
 
 ## Requirements
 
-[notice=tip]Using Docker? [Check out the Docker Documentation](/installation/environment/docker) to install UserFrosting through it's native Docker integration.[/notice]
+> [!TIP]
+> Using Docker? [Check out the Docker Documentation](/installation/environment/docker) to install UserFrosting through it's native Docker integration.
 
 UserFrosting has a few system requirements. You need to make sure your local UserFrosting development environment meets the following requirements:
 
@@ -30,7 +33,8 @@ Use Composer to create an empty project with the latest version of UserFrosting 
 composer create-project userfrosting/userfrosting UserFrosting "^5.1"
 ```
 
-[notice=tip]During installation, you can choose **sqlite** as database provider if you don't have a database provider available.[/notice]
+> [!TIP]
+> During installation, you can choose **sqlite** as database provider if you don't have a database provider available.
 
 If any dependencies are not met, an error will occur. Simply try again after fixing said error, or manually run `composer install` and `php bakery bake` from the install directory. For more information about the `bake` command, head to the [Bakery CLI](/cli) chapter.
 
