@@ -1,11 +1,21 @@
+/**
+ * Import dependencies
+ */
 @import '@userfrosting/theme-pink-cupcake/less/main.less';
+@import 'highlight.js/styles/github-dark-dimmed.css';
+@import 'highlightjs-copy/dist/highlightjs-copy.min.css';
+
+/**
+ * Import custom styles for documentation
+ */
 @import 'css/docs.less';
 
 /**
- * Custom Theme Overrides
+ * Override Pink Cupcake default variables
  */
 @sidebar-width: 300px;
 @alert-primary-title-background: #6ab0de;
+@base-pre-padding: 0px;
 
 /*
  * TEMP - Fix font smoothing issues until Beta 7 release

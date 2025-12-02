@@ -8,6 +8,11 @@ import './theme.less'
 import '@fortawesome/fontawesome-free/css/all.css'
 
 /**
+ * Import Highlight.js
+ */
+import './highlight'
+
+/**
  * Import UIkit and its icons.
  */
 import UIkit from 'uikit'
