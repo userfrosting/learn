@@ -186,6 +186,30 @@ class DocumentationRepository
     }
 
     /**
+     * Get a versioned image resource by path and version.
+     *
+     * @param string $version The version (empty string for latest)
+     * @param string $path    The image path
+     *
+     * @throws PageNotFoundException If the image is not found
+     * @return ResourceInterface
+     */
+    public function getVersionedImage(string $version, string $path): ResourceInterface
+    {
+        // Get version object (throws exception if invalid)
+        $versionObj = $this->versionValidator->getVersion($version === '' ? null : $version);
+
+        // Try to get the versioned image resource first
+        $resource = $this->locator->getResource("pages://{$versionObj->id}/images/{$path}");
+
+        if ($resource === null) {
+            throw new PageNotFoundException("Image not found: {$path} (version: {$versionObj->id})");
+        }
+
+        return $resource;
+    }
+
+    /**
      * Get the cache key for documentation items.
      *
      * @param string $type       The type of item (e.g., 'tree', 'page', 'versions', 'pages')

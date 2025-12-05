@@ -19,6 +19,14 @@ class MyRoutes implements RouteDefinitionInterface
 {
     public function register(App $app): void
     {
+        // Route for versioned and non-versioned images
+        $app->get('/{version:\d+\.\d+}/images/{path:.*}', [DocumentationController::class, 'imageVersioned'])
+            ->add(TwigGlobals::class)
+            ->setName('documentation.image.versioned');
+        $app->get('/images/{path:.*}', [DocumentationController::class, 'image'])
+            ->add(TwigGlobals::class)
+            ->setName('documentation.image');
+
         // Route for versioned and non-versioned documentation pages
         $app->get('/{version:\d+\.\d+}[/{path:.*}]', [DocumentationController::class, 'pageVersioned'])
             ->add(TwigGlobals::class)

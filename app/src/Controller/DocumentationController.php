@@ -55,4 +55,63 @@ class DocumentationController
             'page' => $page,
         ]);
     }
+
+    /**
+     * Serve an image file.
+     * Request type: GET.
+     *
+     * @param string   $path
+     * @param Response $response
+     * @param Twig     $view
+     */
+    public function image(string $path, Response $response, Twig $view): Response
+    {
+        return $this->imageVersioned('', $path, $response, $view);
+    }
+
+    /**
+     * Serve a versioned image file.
+     * Request type: GET.
+     *
+     * @param string   $version
+     * @param string   $path
+     * @param Response $response
+     * @param Twig     $view
+     */
+    public function imageVersioned(string $version, string $path, Response $response, Twig $view): Response
+    {
+        // Get the versioned image resource from the repository
+        $imageResource = $this->pagesDirectory->getVersionedImage($version, $path);
+
+        // Get the image content
+        $imageContent = file_get_contents($imageResource->getAbsolutePath());
+
+        if ($imageContent === false) {
+            $response->getBody()->write('Image not found');
+
+            return $response->withStatus(404);
+        }
+
+        // Determine MIME type based on file extension
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        $mimeType = match ($extension) {
+            'jpg', 'jpeg' => 'image/jpeg',
+            'png'   => 'image/png',
+            'gif'   => 'image/gif',
+            'svg'   => 'image/svg+xml',
+            'webp'  => 'image/webp',
+            'bmp'   => 'image/bmp',
+            'ico'   => 'image/x-icon',
+            default => 'application/octet-stream',
+        };
+
+        // Write the image content to response body
+        $response->getBody()->write($imageContent);
+
+        // Set appropriate headers
+        return $response
+            ->withHeader('Content-Type', $mimeType)
+            ->withHeader('Content-Length', (string) strlen($imageContent))
+            ->withHeader('Cache-Control', 'public, max-age=3600');
+    }
 }
