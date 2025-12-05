@@ -6,6 +6,9 @@
 /* Common Pages Styles
 =====================*/
 @text-letter-spacing: -0.03rem;
+@blockquote-border-size: 10px;
+@blockquote-border-color: @global-muted-background;
+@blockquote-color: @global-muted-color;
 
 .docs-content,
 .chapter-content {
@@ -102,53 +105,17 @@
     //     top: 1px;
     // }
 
-    // blockquote code, blockquote .copy-to-clipboard {
-    //     background-color: rgba(129, 136, 142, 0.13);
-    // }
+    /* Blockquotes */
+    blockquote {
+        border-left: @blockquote-border-size solid @blockquote-border-color;
 
-    // blockquote p {
-    //     color: #555;
-    //     padding-left: .5rem;
-    // }
-
-    // blockquote {
-    //     border-left: 10px solid #e5e6e6;
-    // }
-
-    // blockquote>blockquote>p,
-    // blockquote>blockquote>blockquote>p,
-    // blockquote>blockquote>blockquote>blockquote>p,
-    // blockquote>blockquote>blockquote>blockquote>blockquote>p,
-    // blockquote>blockquote>blockquote>blockquote>blockquote>blockquote>p {
-    //     /*border-top-color: rgba(247, 196, 198, 0.42);
-    //     background-color: #fbf1f1;
-    //     color: #555;
-    //     border-top-color: rgba(0, 128, 128, 0.74);
-    //     background: #e7f5f5;*/
-    //     border-top: 30px solid #6AB0DE;
-    //     background: #E7F2FA;
-    // }
-
-    // blockquote>blockquote>blockquote>blockquote>p {
-    //     /*border-top-color: rgba(238, 110, 115, 0.99);
-    //     background-color: rgb(253, 242, 243);*/
-    //     border-top: 30px solid #F0B37E;
-    //     background: #FFF2DB;
-    // }
-
-    // blockquote p:first-child:after,
-    // blockquote > blockquote p:first-child:after,
-    // blockquote > blockquote > blockquote p:first-child:after,
-    // blockquote > blockquote > blockquote > blockquote p:first-child:after,
-    // blockquote > blockquote > blockquote > blockquote > blockquote p:first-child:after,
-    // blockquote p:first-child:before,
-    // blockquote > blockquote p:first-child:before,
-    // blockquote > blockquote > blockquote p:first-child:before,
-    // blockquote > blockquote > blockquote > blockquote p:first-child:before,
-    // blockquote > blockquote > blockquote > blockquote > blockquote p:first-child:before {
-    //     color: white;
-    //     font-weight: inherit;
-    // }
+        p {
+            color: @blockquote-color;
+            padding-left: @blockquote-border-size;
+            font-size: @global-font-size;
+            line-height: @global-line-height;
+        }
+    }
 
     /* Tables */
     @table-padding: 0.5rem;
