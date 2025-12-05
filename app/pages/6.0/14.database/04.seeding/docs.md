@@ -14,13 +14,15 @@ While migrations acts on the structure of the database, seeds acts on the data i
 
 A seed is actually the most versatile yet simple way to interact with the database as well as many other aspect of UserFrosting. And while a seed don't have build in dependencies and has no direct way to be reverted, this can still be done manually! They can even be run by a migration sometimes.
 
-[notice=note]Seeds can't interact with the user through the command line and can't accept any arguments. This is because seeds can also be run outside of the Bakery. If you want to interact with the user through the console, you should write a [custom Bakery command](/cli/custom-commands).[/notice]
+> [!NOTE]
+> Seeds can't interact with the user through the command line and can't accept any arguments. This is because seeds can also be run outside of the Bakery. If you want to interact with the user through the console, you should write a [custom Bakery command](/cli/custom-commands).
 
 ## Seed structure
 
 Each seed class needs to implement the `\UserFrosting\Sprinkle\Core\Seeder\SeedInterface` interface and must at least implement the `run(): void` method. This method will be the one ran by the `seed` Bakery command. Of course your class may contains other helper methods, but they need to be called by the `run` one. 
 
-[notice=tip]Any services you require inside your seed class can be [injected in the constructor via Autowire](/dependency-injection/the-di-container#autowiring).[/notice]
+> [!TIP]
+> Any services you require inside your seed class can be [injected in the constructor via Autowire](/dependency-injection/the-di-container#autowiring).
 
 The basic seed class looks like this :
 
@@ -249,4 +251,5 @@ class MyMasterSeed implements SeedInterface
 }
 ```
 
-[notice=tip]The same method can be used to run a seed inside a migration.[/notice]
+> [!TIP]
+> The same method can be used to run a seed inside a migration.

@@ -18,4 +18,5 @@ See this guide for more detail on this process : [Set up a WSL development envir
 
 When using Windows and WSL2, keep in mind your project files will be stored inside the Linux file system. For example, your project files will be in the Linux file system root directory (`\\wsl$\<DistroName>\home\<UserName>\Project`), not the Windows file system root directory (`C:\Users\<UserName>\Project or /mnt/c/Users/<UserName>/Project$`). See [Microsoft guide on file storage](https://learn.microsoft.com/en-us/windows/wsl/setup/environment#file-storage) for more information. 
 
-[notice=tip]Also see the [Get started using Visual Studio Code with Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode) guide if you're using VSCode.[/notice]
+> [!TIP]
+> Also see the [Get started using Visual Studio Code with Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode) guide if you're using VSCode.

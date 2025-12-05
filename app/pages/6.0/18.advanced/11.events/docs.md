@@ -49,9 +49,9 @@ class UserLoggedInEvent
 
 When it's created, the *Emitter* will define a user object as it's contractor argument. Because it's used a *public* property, the *Listeners* can have **read and write access** to it. The *Emitter* can retrieve the mutated version of the object when the dispatcher return the event to it.
 
-[notice]Remember the goal of events are to be a container. It **can** contains other variables and object, but **shouldn't** act on them. As defined in the PSR-14 standard : 
-
-> Event objects MAY be mutable should the use case call for Listeners providing information back to the Emitter. However, if no such bidirectional communication is needed then it is RECOMMENDED that the Event be defined as immutable; i.e., defined such that it lacks mutator methods.[/notice]
+> [!NOTE]
+> Remember the goal of events are to be a container. It **can** contains other variables and object, but **shouldn't** act on them. As defined in the PSR-14 standard :
+> > Event objects MAY be mutable should the use case call for Listeners providing information back to the Emitter. However, if no such bidirectional communication is needed then it is RECOMMENDED that the Event be defined as immutable; i.e., defined such that it lacks mutator methods.
 
 #### Stoppable Events
 
@@ -65,7 +65,8 @@ For example, if the event purpose is to log an activity, and it should only be l
 
 A Listener may be any PHP callable. In it's basic form, it's also a very basic class that doesn't requires to implement any interface, it must only have the `__invoke` method. The Listener's `__invoke` method MUST have one and only one parameter, which is the Event to which it responds, and should always return `void`.
 
-[notice=tip]A listeners can listen to many events. It should type hint it's parameter as specifically as possible; that is, a Listener may type hint against an interface to indicate it is compatible with any Event type that implements that interface, or to a specific event class.[/notice]
+> [!TIP]
+> A listeners can listen to many events. It should type hint it's parameter as specifically as possible; that is, a Listener may type hint against an interface to indicate it is compatible with any Event type that implements that interface, or to a specific event class.
 
 For example : 
 ```php
@@ -99,7 +100,8 @@ class AssignDefaultRoles
 }
 ```
 
-[notice=tip]An Exception or Error thrown by a Listener WILL block the execution of any further Listeners. An Exception or Error thrown by a Listener will propagate back up to the Emitter. Compared to stoppable event, the exception can (should) be catch by the emitter, making it very useful stop execution of of any further Listeners, but also the emitter code.[/notice]
+> [!TIP]
+> An Exception or Error thrown by a Listener WILL block the execution of any further Listeners. An Exception or Error thrown by a Listener will propagate back up to the Emitter. Compared to stoppable event, the exception can (should) be catch by the emitter, making it very useful stop execution of of any further Listeners, but also the emitter code.
 
 ### Dispatcher
 
@@ -165,13 +167,11 @@ public function getEventListeners(): array
 }
 ```
 
-[notice=tip]
-to get a compiled map of all registered events and their associated listeners, in the order returned by UserFrosting Listener Provider, you can use the debug bakery command : 
-
-```bash
-php bakery debug:events
-```
-[/notice]
+> [!TIP]
+> to get a compiled map of all registered events and their associated listeners, in the order returned by UserFrosting Listener Provider, you can use the debug bakery command :
+> ```bash
+> php bakery debug:events
+> ```
 
 ## Built-in events
 

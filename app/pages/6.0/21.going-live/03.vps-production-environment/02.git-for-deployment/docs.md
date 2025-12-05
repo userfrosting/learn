@@ -7,7 +7,8 @@ taxonomy:
 ---
 <!-- [plugin:content-inject](/modular/_update5.0) -->
 
-[notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+> [!NOTE]
+> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
 As we explained earlier, `git` is a good tool for deployment because it keeps track of the changes to your codebase between commits. Once you've set up a remote repository in your production environment, deployment can be as simple as a single `git push` command. Git will automatically determine which files need to be updated on the live server.
 
@@ -19,7 +20,8 @@ This guide assumes that you already set up your UserFrosting project as a git re
 
 This guide also assumes that you are **regularly committing changes to your repository.** Git can **only** push files to the production server if it is [tracking them](https://www.atlassian.com/git/tutorials/saving-changes#git-add) and you have [committed your changes](https://www.atlassian.com/git/tutorials/saving-changes#git-commit). If you are new to git and _don't understand what this means_, we strongly suggest you check out the free git tutorials from [Github](https://try.github.io) or [Atlassian](https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud) before you continue.
 
-[notice=warning]Your custom code will not get deployed unless you **add new files** and **commit changes** with git to your repository.[/notice]
+> [!WARNING]
+> Your custom code will not get deployed unless you **add new files** and **commit changes** with git to your repository.
 
 ## SSH into remote machine
 
@@ -31,7 +33,8 @@ If we used a non-bare repository, we wouldn't be able to "push to production" be
 
 ## Create a bare repository
 
-[notice=note]You may need to use `sudo` to run some of these commands.[/notice]
+> [!NOTE]
+> You may need to use `sudo` to run some of these commands.
 
 By default, we'll create a directory `repo` in Ubuntu's `var/` directory that will contain all of our bare repositories on this server.
 
@@ -93,7 +96,8 @@ Make sure that your user account has ownership of the `post-receive` file, and t
 sudo chmod u+x,g+x /var/repo/<repo name>.git/hooks/post-receive
 ```
 
-[notice=tip]For more information on file permissions, see the [Unix primer](/going-live/unix-primer-ubuntu#viewing-and-basic-concepts).[/notice]
+> [!TIP]
+> For more information on file permissions, see the [Unix primer](/going-live/unix-primer-ubuntu#viewing-and-basic-concepts).
 
 ## Push your project for the first time
 
@@ -143,7 +147,8 @@ ls /var/www/<repo name>
 
 You should see your project files. If the directory is empty, then something went wrong with the `post-receive` script - most likely a permissions issue. Fix the issue and try to `push` again.
 
-[notice=warning]If the files were successfully `push`ed to the production server, but the `post-receive` script failed to execute properly, git will just say `Everything up-to-date` and exit **without** rerunning your `post-receive` script. To force git to run the script, you need to make a commit before you rerun `git push`. To make an "empty" commit, use `git commit --allow-empty -m "retry deployment"`. You may want to create a separate deployment branch to avoid polluting your `master` branch with lots of empty commits.[/notice]
+> [!WARNING]
+> If the files were successfully `push`ed to the production server, but the `post-receive` script failed to execute properly, git will just say `Everything up-to-date` and exit **without** rerunning your `post-receive` script. To force git to run the script, you need to make a commit before you rerun `git push`. To make an "empty" commit, use `git commit --allow-empty -m "retry deployment"`. You may want to create a separate deployment branch to avoid polluting your `master` branch with lots of empty commits.
 
 Once you have your `git push` working properly, congratulations! Deploying updates to your live application is as simple as running `git push live master` again.
 

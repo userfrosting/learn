@@ -18,7 +18,8 @@ To make things easier, UserFrosting 5 now separates all of your code from UserFr
 
 The **app skeleton** is a bare-bone UserFrosting project. Think of it like a starting kit, or template, to create your own application. Everything in the skeleton is meant to be modified. As such, the skeleton doesn't need to be a synced copy of the UserFrosting Github repository (called a ***fork***). It provides example pages and all the basic configuration to run a default UserFrosting application. 
 
-[notice=info]While there is an official UserFrosting App Skeleton, it doesn't need to be the only one. Many skeletons could exist as starting points for new UserFrosting-based projects ![/notice]
+> [!IMPORTANT]
+> While there is an official UserFrosting App Skeleton, it doesn't need to be the only one. Many skeletons could exist as starting points for new UserFrosting-based projects
 
 But what makes a UserFrosting application, a UserFrosting application? What does it contain? Well, it's not much different than a normal modern PHP application. Your UserFrosting based project will consist of your code, plus a bunch of **dependencies**. These dependencies are all handled by Composer (which we'll explain later) and are themselves separated into three groups : **The Framework**, **External Libraries**, and **Sprinkles** :
 

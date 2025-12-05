@@ -32,7 +32,8 @@ AWS_URL=""
 
 See [Amazon S3 Support Page](https://aws.amazon.com/en/blogs/security/wheres-my-secret-access-key/) if you need help finding your access keys. The region code can be found [here](http://docs.aws.amazon.com/general/latest/gr/rande.html).
 
-[notice=note]The package required to use S3 disk is not included with a default install. You must include `league/flysystem-aws-s3-v3` inside a custom Sprinkles `composer.json`.[/notice]
+> [!NOTE]
+> The package required to use S3 disk is not included with a default install. You must include `league/flysystem-aws-s3-v3` inside a custom Sprinkles `composer.json`.
 
 #### The _rackspace_ disk
 The **rackspace** disk provides an example configuration to access [rackspace](https://www.rackspace.com) storage solution. Because of the sensitive information, we recommend storing your rackspace credential in the `app/.env` file.
@@ -46,13 +47,15 @@ RACKSPACE_REGION=""
 RACKSPACE_URL_TYPE=""
 ```
 
-[notice=note]The package required to use rackspace disk is not included with a default install. You must include `league/flysystem-rackspace` inside a custom Sprinkles `composer.json`.[/notice]
+> [!NOTE]
+> The package required to use rackspace disk is not included with a default install. You must include `league/flysystem-rackspace` inside a custom Sprinkles `composer.json`.
 
 ### Adding your own disk
 
 Of course, you may configure as many disks as you like, and may even have multiple disks that use the same driver.
 
-[notice=warning]Since every sprinkles can access the filesystem, we recommend you create a sprinkle specific disk if you want to avoid another sprinkle from accidentally overwriting a file managed by your sprinkle.[/notice]
+> [!WARNING]
+> Since every sprinkles can access the filesystem, we recommend you create a sprinkle specific disk if you want to avoid another sprinkle from accidentally overwriting a file managed by your sprinkle.
 
 To define a new disk, simply add the necessary configuration to your sprinkle configuration file :
 
@@ -71,7 +74,8 @@ The `mySite` disk will point to the `app/storage/_mySite` directory.
 
 Note that you can also overwrite a default disk configuration values in your sprinkle the same way you do with other configuration values.
 
-[notice=tip]To change the default disk used by UserFrosting, you can also overwrite the `filesystems.default` configuration.[/notice]
+> [!TIP]
+> To change the default disk used by UserFrosting, you can also overwrite the `filesystems.default` configuration.
 
 The following drivers have built-in support in UserFrosting :
  - local
@@ -190,4 +194,5 @@ Last thing to do is to create a disk using the `gdrive` driver in your sprinkle 
 
 ```
 
-[notice=tip]As with the S3 and rackspace Drivers, it's recommended to store your tokens and keys in the `app/.env` file.[/notice]
+> [!TIP]
+> As with the S3 and rackspace Drivers, it's recommended to store your tokens and keys in the `app/.env` file.

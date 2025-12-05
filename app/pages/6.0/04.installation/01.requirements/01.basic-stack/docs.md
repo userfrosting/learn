@@ -17,7 +17,8 @@ To run UserFrosting, you'll need four things :
 3. [Database](#database)
 4. [SMTP (Mail) Server](#smtp-mail-server)
 
-[notice=note]If you're already using or plan on using Docker, all of the necessary stack will already be configured for you. However, it's important to understand what is required to run UserFrosting, so you can understand the services Docker provides for you![/notice]
+> [!NOTE]
+> If you're already using or plan on using Docker, all of the necessary stack will already be configured for you. However, it's important to understand what is required to run UserFrosting, so you can understand the services Docker provides for you
 
 ## Web Server Software Requirements
 
@@ -47,7 +48,8 @@ If your hosting service doesn't have PHP 8.1 or above installed, call them and a
 
 As for your local development environment ([You _do_ have a local development environment, right ?](/background/develop-locally-serve-globally)), if it's that much of a burden then... I don't know what to tell you. So what are you waiting for? Upgrade!
 
-[notice=note]As a reminder, as of UserFrosting 5.1, **PHP 8.3** is officially recommended. While you can still use UserFrosting 5 with PHP 8.1 and 8.2, upgrading to PHP 8.3 is highly recommended. Both PHP 8.1 and 8.2 support will eventually be removed the future.[/notice]
+> [!NOTE]
+> As a reminder, as of UserFrosting 5.1, **PHP 8.3** is officially recommended. While you can still use UserFrosting 5 with PHP 8.1 and 8.2, upgrading to PHP 8.3 is highly recommended. Both PHP 8.1 and 8.2 support will eventually be removed the future.
 
 ### PHP Extensions
 
@@ -68,15 +70,19 @@ To store data, UserFrosting requires a [relational database](https://www.techtar
 - [PostgreSQL 14](https://www.postgresql.org)
 - [Microsoft SQL Server 2019](https://en.wikipedia.org/wiki/Microsoft_SQL_Server)
 
-[notice]MariaDB is an open-source fork of MySQL. The reason it exists is because of [numerous concerns](https://www2.computerworld.com.au/article/457551/dead_database_walking_mysql_creator_why_future_belongs_mariadb/) that Oracle would not do a good job honoring the open-source nature of the MySQL community. For all technical purposes, MariaDB and MySQL are more or less perfectly interoperable.[/notice]
+> [!NOTE]
+> MariaDB is an open-source fork of MySQL. The reason it exists is because of [numerous concerns](https://www2.computerworld.com.au/article/457551/dead_database_walking_mysql_creator_why_future_belongs_mariadb/) that Oracle would not do a good job honoring the open-source nature of the MySQL community. For all technical purposes, MariaDB and MySQL are more or less perfectly interoperable.
 
-[notice=warning]Support for SQL Server on Windows is **experimental**. Contact the UserFrosting team if you want to help improve support for SQL Server ![/notice]
+> [!WARNING]
+> Support for SQL Server on Windows is **experimental**. Contact the UserFrosting team if you want to help improve support for SQL Server
 
 MySQL and MariaDB are the most popular choice of database provider. However, when developing locally, you can skip installing additional software by using **SQLite** as your database provider. SQLite support is built-in to PHP and the data is stored as a file within the UserFrosting directory structure. This option isn't suited for production websites as it's slower than other solutions, but it's perfectly viable when testing your application locally.
 
-[notice=tip]It is not required to develop with the same database provider as the one you'll be using in production. It's totally fine to develop locally using SQLite and use MySQL on your production server. A [testing environment](/testing) can be used to make sure your code runs smoothly on both.[/notice]
+> [!TIP]
+> It is not required to develop with the same database provider as the one you'll be using in production. It's totally fine to develop locally using SQLite and use MySQL on your production server. A [testing environment](/testing) can be used to make sure your code runs smoothly on both.
 
-[notice=tip]One additional reason not to use SQLite in production: it does not fully support `ALTER TABLE` operations, and [the official workaround is twelve steps long](https://www.sqlite.org/lang_altertable.html#otheralter).  This is most likely to cause issues when [rolling back a migration](/cli/commands#migrate-rollback), or if you decide to [remove foreign keys or columns (or tables!)](https://www.sqlite.org/lang_altertable.html#altertabdropcol) in a later migration. There is an easier [workaround for dropping entire tables](/database/migrations#running-your-migration), but this is usually not acceptable in production. In development, it's much easier to drop a table if needed, re-run any needed migrations, and restore any missing (test) data.[/notice]
+> [!TIP]
+> One additional reason not to use SQLite in production: it does not fully support `ALTER TABLE` operations, and [the official workaround is twelve steps long](https://www.sqlite.org/lang_altertable.html#otheralter).  This is most likely to cause issues when [rolling back a migration](/cli/commands#migrate-rollback), or if you decide to [remove foreign keys or columns (or tables!)](https://www.sqlite.org/lang_altertable.html#altertabdropcol) in a later migration. There is an easier [workaround for dropping entire tables](/database/migrations#running-your-migration), but this is usually not acceptable in production. In development, it's much easier to drop a table if needed, re-run any needed migrations, and restore any missing (test) data.
 
 ## SMTP (Mail) Server
 

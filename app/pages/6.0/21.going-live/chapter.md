@@ -16,4 +16,5 @@ The specific act of transferring your code from the development environment to t
 
 This chapter discusses some options for **where** to deploy your UserFrosting application (hosting), **how** to deploy, and what additional steps you should take to ensure **security**, **reliability**, and a **good experience** for your users.
 
-[notice=note]To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+> [!NOTE]
+> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).

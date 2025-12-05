@@ -85,7 +85,8 @@ The main issue with client-side caching is that you need some way of forcing the
 
 Fortunately, UserFrosting's build tools take care of this as well. Each time you compile your assets, a random hash is used to name the compiled files. References to these assets in your pages are automatically updated to reflect these new names.
 
-[notice=tip]There are other steps that can be taken to further improve page performance, such as deferring the loading of Javascript and CSS, and inlining "above-the-fold" CSS. Google has recently released its [Pagespeed webserver module](https://developers.google.com/speed/pagespeed/module/) for Apache and nginx, which can automatically perform optimizations like these automatically and behind the scenes. We highly recommend that you look into installing and configuring this module if you use a supported webserver.[/notice]
+> [!TIP]
+> There are other steps that can be taken to further improve page performance, such as deferring the loading of Javascript and CSS, and inlining "above-the-fold" CSS. Google has recently released its [Pagespeed webserver module](https://developers.google.com/speed/pagespeed/module/) for Apache and nginx, which can automatically perform optimizations like these automatically and behind the scenes. We highly recommend that you look into installing and configuring this module if you use a supported webserver.
 
 ## Link building
 

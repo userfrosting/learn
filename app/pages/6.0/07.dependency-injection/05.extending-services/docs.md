@@ -31,4 +31,5 @@ public function register(): array
 
 The first parameter of the callable is the instance returned by the previous definition (i.e. the one we wish to decorate), the second parameter is the container.
 
-[notice=note]When extending a service, UserFrosting will always apply the extension **on top** of the previously defined service. The service is defined following the sprinkle dependency tree. It's important to keep in mind you might not always receive the `core` sprinkle definition, for example, and that your own extension can be overwritten down the road by a subsequent sprinkle.[/notice]
+> [!NOTE]
+> When extending a service, UserFrosting will always apply the extension **on top** of the previously defined service. The service is defined following the sprinkle dependency tree. It's important to keep in mind you might not always receive the `core` sprinkle definition, for example, and that your own extension can be overwritten down the road by a subsequent sprinkle.

@@ -11,4 +11,5 @@ This guide assumes that you've set up a VPS and installed a LAMP or LEMP stack, 
 
 The first step is to [install and configure required software on the remote server](/going-live/vps-production-environment/server-setup).
 
-[notice=note]To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+> [!NOTE]
+> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).

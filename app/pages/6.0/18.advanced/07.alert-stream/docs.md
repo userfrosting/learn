@@ -85,7 +85,8 @@ By default, alerts are stored in the user's [session](/advanced/sessions). They 
 
 Alternatively, you may choose to store alerts in the [user cache](/advanced/caching/usage#user-cache) instead. To do this, set value of `alert.storage` in your [configuration file](/configuration/config-files) to `cache`.
 
-[notice=info]If you are having issues with alerts not being properly cleared from the alert stream after retrieval, try using the `cache` option for alert persistence. See [this issue](https://github.com/userfrosting/UserFrosting/issues/633) for an explanation of the problem.[/notice]
+> [!IMPORTANT]
+> If you are having issues with alerts not being properly cleared from the alert stream after retrieval, try using the `cache` option for alert persistence. See [this issue](https://github.com/userfrosting/UserFrosting/issues/633) for an explanation of the problem.
 
 ## Client-side
 

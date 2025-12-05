@@ -29,7 +29,8 @@ After joining chat, please be sure to choose the appropriate channel:
 - **#github-activity**: Automated notifications from Github. This channel is read-only.
 - **#announcements**: General announcement channel. This channel is read-only.
 
-[notice=tip]Generally speaking, you're more likely to get a quick response if you post in **#support** rather than sending a direct message to a moderator or admin user directly.[/notice]
+> [!TIP]
+> Generally speaking, you're more likely to get a quick response if you post in **#support** rather than sending a direct message to a moderator or admin user directly.
 
 ### Chat Rules
 
@@ -114,7 +115,8 @@ If you have a **specific, well-researched question**, you may consider posting i
 
 Tag your question as `userfrosting`, as well as any other relevant tags (`twig`, `slim`, `eloquent`, `rest`, `jquery`, etc). **Before posting to any Stack community, please make sure your question conforms to their [question guidelines](http://stackoverflow.com/help/on-topic)!** If your question is more open-ended or opinion-based, you should probably just ask directly in chat.
 
-[notice=note]Once you post a question to Stack Overflow, you should post a link to your question in [chat](https://chat.userfrosting.com) for the fastest response.[/notice]
+> [!NOTE]
+> Once you post a question to Stack Overflow, you should post a link to your question in [chat](https://chat.userfrosting.com) for the fastest response.
 
 You may also find the following communities useful in certain cases:
 

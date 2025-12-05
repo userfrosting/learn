@@ -14,7 +14,8 @@ You can access any [configuration value](/configuration/config-files) directly i
 {{ config('site.title') }}
 ```
 
-[notice=warning]Use this carefully, as sensitive information (ie. passwords) could be stored in config ![/notice]
+> [!WARNING]
+> Use this carefully, as sensitive information (ie. passwords) could be stored in config
 
 ### checkAccess
 

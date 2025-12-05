@@ -98,7 +98,8 @@ To compare two values in an if/else block, use our custom Handlebars helper inst
 {{/ifx}}
 ```
 
-[notice=info]`#ifx` supports the basic logical operators (`==`, `!=`, `>`, `<`, etc), but does not support compound expressions. You can instead nest your expressions, or create your own custom helper. For more information, see [this Stack Overflow question](http://stackoverflow.com/questions/8853396/logical-operator-in-a-handlebars-js-if-conditional).[/notice]
+> [!IMPORTANT]
+> `#ifx` supports the basic logical operators (`==`, `!=`, `>`, `<`, etc), but does not support compound expressions. You can instead nest your expressions, or create your own custom helper. For more information, see [this Stack Overflow question](http://stackoverflow.com/questions/8853396/logical-operator-in-a-handlebars-js-if-conditional).
 
 ### Loops
 

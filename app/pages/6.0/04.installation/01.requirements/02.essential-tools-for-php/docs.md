@@ -17,7 +17,8 @@ During development, and before you're ready to deploy, you'll want to have the f
 5. [npm](#npm)
 6. [A code editor](#code-editor)
 
-[notice=note]If you're using or plan on using Docker, most of these tools will be provided for you. However, it's important to understand what they are, since you'll need to interact with them.[/notice]
+> [!NOTE]
+> If you're using or plan on using Docker, most of these tools will be provided for you. However, it's important to understand what they are, since you'll need to interact with them.
 
 ## The Command Line (CLI)
 
@@ -43,7 +44,8 @@ If you've been out of the PHP world for a while, you might have missed this crit
 
 Composer also handles autoloading, which means that the days of needing long blocks of `include` or `require` statements in your code are over. It fully implements the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/) for autoloading, which further helps the PHP community develop a consistent approach to releasing and consuming packages.
 
-[notice=note]Following its release in October 2020, UserFrosting 5 now requires [**Composer 2**](https://getcomposer.org).[/notice]
+> [!NOTE]
+> Following its release in October 2020, UserFrosting 5 now requires [**Composer 2**](https://getcomposer.org).
 
 ## Node.js
 
@@ -51,15 +53,18 @@ Composer also handles autoloading, which means that the days of needing long blo
 
 Although UserFrosting does not _run_ on Node.js, it does use several Node-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
 
-[notice]Even though we'll be using these tools to get our application ready for deployment, you don't need to install Node.js on your live server. You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.[/notice]
+> [!NOTE]
+> Even though we'll be using these tools to get our application ready for deployment, you don't need to install Node.js on your live server. You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.
 
-[notice=note]UserFrosting 5 requires **Node 18** or above.[/notice]
+> [!NOTE]
+> UserFrosting 5 requires **Node 18** or above.
 
 ## npm
 
 [npm](https://www.npmjs.com) stands for **N**ode **P**ackage **M**anager. npm is to Node.js what Composer is to PHP. It is used to grab the various Node packages that are required by UserFrosting's installation and build tools. 
 
-[notice=note]UserFrosting 5 requires **NPM 9** or above.[/notice]
+> [!NOTE]
+> UserFrosting 5 requires **NPM 9** or above.
 
 ## Code Editor
 

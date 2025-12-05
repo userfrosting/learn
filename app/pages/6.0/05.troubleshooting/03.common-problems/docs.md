@@ -84,7 +84,8 @@ Some examples:
 
 We **strongly recommend** using only lowercase words separated with `-` for Sprinkle directory names.
 
-[notice=note]You may need to re-run Composer if you change your Sprinkle directory path or namespace. On certain operating systems with case-insensitive filesystems, Composer may not update the directory -> namespace mappings correctly. You may need to completely erase your `app/vendor` directory and re-run `composer install` in these cases.[/notice] -->
+> [!NOTE]
+> You may need to re-run Composer if you change your Sprinkle directory path or namespace. On certain operating systems with case-insensitive filesystems, Composer may not update the directory -> namespace mappings correctly. You may need to completely erase your `app/vendor` directory and re-run `composer install` in these cases. -->
 
 ## Deployment/Production
 

@@ -17,7 +17,8 @@ If your local development environment doesn't already have the [required stack a
 
 If you followed the previous pages, you probably noticed two pieces of software absent from that list: The *web server software* and the *database*. This is on purpose. This guide uses the built-in PHP Server and SQLite, which don't require additional installation. Optionally, you may want to install a web server (e.g.: Apache, Nginx, etc) and a database (MariaDB, MySQL, Postgres or SQL Server). The "optional" part of this guide will cover setup for those.
 
-[notice]Please **make sure** that you have these installed **before** attempting to install UserFrosting![/notice]
+> [!NOTE]
+> Please **make sure** that you have these installed **before** attempting to install UserFrosting
 
 ## Installing required tools
 
@@ -35,7 +36,8 @@ The easiest way to install PHP on MacOS is through Homebrew:
 2. Install [Homebrew](https://brew.sh) using their guide
 3. Install PHP 8.3, from the terminal : `brew install shivammathur/php/php@8.3` 
 
-[notice=tip]It's possible to use multiple versions of PHP on MacOS. See [shivammathur/php documentation](https://github.com/shivammathur/homebrew-php#switch-between-php-versions).[/notice]
+> [!TIP]
+> It's possible to use multiple versions of PHP on MacOS. See [shivammathur/php documentation](https://github.com/shivammathur/homebrew-php#switch-between-php-versions).
 
 #### Linux & Windows WSL2
 Install PHP through the package manager. For example, on Ubuntu : 
@@ -72,9 +74,9 @@ Zend Engine v4.3.0, Copyright (c) Zend Technologies
 
 This is the version of PHP which will be used by Composer. Make sure it meets the minimum required version for UserFrosting!
 
-[notice]If it's a lower version than the version that you **know** your webserver uses, then chances are that your terminal is incorrectly resolving the `php` command. This happens because there is an older version of PHP (often preinstalled with your operating system) in one of the paths specified in your path variable (`$PATH` in *nix systems, `PATH` environment variable in Windows).
-
-To check the value of your `PATH` variable in *nix environments, simply run `echo $PATH`.[/notice]
+> [!NOTE]
+> If it's a lower version than the version that you **know** your webserver uses, then chances are that your terminal is incorrectly resolving the `php` command. This happens because there is an older version of PHP (often preinstalled with your operating system) in one of the paths specified in your path variable (`$PATH` in *nix systems, `PATH` environment variable in Windows).
+> To check the value of your `PATH` variable in *nix environments, simply run `echo $PATH`.
 
 To check if the required extensions are enabled, you can use :
 
@@ -90,7 +92,8 @@ Next step is to install [Composer 2](/installation/requirements/essential-tools-
 mv composer.phar /usr/local/bin/composer
 ```
 
-[notice=warning]Composer has a special installer that you can use for **Windows** - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe). However, since we're using WSL2 (a Linux backend), this installer **won't work** and won't be available in the command line.[/notice]
+> [!WARNING]
+> Composer has a special installer that you can use for **Windows** - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe). However, since we're using WSL2 (a Linux backend), this installer **won't work** and won't be available in the command line.
 
 #### Preflight checks
 
@@ -147,7 +150,8 @@ This is where email testing tools come in. When an email is sent by UserFrosting
 
 While multiple solutions are available, two are recommended by UserFrosting : **Mailpit** and **Mailtrap**. It's up to you to choose the one you prefer.
 
-[notice]Please note that in production, you _will_ need to have a real, working SMTP service. If you do not already have a mail provider, please see our section on [mail providers](/going-live/mail-providers#choosing-a-mail-service-provider) for our recommendations including both free and paid third-party mail services. While it's not recommended, a real SMTP server *can* also be used in a development environment.[/notice]
+> [!NOTE]
+> Please note that in production, you _will_ need to have a real, working SMTP service. If you do not already have a mail provider, please see our section on [mail providers](/going-live/mail-providers#choosing-a-mail-service-provider) for our recommendations including both free and paid third-party mail services. While it's not recommended, a real SMTP server *can* also be used in a development environment.
 
 #### Mailpit
 
@@ -189,7 +193,8 @@ The next tools are not required in your local development environment to run Use
 
 By default, MacOS and other Linux operating systems should come with git preinstalled. On MacOS, Apple also ships a binary package of Git with Xcode. You may not need to install it manually. If you would like to update your version of git, you can do so with their [installer](https://git-scm.com/downloads).
 
-[notice=tip]If you're looking for a Git GUI and are working with Github, you might be interested in [Github Desktop](https://desktop.github.com).[/notice]
+> [!TIP]
+> If you're looking for a Git GUI and are working with Github, you might be interested in [Github Desktop](https://desktop.github.com).
 
 ### Web Server Config
 
@@ -242,4 +247,5 @@ It's also possible to install each database provider with Docker:
 
 Before installing UserFrosting, you'll need to create a database and database user account. Consult your database documentation for more details. If you use [_phpmyadmin_](https://hub.docker.com/_/phpmyadmin) or a similar tool, you can create your database and database user through their interface. Otherwise, you can do it via the command line.
 
-[notice=note]"Database user account" and "UserFrosting user account" are not the same thing. The "database user account" is independent of UserFrosting. See your database's documentation for information on creating a database user. Make sure that your database user has all read and write permissions for your database.[/notice]
+> [!NOTE]
+> "Database user account" and "UserFrosting user account" are not the same thing. The "database user account" is independent of UserFrosting. See your database's documentation for information on creating a database user. Make sure that your database user has all read and write permissions for your database.

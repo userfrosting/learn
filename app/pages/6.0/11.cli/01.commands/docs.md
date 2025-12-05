@@ -24,7 +24,8 @@ General help can also be displayed by running:
 $ php bakery help
 ```
 
-[notice=tip]Always run any bakery command from the project root directory (`/`). Otherwise, you'll receive a `Could not open input file: bakery` error.[/notice]
+> [!TIP]
+> Always run any bakery command from the project root directory (`/`). Otherwise, you'll receive a `Could not open input file: bakery` error.
 
 ## Available commands
 
@@ -41,7 +42,8 @@ $ php bakery assets:build [options]
 | -p, --production | Compile the assets and asset bundles for production environment |
 | -w, --watch      | Watch for changes and recompile automatically                   |
 
-[notice=note]The `production` option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.[/notice]
+> [!NOTE]
+> The `production` option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.
 
 See the [Asset Management](/asset-management) chapter for more information about asset bundles and these options.
 
@@ -63,9 +65,11 @@ The `assets:webpack` command is an alias for the **Webpack Encore** scripts used
 | -p, --production | Compile the assets for production environment                                             | `npm run build` |
 | -w, --watch      | Watch for changes and recompile automatically. Only available in development environment. | `npm run watch` |
 
-[notice=note]The `production` option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.[/notice]
+> [!NOTE]
+> The `production` option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.
 
-[notice=note]If both `watch` and `production` options are used, _watch_ will be ignored and assets will be build for production.[/notice]
+> [!NOTE]
+> If both `watch` and `production` options are used, _watch_ will be ignored and assets will be build for production.
 
 See the [Asset Management](/asset-management) chapter for more information about asset bundles and these options.
 
@@ -77,9 +81,11 @@ Bake is the general installation command. It combines `setup:db`, `setup:mail`, 
 $ php bakery bake
 ```
 
-[notice=tip]This command should be executed every time you run `composer update`, change assets, create a new migration, create a new sprinkle or install a [community sprinkle](/sprinkles/community).[/notice]
+> [!TIP]
+> This command should be executed every time you run `composer update`, change assets, create a new migration, create a new sprinkle or install a [community sprinkle](/sprinkles/community).
 
-[notice=tip]It is possible and easy to add your own command to the `bake` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
+> [!TIP]
+> It is possible and easy to add your own command to the `bake` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.
 
 
 ### clear-cache
@@ -90,7 +96,8 @@ The `clear-cache` command takes care of deleting all cached data. See [Chapter 1
 $ php bakery clear-cache
 ```
 
-[notice=note]When using the `file` cache store, you might need to run this command as administrator or using `sudo` to avoid file permission issues.[/notice]
+> [!NOTE]
+> When using the `file` cache store, you might need to run this command as administrator or using `sudo` to avoid file permission issues.
 
 
 ### create:admin-user
@@ -154,7 +161,8 @@ The debug command is in fact an aggregator of sub-commands, similar to `bake`. I
 
 Some results will be only displayed when the verbose mode is active.
 
-[notice=tip]It is also possible (and easy) to add your own command to the `debug` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
+> [!TIP]
+> It is also possible (and easy) to add your own command to the `debug` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.
 
 ### locale:compare
 
@@ -227,7 +235,8 @@ Example output :
 
 ### migrate
 
-[notice=warning]Database migrations have the potential to destroy data. **Always** back up production databases, and databases with important data, before running migrations on them.[/notice]
+> [!WARNING]
+> Database migrations have the potential to destroy data. **Always** back up production databases, and databases with important data, before running migrations on them.
 
 The `migrate` command runs all the pending [database migrations](/database/migrations). Migrations consist of special PHP classes used to manipulate the database structure and data, creating new tables or modifying existing ones. UserFrosting comes with a handful of migrations to create the [default tables](/database/default-tables). The built-in migrations also handle the changes in the database between versions. See the [Migrations](/database/migrations) section for more information about migrations.
 
@@ -282,7 +291,8 @@ $ php bakery migrate:rollback [options]
 
 The `migrate:reset` command is the same as the _rollback_ command, but it will revert **every** migration. Without options, this is the same as wiping the database to a clean state. 
 
-[notice=warning]**Use this command with caution!**[/notice]
+> [!WARNING]
+> **Use this command with caution!**
 
 ```bash
 $ php bakery migrate:reset [options]
@@ -299,7 +309,8 @@ $ php bakery migrate:reset [options]
 
 The `migrate:reset:hard` command is the same as the `migrate:reset` command, but it will bypass all migrations and drop all tables from the database. This can be used as a last resort when a specific migration won't allow you to reset the whole stack.
 
-[notice=warning]**Use this command with _extreme_ caution!**[/notice]
+> [!WARNING]
+> **Use this command with _extreme_ caution!**
 
 ```bash
 $ php bakery migrate:reset:hard [options]
@@ -320,8 +331,10 @@ $ php bakery migrate:refresh [options]
 | -d, --database=DATABASE | The database connection to use                |
 | -s, --steps=STEPS       | Number of steps to rollback [default: 1]      |
 
-[notice=warning]Using the `-s` option will rollback that number of steps, but will migrate them back up in a single step.[/notice]
-[notice=info]Unlike other migrate commands, `migrate:refresh` does NOT accept the `-p` or `--pretend` option.[/notice]
+> [!WARNING]
+> Using the `-s` option will rollback that number of steps, but will migrate them back up in a single step.
+> [!IMPORTANT]
+> Unlike other migrate commands, `migrate:refresh` does NOT accept the `-p` or `--pretend` option.
 
 ### migrate:status
 
@@ -493,7 +506,8 @@ The `setup` command combines the `setup:db`, `setup:mail`, and `setup:env` comma
 $ php bakery setup
 ```
 
-[notice=tip]It is also possible (and easy) to add your own command to the `setup` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
+> [!TIP]
+> It is also possible (and easy) to add your own command to the `setup` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.
 
 ### sprinkle:list
 
@@ -554,9 +568,9 @@ $ php bakery test [options] [--] [<testscope>]
 | --coverage-format=COVERAGE-FORMAT | Select test coverage format. Choose from html, clover, crap4j, php, text, xml, etc. Defaults to HTML. |
 | --coverage-path=COVERAGE-PATH     | Code coverage report saving location. Default to `_meta/coverage`.                                   |
 
-[notice=warning]UserFrosting's built-in integration tests use a temporary in-memory SQLite database.  For testing to run successfully, you must have the `php-sqlite3` package installed and enabled.
-
-Alternatively, you can create a separate testing database and override the `test_integration` database settings in `testing.php` [environment mode](/configuration/config-files).[/notice]
+> [!WARNING]
+> UserFrosting's built-in integration tests use a temporary in-memory SQLite database.  For testing to run successfully, you must have the `php-sqlite3` package installed and enabled.
+> Alternatively, you can create a separate testing database and override the `test_integration` database settings in `testing.php` [environment mode](/configuration/config-files).
 
 
 ### test:mail

@@ -24,7 +24,8 @@ UserFrosting uses this stored `user_id` to retrieve the current user's complete 
 
 _Users_ may not have direct access to their session, but _your server-side code_ can access the current user's session via the [`session` service](/services/default-services#session).
 
-[notice=warning]It is preferred to use the `session` service over PHP's `$_SESSION` superglobal.[/notice]
+> [!WARNING]
+> It is preferred to use the `session` service over PHP's `$_SESSION` superglobal.
 
 You can inject the service in your class through Autowiring or Annotation injection on the `UserFrosting\Session\Session` class:
 
@@ -87,7 +88,8 @@ UserFrosting uses this method to destroy the session when a user logs out.
 
 If you pass a value of `true` to this method, UserFrosting will set the expiration time for the current session cookie to a negative value, causing the browser to immediately delete the session cookie on the next request.
 
-[notice=info]You should avoid storing additional information in the user's session whenever possible. Sessions are difficult to scale and can cause concurrency issues when they are used excessively. You should instead store additional persistent data in the [database](/database), [cache](/advanced/cache) or another more robust storage mechanism, and associate it with the user's `user_id`.[/notice]
+> [!IMPORTANT]
+> You should avoid storing additional information in the user's session whenever possible. Sessions are difficult to scale and can cause concurrency issues when they are used excessively. You should instead store additional persistent data in the [database](/database), [cache](/advanced/cache) or another more robust storage mechanism, and associate it with the user's `user_id`.
 
 ## Session drivers
 

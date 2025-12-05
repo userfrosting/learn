@@ -81,7 +81,8 @@ $user = new User([
 $user->save();
 ```
 
-[notice=warning]Notice that the `User` class is in a [namespace](http://php.net/manual/en/language.namespaces.rationale.php). To reference it correctly, we need to either specify the fully qualified path in a `use` statement at the top of our file, or explicitly reference it in our code as `\UserFrosting\Sprinkle\Account\Database\Models\User`.[/notice]
+> [!WARNING]
+> Notice that the `User` class is in a [namespace](http://php.net/manual/en/language.namespaces.rationale.php). To reference it correctly, we need to either specify the fully qualified path in a `use` statement at the top of our file, or explicitly reference it in our code as `\UserFrosting\Sprinkle\Account\Database\Models\User`.
 
 #### Select
 

@@ -125,9 +125,9 @@ return $this->view->render($response, 'pages/contact.html.twig', [
 
 If your page includes the `pages/partials/page.js.twig` partial template, then the validation rules will become available via the Javascript variable `page.validators.contact`.
 
-[notice=tip]For an example of how this all fits together, see the `UserFrosting\Theme\AdminLTE\Controller\RegisterPageAction` controller, and the template `pages/register.html.twig` from the AdminLTE sprinkle. At the bottom of the template you will see the include for `pages/partials/page.js.twig`.
-
-If you visit the page `/account/register` and use "View Source", you can see how the validation rules have been injected into the page. See [exporting variables](/client-side-code/exporting-variables#page-specific-variables) for more details on exporting server-side variables to Javascript variables on a page.[/notice]
+> [!TIP]
+> For an example of how this all fits together, see the `UserFrosting\Theme\AdminLTE\Controller\RegisterPageAction` controller, and the template `pages/register.html.twig` from the AdminLTE sprinkle. At the bottom of the template you will see the include for `pages/partials/page.js.twig`.
+> If you visit the page `/account/register` and use "View Source", you can see how the validation rules have been injected into the page. See [exporting variables](/client-side-code/exporting-variables#page-specific-variables) for more details on exporting server-side variables to Javascript variables on a page.
 
 ### Server-side Validation
 
@@ -181,7 +181,8 @@ if (count($errors) !== 0) {
 
 The `validate` method will return `false` if any fields fail any of their validation rules. Notice that we throw an exception to handle any error messages that we wish to display to the client, and stop the execution of the controller code.
 
-[notice=info]Internally, UserFrosting uses the [Valitron](https://github.com/vlucas/valitron) validation package to perform server-side validation.[/notice]
+> [!IMPORTANT]
+> Internally, UserFrosting uses the [Valitron](https://github.com/vlucas/valitron) validation package to perform server-side validation.
 
 ### Schema Specifications
 
@@ -310,7 +311,8 @@ owls:
       message: "Number of owls must be equal to {{value}}."
 ```
 
-[notice=tip]By default, this is case-insensitive. It can be made case-sensitive by setting `caseSensitive` to `true`.[/notice]
+> [!TIP]
+> By default, this is case-insensitive. It can be made case-sensitive by setting `caseSensitive` to `true`.
 
 **Example - Length:**
 ```yaml
@@ -364,7 +366,8 @@ screech:
       message: You did not provide a valid screech.
 ```
 
-[notice=warning]Regular expressions should _not_ be wrapped in quotes in YAML. Also the jQuery Validation plugin wraps regular expressions on the client side with `^...$`. Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).[/notice]
+> [!WARNING]
+> Regular expressions should _not_ be wrapped in quotes in YAML. Also the jQuery Validation plugin wraps regular expressions on the client side with `^...$`. Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).
 
 ### Input arrays, multidimensional arrays & associative arrays
 If your form uses [input arrays](https://stackoverflow.com/a/42969920/445757) such as `<input name='nameList[]'...`, you can reference the array itself in your validation schema as `nameList` and each element of the array as `nameList.*`. This can be useful with dynamic form with a variable or unknown number of input of the same nature. For example, a list of names : 

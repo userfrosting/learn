@@ -72,7 +72,8 @@ The [`bake` command](/cli/commands#bake) combines many CLI commands into one and
 
 In the recipe, you're telling UserFrosting to execute `BakeCommandListener` when the `BakeCommandEvent` is fired by the UserFrosting event dispatcher. The listener itself isn't required to implement any interface. It simply needs to be callable, which the [`__invoke()`](https://www.php.net/manual/en/language.oop5.magic.php#object.invoke) magic method enables. This method accepts a single argument, which will be the event itself. 
 
-[notice=tip]A single listener can handle multiple events. The or (`|`) syntax can be used to type-hint against multiple event classes, or type-hinting can be omitted, or in this case the parent `AbstractAggregateCommandEvent` can be used to type-hint.[/notice]
+> [!TIP]
+> A single listener can handle multiple events. The or (`|`) syntax can be used to type-hint against multiple event classes, or type-hinting can be omitted, or in this case the parent `AbstractAggregateCommandEvent` can be used to type-hint.
 
 The event listener uses `$event->addCommand('hello');` to add the "hello" command to the event. The command is passed by its name as a string, not the class itself. This method will add the hello command to the end of the list of commands which "bake" will run. Other public methods exist on `$event` to place the command exactly where you need it: 
 
@@ -87,7 +88,8 @@ The same command event can be listened by many sprinkles. In this case, dependen
 
 If you need to place your command at a specific place in the stack, you can use the `getCommands` method to retrieve the current list, modify it, and place it back using `setCommands` method. This method can also be used to **remove** commands.
 
-[notice]You can learn more about Event Listening in [Chapter 18](/advanced/events).[/notice]
+> [!NOTE]
+> You can learn more about Event Listening in [Chapter 18](/advanced/events).
 
 ## Adding Custom Commands to the `setup` command
 

@@ -4,7 +4,8 @@ taxonomy:
     category: docs
 ---
 
-[notice]This page is a stub. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+> [!NOTE]
+> This page is a stub. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
 Model factories can be used to insert test data into the database. See [Laravel Documentation](https://laravel.com/docs/10.x/eloquent-factories#introduction) for more information. The only difference si the class your factory need to extend:
 

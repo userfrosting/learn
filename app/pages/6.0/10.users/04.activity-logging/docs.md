@@ -33,7 +33,8 @@ The following activity types are logged by the core UserFrosting features:
 | `account_update_info` | The user updated general account info (name, locale, etc) for another user. |
 | `account_update_field` | The user updated a specific field for another user (this includes modifying a user's roles or password, and enabling/disabling their account). |
 
-[notice]These activities are only logged _when successful_. If a user is unable to perform one of these activities, for example because they don't have the necessary permissions or there is some other problem, the attempt won't be logged.[/notice]
+> [!NOTE]
+> These activities are only logged _when successful_. If a user is unable to perform one of these activities, for example because they don't have the necessary permissions or there is some other problem, the attempt won't be logged.
 
 ## Logging activities
 
@@ -48,7 +49,8 @@ $userActivityLogger->info("User {$currentUser->user_name} adopted a new owl '{$o
 
 The first parameter is the activity description. The second parameter contains an array, which should have a `type` key defined. The value of this key decides the activity type that will be logged. Note that these activity types are not defined anywhere explicitly - they are stored in the database as plain text and you may create new types on the fly when you log an activity.
 
-[notice=note]In general, you will probably want to log user activities at the end of the controller method, after the user's activity has completed successfully. However, you may choose to write to this log at any point in your code.[/notice]
+> [!NOTE]
+> In general, you will probably want to log user activities at the end of the controller method, after the user's activity has completed successfully. However, you may choose to write to this log at any point in your code.
 
 ## Retrieving activities for a user
 
@@ -70,7 +72,8 @@ You can get the `Activity` record for a user's last activity using the `lastActi
 $lastActivity = $user->lastActivity;
 ```
 
-[notice]Notice that we reference this as an model _property_, rather than calling it as a method. If we called `$user->lastActivity()` (with parentheses) instead, it would return the _relationship_ rather than the model itself.[/notice]
+> [!NOTE]
+> Notice that we reference this as an model _property_, rather than calling it as a method. If we called `$user->lastActivity()` (with parentheses) instead, it would return the _relationship_ rather than the model itself.
 
 ### Getting a user's last activity by type
 
@@ -80,7 +83,8 @@ If you want to get the last activity _of a specific type_, use the `lastActivity
 $lastSignIn = $user->lastActivity('sign_in')->get();
 ```
 
-[notice=note]Since `lastActivity(...)` returns a `Builder` object, we need to call `get` to return the actual result.[/notice]
+> [!NOTE]
+> Since `lastActivity(...)` returns a `Builder` object, we need to call `get` to return the actual result.
 
 ### Getting the time of a user's last activity
 

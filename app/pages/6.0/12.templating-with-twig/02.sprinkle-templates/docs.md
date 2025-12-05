@@ -160,7 +160,8 @@ To define a child template, we use the [`extends` tag](https://twig.symfony.com/
 
 When we render this template, Twig will use `base.html.twig`, but then replace any instances of the `content` block with the contents of the `content` block we've defined in the child template.
 
-[notice=info]Like with OOP, child templates can themselves be extended, creating a hierarchy of template inheritance. For example, in the `core` sprinkle, `pages/abstract/default.html.twig` extends `pages/abstract/base.html.twig`, and `pages/index.html.twig` extends `pages/abstract/default.html.twig`.[/notice]
+> [!IMPORTANT]
+> Like with OOP, child templates can themselves be extended, creating a hierarchy of template inheritance. For example, in the `core` sprinkle, `pages/abstract/default.html.twig` extends `pages/abstract/base.html.twig`, and `pages/index.html.twig` extends `pages/abstract/default.html.twig`.
 
 ### Partial templates
 

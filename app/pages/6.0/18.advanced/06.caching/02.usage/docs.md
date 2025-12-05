@@ -59,13 +59,15 @@ UserFrosting provide access and configuration out of the box for 3 cache drivers
 
 The driver used by UserFrosting can be defined in the configuration files under the `cache.driver` key. To change drivers, simply overwrite this key in your sprinkle for one of the drivers below.
 
-[notice=tip]In a production environment, Memcached or Redis should be used for better performance.[/notice]
+> [!TIP]
+> In a production environment, Memcached or Redis should be used for better performance.
 
 ### File
 
 The file driver is the one enabled by default. Cached data is stored in text files located in `app/cache/`. While slower and less efficient than memory based drivers, the file driver is ideal for a development environment.
 
-[notice=note]The default Laravel File Driver doesn't support `tags`. UserFrosting uses a custom version of this driver that enabled tagging. Still, Memcached and Redis are more optimized for this and should be used in a production environment for better performance.[/notice]
+> [!NOTE]
+> The default Laravel File Driver doesn't support `tags`. UserFrosting uses a custom version of this driver that enabled tagging. Still, Memcached and Redis are more optimized for this and should be used in a production environment for better performance.
 
 ### Memcached
 
@@ -81,7 +83,8 @@ In contrast with the file driver, the **Memcached** driver stores the cached dat
 ]
 ```
 
-[notice=warning]**Memcached** shouldn't be confused with **memcache**. Those are [two different clients](https://stackoverflow.com/questions/1442411/when-should-i-use-memcache-instead-of-memcached) ![/notice]
+> [!WARNING]
+> **Memcached** shouldn't be confused with **memcache**. Those are [two different clients](https://stackoverflow.com/questions/1442411/when-should-i-use-memcache-instead-of-memcached)
 
 ### Redis
 
@@ -98,10 +101,12 @@ Similar to Memcached, **Redis** uses in-memory data structure to store the cache
 ]
 ```
 
-[notice=tip]When using Redis with multiple applications on the same server, you can use the `database` option to assign one of 16 default Redis databases (identified by a number form 0 to 15) to your UserFrosting instance and avoid sharing the same database with multiple apps.[/notice]
+> [!TIP]
+> When using Redis with multiple applications on the same server, you can use the `database` option to assign one of 16 default Redis databases (identified by a number form 0 to 15) to your UserFrosting instance and avoid sharing the same database with multiple apps.
 
 ## Prefix configuration
 
 When using multiple instances of UserFrosting with the **Memcached** or **Redis** driver on the same server, or any other app using Redis/Memcached, you should edit the `config.prefix` configuration value so each installation uses a unique prefix. Otherwise, both installations of UserFrosting might end up sharing the same cached data. Note that this does not affect the **file** driver.
 
-[notice=warning]When using the **Redis** or **Memcached** drivers, flushing the cache does not respect the cache prefix and will remove all entries from the cache. That means all data stored in the Redis/Memcached database will be deleted, whether or not it belong to your application. Consider this carefully when clearing a cache which is shared by other applications. When using the Redis driver, [different database can be used for each app](https://stackoverflow.com/a/38272337/445757) to avoid this.[/notice]
+> [!WARNING]
+> When using the **Redis** or **Memcached** drivers, flushing the cache does not respect the cache prefix and will remove all entries from the cache. That means all data stored in the Redis/Memcached database will be deleted, whether or not it belong to your application. Consider this carefully when clearing a cache which is shared by other applications. When using the Redis driver, [different database can be used for each app](https://stackoverflow.com/a/38272337/445757) to avoid this.

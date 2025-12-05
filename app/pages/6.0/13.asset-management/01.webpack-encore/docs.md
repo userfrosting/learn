@@ -28,9 +28,9 @@ Compiling assets through Webpack Encore basically does :
 
 Webpack Encore, as with most frontend dependencies, is installed by [npm](https://www.npmjs.com). Fortunately for you, you should already have Node.js and npm installed if you completed the UserFrosting installation process successfully!
 
-[notice=note]Why do we use Node.js, anyway, instead of a PHP-based asset management tools?
-
-Because over time, npm imposed itself as the defacto manager for javascript based project. Since most frontend packages relies on Javascript, and with the arrival of more complex framework, it makes sense to use tools for these tasks in a common language. No matter which server-side technology a developer uses, they all have to deal with Javascript sooner or later. Thus, Javascript-based tools are the most popular and actively developed and maintained options.[/notice]
+> [!NOTE]
+> Why do we use Node.js, anyway, instead of a PHP-based asset management tools?
+> Because over time, npm imposed itself as the defacto manager for javascript based project. Since most frontend packages relies on Javascript, and with the arrival of more complex framework, it makes sense to use tools for these tasks in a common language. No matter which server-side technology a developer uses, they all have to deal with Javascript sooner or later. Thus, Javascript-based tools are the most popular and actively developed and maintained options.
 
 Where Composer has it's `composer.json` file to defines the project dependencies, npm has the `package.json` file. The default UserFrosting `package.json` looks like this : 
 
@@ -75,7 +75,8 @@ The same goes for installing you own dependencies, which should be done using np
 npm i bootstrap --save
 ```
 
-[notice]As with Composer, `npm update` should be run after any changes made manually to `package.json`[/notice]
+> [!NOTE]
+> As with Composer, `npm update` should be run after any changes made manually to `package.json`
 
 ## Webpack Encore configuration
 
@@ -204,7 +205,8 @@ $ php bakery assets:build --watch
 $ php bakery assets:webpack --watch
 ```
 
-[notice=warning]Whenever you make changes in your `webpack.config.js` or `webpack.entries.js` file, you must stop and restart encore when using the "watch" option.[/notice]
+> [!WARNING]
+> Whenever you make changes in your `webpack.config.js` or `webpack.entries.js` file, you must stop and restart encore when using the "watch" option.
 
 To compile assets for a **production** environment, simply use:
 
@@ -216,7 +218,8 @@ $ php bakery assets:build --production
 $ php bakery assets:webpack --production
 ```
 
-[notice=tip]If you have shell access (for example, [using a VPS](/going-live/vps-production-environment)), you can build production assets directly on your host server as part of your deployment process. Otherwise, you can build them locally before transferring your application to the host server. Unlike Composer, frontend dependencies doesn't depend on any server configuration, so it is safe to build locally and upload the resulting build.[/notice]
+> [!TIP]
+> If you have shell access (for example, [using a VPS](/going-live/vps-production-environment)), you can build production assets directly on your host server as part of your deployment process. Otherwise, you can build them locally before transferring your application to the host server. Unlike Composer, frontend dependencies doesn't depend on any server configuration, so it is safe to build locally and upload the resulting build.
 
 Alternatively, the underlying npm scripts can also be executed directly. However, be aware some preflight check are executed by Bakery (e.g.: make sure `webpack.config.js` exist), and won't be executed if running the scripts directly.
 

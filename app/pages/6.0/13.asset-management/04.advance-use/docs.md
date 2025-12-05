@@ -10,7 +10,8 @@ By using Webpack Encore to manage frontend assets, Sass, Less, Vue and React can
 
 ## Sass/SCSS
 
-[notice=note]Sass is enabled by default in UserFrosting 5, as it's required by the *AdminLTE Theme*.[/notice]
+> [!NOTE]
+> Sass is enabled by default in UserFrosting 5, as it's required by the *AdminLTE Theme*.
 
 To enable [Sass/SCSS](https://sass-lang.com) support, first enable Sass loader inside `webpack.config.js`, install the required npm dependencies, and restart Webpack.
 
@@ -109,7 +110,8 @@ Any `.vue` files that you require will be processed correctly. You can also conf
 
 For more information, check out [Encore Documentation](https://symfony.com/doc/current/frontend/encore/vuejs.html). 
 
-[notice]Future version of UserFrosting will make use of Vue.JS. You can checkout a proof of concept of a Vue based interface running inside UserFrosting [on Github](https://github.com/userfrosting/demo-vue/tree/main)[/notice]
+> [!NOTE]
+> Future version of UserFrosting will make use of Vue.JS. You can checkout a proof of concept of a Vue based interface running inside UserFrosting [on Github](https://github.com/userfrosting/demo-vue/tree/main)
 
 ## React
 

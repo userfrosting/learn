@@ -110,4 +110,5 @@ Using interfaces to declare what kind of object a class is expected to receive, 
 
 This is of course a contrived example, but the general strategy of keeping your classes loosely coupled is a good way to make your code more reusable and easily tested.
 
-[notice=tip]You can learn more, and see other examples, on the [PHP-DI Website : Understanding Dependency Injection](https://php-di.org/doc/understanding-di.html).[/notice]
+> [!TIP]
+> You can learn more, and see other examples, on the [PHP-DI Website : Understanding Dependency Injection](https://php-di.org/doc/understanding-di.html).

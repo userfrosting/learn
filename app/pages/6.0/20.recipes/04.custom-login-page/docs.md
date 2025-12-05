@@ -6,9 +6,11 @@ taxonomy:
     category: docs
 ---
 
-[notice=note]This recipe assumes that you've already setup your own UserFrosting instance from the Skeleton template and you're familiar with the basics of UserFrosting.[/notice]
+> [!NOTE]
+> This recipe assumes that you've already setup your own UserFrosting instance from the Skeleton template and you're familiar with the basics of UserFrosting.
 
-[notice=tip]A complete example of this guide can be found on GitHub : [https://github.com/userfrosting/recipe-custom-login](https://github.com/userfrosting/recipe-custom-login)[/notice]
+> [!TIP]
+> A complete example of this guide can be found on GitHub : [https://github.com/userfrosting/recipe-custom-login](https://github.com/userfrosting/recipe-custom-login)
 
 This recipe will guide you in customizing the UserFrosting login screen. Specifically, we'll explain how to:
 - Disable the registration
@@ -17,7 +19,8 @@ This recipe will guide you in customizing the UserFrosting login screen. Specifi
 
 If you haven't already, set up your site Sprinkle as per the installation instructions. For the purposes of this tutorial, we will use the same info as the Skeleton : call our Sprinkle recipe `MyApp` with `UserFrosting\App` as a base namespace.
 
-[notice]This recipe was originally sponsored by [adm.ninja](https://adm.ninja). [Get in touch with the UserFrosting team](https://chat.userfrosting.com) if you want to sponsor a custom recipe for your organization![/notice]
+> [!NOTE]
+> This recipe was originally sponsored by [adm.ninja](https://adm.ninja). [Get in touch with the UserFrosting team](https://chat.userfrosting.com) if you want to sponsor a custom recipe for your organization
 
 ## Disabling registration
 
@@ -25,7 +28,8 @@ For many reasons, you may want to disable the ability for someone to create a ne
 
 To do this, first we'll need to create a `app/config/` directory inside your Sprinkle directory structure. Inside this directory, we'll create a PHP file named `default.php`.
 
-[notice=tip]The name of the configuration file is important. The `default` config file will be automatically loaded when your Sprinkle is included by the system. See the [Environment Mode](/configuration/config-files#environment-modes) chapter if you want to edit a configuration value for another environment mode.[/notice]
+> [!TIP]
+> The name of the configuration file is important. The `default` config file will be automatically loaded when your Sprinkle is included by the system. See the [Environment Mode](/configuration/config-files#environment-modes) chapter if you want to edit a configuration value for another environment mode.
 
 Inside your newly created config file, you add any configuration options you want to overwrite or add. In this case, we want to set the `site.registration.enabled` option to `false`:
 
@@ -47,7 +51,8 @@ Save the file, reload the login page and voilà! Not only will the registration 
 
 See the [Configuration Files](/configuration/config-files) chapter for more information about editing configuration.
 
-[notice=tip]If you need to be able to control basic configuration through the web interface, check out the `ConfigManager` Sprinkle from the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). This easy to install Sprinkle provides a graphical UI to manage some of the basic UserFrosting settings, including registration, and provides APIs to add you own custom settings.[/notice]
+> [!TIP]
+> If you need to be able to control basic configuration through the web interface, check out the `ConfigManager` Sprinkle from the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). This easy to install Sprinkle provides a graphical UI to manage some of the basic UserFrosting settings, including registration, and provides APIs to add you own custom settings.
 
 ## Changing the post-login destination
 
@@ -109,7 +114,8 @@ class UserRedirectedToAbout
 }
 ```
 
-[notice=note]Note that we use Slim's route parser `urlFor` method to get the route definition from it's name. This is the same as hardcoding `'/about'`. Check out [Slim's documentation](https://www.slimframework.com/docs/objects/router.html#route-names) for more info on named routes.[/notice]
+> [!NOTE]
+> Note that we use Slim's route parser `urlFor` method to get the route definition from it's name. This is the same as hardcoding `'/about'`. Check out [Slim's documentation](https://www.slimframework.com/docs/objects/router.html#route-names) for more info on named routes.
 
 The last step is to register the new listener in your Sprinkle Recipe. The recipe itself will also need to implement the `UserFrosting\Event\EventListenerRecipe` interface.
 

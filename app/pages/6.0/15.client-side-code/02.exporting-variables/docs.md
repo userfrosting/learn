@@ -39,7 +39,8 @@ Alternatively, you can override `config.js.twig` in your Sprinkle. `config.js.tw
 
 ![Extending UserFrosting's client-side site variable](/images/extending-site-variable.png)
 
-[notice=warning]Remember, any data you place in the `site` variable will be visible to the end-user - all they have to do is "View source"! Don't put any sensitive or private information in this variable.[/notice]
+> [!WARNING]
+> Remember, any data you place in the `site` variable will be visible to the end-user - all they have to do is "View source"! Don't put any sensitive or private information in this variable.
 
 ## Page-specific variables
 

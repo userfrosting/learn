@@ -102,7 +102,8 @@ Some built-in permissions [were missing from the database](https://github.com/us
 
 To add them to the database, run `php bakery seed` and select `UserFrosting\Sprinkle\Account\Database\Seeds\DefaultPermissions`. These will also be added to the `site-admin` role when running the seed.
 
-[notice=warning]If your application defines custom permissions to the `site-admin` role or you customized this role, **do not run the seed** unless you want to lose any custom changes. Running the seed will revert back the role to it's default state.[/notice]
+> [!WARNING]
+> If your application defines custom permissions to the `site-admin` role or you customized this role, **do not run the seed** unless you want to lose any custom changes. Running the seed will revert back the role to it's default state.
 
 The `site-admin` role is now on par with the root user permission by default, except for the last two permissions added, `view_system_info` & `clear_cache`. Theses can be added to the role if desired using the UI.
 
@@ -152,7 +153,8 @@ $result = $transformer->transform($schema, $data, 'skip');
 
 `\UserFrosting\Fortress\RequestDataTransformerInterface` is also ***deprecated*** and replaced by `\UserFrosting\Fortress\Transformer\RequestDataTransformerInterface`. 
 
-[notice=tip]Before, `RequestDataTransformer` was typically created inside the controllers each time it was needed. It now can be injected using `RequestDataTransformerInterface`.[/notice]
+> [!TIP]
+> Before, `RequestDataTransformer` was typically created inside the controllers each time it was needed. It now can be injected using `RequestDataTransformerInterface`.
 
 #### ServerSideValidator
 `\UserFrosting\Fortress\ServerSideValidator` is ***deprecated*** and replaced by `\UserFrosting\Fortress\Validator\ServerSideValidator` (*notice the difference in the namespace !*). 
@@ -171,7 +173,8 @@ $result = $validator->validate($schema, $data);
 
 `\UserFrosting\Fortress\ServerSideValidatorInterface` is also ***deprecated*** and replaced by `\UserFrosting\Fortress\Validator\ServerSideValidatorInterface`. 
   
-[notice=tip]Before, `ServerSideValidator` was typically created inside the controllers each time it was needed. It now can be injected using `ServerSideValidatorInterface`. The translator will be "sub-injected" at the same time.[/notice]
+> [!TIP]
+> Before, `ServerSideValidator` was typically created inside the controllers each time it was needed. It now can be injected using `ServerSideValidatorInterface`. The translator will be "sub-injected" at the same time.
 
 #### FormValidationAdapter
 `UserFrosting\Fortress\Adapter\FormValidationAdapter` is ***deprecated***. Instead of defining the format in the `rules` method, you simply use of the appropriate class for the associated format.
@@ -205,7 +208,8 @@ $adapter = new FormValidationJsonAdapter($this->translator);
 $result = $adapter->rules($schema);
 ```
 
-[notice=tip]Again, the required adapter can now be injected into your class.[/notice]
+> [!TIP]
+> Again, the required adapter can now be injected into your class.
 
 #### JqueryValidationAdapter
 `UserFrosting\Fortress\Adapter\JqueryValidationAdapter` is ***deprecated***. Instead of defining the format in the `rules` method, you simply use of the appropriate class for the associated format.

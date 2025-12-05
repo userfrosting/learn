@@ -16,7 +16,8 @@ The Skeleton application, used as a base installation for every new installation
 
 The most important part to edit here is the Namespace. The namespace tells Composer where to look for source code in a PHP application. By default, the base namespace in the Skeleton is `UserFrosting\App`, but you can change this to whatever you want. The usual scheme is `{Vendor}\{Project}`, where *Vendor* is your brand and *Project* your project name, but there's no *law* you have to follow here.
 
-[notice]Compared to previous version of UserFrosting, **starting from UserFrosting 5**, the namespace isn't strict anymore. There's no more convention to follow.[/notice]
+> [!NOTE]
+> Compared to previous version of UserFrosting, **starting from UserFrosting 5**, the namespace isn't strict anymore. There's no more convention to follow.
 
 The namespace is defined in the `composer.json` file in the base directory of your sprinkle. The default file looks like this : 
 
@@ -136,7 +137,8 @@ Modified **composer.json**
 
 The important part here is the `autoload.psr-4` key. This tells Composer to map the root `src/` directory of your sprinkle to the root **namespace** `Owlfancy\Site\`.
 
-[notice]If you're not familiar with PSR-4, it is a standard that says we should map a base directory to a base namespace, and then the relative namespaces of classes in that directory should correspond to the relative paths of their class files. For example, the directory `/app/src/Controller/OwlController.php` would be mapped to the fully qualified class name `\Owlfancy\Site\Controller\OwlController`.[/notice]
+> [!NOTE]
+> If you're not familiar with PSR-4, it is a standard that says we should map a base directory to a base namespace, and then the relative namespaces of classes in that directory should correspond to the relative paths of their class files. For example, the directory `/app/src/Controller/OwlController.php` would be mapped to the fully qualified class name `\Owlfancy\Site\Controller\OwlController`.
 
 The next step is to run Composer from your project directory, so that it can detect the changes in `composer.json` and update the appropriate mappings. You only need to run this once, when you make any changes to the `composer.json` file  - any new classes that you add to `src/` will be automatically picked up in the future.
 
@@ -144,7 +146,8 @@ The next step is to run Composer from your project directory, so that it can det
 $ composer update
 ```
 
-[notice=note]If after running these steps, UserFrosting fails to find new classes that you add to `src/`, make sure that that the user running Composer had read permissions for your sprinkle. You can check that the path to your sprinkle's `src/` directory was actually added in `app/vendor/composer/autoload_psr4.php` You can also try running Composer with the `-vvv` flag for more detailed reporting.[/notice]
+> [!NOTE]
+> If after running these steps, UserFrosting fails to find new classes that you add to `src/`, make sure that that the user running Composer had read permissions for your sprinkle. You can check that the path to your sprinkle's `src/` directory was actually added in `app/vendor/composer/autoload_psr4.php` You can also try running Composer with the `-vvv` flag for more detailed reporting.
 
 ### The recipe
 
@@ -272,4 +275,5 @@ This customizes some basic properties for our application - you can set your sit
 
 The template for this page dynamically pulls that particular piece of text from your new configuration file. Note that your value for `site.title` overrides the value of `site.title` in the core sprinkle's configuration file.
 
-[notice=tip]You can [override configuration values](/configuration/config-files) from any previously loaded sprinkles, including the default sprinkles that ship with UserFrosting. Check the Core sprinkle and the Account sprinkle `/app/config/default.php` for a complete list.[/notice]
+> [!TIP]
+> You can [override configuration values](/configuration/config-files) from any previously loaded sprinkles, including the default sprinkles that ship with UserFrosting. Check the Core sprinkle and the Account sprinkle `/app/config/default.php` for a complete list.

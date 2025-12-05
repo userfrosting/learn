@@ -21,4 +21,5 @@ At each stage in this process, some events are triggered that you can hook into 
 9. Fires `AppInitiatedEvent` ***or*** `BakeryInitiatedEvent`.
 10. Invoke the `run` method on the Slim ***or*** Console application.
 
-[notice]When running the normal application (webpage), only the Slim Application and `AppInitiatedEvent` is fired. When using the Bakery CLI, the Slim App and associated event **is not** used. Instead, the Symfony Console application is created, and `BakeryInitiatedEvent` is fired. Both the App and Console can still be accessed trough Dependency Injection, which will handle injecting the routes or command as needed.[/notice]
+> [!NOTE]
+> When running the normal application (webpage), only the Slim Application and `AppInitiatedEvent` is fired. When using the Bakery CLI, the Slim App and associated event **is not** used. Instead, the Symfony Console application is created, and `BakeryInitiatedEvent` is fired. Both the App and Console can still be accessed trough Dependency Injection, which will handle injecting the routes or command as needed.

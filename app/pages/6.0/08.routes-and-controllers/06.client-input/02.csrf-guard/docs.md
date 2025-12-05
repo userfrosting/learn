@@ -55,7 +55,8 @@ $.ajax({
 });
 ```
 
-[notice=note]The Javascript `site` variable is declared in the `pages/partials/config.js.twig` template.[/notice]
+> [!NOTE]
+> The Javascript `site` variable is declared in the `pages/partials/config.js.twig` template.
 
 ### Blacklisting routes
 
@@ -77,7 +78,8 @@ To bypass CSRF protection, you can map regular expressions to arrays of HTTP met
 ],
 ```
 
-[notice=warning]Please note we require that you explicitly add the leading `/` to your blacklisted routes, to be consistent with the way the route definitions themselves are declared.[/notice]
+> [!WARNING]
+> Please note we require that you explicitly add the leading `/` to your blacklisted routes, to be consistent with the way the route definitions themselves are declared.
 
 Any requests whose URL matches one of these regular expressions, and whose method matches one of the mapped methods, will be automatically exempted from loading the CSRF middleware. This means that the CSRF token will not be retrieved (for `GET` requests) or checked (for `POST`, `PUT`, `DELETE`, and `PATCH` requests).
 

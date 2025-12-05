@@ -27,7 +27,8 @@ echo $this->translator->translate("ACCOUNT_SPECIFY_USERNAME");
 
 The current locale will be automatically defined and the associated dictionary automatically loaded by UserFrosting.
 
-[notice=tip]The translator service contains others public methods that can be useful for you. For example, you can use it to retrieve the associated dictionary and locale. See the [i18n API Guide](https://github.com/userfrosting/i18n/tree/master/docs) for more information.[/notice]
+> [!TIP]
+> The translator service contains others public methods that can be useful for you. For example, you can use it to retrieve the associated dictionary and locale. See the [i18n API Guide](https://github.com/userfrosting/i18n/tree/master/docs) for more information.
 
 ### In Twig
 
@@ -119,30 +120,27 @@ echo $this->translator->translate("X_HUNGRY_CATS", 5); // Return "5 hungry cats"
 echo $this->translator->translate("X_HUNGRY_CATS", ['plural': 5]); // Return "5 hungry cats" (equivalent to the previous one)
 ```
 
-[notice=tip]Note that the `plural` placeholder can be overwritten using [handles](#-plural-special-handle).[/notice]
+> [!TIP]
+> Note that the `plural` placeholder can be overwritten using [handles](#-plural-special-handle).
 
 In this example, you can see that `0` is used as a special form to display `No hungry cats` instead of `0 hungry cats` to create more user friendly message.
 
-[notice=warning]Remember, the **number** defined as the array key **IS NOT** related to the plural value, but to [the plural rule](https://developer.mozilla.org/en-US/docs/Mozilla/Localization/Localization_and_Plurals).
-
-For example :
-```php
-"X_HUNGRY_CATS" => [
-	0 => "No hungry cats",
-	1 => "One hungry cat",
-	2 => "{{plural}} hungry cats",
-	5 => "A lot of hungry cats"
-]
-```
-
-With :
-
-```php
-echo $this->translator->translate("X_HUNGRY_CATS", 5);
-```
-
-Will display "**5 hungry cats**", not "A lot of hungry cats" !
-[/notice]
+> [!WARNING]
+> Remember, the **number** defined as the array key **IS NOT** related to the plural value, but to [the plural rule](https://developer.mozilla.org/en-US/docs/Mozilla/Localization/Localization_and_Plurals).
+> For example :
+> ```php
+> "X_HUNGRY_CATS" => [
+> 0 => "No hungry cats",
+> 1 => "One hungry cat",
+> 2 => "{{plural}} hungry cats",
+> 5 => "A lot of hungry cats"
+> ]
+> ```
+> With :
+> ```php
+> echo $this->translator->translate("X_HUNGRY_CATS", 5);
+> ```
+> Will display "**5 hungry cats**", not "A lot of hungry cats" !
 
 ### Plural value with additional placeholders
 If you have more than one placeholder, you must pass the plural value in the placeholders, no shortcut possible:
@@ -186,7 +184,8 @@ echo $this->translator->translate("ONLINE_USERS", ["guest" => $online_guest, "fr
 // 1 guest and 4 friends currently online
 ```
 
-[notice=note]Nested translations can be used when faced with long sentence using multiples sub strings or plural form, but those should be avoided when possible. Shorter or multiple sentences should be preferred instead. Specials [handles](#the-placeholder) can also be useful in those cases.[/notice]
+> [!NOTE]
+> Nested translations can be used when faced with long sentence using multiples sub strings or plural form, but those should be avoided when possible. Shorter or multiple sentences should be preferred instead. Specials [handles](#the-placeholder) can also be useful in those cases.
 
 ### `@PLURAL` special handle
 The default `plural` default placeholder can be overwritten by the `@PLURAL` handle in the language files. This may be useful if you pass an existing array to the translate function, or using multiple placeholder.
@@ -345,18 +344,16 @@ $this->translator->translate('I_LOVE_MY_CATS', 3); //Return "I love my 3 cats"
 In this example, `{{&MY_CATS}}` gets replaced with the value of `MY_CATS` to create `I love my {{plural}} cats`. Since there are 3 cats, the rule #2 is selected. So the string becomes `I love my 3 cats`.
 
 
-[notice=note]This behavior can be overwritten if you pass a placeholder with the same key to the translate function :
-
-```php
-$this->translator->translate('I_LOVE_MY_CATS', [
-    "plural" => 3,
-    "&MY_CATS" => "my dogs"
-]);
-
-// RESULT :
-// I love my dogs
-```
-[/notice]
+> [!NOTE]
+> This behavior can be overwritten if you pass a placeholder with the same key to the translate function :
+> ```php
+> $this->translator->translate('I_LOVE_MY_CATS', [
+> "plural" => 3,
+> "&MY_CATS" => "my dogs"
+> ]);
+> // RESULT :
+> // I love my dogs
+> ```
 
 ### Plural adjectives
 

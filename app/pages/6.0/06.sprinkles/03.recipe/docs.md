@@ -21,7 +21,8 @@ This interface requires you to implement the following method in your recipe:
 - [`getRoutes`](#routes): Return an array of routes classes.
 - [`getServices`](#services): Return an array of services classes.
 
-[notice=note]Since the class must implement the `SprinkleRecipe` interface, all of those methods are mandatory. Failure to implement the interface will result in an exception being thrown. However, it doesn't mean a method must return data. It's perfectly fine for a method to return an empty string or empty array.[/notice]
+> [!NOTE]
+> Since the class must implement the `SprinkleRecipe` interface, all of those methods are mandatory. Failure to implement the interface will result in an exception being thrown. However, it doesn't mean a method must return data. It's perfectly fine for a method to return an empty string or empty array.
 
 ### Name
 
@@ -65,7 +66,8 @@ public function getPath(): string
 }
 ```
 
-[notice=note]`app/` can actually be named whatever you want. As long as the recipe point to the folder containing all the sprinkle static resources.[/notice]
+> [!NOTE]
+> `app/` can actually be named whatever you want. As long as the recipe point to the folder containing all the sprinkle static resources.
 
 ### Dependent sprinkles
 
@@ -121,7 +123,8 @@ Let's look at the process for the above code :
 
 Because of sprinkle dependencies, in all three examples the order will be `Core -> Account -> AdminLTE -> Admin -> YOUR APP`.
 
-[notice=tip]An easy way to see the final order sprinkles are loaded is via the command line `php bakery sprinkle:list` command. The registered sprinkles will be displayed in the order they are registered.[/notice]
+> [!TIP]
+> An easy way to see the final order sprinkles are loaded is via the command line `php bakery sprinkle:list` command. The registered sprinkles will be displayed in the order they are registered.
 
 ### Routes
 
@@ -180,7 +183,8 @@ $bakery = new Bakery(MyApp::class); // <-- Reference here
 $bakery->run();
 ```
 
-[notice]The main sprinkle class can be named whatever you want. You can rename the default one from App Skeleton, but it's important to remember to also update its reference in both locations.[/notice]
+> [!NOTE]
+> The main sprinkle class can be named whatever you want. You can rename the default one from App Skeleton, but it's important to remember to also update its reference in both locations.
 
 ## Optional recipes
 
@@ -210,7 +214,8 @@ class MyApp implements
 {
 ```
 
-[notice=tip]Your sprinkle could even define its own recipe that you or other sprinkles could implement![/notice]
+> [!TIP]
+> Your sprinkle could even define its own recipe that you or other sprinkles could implement
 
 ### BakeryRecipe
 Interface : `UserFrosting\Sprinkle\BakeryRecipe`
@@ -351,7 +356,8 @@ In this case, two files need to be edited : `composer.json` and the Sprinkle Rec
     }
     ```
 
-[notice=note]Technically, the **Core** sprinkle IS optional. However, remember it provides pretty much every base feature of UserFrosting, including database support. Without any sprinkles, i.e. only the UserFrosting Framework, your app would be a very basic Slim Application with routes support.[/notice]
+> [!NOTE]
+> Technically, the **Core** sprinkle IS optional. However, remember it provides pretty much every base feature of UserFrosting, including database support. Without any sprinkles, i.e. only the UserFrosting Framework, your app would be a very basic Slim Application with routes support.
 
 ## Customizing a dependent sprinkle
 

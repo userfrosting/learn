@@ -79,7 +79,8 @@ return [
 
 Some locales have a parent locale, and each locale's language files will be loaded on top of the parent's one. So for example, since the Spanish version above doesn't have any value for the `ACCOUNT_SPECIFY_AGE` key, the English value would be returned for that key if `en_ES` has `en_US` for parent.
 
-[notice=tip]Some Bakery commands can help you view and compare locale Dictionaries. See the [Built-in Commands](/cli/commands#locale-compare) page for more info.[/notice]
+> [!TIP]
+> Some Bakery commands can help you view and compare locale Dictionaries. See the [Built-in Commands](/cli/commands#locale-compare) page for more info.
 
 Just like [routes](/routes-and-controllers/front-controller), the names of the files don't matter as they won't overwrite each other. This means two sprinkles can have a `locale/en_US/messages.php` file and **both** will be loaded and **merged** togeter. This means that each subsequently loaded Sprinkle can override translations from previous Sprinkles, or define new ones entirely.
 

@@ -6,7 +6,8 @@ taxonomy:
 
 To make it easier to run your tests in your Sprinkle environment, that is with every routes, middlewares and other class registered in your Recipe, UserFrosting provides a base TestCase you can use. You simply need to tell the TestCase to use your Recipe. It will create a simple UserFrosting app instance, and cleanly destroy it when the test is done. It also provides some additional helper methods.
 
-[notice=note]Of course, the use of this test case is purely optional. You can still use the default PHPUnit test case. However, you won't have access to other services, such as the database. However, the tests will be faster if you're using the default PHPUnit test case, so it's a good idea to use it when Mocking services for example.[/notice]
+> [!NOTE]
+> Of course, the use of this test case is purely optional. You can still use the default PHPUnit test case. However, you won't have access to other services, such as the database. However, the tests will be faster if you're using the default PHPUnit test case, so it's a good idea to use it when Mocking services for example.
 
 ## Integrating with your Sprinkle
 
@@ -47,7 +48,8 @@ When extending `UserFrosting\Testing\TestCase`, you have access to many helper m
 | `$this->userfrosting` | The UserFrosting App Instance  |
 | `$this->mainSprinkle` | The main sprinkle identifier   |
 
-[notice=note]The default PHPUnit `setUp` method will create the application, while `tearDown` will delete the application. All properties needs to be access after invoking the parent method.[/notice]
+> [!NOTE]
+> The default PHPUnit `setUp` method will create the application, while `tearDown` will delete the application. All properties needs to be access after invoking the parent method.
 
 ### createRequest
 

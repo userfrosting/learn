@@ -107,7 +107,8 @@ Then, the `equals_num` condition will be used to compare the current user's `id`
 !has_role(user.id,2) && !is_master(user.id)
 ```
 
-[notice]In access conditions, the special keyword `self` is used to refer to the current user. This avoids the need to explicitly pass in the current user's object.[/notice]
+> [!NOTE]
+> In access conditions, the special keyword `self` is used to refer to the current user. This avoids the need to explicitly pass in the current user's object.
 
 ### Callbacks
 

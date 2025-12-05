@@ -169,7 +169,8 @@ $this->mailer->sendDistinct($message);
 
 `sendDistinct` will send a **separate** email to each recipient, passing in any custom data that was defined in the `EmailRecipient` constructor. If you are trying to send a single message to a list of recipients, just use `send` instead. Note that in the case of `send`, any recipient-specific Twig parameters will be ignored.
 
-[notice=note]By default, `sendDistinct` and `send` will clear the list of recipients from your message object after successfully sending. To prevent this from happening (for example, if you want to send the message again), you can set the second parameter of either of these methods to `true`.[/notice]
+> [!NOTE]
+> By default, `sendDistinct` and `send` will clear the list of recipients from your message object after successfully sending. To prevent this from happening (for example, if you want to send the message again), you can set the second parameter of either of these methods to `true`.
 
 ### Error handling
 

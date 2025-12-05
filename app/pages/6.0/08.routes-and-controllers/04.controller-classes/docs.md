@@ -8,8 +8,8 @@ taxonomy:
 
 To keep your code organized, it is highly recommended to use **controller** or **action** classes. By separating your code in this way, you can easily see a list of the endpoints that a Sprinkle defines by looking at its route definitions. The implementation can then be tucked away in separate files.
 
-[notice=tip]**Controller or Action?** Controller and Action classes are basically the same thing. The only difference is an **Action** handles one specific action (route) per class, while a **Controller** can handle many actions or routes. In other words, a controller class is composed of several actions, with one method per route. In this guide, we often use the term **Controller** for both implementations for simplicity, but we highly recommend you use the "one action = one class" method.
-[/notice]
+> [!TIP]
+> **Controller or Action?** Controller and Action classes are basically the same thing. The only difference is an **Action** handles one specific action (route) per class, while a **Controller** can handle many actions or routes. In other words, a controller class is composed of several actions, with one method per route. In this guide, we often use the term **Controller** for both implementations for simplicity, but we highly recommend you use the "one action = one class" method.
 
 ## Defining Controller Classes
 
@@ -91,7 +91,8 @@ class OwlController
 }
 ```
 
-[notice=tip]The `Response` and `Request` services are not required to be injected into the method. While most of the time the `Response` is required to write to the page (except when throwing an exception, for example), the `Request` might not always be useful. In these cases, it's perfectly fine to omit it.[/notice]
+> [!TIP]
+> The `Response` and `Request` services are not required to be injected into the method. While most of the time the `Response` is required to write to the page (except when throwing an exception, for example), the `Request` might not always be useful. In these cases, it's perfectly fine to omit it.
 
 When writing controllers, which often handle multiple routes, sometimes services needs to be shared between methods. Those can be injected into the class constructor instead of each individual method:
 
@@ -136,7 +137,8 @@ class OwlController
 }
 ```
 
-[notice=tip]When many routes share the same code, for example permission validation, the controller can make use of a shared private method to handle this task, which makes the above syntax (i.e. many routes per class) interesting. But it's also possible to share the same code using a [Trait](https://www.php.net/manual/en/language.oop5.traits.php), a Service or a Middleware.[/notice]
+> [!TIP]
+> When many routes share the same code, for example permission validation, the controller can make use of a shared private method to handle this task, which makes the above syntax (i.e. many routes per class) interesting. But it's also possible to share the same code using a [Trait](https://www.php.net/manual/en/language.oop5.traits.php), a Service or a Middleware.
 
 ## Defining Action Classes
 

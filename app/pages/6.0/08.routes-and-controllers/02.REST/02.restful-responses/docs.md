@@ -53,7 +53,8 @@ Note that most major browsers perform the redirect automatically when they recei
 
 Respond with this code when the client has submitted an "invalid" request. In most cases where the user's request has failed [validation](/routes-and-controllers/client-input/validation), `400` is the appropriate code to return.
 
-[notice=note]Don't return a 400 code if the error isn't the client's fault, or if the request was valid but refused for some other reason (like failing authorization, or a CSRF token check).[/notice]
+> [!NOTE]
+> Don't return a 400 code if the error isn't the client's fault, or if the request was valid but refused for some other reason (like failing authorization, or a CSRF token check).
 
 ### 401 (Unauthorized)
 
@@ -63,7 +64,8 @@ In lieu of a better alternative, UserFrosting has co-opted this code for its own
 
 For non-AJAX requests (i.e., when visiting a page), if a request fails because the user is not logged in, a 302 status code will be returned instead, and the user will be redirected to the login page.
 
-[notice=note]Don't return a 401 code if the user is authenticated, but simply lacks the proper permissions. A 403 should be used in this situation.[/notice]
+> [!NOTE]
+> Don't return a 401 code if the user is authenticated, but simply lacks the proper permissions. A 403 should be used in this situation.
 
 ### 403 (Forbidden)
 

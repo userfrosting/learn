@@ -6,9 +6,11 @@ taxonomy:
     category: docs
 ---
 
-[notice=note]This recipe assumes that you've already setup your own UserFrosting instance from the Skeleton template and you're familiar with the basics of UserFrosting.[/notice]
+> [!NOTE]
+> This recipe assumes that you've already setup your own UserFrosting instance from the Skeleton template and you're familiar with the basics of UserFrosting.
 
-[notice=tip]A complete example of this guide can be found on GitHub : [https://github.com/userfrosting/recipe-js-package](https://github.com/userfrosting/recipe-js-package)[/notice]
+> [!TIP]
+> A complete example of this guide can be found on GitHub : [https://github.com/userfrosting/recipe-js-package](https://github.com/userfrosting/recipe-js-package)
 
 This recipe will guide you on how to add a 3rd party javascript package on a default UserFrosting installation. The process is simple, but can be challenging to understand as most 3rd party package won't provides instructions for UserFrosting Webpack setup.  
 

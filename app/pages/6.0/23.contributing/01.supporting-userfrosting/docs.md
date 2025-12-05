@@ -39,9 +39,9 @@ Yes, we welcome pull requests! Based on your level of skill and background, you 
 - Implementing feature requests
 - Fixing bugs
 
-[notice=tip]Don't start working on a new feature until you've discussed it with a member of the dev team in chat first. It's always a tragedy when someone spends a lot of time working on a feature, only to have their pull request rejected because their code doesn't fit the technical requirements and/or general vision for UF's future.
-
-Since UF4 is fully modular and extendable, additional features might be best implemented as a new [Sprinkle](/sprinkles) rather than being added to the core UserFrosting project. Join us in chat to discuss an appropriate development plan for your feature.[/notice]
+> [!TIP]
+> Don't start working on a new feature until you've discussed it with a member of the dev team in chat first. It's always a tragedy when someone spends a lot of time working on a feature, only to have their pull request rejected because their code doesn't fit the technical requirements and/or general vision for UF's future.
+> Since UF4 is fully modular and extendable, additional features might be best implemented as a new [Sprinkle](/sprinkles) rather than being added to the core UserFrosting project. Join us in chat to discuss an appropriate development plan for your feature.
 
 Requirements are as follows:
 

@@ -73,7 +73,8 @@ class ExampleAfterMiddleware implements MiddlewareInterface
 }
 ```
 
-[notice=tip]It's possible to pass variables from middleware via [request's attributes](https://www.slimframework.com/docs/v4/concepts/middleware.html#passing-variables-from-middleware).[/notice]
+> [!TIP]
+> It's possible to pass variables from middleware via [request's attributes](https://www.slimframework.com/docs/v4/concepts/middleware.html#passing-variables-from-middleware).
 
 ## How do I add middleware?
 
@@ -140,4 +141,5 @@ class MyRoutes implements RouteDefinitionInterface
 }
 ```
 
-[notice]This page was inspired by [Slim's documentation](https://www.slimframework.com/docs/v4/concepts/middleware.html). You can find more information on their documentation.[/notice]
+> [!NOTE]
+> This page was inspired by [Slim's documentation](https://www.slimframework.com/docs/v4/concepts/middleware.html). You can find more information on their documentation.

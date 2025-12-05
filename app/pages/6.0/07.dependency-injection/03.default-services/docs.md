@@ -72,7 +72,8 @@ Sets up UserFrosting's `Session` object, which serves as a wrapper for the `$_SE
 
 Please note that when using file-based sessions, UserFrosting places sessions in its own `/app/sessions` directory instead of PHP's default session directory.
 
-[notice=warning]Use UserFrosting's `Session` service instead of PHP's `$_SESSION` superglobal in your code for proper functionality.[/notice]
+> [!WARNING]
+> Use UserFrosting's `Session` service instead of PHP's `$_SESSION` superglobal in your code for proper functionality.
 
 ### `Slim\Views\Twig`
 

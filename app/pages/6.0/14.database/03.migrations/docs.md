@@ -10,7 +10,8 @@ When you start building your application with UserFrosting, you'll no doubt be a
 
 Though you could add new tables to your database through the command line, phpMyAdmin, MySQL Workbench or another tool, you will probably want something that is portable, allowing you to set up your database on other developers' machines or on your test and production servers. To do this, you should use a **migration**. Migrations bring version control to your database. If you have ever had to share sql files or manually edit a database schema, you've faced the problem that database migrations solve.
 
-[notice=tip]Even if you only have a simple table to create, creating a migration is a good practice. You never know what changes you'll need to do to that table later on. You also don't know when or who will need to create that table again later on a different system or even database provider![/notice]
+> [!TIP]
+> Even if you only have a simple table to create, creating a migration is a good practice. You never know what changes you'll need to do to that table later on. You also don't know when or who will need to create that table again later on a different system or even database provider
 
 Migrations are also very useful when dealing with [Automated Test](/testing). Tests can use your migrations to setup a temporary or a test database so your tests are executed in a safe environment, keeping your production database secure.
 
@@ -49,7 +50,8 @@ class MyTable extends Migration
 }
 ```
 
-[notice=note]Recall that [PSR-4](http://www.php-fig.org/psr/psr-4/#examples) requires that classes have a namespace that corresponds to their file path, i.e. `UserFrosting\Sprinkle\{sprinkleName}\Database\Migrations`(where `{sprinkleName}` is the name of your sprinkle). **Crucially**, namespaces are case-sensitive and **must** match the case of the corresponding directories. Also note that dots (`.`) and dashes (`-`) are not included in the directories (and namespace) as per PSR-4 rules. The class names must also correspond to these file names; e.g. `MembersTable.php` must contain a single `MembersTable` class.[/notice]
+> [!NOTE]
+> Recall that [PSR-4](http://www.php-fig.org/psr/psr-4/#examples) requires that classes have a namespace that corresponds to their file path, i.e. `UserFrosting\Sprinkle\{sprinkleName}\Database\Migrations`(where `{sprinkleName}` is the name of your sprinkle). **Crucially**, namespaces are case-sensitive and **must** match the case of the corresponding directories. Also note that dots (`.`) and dashes (`-`) are not included in the directories (and namespace) as per PSR-4 rules. The class names must also correspond to these file names; e.g. `MembersTable.php` must contain a single `MembersTable` class.
 
 You can optionally organize your migrations in subdirectories so it's easier to find and manage them. For example:
 
@@ -142,7 +144,8 @@ class MembersTable extends Migration
 
 `$this->schema` is a variable created by the base `\UserFrosting\Sprinkle\Core\Database\Migration` class, which models your database structure. In this example, we call `hasTable` to check if the `members` table already exists, and then create it if it doesn't.
 
-[notice=note]Using `hasTable` to make sure the table doesn't already exist is not strictly required since [Dependencies](#dependencies) could also be used to prevent any duplicate, but it can still be useful in case another sprinkle already created a table with the same name.[/notice]
+> [!NOTE]
+> Using `hasTable` to make sure the table doesn't already exist is not strictly required since [Dependencies](#dependencies) could also be used to prevent any duplicate, but it can still be useful in case another sprinkle already created a table with the same name.
 
 We then call a series of methods on the `$table` variable in `create`'s closure, to set up the columns and other table properties.
 
@@ -152,7 +155,8 @@ For a complete explanation of the available methods for working with tables, see
 
 As for the `down` method, it simply tells the database structure to delete the table created by the `up` method when rolling back that migration. In the `members` example, the table created by the `up` method would be **deleted** by the `down` method.
 
-[notice=warning]For your table to work correctly with Eloquent, it should always have an autoincrementing `id` column which serves as the primary key. This is done automatically for you with the `increments` method.[/notice]
+> [!WARNING]
+> For your table to work correctly with Eloquent, it should always have an autoincrementing `id` column which serves as the primary key. This is done automatically for you with the `increments` method.
 
 ## Dependencies
 
@@ -187,7 +191,8 @@ class MembersTable extends Migration
 
 The above example tells the bakery `migrate` command that the `UsersTable`, `RolesTable` and `RoleUsersTable` migrations from the `Account` Sprinkle need to be already executed before executing the `MembersTable` migration from the `MySprinkle` sprinkle. If those migrations are not yet executed and are pending execution, the `migrate` command will take care of the order automatically. If a migration's dependencies cannot be met, the `migrate` command will abort.
 
-[notice=note]Dependencies can also target previous versions of your own migrations. For example, you should check that your `member` table is created before adding a new column in a new migration.[/notice]
+> [!NOTE]
+> Dependencies can also target previous versions of your own migrations. For example, you should check that your `member` table is created before adding a new column in a new migration.
 
 ## Running your migration
 
@@ -199,10 +204,10 @@ $ php bakery migrate
 
 If you want to do a "fresh install" of your migration or cancel the changes made, you can **rollback** the previous migration. You can also do a dry run of your migrations using the `pretend` option. See [Chapter 8](/cli/commands) for more details.
 
-[notice=tip]If you have any trouble rolling back migrations under the SQLite driver, you may want to temporarily add this line to your [`.env` file](/configuration/environment-vars):
-```text
-DB_FOREIGN_KEYS=false
-```
-This will disable foreign keys, which [should allow SQLite to make changes more easily](https://github.com/laravel/framework/issues/23461#issuecomment-507799947). 
-Please be sure to re-enable foreign keys before running your migrations back up!
-[/notice]
+> [!TIP]
+> If you have any trouble rolling back migrations under the SQLite driver, you may want to temporarily add this line to your [`.env` file](/configuration/environment-vars):
+> ```text
+> DB_FOREIGN_KEYS=false
+> ```
+> This will disable foreign keys, which [should allow SQLite to make changes more easily](https://github.com/laravel/framework/issues/23461#issuecomment-507799947).
+> Please be sure to re-enable foreign keys before running your migrations back up!

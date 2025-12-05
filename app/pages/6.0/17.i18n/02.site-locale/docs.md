@@ -18,7 +18,8 @@ For example, to use _French_ as the default locale :
 'default' => 'fr_FR',
 ```
 
-[notice=note]When returned by the browser, the browser prefered locale will be used as the default locale for guest user.[/notice]
+> [!NOTE]
+> When returned by the browser, the browser prefered locale will be used as the default locale for guest user.
 
 ## The available user locales
 
@@ -41,4 +42,5 @@ To remove one locale from the available ones, simply set the unwanted locale to 
         'th_TH' => false,
     ],
 ```
-[notice=tip]Want to add a new locale to UserFrosting? Feel free to [contribute](/contributing/supporting-userfrosting#contributing-code-and-content) on GitHub ![/notice]
+> [!TIP]
+> Want to add a new locale to UserFrosting? Feel free to [contribute](/contributing/supporting-userfrosting#contributing-code-and-content) on GitHub

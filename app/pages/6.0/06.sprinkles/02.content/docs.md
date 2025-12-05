@@ -35,7 +35,8 @@ Within each sprinkle, you will find any or all of the following directories and 
 └── webpack.config.js
 ```
 
-[notice=note]The file structure is *somewhat* flexible. For example, `app/` can be named whatever you want. All contents of `app/src/` can also be customized. However, other directories inside `app/` (or whatever you call it) should use the above naming system to allow your sprinkle to overwrite other sprinkles' resources.[/notice]
+> [!NOTE]
+> The file structure is *somewhat* flexible. For example, `app/` can be named whatever you want. All contents of `app/src/` can also be customized. However, other directories inside `app/` (or whatever you call it) should use the above naming system to allow your sprinkle to overwrite other sprinkles' resources.
 
 Each of these directories corresponds to specific types of entities that make up your application. UserFrosting has different rules for how each type of entity can extend the entities of the same type loaded in previous sprinkles. A brief description of each one is listed below.
 
@@ -91,7 +92,8 @@ The `schema` directory contains the [request schema](/routes-and-controllers/cli
 
 The `src` directory contains the (preferably) [PSR-4](http://www.php-fig.org/psr/psr-4/) compatible PHP code for your sprinkle. This directory will contain your controllers, database models, [migrations](/database/migrations), [routes](/routes-and-controllers), [service providers](/services), [data sprunjers](/database/data-sprunjing), and any other custom classes that your sprinkle uses. This is where your sprinkle's Recipe will be found.
 
-[notice=note]The content of `app/src/` can be customized and doesn't need to follow any strict convention.[/notice]
+> [!NOTE]
+> The content of `app/src/` can be customized and doesn't need to follow any strict convention.
 
 ### /app/storage
 
@@ -113,7 +115,8 @@ The `.env` file is used to store your local [environment variables](/configurati
 
 The `public` directory is the web server's document / web root. The `index.php` in this directory serves as the front controller for all HTTP requests. This directory is only required for main sprinkles.
 
-[notice=warning]The public directory *can* technically be renamed to something else. However, some features requires this path to be hardcoded. For example, the asset compiler and locator have this reference hardcoded. To customize the public directory name, further customization will be required in the code and other configuration values.[/notice]
+> [!WARNING]
+> The public directory *can* technically be renamed to something else. However, some features requires this path to be hardcoded. For example, the asset compiler and locator have this reference hardcoded. To customize the public directory name, further customization will be required in the code and other configuration values.
 
 ### /vendor
 

@@ -73,7 +73,8 @@ $this->assertStringContainsString('Cache cleared', $result->getDisplay());
 
 By default all tests are run against an in-memory SQLite database. This database is temporary and independent from the database used by your UserFrosting instance. That means your data is safe when tests are run. If you prefer to use a real database for tests, you can overwrite the `test_integration` connection config in your own sprinkle for the `testing` environment.
 
-[notice=warning]While you **can** test your code against the main database, it usually not a good idea to do so with a production database. Those are _tests_ after all. They _can_ fail. **Catastrophically**. UserFrosting built-in tests are all run against a test database.[/notice]
+> [!WARNING]
+> While you **can** test your code against the main database, it usually not a good idea to do so with a production database. Those are _tests_ after all. They _can_ fail. **Catastrophically**. UserFrosting built-in tests are all run against a test database.
 
 Note that the in-memory database is empty by default. If your test requires the standard tables to be up, you need to use the `UserFrosting\Sprinkle\Core\Testing\RefreshDatabase` trait to run all migrations up. You could also use the migrator service to run a particular migration up.
 
@@ -100,7 +101,8 @@ class MyTest extends TestCase
 
 It's good practice to reset your database before each test so that data from a previous test does not interfere with your tests. The `RefreshDatabase` trait will help you wipe the database clean and run all migration up.
 
-[notice=warning]This is **destructive**! All existing data in the database will be lost. Use it along the in-memory SQLite database to avoid losing data in your production database ![/notice]
+> [!WARNING]
+> This is **destructive**! All existing data in the database will be lost. Use it along the in-memory SQLite database to avoid losing data in your production database
 
 ## WithTestUser
 
@@ -125,4 +127,5 @@ $user = User::factory()->create();
 $this->actAsUser($user, permissions: ['test_permissions']);
 ```
 
-[notice]When dealing with logged-in user, they will be automatically logout at the end of the test to avoid collision with subsequent tests.[/notice]
+> [!NOTE]
+> When dealing with logged-in user, they will be automatically logout at the end of the test to avoid collision with subsequent tests.

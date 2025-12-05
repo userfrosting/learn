@@ -34,7 +34,8 @@ If you think that setting up a local environment is too much work, think again! 
 
 And the sprinkle on the cupcake is the [next chapter](/installation) will teach you how to do everything yourself!
 
-[notice=warning]There are a number of "one-click" installers available, which can set up your machine with a complete web application stack in just a few minutes: **XAMPP**, **MAMP**, **WampServer**, etc. **These are not officially supported by UserFrosting and we do not recommend using them.** They can be slow, out of date or use obscure configuration. They were useful at some point, but with modern tools, especially with WSL2 on Windows, it's never been easier to install every tool you need locally If you insist on using a "one-click" solution, [Docker](#alternatives-to-installing-a-stack-natively-docker) is a [great, modern alternative](https://www.reddit.com/r/PHP/comments/gqhg15/comment/frt8cp0/).[/notice]
+> [!WARNING]
+> There are a number of "one-click" installers available, which can set up your machine with a complete web application stack in just a few minutes: **XAMPP**, **MAMP**, **WampServer**, etc. **These are not officially supported by UserFrosting and we do not recommend using them.** They can be slow, out of date or use obscure configuration. They were useful at some point, but with modern tools, especially with WSL2 on Windows, it's never been easier to install every tool you need locally If you insist on using a "one-click" solution, [Docker](#alternatives-to-installing-a-stack-natively-docker) is a [great, modern alternative](https://www.reddit.com/r/PHP/comments/gqhg15/comment/frt8cp0/).
 
 ## Alternatives to installing a stack natively : Docker
 

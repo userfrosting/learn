@@ -8,9 +8,9 @@ taxonomy:
 
 Upgrading an existing sprinkle from UserFrosting 4 to UserFrosting 5 can unfortunately be a difficult task. It all depends on how much customization of the core code you have done. Very basic sites will be easy to upgrade, very complex ones could be a nightmare. However, it's for the greater good; UserFrosting 5 is more modern and uses new techniques.
 
-[notice=warning]This guide contains the most important changes and the actions you need to take to upgrade your UserFrosting 4 Sprinkle. However, **it's far from complete**, as there are too many changes to document. Make sure you have a backup of your existing application and your **development database** before starting.
-
-If you spot anything missing, don't hesitate to contribute to this page via the [*edit this page*](https://github.com/userfrosting/learn/blob/5.1/pages/22.upgrading/01.46-to-50/02.guide/docs.md) button at the top.[/notice]
+> [!WARNING]
+> This guide contains the most important changes and the actions you need to take to upgrade your UserFrosting 4 Sprinkle. However, **it's far from complete**, as there are too many changes to document. Make sure you have a backup of your existing application and your **development database** before starting.
+> If you spot anything missing, don't hesitate to contribute to this page via the [*edit this page*](https://github.com/userfrosting/learn/blob/5.1/pages/22.upgrading/01.46-to-50/02.guide/docs.md) button at the top.
 
 ## Before you start
 
@@ -20,7 +20,8 @@ To begin the upgrade journey, **the first thing you should do is a [fresh instal
 
 Once you have a functioning vanilla version of UserFrosting 5, you can begin to upgrade your sprinkle.
 
-[notice]While the database structure is mostly the same between V4 and V5, it is highly recommended you keep a backup of your existing application and your **development database**.[/notice]
+> [!NOTE]
+> While the database structure is mostly the same between V4 and V5, it is highly recommended you keep a backup of your existing application and your **development database**.
 
 ## Upgrading your sprinkle structure
 
@@ -38,7 +39,8 @@ To start with this option, the first step is to create a [fresh install](/instal
 
 The Skeleton comes with a basic `composer.json`. This defines the PSR-4 autoload namespace to `UserFrosting\App\`. You should edit this file to fit your sprinkle, as well as use the **same namespace as your old sprinkle**.
 
-[notice]**Important:** To make sure your migrations and database data are preserved, the app namespace must be the same![/notice]
+> [!NOTE]
+> **Important:** To make sure your migrations and database data are preserved, the app namespace must be the same
 
 You'll also need to update the namespace in every existing class, `index.php`, and `bakery`. See [Customizing Your Sprinkle](/sprinkles/customize#custom-namespace-and-name) for more information.
 
@@ -96,7 +98,8 @@ Next, you'll need to update some dependencies. Open `composer.json` **from the s
 
 You should also update the path for the `autoload` and `autoload-dev` sections to point to `app/src/` and `app/tests/` respectively.
 
-[notice]**Important:** Don't change the namespace if you want to keep the existing migration![/notice]
+> [!NOTE]
+> **Important:** Don't change the namespace if you want to keep the existing migration
 
 Once this is done, you can run `composer update` to fetch dependencies.
 
@@ -276,7 +279,8 @@ Simple changes have been made to controller classes:
 
 See the [Controller classes](/routes-and-controllers/controller-classes) guide for more information.
 
-[notice]If your sprinkle extends a controller class from a default sprinkle instead of `SimpleController`, note that **every** controller class from the default sprinkles has been moved, renamed, and rewritten as *Action classes*. You will need to check out the sprinkle source code to find out how to update your sprinkle.[/notice]
+> [!NOTE]
+> If your sprinkle extends a controller class from a default sprinkle instead of `SimpleController`, note that **every** controller class from the default sprinkles has been moved, renamed, and rewritten as *Action classes*. You will need to check out the sprinkle source code to find out how to update your sprinkle.
 
 ### Bakery
 

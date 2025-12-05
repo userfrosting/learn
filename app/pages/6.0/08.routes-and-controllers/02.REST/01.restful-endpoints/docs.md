@@ -46,6 +46,8 @@ Here's an example of routes used by UserFrosting :
 | GET    | `/modals/users/edit`     | Get an "edit user" modal HTML fragment                      |
 
 
-[notice=note]Notice that some requests use the exact same url, and only differ in the HTTP method used. For example, `/api/users/u/bob` can be used to retrieve, update, or delete Bob's account depending on which HTTP verb we are using.[/notice]
+> [!NOTE]
+> Notice that some requests use the exact same url, and only differ in the HTTP method used. For example, `/api/users/u/bob` can be used to retrieve, update, or delete Bob's account depending on which HTTP verb we are using.
 
-[notice=tip]The `route:list` [Bakery Command](/cli/commands#route-list) will display the full list of provided routes.[/notice]
+> [!TIP]
+> The `route:list` [Bakery Command](/cli/commands#route-list) will display the full list of provided routes.

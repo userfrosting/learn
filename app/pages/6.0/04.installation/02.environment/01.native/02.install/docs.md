@@ -16,19 +16,18 @@ Use Composer to create an empty project with the latest version of UserFrosting 
 composer create-project userfrosting/userfrosting UserFrosting "^5.1"
 ```
 
-[notice=tip]Note the `UserFrosting` at the end of the command. This means `composer` will create new `UserFrosting` subdirectory inside the current location. You can change `UserFrosting` to whatever you like.[/notice]
+> [!TIP]
+> Note the `UserFrosting` at the end of the command. This means `composer` will create new `UserFrosting` subdirectory inside the current location. You can change `UserFrosting` to whatever you like.
 
 This may take some time to complete. If Composer has completed successfully, you should see that a `vendor/` directory has been created. This `vendor/` directory contains all of UserFrosting's PHP dependencies - there should be nearly 30 subdirectories in here! 
 
 Next the **Bakery** will execute it's magic. You'll have to answer some questions, which will guide you into the configuration process. These will help you set up the **database** credentials, create the first **admin user** and install the third-party **assets**.
 
-[notice=note]
-If any error is encountered at this point, in the main project directory, run:
-
-```bash
-$ php bakery bake
-```
-[/notice]
+> [!NOTE]
+> If any error is encountered at this point, in the main project directory, run:
+> ```bash
+> $ php bakery bake
+> ```
 
 You will first be prompted for your database credentials. This is the information PHP needs to connect to your database. If you followed our guide to setup, you can select **SQLite** and the default path when asked. If PHP can't connect to your database using these credentials, make sure you have entered the right information and re-run the `bake` command.
 
@@ -37,12 +36,11 @@ If you're using **Mailpit** or **Mailtrap**, you can select "SMTP" and enter the
 
 If the database connection is successful, the installer will then check that the basic dependencies are met. If so, the installer will run the _migrations_ to populate your database with new tables. During this process, you will be prompted for some information to set up the master account (first user). Finally, the installer will run the command to fetch javascript dependencies and build the assets.
 
-[notice=tip]Composer `create-project` command is an umbrella command which run the following commands. You can still run them following manually if you want, or to debug any issue :
-
-1. Run `git clone` (from the UserFrosting repo)
-2. Run `composer install`
-3. Run `php bakery bake`
-[/notice]
+> [!TIP]
+> Composer `create-project` command is an umbrella command which run the following commands. You can still run them following manually if you want, or to debug any issue :
+> 1. Run `git clone` (from the UserFrosting repo)
+> 2. Run `composer install`
+> 3. Run `php bakery bake`
 
 ## Serve and visit your website
 
@@ -56,7 +54,8 @@ You can now access UserFrosting at [http://localhost:8080](http://localhost:8080
 
 ![Basic front page of a UserFrosting installation](/images/front-page.png)
 
-[notice=tip]To stop the server, hit `ctrl+c`.[/notice]
+> [!TIP]
+> To stop the server, hit `ctrl+c`.
 
 ## Star the project and follow us on Twitter
 

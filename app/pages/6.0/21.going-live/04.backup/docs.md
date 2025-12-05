@@ -7,7 +7,8 @@ taxonomy:
 ---
 <!-- [plugin:content-inject](/modular/_updateRequired) -->
 
-[notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+> [!NOTE]
+> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
 It is extremely important to have a system in place to make regular, automated backups of your production database. Even if no one is [maliciously targeting your data](http://fieldguide.gizmodo.com/a-solid-backup-system-is-the-best-protection-against-ra-1795682989), [accidents](https://about.gitlab.com/2017/02/01/gitlab-dot-com-database-incident/) happen [all the time](https://np.reddit.com/r/cscareerquestions/comments/6ez8ag/accidentally_destroyed_production_database_on/).
 
@@ -19,7 +20,8 @@ In this guide, we'll use a free open-source program called Duplicity to set this
 4. Encrypt the backups, in case your Google account is compromised;
 5. Automate this entire process.
 
-[notice=warning]This guide assumes that you are using a MySQL/MariaDB database. The database commands may be different for other database technologies.[/notice]
+> [!WARNING]
+> This guide assumes that you are using a MySQL/MariaDB database. The database commands may be different for other database technologies.
 
 ## Google account
 
@@ -88,7 +90,8 @@ Test out the dump command (replace `<db_password>` with the password you set ear
 mysqldump --single-transaction --routines --events --triggers --add-drop-table --extended-insert --max-allowed-packet=1000000000 -u backup -h 127.0.0.1 -p<db_password> --all-databases | gzip -9 | sudo tee /var/backups/<repo name>/sql/all_$(date +"%Y_week_%U").sql.gz > /dev/null
 ```
 
-[notice=warning]Note that there is no space between the `-p` flag and your password.[/notice]
+> [!WARNING]
+> Note that there is no space between the `-p` flag and your password.
 
 This command will dump all databases to a single file, labeled with the year and current week number. Each time we run this, it will update the current dump file. However when a new week commences, it will end up creating a new file instead. Thus, we maintain a history of weekly snapshots of our databases. You can adjust the [date portion](http://www.computerhope.com/unix/udate.htm) to make these snapshots more or less frequent, depending on the size of your database and the space you're willing to allocate for these snapshots.
 
@@ -246,7 +249,8 @@ duplicity ~/test gdocs://<google_account_name>@gmail.com/backup
 
 Follow the verification link it creates, and copy-paste the verification code you receive back into the prompt. Duplicity *should* store the auth token it creates in `/home/<username>/.duplicity/gdrive.cache` so that we don't have to do the verification step again (and so our system can automatically do this every night without our input).
 
-[notice=warning]Make sure the target directory on the remote (Google Drive) does not contain any duplicity backups made with old/other GPG keys. Otherwise, Duplicity will try to synchronize with these backups and fail because the public keys do not match.[/notice]
+> [!WARNING]
+> Make sure the target directory on the remote (Google Drive) does not contain any duplicity backups made with old/other GPG keys. Otherwise, Duplicity will try to synchronize with these backups and fail because the public keys do not match.
 
 You should see three files show up in your Google Drive backup directory:
 
@@ -272,7 +276,8 @@ We'll use a `cron` script to automatically perform the database dumps and run Du
 
 This will run every night, creating incremental backups of everything in our target path. Duplicity by default tries to back up ALL files in the target path.
 
-[notice=note]Use the `--exclude` parameter so that Duplicity ignores everything except the directories we include via `--include`. You can use multiple `--include` parameters to include multiple directories.[/notice]
+> [!NOTE]
+> Use the `--exclude` parameter so that Duplicity ignores everything except the directories we include via `--include`. You can use multiple `--include` parameters to include multiple directories.
 
 Instead of adding to our normal `crontab`, we'll create a dedicated cron script in the `cron.daily` directory:
 

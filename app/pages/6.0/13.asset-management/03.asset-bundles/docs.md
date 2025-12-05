@@ -45,7 +45,8 @@ The shared resources (e.g. template resources) can be loaded on every page along
 
 Now that the "entry" files have been created, we need to register them with Encore as entrypoints. Entrypoints are configured in `/webpack.entries.js` by default.
 
-[notice=note]Entrypoints can also be defined in `/webpack.config.js` directly. However, UserFrosting defines them in a separate file, as it's easier to include other sprinkles entries.[/notice] 
+> [!NOTE]
+> Entrypoints can also be defined in `/webpack.config.js` directly. However, UserFrosting defines them in a separate file, as it's easier to include other sprinkles entries. 
 
 **webpack.entries.js**
 ```js
@@ -120,4 +121,5 @@ Similarly, for Javascript assets, we have:
 
 The main idea is for each page to include no more than three different bundles of each type - a **sitewide bundle**, containing assets that every page on your site uses; a **page group bundle**, to share assets among sets of similar pages; and a **page-specific bundle**, for assets that are specific enough to only be needed on one page.
 
-[notice=tip]The `content/scripts_site.html.twig` and `content/stylesheets_site.html.twig` pages contains the `{% block scripts_site %}{% endblock %}` and `{% block stylesheets_site %}{% endblock %}` blocks respectively. A content file is used here, as it's easier for Sprinkles to overwrite this smaller file, than the whole base layout.[/notice]
+> [!TIP]
+> The `content/scripts_site.html.twig` and `content/stylesheets_site.html.twig` pages contains the `{% block scripts_site %}{% endblock %}` and `{% block stylesheets_site %}{% endblock %}` blocks respectively. A content file is used here, as it's easier for Sprinkles to overwrite this smaller file, than the whole base layout.

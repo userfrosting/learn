@@ -38,7 +38,8 @@ use Owlfancy\Sprinkle\Owlery ; //don't forget to include the sprinkle's namespac
     }
 ```
 
-[notice]If the sprinkle does not include Javascript, you're done setting up--skip to the "Installing" section.[/notice]
+> [!NOTE]
+> If the sprinkle does not include Javascript, you're done setting up--skip to the "Installing" section.
 
 ### Javascript
 If the sprinkle includes Javascript, you will need to add it to both the "dependencies" [in your `package.json`](/asset-management/webpack-encore#npm-and-packages-json)... 
@@ -60,7 +61,8 @@ const sprinkles = {
 ```
 (We'll talk more about these files in the [Assets chapter](/asset-management)).
 
-[notice=tip]In the `package.json` example above, we're loading the Userfrosting core sprinkles from npm, and the Owlery sprinkle from Github. Each community sprinkle decides where it is published, and should include this in their README.[/notice]
+> [!TIP]
+> In the `package.json` example above, we're loading the Userfrosting core sprinkles from npm, and the Owlery sprinkle from Github. Each community sprinkle decides where it is published, and should include this in their README.
 
 ## Installing a community sprinkle
 Once you've added the sprinkle to the recipe, `composer.json`, and (if needed) `package.json`, you're ready to use Composer and [Bakery](/cli/commands#bake) to download and install the files.
@@ -77,9 +79,11 @@ php bakery seed
 ```
 You can also use `php bakery migrate:status` and `php bakery seed:list` to check what migrations and seeds the sprinkle has added, and if any migrations have not yet been run. 
 
-[notice=tip]`php bakery bake` should run migrations automatically, but you can use the above commands later if you don't want to run a full `bake`.[/notice]
+> [!TIP]
+> `php bakery bake` should run migrations automatically, but you can use the above commands later if you don't want to run a full `bake`.
 
-[notice=info]Migrations set up the database, if the sprinkle adds features there. Depending on the individual sprinkle, seeds may be convenient management tools and not used during install.[/notice]
+> [!IMPORTANT]
+> Migrations set up the database, if the sprinkle adds features there. Depending on the individual sprinkle, seeds may be convenient management tools and not used during install.
 
 ## Distributing your sprinkle
 
@@ -87,7 +91,8 @@ You can also use `php bakery migrate:status` and `php bakery seed:list` to check
 When you're ready to distribute your sprinkle, first use `composer update` to make sure it is up to date with the latest version of UserFrosting.
 
 Providing documentation and examples in a `README` file will encourage other devs to use your sprinkle. You should specify whether they need to add your sprinkle to `package.json`, if there are any seeds to run, and any other steps needed to fully set up. 
-[notice=tip]As an example, if your sprinkle adds a new permission, anyone installing your sprinkle may need to manually add that permission to the appropriate roles through the UserFrosting UI.[/notice]
+> [!TIP]
+> As an example, if your sprinkle adds a new permission, anyone installing your sprinkle may need to manually add that permission to the appropriate roles through the UserFrosting UI.
 
 Every sprinkle needs a valid `composer.json` file. This file is required to add any sort of class and PSR-4 definition to your sprinkle, so you already have one. Make sure it contains up-to-date information; your name and license details are always welcome. If you include a `type` key, be sure it's defined as `userfrosting-sprinkle` in your sprinkles `composer.json` file--but this is not required as of UserFrosting 5.
 
@@ -110,7 +115,8 @@ If your sprinkle includes any Javascript, you'll need to show npm how to install
     "repository": "@owlfancy/sprinkle-owlery",
 ```
 
-[notice=tip]Consider including a ["files" section](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#files), so that only Javascript files are included in `/node_modules`--npm doesn't typically need PHP or Twig files! Different sprinkles may need npm to be aware of different files or folders.[/notice]
+> [!TIP]
+> Consider including a ["files" section](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#files), so that only Javascript files are included in `/node_modules`--npm doesn't typically need PHP or Twig files! Different sprinkles may need npm to be aware of different files or folders.
 
 #### Npmjs
 [Npmjs](https://www.npmjs.com/about) is a registry of JS projects, similar to Packagist for Composer.
@@ -122,4 +128,5 @@ If the Javascript is tightly bound to your sprinkle and you've already published
 ```json
     "repository": "github:owlfancy/sprinkle-owlery",
 ```
-[notice=warning]Publishing via Github may [prevent your users from automatically getting updates](https://medium.com/@jonchurch/use-github-branch-as-dependency-in-package-json-5eb609c81f1a) through npm.[/notice]
+> [!WARNING]
+> Publishing via Github may [prevent your users from automatically getting updates](https://medium.com/@jonchurch/use-github-branch-as-dependency-in-package-json-5eb609c81f1a) through npm.

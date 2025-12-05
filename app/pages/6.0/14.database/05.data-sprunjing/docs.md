@@ -99,7 +99,8 @@ class OwlSprunje extends Sprunje
 
 This whitelisting is done to prevent consumers of your API from sorting/filtering on arbitrary columns, which could reveal potentially sensitive information. For example, even if you don't return the actual **value** of a column in your result set (e.g., `is_admin`), one could still determine which users are admins, for example, by filtering based on `is_admin=1`. Whitelisting ensures that this cannot happen.
 
-[notice]Both `sorts` and `filters` can accept multiple values separated by `||`, which will cause your Sprunje to return rows that match *any* of the values.[/notice]
+> [!NOTE]
+> Both `sorts` and `filters` can accept multiple values separated by `||`, which will cause your Sprunje to return rows that match *any* of the values.
 
 ## Using your Sprunje
 
@@ -242,7 +243,8 @@ protected function applyTransformations(Collection $collection): Collection
 }
 ```
 
-[notice=warning]There are a few methods that do _not_ automatically apply transformations. Specifically `getColumnValues`--and methods such as [the default `getListable`](#sprunje-lists) which use `getColumnValues` as their datasource--skip this step. If your Sprunje depends on transformations, you may wish to override `getColumnValues` and/or use custom methods for all `listable` fields.[/notice]
+> [!WARNING]
+> There are a few methods that do _not_ automatically apply transformations. Specifically `getColumnValues`--and methods such as [the default `getListable`](#sprunje-lists) which use `getColumnValues` as their datasource--skip this step. If your Sprunje depends on transformations, you may wish to override `getColumnValues` and/or use custom methods for all `listable` fields.
 
 ## Extending a Sprunje query
 
@@ -299,9 +301,11 @@ An array mapping each listable field to a list of possible values can be obtaine
 }
 ```
 
-[notice=warning]It is recommended to use strings for both the `value` and `text` for compatibility purposes with the TableSorter plugin. You can cast your value to a string by wrapping it in double quotation marks or with `(string)` prefix of the value. See [this thread](https://github.com/userfrosting/UserFrosting/issues/966#issuecomment-483245033) for an example.[/notice]
+> [!WARNING]
+> It is recommended to use strings for both the `value` and `text` for compatibility purposes with the TableSorter plugin. You can cast your value to a string by wrapping it in double quotation marks or with `(string)` prefix of the value. See [this thread](https://github.com/userfrosting/UserFrosting/issues/966#issuecomment-483245033) for an example.
 
-[notice]Remember that `getListable` does not apply [transformations](#custom-data-transformations). If your Sprunje uses transformations, consider writing custom methods for each listable field. [/notice]
+> [!NOTE]
+> Remember that `getListable` does not apply [transformations](#custom-data-transformations). If your Sprunje uses transformations, consider writing custom methods for each listable field.
 
 Of course you can override the default listing behavior for a field by defining a custom method. This method must consist of the field name (converted to StudlyCase) prefixed with `list`:
 

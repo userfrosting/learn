@@ -103,7 +103,8 @@ Notice that we extend the `default.html.twig` abstract template, which is the sa
 
 Then, we simply have to fill in some of the [blocks](https://twig.symfony.com/doc/3.x/tags/extends.html) defined in the abstract template with our page content. As a simple example of using Twig to produce dynamic content, we reference the `current_user` global Twig variable to get and display the user's first name.
 
-[notice=tip]The default UserFrosting theme is based on [AdminLTE](https://adminlte.io). Check it out while building your pages. It comes with pretty cool features and widgets you can use in your own pages ![/notice]
+> [!TIP]
+> The default UserFrosting theme is based on [AdminLTE](https://adminlte.io). Check it out while building your pages. It comes with pretty cool features and widgets you can use in your own pages
 
 ## Next steps
 

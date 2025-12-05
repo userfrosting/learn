@@ -718,7 +718,8 @@ transformDropdownSelection: function (item) {
 }
 ```
 
-[notice=warning]Notice that we use `$.extend(true, {}, item)` to [clone the object](https://stackoverflow.com/a/122704/2970321). If you instead were to manipulate the `item` object directly, it will change the actual object as it exists in the dropdown control, and likely break the dropdown in the process.[/notice]
+> [!WARNING]
+> Notice that we use `$.extend(true, {}, item)` to [clone the object](https://stackoverflow.com/a/122704/2970321). If you instead were to manipulate the `item` object directly, it will change the actual object as it exists in the dropdown control, and likely break the dropdown in the process.
 
 #### DEBUG
 
@@ -726,10 +727,11 @@ _Dump debugging information to the browser console._
 
 Defaults to `false`.
 
-[notice]Your sprunje should return the id column as `id` in lowercase and not in uppercase for the uf-collection to function. If you have a column named `ID` in your database, you can use an alias while querying your sprunje collection.
-You can write,
-```php
-return $instance->newQuery()->select("Id AS id");
-}
-```
-in your sprunje file, or use any other method to alias the Id column. Keeping in your mind that your sprunje's baseQuery function should return an instance of a "queriable" class. See more [`Defining a Sprunje` Data Sprunjing](/database/data-sprunjing#defining-a-sprunje)[/notice]
+> [!NOTE]
+> Your sprunje should return the id column as `id` in lowercase and not in uppercase for the uf-collection to function. If you have a column named `ID` in your database, you can use an alias while querying your sprunje collection.
+> You can write,
+> ```php
+> return $instance->newQuery()->select("Id AS id");
+> }
+> ```
+> in your sprunje file, or use any other method to alias the Id column. Keeping in your mind that your sprunje's baseQuery function should return an instance of a "queriable" class. See more [`Defining a Sprunje` Data Sprunjing](/database/data-sprunjing#defining-a-sprunje)

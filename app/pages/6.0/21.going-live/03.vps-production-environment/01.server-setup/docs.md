@@ -7,7 +7,8 @@ taxonomy:
 ---
 <!-- [plugin:content-inject](/modular/_updateRequired) -->
 
-[notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+> [!NOTE]
+> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
 We recommend that you start with a $4/month Droplet and [install a LEMP stack](https://marketplace.digitalocean.com/apps/lemp) (Ubuntu 20.04, nginx, MariaDB, and PHP 8.1). If you prefer you may [install Apache instead](https://marketplace.digitalocean.com/apps/lamp), but nginx offers superior performance and requires less configuration.
 
@@ -142,7 +143,8 @@ See this [**DigitalOcean tutorial**](https://www.digitalocean.com/community/tuto
 
 Notes:
 
-1. Make sure to pick a particularly strong password for the phpmyadmin user account. For development, you can use [Random.org](https://www.random.org/passwords/) - we recommend generating something with at least 20 characters. [notice]Random.org recommends against using any online password creation service, including theirs, for anything sensitive.[/notice]
+1. Make sure to pick a particularly strong password for the phpmyadmin user account. For development, you can use [Random.org](https://www.random.org/passwords/) - we recommend generating something with at least 20 characters. > [!NOTE]
+> Random.org recommends against using any online password creation service, including theirs, for anything sensitive.
 2. To enable `mcrypt` in PHP 8:
 
 ```bash

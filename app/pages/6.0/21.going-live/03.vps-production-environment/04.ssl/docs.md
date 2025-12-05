@@ -7,7 +7,8 @@ taxonomy:
 ---
 <!-- [plugin:content-inject](/modular/_updateRequired) -->
 
-[notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+> [!NOTE]
+> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
 Let's Encrypt has put an enormous amount of effort into making `certbot` very user-friendly.  Most problems that come up when installing an SSL certificate with `certbot` can be traced back to file permissions issues.  Make sure that you understand how Linux file permissions work before attempting this task.
 
@@ -107,7 +108,8 @@ certbot certificates
 
 to get a list of certificates managed by `certbot` on this server.
 
-[notice=warning]Make sure that the paths for `ssl_certificate`, `ssl_certificate_key`, and `ssl_trusted_certificate` match the paths given by `certbot certificates`![/notice]
+> [!WARNING]
+> Make sure that the paths for `ssl_certificate`, `ssl_certificate_key`, and `ssl_trusted_certificate` match the paths given by `certbot certificates`
 
 ## Redirect HTTP to HTTPS
 
@@ -165,7 +167,8 @@ Add the following lines at the bottom:
 - `--renew-hook "/bin/systemctl reload nginx"` will tell certbot to automatically reload nginx when renewal succeeds;
 - `2>&1 | ts "\%F \%T" >> /var/log/certbot-autorenew.log` logs each line of `certbot`'s output with a timestamp to `/var/log/certbot-autorenew.log`, to help you trace errors when the renewal fails.
 
-[notice=tip]`certbot` automatically tries to upgrade itself each time it is run.  If you find that your `cron` job is failing often due to difficulties in automatically upgrading `certbot`, add `--no-self-upgrade` to the command.[/notice]
+> [!TIP]
+> `certbot` automatically tries to upgrade itself each time it is run.  If you find that your `cron` job is failing often due to difficulties in automatically upgrading `certbot`, add `--no-self-upgrade` to the command.
 
 ## Set up a third-party service to monitor your certificates
 
@@ -189,7 +192,8 @@ sudo certbot certificates
 sudo certbot delete --cert-name example.com
 ```
 
-[notice=note]The **certificate name** is not necessarily the same as the **domain name**.  Use the `certificates` command above to see the names of each certificate and the domains that they point to.[/notice]
+> [!NOTE]
+> The **certificate name** is not necessarily the same as the **domain name**.  Use the `certificates` command above to see the names of each certificate and the domains that they point to.
 
 ### Expand an existing certificate
 
@@ -199,4 +203,5 @@ sudo certbot certonly --cert-name example.com -d example.com,www.example.com,tes
 
 This will take the certificate named `example.com`, and set its domains as `example.com,www.example.com,test.example.com`.  Note that this replaces the entire certificate, so you will have to re-validate the acme challenge for _all_ listed domains.
 
-[notice=warning]Even when using `--cert-name`, you need to specify **all** the domains/subdomains that you would ultimately like to have registered on this certificate (not just the new ones).  Certbot cannot "add" additional domains/subdomains to an existing certificate - it must reissue a completely new cert.[/notice]
+> [!WARNING]
+> Even when using `--cert-name`, you need to specify **all** the domains/subdomains that you would ultimately like to have registered on this certificate (not just the new ones).  Certbot cannot "add" additional domains/subdomains to an existing certificate - it must reissue a completely new cert.

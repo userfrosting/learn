@@ -17,4 +17,5 @@ The links below will guide you to the right installation guide for you, which ca
 - [I have a local environment set up already, I'll do everything myself](/installation/environment/native/install)
 - [I'm familiar with *Docker*, let's use that](/installation/environment/docker#get-userfrosting)
 
-[notice=warning]There are a number of "one-click" installers available, which can set up your machine with a complete web application stack in just a few minutes: **XAMPP**, **MAMP**, **WampServer**, etc. **These are not officially supported by UserFrosting and we do not recommend using them.** For "one-click" dev environment, we recommend **Docker**.[/notice]
+> [!WARNING]
+> There are a number of "one-click" installers available, which can set up your machine with a complete web application stack in just a few minutes: **XAMPP**, **MAMP**, **WampServer**, etc. **These are not officially supported by UserFrosting and we do not recommend using them.** For "one-click" dev environment, we recommend **Docker**.

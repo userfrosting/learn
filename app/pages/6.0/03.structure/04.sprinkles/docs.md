@@ -20,7 +20,8 @@ A default UserFrosting installation comes with **four** sprinkles, each of which
 
 Because UserFrosting is modular, you can decide to use these bundled sprinkles or not. You may or may not need the functionality each provides in your app. We'll go over how to enable and disable them [later](/sprinkles/recipe#removing-default-sprinkles). For now, let's focus on their features.
 
-[notice]Remove all sprinkles and the [Framework](/structure/framework) can be used by itself to create a very basic Slim/Symfony Console application with no database, template, etc. ![/notice]
+> [!NOTE]
+> Remove all sprinkles and the [Framework](/structure/framework) can be used by itself to create a very basic Slim/Symfony Console application with no database, template, etc. !
 
 ### Core Sprinkle
 The **Core** contains most of the "heavy lifting" PHP code. It provides all the necessary services for [databases](/database), [templating](/templating-with-twig), [error handling](/advanced/error-handling), [mail](/mail) support, [request throttling](/routes-and-controllers/client-input/throttle), and more.

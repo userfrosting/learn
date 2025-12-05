@@ -34,13 +34,11 @@ This is a lot of code to write just to create one measly object! It would be gre
 
 This is where the **dependency injection container (DIC)** comes into play. The DIC handles basic management of dependencies, encapsulating their creation into simple callbacks. We will call these callbacks **services**. 
 
-[notice=note]Dependency Injection (DI) and the Dependency Injection Container (DIC) are two separate concepts. 
-
-1. dependency injection is a method for writing better code
-2. a container is a tool to help injecting dependencies
- 
-You don't need a container to do dependency injection. However, a container can make injections easier.
-[/notice]
+> [!NOTE]
+> Dependency Injection (DI) and the Dependency Injection Container (DIC) are two separate concepts.
+> 1. dependency injection is a method for writing better code
+> 2. a container is a tool to help injecting dependencies
+> You don't need a container to do dependency injection. However, a container can make injections easier.
 
 UserFrosting uses [_PHP-DI 7_](https://php-di.org) as it's DIC implementation since it provides many powerful features that we rely on:
 
@@ -51,7 +49,8 @@ UserFrosting uses [_PHP-DI 7_](https://php-di.org) as it's DIC implementation si
 
 Taken together, we can define our services without needing to worry about when and where their dependencies are created in our application's lifecycle.
 
-[notice=note]When we talk about services, this might bring to mind an anti-pattern called the **Service Locator Pattern**. It is true that the DIC _can_ be used as a service locator, especially if you inject the entire container into your objects. With the exception of Models and a few other classes with very large numbers of dependencies, we try to avoid implementing the Service Locator Pattern whenever possible.[/notice]
+> [!NOTE]
+> When we talk about services, this might bring to mind an anti-pattern called the **Service Locator Pattern**. It is true that the DIC _can_ be used as a service locator, especially if you inject the entire container into your objects. With the exception of Models and a few other classes with very large numbers of dependencies, we try to avoid implementing the Service Locator Pattern whenever possible.
 
 ### Autowiring
 
@@ -82,7 +81,8 @@ It's very simple, doesn't require any configuration, and it just works !
 
 > Autowiring is an exotic word that represents something very simple: the ability of the container to automatically create and inject dependencies.
 
-[notice]You can learn more about autowiring in the [PHP-DI Documentation](https://php-di.org/doc/autowiring.html)[/notice]
+> [!NOTE]
+> You can learn more about autowiring in the [PHP-DI Documentation](https://php-di.org/doc/autowiring.html)
 
 ### Service Providers & Definitions
 
@@ -130,9 +130,11 @@ This definition uses the [PHP-DI factories](https://php-di.org/doc/php-definitio
 
 You'll notice that the callable used to create a `Logger` object takes two parameters: `StreamHandler` and `LineFormatter`. This allows us to inject these services inside the definition. When `Logger` is created (or injected), both `StreamHandler` and `LineFormatter` will be injected using their own definition.
 
-[notice=note]The `LineFormatter` definition is different. It uses the [object syntax](https://php-di.org/doc/php-definitions.html#objects) instead of the _factories_ syntax.[/notice]
+> [!NOTE]
+> The `LineFormatter` definition is different. It uses the [object syntax](https://php-di.org/doc/php-definitions.html#objects) instead of the _factories_ syntax.
 
-[notice]You can learn more about PHP Definitions in the [PHP-DI Documentation](https://php-di.org/doc/php-definitions.html#definition-types)[/notice]
+> [!NOTE]
+> You can learn more about PHP Definitions in the [PHP-DI Documentation](https://php-di.org/doc/php-definitions.html#definition-types)
 
 ### Binding Interfaces
 
@@ -194,6 +196,7 @@ $nest = $this->ci->get(Nest::class); // Return `Nest`
 $test = new AcceptImprovedNest($nest); // Throws TypeError Exception, Nest is not a subtype of ImprovedNest
 ```
 
-[notice=info]In most cases it's considered "best practice" to type-hint against interfaces, unless you explicitly required a specific class to fit a very specific need, said class is very basic and it's not worth it, or you don't plan on ever extending or distributing your code.[/notice]
+> [!IMPORTANT]
+> In most cases it's considered "best practice" to type-hint against interfaces, unless you explicitly required a specific class to fit a very specific need, said class is very basic and it's not worth it, or you don't plan on ever extending or distributing your code.
 
 The next page shows a small list of the **default services** that ship with UserFrosting, as well as tips for using them. After that, we talk about how you can **add** your own services, **extend** existing services, or completely **replace** certain services in your own sprinkle.
