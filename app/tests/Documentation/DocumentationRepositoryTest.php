@@ -22,7 +22,7 @@ use UserFrosting\UniformResourceLocator\ResourceStream;
 /**
  * Tests for PagesManager.
  */
-class PagesDirectoryTest extends TestCase
+class DocumentationRepositoryTest extends TestCase
 {
     protected string $mainSprinkle = Recipe::class;
 
@@ -159,5 +159,33 @@ class PagesDirectoryTest extends TestCase
         // Uses the template from front-matter (foos) over the file name (chapter)
         $page = $pagesManager->getPage('third/foo');
         $this->assertSame('foos', $page->getTemplate());
+    }
+
+    public function testGetBreadcrumbsForPage(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // Test breadcrumbs for a top-level page
+        $page = $pagesManager->getPage('first');
+        $breadcrumbs = $pagesManager->getBreadcrumbsForPage($page);
+
+        $this->assertCount(2, $breadcrumbs);
+        $this->assertSame('Home', $breadcrumbs[0]['label']);
+        $this->assertSame('First page', $breadcrumbs[1]['label']);
+
+        // Test breadcrumbs for a nested page
+        $page = $pagesManager->getPage('third/foo/grandchild1');
+        $breadcrumbs = $pagesManager->getBreadcrumbsForPage($page);
+
+        $this->assertCount(4, $breadcrumbs);
+        $this->assertSame('Home', $breadcrumbs[0]['label']);
+        $this->assertSame('Third Page', $breadcrumbs[1]['label']);
+        $this->assertSame('Foo Page', $breadcrumbs[2]['label']);
+        $this->assertSame('Foo Foo Page', $breadcrumbs[3]['label']);
+
+        // Verify URLs are generated
+        foreach ($breadcrumbs as $breadcrumb) {
+            $this->assertNotEmpty($breadcrumb['url']);
+        }
     }
 }

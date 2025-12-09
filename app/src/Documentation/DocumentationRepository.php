@@ -186,6 +186,45 @@ class DocumentationRepository
     }
 
     /**
+     * Get the breadcrumbs for a given page.
+     *
+     * @param PageResource $page
+     *
+     * @return array<int, array{label: string, url: string}>
+     */
+    public function getBreadcrumbsForPage(PageResource $page): array
+    {
+        $breadcrumbs = [];
+        $current = $page;
+
+        // Build breadcrumbs from current page up to root
+        while ($current !== null) {
+            array_unshift($breadcrumbs, [
+                'label' => $current->getTitle(),
+                'url'   => $current->getRoute(),
+            ]);
+
+            $parentSlug = $current->getParentSlug();
+            $current = $parentSlug === '' ? null : $this->getPage($parentSlug, $current->getVersion()->id);
+        }
+
+        // Add home link at the start
+        array_unshift($breadcrumbs, [
+            'label' => 'Home',
+            'url'   => $page->getVersion()->latest ?
+                $this->router->urlFor('documentation', [
+                    'path'    => ''
+                ]) :
+                $this->router->urlFor('documentation.versioned', [
+                    'path'    => '',
+                    'version' => $page->getVersion()->id,
+                ]),
+        ]);
+
+        return $breadcrumbs;
+    }
+
+    /**
      * Get a versioned image resource by path and version.
      *
      * @param string $version The version (empty string for latest)
