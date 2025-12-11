@@ -11,6 +11,7 @@
 namespace UserFrosting\Learn\Documentation;
 
 use League\CommonMark\ConverterInterface;
+use UserFrosting\Config\Config;
 use UserFrosting\Sprinkle\Core\Util\MarkdownFile;
 use UserFrosting\Sprinkle\Core\Util\RouteParserInterface;
 use UserFrosting\Support\Exception\FileNotFoundException;
@@ -28,6 +29,7 @@ class PageFactory
     public function __construct(
         protected ConverterInterface $markdown,
         protected RouteParserInterface $router,
+        protected Config $config,
     ) {
     }
 
@@ -64,6 +66,13 @@ class PageFactory
             ]);
         }
         $page->setRoute($route);
+
+        // Generate the GitHub URL
+        $githubBaseUrl = rtrim($this->config->get('learn.github.url'), '/');
+        $githubPath = ltrim($this->config->get('learn.github.path'), '/');
+        $githubBranch = $this->config->get('learn.github.branch', 'main');
+        $githubUrl = sprintf('%s/blob/%s/%s/%s', $githubBaseUrl, $githubBranch, $githubPath, ltrim($resource->getPath(), '/'));
+        $page->setGithub($githubUrl);
 
         return $page;
     }

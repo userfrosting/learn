@@ -31,6 +31,7 @@ class PageResource extends Resource
      * @param string                         $locatorBasePath
      * @param MarkdownFile                   $markdownFile
      * @param string                         $route
+     * @param string                         $github          Url to the page on GitHub
      */
     public function __construct(
         protected readonly Version $version,
@@ -39,7 +40,8 @@ class PageResource extends Resource
         protected string $path,
         protected string $locatorBasePath,
         protected readonly MarkdownFile $markdownFile,
-        protected string $route = ''
+        protected string $route = '',
+        protected string $github = '',
     ) {
         parent::__construct($stream, $location, $path, $locatorBasePath);
     }
@@ -62,6 +64,26 @@ class PageResource extends Resource
     public function setRoute(string $route): void
     {
         $this->route = $route;
+    }
+
+    /**
+     * Get the GitHub URL for this page.
+     *
+     * @return string The GitHub URL
+     */
+    public function getGithub(): string
+    {
+        return $this->github;
+    }
+
+    /**
+     * Set the GitHub URL for this page.
+     *
+     * @param string $github The GitHub URL to set
+     */
+    public function setGithub(string $github): void
+    {
+        $this->github = $github;
     }
 
     /**

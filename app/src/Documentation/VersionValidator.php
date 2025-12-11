@@ -80,7 +80,7 @@ class VersionValidator
      */
     protected function getAvailableVersions(): array
     {
-        return $this->config->get('site.versions.available', []);
+        return $this->config->get('learn.versions.available', []);
     }
 
     /**
@@ -90,6 +90,6 @@ class VersionValidator
      */
     protected function getLatestVersion(): string
     {
-        return $this->config->get('site.versions.latest');
+        return $this->config->get('learn.versions.latest');
     }
 }

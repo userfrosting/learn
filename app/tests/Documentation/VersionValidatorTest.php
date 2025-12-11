@@ -28,11 +28,11 @@ class VersionValidatorTest extends TestCase
         $this->configMock = Mockery::mock(Config::class);
         $this->configMock
             ->shouldReceive('get')
-            ->with('site.versions.available', Mockery::any())
+            ->with('learn.versions.available', Mockery::any())
             ->andReturn(['1.0' => 'Version 1.0', '2.0' => 'Version 2.0']);
         $this->configMock
             ->shouldReceive('get')
-            ->with('site.versions.latest')
+            ->with('learn.versions.latest')
             ->andReturn('2.0');
     }
 

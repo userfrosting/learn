@@ -33,8 +33,8 @@ class DocumentationRepositoryTest extends TestCase
         // Load test config to force the default version
         /** @var Config $config */
         $config = $this->ci->get(Config::class);
-        $config->set('site.versions.latest', '6.0');
-        $config->set('site.versions.available', [
+        $config->set('learn.versions.latest', '6.0');
+        $config->set('learn.versions.available', [
             '6.0' => '6.0 Beta',
             '5.0' => '5.0',
         ]);

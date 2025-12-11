@@ -48,6 +48,19 @@ return [
             'key'     => 'learn.%1$s.%2$s',
             'ttl'     => 86400,
         ],
+        'github' => [
+            'url'    => 'https://github.com/userfrosting/learn',
+            'path'   => '/app',
+            'branch' => 'main',
+        ],
+        'versions' => [
+            'available' => [
+                '6.0' => '6.0 Beta',
+                '5.1' => '5.1',
+                '5.0' => '5.0',
+            ],
+            'latest' => '6.0',
+        ],
     ],
 
     /*
@@ -75,14 +88,6 @@ return [
             'author'    => 'https://www.userfrosting.com',
             'publisher' => '',
             'public'    => null,
-        ],
-        'versions' => [
-            'available' => [
-                '6.0' => '6.0 Beta',
-                '5.1' => '5.1',
-                '5.0' => '5.0',
-            ],
-            'latest' => '6.0',
         ],
     ],
 ];

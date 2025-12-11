@@ -76,7 +76,7 @@ class DocumentationRepository
             $this->getCacheKey('versions', $path),
             $this->getCacheTtl(),
             function () use ($path) {
-                $available = $this->config->get('site.versions.available', []);
+                $available = $this->config->get('learn.versions.available', []);
 
                 // $available contains a list of version => name
                 // We need for the dropdown to have name => path

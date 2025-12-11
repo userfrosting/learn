@@ -54,6 +54,7 @@ class DocumentationController
         return $twig->render($response, $template, [
             'page'        => $page,
             'breadcrumbs' => $this->pagesDirectory->getBreadcrumbsForPage($page),
+            'github'      => $page->getGithub(),
         ]);
     }
 
