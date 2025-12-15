@@ -1,0 +1,7 @@
+{% if page.getFrontMatter().tags %}
+    <div class="uk-margin-xsmall">
+        {% for tag in page.getFrontMatter().tags %}
+            <span class="uk-label">{{ tag }}</span>
+        {% endfor %}
+    </div>
+{% endif %}
