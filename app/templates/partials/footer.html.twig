@@ -1,17 +1,15 @@
-<footer class="uf-main uk-section uk-section-small uk-text-center">
+<footer class="uk-section uk-section-xsmall uk-text-center uk-light">
     <hr />
-    <p class="uk-text-small uk-text-center" data-test="slot">
-        {% include "content/navigation/footer.html.twig" %}
-        <span>{{ translate("BUILT_WITH_UF") | raw }}</span>
-        <span>
-            | {{ translate('THEME_BY') }}
-            <a
-                href="http://getuikit.com"
-                title="Visit UIkit 3 site"
-                target="_blank"
-                data-uk-tooltip>
-                <span data-uk-icon="uikit"></span>
-            </a>
-        </span>
-    </p>
+    {% include "content/navigation/footer.html.twig" %}
+    <div>{{ translate("BUILT_WITH_UF") | raw }}</div>
+    <div>
+        {{ translate('THEME_BY') }}
+        <a
+            href="http://getuikit.com"
+            title="Visit UIkit 3 site"
+            target="_blank"
+            data-uk-tooltip>
+            <span data-uk-icon="uikit"></span>
+        </a>
+    </div>
 </footer>
