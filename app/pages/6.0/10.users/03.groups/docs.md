@@ -1,8 +1,7 @@
 ---
 title: Groups
-metadata:
-    description: Unlike roles, which assign specific sets of permissions to users, user groups allow you to horizontally partition your users.
-    obsolete: true
+description: Unlike roles, which assign specific sets of permissions to users, user groups allow you to horizontally partition your users.
+obsolete: true
 ---
 
 Every user can belong to **exactly one group**. Groups are used to horizontally partition your users - for example, if you have offices in Baltimore, London, and Munich, you might want to group your users according to which office they are in. Group membership can be used to broadly determine styling, layout, or access control for all users in the group.

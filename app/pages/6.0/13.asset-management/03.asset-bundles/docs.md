@@ -1,8 +1,7 @@
 ---
 title: Entrypoints
-metadata:
-    description: Entrypoints bundles allow you to group one or more asset references for reuse throughout your application.
-    obsolete: true
+description: Entrypoints bundles allow you to group one or more asset references for reuse throughout your application.
+obsolete: true
 ---
 
 Most CSS and Javascript resources should be integrated into your pages through **entrypoints**. Entrypoints defines groups of assets for which UserFrosting can automatically render `<link>` or `<script>` tags in your pages. 

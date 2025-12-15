@@ -1,8 +1,7 @@
 ---
 title: Referencing static assets
-metadata:
-    description: Referencing statics assets in your Twig templates.
-    obsolete: true
+description: Referencing statics assets in your Twig templates.
+obsolete: true
 ---
 
 When a user loads a page of your website in their browser, it includes a number of `<link ...>`, `<img ...>`, `<script ...>` and other tags that tell their browser how to fetch these additional resources from the server. Since the client must issue a separate request to retrieve an asset after loading a page, we need a way to generate asset URLs in our templates. To automatically build a url for a single asset in a Twig template, you may use the `asset()` helper. This helper takes a file path to an asset, and generates an appropriate absolute url:

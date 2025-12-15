@@ -1,8 +1,7 @@
 ---
 title: The Alert Stream
-metadata:
-    description: The alert stream is UserFrosting's implementation of a flash messaging system, and is used to display error or success notifications to the end user.
-    obsolete: true
+description: The alert stream is UserFrosting's implementation of a flash messaging system, and is used to display error or success notifications to the end user.
+obsolete: true
 ---
 
 The **alert stream** is UserFrosting's implementation of a flash messaging system, and is used to display error or success notifications to the end user.

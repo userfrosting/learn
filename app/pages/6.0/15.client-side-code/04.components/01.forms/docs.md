@@ -1,8 +1,7 @@
 ---
 title: Forms
-metadata:
-    description: The ufForm widget makes it easy to set up simple forms for validation and AJAX submission.
-    obsolete: true
+description: The ufForm widget makes it easy to set up simple forms for validation and AJAX submission.
+obsolete: true
 ---
 
 You may have noticed that in UserFrosting, forms are usually submitted via an AJAX request. By submitting forms with AJAX rather than HTML's native form submission, we can control the behavior of the page before submission (client-side validation, transforming form data) and after submission (deciding whether to reload the page, redirect, display messages, etc).

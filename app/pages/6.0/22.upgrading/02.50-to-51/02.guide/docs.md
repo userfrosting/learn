@@ -1,8 +1,7 @@
 ---
 title: Upgrade Guide
-metadata:
-    description: Upgrade guide from version 5.0.x to 5.1.x
-    obsolete: true
+description: Upgrade guide from version 5.0.x to 5.1.x
+obsolete: true
 ---
 
 ## Dependencies

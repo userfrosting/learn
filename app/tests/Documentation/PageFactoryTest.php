@@ -67,7 +67,7 @@ class PageFactoryTest extends TestCase
         $this->assertSame('/first', $page->getRoute());
         $this->assertSame('first', $page->getSlug());
         $this->assertSame('First page', $page->getTitle());
-        $this->assertSame('First page description', $page->getFrontMatter()['metadata']['description']);
+        $this->assertSame('First page description', $page->getFrontMatter()['description']);
     }
 
     public function testCreateFromResourceWithVersionedRoute(): void
@@ -92,7 +92,7 @@ class PageFactoryTest extends TestCase
         $this->assertSame('/6.0/first', $page->getRoute());
         $this->assertSame('first', $page->getSlug());
         $this->assertSame('First page', $page->getTitle());
-        $this->assertSame('First page description', $page->getFrontMatter()['metadata']['description']);
+        $this->assertSame('First page description', $page->getFrontMatter()['description']);
     }
 
     public function testCreateFromResourceWithNoFrontMatter(): void

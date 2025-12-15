@@ -1,7 +1,6 @@
 ---
 title: Factories
-metadata:
-    obsolete: true
+obsolete: true
 ---
 
 > [!NOTE]

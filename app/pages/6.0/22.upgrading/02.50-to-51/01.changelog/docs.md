@@ -1,8 +1,7 @@
 ---
 title: What's new in 5.1
-metadata:
-    description: A detailed look at what's new in UserFrosting 5.1
-    obsolete: true
+description: A detailed look at what's new in UserFrosting 5.1
+obsolete: true
 ---
 
 UserFrosting 5.1 focuses on adding PHP 8.3 support, removing PHP 8.1 support, upgrading Laravel, PHPUnit & FontAwesome dependencies and continue improving code quality.

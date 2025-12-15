@@ -1,8 +1,7 @@
 ---
 title: Server Setup
-metadata:
-    description: No matter which VPS option you choose, you'll need to make sure that you have the required software installed and properly configured for UserFrosting.
-    obsolete: true
+description: No matter which VPS option you choose, you'll need to make sure that you have the required software installed and properly configured for UserFrosting.
+obsolete: true
 ---
 <!-- [plugin:content-inject](/modular/_updateRequired) -->
 

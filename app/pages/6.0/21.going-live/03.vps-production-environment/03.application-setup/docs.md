@@ -1,8 +1,7 @@
 ---
 title: Application Setup
-metadata:
-    description: This section covers installing and using Composer, running Bakery, and configuring the webserver in the production environment.
-    obsolete: true
+description: This section covers installing and using Composer, running Bakery, and configuring the webserver in the production environment.
+obsolete: true
 ---
 <!-- [plugin:content-inject](/modular/_updateRequired) -->
 

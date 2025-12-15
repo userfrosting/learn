@@ -1,8 +1,7 @@
 ---
 title: Introduction
-metadata:
-    description: If you're new to object-oriented programming, you may not be familiar with the MVC pattern, a popular and very flexible design paradigm for scalable, easily maintained web applications.
-    obsolete: true
+description: If you're new to object-oriented programming, you may not be familiar with the MVC pattern, a popular and very flexible design paradigm for scalable, easily maintained web applications.
+obsolete: true
 ---
 
 UserFrosting is built to follow the [Model-View-Controller (MVC)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) design paradigm. If you come from a "traditional" PHP background, you may be used to seeing code that looks like this:

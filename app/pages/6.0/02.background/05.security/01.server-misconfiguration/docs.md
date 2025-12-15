@@ -1,8 +1,7 @@
 ---
 title: Server Misconfiguration
-metadata:
-    description: Server misconfiguration is one of the top 10 vulnerabilities of any web application, according to OWASP. Most of these misconfigurations occur because of inexperienced developers or system administrators, and are simple to fix.
-    obsolete: true
+description: Server misconfiguration is one of the top 10 vulnerabilities of any web application, according to OWASP. Most of these misconfigurations occur because of inexperienced developers or system administrators, and are simple to fix.
+obsolete: true
 ---
 
 As we discussed in [The Client-Server Conversation](/background/the-client-server-conversation), it's important to distinguish between the code that is running on the server, and the response that it sends back to the client.

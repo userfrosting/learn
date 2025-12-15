@@ -1,8 +1,7 @@
 ---
 title: Setting up the site language
-metadata:
-    description: Configuration options are available to control the overall language presented by UserFrosting.
-    obsolete: true
+description: Configuration options are available to control the overall language presented by UserFrosting.
+obsolete: true
 ---
 
 UserFrosting is translated in a variaty of languages provided by our community. While a default locale will be used for new visitors, each user can  choose their prefered language.

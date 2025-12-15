@@ -1,8 +1,7 @@
 ---
 title: Common Problems
-metadata:
-    description: Commonly encountered issues when setting up, developing, or deploying a UserFrosting project.
-    obsolete: true
+description: Commonly encountered issues when setting up, developing, or deploying a UserFrosting project.
+obsolete: true
 ---
 
 ## Installation

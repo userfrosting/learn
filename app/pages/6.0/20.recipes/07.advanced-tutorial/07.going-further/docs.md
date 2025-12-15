@@ -1,8 +1,7 @@
 ---
 title: Going further
-metadata:
-    description: Ideas on how to further improve the pastry page and learn more about UserFrosting!
-    obsolete: true
+description: Ideas on how to further improve the pastry page and learn more about UserFrosting!
+obsolete: true
 ---
 
 We now have a complete, but very basic page to display a table of data dynamically powered by the database. But, there is a lot more we can still do to improve this page! Continue exploring the documentation to learn how to add more features to your pastry page:

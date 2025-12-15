@@ -1,8 +1,7 @@
 ---
 title: Upgrading
-metadata:
-    description: Upgrading to future versions of UserFrosting is easy...
-    obsolete: true
+description: Upgrading to future versions of UserFrosting is easy...
+obsolete: true
 ---
 
 #### Chapter 22

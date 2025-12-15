@@ -1,8 +1,7 @@
 ---
 title: Configuration Files
-metadata:
-    description: Configuration files allow you to customize the default behavior of UserFrosting - for example, to toggle debugging, caching, and logging behaviors and to set other sitewide settings.
-    obsolete: true
+description: Configuration files allow you to customize the default behavior of UserFrosting - for example, to toggle debugging, caching, and logging behaviors and to set other sitewide settings.
+obsolete: true
 ---
 
 Configuration files allow you to customize the default behavior of UserFrosting - for example, to toggle debugging, caching, and logging behaviors and to set other sitewide settings. Configuration files are found in the `config/` directory of each Sprinkle.

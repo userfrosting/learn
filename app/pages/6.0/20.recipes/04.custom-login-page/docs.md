@@ -1,8 +1,7 @@
 ---
 title: Customizing the login page
-metadata:
-    description: An example of how to modify UserFrosting's default login page and behavior.
-    obsolete: true
+description: An example of how to modify UserFrosting's default login page and behavior.
+obsolete: true
 ---
 
 > [!NOTE]

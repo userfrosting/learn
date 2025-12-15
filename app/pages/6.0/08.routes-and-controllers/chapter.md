@@ -1,8 +1,7 @@
 ---
 title: Routes and Controllers
-metadata:
-    description: UserFrosting controllers are used to mediate interactions between the model and view, and are responsible for much of your application's logic.
-    obsolete: true
+description: UserFrosting controllers are used to mediate interactions between the model and view, and are responsible for much of your application's logic.
+obsolete: true
 ---
 
 #### Chapter 8

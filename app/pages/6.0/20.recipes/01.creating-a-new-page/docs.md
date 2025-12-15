@@ -1,8 +1,7 @@
 ---
 title: Creating a new page
-metadata:
-    description: A very basic walkthrough for setting up a new page in your application. The purpose of this recipe is to get you familiar with adding routes, controller classes, and Twig templates to your Sprinkle.
-    obsolete: true
+description: A very basic walkthrough for setting up a new page in your application. The purpose of this recipe is to get you familiar with adding routes, controller classes, and Twig templates to your Sprinkle.
+obsolete: true
 ---
 
 Before we begin this tutorial, it is important that you understand what a web page really is. Unfortunately, many "classic" approaches to building a website give developers the mistaken impression that a web page "is" either a static `.html` page or a scripted `.php` page. Neither of these approaches are conceptually correct.

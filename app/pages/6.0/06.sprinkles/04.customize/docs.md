@@ -1,8 +1,7 @@
 ---
 title: Customizing Your Sprinkle
-metadata:
-    description: This guide walks you though the process of setting up your application by implementing a new sprinkle.
-    obsolete: true
+description: This guide walks you though the process of setting up your application by implementing a new sprinkle.
+obsolete: true
 ---
 
 This guide assumes that you've already completed the [installation guide](/installation) and successfully managed to get UserFrosting working in your [local development environment](/background/develop-locally-serve-globally) using the [Skeleton](/structure/introduction#the-app-skeleton-your-project-s-template). If not, please do that now - feel free to [ask for help](/troubleshooting/getting-help) if you're running into trouble!

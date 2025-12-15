@@ -1,8 +1,7 @@
 ---
 title: Requirements
-metadata:
-    description: UserFrosting has a few basic, sensible requirements - requirements that just about any modern web developer should already have set up!
-    obsolete: true
+description: UserFrosting has a few basic, sensible requirements - requirements that just about any modern web developer should already have set up!
+obsolete: true
 ---
 
 # Requirements

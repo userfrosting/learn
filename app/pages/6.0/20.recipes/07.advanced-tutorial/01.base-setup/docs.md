@@ -1,8 +1,7 @@
 ---
 title: Setting up the basics
-metadata:
-    description: Setting up the basic sprinkle
-    obsolete: true
+description: Setting up the basic sprinkle
+obsolete: true
 ---
 
 ## The Base Sprinkle

@@ -1,8 +1,7 @@
 ---
 title: Contents
-metadata:
-    description: Detailed breakdown of a Sprinkle's contents.
-    obsolete: true
+description: Detailed breakdown of a Sprinkle's contents.
+obsolete: true
 ---
 
 Within each sprinkle, you will find any or all of the following directories and files:

@@ -1,8 +1,7 @@
 ---
 title: Sprinkles
-metadata:
-    description: Sprinkles are modular units of code and content that implement some feature or override some default behavior of UserFrosting.
-    obsolete: true
+description: Sprinkles are modular units of code and content that implement some feature or override some default behavior of UserFrosting.
+obsolete: true
 ---
 
 #### Chapter 6

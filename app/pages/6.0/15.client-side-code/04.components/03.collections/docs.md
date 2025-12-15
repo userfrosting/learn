@@ -1,8 +1,7 @@
 ---
 title: Collections
-metadata:
-    description: The ufCollection widget provides a convenient interface for associating related or child entities with a single parent entity.
-    obsolete: true
+description: The ufCollection widget provides a convenient interface for associating related or child entities with a single parent entity.
+obsolete: true
 ---
 
 {% do assets.addCss('theme://css/select2.min.css') %}

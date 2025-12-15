@@ -1,8 +1,7 @@
 ---
 title: Twig Filters and Functions
-metadata:
-    description: ""
-    obsolete: true
+description: ""
+obsolete: true
 ---
 
 ### config

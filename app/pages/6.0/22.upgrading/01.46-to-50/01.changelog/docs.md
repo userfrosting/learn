@@ -1,8 +1,7 @@
 ---
 title: What's new ?
-metadata:
-    description: A detailed look at what's new in UserFrosting 5.
-    obsolete: true
+description: A detailed look at what's new in UserFrosting 5.
+obsolete: true
 ---
 
 UserFrosting 5 is the culmination of two years of work. It is a complete rewrite of the backend PHP code. And by complete, we _really_ mean **complete**. No class was left untouched! The key points are :

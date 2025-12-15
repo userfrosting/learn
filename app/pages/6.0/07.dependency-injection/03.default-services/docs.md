@@ -1,8 +1,7 @@
 ---
 title: Default Services
-metadata:
-    description: UserFrosting's default services provide most of the tools needed to build a basic web application.
-    obsolete: true
+description: UserFrosting's default services provide most of the tools needed to build a basic web application.
+obsolete: true
 ---
 
 As mentioned in the last section, each sprinkle can set up its own services through **service providers**. The [bundled sprinkles](/structure/sprinkles#bundled-sprinkles) set up many services that are essential to UserFrosting's functionality. These services can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory. 

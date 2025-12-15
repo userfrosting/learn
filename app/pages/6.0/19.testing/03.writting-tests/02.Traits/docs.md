@@ -1,7 +1,6 @@
 ---
 title: Helper Traits & Class
-metadata:
-    obsolete: true
+obsolete: true
 ---
 
 UserFrosting provides some helper Traits to easily enable features and tools for your tests. Some of those tools make it easier to test your code against a testing database.

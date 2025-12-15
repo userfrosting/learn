@@ -1,8 +1,7 @@
 ---
 title: Develop Locally, Serve Globally
-metadata:
-    description: The right way to approach development.
-    obsolete: true
+description: The right way to approach development.
+obsolete: true
 ---
 
 Just about every week, we see someone wander into [chat](https://chat.userfrosting.com) and ask:

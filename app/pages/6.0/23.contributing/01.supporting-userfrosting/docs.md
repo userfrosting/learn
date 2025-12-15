@@ -1,8 +1,7 @@
 ---
 title: Supporting UserFrosting
-metadata:
-    description: Donate your time, money, or expertise to furthering the development of UserFrosting.
-    obsolete: true
+description: Donate your time, money, or expertise to furthering the development of UserFrosting.
+obsolete: true
 ---
 
 ## Financial support

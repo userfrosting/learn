@@ -1,8 +1,7 @@
 ---
 title: Essential Tools for Modern PHP
-metadata:
-    description: A minimal set of tools that every PHP developer should have installed in their development environment.
-    obsolete: true
+description: A minimal set of tools that every PHP developer should have installed in their development environment.
+obsolete: true
 ---
 
 On the previous page, we saw the softwares required to run UserFrosting. Now it's time to look at tools you'll need during development to build your UserFrosting application. These tools are not strictly required to be installed on your production server, which we'll cover in a [later chapter](/going-live).

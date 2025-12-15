@@ -1,8 +1,7 @@
 ---
 title: Search Engine Optimization
-metadata:
-    description: Search Engine Optimization (SEO) is an integral part of the design and development process. We discuss the major important factors in getting a page to rank well, and how they fit in with UserFrosting's features and overall architecture.
-    obsolete: true
+description: Search Engine Optimization (SEO) is an integral part of the design and development process. We discuss the major important factors in getting a page to rank well, and how they fit in with UserFrosting's features and overall architecture.
+obsolete: true
 ---
 
 Search Engine Optimization (SEO) is an integral part of the design and development process. Getting the public side of your website to rank well in search results should be something you consider from the very beginning, and not an afterthought once you're getting ready to deploy.

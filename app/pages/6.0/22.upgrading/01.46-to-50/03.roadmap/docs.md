@@ -1,8 +1,7 @@
 ---
 title: Future Roadmap
-metadata:
-    description: ""
-    obsolete: true
+description: ""
+obsolete: true
 ---
 
 ## How will future update be done?

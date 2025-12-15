@@ -1,8 +1,7 @@
 ---
 title: Backing up Your Data
-metadata:
-    description: If you're using version control and use a reliable central repository, your code is generally safe from data loss due to hardware failure, and accidents. But what about your live database? In this chapter, we'll show you how to set up automated, encrypted daily backups with Duplicity.
-    obsolete: true
+description: If you're using version control and use a reliable central repository, your code is generally safe from data loss due to hardware failure, and accidents. But what about your live database? In this chapter, we'll show you how to set up automated, encrypted daily backups with Duplicity.
+obsolete: true
 ---
 <!-- [plugin:content-inject](/modular/_updateRequired) -->
 

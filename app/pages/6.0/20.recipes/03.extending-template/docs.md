@@ -1,8 +1,7 @@
 ---
 title: Extending templates and menus
-metadata:
-    description: Steps to extend a template defined in another sprinkle.
-    obsolete: true
+description: Steps to extend a template defined in another sprinkle.
+obsolete: true
 ---
 
 > [!NOTE]

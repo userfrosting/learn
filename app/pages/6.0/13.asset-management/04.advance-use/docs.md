@@ -1,8 +1,7 @@
 ---
 title: Enabling Sass, Less, Vue and React
-metadata:
-    description: ""
-    obsolete: true
+description: ""
+obsolete: true
 ---
 
 By using Webpack Encore to manage frontend assets, Sass, Less, Vue and React can be used with UserFrosting out of the box.

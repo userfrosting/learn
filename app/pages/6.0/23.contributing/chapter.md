@@ -1,8 +1,7 @@
 ---
 title: Giving Back to UF
-metadata:
-    description: UserFrosting is possible thanks to the generous contributions of users like you!
-    obsolete: true
+description: UserFrosting is possible thanks to the generous contributions of users like you!
+obsolete: true
 ---
 
 #### Chapter 23

@@ -1,8 +1,7 @@
 ---
 title: RESTful Design
-metadata:
-    description: Representational State Transfer (REST) is a design paradigm for efficient, scalable communication between clients and the server.
-    obsolete: true
+description: Representational State Transfer (REST) is a design paradigm for efficient, scalable communication between clients and the server.
+obsolete: true
 ---
 
 Before we talk about the application itself, let's talk about how the client gets to the application in the first place: by making a **request**. A request consists of a few main components:

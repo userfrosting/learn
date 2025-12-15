@@ -1,8 +1,7 @@
 ---
 title: Sessions
-metadata:
-    description: UserFrosting offers an easy to use wrapper for PHP sessions, and supports session drivers for file and database storage mechanisms.
-    obsolete: true
+description: UserFrosting offers an easy to use wrapper for PHP sessions, and supports session drivers for file and database storage mechanisms.
+obsolete: true
 ---
 
 HTTP itself is stateless - you may recall that we compare a web application to a [conversation between two agents with very poor memory](/background/the-client-server-conversation). This presents a problem if we want to implement a "login" functionality - the server needs to be able to remember that someone has already authenticated in an earlier request!

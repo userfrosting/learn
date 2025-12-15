@@ -1,8 +1,7 @@
 ---
 title: 5.0.x to 5.1.x
-metadata:
-    description: Upgrade guide for UserFrosting 5.1
-    obsolete: true
+description: Upgrade guide for UserFrosting 5.1
+obsolete: true
 ---
 
 # Upgrading to UserFrosting 5.1

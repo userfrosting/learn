@@ -1,8 +1,7 @@
 ---
 title: Coming up next
-metadata:
-    description: ""
-    obsolete: true
+description: ""
+obsolete: true
 ---
 
 ### UserFrosting 5.2

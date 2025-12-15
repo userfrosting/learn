@@ -1,8 +1,7 @@
 ---
 title: Adding a 3rd party Javascript package
-metadata:
-    description: An example of how to add a 3rd party javascript package using Webpack.
-    obsolete: true
+description: An example of how to add a 3rd party javascript package using Webpack.
+obsolete: true
 ---
 
 > [!NOTE]

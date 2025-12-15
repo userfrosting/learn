@@ -1,8 +1,7 @@
 ---
 title: Front Controller
-metadata:
-    description: The front controller consists of the route definitions that UserFrosting uses to process incoming requests from the client.
-    obsolete: true
+description: The front controller consists of the route definitions that UserFrosting uses to process incoming requests from the client.
+obsolete: true
 ---
 
 The front controller is a collective term for the **routes** that your web application defines for its various **endpoints**. This is how UserFrosting links URLs and methods to your application's code.

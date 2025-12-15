@@ -1,8 +1,7 @@
 ---
 title: Introduction
-metadata:
-    description: An introduction to UserFrosting i18n system
-    obsolete: true
+description: An introduction to UserFrosting i18n system
+obsolete: true
 ---
 
 UserFrosting provides a complete framework for translating strings and sentences easily and efficiently. UserFrosting allows you to [define the default locale](/i18n/site-locale#the-default-locale) your UI should present to guest users, while allowing resgistered users to [choose their prefered locale](/i18n/site-locale#the-available-user-locales).

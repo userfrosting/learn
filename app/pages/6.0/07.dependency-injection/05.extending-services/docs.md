@@ -1,8 +1,7 @@
 ---
 title: Extending Existing Services
-metadata:
-    description: You may extend UserFrosting's default services for additional functionality, or define completely new services in your sprinkles.
-    obsolete: true
+description: You may extend UserFrosting's default services for additional functionality, or define completely new services in your sprinkles.
+obsolete: true
 ---
 
 PHP-DI allows us to extend services that were defined previously, for example in another sprinkle, using [decorators](https://php-di.org/doc/definition-overriding.html#decorators).

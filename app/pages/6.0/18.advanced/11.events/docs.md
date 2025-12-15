@@ -1,7 +1,6 @@
 ---
 title: Events
-metadata:
-    obsolete: true
+obsolete: true
 ---
 
 UserFrosting makes uses of *Event Dispatching* to enable customization of some built-in features. For example, when someone uses the login form, the following process is done : 

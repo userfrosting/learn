@@ -1,8 +1,7 @@
 ---
 title: Troubleshooting
-metadata:
-    description: Troubleshooting installation and your application.
-    obsolete: true
+description: Troubleshooting installation and your application.
+obsolete: true
 ---
 
 #### Chapter 5

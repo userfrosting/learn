@@ -1,8 +1,7 @@
 ---
 title: Introduction
-metadata:
-    description: The PHP community has evolved considerably over the past decade, and this breakneck pace has caused a lot of people to get left behind. UserFrosting aims to help new and legacy developers navigate the overwhelming ocean of tools, packages, and concepts in PHP and the modern web development community as a whole.
-    obsolete: true
+description: The PHP community has evolved considerably over the past decade, and this breakneck pace has caused a lot of people to get left behind. UserFrosting aims to help new and legacy developers navigate the overwhelming ocean of tools, packages, and concepts in PHP and the modern web development community as a whole.
+obsolete: true
 ---
 
 ## Motivation

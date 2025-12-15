@@ -1,8 +1,7 @@
 ---
 title: The Mailer Service
-metadata:
-    description: UserFrosting's mailer service integrates smoothly with Twig to create dynamically generated messages.  Templated messages can be sent to large groups of recipients, customizing the content for each recipient.
-    obsolete: true
+description: UserFrosting's mailer service integrates smoothly with Twig to create dynamically generated messages.  Templated messages can be sent to large groups of recipients, customizing the content for each recipient.
+obsolete: true
 ---
 
 ## Configuration

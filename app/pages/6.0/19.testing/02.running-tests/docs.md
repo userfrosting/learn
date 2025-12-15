@@ -1,7 +1,6 @@
 ---
 title: Running Tests
-metadata:
-    obsolete: true
+obsolete: true
 ---
 
 You can execute tests using [Phpunit](https://phpunit.de) directly : 

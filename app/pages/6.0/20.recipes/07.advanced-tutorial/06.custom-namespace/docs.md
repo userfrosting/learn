@@ -1,8 +1,7 @@
 ---
 title: Customizing the Skeleton
-metadata:
-    description: The default skeleton can easily be changed
-    obsolete: true
+description: The default skeleton can easily be changed
+obsolete: true
 ---
 
 ## Custom Namespace

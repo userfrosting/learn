@@ -1,8 +1,7 @@
 ---
 title: Exporting Variables to Javascript
-metadata:
-    description: The server-side variables that UserFrosting automatically exports to your pages as Javascript variables, and suggestions for exporting additional variables in your application.
-    obsolete: true
+description: The server-side variables that UserFrosting automatically exports to your pages as Javascript variables, and suggestions for exporting additional variables in your application.
+obsolete: true
 ---
 
 We often need to access the value of some server-side variable in our client-side code. For example, we use the value `site.uri.public` throughout our Javascript code when building urls for AJAX requests. The value of this variable is taken directly from UserFrosting's configuration variable of the same name, and embedded into a Javascript variable on every page.

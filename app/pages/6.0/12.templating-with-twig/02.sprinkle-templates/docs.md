@@ -1,8 +1,7 @@
 ---
 title: Sprinkle Templates
-metadata:
-    description: ""
-    obsolete: true
+description: ""
+obsolete: true
 ---
 
 ## Template organization

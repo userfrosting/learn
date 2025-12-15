@@ -1,7 +1,6 @@
 ---
 title: Middlewares
-metadata:
-    obsolete: true
+obsolete: true
 ---
 
 Sometimes it can be useful to run code _before_ or _after_ the the request is handled, to either manipulate the Request and/or the Response objects. This can be done by _middlewares_. Middlewares can be used to add many feature to every page or simple routes, for example to add protection to the website, handle some configuration, inject some variable, etc.

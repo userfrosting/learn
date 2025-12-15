@@ -1,8 +1,7 @@
 ---
 title: Testing
-metadata:
-    description: An introduction to Unit and Integration testing, your most powerful ally.
-    obsolete: true
+description: An introduction to Unit and Integration testing, your most powerful ally.
+obsolete: true
 ---
 
 #### Chapter 19

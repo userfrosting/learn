@@ -1,8 +1,7 @@
 ---
 title: Throttling
-metadata:
-    description: Throttling, also known as rate-limiting, is a technique for slowing down attackers by limiting the frequency with which they can make certain types of requests.
-    obsolete: true
+description: Throttling, also known as rate-limiting, is a technique for slowing down attackers by limiting the frequency with which they can make certain types of requests.
+obsolete: true
 ---
 
 People tend to be bad at picking strong passwords. [Publicly available lists of passwords](https://github.com/danielmiessler/SecLists/tree/master/Passwords) recovered from hacked databases reveal that, despite efforts to educate, users still pick the same highly predictable passwords over and over. These lists make it easy for brute-force attackers to gain unauthorized access to a large number of your users' accounts.

@@ -1,8 +1,7 @@
 ---
 title: Additional Recommendations
-metadata:
-    description: Additional recommended configuration steps to get the most out of your VPS production server.
-    obsolete: true
+description: Additional recommended configuration steps to get the most out of your VPS production server.
+obsolete: true
 ---
 <!-- [plugin:content-inject](/modular/_updateRequired) -->
 

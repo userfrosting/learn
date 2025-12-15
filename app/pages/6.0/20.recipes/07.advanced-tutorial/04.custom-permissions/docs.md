@@ -1,8 +1,7 @@
 ---
 title: Adding custom authorization
-metadata:
-    description: Adding custom authorization rules to control access to our Pastries page.
-    obsolete: true
+description: Adding custom authorization rules to control access to our Pastries page.
+obsolete: true
 ---
 
 Now it's time to add custom authorization rules to our page. We will use these rules to control two things: visibility of the page itself, and visibility of the `origin` column in the table. Each one will require a new [permission](/users/access-control#permissions).
