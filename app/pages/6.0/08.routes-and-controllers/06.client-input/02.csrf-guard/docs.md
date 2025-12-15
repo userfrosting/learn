@@ -81,4 +81,4 @@ To bypass CSRF protection, you can map regular expressions to arrays of HTTP met
 
 Any requests whose URL matches one of these regular expressions, and whose method matches one of the mapped methods, will be automatically exempted from loading the CSRF middleware. This means that the CSRF token will not be retrieved (for `GET` requests) or checked (for `POST`, `PUT`, `DELETE`, and `PATCH` requests).
 
-Requests for [raw assets](/asset-management/basic-usage) are automatically exempted from CSRF protection in the `config` [service](/services/default-services#userfrosting-config-config).
+Requests for [raw assets](asset-management/basic-usage) are automatically exempted from CSRF protection in the `config` [service](services/default-services#userfrosting-config-config).

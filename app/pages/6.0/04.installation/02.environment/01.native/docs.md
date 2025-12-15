@@ -8,4 +8,4 @@ This **native installation** guide will first show you the steps to install all 
 
 If you already have a local environment and you're familiar with tools like **Composer**, the first part also contains steps to make sure you have the *appropriate version* of everything set up. If you're already up to date, you can skip to the second part right away. 
 
-If you don't want to install the required software natively, you may instead want to consider setting up [Docker](/installation/environment/docker) as a pre-configured virtual environment.
+If you don't want to install the required software natively, you may instead want to consider setting up [Docker](installation/environment/docker) as a pre-configured virtual environment.

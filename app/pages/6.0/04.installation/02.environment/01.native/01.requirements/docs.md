@@ -4,7 +4,7 @@ description: Getting UserFrosting up and running in your development environment
 obsolete: true
 ---
 
-If your local development environment doesn't already have the [required stack and tools](/installation/requirements), we'll now set them up. We'll go through the following:
+If your local development environment doesn't already have the [required stack and tools](installation/requirements), we'll now set them up. We'll go through the following:
 
 - [Command Line Interface](#cli)
 - [PHP 8.1 or higher](#php)
@@ -22,7 +22,7 @@ If you followed the previous pages, you probably noticed two pieces of software 
 
 ### CLI
 
-[plugin:content-inject](/04.installation/_modular/cli)
+[plugin:content-inject](04.installation/_modular/cli)
 
 ### PHP
 
@@ -84,7 +84,7 @@ php -m
 
 ### Composer
 
-Next step is to install [Composer 2](/installation/requirements/essential-tools-for-php#composer-2). At this point, the installation is the same for MacOS, Linux and Windows WSL2. The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx). We **strongly recommend that you install [Composer globally](https://getcomposer.org/doc/00-intro.md#globally)** on your system. This will let you run Composer using the `composer` command.
+Next step is to install [Composer 2](installation/requirements/essential-tools-for-php#composer-2). At this point, the installation is the same for MacOS, Linux and Windows WSL2. The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx). We **strongly recommend that you install [Composer globally](https://getcomposer.org/doc/00-intro.md#globally)** on your system. This will let you run Composer using the `composer` command.
 
 ```bash
 mv composer.phar /usr/local/bin/composer
@@ -142,14 +142,14 @@ UserFrosting build scripts will automatically install all other Node and NPM dep
 
 ### Mail
 
-As we've seen [in previous pages](/installation/requirements/basic-stack#smtp-mail-server), UserFrosting requires an SMTP server for sending email to your users, especially registration emails. However, in a local environment you don't want "test" emails to be sent to your users. You also don't want to fill your inbox with test emails.
+As we've seen [in previous pages](installation/requirements/basic-stack#smtp-mail-server), UserFrosting requires an SMTP server for sending email to your users, especially registration emails. However, in a local environment you don't want "test" emails to be sent to your users. You also don't want to fill your inbox with test emails.
 
 This is where email testing tools come in. When an email is sent by UserFrosting, instead of sending the email to a real mailbox, the email testing tool will capture the email and makes it available to you to read, regardless of the recipient of the email. In other words, if UserFrosting send five emails to five different email address, all five email will be captured and displayed in the same "test" inbox.
 
 While multiple solutions are available, two are recommended by UserFrosting : **Mailpit** and **Mailtrap**. It's up to you to choose the one you prefer.
 
 > [!NOTE]
-> Please note that in production, you _will_ need to have a real, working SMTP service. If you do not already have a mail provider, please see our section on [mail providers](/going-live/mail-providers#choosing-a-mail-service-provider) for our recommendations including both free and paid third-party mail services. While it's not recommended, a real SMTP server *can* also be used in a development environment.
+> Please note that in production, you _will_ need to have a real, working SMTP service. If you do not already have a mail provider, please see our section on [mail providers](going-live/mail-providers#choosing-a-mail-service-provider) for our recommendations including both free and paid third-party mail services. While it's not recommended, a real SMTP server *can* also be used in a development environment.
 
 #### Mailpit
 

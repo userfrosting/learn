@@ -6,7 +6,7 @@ obsolete: true
 
 A typical application feature is to display a table of entities from a server-side data source (e.g., a database). For example, the `admin` Sprinkle generates client-side tables for admins to view and manage users, groups, roles, activities, and permissions:
 
-![Viewing a table of user activities](/images/table-activities.png)
+![Viewing a table of user activities](images/table-activities.png)
 
 `ufTable` provides a convenient way to generate sortable, searchable, paginated tables of data from an AJAX source using Mottie's [tablesorter](https://mottie.github.io/tablesorter/docs/) jQuery plugin.
 
@@ -51,15 +51,15 @@ Each column header (`th` element) has several required `data-*` attributes that 
 
 ##### `data-column-name`
 
-This is used to determine the [Sprunje filter](/database/data-sprunjing#custom-sorts-and-filters) name to use when the user types a query into the filter box for that column. For example, if we type "userfrost" into the filter box in the "User info" column:
+This is used to determine the [Sprunje filter](database/data-sprunjing#custom-sorts-and-filters) name to use when the user types a query into the filter box for that column. For example, if we type "userfrost" into the filter box in the "User info" column:
 
-![Searching a table](/images/uf-table-search.png)
+![Searching a table](images/uf-table-search.png)
 
-`ufTable` will add a query parameter `filters[name]=userfrost` in the next AJAX request it makes. See [Data Sprunjing](/database/data-sprunjing) for information on setting up a Sprunjed data source in your server-side code.
+`ufTable` will add a query parameter `filters[name]=userfrost` in the next AJAX request it makes. See [Data Sprunjing](database/data-sprunjing) for information on setting up a Sprunjed data source in your server-side code.
 
 ##### `data-column-template`
 
-An identifier used to find the [Handlebars template](/client-side-code/client-side-templating) to use when rendering the cells for that particular column. For this example, we will define two Handlebars templates in the `table_cell_templates` block of our Twig template:
+An identifier used to find the [Handlebars template](client-side-code/client-side-templating) to use when rendering the cells for that particular column. For this example, we will define two Handlebars templates in the `table_cell_templates` block of our Twig template:
 
 ```html
 {% block table_cell_templates %}
@@ -151,7 +151,7 @@ Use this to set placeholder text for the column filter input (search field).
 
 ##### `class="filter-select"`
 
-When you add this CSS class to your table, Tablesorter will generate a dropdown instead of a free text input for searching this column. Values for this dropdown will be populated from the corresponding `listable` array returned by your table's [Sprunje](/database/data-sprunjing#Sprunjelists).
+When you add this CSS class to your table, Tablesorter will generate a dropdown instead of a free text input for searching this column. Values for this dropdown will be populated from the corresponding `listable` array returned by your table's [Sprunje](database/data-sprunjing#Sprunjelists).
 
 ## Table wrapper
 
@@ -201,7 +201,7 @@ Any button with the `.js-uf-table-download` class inside your wrapper is bound t
 
 This is implemented by default in the table tool menu, in `tables/table-tool-menu.html.twig`.
 
-![Table tool menu](/images/table-tools.png)
+![Table tool menu](images/table-tools.png)
 
 #### Column selectors
 
@@ -235,7 +235,7 @@ $("#myUserTable").ufTable({
 
 ### dataUrl
 
-The absolute url for the table's AJAX data source. `ufTable` expects the data source to use the Sprunje API. Thus, it should be able to understand the API for [Sprunje requests](/database/data-sprunjing#sprunje-parameters), and return data in the Sprunje response format:
+The absolute url for the table's AJAX data source. `ufTable` expects the data source to use the Sprunje API. Thus, it should be able to understand the API for [Sprunje requests](database/data-sprunjing#sprunje-parameters), and return data in the Sprunje response format:
 
 ```json
 {
@@ -258,7 +258,7 @@ The absolute url for the table's AJAX data source. `ufTable` expects the data so
 
 ### msgTarget
 
-If `ufTable` receives an error from the server when it attempts to retrieve row data, it will automatically retrieve any error messages from the [alert stream](/routes-and-controllers/alert-stream) and render them on the page. `msgTarget` allows you to specify an element of the DOM where `ufTable` should display these messages.
+If `ufTable` receives an error from the server when it attempts to retrieve row data, it will automatically retrieve any error messages from the [alert stream](routes-and-controllers/alert-stream) and render them on the page. `msgTarget` allows you to specify an element of the DOM where `ufTable` should display these messages.
 
 Internally, `ufTable` will set up a `ufAlerts` widget to fetch and render the alert stream messages.
 
@@ -348,9 +348,9 @@ An object containing tablesorter's [configuration options](https://mottie.github
 An object containing any additional key-value pairs that you want appended to the AJAX requests made by the table. Useful when implementing, for example, site-wide filters or using data sources that require additional context.
 
 When sending an AJAX request to a Sprunje, there are some hoops to jump through:
-1. Remember that sprunjes only accept [certain parameters](/database/data-sprunjing#sprunje-parameters). If, for instance, you want to filter by "UserID" that's set outside of the table, you'll need to pass `filters[UserID]` in the AJAX request rather than simply `UserID`.
-2. Additionally, sprunjes only accept [whitelisted fields](/database/data-sprunjing#sorts-and-filters), so you'll need to ensure that `UserID` is in the appropriate array in the sprunje--in this case, `$filterable`.
-3. Optional: Unless you're hardcoding the parameter value, you may need to [export it to JS](/client-side-code/exporting-variables).
+1. Remember that sprunjes only accept [certain parameters](database/data-sprunjing#sprunje-parameters). If, for instance, you want to filter by "UserID" that's set outside of the table, you'll need to pass `filters[UserID]` in the AJAX request rather than simply `UserID`.
+2. Additionally, sprunjes only accept [whitelisted fields](database/data-sprunjing#sorts-and-filters), so you'll need to ensure that `UserID` is in the appropriate array in the sprunje--in this case, `$filterable`.
+3. Optional: Unless you're hardcoding the parameter value, you may need to [export it to JS](client-side-code/exporting-variables).
 
 In this Javascript sample, we've already asked the user for a Genus name and exported it to the variable `page.owl.genus`.
 ```javascript

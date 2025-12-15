@@ -29,7 +29,7 @@ Google can tell when you're copying content from another page. When it sees copi
 
 Having lots of words on a page gives Google more to work with when it determines how relevant that page is. While you may not _need_ a lot of words to get your point across, it signals to search engines that your pages' contents have real value. At the same time, you need to avoid [keyword stuffing](https://en.wikipedia.org/wiki/Keyword_stuffing) - putting an unnatural number of keywords in your content in an attempt to game the ranking algorithm. This used to work in the past, but nowadays search engines will detect and penalize you if every other sentence is "Garden shed painting."
 
-![Real world SEO](/images/real-world-seo.png)
+![Real world SEO](images/real-world-seo.png)
 
 To summarize, you need to write the text of your pages so that they have a healthy balance of your target keywords without appearing overly spammy. You _do_ know what your target keywords are, right?
 
@@ -63,7 +63,7 @@ Make your image files exactly the size at which you intend to display them (in s
 
 ### Use compiled assets in production
 
-The way UserFrosting [serves assets](/asset-management) is great for development and debugging, but not so much for production. The asset files themselves (Javascript and CSS) are larger than they need to be to perform their function.
+The way UserFrosting [serves assets](asset-management) is great for development and debugging, but not so much for production. The asset files themselves (Javascript and CSS) are larger than they need to be to perform their function.
 
 Using Webpack solves all of these problems:
 
@@ -73,7 +73,7 @@ Using Webpack solves all of these problems:
 
 ### Caching
 
-[Caching](/advanced/caching/intro) should happen on a number of levels throughout your application, on both the server and client sides. On the server, UserFrosting automatically caches route resolutions and fully-rendered Twig templates when you use the `production` configuration profile. You can also configure the webserver itself to cache entire responses. For example, see [nginx's caching documentation](https://www.nginx.com/resources/admin-guide/content-caching/).
+[Caching](advanced/caching/intro) should happen on a number of levels throughout your application, on both the server and client sides. On the server, UserFrosting automatically caches route resolutions and fully-rendered Twig templates when you use the `production` configuration profile. You can also configure the webserver itself to cache entire responses. For example, see [nginx's caching documentation](https://www.nginx.com/resources/admin-guide/content-caching/).
 
 Caching can also happen in the client's browser. For example, you don't want the client to have to retrieve images and Javascript files each time they visit your page, if those assets haven't changed since their last visit. Browser caching is handled by the `Cache-Control` response header, which is the server's way of telling the client's browser how long they should cache the response of a particular request.
 

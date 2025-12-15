@@ -185,7 +185,7 @@ This is a list of dependent sprinkles entry files list, plus our own list. Every
 
 ## Compiling assets
 
-To build the assets, run the following [Bakery command](/cli/commands#assets:build) : 
+To build the assets, run the following [Bakery command](cli/commands#assets:build) : 
 
 ```bash
 $ php bakery assets:build
@@ -217,7 +217,7 @@ $ php bakery assets:webpack --production
 ```
 
 > [!TIP]
-> If you have shell access (for example, [using a VPS](/going-live/vps-production-environment)), you can build production assets directly on your host server as part of your deployment process. Otherwise, you can build them locally before transferring your application to the host server. Unlike Composer, frontend dependencies doesn't depend on any server configuration, so it is safe to build locally and upload the resulting build.
+> If you have shell access (for example, [using a VPS](going-live/vps-production-environment)), you can build production assets directly on your host server as part of your deployment process. Otherwise, you can build them locally before transferring your application to the host server. Unlike Composer, frontend dependencies doesn't depend on any server configuration, so it is safe to build locally and upload the resulting build.
 
 Alternatively, the underlying npm scripts can also be executed directly. However, be aware some preflight check are executed by Bakery (e.g.: make sure `webpack.config.js` exist), and won't be executed if running the scripts directly.
 

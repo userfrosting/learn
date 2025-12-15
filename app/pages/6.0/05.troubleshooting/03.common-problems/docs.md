@@ -11,7 +11,7 @@ obsolete: true
 
 ### I get a Node/npm error when running `php bakery bake`.
 
-If installation of npm dependencies fails, see [npm](/basics/requirements/essential-tools-for-php#npm) to ensure npm is correctly installed and updated. You may need to [change npm permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions).
+If installation of npm dependencies fails, see [npm](basics/requirements/essential-tools-for-php#npm) to ensure npm is correctly installed and updated. You may need to [change npm permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions).
 
 ### An exception has been thrown during the rendering of a template
 
@@ -21,11 +21,11 @@ When trying to view your site you get an error similar to this :
 
 <!-- TODO : The above error needs to be updated ! -->
 
-This is an indication that asset build failed or you missed a step in the installation process. Try [running the installer](/installation/environment/native/install#clone-the-userfrosting-repository) again with `php bakery bake` and check for any error messages.
+This is an indication that asset build failed or you missed a step in the installation process. Try [running the installer](installation/environment/native/install#clone-the-userfrosting-repository) again with `php bakery bake` and check for any error messages.
 
 ### Installation went fine, except I don't see any styling on my home page. I am using Apache.
 
-UserFrosting uses a [dynamic routing system](/asset-management/basic-usage) for serving assets in a development environment. For this to work on an Apache webserver, `mod_rewrite` needs to be enabled, **and** you need to give Apache permission to use the `.htaccess` file in `public/`.
+UserFrosting uses a [dynamic routing system](asset-management/basic-usage) for serving assets in a development environment. For this to work on an Apache webserver, `mod_rewrite` needs to be enabled, **and** you need to give Apache permission to use the `.htaccess` file in `public/`.
 
 #### Enabling `mod_rewrite`
 
@@ -56,7 +56,7 @@ For more information, see [this blog article](http://seventhsoulmountain.blogspo
 
 <!-- ### I get an error like "There is no class mapped" or "class not found" when using the class mapper or running my migrations.
 
-The "There is no class mapped" error occurs when you attempt to use the [dynamic class mapper](/advanced/class-mapper) with an identifier that has not been successfully mapped to a class name. If you are sure that you defined the mapping in your Sprinkle's `ServicesProvider` class, it is likely that UserFrosting is simply not even finding your `ServicesProvider` class itself. This is usually due to using an incorrect namespace for your Sprinkle.
+The "There is no class mapped" error occurs when you attempt to use the [dynamic class mapper](advanced/class-mapper) with an identifier that has not been successfully mapped to a class name. If you are sure that you defined the mapping in your Sprinkle's `ServicesProvider` class, it is likely that UserFrosting is simply not even finding your `ServicesProvider` class itself. This is usually due to using an incorrect namespace for your Sprinkle.
 
 It's important to understand that UserFrosting uses a very strict, **case-sensitive** naming convention for Sprinkle namespaces. UserFrosting will convert your Sprinkle's directory name to [studly caps](https://laravel.com/docs/8.x/helpers#method-studly-case) when it builds the fully qualified namespace where it expects your `ServicesProvider` and `Migration` classes to be found. If your Sprinkle's namespace does not match what UserFrosting is expecting, it will not find and load these classes. This will not cause an error directly, but will manifest in other parts of your code that depend on these classes to be located successfully.
 

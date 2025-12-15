@@ -4,7 +4,7 @@ description: Detailed breakdown of a sprinkle's contents.
 obsolete: true
 ---
 
-Sprinkles are an integral part of UserFrosting. We'll see in detail how they work in [a later chapter](/sprinkles), but for now it's important to have an overview.
+Sprinkles are an integral part of UserFrosting. We'll see in detail how they work in [a later chapter](sprinkles), but for now it's important to have an overview.
 
 Unlike dependencies, which are usually meant to be used across many different frameworks, sprinkles are meant to integrate directly into UserFrosting and interact together. Sprinkles could be compared to "plugins", but they're so much more.
 
@@ -14,18 +14,18 @@ Your app can have as many sprinkles as you want. A sprinkle could even depend on
 
 ## Bundled Sprinkles
 
-A default UserFrosting installation comes with **four** sprinkles, each of which will be downloaded by [Composer](/installation/requirements/essential-tools-for-php#composer) in the `/vendor` directory during installation. 
+A default UserFrosting installation comes with **four** sprinkles, each of which will be downloaded by [Composer](installation/requirements/essential-tools-for-php#composer) in the `/vendor` directory during installation. 
 
-Because UserFrosting is modular, you can decide to use these bundled sprinkles or not. You may or may not need the functionality each provides in your app. We'll go over how to enable and disable them [later](/sprinkles/recipe#removing-default-sprinkles). For now, let's focus on their features.
+Because UserFrosting is modular, you can decide to use these bundled sprinkles or not. You may or may not need the functionality each provides in your app. We'll go over how to enable and disable them [later](sprinkles/recipe#removing-default-sprinkles). For now, let's focus on their features.
 
 > [!NOTE]
-> Remove all sprinkles and the [Framework](/structure/framework) can be used by itself to create a very basic Slim/Symfony Console application with no database, template, etc. !
+> Remove all sprinkles and the [Framework](structure/framework) can be used by itself to create a very basic Slim/Symfony Console application with no database, template, etc. !
 
 ### Core Sprinkle
-The **Core** contains most of the "heavy lifting" PHP code. It provides all the necessary services for [databases](/database), [templating](/templating-with-twig), [error handling](/advanced/error-handling), [mail](/mail) support, [request throttling](/routes-and-controllers/client-input/throttle), and more.
+The **Core** contains most of the "heavy lifting" PHP code. It provides all the necessary services for [databases](database), [templating](templating-with-twig), [error handling](advanced/error-handling), [mail](mail) support, [request throttling](routes-and-controllers/client-input/throttle), and more.
 
 ### Account Sprinkle
-The **Account** sprinkle handles [user modeling and authentication](/users), [user groups](/users/groups), and [roles & access control](/users/access-control). It contains the routes, templates, and controllers needed to implement pages for registration, password resetting, login, and more.
+The **Account** sprinkle handles [user modeling and authentication](users), [user groups](users/groups), and [roles & access control](users/access-control). It contains the routes, templates, and controllers needed to implement pages for registration, password resetting, login, and more.
 
 The Account sprinkle depends on the Core sprinkle.
 

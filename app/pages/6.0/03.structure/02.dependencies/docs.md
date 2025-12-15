@@ -4,7 +4,7 @@ description: Detailed breakdown of a UserFrosting's dependencies.
 obsolete: true
 ---
 
-As detailed in a previous chapter, it's important [not to reinvent the wheel](/background/dont-reinvent-the-wheel). That's why UserFrosting depends on a number of external libraries, called dependencies. Those are written by people and organizations external to UserFrosting, providing the base that UserFrosting works on. These dependencies are not tied to UserFrosting and can be used by anyone. Think of dependencies as the raw materials, like wood and concrete, you get from the hardware store to build a house. We simply "glued" them together to create awesomeness! 
+As detailed in a previous chapter, it's important [not to reinvent the wheel](background/dont-reinvent-the-wheel). That's why UserFrosting depends on a number of external libraries, called dependencies. Those are written by people and organizations external to UserFrosting, providing the base that UserFrosting works on. These dependencies are not tied to UserFrosting and can be used by anyone. Think of dependencies as the raw materials, like wood and concrete, you get from the hardware store to build a house. We simply "glued" them together to create awesomeness! 
 
 While UserFrosting uses dozens of dependencies, here's a rundown of the most important ones:
 

@@ -4,11 +4,11 @@ description: UserFrosting comes with a number of custom jQuery plugins that simp
 obsolete: true
 ---
 
-UserFrosting also comes with a number of [custom jQuery plugins](/client-side-code/components) that simplify the interactions between the client-side components and the backend. These can all be found in the `core` Sprinkle, under `assets/local/core/js/`.
+UserFrosting also comes with a number of [custom jQuery plugins](client-side-code/components) that simplify the interactions between the client-side components and the backend. These can all be found in the `core` Sprinkle, under `assets/local/core/js/`.
 
 ### ufAlerts
 
-Fetches and renders alerts from the [alert stream](/routes-and-controllers/alert-stream). See the section on [alerts](/client-side-code/components/alerts) for more information on using this plugin.
+Fetches and renders alerts from the [alert stream](routes-and-controllers/alert-stream). See the section on [alerts](client-side-code/components/alerts) for more information on using this plugin.
 
 ### ufCollection
 
@@ -16,15 +16,15 @@ A client-side widget that allows you to easily associate related entities in a o
 
 For example, both the "user roles" and "role permissions" interfaces use this plugin:
 
-![ufCollection widget as used for the "user role" management interface.](/images/uf-collection.png)
+![ufCollection widget as used for the "user role" management interface.](images/uf-collection.png)
 
-See the documentation on [collections](/client-side-code/components/collections) for more information on using this plugin.
+See the documentation on [collections](client-side-code/components/collections) for more information on using this plugin.
 
 ### ufCopy
 
 Helper to generate a tooltip alert for clipboard.js.
 
-![ufCopy widget.](/images/uf-copy.png)
+![ufCopy widget.](images/uf-copy.png)
 
 **Markup:**
 
@@ -39,7 +39,7 @@ Helper to generate a tooltip alert for clipboard.js.
 
 A convenient wrapper for AJAX form submission. Handles validation, loading icon during the submission process, and automatically fetching and displaying error messages after a failed submission.
 
-See the section on [forms](/client-side-code/components/forms) for more information on using this plugin.
+See the section on [forms](client-side-code/components/forms) for more information on using this plugin.
 
 ### ufModal
 
@@ -72,4 +72,4 @@ $('body').on('renderSuccess.ufModal', function (data) {
 
 A wrapper for [Tablesorter](https://mottie.github.io/tablesorter/docs/) that automatically fetches JSON data from a specified API endpoint, and dynamically builds paginated, sorted, filtered views on the fly. Very useful as a quick-and-easy way to get data from your database to the client.
 
-See the section on [tables](/client-side-code/components/tables) for more information on using this plugin.
+See the section on [tables](client-side-code/components/tables) for more information on using this plugin.

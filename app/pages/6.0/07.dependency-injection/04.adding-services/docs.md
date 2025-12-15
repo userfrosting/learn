@@ -6,7 +6,7 @@ obsolete: true
 
 You'll probably want to create your own services to modularize certain aspects of your own project. For example, if your application needs to interact with some third-party API like Google Maps, you might create a `MapBuilder` class that encapsulates all of that functionality. This is a cleaner and more manageable alternative to simply stuffing all of your code directly into your controller classes.
 
-If you want to use a single instance of `MapBuilder` throughout your application, you'll probably end up defining it as a service. To do this, you'll need to create a new  `MapBuilderService` class in your site sprinkle and register it in your [Sprinkle Recipe](/sprinkles/recipe#services).
+If you want to use a single instance of `MapBuilder` throughout your application, you'll probably end up defining it as a service. To do this, you'll need to create a new  `MapBuilderService` class in your site sprinkle and register it in your [Sprinkle Recipe](sprinkles/recipe#services).
 
 You can actually create one big service provider for all your services, but it's best to create different provider classes for each service. This makes it easier to test and debug each of your services. It also makes things easier if you need to extend or disable a service in another sprinkle down the road. With this setup, each service resides in its own provider class instead of the global `ServiceProvider` class. For example :
 
@@ -21,7 +21,7 @@ app
 
 ### Create your service
 
-First, we'll create the service class. This class **must** implement the `UserFrosting\ServicesProvider\ServicesProviderInterface` interface. It must contain the `register` method, which returns an array of [service definitions](/dependency-injection/the-di-container#service-providers-definitions). 
+First, we'll create the service class. This class **must** implement the `UserFrosting\ServicesProvider\ServicesProviderInterface` interface. It must contain the `register` method, which returns an array of [service definitions](dependency-injection/the-di-container#service-providers-definitions). 
 
 **app/src/ServicesProvider/MapBuilderService.php**:
 
@@ -78,7 +78,7 @@ MapBuilder::class => function (Config $config) {
 
 ### Register your service
 
-The next step is to tell UserFrosting to load your service in your [Sprinkle Recipe](/sprinkles/recipe#getservices). To do so, you only need to list all the service providers you want to automatically register inside the `$getServices` property of your sprinkle class :
+The next step is to tell UserFrosting to load your service in your [Sprinkle Recipe](sprinkles/recipe#getservices). To do so, you only need to list all the service providers you want to automatically register inside the `$getServices` property of your sprinkle class :
 
 **app/src/MyApp.php** :
 ```php
@@ -106,4 +106,4 @@ class MyApp implements SprinkleRecipe
 }
 ```
 
-That's it! Behind the scenes, UserFrosting will register every definition from each service provider with the DI container, following the sprinkle [dependency tree](/sprinkles/recipe#dependent-sprinkles) during the [application lifecycle](/advanced/application-lifecycle).
+That's it! Behind the scenes, UserFrosting will register every definition from each service provider with the DI container, following the sprinkle [dependency tree](sprinkles/recipe#dependent-sprinkles) during the [application lifecycle](advanced/application-lifecycle).

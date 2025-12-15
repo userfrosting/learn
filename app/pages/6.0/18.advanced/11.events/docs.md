@@ -80,7 +80,7 @@ class BakeCommandListener
 
 This listener accept a `BakeCommandEvent`, which exposes some methods, like `addCommand`, that modify a list of commands stored in the `BakeCommandEvent` object. Since this listener doesn't stop the propagation of a stoppable event, other listeners can also add their own command to the event, and they'll even see that `create:admin-user` exist if they list all currently registered commands (and it it's executed *after* `BakeCommandListener` of course).
 
-A listener can also delegate task to other code or service. It is definitively possible to inject a service in the service constructor method - Listeners will in fact be instantiated by the [dependency injection container](/dependency-injection/the-di-container). For example : 
+A listener can also delegate task to other code or service. It is definitively possible to inject a service in the service constructor method - Listeners will in fact be instantiated by the [dependency injection container](dependency-injection/the-di-container). For example : 
 
 ```php
 class AssignDefaultRoles
@@ -127,7 +127,7 @@ The dispatcher only has one public method : `public function dispatch(object $ev
 
 UserFrosting implements a PSR-14 compatible `Psr\EventDispatcher\ListenerProviderInterface`, used by the dispatcher. Sprinkles are not expected to access it directly: Invoking listeners should only be done thought the provided dispatcher.
 
-It's only worth to know that UserFrosting listener provider will return the relevant listeners for a given event based on the [Sprinkle dependency order](/sprinkles/recipe#getsprinkles), then the order they are registered (which we'll see next). Your sprinkle will always be the top sprinkle, so your listeners will always be invoked first. 
+It's only worth to know that UserFrosting listener provider will return the relevant listeners for a given event based on the [Sprinkle dependency order](sprinkles/recipe#getsprinkles), then the order they are registered (which we'll see next). Your sprinkle will always be the top sprinkle, so your listeners will always be invoked first. 
 
 ## Registering a listener
 

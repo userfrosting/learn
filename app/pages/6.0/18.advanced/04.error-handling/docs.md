@@ -32,7 +32,7 @@ It's worth noting at this point that some Exception are *user facing*, while oth
 | MigrationDependencyNotMetException | A migration dependency is not met.               |
 | MigrationNotFoundException         | A required migration class cannot be found       |
 | MigrationRollbackException         | A migration cannot be rollback                   |
-| ValidationException                | Used when [client input validation](/routes-and-controllers/client-input/validation) fails. Implements *UserMessageException*.                                                                 |
+| ValidationException                | Used when [client input validation](routes-and-controllers/client-input/validation) fails. Implements *UserMessageException*.                                                                 |
 | **UserFacingException**            | Shows a specific message and optional description meant for to the user. This exception is meant to be extended to create specific exceptions. Implements *TwigRenderedException* & *UserMessageException* |
 | VersionCompareException            | Used when a version constraint is not matched.   |
 
@@ -183,7 +183,7 @@ However, keep in mind some handlers/renderers might force configuration value. F
 
 Normally, when `displayErrorDetails` is enabled and an error is generated during an AJAX request that requests a JSON response, the `JsonRenderer` will be invoked to return a JSON object containing the debugging information.
 
-However for some types of exceptions, you may wish to display a debugging page in the browser instead - even for AJAX requests! When this setting is enabled, `ExceptionHandler` will ignore the requested content type and generate an HTML response instead. In [client side code](/client-side-code), when `site.debug.ajax` is enabled and an error code is received by an AJAX call, your Javascript can use this information to decide whether or not to completely replace the current page with the HTML debug page that was returned in the response.
+However for some types of exceptions, you may wish to display a debugging page in the browser instead - even for AJAX requests! When this setting is enabled, `ExceptionHandler` will ignore the requested content type and generate an HTML response instead. In [client side code](client-side-code), when `site.debug.ajax` is enabled and an error code is received by an AJAX call, your Javascript can use this information to decide whether or not to completely replace the current page with the HTML debug page that was returned in the response.
 
 > [!WARNING]
 > Any detailed error message can, in fact, leak sensitive information to the client! That's why, by default, both `debug.exception` and `site.debug.ajax` are disabled in the **production** configuration environment. Do not change this! Displaying detailed exception traces in production is an extreme security risk and could leak sensitive passwords to your users and/or the public.
@@ -293,7 +293,7 @@ Handlers can also perform redirection. For example `RedirectToLoginDangerHandler
 
 ### Registering custom exception handlers
 
-Once you have defined your custom exception handler, you'll need to map the corresponding exception to it by extending the [`ExceptionHandlerMiddleware` service provider](/dependency-injection/extending-services).
+Once you have defined your custom exception handler, you'll need to map the corresponding exception to it by extending the [`ExceptionHandlerMiddleware` service provider](dependency-injection/extending-services).
 
 To do this, simply decorate the `ExceptionHandlerMiddleware` class and call the `registerHandler` method on the `$middleware` object:
 

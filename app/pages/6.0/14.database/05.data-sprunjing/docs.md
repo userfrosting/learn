@@ -337,4 +337,4 @@ protected function listStatus(): array
 
 If you're wondering where the term "Sprunje" comes from:
 
-![Futurama - Sprunjer](/images/sprunje.mp4)
+![Futurama - Sprunjer](images/sprunje.mp4)

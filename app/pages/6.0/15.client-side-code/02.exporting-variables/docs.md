@@ -14,13 +14,13 @@ There are a number of ways to get the values of specific variables from the serv
 
 Depending on the context of your application, one of these options might be more appropriate than the others. For the purposes of this section however, we will focus on the last option, and the "global" Javascript variables that UserFrosting makes available on each page. This is the best choice when you have miscellaneous values that aren't closely associated with any specific element of the DOM, and are generic enough that they don't warrant the trouble of making a separate AJAX request for their values.
 
-No matter how you go about it, it's important to keep in mind that **you're not directly accessing server-side variables in Javascript.** Keep in mind our [discussion on the client-server conversation](/background/the-client-server-conversation) - the client makes a **request** for the page and receives a fixed piece of HTML in the **response**.
+No matter how you go about it, it's important to keep in mind that **you're not directly accessing server-side variables in Javascript.** Keep in mind our [discussion on the client-server conversation](background/the-client-server-conversation) - the client makes a **request** for the page and receives a fixed piece of HTML in the **response**.
 
 Any PHP variables we receive in the response are really just **copies of their server-side values** when the page was rendered. Our page can't change these values on the server without making another request - and even then, changes won't persist from one request to the next unless we use some sort of persistence mechanism (sessions, database, etc).
 
 ## Site variables
 
-By default, UserFrosting will create a global `site` Javascript variable on every page. `site` is a JSON object that contains a copy of the main `site` config array, [defined in PHP](/configuration/config-files) (ie. `app/sprinkles/core/config/default.php`). The following values are among the ones contained in the `site` object :
+By default, UserFrosting will create a global `site` Javascript variable on every page. `site` is a JSON object that contains a copy of the main `site` config array, [defined in PHP](configuration/config-files) (ie. `app/sprinkles/core/config/default.php`). The following values are among the ones contained in the `site` object :
 
 - `site.uri.public`: Base url of your site (e.g., `https://example.com`).
 - `site.debug.ajax`: `true` if AJAX debugging mode is enabled, false otherwise.
@@ -31,11 +31,11 @@ By default, UserFrosting will create a global `site` Javascript variable on ever
 
 Notice that all of these variables are nested under a single, top-level `site` object which is constructed in the `core/templates/pages/partials/config.js.twig` template. By formatting these as keys in a JSON object, rather than making each one an individual variable, we avoid polluting Javascript's global namespace with too many identifiers.
 
-To add, remove, or modify the contents of the `site` object, simply extends the `site` configuration [in your Sprinkle](/configuration/config-files#file-structure).
+To add, remove, or modify the contents of the `site` object, simply extends the `site` configuration [in your Sprinkle](configuration/config-files#file-structure).
 
-Alternatively, you can override `config.js.twig` in your Sprinkle. `config.js.twig` itself pulls its values from Twig's global variables (`site`, `current_user`, etc). Keep in mind that you can add global variables to Twig by [creating a Twig extension](https://twig.sensiolabs.org/doc/2.x/advanced.html#creating-an-extension) and then loading your extension by [extending the `view` service](/services/extending-services#extending-existing-services). This process is summarized in this diagram:
+Alternatively, you can override `config.js.twig` in your Sprinkle. `config.js.twig` itself pulls its values from Twig's global variables (`site`, `current_user`, etc). Keep in mind that you can add global variables to Twig by [creating a Twig extension](https://twig.sensiolabs.org/doc/2.x/advanced.html#creating-an-extension) and then loading your extension by [extending the `view` service](services/extending-services#extending-existing-services). This process is summarized in this diagram:
 
-![Extending UserFrosting's client-side site variable](/images/extending-site-variable.png)
+![Extending UserFrosting's client-side site variable](images/extending-site-variable.png)
 
 > [!WARNING]
 > Remember, any data you place in the `site` variable will be visible to the end-user - all they have to do is "View source"! Don't put any sensitive or private information in this variable.

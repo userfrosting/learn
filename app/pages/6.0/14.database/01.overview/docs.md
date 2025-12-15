@@ -8,9 +8,9 @@ Even in relatively simple applications, writing out the same types of database q
 
 ## Configuration
 
-By default, UserFrosting creates a `default` database connection, and handles basic configuration through [environment variables](/configuration/environment-vars).
+By default, UserFrosting creates a `default` database connection, and handles basic configuration through [environment variables](configuration/environment-vars).
 
-These values are, in turn, retrieved through the `db` key in your [configuration files](/configuration/config-files). For advanced database configuration, or to add additional database connections, you can directly override this key or subkeys in your Sprinkle's configuration file:
+These values are, in turn, retrieved through the `db` key in your [configuration files](configuration/config-files). For advanced database configuration, or to add additional database connections, you can directly override this key or subkeys in your Sprinkle's configuration file:
 
 ```php
 <?php
@@ -43,7 +43,7 @@ return [
 
 Eloquent works by having you define [model classes](https://laravel.com/docs/8.x/eloquent#eloquent-model-conventions). Generally speaking, each model maps to a table in your database. Interactions with the table are then handled through the corresponding model.
 
-UserFrosting has already implemented all of the models needed for interacting with its [default tables](/database/default-tables). These can be found in the `src/Database/Models/` subdirectories of your sprinkles. Among the three default Sprinkles (`core`, `account`, and `admin`), UserFrosting implements:
+UserFrosting has already implemented all of the models needed for interacting with its [default tables](database/default-tables). These can be found in the `src/Database/Models/` subdirectories of your sprinkles. Among the three default Sprinkles (`core`, `account`, and `admin`), UserFrosting implements:
 
 - Migration
 - Throttle

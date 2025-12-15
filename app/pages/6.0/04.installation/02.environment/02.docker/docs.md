@@ -8,11 +8,11 @@ If you don't already have a local environment or you're not familiar with **Dock
 
 Docker provides a great starting point for building a UserFrosting application using PHP, NGINX, and MySQL without requiring prior Docker experience. All the necessary tools will be available through Docker. The only necessary tool required on your computer, besides Docker, is the **command line**.
 
-If you're familiar with PHP development, or already have PHP installed locally, you may instead want to consider setting up [natively](/installation/environment/native).
+If you're familiar with PHP development, or already have PHP installed locally, you may instead want to consider setting up [natively](installation/environment/native).
 
 ## Command Line Interface
 
-[plugin:content-inject](/04.installation/_modular/cli)
+[plugin:content-inject](04.installation/_modular/cli)
 
 ## Install Docker
 First, you'll need to install Docker. Just follow the installation instructions from the Docker website:
@@ -80,7 +80,7 @@ Now visit [http://localhost:8080](http://localhost:8080) to see your UserFrostin
 
 You should see the default UserFrosting pages and be able to login with the newly created master account. 
 
-![Basic front page of a UserFrosting installation](/images/front-page.png)
+![Basic front page of a UserFrosting installation](images/front-page.png)
 
 To stop the containers, run : 
 

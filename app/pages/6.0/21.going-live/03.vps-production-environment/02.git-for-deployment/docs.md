@@ -3,7 +3,7 @@ title: Using Git for Deployment
 description: Once you've set up a remote repository in your production environment, deployment can be as simple as a single `git push` command.
 obsolete: true
 ---
-<!-- [plugin:content-inject](/modular/_update5.0) -->
+<!-- [plugin:content-inject](modular/_update5.0) -->
 
 > [!NOTE]
 > This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
@@ -14,7 +14,7 @@ We can also use the git `post-receive` hook to run additional build tasks after 
 
 ## Introduction
 
-This guide assumes that you already set up your UserFrosting project as a git repository during installation. If not, [go back to the installation guide](/installation/environment/native).
+This guide assumes that you already set up your UserFrosting project as a git repository during installation. If not, [go back to the installation guide](installation/environment/native).
 
 This guide also assumes that you are **regularly committing changes to your repository.** Git can **only** push files to the production server if it is [tracking them](https://www.atlassian.com/git/tutorials/saving-changes#git-add) and you have [committed your changes](https://www.atlassian.com/git/tutorials/saving-changes#git-commit). If you are new to git and _don't understand what this means_, we strongly suggest you check out the free git tutorials from [Github](https://try.github.io) or [Atlassian](https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud) before you continue.
 
@@ -95,7 +95,7 @@ sudo chmod u+x,g+x /var/repo/<repo name>.git/hooks/post-receive
 ```
 
 > [!TIP]
-> For more information on file permissions, see the [Unix primer](/going-live/unix-primer-ubuntu#viewing-and-basic-concepts).
+> For more information on file permissions, see the [Unix primer](going-live/unix-primer-ubuntu#viewing-and-basic-concepts).
 
 ## Push your project for the first time
 
@@ -150,4 +150,4 @@ You should see your project files. If the directory is empty, then something wen
 
 Once you have your `git push` working properly, congratulations! Deploying updates to your live application is as simple as running `git push live master` again.
 
-The next step is to [configure UserFrosting for production](/going-live/vps-production-environment/application-setup).
+The next step is to [configure UserFrosting for production](going-live/vps-production-environment/application-setup).

@@ -4,7 +4,7 @@ description: The `ufAlerts` plugin handles retrieving and rendering alerts and n
 obsolete: true
 ---
 
-For page loads, as well as requests made by most of UserFrosting's [client-side components](/client-side-code/components), alerts are automatically fetched from the [alert stream](/routes-and-controllers/alert-stream) and rendered for you. However, sometimes you will make your own custom AJAX requests that need to manually fetch and render alerts after the request is complete. To do this, you may create your own instance of the `ufAlerts` plugin.
+For page loads, as well as requests made by most of UserFrosting's [client-side components](client-side-code/components), alerts are automatically fetched from the [alert stream](routes-and-controllers/alert-stream) and rendered for you. However, sometimes you will make your own custom AJAX requests that need to manually fetch and render alerts after the request is complete. To do this, you may create your own instance of the `ufAlerts` plugin.
 
 ## Initialization
 
@@ -51,7 +51,7 @@ Fetch alerts from the message stream resource url.
 
 Render all alert messages in the initialized element.
 
-Alerts are rendered using a custom [Handlebars template](/client-side-code/client-side-templating). The default template is located in `core/templates/pages/partials/alerts.html.twig`, and uses Bootstrap 3's [alert](https://getbootstrap.com/docs/3.3/components/#alerts) component to render each message. This partial template is automatically included in the `core/templates/pages/abstract/base.html.twig` template, in the `uf_alerts_template` block.
+Alerts are rendered using a custom [Handlebars template](client-side-code/client-side-templating). The default template is located in `core/templates/pages/partials/alerts.html.twig`, and uses Bootstrap 3's [alert](https://getbootstrap.com/docs/3.3/components/#alerts) component to render each message. This partial template is automatically included in the `core/templates/pages/abstract/base.html.twig` template, in the `uf_alerts_template` block.
 
 If you wish you may include your own custom Handlebars template instead, overriding the `uf_alerts_template` block and and specifying its `id` with the `alertTemplateId` option when you initialize `ufAlerts`.
 

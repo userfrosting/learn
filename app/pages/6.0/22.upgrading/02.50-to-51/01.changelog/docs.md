@@ -30,7 +30,7 @@ Complete refactoring of Fortress. Mostly enforcing strict types, updating PHPDoc
 
 In general, instead of passing the *schema* in the constructor of Adapters, Transformers and Validators class, you pass it directly to theses class methods. This makes it easier to inject the classes as services and reuse the same instance with different schemas. 
 
-[Check out the updated documentation](/routes-and-controllers/client-input/validation) for more information on new class usage, as well as the upgrade guide. 
+[Check out the updated documentation](routes-and-controllers/client-input/validation) for more information on new class usage, as well as the upgrade guide. 
 
 #### Config
 - Methods `getBool`, `getString`, `getInt` & `getArray` now return `null` if key doesn't exist, to make it on par with parent `get` method.
@@ -54,7 +54,7 @@ This change allows new bakery command to update Npm assets, and eventually allow
 
 *tl;dr* : Use `php bakery assets:build` instead of `php bakery webpack` or `php bakery build-assets`. 
 
-See [Assets Chapter](/asset-management) and [Bakery commands](/cli/commands) for more details.
+See [Assets Chapter](asset-management) and [Bakery commands](cli/commands) for more details.
 
 #### Loggers changes
 The different loggers now implement their own interface, for more flexibility with dependency injection. Debuggers should now be injected using their interface, instead of their class name.
@@ -72,7 +72,7 @@ Behind the scene, each interface extends `Psr\Log\LoggerInterface`. Plus, instea
 Finally, `UserActivityLogger` used to define some constants. These have been moved to `UserActivityTypes` enum.
 
 #### New bakery commands
-- [`serve`](/cli/commands#serve) : Run the php built-in web server to test your application 
+- [`serve`](cli/commands#serve) : Run the php built-in web server to test your application 
 - [`debug:twig`](cli/commands#debug) : List all twig namespaces to help debugging
 
 #### New Twig Function

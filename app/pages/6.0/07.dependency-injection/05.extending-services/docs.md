@@ -6,7 +6,7 @@ obsolete: true
 
 PHP-DI allows us to extend services that were defined previously, for example in another sprinkle, using [decorators](https://php-di.org/doc/definition-overriding.html#decorators).
 
-Most of the default services that UserFrosting defines can be overridden in your sprinkle. However, some higher level services cannot be extended since they have already been invoked before the SprinkleManager can load the sprinkles. These services are mostly in the [UserFrosting Framework](/structure/framework).
+Most of the default services that UserFrosting defines can be overridden in your sprinkle. However, some higher level services cannot be extended since they have already been invoked before the SprinkleManager can load the sprinkles. These services are mostly in the [UserFrosting Framework](structure/framework).
 
 ## Overriding Existing Services
 

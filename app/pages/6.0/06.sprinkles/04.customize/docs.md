@@ -4,7 +4,7 @@ description: This guide walks you though the process of setting up your applicat
 obsolete: true
 ---
 
-This guide assumes that you've already completed the [installation guide](/installation) and successfully managed to get UserFrosting working in your [local development environment](/background/develop-locally-serve-globally) using the [Skeleton](/structure/introduction#the-app-skeleton-your-project-s-template). If not, please do that now - feel free to [ask for help](/troubleshooting/getting-help) if you're running into trouble!
+This guide assumes that you've already completed the [installation guide](installation) and successfully managed to get UserFrosting working in your [local development environment](background/develop-locally-serve-globally) using the [Skeleton](structure/introduction#the-app-skeleton-your-project-s-template). If not, please do that now - feel free to [ask for help](troubleshooting/getting-help) if you're running into trouble!
 
 ## Custom Namespace and Name
 
@@ -269,9 +269,9 @@ In `default.php`, add the following:
 
 This customizes some basic properties for our application - you can set your site title, author, author's URL, and timezone. Reload the page, and you should see the new site title appear in the upper left corner:
 
-![Overriding site settings in config file](/images/site-title.png)
+![Overriding site settings in config file](images/site-title.png)
 
 The template for this page dynamically pulls that particular piece of text from your new configuration file. Note that your value for `site.title` overrides the value of `site.title` in the core sprinkle's configuration file.
 
 > [!TIP]
-> You can [override configuration values](/configuration/config-files) from any previously loaded sprinkles, including the default sprinkles that ship with UserFrosting. Check the Core sprinkle and the Account sprinkle `/app/config/default.php` for a complete list.
+> You can [override configuration values](configuration/config-files) from any previously loaded sprinkles, including the default sprinkles that ship with UserFrosting. Check the Core sprinkle and the Account sprinkle `/app/config/default.php` for a complete list.

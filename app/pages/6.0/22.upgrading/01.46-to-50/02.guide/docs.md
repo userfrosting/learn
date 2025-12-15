@@ -14,7 +14,7 @@ Upgrading an existing sprinkle from UserFrosting 4 to UserFrosting 5 can unfortu
 
 The upgrade path for your UserFrosting 4 sprinkle will depend on how many features you're using. The good news is, the database structure is the same, and the frontend is 90% the same.
 
-To begin the upgrade journey, **the first thing you should do is a [fresh install](/installation) of UserFrosting 5**. This is important, as it will allow you to familiarize yourself with the new structure, as well as validate that your [local development environment](/background/develop-locally-serve-globally) is up to date and meets the [minimum requirements](/installation/requirements).
+To begin the upgrade journey, **the first thing you should do is a [fresh install](installation) of UserFrosting 5**. This is important, as it will allow you to familiarize yourself with the new structure, as well as validate that your [local development environment](background/develop-locally-serve-globally) is up to date and meets the [minimum requirements](installation/requirements).
 
 Once you have a functioning vanilla version of UserFrosting 5, you can begin to upgrade your sprinkle.
 
@@ -23,15 +23,15 @@ Once you have a functioning vanilla version of UserFrosting 5, you can begin to 
 
 ## Upgrading your sprinkle structure
 
-As seen on the [previous page](/upgrading/46-to-50/changelog), one of the biggest changes is the app structure. It's recommended before you start to head over to [Chapter 3 - App Structure](/structure), to learn more about this new structure.
+As seen on the [previous page](upgrading/46-to-50/changelog), one of the biggest changes is the app structure. It's recommended before you start to head over to [Chapter 3 - App Structure](structure), to learn more about this new structure.
 
-Once you're familiar with the new structure, it's time to move things around so your sprinkle meets the new structure. There are two options here: You can either start from scratch from the [Skeleton repo](/structure/introduction#the-app-skeleton-your-project-s-template), *or* you can manually upgrade in place.
+Once you're familiar with the new structure, it's time to move things around so your sprinkle meets the new structure. There are two options here: You can either start from scratch from the [Skeleton repo](structure/introduction#the-app-skeleton-your-project-s-template), *or* you can manually upgrade in place.
 
 The first option is easier as the base has been set up for you, and you can start right away moving your code into the skeleton created from the sprinkle template, in a new git repository. However, its drawback is you'll probably lose your Git History. The second option is harder, but since you're starting from your existing code, you'll keep your git history if your code is saved on GitHub for example.
 
 ### Option 1 - Start over from the Skeleton
 
-To start with this option, the first step is to create a [fresh install](/installation) from the app skeleton. You'll then have an empty sprinkle with the new structure, ready to copy your code into it. However, there are some steps you need to follow before going further.
+To start with this option, the first step is to create a [fresh install](installation) from the app skeleton. You'll then have an empty sprinkle with the new structure, ready to copy your code into it. However, there are some steps you need to follow before going further.
 
 #### Update `composer.json`
 
@@ -40,19 +40,19 @@ The Skeleton comes with a basic `composer.json`. This defines the PSR-4 autoload
 > [!NOTE]
 > **Important:** To make sure your migrations and database data are preserved, the app namespace must be the same
 
-You'll also need to update the namespace in every existing class, `index.php`, and `bakery`. See [Customizing Your Sprinkle](/sprinkles/customize#custom-namespace-and-name) for more information.
+You'll also need to update the namespace in every existing class, `index.php`, and `bakery`. See [Customizing Your Sprinkle](sprinkles/customize#custom-namespace-and-name) for more information.
 
 Once this is done, you can run `composer update` to fetch dependencies.
 
 #### Edit the Recipe
 
-Next up, you should familiarize yourself with the [Sprinkle Recipe](/sprinkles/recipe#name). Right now, the only thing you must update is the sprinkle name, but we'll come back later to the recipe.
+Next up, you should familiarize yourself with the [Sprinkle Recipe](sprinkles/recipe#name). Right now, the only thing you must update is the sprinkle name, but we'll come back later to the recipe.
 
 #### Moving your code
 
 The last part is to move your code from `app/sprinkles/{YourSprinkle}/` from your old install (usually from `app/sprinkles/{YourSprinkle}/`) to `app/` in the new directory.
 
-At this point, you can skip to [Upgrading components](/upgrading/46-to-50/guide#upgrading-components).
+At this point, you can skip to [Upgrading components](upgrading/46-to-50/guide#upgrading-components).
 
 ### Option 2 - Upgrade in place
 
@@ -103,7 +103,7 @@ Once this is done, you can run `composer update` to fetch dependencies.
 
 #### The Recipe
 
-The next step is to create your [sprinkle recipe](/sprinkles/recipe#name).
+The next step is to create your [sprinkle recipe](sprinkles/recipe#name).
 
 Start by:
 - Copy `app/src/MyApp.php` from the skeleton into your app, inside `app/src/`
@@ -114,7 +114,7 @@ We'll update the rest of your recipe later.
 
 #### The entry files
 
-Finally, you'll need to update both *entry files*, aka `/bakery` and `/public/index.php`, with the correct reference to your recipe. Open both files, and replace `UserFrosting\App\MyApp` and `MyApp` with the correct reference to your recipe. See [this page](/sprinkles/customize#the-entry-files) for more information and examples.
+Finally, you'll need to update both *entry files*, aka `/bakery` and `/public/index.php`, with the correct reference to your recipe. Open both files, and replace `UserFrosting\App\MyApp` and `MyApp` with the correct reference to your recipe. See [this page](sprinkles/customize#the-entry-files) for more information and examples.
 
 ## Upgrading components
 
@@ -136,7 +136,7 @@ Keep this in mind, especially if you've extended built-in classes. Not only may 
 
 ### Services -> Dependency Injection
 
-Services have been updated for UserFrosting 5. While the principle is the same, the way to register a service is different. Services are now served by the new dependency injection container, PHP-DI. You should head over to the [Dependency Injection Chapter](/dependency-injection) to learn more about PHP-DI integration in UserFrosting 5 before going further.
+Services have been updated for UserFrosting 5. While the principle is the same, the way to register a service is different. Services are now served by the new dependency injection container, PHP-DI. You should head over to the [Dependency Injection Chapter](dependency-injection) to learn more about PHP-DI integration in UserFrosting 5 before going further.
 
 Your services definition must first be updated to implement `UserFrosting\ServicesProvider\ServicesProviderInterface`. For example:
 
@@ -166,9 +166,9 @@ class ServicesProvider implements ServicesProviderInterface
 }
 ```
 
-You'll also need to **register your service** in your recipe. Check out [Adding Services](/dependency-injection/adding-services) for more information.
+You'll also need to **register your service** in your recipe. Check out [Adding Services](dependency-injection/adding-services) for more information.
 
-Finally, instead of injecting the whole container and retrieving your service from it, you should inject the service directly into the class using [autowiring](/dependency-injection/the-di-container#autowiring) in the class constructor or through [route service injection](/routes-and-controllers/controller-classes#service-injection) for example.
+Finally, instead of injecting the whole container and retrieving your service from it, you should inject the service directly into the class using [autowiring](dependency-injection/the-di-container#autowiring) in the class constructor or through [route service injection](routes-and-controllers/controller-classes#service-injection) for example.
 
 For example:
 
@@ -190,25 +190,25 @@ public function __construct(protected CamHelper $camHelper): void
 
 ### Classmapper
 
-The classmapper has been removed in UF5. PHP-DI should be used instead, via the "autowire" and [interface binding](/dependency-injection/the-di-container#binding-interfaces). Existing classmapper definitions should be moved inside a service, and calls to the classmapper should be updated to use dependency injection via the controller or other methods.
+The classmapper has been removed in UF5. PHP-DI should be used instead, via the "autowire" and [interface binding](dependency-injection/the-di-container#binding-interfaces). Existing classmapper definitions should be moved inside a service, and calls to the classmapper should be updated to use dependency injection via the controller or other methods.
 
 ### Migrations
 
 Migrations are mostly the same, only the class structure has changed, as well as the need to register migrations in your Sprinkle Recipe. The key points regarding migration are as follows:
 
-1. Up/Down return type: The `up()` and `down()` methods [must now have a return type of `void`](/database/migrations#base-class).
+1. Up/Down return type: The `up()` and `down()` methods [must now have a return type of `void`](database/migrations#base-class).
    
-2. Migrations must [now extend](/database/migrations#base-class) `UserFrosting\Sprinkle\Core\Database\Migration`. Change `use UserFrosting\System\Bakery\Migration;` to `use UserFrosting\Sprinkle\Core\Database\Migration;` in every one of your migrations.
+2. Migrations must [now extend](database/migrations#base-class) `UserFrosting\Sprinkle\Core\Database\Migration`. Change `use UserFrosting\System\Bakery\Migration;` to `use UserFrosting\Sprinkle\Core\Database\Migration;` in every one of your migrations.
    
-3. [Dependencies](/database/migrations#dependencies) must now be declared in a static property. Change `public $dependencies = [];` to `public static $dependencies = [];` in every one of your migrations.
+3. [Dependencies](database/migrations#dependencies) must now be declared in a static property. Change `public $dependencies = [];` to `public static $dependencies = [];` in every one of your migrations.
    
-4. Migrations are not auto-discovered anymore. You need to add them to your sprinkle recipe, using `MigrationRecipe`. See [the migration chapter](/database/migrations#sprinkle-recipe) for more information and a detailed guide.
+4. Migrations are not auto-discovered anymore. You need to add them to your sprinkle recipe, using `MigrationRecipe`. See [the migration chapter](database/migrations#sprinkle-recipe) for more information and a detailed guide.
 
 ### Seeds
 
 Seeds are also mostly the same; they just need to implement `\UserFrosting\Sprinkle\Core\Seeder\SeedInterface` and have a `run()` function with a return type of `void`. They are also not auto-discovered, so need to be added to your sprinkle recipe using `SeedRecipe`. 
 
-See [the seeding chapter](/database/seeding) for more details.
+See [the seeding chapter](database/seeding) for more details.
 
 ### Models
 
@@ -216,12 +216,12 @@ The only change in the database model is the `$timestamps` property is now `true
 
 ### Routes
 
-The way to register routes has changed. The definition is mostly the same; however, the routes are now real PHP classes instead of static PHP resources. Check out the [Registering routes](/routes-and-controllers/registering-routes) guide for more information.
+The way to register routes has changed. The definition is mostly the same; however, the routes are now real PHP classes instead of static PHP resources. Check out the [Registering routes](routes-and-controllers/registering-routes) guide for more information.
 
 To update your routes, you should start by:
 
 1. Moving your routes from `app/routes/*` to `app/src/Routes/*`.
-2. Updating your route definitions so they are classes [implementing RouteDefinitionInterface](/routes-and-controllers/registering-routes).
+2. Updating your route definitions so they are classes [implementing RouteDefinitionInterface](routes-and-controllers/registering-routes).
 3. Registering your routes in your Sprinkle Recipe.
 
 A few other key points to know:
@@ -230,7 +230,7 @@ A few other key points to know:
 3. Middleware must now be called by their class name. For example, `authGuard` must be updated to `UserFrosting\Sprinkle\Account\Authenticate\AuthGuard::class`.
 
 ### Sprunje
-The Sprunje class used to accept options in the constructor. To make it easier to [inject dependencies](/dependency-injection/the-di-container), options should now be defined using the `setOptions` method. Sprunje should now be injected into controllers.
+The Sprunje class used to accept options in the constructor. To make it easier to [inject dependencies](dependency-injection/the-di-container), options should now be defined using the `setOptions` method. Sprunje should now be injected into controllers.
 
 **OLD:**
 ```php
@@ -271,11 +271,11 @@ Simple changes have been made to controller classes:
 1. Remove `extends SimpleController`, no extension is required anymore.
 2. `use Slim\Http\Request;` must be changed to `use Psr\Http\Message\ServerRequestInterface as Request;`
 3. `use Slim\Http\Response;` must be changed to `use Psr\Http\Message\ResponseInterface as Response;`
-4. Since the DI container is not available globally in the controllers, the services you require must be [injected via the constructor](/routes-and-controllers/controller-classes#service-injection).
+4. Since the DI container is not available globally in the controllers, the services you require must be [injected via the constructor](routes-and-controllers/controller-classes#service-injection).
    1. For example, to use the `view` service, inject `Slim\Views\Twig`.
 5. Routes placeholder, usually in the `$args` variables, should now [be directly injected](https://php-di.org/doc/frameworks/slim.html#route-placeholder-injection). See [Retrieving URL Parameters](https://learn.userfrosting.com/routes-and-controllers/client-input#retrieving-url-parameters) for more information.
 
-See the [Controller classes](/routes-and-controllers/controller-classes) guide for more information.
+See the [Controller classes](routes-and-controllers/controller-classes) guide for more information.
 
 > [!NOTE]
 > If your sprinkle extends a controller class from a default sprinkle instead of `SimpleController`, note that **every** controller class from the default sprinkles has been moved, renamed, and rewritten as *Action classes*. You will need to check out the sprinkle source code to find out how to update your sprinkle.
@@ -289,13 +289,13 @@ Simple changes have been made to bakery commands:
 3. Add the `use UserFrosting\Bakery\WithSymfonyStyle;` trait to access `$this->io`.
 4. Commands should return `return self::SUCCESS;` or `return self::FAILURE;`.
 
-The biggest change is you're now required to **register your command in your sprinkle recipe**. Check out the [Bakery CLI](/cli/custom-commands#command-class-template) chapter for more information.
+The biggest change is you're now required to **register your command in your sprinkle recipe**. Check out the [Bakery CLI](cli/custom-commands#command-class-template) chapter for more information.
 
-Also note that the `create-admin` command has been renamed `create:admin-user`. If you were adding custom commands to the "bake" command, you can now use the [Extending Aggregator Commands](/cli/extending-commands) guide to achieve this more easily.
+Also note that the `create-admin` command has been renamed `create:admin-user`. If you were adding custom commands to the "bake" command, you can now use the [Extending Aggregator Commands](cli/extending-commands) guide to achieve this more easily.
 
 ### Resources Stream / Locator
 
-Not much has changed regarding the Resource Locator. Refer to the [Locator Service](/advanced/locator) page for more information. Note, however, that the two streams below have been renamed:
+Not much has changed regarding the Resource Locator. Refer to the [Locator Service](advanced/locator) page for more information. Note, however, that the two streams below have been renamed:
 
 1. log -> logs
 2. session -> sessions
@@ -321,27 +321,27 @@ FontAwesome has also been updated, and references to icons must also be updated:
 
 1. Facades (Translator, etc.) are no longer available. The corresponding service should be injected properly now.
 2. Router `PathFor` has been changed. To generate a route based on its name, inject `UserFrosting\Sprinkle\Core\Util\RouteParserInterface` and use the `urlFor` method.  
-3. Exceptions have changed, especially HTTP ones. For example: `use UserFrosting\Support\Exception\ForbiddenException;` => `use UserFrosting\Sprinkle\Account\Exceptions\ForbiddenException;`. Check out the [Exception and Error Handling](/advanced/error-handling#default-exceptions) guide for more information.
+3. Exceptions have changed, especially HTTP ones. For example: `use UserFrosting\Support\Exception\ForbiddenException;` => `use UserFrosting\Sprinkle\Account\Exceptions\ForbiddenException;`. Check out the [Exception and Error Handling](advanced/error-handling#default-exceptions) guide for more information.
 
 ### Login redirect
 
-If your sprinkle was implementing a custom post-login destination, be sure to [check out the updated recipe](/recipes/custom-login-page#changing-the-post-login-destination).
+If your sprinkle was implementing a custom post-login destination, be sure to [check out the updated recipe](recipes/custom-login-page#changing-the-post-login-destination).
 
 ### Testing
 
 If your sprinkle had automated testing:
-1. [Create a new Sprinkle Test case](/testing/writing-tests/testcase)
+1. [Create a new Sprinkle Test case](testing/writing-tests/testcase)
 2. `setupTestDatabase` has been removed, it's no longer necessary.
 3. `UserFrosting\Sprinkle\Core\Tests\RefreshDatabase` is now `UserFrosting\Sprinkle\Core\Testing\RefreshDatabase`.
 4. `TestDatabase` is removed.
-5. `withTestUser` usage [has been updated](/testing/writing-tests/traits#withtestuser).
-6. [Factories have been overhauled](/testing/writing-tests/factories).
+5. `withTestUser` usage [has been updated](testing/writing-tests/traits#withtestuser).
+6. [Factories have been overhauled](testing/writing-tests/factories).
 
 ## Assets
 
-Asset management has been completely changed. Instead of a custom solution, UserFrosting 5 now uses [Symfony's Webpack Encore](https://github.com/symfony/webpack-encore) to handle and build frontend assets. Your first stop should be the [Asset Chapter](/asset-management) or the documentation for an in-depth guide for this new system.
+Asset management has been completely changed. Instead of a custom solution, UserFrosting 5 now uses [Symfony's Webpack Encore](https://github.com/symfony/webpack-encore) to handle and build frontend assets. Your first stop should be the [Asset Chapter](asset-management) or the documentation for an in-depth guide for this new system.
 
 The key points here are:
-1. Your `asset-bundles.json` must be replaced with a new [entrypoint and entries](/asset-management/asset-bundles).
-2. Rendering of assets (CSS and JS entries) [must be updated](/asset-management/asset-bundles#rendering-entrypoints). Check out the `content/scripts_site.html.twig` and `content/stylesheets_site.html.twig` files from the skeleton repo for an example.
-3. Static assets must be [copied to the built directory](/asset-management/basic-usage).
+1. Your `asset-bundles.json` must be replaced with a new [entrypoint and entries](asset-management/asset-bundles).
+2. Rendering of assets (CSS and JS entries) [must be updated](asset-management/asset-bundles#rendering-entrypoints). Check out the `content/scripts_site.html.twig` and `content/stylesheets_site.html.twig` files from the skeleton repo for an example.
+3. Static assets must be [copied to the built directory](asset-management/basic-usage).

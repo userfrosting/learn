@@ -46,7 +46,7 @@ Now, we can start using `\UserFrosting\Sprinkle\Site\Database\Models\User` to ex
 
 Of course, the limitations of object-oriented inheritance becomes clear when you want to change the behavior of the original class in other places where it has been used. For example, if I extended `Account\Database\Models\User` and redefined the `onLogin` method in my `Site\Database\Models\User` class, this would let me use `Site\Database\Models\User` going forward in any code I write in the `site` Sprinkle. However, it wouldn't affect references to `User` in the `account` Sprinkle - they would still be referring to the base class.
 
-To allow this sort of "_retroactive extendability_", the Dependency Injector can be used to resolves interface identifiers to specific class names at runtime [through Interface Binding and custom Autowiring](/dependency-injection/the-di-container#binding-interfaces). 
+To allow this sort of "_retroactive extendability_", the Dependency Injector can be used to resolves interface identifiers to specific class names at runtime [through Interface Binding and custom Autowiring](dependency-injection/the-di-container#binding-interfaces). 
 
 UserFrosting uses this feature to solve this issue when dealing with data Models **by binding each default model to an interface**. Rather than hardcoding references to `UserFrosting\Sprinkle\Account\Database\Models\User`, UserFrosting reference the `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface` interface and map the interface with the correct model in the Account Sprinkle service provider. 
 
@@ -125,4 +125,4 @@ class ModelsService implements ServicesProviderInterface
 > Keep in mind the last Sprinkle to be loaded, via the dependency tree, will be the last one to take effect. For example, if *Site* depends on *Feature* which depend on *Account*, and they each associate a custom model to `UserInterface` interface, the **Site** version will be used.
 
 
-Note that it's not just database models that you can dynamically remap (though they are the most common use case!) Any class references that haven't been hardcoded can be dynamically remapped in another Sprinkle's service. You can learn more about services in [Chapter 15](/services).
+Note that it's not just database models that you can dynamically remap (though they are the most common use case!) Any class references that haven't been hardcoded can be dynamically remapped in another Sprinkle's service. You can learn more about services in [Chapter 15](services).

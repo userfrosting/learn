@@ -68,7 +68,7 @@ To:
 // ...
 ```
 
-Now, simply use npm and [Bakery](/cli) to get up to date with everything else:
+Now, simply use npm and [Bakery](cli) to get up to date with everything else:
 
 ```bash
 $ npm update
@@ -107,13 +107,13 @@ The `site-admin` role is now on par with the root user permission by default, ex
 
 ### `urlFor` service change
 
-When calling [`urlFor`](/templating-with-twig/filters-and-functions#urlfor) **in PHP** (not Twig) to generate a route from its name, the service has been replaced. Find and replace the following import to upgrade: 
+When calling [`urlFor`](templating-with-twig/filters-and-functions#urlfor) **in PHP** (not Twig) to generate a route from its name, the service has been replaced. Find and replace the following import to upgrade: 
 - Find : `use Slim\Interfaces\RouteParserInterface;`
 - Replace : `use UserFrosting\Sprinkle\Core\Util\RouteParserInterface;`
 
 ### Alerts
 
-When using the [alerts](/advanced/alert-stream) service, replace `addMessageTranslated(...);` with `addMessage(...);`. The old method is still available, but it is deprecated and will be removed in a future version.
+When using the [alerts](advanced/alert-stream) service, replace `addMessageTranslated(...);` with `addMessage(...);`. The old method is still available, but it is deprecated and will be removed in a future version.
 
 ### Fortress
 

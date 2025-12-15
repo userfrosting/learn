@@ -11,7 +11,7 @@ Though you could add new tables to your database through the command line, phpMy
 > [!TIP]
 > Even if you only have a simple table to create, creating a migration is a good practice. You never know what changes you'll need to do to that table later on. You also don't know when or who will need to create that table again later on a different system or even database provider
 
-Migrations are also very useful when dealing with [Automated Test](/testing). Tests can use your migrations to setup a temporary or a test database so your tests are executed in a safe environment, keeping your production database secure.
+Migrations are also very useful when dealing with [Automated Test](testing). Tests can use your migrations to setup a temporary or a test database so your tests are executed in a safe environment, keeping your production database secure.
 
 ## Migration Structure
 
@@ -200,10 +200,10 @@ To run your migrations simply re-run the Bakery `migrate` from your command line
 $ php bakery migrate
 ```
 
-If you want to do a "fresh install" of your migration or cancel the changes made, you can **rollback** the previous migration. You can also do a dry run of your migrations using the `pretend` option. See [Chapter 8](/cli/commands) for more details.
+If you want to do a "fresh install" of your migration or cancel the changes made, you can **rollback** the previous migration. You can also do a dry run of your migrations using the `pretend` option. See [Chapter 8](cli/commands) for more details.
 
 > [!TIP]
-> If you have any trouble rolling back migrations under the SQLite driver, you may want to temporarily add this line to your [`.env` file](/configuration/environment-vars):
+> If you have any trouble rolling back migrations under the SQLite driver, you may want to temporarily add this line to your [`.env` file](configuration/environment-vars):
 > ```text
 > DB_FOREIGN_KEYS=false
 > ```

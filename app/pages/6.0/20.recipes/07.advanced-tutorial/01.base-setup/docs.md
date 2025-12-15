@@ -6,7 +6,7 @@ obsolete: true
 
 ## The Base Sprinkle
 
-First thing to do is to create an empty sprinkle for our code to live in from the UserFrosting 5 Skeleton. We'll call this sprinkle `Pastries`. As described in the [Installation Chapter](/installation) chapter, start by creating an empty base using the Skeleton template:
+First thing to do is to create an empty sprinkle for our code to live in from the UserFrosting 5 Skeleton. We'll call this sprinkle `Pastries`. As described in the [Installation Chapter](installation) chapter, start by creating an empty base using the Skeleton template:
 
 ```bash
 $ composer create-project userfrosting/userfrosting UserFrosting "^5.1"
@@ -16,7 +16,7 @@ Make sure the default skeleton app is working. Once the base website is created 
 
 ## The Route Class
 
-We can create the [route definition](/routes-and-controllers) for the `/pastries` page. We'll *edit* the default `app/src/MyRoutes.php` file. 
+We can create the [route definition](routes-and-controllers) for the `/pastries` page. We'll *edit* the default `app/src/MyRoutes.php` file. 
 
 **app/src/MyRoutes.php**:
 ```php
@@ -115,6 +115,6 @@ Finally, we need to *create* the template file. We use the same file name as the
 
 You should now be able to manually go to the `/pastries` page in your browser and see the result:
 
-![Pastries page](/images/pastries/01.png)
+![Pastries page](images/pastries/01.png)
 
 You'll notice that at this point, we're not actually displaying any useful content on the page. In the next section, we'll discuss how to display content dynamically retrieved from the database.

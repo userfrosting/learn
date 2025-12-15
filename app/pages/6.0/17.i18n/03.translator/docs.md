@@ -4,7 +4,7 @@ description: Each sprinkle can overwrite or add new translations keys using tran
 obsolete: true
 ---
 
-Now that we've [seen the basics](/i18n/introduction), it's time to actually use the translator in code, and learn a little bit more about special features the translator offers, mainly **placeholder**, **pluralization** and **nested keys**.
+Now that we've [seen the basics](i18n/introduction), it's time to actually use the translator in code, and learn a little bit more about special features the translator offers, mainly **placeholder**, **pluralization** and **nested keys**.
 
 ## Using the translator service
 
@@ -30,7 +30,7 @@ The current locale will be automatically defined and the associated dictionary a
 
 ### In Twig
 
-The translator service is also available as a [Twig function](/templating-with-twig). Placeholders can be passed to the Twig function too:
+The translator service is also available as a [Twig function](templating-with-twig). Placeholders can be passed to the Twig function too:
 
 ```
 {{ translate("ACCOUNT_SPECIFY_USERNAME") }}
@@ -38,7 +38,7 @@ The translator service is also available as a [Twig function](/templating-with-t
 
 ### In Javascript
 
-Since the translator is written in PHP, it cannot be used with Javascript yet. In fact, providing dynamic translation with Javascript can be problematic. In most cases, it simpler to either have all your interface text pre-loaded in the page HTML (or Twig) template, or thought a separate AJAX query like the [alert stream](/routes-and-controllers/alert-stream). [Handlebar templates](/client-side-code/client-side-templating) can also be really helpful when dealing with dynamic content.
+Since the translator is written in PHP, it cannot be used with Javascript yet. In fact, providing dynamic translation with Javascript can be problematic. In most cases, it simpler to either have all your interface text pre-loaded in the page HTML (or Twig) template, or thought a separate AJAX query like the [alert stream](routes-and-controllers/alert-stream). [Handlebar templates](client-side-code/client-side-templating) can also be really helpful when dealing with dynamic content.
 
 ## Placeholders
 
@@ -70,7 +70,7 @@ The same can be done with the Twig function :
 
 The translator also account for easy pluralization of strings. For a given language, there is a grammatical rule on how to change words depending on the number qualifying the word. Different languages can have different rules. For example, when dealing with an absence of cars, in English you say "**no carS**" (note the **s**), while in French you say **Aucune voiture** (note the **absence** the "s" at the end of "voiture").
 
-The rules associated with a particular language that are used by UserFrosting are based on [Mozilla plural rules](https://developer.mozilla.org/en-US/docs/Mozilla/Localization/Localization_and_Plurals). For example, the **English** locale uses the rule #1, while the **French** locale uses the rule #2. The plural rule a locale will apply is defined in [it's configuration file](/i18n/custom-locale#plural-rule).
+The rules associated with a particular language that are used by UserFrosting are based on [Mozilla plural rules](https://developer.mozilla.org/en-US/docs/Mozilla/Localization/Localization_and_Plurals). For example, the **English** locale uses the rule #1, while the **French** locale uses the rule #2. The plural rule a locale will apply is defined in [it's configuration file](i18n/custom-locale#plural-rule).
 
 In the dictionary, messages keys that support a plural form will have an array as a localized messages instead of a single string. This arrays uses the **rules form** as the key. The right plural form to use is determined by the placeholder value passed as the second parameter of the `translate` function :
 

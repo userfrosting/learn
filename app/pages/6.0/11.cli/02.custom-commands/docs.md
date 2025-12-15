@@ -72,7 +72,7 @@ class HelloCommand extends Command
 }
 ```
 
-Now, you simply need to register your command in your [Sprinkle Recipe](/sprinkles/recipe). First, add the `BakeryRecipe` implementation. Then, register your command in the `getBakeryCommands()` method. Don't forget to import your class:
+Now, you simply need to register your command in your [Sprinkle Recipe](sprinkles/recipe). First, add the `BakeryRecipe` implementation. Then, register your command in the `getBakeryCommands()` method. Don't forget to import your class:
 
 ```php
 <?php

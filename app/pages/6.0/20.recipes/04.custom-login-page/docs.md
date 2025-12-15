@@ -22,12 +22,12 @@ If you haven't already, set up your site Sprinkle as per the installation instru
 
 ## Disabling registration
 
-For many reasons, you may want to disable the ability for someone to create a new account. Fortunately, UserFrosting provides an option inside the [configuration files](/configuration/config-files) to disable the registration feature. Since you should never modify code directly in the core UserFrosting codebase, the clean way to do this is to **override the default configuration in your own Sprinkle**.
+For many reasons, you may want to disable the ability for someone to create a new account. Fortunately, UserFrosting provides an option inside the [configuration files](configuration/config-files) to disable the registration feature. Since you should never modify code directly in the core UserFrosting codebase, the clean way to do this is to **override the default configuration in your own Sprinkle**.
 
 To do this, first we'll need to create a `app/config/` directory inside your Sprinkle directory structure. Inside this directory, we'll create a PHP file named `default.php`.
 
 > [!TIP]
-> The name of the configuration file is important. The `default` config file will be automatically loaded when your Sprinkle is included by the system. See the [Environment Mode](/configuration/config-files#environment-modes) chapter if you want to edit a configuration value for another environment mode.
+> The name of the configuration file is important. The `default` config file will be automatically loaded when your Sprinkle is included by the system. See the [Environment Mode](configuration/config-files#environment-modes) chapter if you want to edit a configuration value for another environment mode.
 
 Inside your newly created config file, you add any configuration options you want to overwrite or add. In this case, we want to set the `site.registration.enabled` option to `false`:
 
@@ -45,9 +45,9 @@ Inside your newly created config file, you add any configuration options you wan
 
 Save the file, reload the login page and voilà! Not only will the registration link disappear, but all relevant registration endpoints will also be deactivated. You will still be able to create a new user manually using the administration interface.
 
-![Login form without registration](/images/login-no-registration.png)
+![Login form without registration](images/login-no-registration.png)
 
-See the [Configuration Files](/configuration/config-files) chapter for more information about editing configuration.
+See the [Configuration Files](configuration/config-files) chapter for more information about editing configuration.
 
 > [!TIP]
 > If you need to be able to control basic configuration through the web interface, check out the `ConfigManager` Sprinkle from the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). This easy to install Sprinkle provides a graphical UI to manage some of the basic UserFrosting settings, including registration, and provides APIs to add you own custom settings.
@@ -154,7 +154,7 @@ class MyApp implements
 
 Since the last listener registered is called first, your sprinkle's listener will be called first. Plus, since your listener calls `$event->isPropagationStopped();`, the other listeners won't be called.
 
-From now on, when a user logs in, they will be taken to the index page (`/` route). From there, you can change the redirect value to any route you want. You can also inject other services, like [authorizer](/users/access-control) in the default behavior, to add more logic to your redirect strategy.
+From now on, when a user logs in, they will be taken to the index page (`/` route). From there, you can change the redirect value to any route you want. You can also inject other services, like [authorizer](users/access-control) in the default behavior, to add more logic to your redirect strategy.
 
 ## Custom style
 
@@ -216,7 +216,7 @@ $ php bakery assets:build
 
 Once you refresh the page, you should see the result:
 
-![Custom login template](/images/custom-login.png)
+![Custom login template](images/custom-login.png)
 
 ### Customizing the CSS
 
@@ -266,4 +266,4 @@ php bakery assets:build
 
 Your new CSS file should be loaded when you refresh the page and you should see the result:
 
-![Custom login style](/images/custom-login2.png)
+![Custom login style](images/custom-login2.png)

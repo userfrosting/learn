@@ -8,11 +8,11 @@ UserFrosting uses jQuery and Bootstrap to provide a rich, intuitive, and modern 
 
 It also uses the following components by default (of course, you can replace any of these as you see fit in your own Sprinkles):
 
-- [Handlebars.js](http://handlebarsjs.com/) - [client-side templating engine](/client-side-code/client-side-templating)
+- [Handlebars.js](http://handlebarsjs.com/) - [client-side templating engine](client-side-code/client-side-templating)
 - [FontAwesome](http://fontawesome.io/) - Wildly popular icon library
 - [Ionicons](http://ionicons.com/) - More icons
 - [Tablesorter](https://mottie.github.io/tablesorter/docs/) - Flexible client-side table sorting
-- [jQuery Validation Plugin](https://jqueryvalidation.org/) - client-side [validation](/routes-and-controllers/client-input/validation)
+- [jQuery Validation Plugin](https://jqueryvalidation.org/) - client-side [validation](routes-and-controllers/client-input/validation)
 - [select2](http://select2.github.io/) - Dropdowns that support search, autocomplete, and more
 - [Moment.js](https://momentjs.com/) - Parse, validate, manipulate, and display dates in JavaScript
 - [URI.js](http://medialize.github.io/URI.js/) - URL parsing library

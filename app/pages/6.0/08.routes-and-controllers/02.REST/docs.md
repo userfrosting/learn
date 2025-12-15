@@ -40,6 +40,6 @@ Within each file, you'd also need control structures (if/else) to have it do dif
 
 ### The Better Way
 
-UserFrosting, and most other modern frameworks and content management systems, use a [front controller](/routes-and-controllers/front-controller) to solve this problem. With a front controller, the web server is configured to pass all requests to a single script - `index.php`. From there, the request endpoint is interpreted, and a matching **route** is invoked. These routes do not need to be defined in PHP files that match the name of the url. Thus, we've **decoupled** the endpoints from the directory structure of our application.
+UserFrosting, and most other modern frameworks and content management systems, use a [front controller](routes-and-controllers/front-controller) to solve this problem. With a front controller, the web server is configured to pass all requests to a single script - `index.php`. From there, the request endpoint is interpreted, and a matching **route** is invoked. These routes do not need to be defined in PHP files that match the name of the url. Thus, we've **decoupled** the endpoints from the directory structure of our application.
 
 Having done this, we are now free to choose any url and method for any request - whether it's a page, form submission, API request, or whatever. This allows us to more easily design our endpoints according to the principles of REST. The next section explains how we should think when we're choosing the urls and methods that our application exposes to the client.

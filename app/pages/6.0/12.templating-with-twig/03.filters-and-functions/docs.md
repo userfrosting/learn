@@ -6,7 +6,7 @@ obsolete: true
 
 ### config
 
-You can access any [configuration value](/configuration/config-files) directly in your Twig templates using the `config` helper function. For example, to display `site.title`:
+You can access any [configuration value](configuration/config-files) directly in your Twig templates using the `config` helper function. For example, to display `site.title`:
 
 ```twig
 {{ config('site.title') }}
@@ -47,7 +47,7 @@ You can use `urlFor` in your Twig templates to get the URL for a named route. Th
 
 ## Extending Twig Extensions
 
-The `view` service loads UserFrosting's [Twig extensions](/templating-with-twig/filters-and-functions) to expose additional functions, filters, and variables in our templates. If we want to define more global Twig variables in our site Sprinkle, we can create a new Twig extension and then add it to our `view` service by extending it in our service provider class. An extension which adds globals like this must also implement Twig's `GlobalsInterface`.
+The `view` service loads UserFrosting's [Twig extensions](templating-with-twig/filters-and-functions) to expose additional functions, filters, and variables in our templates. If we want to define more global Twig variables in our site Sprinkle, we can create a new Twig extension and then add it to our `view` service by extending it in our service provider class. An extension which adds globals like this must also implement Twig's `GlobalsInterface`.
 
 First, create your new Twig extension class in `src/Twig/Extension.php`:
 

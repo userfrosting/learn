@@ -8,4 +8,4 @@ obsolete: true
 
 # Users
 
-In this chapter, you'll learn about the user and admin [account features](/users/user-accounts) that come built-in and fully implemented in UserFrosting, as well as UserFrosting's powerful [role-based access control system](/users/access-control).
+In this chapter, you'll learn about the user and admin [account features](users/user-accounts) that come built-in and fully implemented in UserFrosting, as well as UserFrosting's powerful [role-based access control system](users/access-control).

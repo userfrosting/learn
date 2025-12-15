@@ -6,7 +6,7 @@ obsolete: true
 
 Twig is a [templating engine](http://twig.sensiolabs.org/), which is designed to help maintain a clean separation between your application's logic and its content.
 
-If you recall the spaghetti code example from [Chapter 8](/routes-and-controllers/introduction):
+If you recall the spaghetti code example from [Chapter 8](routes-and-controllers/introduction):
 
 ```php
 if (isset($_POST)) {

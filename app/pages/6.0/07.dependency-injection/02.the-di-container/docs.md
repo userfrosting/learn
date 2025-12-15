@@ -86,7 +86,7 @@ It's very simple, doesn't require any configuration, and it just works !
 
 Sometimes classes might be a bit more complex to instantiate, especially third party ones (eg. the logger object from before). Or you might want to use a different class based on some configuration value. You might also want a class to be replaced by another one (eg. our `ImprovedNest`). In these cases, autowiring cannot be used. This is where PHP-DI **definition** comes handy. PHP-DI loads the definitions you have written and uses them like instructions on how to create objects.
 
-UserFrosting sets up its services through **service provider** classes. Each sprinkle can define as many service providers as it needs and register them in the [Recipe](/dependency-injection/adding-services). For example, the Services Provider class for the previous `Logger` example would look like this:
+UserFrosting sets up its services through **service provider** classes. Each sprinkle can define as many service providers as it needs and register them in the [Recipe](dependency-injection/adding-services). For example, the Services Provider class for the previous `Logger` example would look like this:
 
 ```php
 use Monolog\Formatter\LineFormatter;

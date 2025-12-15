@@ -85,11 +85,11 @@ If the `validators` option is set, `ufForm` will automatically validate on the f
 }
 ```
 
-See the section on [generating client-side validation rules in Fortress](/routes-and-controllers/client-input/validation#generating-client-side-rules) to see how `page.validators.login` can be automatically generated from a Fortress schema.
+See the section on [generating client-side validation rules in Fortress](routes-and-controllers/client-input/validation#generating-client-side-rules) to see how `page.validators.login` can be automatically generated from a Fortress schema.
 
 ### msgTarget
 
-If `ufForm` receives an error from the server when it attempts to submit your form (i.e., the response contains a 4xx or 5xx status code), it will automatically retrieve any error messages from the [alert stream](/routes-and-controllers/alert-stream) and render them on the page. `msgTarget` allows you to specify an element of the DOM where `ufForm` should display these messages.
+If `ufForm` receives an error from the server when it attempts to submit your form (i.e., the response contains a 4xx or 5xx status code), it will automatically retrieve any error messages from the [alert stream](routes-and-controllers/alert-stream) and render them on the page. `msgTarget` allows you to specify an element of the DOM where `ufForm` should display these messages.
 
 Internally, `ufForm` will set up a `ufAlerts` widget to fetch and render the alert stream messages.
 

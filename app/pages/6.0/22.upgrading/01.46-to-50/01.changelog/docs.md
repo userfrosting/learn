@@ -42,7 +42,7 @@ While any version of PHP 8 is supported, we recommend you use the latest version
 
 ## New Structure
 
-This is where all the magic happened. The [new structure](/structure) introduced in UserFrosting 5 makes it even more easier to separate your code from UserFrosting's code. This also makes it easier for new developer to get started with UserFrosting. Upgrading will also be easier, as everything is now managed by Composer. Requesting a new major version will required to edit your `composer.json` file. Finally, default pages and content are not part of the Core Sprinkle anymore. This makes easier to overwrite default pages.
+This is where all the magic happened. The [new structure](structure) introduced in UserFrosting 5 makes it even more easier to separate your code from UserFrosting's code. This also makes it easier for new developer to get started with UserFrosting. Upgrading will also be easier, as everything is now managed by Composer. Requesting a new major version will required to edit your `composer.json` file. Finally, default pages and content are not part of the Core Sprinkle anymore. This makes easier to overwrite default pages.
 
 The old directory structure looked like this:
 
@@ -115,12 +115,12 @@ The new structure looks like this:
 └── webpack.config.js
 ```
 
-As you see, since `/vendor` should be omitted from version control (your Github Repository), the new structure is much more cleaner! This doesn't means your code can't be distributed and added as a sprinkle in another UserFrosting powered app. [Community Sprinkle](/sprinkles/community) are still a thing! This new structure even makes it easier to develop them!
+As you see, since `/vendor` should be omitted from version control (your Github Repository), the new structure is much more cleaner! This doesn't means your code can't be distributed and added as a sprinkle in another UserFrosting powered app. [Community Sprinkle](sprinkles/community) are still a thing! This new structure even makes it easier to develop them!
 
 ### Sprinkles
-All [bundled Sprinkles](/structure/sprinkles#bundled-sprinkles) are now managed by Composer, and directly required in your project's `composer.json`. Gone is the `app/sprinkles` directory. Your app now sits in `/app` directly and other Sprinkles will now be loaded into the `vendor/` directory, like any other dependencies.
+All [bundled Sprinkles](structure/sprinkles#bundled-sprinkles) are now managed by Composer, and directly required in your project's `composer.json`. Gone is the `app/sprinkles` directory. Your app now sits in `/app` directly and other Sprinkles will now be loaded into the `vendor/` directory, like any other dependencies.
 
-Gone is also `app/sprinkles.json`. To register sprinkles, we now use **[Sprinkle Recipe](/sprinkles/recipe)**. Recipes makes it easier for sprinkle to define other sprinkle as dependencies. In fact, recipe also makes it easier for Sprinkles to _register_ any class and resources they need. UserFrosting 4 used to rely on naming convention and auto-discovery, which was prone to errors. Registering resources also makes the structure more adaptable, as there's **no** naming convention anymore for classes : The structure of `/src` can be whatever you want! You can read more about [Sprinkle Recipe here](/sprinkles/recipe).
+Gone is also `app/sprinkles.json`. To register sprinkles, we now use **[Sprinkle Recipe](sprinkles/recipe)**. Recipes makes it easier for sprinkle to define other sprinkle as dependencies. In fact, recipe also makes it easier for Sprinkles to _register_ any class and resources they need. UserFrosting 4 used to rely on naming convention and auto-discovery, which was prone to errors. Registering resources also makes the structure more adaptable, as there's **no** naming convention anymore for classes : The structure of `/src` can be whatever you want! You can read more about [Sprinkle Recipe here](sprinkles/recipe).
 
 Finally, as mentioned before, the AdminLTE Theme has been moved to it's own Sprinkle. This will make it easier to switch theme in the future, but also means some reference will need to be updated.
 
@@ -132,7 +132,7 @@ It also means routes file are not directly overwritten anymore, similar to templ
 
 ### Dependency injection
 
-As mentioned in previous paragraphs, UserFrosting 5 now uses [PHP-DI](https://php-di.org) a. This brings a **ton** of new features and capability. The best way to understand how it affect your code in UserFrosting 5, head over to the [Dependency Injection Chapter](/dependency-injection).
+As mentioned in previous paragraphs, UserFrosting 5 now uses [PHP-DI](https://php-di.org) a. This brings a **ton** of new features and capability. The best way to understand how it affect your code in UserFrosting 5, head over to the [Dependency Injection Chapter](dependency-injection).
 
 ## Migrating
 

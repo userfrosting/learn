@@ -21,11 +21,11 @@ obsolete: true
 
 The `ufCollection` widget provides a convenient interface for associating related or child entities with a single parent entity. For example, you might want to associate a user account with one or more roles, or add multiple phone numbers or addresses to an employee.
 
-![ufCollection widget as used for the 'user role' management interface.](/images/uf-collection.png)
+![ufCollection widget as used for the 'user role' management interface.](images/uf-collection.png)
 
 ## Basic setup
 
-To use `ufCollection`, you need to have `userfrosting/js/uf-collection.js` and `userfrosting/css/uf-collection.css` included in your page assets. The easiest way to do this is by including the `js/form-widgets` and `css/form-widgets` [asset bundles](/asset-management/asset-bundles) in your page. Most of the default administrative pages include these bundles by default in their `stylesheets_page` and `scripts_page` Twig blocks. Of course, feel free to include the required JS and CSS files in your page-specific asset bundles instead, if you prefer.
+To use `ufCollection`, you need to have `userfrosting/js/uf-collection.js` and `userfrosting/css/uf-collection.css` included in your page assets. The easiest way to do this is by including the `js/form-widgets` and `css/form-widgets` [asset bundles](asset-management/asset-bundles) in your page. Most of the default administrative pages include these bundles by default in their `stylesheets_page` and `scripts_page` Twig blocks. Of course, feel free to include the required JS and CSS files in your page-specific asset bundles instead, if you prefer.
 
 The basic markup for a collection widget consists of a table "skeleton" wrapped inside some sort of container element. For example:
 
@@ -43,7 +43,7 @@ The basic markup for a collection widget consists of a table "skeleton" wrapped 
 
 You'll notice that the table skeleton contains an empty `tbody` element. By default, when a new row is added (by the client or programmatically), `ufCollection` will insert the new row inside this `tbody`.
 
-The markup for the rows themselves is dynamically generated using a [Handlebars template](/client-side-code/client-side-templating). The row template can be embedded inside your page's Twig template using the Twig `{{ '{% verbatim %}' }}` tag. It might look something like:
+The markup for the rows themselves is dynamically generated using a [Handlebars template](client-side-code/client-side-templating). The row template can be embedded inside your page's Twig template using the Twig `{{ '{% verbatim %}' }}` tag. It might look something like:
 
 ```
 {{ '{% verbatim %}' }}
@@ -405,7 +405,7 @@ This parameter contains the [Select2 options](http://select2.github.io/options.h
 
 For large, dynamic collections of options, you will probably want to provide an AJAX data source with the `ajax` subkey.
 
-`ufCollection` will expect JSON data from an AJAX source, in the same format as that returned by the [Data Sprunjer](/database/data-sprunjing). In particular, it should have a `rows` key that contains the collection of selectable options:
+`ufCollection` will expect JSON data from an AJAX source, in the same format as that returned by the [Data Sprunjer](database/data-sprunjing). In particular, it should have a `rows` key that contains the collection of selectable options:
 
 ```json
 {
@@ -729,4 +729,4 @@ Defaults to `false`.
 > return $instance->newQuery()->select("Id AS id");
 > }
 > ```
-> in your sprunje file, or use any other method to alias the Id column. Keeping in your mind that your sprunje's baseQuery function should return an instance of a "queriable" class. See more [`Defining a Sprunje` Data Sprunjing](/database/data-sprunjing#defining-a-sprunje)
+> in your sprunje file, or use any other method to alias the Id column. Keeping in your mind that your sprunje's baseQuery function should return an instance of a "queriable" class. See more [`Defining a Sprunje` Data Sprunjing](database/data-sprunjing#defining-a-sprunje)

@@ -4,15 +4,15 @@ description: UserFrosting's installer creates a number of tables by default.  He
 obsolete: true
 ---
 
-When you install UserFrosting with the [Bakery CLI](/cli), a number of tables will automatically added to your database. These tables are required for UserFrosting's built-in features, such as user accounts, request throttling, persistent sessions, and access control.
+When you install UserFrosting with the [Bakery CLI](cli), a number of tables will automatically added to your database. These tables are required for UserFrosting's built-in features, such as user accounts, request throttling, persistent sessions, and access control.
 
-The [migrations](/database/migrations) for most tables can be found in the `src/Database/Migrations` directory of the Sprinkle that depends on it. The exceptions are the system tables, which are located in `app/system/Database/Migrations`.
+The [migrations](database/migrations) for most tables can be found in the `src/Database/Migrations` directory of the Sprinkle that depends on it. The exceptions are the system tables, which are located in `app/system/Database/Migrations`.
 
 ## System tables
 
 ### `migrations`
 
-The `migrations` table is responsible for maintaining a history of the [migrations](/database/migrations) run by the installer. In general, you shouldn't need to interact with this table in your own code.
+The `migrations` table is responsible for maintaining a history of the [migrations](database/migrations) run by the installer. In general, you shouldn't need to interact with this table in your own code.
 
 | Column       | Type                | Description                                                                                                                                           |
 | ------------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -29,7 +29,7 @@ The `core` Sprinkle depends on the following tables:
 
 ### `sessions`
 
-This is an optional table, and is only used if you are using the database [session driver](/advanced/sessions).
+This is an optional table, and is only used if you are using the database [session driver](advanced/sessions).
 
 | Column          | Type           | Description                                          |
 | --------------- | -------------- | ---------------------------------------------------- |
@@ -42,12 +42,12 @@ This is an optional table, and is only used if you are using the database [sessi
 
 ### `throttles`
 
-This table stores a history of requests to [throttled endpoints](/routes-and-controllers/client-input/throttle).
+This table stores a history of requests to [throttled endpoints](routes-and-controllers/client-input/throttle).
 
 | Column         | Type          | Description                                                                                  |
 | -------------- | ------------- | -------------------------------------------------------------------------------------------- |
 | `id`           | `string`      | The unique identifier for the record.                                                        |
-| `type`         | `string(255)` | The throttled [event type](/routes-and-controllers/client-input/throttle#DefiningThrottles). |
+| `type`         | `string(255)` | The throttled [event type](routes-and-controllers/client-input/throttle#DefiningThrottles). |
 | `ip`           | `string(255)` | The IP address of the requester.                                                             |
 | `request_data` | `text`        | Additional request data to compare when using the `data` throttling method.                  |
 | `created_at`   | `timestamp`   | The time when this record was created.                                                       |
@@ -68,12 +68,12 @@ This table contains records for each user.
 | `email`            | `string(255)`  | The email address of the user. Must be unique.                                                                                                            |
 | `first_name`       | `string(20)`   | The user's first name. Optional.                                                                                                                          |
 | `last_name`        | `string(30)`   | The user's last name. Optional.                                                                                                                           |
-| `locale`           | `string(10)`   | The [language and locale](/i18n) to use for this user.                                                                                                    |
+| `locale`           | `string(10)`   | The [language and locale](i18n) to use for this user.                                                                                                    |
 | `theme`            | `string(100)`  | The user theme (not yet fully implemented).                                                                                                               |
-| `group_id`         | unsigned `int` | The id of the user's [group](/users/groups).                                                                                                              |
+| `group_id`         | unsigned `int` | The id of the user's [group](users/groups).                                                                                                              |
 | `flag_verified`    | `bool`         | Set to 1 if the user has verified their account via email, 0 otherwise.                                                                                   |
 | `flag_enabled`     | `bool`         | Set to 1 if the user account is currently enabled, 0 otherwise. Disabled accounts cannot be logged in to, but they retain all of their data and settings. |
-| `last_activity_id` | unsigned `int` | The id of the last [activity](/users/activity-logging) performed by this user.                                                                            |
+| `last_activity_id` | unsigned `int` | The id of the last [activity](users/activity-logging) performed by this user.                                                                            |
 | `password`         | `string(255)`  | The hashed password (including the salt and cost function identifier) of the user.                                                                        |
 | `deleted_at`       | `timestamp`    | The time when this record was deleted (when using soft deletes).                                                                                          |
 | `created_at`       | `timestamp`    | The time when this record was created.                                                                                                                    |
@@ -81,7 +81,7 @@ This table contains records for each user.
 
 ### `roles`
 
-This table contains [user roles](/users/access-control#Overview).
+This table contains [user roles](users/access-control#Overview).
 
 | Column        | Type          | Description                                                                                                                             |
 | ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -94,34 +94,34 @@ This table contains [user roles](/users/access-control#Overview).
 
 ### `permissions`
 
-This table contains [user permissions](/users/access-control#Definingpermissions).
+This table contains [user permissions](users/access-control#Definingpermissions).
 
 | Column        | Type          | Description                                                                                                                |
 | ------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `id`          | `string`      | The unique identifier for the record.                                                                                      |
 | `slug`        | `string(255)` | The referencing identifier for the permission. Does **not** need to be unique. Only `[a-zA-Z0-9_]` characters are allowed. |
 | `name`        | `string(255)` | Name of the permission. Any characters can be used.                                                                        |
-| `conditions`  | `text`        | The [conditions](/users/access-control#Accessconditions) on which this permission should be evaluated.                     |
+| `conditions`  | `text`        | The [conditions](users/access-control#Accessconditions) on which this permission should be evaluated.                     |
 | `description` | `text`        | A brief description of the permission and its purpose.                                                                     |
 | `created_at`  | `timestamp`   | The time when this record was created.                                                                                     |
 | `updated_at`  | `timestamp`   | The time when this record was last updated.                                                                                |
 
 ### `activities`
 
-This table serves as the default storage method for [user activity logs](/users/activity-logging).
+This table serves as the default storage method for [user activity logs](users/activity-logging).
 
 | Column        | Type           | Description                                                                                       |
 | ------------- | -------------- | ------------------------------------------------------------------------------------------------- |
 | `id`          | `string`       | The unique identifier for the record.                                                             |
 | `user_id`     | unsigned `int` | The `user_id` of the user who completed this activity.                                            |
 | `ip_address`  | `string(45)`   | The IP address of the user when they completed this activity.                                     |
-| `type`        | `string(255)`  | An identifier used to track the [type](/users/activity-logging#Defaultactivitytypes) of activity. |
+| `type`        | `string(255)`  | An identifier used to track the [type](users/activity-logging#Defaultactivitytypes) of activity. |
 | `occurred_at` | `timestamp`    | The time when the activity was completed.                                                         |
 | `description` | `text`         | A description of the activity.                                                                    |
 
 ### `groups`
 
-This table contains records for each [user group](/users/groups).
+This table contains records for each [user group](users/groups).
 
 | Column        | Type          | Description                                                                                                                              |
 | ------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
@@ -135,7 +135,7 @@ This table contains records for each [user group](/users/groups).
 
 ### `password_resets`
 
-This table contains records for each [password reset request](/users/user-accounts#Passwordresetrequests) that is issued.
+This table contains records for each [password reset request](users/user-accounts#Passwordresetrequests) that is issued.
 
 | Column         | Type           | Description                                                                                     |
 | -------------- | -------------- | ----------------------------------------------------------------------------------------------- |
@@ -150,7 +150,7 @@ This table contains records for each [password reset request](/users/user-accoun
 
 ### `verifications`
 
-This table contains records for [new account verification](/users/user-accounts#account-verification) tokens.
+This table contains records for [new account verification](users/user-accounts#account-verification) tokens.
 
 | Column         | Type           | Description                                                                                                |
 | -------------- | -------------- | ---------------------------------------------------------------------------------------------------------- |

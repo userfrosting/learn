@@ -147,7 +147,7 @@ final class CustomAccessConditionsService implements ServicesProviderInterface
 ```
 <!-- TODO : Requires update in Account Sprinkle (UserFrosting\Sprinkle\Account\Authorize\AccessConditions) -->
 <!-- 
-Alternatively, to add your own access condition callbacks, simply [decorate](/dependency-injection/extending-services) the `AccessConditions` service:
+Alternatively, to add your own access condition callbacks, simply [decorate](dependency-injection/extending-services) the `AccessConditions` service:
 
 ```php
 public function register(): array
@@ -181,7 +181,7 @@ You may notice that while roles can be created and modified through the administ
 
 Think about it this way - for a permission to have any effect on your application at all, you must reference its slug somewhere in one of your controllers. This means that even if a user were to create a new permission through the web interface, it **wouldn't make any difference** until a developer were to implement some code that makes use of it.
 
-Instead, you should think of permissions as hardcoded parts of your application that just happen to be stored in the database. Permissions can be **added, removed, or modified** using a [database migration](/database/migrations) or a [database seed](/database/seeding).
+Instead, you should think of permissions as hardcoded parts of your application that just happen to be stored in the database. Permissions can be **added, removed, or modified** using a [database migration](database/migrations) or a [database seed](database/seeding).
 
 Both methods can be used to create or manipulate permissions. **Migrations** are better suited to edit or remove existing permissions since they assure your permissions stay constant in time. They won't help you restore a permission if one gets deleted by accident, since a migration can only be run once. **Seeds** on the other hand can be run more than once, so they can be used to restore deleted permissions, but can't be relied on to edit a permission the same way you can with a migration. Seeds can be run in any order, don't have dependencies, can't be automatically rolled down, and the system tracks neither *when* they run nor *whether* they have been run.
 

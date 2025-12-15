@@ -11,7 +11,7 @@ The best place to look for community sprinkles is on [GitHub](https://github.com
 
 ## Loading a community sprinkle
 ### Sprinkle recipe
-Once you've found a sprinkle you'd like to use in your own project, the first step is to `require` it in [your `composer.json`](/sprinkles/customize#composer-json), along with the core UserFrosting sprinkles.
+Once you've found a sprinkle you'd like to use in your own project, the first step is to `require` it in [your `composer.json`](sprinkles/customize#composer-json), along with the core UserFrosting sprinkles.
 ```json
     "require": {
 ...
@@ -40,7 +40,7 @@ use Owlfancy\Sprinkle\Owlery ; //don't forget to include the sprinkle's namespac
 > If the sprinkle does not include Javascript, you're done setting up--skip to the "Installing" section.
 
 ### Javascript
-If the sprinkle includes Javascript, you will need to add it to both the "dependencies" [in your `package.json`](/asset-management/webpack-encore#npm-and-packages-json)... 
+If the sprinkle includes Javascript, you will need to add it to both the "dependencies" [in your `package.json`](asset-management/webpack-encore#npm-and-packages-json)... 
 ```json
  "dependencies": {
         "@userfrosting/sprinkle-admin": "~5.1.0",
@@ -48,7 +48,7 @@ If the sprinkle includes Javascript, you will need to add it to both the "depend
         "sprinkle-owlery":"github:owlfancy/sprinkle-owlery"
     },
 ```
-...*and* to the "sprinkles" [in `/webpack.config.js`](/asset-management/webpack-encore#webpack-encore-configuration).
+...*and* to the "sprinkles" [in `/webpack.config.js`](asset-management/webpack-encore#webpack-encore-configuration).
 ```js
 // List dependent sprinkles and local entries files
 const sprinkles = {
@@ -57,20 +57,20 @@ const sprinkles = {
     Owlery: require('sprinkle-owlery/webpack.entries'),// add any community sprinkles as well
 }
 ```
-(We'll talk more about these files in the [Assets chapter](/asset-management)).
+(We'll talk more about these files in the [Assets chapter](asset-management)).
 
 > [!TIP]
 > In the `package.json` example above, we're loading the Userfrosting core sprinkles from npm, and the Owlery sprinkle from Github. Each community sprinkle decides where it is published, and should include this in their README.
 
 ## Installing a community sprinkle
-Once you've added the sprinkle to the recipe, `composer.json`, and (if needed) `package.json`, you're ready to use Composer and [Bakery](/cli/commands#bake) to download and install the files.
+Once you've added the sprinkle to the recipe, `composer.json`, and (if needed) `package.json`, you're ready to use Composer and [Bakery](cli/commands#bake) to download and install the files.
 ```
 composer update
 php bakery bake
 ```
 
 ### Database (optional)
-If needed, [migrations](/cli/commands#migrate) and [seeds](/cli/commands#seed) can be run manually through Bakery. 
+If needed, [migrations](cli/commands#migrate) and [seeds](cli/commands#seed) can be run manually through Bakery. 
 ```txt
 php bakery migrate
 php bakery seed
@@ -99,7 +99,7 @@ We highly recommend publishing your community sprinkle on GitHub and adding it t
 You may also have some extra steps depending on what features your sprinkle provides:
 
 ### Database?
-If your sprinkle changes the database structure, make sure you bundle a working [migration](/database/migrations) with your sprinkle.
+If your sprinkle changes the database structure, make sure you bundle a working [migration](database/migrations) with your sprinkle.
 You might also consider whether any seeds would help manage those changes.
 
 ### Javascript?

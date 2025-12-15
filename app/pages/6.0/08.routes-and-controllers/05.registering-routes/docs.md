@@ -4,7 +4,7 @@ description: Once your routes definitions are ready, you have to register them i
 obsolete: true
 ---
 
-So far we've seen how to [create route definitions](/routes-and-controllers/front-controller) and [controller classes](/routes-and-controllers/controller-classes). However, there one last step required for our routes to be enabled inside our application. That is registering the route class inside the [Sprinkle Recipe](/sprinkles/recipe#routes). 
+So far we've seen how to [create route definitions](routes-and-controllers/front-controller) and [controller classes](routes-and-controllers/controller-classes). However, there one last step required for our routes to be enabled inside our application. That is registering the route class inside the [Sprinkle Recipe](sprinkles/recipe#routes). 
 
 > [!NOTE]
 > Previous versions of UserFrosting relied on a naming convention for registering routes. Routes were expected to be placed in a special directory, and would automatically be registered at runtime. To provide more flexibility, the naming convention has been dropped in UserFrosting 5. You now have to register every class you wish to register, in the order you want them to be registered, inside the Sprinkle Recipe.
@@ -79,10 +79,10 @@ Routes themselves cannot be extended by other Sprinkles and they cannot be overr
 Cannot register two routes matching "/" for method "GET"
 ```
 
-To solve this, it's possible to manually customize a dependent Sprinkle Recipe. Check out the [Advanced Dev Features](/advanced) chapter for more info on this technique.
+To solve this, it's possible to manually customize a dependent Sprinkle Recipe. Check out the [Advanced Dev Features](advanced) chapter for more info on this technique.
  <!-- TODO : Update link when page is created -->
 
-Another workaround is to [override](/advanced/custom-models#overwriting-existing-map) the Action class called in the dependent Sprinkle's route.
+Another workaround is to [override](advanced/custom-models#overwriting-existing-map) the Action class called in the dependent Sprinkle's route.
 
 > [!TIP]
 > For this reason, if you plan to distribute your Sprinkle as a Community Sprinkle, it can be helpful to split your routes into multiple classes instead of a single big class. It will be easier for an inheriting sprinkle to cherry pick the routes they want to keep or overwrite.

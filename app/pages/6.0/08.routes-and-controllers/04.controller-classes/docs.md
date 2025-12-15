@@ -54,7 +54,7 @@ use UserFrosting\Sprinkle\Site\Controller\OwlController;
 $app->get('/api/owls/{genus}', [OwlController::class, 'getOwls']);
 ```
 
-Slim will automatically invoke the method and PHP-DI [will inject](/dependency-injection) the values of `$genus`, `$request`, `$response`.
+Slim will automatically invoke the method and PHP-DI [will inject](dependency-injection) the values of `$genus`, `$request`, `$response`.
 
 ## Service Injection
 

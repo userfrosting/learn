@@ -4,7 +4,7 @@ description: An introduction to UserFrosting i18n system
 obsolete: true
 ---
 
-UserFrosting provides a complete framework for translating strings and sentences easily and efficiently. UserFrosting allows you to [define the default locale](/i18n/site-locale#the-default-locale) your UI should present to guest users, while allowing resgistered users to [choose their prefered locale](/i18n/site-locale#the-available-user-locales).
+UserFrosting provides a complete framework for translating strings and sentences easily and efficiently. UserFrosting allows you to [define the default locale](i18n/site-locale#the-default-locale) your UI should present to guest users, while allowing resgistered users to [choose their prefered locale](i18n/site-locale#the-available-user-locales).
 
 ## Why use translation on a single locale app ?
 
@@ -32,7 +32,7 @@ UserFrosting [i18n module](https://github.com/userfrosting/i18n) is composed of 
 
 A **Locale** is used to create a **Dictionary**, which is then used by the **Translator**. The overall flow can be visualized as :
 
-![](/images/i18n/diagram.png)
+![](images/i18n/diagram.png)
 
 ### The Locale
 
@@ -40,7 +40,7 @@ The **Locale** object contains all there is to know about the locale itself: The
 
 All this information can be found in the locale **configuration file**. Like everything with UserFrosting, a locale can be overwritten by any Sprinkle.
 
-See [Creating a custom locale](/i18n/custom-locale) for more information.
+See [Creating a custom locale](i18n/custom-locale) for more information.
 
 ### The Dictionary
 
@@ -78,9 +78,9 @@ return [
 Some locales have a parent locale, and each locale's language files will be loaded on top of the parent's one. So for example, since the Spanish version above doesn't have any value for the `ACCOUNT_SPECIFY_AGE` key, the English value would be returned for that key if `en_ES` has `en_US` for parent.
 
 > [!TIP]
-> Some Bakery commands can help you view and compare locale Dictionaries. See the [Built-in Commands](/cli/commands#locale-compare) page for more info.
+> Some Bakery commands can help you view and compare locale Dictionaries. See the [Built-in Commands](cli/commands#locale-compare) page for more info.
 
-Just like [routes](/routes-and-controllers/front-controller), the names of the files don't matter as they won't overwrite each other. This means two sprinkles can have a `locale/en_US/messages.php` file and **both** will be loaded and **merged** togeter. This means that each subsequently loaded Sprinkle can override translations from previous Sprinkles, or define new ones entirely.
+Just like [routes](routes-and-controllers/front-controller), the names of the files don't matter as they won't overwrite each other. This means two sprinkles can have a `locale/en_US/messages.php` file and **both** will be loaded and **merged** togeter. This means that each subsequently loaded Sprinkle can override translations from previous Sprinkles, or define new ones entirely.
 
 For example, if you want your sprinkle to overwrite a value in the core, you can redefine the same key in your sprinkle :
 
@@ -108,4 +108,4 @@ When processed using the English locale, `ACCOUNT_SPECIFY_USERNAME` will be link
 
 Finally, the **Translator** use the information from a specific Dictionary to perform the actual association, aka finding the proper _localized messages_ and returning it to the system, while replacing the placeholder with the specified values.
 
-In [the next pages](/i18n/translator), we will see how to actually use the translator in your app.
+In [the next pages](i18n/translator), we will see how to actually use the translator in your app.
