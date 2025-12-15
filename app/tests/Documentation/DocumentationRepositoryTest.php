@@ -46,7 +46,7 @@ class DocumentationRepositoryTest extends TestCase
         $locator->addStream(new ResourceStream('pages', shared: true, readonly: true, path: __DIR__ . '/../pages'));
 
         // Make sure setup is ok
-        $this->assertCount(9, $locator->listResources('pages://'));
+        $this->assertCount(10, $locator->listResources('pages://'));
     }
 
     public function testGetTree(): void
@@ -187,5 +187,160 @@ class DocumentationRepositoryTest extends TestCase
         foreach ($breadcrumbs as $breadcrumb) {
             $this->assertNotEmpty($breadcrumb['url']);
         }
+    }
+
+    public function testGetVersionedImage(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // Test successful image retrieval
+        $resource = $pagesManager->getVersionedImage('6.0', 'test.jpg');
+        $this->assertNotNull($resource);
+        $this->assertSame('test.jpg', $resource->getBasename());
+    }
+
+    public function testGetVersionedImageWithEmptyVersion(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // Test with empty version string (should use latest)
+        $resource = $pagesManager->getVersionedImage('', 'test.jpg');
+        $this->assertNotNull($resource);
+        $this->assertSame('test.jpg', $resource->getBasename());
+    }
+
+    public function testGetVersionedImageNotFound(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage('Image not found: nonexistent.png (version: 6.0)');
+        $pagesManager->getVersionedImage('6.0', 'nonexistent.png');
+    }
+
+    public function testCacheKeyGeneration(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // Use reflection to test protected method
+        $reflection = new \ReflectionClass($pagesManager);
+        $method = $reflection->getMethod('getCacheKey');
+
+        $key = $method->invoke($pagesManager, 'page', 'test-slug');
+        $this->assertSame('learn.page.test-slug', $key);
+
+        $key = $method->invoke($pagesManager, 'tree', '6.0');
+        $this->assertSame('learn.tree.6.0', $key);
+    }
+
+    public function testCacheTtlConfiguration(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // Use reflection to test protected method
+        $reflection = new \ReflectionClass($pagesManager);
+        $method = $reflection->getMethod('getCacheTtl');
+
+        $ttl = $method->invoke($pagesManager);
+        $this->assertIsInt($ttl);
+        $this->assertGreaterThan(0, $ttl);
+    }
+
+    public function testGetTreeWithEmptyPages(): void
+    {
+        /** @var ResourceLocatorInterface $locator */
+        $locator = $this->ci->get(ResourceLocatorInterface::class);
+
+        // Remove the test pages stream and add an empty one
+        $locator->removeStream('pages');
+        $locator->addStream(new ResourceStream('pages', shared: true, readonly: true, path: __DIR__ . '/empty-pages'));
+
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $files = $pagesManager->getTree();
+
+        $this->assertIsArray($files);
+        $this->assertCount(0, $files);
+    }
+
+    public function testGetPageWithSpecificVersion(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // Test getting page with explicit version
+        $page = $pagesManager->getPage('second', '6.0');
+        $this->assertSame('second', $page->getTitle());
+        $this->assertSame('6.0', $page->getVersion()->id);
+
+        // Test getting nested page with version
+        $page = $pagesManager->getPage('third', '6.0');
+        $this->assertSame('Third Page', $page->getTitle());
+        $this->assertSame('6.0', $page->getVersion()->id);
+    }
+
+    public function testGetAlternateVersionsWithPath(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // Test alternate versions for a specific path
+        $alternates = $pagesManager->getAlternateVersions('first');
+
+        $this->assertIsArray($alternates);
+        $this->assertCount(2, $alternates);
+        $this->assertArrayHasKey('6.0 Beta', $alternates);
+        $this->assertArrayHasKey('5.0', $alternates);
+
+        // Verify URLs are generated for each version
+        foreach ($alternates as $url) {
+            $this->assertIsString($url);
+            $this->assertNotEmpty($url);
+        }
+    }
+
+    public function testGetTreeSorting(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $files = $pagesManager->getTree();
+
+        // Verify the files are sorted correctly (first, second, third)
+        $slugs = array_map(fn ($p) => $p->getSlug(), $files);
+        $expectedOrder = ['first', 'second', 'third'];
+
+        $this->assertSame($expectedOrder, $slugs);
+
+        // Test children are also sorted
+        $secondChildren = $files[1]->getChildren();
+        $childSlugs = array_map(fn ($p) => $p->getSlug(), $secondChildren);
+        $expectedChildOrder = ['second/alpha', 'second/beta'];
+
+        $this->assertSame($expectedChildOrder, $childSlugs);
+    }
+
+    public function testGetPagesChildren(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // Use reflection to test protected method
+        $reflection = new \ReflectionClass($pagesManager);
+        $method = $reflection->getMethod('getPagesChildren');
+
+        // Get all pages first
+        $getPages = $reflection->getMethod('getPages');
+
+        /** @var \UserFrosting\Learn\Documentation\VersionValidator $versionValidator */
+        $versionValidator = $this->ci->get(\UserFrosting\Learn\Documentation\VersionValidator::class);
+        $version = $versionValidator->getVersion('6.0');
+
+        $allPages = $getPages->invoke($pagesManager, $version);
+
+        // Test getting children for empty parent (top-level pages)
+        $topLevel = $method->invoke($pagesManager, $allPages, '');
+        $this->assertCount(3, $topLevel);
+
+        // Test getting children for specific parent
+        $secondChildren = $method->invoke($pagesManager, $allPages, 'second');
+        $this->assertCount(2, $secondChildren);
+
+        $thirdChildren = $method->invoke($pagesManager, $allPages, 'third');
+        $this->assertCount(2, $thirdChildren);
     }
 }

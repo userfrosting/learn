@@ -42,7 +42,7 @@ class PageFactoryTest extends TestCase
         $locator->addStream(new ResourceStream('pages', shared: true, readonly: true, path: __DIR__ . '/../pages'));
 
         // Make sure setup is ok
-        $this->assertCount(9, $locator->listResources('pages://'));
+        $this->assertCount(10, $locator->listResources('pages://'));
     }
 
     public function testCreateFromResourceWithLatestVersion(): void
