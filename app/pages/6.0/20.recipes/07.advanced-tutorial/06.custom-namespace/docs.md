@@ -2,8 +2,7 @@
 title: Customizing the Skeleton
 metadata:
     description: The default skeleton can easily be changed
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 ## Custom Namespace

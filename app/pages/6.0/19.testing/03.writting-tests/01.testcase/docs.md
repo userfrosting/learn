@@ -1,7 +1,7 @@
 ---
 title: Sprinkle Test Case
-taxonomy:
-    category: docs
+metadata:
+    obsolete: true
 ---
 
 To make it easier to run your tests in your Sprinkle environment, that is with every routes, middlewares and other class registered in your Recipe, UserFrosting provides a base TestCase you can use. You simply need to tell the TestCase to use your Recipe. It will create a simple UserFrosting app instance, and cleanly destroy it when the test is done. It also provides some additional helper methods.

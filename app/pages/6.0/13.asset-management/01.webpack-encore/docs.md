@@ -2,8 +2,7 @@
 title: Webpack Encore
 metadata:
     description: Asset bundles should be compiled in production to allow for faster and more efficient transfer to the client.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 In a minimalistic setup, asset retrieval is fairly straightforward. We might just keep all of our Javascript files in a `js/` directory directly under our public document root directory. Then the URL is simply `http://example.com/js/whatever.js`, the web server matches the _URL path_ `/js/whatever.js` to the _filesystem_ path `/path/to/document/root/public/js/whatever.js` and finally places the contents of that file in the HTTP response. In most web servers, this happens so transparently that a lot of new developers assume that they're somehow giving direct access to the server's file system. In reality the web server is mediating the interaction, and generating an HTTP response using the _contents_ of these files.

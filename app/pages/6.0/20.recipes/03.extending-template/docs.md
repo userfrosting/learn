@@ -2,8 +2,7 @@
 title: Extending templates and menus
 metadata:
     description: Steps to extend a template defined in another sprinkle.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 > [!NOTE]

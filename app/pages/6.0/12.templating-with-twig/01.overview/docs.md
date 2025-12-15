@@ -2,8 +2,7 @@
 title: Why use Twig?
 metadata:
     description: UserFrosting uses the extremely popular Twig templating engine to facilitate clean separation between content and logic in your application.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 Twig is a [templating engine](http://twig.sensiolabs.org/), which is designed to help maintain a clean separation between your application's logic and its content.

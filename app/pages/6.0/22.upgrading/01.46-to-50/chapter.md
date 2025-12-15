@@ -2,8 +2,7 @@
 title: 4.x to 5.0
 metadata:
     description: Upgrade guide for UserFrosting 5
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 # Upgrading to UserFrosting 5

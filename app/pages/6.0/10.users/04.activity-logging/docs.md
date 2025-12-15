@@ -2,8 +2,7 @@
 title: Activity Logging
 metadata:
     description: The activity logger allows you to capture and log user activities. By default this information is sent to the database, but you can use Monolog to customize how this information is stored - even having critical activity alerts sent to an administrator!
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 By default, user activities are logged to the `activities` database table. Logged information includes the activity time and an activity type, the `user_id`, the user's IP address, and a description of the activity. The administrative interface provides convenient tables for viewing these logs:

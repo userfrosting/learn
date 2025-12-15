@@ -2,8 +2,7 @@
 title: Default Tables
 metadata:
     description: UserFrosting's installer creates a number of tables by default.  Here, we explain the purpose of each table.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 When you install UserFrosting with the [Bakery CLI](/cli), a number of tables will automatically added to your database. These tables are required for UserFrosting's built-in features, such as user accounts, request throttling, persistent sessions, and access control.

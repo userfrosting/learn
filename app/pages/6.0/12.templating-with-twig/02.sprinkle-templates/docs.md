@@ -1,9 +1,8 @@
 ---
 title: Sprinkle Templates
 metadata:
-    description:
-taxonomy:
-    category: docs
+    description: ""
+    obsolete: true
 ---
 
 ## Template organization

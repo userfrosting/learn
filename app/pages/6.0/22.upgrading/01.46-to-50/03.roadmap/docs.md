@@ -1,9 +1,8 @@
 ---
 title: Future Roadmap
 metadata:
-    description: 
-taxonomy:
-    category: docs
+    description: ""
+    obsolete: true
 ---
 
 ## How will future update be done?

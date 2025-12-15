@@ -2,8 +2,7 @@
 title: The DI Container
 metadata:
     description: The Dependency Injection (DI) container provides an elegant and loosely coupled way to make various services available globally in your application.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 ### The Dependency Injection (DI) Container

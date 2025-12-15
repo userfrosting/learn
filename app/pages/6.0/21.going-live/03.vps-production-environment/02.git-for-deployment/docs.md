@@ -2,8 +2,7 @@
 title: Using Git for Deployment
 metadata:
     description: Once you've set up a remote repository in your production environment, deployment can be as simple as a single `git push` command.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 <!-- [plugin:content-inject](/modular/_update5.0) -->
 

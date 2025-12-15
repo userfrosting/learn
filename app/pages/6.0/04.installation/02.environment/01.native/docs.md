@@ -2,8 +2,7 @@
 title: Native Installation
 metadata:
     description: Getting UserFrosting up and running in your development environment.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 This **native installation** guide will first show you the steps to install all the tools and apps required to run your own local development environment. Once this is done, the second part contains the steps required to get UserFrosting itself up and running. 

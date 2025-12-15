@@ -2,8 +2,7 @@
 title: Understanding Dependency Injection
 metadata:
     description: Dependency Injection (DI) is the backbone of modern programming
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 [Dependency Injection](http://www.phptherightway.com/#dependency_injection) is one of the fundamental pillars of modern object-oriented software design - it is a prime example of the **D** in [**SOLID**](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)). The idea is that instead of creating objects _inside_ other objects, you create your "inner objects" (dependencies) separately and then _inject_ (by passing as an argument to the constructor or a setter method) them into the "outer object" (dependent).

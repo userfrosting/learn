@@ -2,8 +2,7 @@
 title: Supporting UserFrosting
 metadata:
     description: Donate your time, money, or expertise to furthering the development of UserFrosting.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 ## Financial support

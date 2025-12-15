@@ -1,9 +1,8 @@
 ---
 title: Twig Filters and Functions
 metadata:
-    description:
-taxonomy:
-    category: docs
+    description: ""
+    obsolete: true
 ---
 
 ### config

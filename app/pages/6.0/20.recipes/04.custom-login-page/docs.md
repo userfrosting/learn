@@ -2,8 +2,7 @@
 title: Customizing the login page
 metadata:
     description: An example of how to modify UserFrosting's default login page and behavior.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 > [!NOTE]

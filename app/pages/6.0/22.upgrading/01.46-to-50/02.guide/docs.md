@@ -2,8 +2,7 @@
 title: Upgrade Guide
 metadata:
     description: Upgrade guide from version 4.6.x to 5.0.x
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 Upgrading an existing sprinkle from UserFrosting 4 to UserFrosting 5 can unfortunately be a difficult task. It all depends on how much customization of the core code you have done. Very basic sites will be easy to upgrade, very complex ones could be a nightmare. However, it's for the greater good; UserFrosting 5 is more modern and uses new techniques.

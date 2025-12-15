@@ -2,8 +2,7 @@
 title: Your Application
 metadata:
     description: A Sprinkle can contain assets, configuration files, translations, routes, PHP classes, and Twig templates.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 UserFrosting 4 introduced the **Sprinkle system** as a way to completely isolate the code and content that you and your team produce from the core UserFrosting installation. **UserFrosting 5** takes this concept a step further, requiring a new chapter on the basic UserFrosting project structure before even talking about downloading any code!

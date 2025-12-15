@@ -2,8 +2,7 @@
 title: Integrating the Database
 metadata:
     description: Customizing our UserFrosting controller to retrieve dynamic data from the database and display it in our page.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 Now that we have a sprinkle with an empty page to work with, it's time to get started with our database integration. Our data structures for the database table will be straightforward. We'll store pastries in a `pastries` table using the following columns:

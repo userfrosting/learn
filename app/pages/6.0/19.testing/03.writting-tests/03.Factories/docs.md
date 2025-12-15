@@ -1,7 +1,7 @@
 ---
 title: Factories
-taxonomy:
-    category: docs
+metadata:
+    obsolete: true
 ---
 
 > [!NOTE]

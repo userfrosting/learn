@@ -2,8 +2,7 @@
 title: Upgrading
 metadata:
     description: Upgrading to future versions of UserFrosting is easy...
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 #### Chapter 22

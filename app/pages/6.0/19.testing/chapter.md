@@ -2,8 +2,7 @@
 title: Testing
 metadata:
     description: An introduction to Unit and Integration testing, your most powerful ally.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 #### Chapter 19

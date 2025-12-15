@@ -1,9 +1,8 @@
 ---
 title: The Sprinkle Recipe
 metadata:
-    description: 
-taxonomy:
-    category: docs
+    description: ""
+    obsolete: true
 ---
 
 The Sprinkle Recipe dictates how your sprinkle is built, like a blueprint. UserFrosting services and framework will use the information from the recipe to initiate some services, and expose classes your sprinkle provides for other servicea to use.

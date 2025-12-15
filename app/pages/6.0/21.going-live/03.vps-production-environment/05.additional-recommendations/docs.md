@@ -2,8 +2,7 @@
 title: Additional Recommendations
 metadata:
     description: Additional recommended configuration steps to get the most out of your VPS production server.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 <!-- [plugin:content-inject](/modular/_updateRequired) -->
 

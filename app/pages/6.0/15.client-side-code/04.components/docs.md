@@ -2,8 +2,7 @@
 title: Components
 metadata:
     description: UserFrosting comes with a number of custom jQuery plugins that simplify the interactions between the client-side components and the backend.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 UserFrosting also comes with a number of [custom jQuery plugins](/client-side-code/components) that simplify the interactions between the client-side components and the backend. These can all be found in the `core` Sprinkle, under `assets/local/core/js/`.

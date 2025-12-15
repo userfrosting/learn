@@ -1,4 +1,4 @@
 ---
 title: API Documentation
-redirect: http://api.userfrosting.com
+redirect: "http://api.userfrosting.com"
 ---

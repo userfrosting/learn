@@ -2,8 +2,7 @@
 title: Extending Aggregator Commands
 metadata:
     description: You may add custom sub-commands to the bake, setup, and debug commands through events.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 *Aggregator commands* is a fancy term to identify core bakery commands that just run multiple sub-commands in one operation. UserFrosting uses 3 of those special commands:

@@ -2,8 +2,7 @@
 title: The Client-Server Conversation
 metadata:
     description: Many developers do not really understand the basics of how HTTP and web applications work. This discussion attempts to clarify some common misconceptions.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 One of the most common misconceptions is that web applications are coherent pieces of software that sit on a server somewhere, and that the client "runs" this application in their browser. This is actually an illusion, carefully crafted to provide a smooth experience for the end user.

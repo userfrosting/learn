@@ -2,8 +2,7 @@
 title: Troubleshooting
 metadata:
     description: Troubleshooting installation and your application.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 #### Chapter 5

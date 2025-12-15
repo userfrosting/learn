@@ -1,9 +1,8 @@
 ---
 title: Coming up next
 metadata:
-    description: 
-taxonomy:
-    category: docs
+    description: ""
+    obsolete: true
 ---
 
 ### UserFrosting 5.2

@@ -2,8 +2,7 @@
 title: Extending the User model
 metadata:
     description: Extend the user model, adding custom fields and views.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 > [!TIP]

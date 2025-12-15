@@ -2,8 +2,7 @@
 title: Unix Primer for Ubuntu
 metadata:
     description: This chapter covers the most common commands and files that web developers might encounter when working with Ubuntu.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 <!-- [plugin:content-inject](/modular/_updateRequired) -->
 

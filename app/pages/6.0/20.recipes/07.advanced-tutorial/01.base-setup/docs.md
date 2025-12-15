@@ -2,8 +2,7 @@
 title: Setting up the basics
 metadata:
     description: Setting up the basic sprinkle
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 ## The Base Sprinkle

@@ -2,8 +2,7 @@
 title: Upgrade Guide
 metadata:
     description: Upgrade guide from version 5.0.x to 5.1.x
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 ## Dependencies

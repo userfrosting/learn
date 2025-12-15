@@ -2,8 +2,7 @@
 title: Application Lifecycle
 metadata:
     description: Each Sprinkle may define a bootstrapper class that allows it to hook into various stages of the UserFrosting application lifecycle.
-taxonomy:
-    category: docs
+    obsolete: true
 ---
 
 Every time UserFrosting is booted up to handle a request, it goes through its **application lifecycle**. This process includes loading the resources and [services](/services) in your Sprinkles, setting up the [Slim application](https://www.slimframework.com/docs/v3/objects/application.html), registering middleware, and setting up your [routes](/routes-and-controllers/front-controller).

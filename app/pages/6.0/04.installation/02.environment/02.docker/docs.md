@@ -1,9 +1,8 @@
 ---
 title: Docker
 metadata:
-  description: Docker is a containerization platform that helps maintain consistent behavior across different development and production environments.
-taxonomy:
-  category: docs
+    description: Docker is a containerization platform that helps maintain consistent behavior across different development and production environments.
+    obsolete: true
 ---
 
 If you don't already have a local environment or you're not familiar with **Docker**, this page will guide you in installing UserFrosting using Docker.
