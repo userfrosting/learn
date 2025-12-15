@@ -3,11 +3,11 @@
 declare(strict_types=1);
 
 /*
- * UserFrosting (http://www.userfrosting.com)
+ * UserFrosting Learn (http://www.userfrosting.com)
  *
- * @link      https://github.com/userfrosting/UserFrosting
- * @copyright Copyright (c) 2013-2024 Alexander Weissman & Louis Charette
- * @license   https://github.com/userfrosting/UserFrosting/blob/master/LICENSE.md (MIT License)
+ * @link      https://github.com/userfrosting/Learn
+ * @copyright Copyright (c) 2025 Alexander Weissman & Louis Charette
+ * @license   https://github.com/userfrosting/Learn/blob/main/LICENSE.md (MIT License)
  */
 
 namespace UserFrosting\Learn\Listeners;
