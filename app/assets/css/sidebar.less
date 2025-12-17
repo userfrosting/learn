@@ -1,0 +1,71 @@
+/*
+ * Custom sidebar template styles.
+ */
+@sidebar-special-padding-horizontal: 12px;
+
+aside.uf-sidenav {
+
+    // Set nav header padding
+    .uk-nav-header {
+        margin-top: @sidebar-item-padding-vertical;
+        padding: @sidebar-header-padding-vertical @sidebar-special-padding-horizontal;
+        border-left: @sidebar-item-border-width solid transparent;
+    }
+
+    // Numbered list style for sidebar navigation
+    .uk-nav-default {
+        list-style-type: decimal-leading-zero;
+        list-style-position: inside;
+    }
+
+    // Marker style for numbered list
+    .uk-nav-default > li::marker {
+        font-weight: bold;
+    }
+
+    // Revert link Flex to fix alignment issue with numbers
+    .uk-nav-default li > a {
+        display: inline-block;
+    }
+
+    // Move padding from a to li.
+    // Adjust left padding to account for the number
+    .uk-nav-default > li {
+        padding: @sidebar-item-padding-vertical @sidebar-special-padding-horizontal;
+        border-left: @sidebar-item-border-width solid transparent;
+        transition: all 0.15s ease-out;
+        font-size: @global-font-size;
+        color: @sidebar-item-color;
+    }
+    .uk-nav-sub > li {
+        padding: 0px;
+    }
+
+    // Move hover and active styles to li
+    // and REMOVE them from a
+    .uk-nav-default > li:hover,
+    .uk-nav-default > li.uk-open,
+    .uk-nav-default > li.uk-active {
+        border-left: @sidebar-item-border-width solid @sidebar-item-border-color;
+        background-color: @inverse-sidebar-active-background; // Apply dark mode by default
+        color: @inverse-sidebar-item-active-color; // Apply dark mode by default
+    }
+    .uk-nav-default > li > a:hover,
+    .uk-nav-default > li.uk-open > a,
+    .uk-nav-default > li.uk-active > a {
+        border-left: 0px;
+        background-color: inherit;
+        color: inherit;
+    }
+
+    // Remove <a> left border and adjust padding
+    .uk-nav-default > li > a {
+        padding: 0px @sidebar-item-padding-horizontal 0px 5px;
+        border-left: 0px;
+    }
+
+    // Move each nested level to the right
+    .uk-nav-default .uk-nav-sub {
+        padding: 0px 0px 0px @sidebar-special-padding-horizontal;
+    }
+}
