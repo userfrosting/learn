@@ -343,4 +343,148 @@ class DocumentationRepositoryTest extends TestCase
         $thirdChildren = $method->invoke($pagesManager, $allPages, 'third');
         $this->assertCount(2, $thirdChildren);
     }
+
+    public function testGetNextPageForPage(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // Test navigation from first page
+        $page = $pagesManager->getPage('first');
+        $nextPage = $pagesManager->getNextPageForPage($page);
+        $this->assertNotNull($nextPage);
+        $this->assertSame('second', $nextPage->getSlug());
+
+        // Test navigation from a middle page
+        $page = $pagesManager->getPage('second');
+        $nextPage = $pagesManager->getNextPageForPage($page);
+        $this->assertNotNull($nextPage);
+        $this->assertSame('second/alpha', $nextPage->getSlug());
+
+        // Test navigation from a nested page
+        $page = $pagesManager->getPage('second/alpha');
+        $nextPage = $pagesManager->getNextPageForPage($page);
+        $this->assertNotNull($nextPage);
+        $this->assertSame('second/beta', $nextPage->getSlug());
+
+        // Test navigation continues to next top-level after nested pages
+        $page = $pagesManager->getPage('second/beta');
+        $nextPage = $pagesManager->getNextPageForPage($page);
+        $this->assertNotNull($nextPage);
+        $this->assertSame('third', $nextPage->getSlug());
+    }
+
+    public function testGetNextPageForLastPage(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // The last page in the tree should return null
+        $page = $pagesManager->getPage('third/bar');
+        $nextPage = $pagesManager->getNextPageForPage($page);
+        $this->assertNull($nextPage);
+    }
+
+    public function testGetPreviousPageForPage(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // Test navigation from second page back to first
+        $page = $pagesManager->getPage('second');
+        $previousPage = $pagesManager->getPreviousPageForPage($page);
+        $this->assertNotNull($previousPage);
+        $this->assertSame('first', $previousPage->getSlug());
+
+        // Test navigation within nested pages
+        $page = $pagesManager->getPage('second/beta');
+        $previousPage = $pagesManager->getPreviousPageForPage($page);
+        $this->assertNotNull($previousPage);
+        $this->assertSame('second/alpha', $previousPage->getSlug());
+
+        // Test navigation from nested page to parent
+        $page = $pagesManager->getPage('second/alpha');
+        $previousPage = $pagesManager->getPreviousPageForPage($page);
+        $this->assertNotNull($previousPage);
+        $this->assertSame('second', $previousPage->getSlug());
+
+        // Test navigation from a deeply nested page
+        $page = $pagesManager->getPage('third/foo/grandchild2');
+        $previousPage = $pagesManager->getPreviousPageForPage($page);
+        $this->assertNotNull($previousPage);
+        $this->assertSame('third/foo/grandchild1', $previousPage->getSlug());
+    }
+
+    public function testGetPreviousPageForFirstPage(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // The first page in the tree should return null
+        $page = $pagesManager->getPage('first');
+        $previousPage = $pagesManager->getPreviousPageForPage($page);
+        $this->assertNull($previousPage);
+    }
+
+    public function testGetFlattenedTree(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // Use reflection to test protected method
+        $reflection = new \ReflectionClass($pagesManager);
+        $method = $reflection->getMethod('getFlattenedTree');
+
+        $flatPages = $method->invoke($pagesManager, '6.0');
+
+        // Should have all 9 pages in flattened order
+        $this->assertCount(9, $flatPages);
+
+        // Verify the order follows depth-first traversal (check array keys)
+        $expectedOrder = [
+            'first',
+            'second',
+            'second/alpha',
+            'second/beta',
+            'third',
+            'third/foo',
+            'third/foo/grandchild1',
+            'third/foo/grandchild2',
+            'third/bar',
+        ];
+
+        $actualOrder = array_keys($flatPages);
+        $this->assertSame($expectedOrder, $actualOrder);
+
+        // Verify each key maps to the correct page
+        foreach ($expectedOrder as $slug) {
+            $this->assertArrayHasKey($slug, $flatPages);
+            $this->assertSame($slug, $flatPages[$slug]->getSlug());
+        }
+    }
+
+    public function testNavigationSequence(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        // Test complete forward navigation through the tree
+        $page = $pagesManager->getPage('first');
+        $visited = [$page->getSlug()];
+
+        while ($nextPage = $pagesManager->getNextPageForPage($page)) {
+            $visited[] = $nextPage->getSlug();
+            $page = $nextPage;
+        }
+
+        // Should visit all 9 pages in order
+        $this->assertCount(9, $visited);
+
+        // Test backward navigation
+        $page = $pagesManager->getPage('third/bar');
+        $visitedBackward = [$page->getSlug()];
+
+        while ($previousPage = $pagesManager->getPreviousPageForPage($page)) {
+            $visitedBackward[] = $previousPage->getSlug();
+            $page = $previousPage;
+        }
+
+        // Should visit all 9 pages in reverse order
+        $this->assertCount(9, $visitedBackward);
+        $this->assertSame(array_reverse($visited), $visitedBackward);
+    }
 }

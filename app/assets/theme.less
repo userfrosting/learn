@@ -10,6 +10,7 @@
  */
 @import 'css/docs.less';
 @import 'css/sidebar.less';
+@import 'css/pager.less';
 
 /**
  * Override Pink Cupcake default variables
@@ -42,4 +43,8 @@ aside.uf-sidenav .uk-nav-default .uk-nav-sub a {
     letter-spacing: -0.45px;
     padding-bottom: 4px;
     padding-top: 4px;
+}
+
+aside ~ main {
+    margin-left: @sidebar-width;
 }

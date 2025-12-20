@@ -52,8 +52,10 @@ class DocumentationController
         $template = sprintf('pages/%s.html.twig', $page->getTemplate());
 
         return $twig->render($response, $template, [
-            'page'        => $page,
-            'breadcrumbs' => $this->pagesDirectory->getBreadcrumbsForPage($page),
+            'page'         => $page,
+            'breadcrumbs'  => $this->pagesDirectory->getBreadcrumbsForPage($page),
+            'previousPage' => $this->pagesDirectory->getPreviousPageForPage($page),
+            'nextPage'     => $this->pagesDirectory->getNextPageForPage($page),
         ]);
     }
 

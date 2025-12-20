@@ -4,13 +4,17 @@
 <div>
     {% include "partials/header.html.twig" %}
     {% include "partials/sidebar.html.twig" %}
-    <div class="uf-main uk-section uk-section-default">
+    <main class="uk-section uk-section-default uk-section-xsmall">
         <div class="uk-container">
             {% include "partials/breadcrumbs.html.twig" %}
-            <main>
+            <div class="uk-section">
                 {% block page_content %}{% endblock %}
-            </main>
+            </div>
+            <div class="pager">
+                <a class="pager-prev" href="{{ previousPage.getRoute() }}"> <i class="fa fa-chevron-left"></i></a>
+                <a class="pager-next" href="{{ nextPage.getRoute() }}"><i class="fa fa-chevron-right"></i></a>
+            </div>
         </div>
-    </div>
+    </main>
 </div>
 {% endblock %}

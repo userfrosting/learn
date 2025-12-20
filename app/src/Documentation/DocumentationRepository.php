@@ -225,6 +225,84 @@ class DocumentationRepository
     }
 
     /**
+     * Get the next page in the documentation tree after the given page.
+     *
+     * Traverses the documentation tree in depth-first order to determine
+     * the next page. Returns null if the given page is the last page.
+     *
+     * @param PageResource $page The current page
+     *
+     * @return PageResource|null The next page, or null if at the end
+     */
+    public function getNextPageForPage(PageResource $page): ?PageResource
+    {
+        return $this->getAdjacentPage($page, 1);
+    }
+
+    /**
+     * Get the previous page in the documentation tree before the given page.
+     *
+     * Traverses the documentation tree in depth-first order to determine
+     * the previous page. Returns null if the given page is the first page.
+     *
+     * @param PageResource $page The current page
+     *
+     * @return PageResource|null The previous page, or null if at the beginning
+     */
+    public function getPreviousPageForPage(PageResource $page): ?PageResource
+    {
+        return $this->getAdjacentPage($page, -1);
+    }
+
+    /**
+     * Get an adjacent page in the documentation tree relative to the given page.
+     *
+     * @param PageResource $page   The current page
+     * @param int          $offset The offset (+1 for next, -1 for previous)
+     *
+     * @return PageResource|null The adjacent page, or null if not found
+     */
+    protected function getAdjacentPage(PageResource $page, int $offset): ?PageResource
+    {
+        $flatPages = $this->getFlattenedTree($page->getVersion()->id);
+        $slugs = array_keys($flatPages);
+        $currentIndex = array_search($page->getSlug(), $slugs, true);
+
+        if ($currentIndex === false || !isset($slugs[$currentIndex + $offset])) {
+            return null;
+        }
+
+        return $flatPages[$slugs[$currentIndex + $offset]];
+    }
+
+    /**
+     * Get a flattened list of pages in tree order (depth-first traversal).
+     * Uses page slugs as array keys for efficient lookups.
+     *
+     * @param string|null $version
+     *
+     * @return array<string, PageResource> Array keyed by page slug
+     */
+    protected function getFlattenedTree(?string $version = null): array
+    {
+        $tree = $this->getTree($version);
+        $flat = [];
+
+        $flatten = function (array $pages) use (&$flatten, &$flat) {
+            foreach ($pages as $page) {
+                $flat[$page->getSlug()] = $page;
+                if ($page->getChildren()) {
+                    $flatten($page->getChildren());
+                }
+            }
+        };
+
+        $flatten($tree);
+
+        return $flat;
+    }
+
+    /**
      * Get a versioned image resource by path and version.
      *
      * @param string $version The version (empty string for latest)
