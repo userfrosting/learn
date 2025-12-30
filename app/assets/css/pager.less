@@ -1,6 +1,8 @@
 @pager-width: 60px;
 @pager-font-size: 50px;
+@pager-breakpoint: @breakpoint-small-max;
 
+// Base pager styles (desktop default)
 main > .uk-container {
     padding-left: @pager-width + @global-gutter;
     padding-right: @pager-width + @global-gutter;
@@ -13,48 +15,67 @@ main > .uk-container {
         top: 0;
         bottom: 0;
         width: @pager-width;
-        font-size: @pager-font-size;
         height: 100%;
-        cursor: pointer;
         display: table;
         text-align: center;
+        font-size: @pager-font-size;
+        cursor: pointer;
         color: @global-theme-color;
-    }
-    
-    a.pager-next > i,
-    a.pager-prev > i {
-        display: table-cell;
-        vertical-align: middle;
-        text-align: center;
-    }
 
-    a.pager-next:hover,
-    a.pager-prev:hover {
-        background: @global-muted-background;
-        color: @global-theme-color;
-        text-decoration: none;
+        &:hover {
+            background: @global-muted-background;
+            text-decoration: none;
+        }
+
+        i {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
     }
 
     a.pager-prev {
         left: @sidebar-width;
     }
+
     a.pager-next {
         right: 0;
     }
+}
 
-    // @media only all and (max-width: 59.938em) {
-    //     .pager {
-    //         display: table-cell;
-    //         position: static;
-    //         top: auto;
-    //         width: 50%;
-    //         text-align: center;
-    //         height: 100px;
-    //         line-height: 100px;
-    //         padding-top: 0;
-    //     }
-    //     .pager > i {
-    //         display: inline-block;
-    //     }
-    // }
+// Mobile layout
+@media (max-width: @pager-breakpoint) {
+    main > .uk-container {
+        padding-left: @global-gutter;
+        padding-right: @global-gutter;
+    }
+
+    .pager {
+        display: table;
+        width: 100%;
+
+        a.pager-next,
+        a.pager-prev {
+            position: static;
+            width: 50%;
+            height: 100px;
+            line-height: 100px;
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+
+            i {
+                display: inline;
+                vertical-align: baseline;
+            }
+        }
+
+        a.pager-prev {
+            left: auto;
+        }
+
+        a.pager-next {
+            right: auto;
+        }
+    }
 }

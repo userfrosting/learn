@@ -3,9 +3,7 @@
  */
 @sidebar-special-padding-horizontal: 12px;
 
-aside.uf-sidenav,
-aside {
-
+.uf-sidebar {
     // Set nav header padding
     .uk-nav-header {
         margin-top: @sidebar-item-padding-vertical;
@@ -14,13 +12,13 @@ aside {
     }
 
     // Numbered list style for sidebar navigation
-    .uk-nav-default {
+    .uf-nav-chaptered {
         list-style-type: decimal-leading-zero;
         list-style-position: inside;
     }
 
     // Marker style for numbered list
-    .uk-nav-default > li::marker {
+    .uf-nav-chaptered > li::marker {
         font-weight: bold;
     }
 

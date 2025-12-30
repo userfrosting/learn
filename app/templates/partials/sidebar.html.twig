@@ -1,6 +1,20 @@
-<aside class="uf-sidenav">
-    <ul class="uk-nav-default" uk-nav>
+<aside class="uf-sidebar uk-visible@m">
+    <ul class="uk-nav-default uf-nav-chaptered" uk-nav>
         {% include 'content/navigation/sidebar.html.twig' %}
     </ul>
     {% include "partials/footer.html.twig" %}
 </aside>
+<div
+    class="uk-hidden@m uk-offcanvas"
+    id="offcanvas-sidebar"
+    uk-offcanvas="overlay: true; selClose: .uf-sidebar-close">
+    <div class="uf-sidebar uk-offcanvas-bar">
+        <ul class="uk-nav-default" uk-nav>
+            {% include "content/navigation/navbar.html.twig" %}
+        </ul>
+        <ul class="uk-nav-default uf-nav-chaptered" uk-nav>
+            {% include 'content/navigation/sidebar.html.twig' %}
+        </ul>
+        {% include "partials/footer.html.twig" %}
+    </div>
+</div>

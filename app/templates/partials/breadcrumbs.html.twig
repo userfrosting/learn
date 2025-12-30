@@ -1,5 +1,5 @@
-<div class="uk-section" uk-grid>
-    <div class="uk-width-expand">
+<div class="uk-section uk-grid-small" uk-grid>
+    <div class="uk-width-expand@s">
         <nav aria-label="Breadcrumb">
             <ul class="uk-breadcrumb">
                 {% for crumb in breadcrumbs %}
@@ -20,7 +20,7 @@
             </ul>
         </nav>
     </div>
-    <div>
+    <div class="uk-width-auto@s">
         {% if page.github is defined %}
             <a href="{{ page.github }}" class="uk-button uk-button-text" target="_blank" rel="noopener">
                 <i class="fab fa-github"></i> Edit this page

@@ -1,27 +1,23 @@
 <header>
     <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
-        <div class="uk-navbar-container">
-            <div class="uk-container uk-container-expand">
-                <nav class="uk-navbar" uk-navbar>
+        <div class="uk-container uk-navbar-container uk-container-expand">
+            <nav class="uk-navbar" uk-navbar>
+                <div class="uk-navbar-left">
                     <ul class="uk-navbar-nav uk-hidden@m">
                         <li>
-                            <a
-                                class="uk-navbar-item uk-logo"
-                                uk-toggle="target: aside; cls: open">
-                                <font-awesome-icon icon="bars" />
+                            <a href="#offcanvas-sidebar" uk-toggle class="uk-navbar-item">
+                                <i class="fa-solid fa-bars"></i>
                             </a>
                         </li>
                     </ul>
-                    <div class="uk-navbar-left" data-test="navbar-left">
-                        <a href="{{ urlFor('index', [], [], '/') }}" class="uk-navbar-item uk-logo">{{site.title}}</a>
-                    </div>
-                    <div class="uk-navbar-right" data-test="navbar-right">
-                        <ul class="uk-navbar-nav">
-                            {% include "content/navigation/navbar.html.twig" %}
-                        </ul>
-                    </div>
-                </nav>
-            </div>
+                    <a href="{{ urlFor('index', [], [], '/') }}" class="uk-navbar-item uk-logo">{{site.title}}</a>
+                </div>
+                <div class="uk-navbar-right uk-visible@m">
+                    <ul class="uk-navbar-nav">
+                        {% include "content/navigation/navbar.html.twig" %}
+                    </ul>
+                </div>
+            </nav>
         </div>
     </div>
 </header>

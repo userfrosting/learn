@@ -8,6 +8,7 @@
 /**
  * Import custom styles for documentation
  */
+@import 'css/alert.less';
 @import 'css/docs.less';
 @import 'css/sidebar.less';
 @import 'css/pager.less';
@@ -20,31 +21,3 @@
 @base-pre-padding: 0px;
 @breadcrumb-item-color: @global-link-color;
 @breadcrumb-divider-color: @global-emphasis-color;
-
-/*
- * TEMP - Fix font smoothing issues until Beta 7 release
- */
-@import 'css/alert.less';
-
-html {
-    scroll-padding-top: @navbar-nav-item-height + @global-medium-margin;
-}
-
-.hook-base-body() {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-.hook-navbar() {
-    -webkit-font-smoothing: auto;
-    -moz-osx-font-smoothing: auto;
-}
-
-aside.uf-sidenav .uk-nav-default .uk-nav-sub a {
-    letter-spacing: -0.45px;
-    padding-bottom: 4px;
-    padding-top: 4px;
-}
-
-aside ~ main {
-    margin-left: @sidebar-width;
-}
