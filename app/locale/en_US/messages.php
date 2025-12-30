@@ -15,4 +15,5 @@ declare(strict_types=1);
  */
 return [
     'ABOUT' => 'About',
+    'BUILT_WITH_UF' => 'Created with <a href="http://www.userfrosting.com">UserFrosting 6</a>',
 ];
