@@ -28,6 +28,7 @@
                         {{ config.versions.branches[config.environment].label }} <i class="fa fa-caret-down"></i>
                     </a>
                     <ul id="dropdown2" class="dropdown-content">
+                        <li><a href="https://learn6.userfrosting.com{{ uri.path }}">6.0 Beta</a></li>
                         {% for version in config.versions.branches %}
                             {% if version.visible %}
                                 <li><a href="{{ uri.rootUrl }}{{ version.path }}{{ uri.path }}">{{ version.label }}</a></li>

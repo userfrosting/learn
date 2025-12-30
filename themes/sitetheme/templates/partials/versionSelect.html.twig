@@ -1,6 +1,7 @@
 <div class="version-select">
     <label>Version: </label>
     <select>
+        <option value="https://learn6.userfrosting.com{{ uri.path }}">6.0 Beta</option>        
         {% for label, version in config.versions.branches %}
             {% if version.visible %}
                 <option {% if config.environment == label %}selected="selected" {% endif %}value="{{ uri.rootUrl }}{{ version.path }}{{ uri.path }}">
