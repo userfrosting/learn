@@ -1,4 +1,8 @@
 # UserFrosting Learn Documentation
+[![Build](https://img.shields.io/github/actions/workflow/status/userfrosting/learn/Build.yml?branch=main&logo=github)](https://github.com/userfrosting/sprinkle-core/actions)
+[![Codecov](https://codecov.io/gh/userfrosting/learn/branch/main/graph/badge.svg)](https://app.codecov.io/gh/userfrosting/sprinkle-core/branch/5.2)
+[![Join the chat](https://img.shields.io/badge/Chat-UserFrosting-brightgreen?logo=Rocket.Chat)](https://chat.userfrosting.com)
+[![Donate](https://img.shields.io/badge/Ko--fi-Donate-blue?logo=ko-fi&logoColor=white)](https://ko-fi.com/lcharette)
 
 TODO
 
