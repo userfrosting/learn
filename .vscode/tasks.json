@@ -63,35 +63,7 @@
             "label": "Frontend - Coverage",
             "type": "shell",
             "command": "npm run coverage"
-        },
-        {
-            "label": "Frontend - webpack:dev",
-            "type": "shell",
-            "command": "npm run webpack:dev",
-            "problemMatcher": []
-        },
-        {
-            "label": "Frontend - webpack:server (HMR)",
-            "type": "shell",
-            "command": "npm run webpack:server",
-            "problemMatcher": [],
-            "isBackground": true
-        },
-        {
-            "label": "Frontend - webpack:watch",
-            "type": "shell",
-            "options": {},
-            "command": "npm run webpack:watch",
-            "problemMatcher": [],
-            "isBackground": true
-        },
-        {
-            "label": "Frontend - webpack:build",
-            "type": "shell",
-            "options": {},
-            "command": "npm run webpack:build",
-            "problemMatcher": []
-        },
+        }
 
         /**
          * PHP Tasks
