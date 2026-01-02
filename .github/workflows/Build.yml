@@ -60,7 +60,7 @@ jobs:
         php_versions: ['8.4']
 
     runs-on: ubuntu-latest
-    name: PHPStan - ${{ matrix.php_versions }}
+    name: PHPStan - PHP ${{ matrix.php_versions }}
 
     steps:
       - uses: actions/checkout@v4
