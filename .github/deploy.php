@@ -9,7 +9,6 @@ set('application', 'UF Learn 6');
 // Project repository
 set('repository', 'https://github.com/userfrosting/learn.git');
 set('branch', 'main');
-set('update_code_strategy', 'clone'); // Required for submodules
 
 // Writable dirs by web server 
 set('writable_dirs', [
@@ -23,18 +22,12 @@ set('allow_anonymous_stats', false);
 host('prod')
     ->set('remote_user', 'deploy-learn')
     ->set('hostname', '157.245.12.207')
-    ->set('deploy_path', '/var/www/learn6')
-    ->set('identity_file', '~/.ssh/deploy_rsa');
+    ->set('deploy_path', '/var/www/learn6');
 
 // UF Bakery task
 task('bakery:bake', function () {
     within('{{release_path}}', function () {
         run('php bakery bake');
-    });
-});
-task('composer:update', function () {
-    within('{{release_path}}', function () {
-        run('composer update --no-dev -o');
     });
 });
 task('bakery:setenv', function () {
@@ -43,20 +36,11 @@ task('bakery:setenv', function () {
     });
 });
 
-// Git submodule task
-task('npm:update', function () {
-    within('{{release_path}}', function () {
-        run('npm update');
-    });
-});
-
 // Tasks
 desc('Deploy your project');
 task('deploy', [
     'deploy:prepare',
-    'deploy:clear_paths',
-    'composer:update',
-    'npm:update',
+    'deploy:vendors',
     'bakery:setenv',
     'bakery:bake',
     'deploy:symlink',
