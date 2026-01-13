@@ -1,9 +1,92 @@
 # Copilot Instructions for UserFrosting Learn
 
 ## Project Overview
-UserFrosting Learn is the official documentation website for **UserFrosting 6** (https://github.com/userfrosting/monorepo), also known as "UF" or "UF6". Built with **UserFrosting 6**, it serves versioned documentation written in Markdown across multiple versions (e.g., `6.0/`) with dynamic page rendering, breadcrumbs, and image serving. It's served publicly at [https://learn6.userfrosting.com](https://learn6.userfrosting.com).
+**PRIMARY GOAL: This repository exists to document UserFrosting 6 (the PHP framework), NOT to document this documentation site itself.**
 
-## Architecture
+The source code to be documented is at [userfrosting/monorepo](https://github.com/userfrosting/monorepo). When users ask to improve, proofread, or create documentation, they are referring to documenting UserFrosting 6 features, configuration, and usage - not the documentation site's infrastructure.
+
+This project (UserFrosting Learn) is simply the **infrastructure** that displays the documentation. It's built with **UserFrosting 6** and serves versioned documentation pages written in Markdown (in `app/pages/{version}/`). It's served publicly at [https://learn6.userfrosting.com](https://learn6.userfrosting.com).
+
+## Documentation Guidelines
+**CRITICAL: The documentation content documents UserFrosting (from [userfrosting/monorepo](https://github.com/userfrosting/monorepo)), NOT this documentation site.**
+
+When users request documentation work (improving, proofreading, creating pages), they mean:
+- ✅ Documenting UserFrosting 6 features, APIs, configuration, and usage
+- ✅ Verifying code examples against the [UserFrosting monorepo](https://github.com/userfrosting/monorepo)
+- ✅ Making sure example commands, code snippets, and configurations match UserFrosting 6 behavior and not other versions
+- ✅ Ensuring images and links in the documentation point to correct resources in UserFrosting
+- ✅ Proofreading and improving clarity of documentation about UserFrosting
+- ✅ Verifying images point to existing files with correct absolute paths
+- ✅ Verifying links point to existing pages with correct absolute paths. Renamed pages should have links updated accordingly.
+- ✅ Verifying external links are still valid
+- ✅ Ensuring terminology is consistent with UserFrosting branding and naming conventions
+- ✅ Ensuring technical accuracy of all external technical content
+They do NOT mean:
+- ❌ NOT documenting how this documentation site works internally
+
+This repository's PHP/TypeScript code is ONLY for rendering the documentation (routing, caching, navigation). Only reference this repo's code when:
+- Fixing bugs in the documentation site itself
+- Modifying how pages are rendered
+- Working on the site's infrastructure
+
+### Documentation Content
+For all documentation tasks, reference the UserFrosting monorepo for accurate technical details, code samples, and feature explanations. Pages should be referenced between each other content wise. Consider other pages as part of the same context.
+
+When editing the documentation markdown files, references to code samples only to the relevant version (e.g., `6.0`), and explain features as they exist in that version. The only exception is in the upgrade guide. When reviewing documentation, ensure that code snippets are accurate and up-to-date against the actual UserFrosting codebase.
+
+Suggest improvements to clarity, grammar, and formatting as needed, but do not change technical content unless verifying against the UserFrosting monorepo. Suggest adding new documentation pages or content only when there is a clear gap in coverage of UserFrosting features or concepts.
+
+### Identifying Obsolete Documentation
+**CRITICAL: Always check for the `obsolete: true` flag in page frontmatter.**
+
+When reviewing or editing documentation pages:
+1. **Check the frontmatter** for `obsolete: true` - this indicates the page documents outdated features or practices
+2. **Verify against the monorepo** - Check the actual implementation in [userfrosting/monorepo](https://github.com/userfrosting/monorepo) to see what the current approach is
+3. **Alert the user** if entire chapters or sections are obsolete and need complete rewrites (e.g., Webpack Encore documentation when UF6 uses Vite)
+4. **Cross-reference** with this documentation site's own implementation (e.g., check `vite.config.ts`, `package.json`) to understand what UF6 actually uses
+5. **Major gaps** - If you discover major documentation gaps (obsolete chapters, missing critical features, outdated architecture), inform the user immediately
+
+Examples of checks to perform:
+- If a page mentions Webpack, verify UF6 doesn't use Vite instead
+- If a page documents a CLI command, check the actual command exists in the monorepo
+- If a page explains configuration, verify the config structure matches the monorepo
+- If a page documents an API, verify it exists and hasn't changed in UF6
+
+When you encounter `obsolete: true` pages, inform the user that the content is outdated and may need to be rewritten to match current UF6 implementation.
+
+### Documentation Style
+The documentation tone should be casual, clear, and aimed at PHP developers of varying experience levels, but mostly novices and non-developers. It should focus on practical usage, configuration, and extension of UserFrosting, with examples and best practices. It should link to relevant external resources where appropriate.
+
+UserFrosting should always be referred to in the documentation as "UserFrosting" (with proper case) or "UF", never "UF6" or "UserFrosting 6" except when specifically discussing version differences.
+
+Markdown syntax supports special alert blocks (e.g., `> [!NOTE]`, `> [!TIP]`, etc.) via a custom CommonMark extension. 
+
+All code snippets should use triple backticks with language specified for syntax highlighting (e.g., ```php, ```bash, ```ts).
+
+### Images and Links
+
+**CRITICAL - Image Paths**: Images are stored in `app/pages/{version}/images` alongside the markdown files, and **MUST always use absolute paths starting with `/`**. 
+- ✅ Correct: `![Alt text](/images/screenshot.png)`
+- ❌ Wrong: `![Alt text](images/screenshot.png)` or `![Alt text](../images/screenshot.png)`
+Images should be checked to ensure the file exists at the specified path.
+
+Internal links should use absolute paths without version numbers to allow automatic version switching.
+- ✅ Correct: `[Requirements](/installation/requirements)`
+- ❌ Wrong: `[Requirements](installation/requirements)` or `[Requirements](/04.installation/01.requirements)`
+
+Pages have anchor links for sections (e.g., `#motivation`). Ensure links point to existing sections.
+
+### Chapter and Page Structure
+Documentation pages are stored in `docs.md` or `chapter.md` files under `app/pages/{version}/` (e.g., `app/pages/6.0/01.quick-start/docs.md`).
+
+`docs.md` files are standalone documentation pages, while `chapter.md` files represent chapters that may contain multiple sections or sub-pages. Chapters are displayed with their own landing page summarizing the chapter content. The content of a chapter's is typically an introduction or overview of the chapter topic, consisting of a title and a short paragraph.
+
+Folder names control the breadcrumb and tree hierarchy in the sidebar navigation. Numeric prefixes (e.g., `01.`) control ordering of pages in the navigation.
+
+When adding new pages, ensure they are placed in the correct folder structure to reflect their logical grouping and order. Update any relevant navigation or links to include the new pages. Update numbering if required.
+
+## Project-Specific Patterns
+Use these patterns when working on the documentation site codebase only (itself, not the documentation content).:
 
 ### Backend
 Built with **UserFrosting 6** framework:
@@ -21,65 +104,6 @@ Built with **UserFrosting 6** framework:
 - **Tests**: Vitest + Vue Test Utils
 - **No Pinia/reactive state** currently needed - mostly static documentation site
 
-## Critical Developer Workflows
-
-### Run Locally (without Docker)
-```bash
-# Terminal 1: Backend
-php bakery serve  # Runs on http://localhost:8000
-
-# Terminal 2: Frontend dev server
-npm run vite:dev   # Runs on http://localhost:5173
-```
-Browser loads via Slim/PHP, which references Vite-compiled assets.
-
-### Run with Docker
-```bash
-docker-compose up -d
-# App on http://localhost:8080
-```
-
-### Build & Test
-```bash
-# Frontend
-npm run vite:build      # Production build
-npm run typecheck       # Vue-tsc type checking
-npm run lint            # ESLint (auto-fix)
-npm run test            # Vitest unit tests
-npm run coverage        # Coverage report → _meta/coverage/
-
-# Backend
-vendor/bin/phpunit      # Unit tests (runs in UF_MODE=testing)
-vendor/bin/phpstan      # Static analysis
-vendor/bin/php-cs-fixer # Code formatting
-```
-
-### Important Tasks
-Run via VS Code command palette or terminal:
-- `Bakery - Serve` / `Frontend - Vite Dev` (background tasks)
-- `==> Serve` (runs both together)
-- `Backend - PHPUnit`, `Frontend - Tests`
-
-### Documentation Generation
-The actual documentation content is for UserFrosting's main repository, the [UserFrosting monorepo](https://github.com/userfrosting/monorepo), not in this repository. When editing the documentation markdown files, references to code samples should point to that repository, refer only to the relevant version (e.g., `6.0`), and explain features as they exist in that version. When reviewing documentation, ensure that code snippets are accurate and up-to-date against the actual UserFrosting codebase.
-
-The documentation site here simply renders those markdown files into HTML pages with navigation, versioning, and styling.
-
-The documentation tone should be casual, clear, and aimed at PHP developers of varying experience levels, but mostly novices and non-developers. It should focus on practical usage, configuration, and extension of UserFrosting, with examples and best practices. It should link to relevant external resources where appropriate.
-
-UserFrosting should always be referred to in the documentation as "UserFrosting" (with proper case) or "UF", never "UF6" or "UserFrosting 6" except when specifically discussing version differences.
-
-Markdown syntax supports special alert blocks (e.g., `> [!NOTE]`, `> [!TIP]`, etc.) via a custom CommonMark extension. 
-
-**CRITICAL - Image Paths**: Images are stored in `app/pages/{version}/images` alongside the markdown files, and **MUST always use absolute paths starting with `/`**. 
-- ✅ Correct: `![Alt text](/images/screenshot.png)`
-- ❌ Wrong: `![Alt text](images/screenshot.png)` or `![Alt text](../images/screenshot.png)`
-Images should be checked to ensure the file exists at the specified path.
-
-Internal links should use absolute paths without version numbers to allow automatic version switching.
-
-## Project-Specific Patterns
-
 ### Documentation Page Structure
 Pages are markdown files under `app/pages/{version}/` (e.g., `app/pages/6.0/01.quick-start/docs.md`). 
 - **Folder names** control breadcrumb/tree hierarchy
@@ -91,6 +115,10 @@ Pages are markdown files under `app/pages/{version}/` (e.g., `app/pages/6.0/01.q
 2. `DocumentationRepository::getPage()` finds markdown, validates version, caches result
 3. Twig template renders with `page`, `breadcrumbs`, `previousPage`, `nextPage`
 4. Frontend assets (Vite manifest) injected via PHP
+
+### Markdown Processing
+- Custom CommonMark extension for alerts (GitHub-style: `> [!NOTE]`, etc.)
+- Markdown parsed to HTML in PHP backend (via Twig filter or service)
 
 ### Versioning
 - Pages stored per-version folder (`6.0/`, `5.1/`, etc.)
@@ -119,45 +147,59 @@ app/
     public/               # Static assets
 ```
 
-## Key Integration Points
+### Developer Workflows
 
-### UserFrosting Framework
-- Uses **Sprinkle pattern** (plugin architecture)
-- `Recipe.php` registers routes, event listeners, Twig extensions
-- DI container configuration in `ServicesProvider/`
-- Events: `BakeCommandEvent`, `SetupCommandEvent`, etc.
+#### Run Locally (without Docker)
+```bash
+# Terminal 1: Backend
+php bakery serve  # Runs on http://localhost:8080 (default)
 
-### Asset Pipeline
-- Vite builds to `public/assets/` with manifest
-- PHP reads manifest to inject versioned asset paths into Twig
-- LESS processed by Vite (not node-sass)
-- UIkit 3 as UI framework (not Bootstrap)
+# Terminal 2: Frontend dev server
+npm run vite:dev   # Runs on http://localhost:5173
+```
+Browser loads via Slim/PHP, which references Vite-compiled assets.
 
-### Markdown Processing
-- Custom CommonMark extension for alerts (GitHub-style: `> [!NOTE]`, etc.)
-- Markdown parsed to HTML in PHP backend (via Twig filter or service)
+#### Run with Docker
+```bash
+docker-compose up -d
+# App on http://localhost:8080
+```
 
-## Testing & QA
+#### Build & Test
+```bash
+# Frontend
+npm run vite:build      # Production build
+npm run typecheck       # Vue-tsc type checking
+npm run lint            # ESLint (auto-fix)
+npm run test            # Vitest unit tests
+npm run coverage        # Coverage report → _meta/coverage/
 
-### Frontend
+# Backend
+vendor/bin/phpunit      # Unit tests (runs in UF_MODE=testing)
+vendor/bin/phpstan      # Static analysis
+vendor/bin/php-cs-fixer # Code formatting
+```
+
+#### Important Tasks
+Run via VS Code command palette or terminal:
+- `Bakery - Serve` / `Frontend - Vite Dev` (background tasks)
+- `==> Serve` (runs both together)
+- `Backend - PHPUnit`, `Frontend - Tests`
+
+#### Testing & QA
 - Unit tests in `app/tests/` (using Vitest)
 - Coverage stored in `_meta/coverage.xml` (Codecov)
 - Type checking required before build: `npm run typecheck`
-
-### Backend
-- PHPUnit tests in `app/tests/` (PSR-4: `UserFrosting\Tests\Learn\`)
-- PHPStan level configured in `phpstan.neon`
 - Test mode: `UF_MODE=testing` env var
 
-### CI/CD
+#### CI/CD
 - GitHub Actions workflow (Build.yml)
 - Codecov integration for coverage tracking
 
 ## Common Pitfalls
 
-1. **Image paths in documentation**: ALWAYS use absolute paths starting with `/` (e.g., `/images/file.png`), NEVER relative paths (e.g., `images/file.png`). This is required for proper routing across versions.
-2. **Vite asset paths**: Always use `base: /assets/` in vite.config.ts
-3. **UIkit imports**: Must import Icons separately; don't exclude UIkit from optimizeDeps
-4. **Sprinkle dependencies**: Ensure `@userfrosting/sprinkle-core` not pre-bundled (in excludeOptimizeDeps)
-5. **Page versioning**: Validate version format before querying cache
-6. **Twig global context**: `TwigGlobals` middleware adds context; check what's available in templates
+1. **Verify against source code**: The documentation is FOR UserFrosting 6 (monorepo), NOT for this documentation site. Always verify technical details against the [UserFrosting monorepo](https://github.com/userfrosting/monorepo), not this repo's code. This repo is only the rendering infrastructure. Use semantic search or GitHub repo search on the monorepo to find current implementations.
+2. **Obsolete documentation**: ALWAYS check page frontmatter for `obsolete: true`. Pages marked obsolete document outdated features and need verification/rewriting against current UF6 implementation in the monorepo. If you find obsolete pages during review, alert the user immediately about the need for updates.
+3. **Image paths in documentation**: ALWAYS use absolute paths starting with `/` (e.g., `/images/file.png`), NEVER relative paths (e.g., `images/file.png`). This is required for proper routing across versions.
+4. **Version-specific features**: Ensure that any features, commands, or configurations mentioned correspond to the correct UserFrosting version being documented. Features may differ between major versions.
+5. **Consistent terminology**: Always refer to the software as "UserFrosting" or "UF". Avoid using "UF6" or "UserFrosting 6" except when specifically discussing version differences.
