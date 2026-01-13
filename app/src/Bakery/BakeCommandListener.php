@@ -24,7 +24,8 @@ class BakeCommandListener
         $event->setCommands([
             'debug',
             'assets:build',
-            'clear-cache'
+            'clear-cache',
+            'search:index'
         ]);
     }
 }

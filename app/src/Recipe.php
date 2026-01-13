@@ -14,10 +14,13 @@ use UserFrosting\Event\EventListenerRecipe;
 use UserFrosting\Learn\Bakery\BakeCommandListener;
 use UserFrosting\Learn\Bakery\DebugCommandListener;
 use UserFrosting\Learn\Bakery\DebugVerboseCommandListener;
+use UserFrosting\Learn\Bakery\SearchIndexCommand;
 use UserFrosting\Learn\Bakery\SetupCommandListener;
 use UserFrosting\Learn\Listeners\ResourceLocatorInitiated;
 use UserFrosting\Learn\ServicesProvider\MarkdownService;
+use UserFrosting\Learn\ServicesProvider\SearchServicesProvider;
 use UserFrosting\Learn\Twig\Extensions\FileTreeExtension;
+use UserFrosting\Sprinkle\BakeryRecipe;
 use UserFrosting\Sprinkle\Core\Bakery\Event\BakeCommandEvent;
 use UserFrosting\Sprinkle\Core\Bakery\Event\DebugCommandEvent;
 use UserFrosting\Sprinkle\Core\Bakery\Event\DebugVerboseCommandEvent;
@@ -35,7 +38,8 @@ use UserFrosting\Sprinkle\SprinkleRecipe;
 class Recipe implements
     SprinkleRecipe,
     EventListenerRecipe,
-    TwigExtensionRecipe
+    TwigExtensionRecipe,
+    BakeryRecipe
 {
     /**
      * Return the Sprinkle name.
@@ -104,6 +108,19 @@ class Recipe implements
     {
         return [
             MarkdownService::class,
+            SearchServicesProvider::class,
+        ];
+    }
+
+    /**
+     * Return an array of all registered Bakery Commands.
+     *
+     * {@inheritdoc}
+     */
+    public function getBakeryCommands(): array
+    {
+        return [
+            SearchIndexCommand::class,
         ];
     }
 

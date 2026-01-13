@@ -12,6 +12,7 @@ namespace UserFrosting\Learn;
 
 use Slim\App;
 use UserFrosting\Learn\Controller\DocumentationController;
+use UserFrosting\Learn\Controller\SearchController;
 use UserFrosting\Learn\Middleware\TwigGlobals;
 use UserFrosting\Routes\RouteDefinitionInterface;
 
@@ -19,6 +20,10 @@ class MyRoutes implements RouteDefinitionInterface
 {
     public function register(App $app): void
     {
+        // Route for search API
+        $app->get('/api/search', [SearchController::class, 'search'])
+            ->setName('api.search');
+
         // Route for versioned and non-versioned images
         $app->get('/{version:\d+\.\d+}/images/{path:.*}', [DocumentationController::class, 'imageVersioned'])
             ->add(TwigGlobals::class)
