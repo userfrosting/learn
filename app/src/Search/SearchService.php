@@ -233,6 +233,11 @@ class SearchService
 
         $index = $this->cache->get($cacheKey);
 
-        return is_array($index) ? $index : [];
+        // Ensure we return an array even if cache returns null or unexpected type
+        if (!is_array($index)) {
+            return [];
+        }
+
+        return $index;
     }
 }

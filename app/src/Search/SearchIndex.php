@@ -130,7 +130,7 @@ class SearchIndex
     protected function stripHtmlTags(string $html): string
     {
         // Combined regex: Add space before/after block elements to prevent word concatenation
-        $html = (string) preg_replace([
+        $result = preg_replace([
             '/<(div|p|h[1-6]|li|pre|code|blockquote)[^>]*>/i',  // Opening tags
             '/<\/(div|p|h[1-6]|li|pre|code|blockquote)>/i',     // Closing tags
             '/<(script|style)[^>]*>.*?<\/\1>/is',               // Remove script/style with content
@@ -140,14 +140,26 @@ class SearchIndex
             '',     // Remove script/style entirely
         ], $html);
 
+        // Check if preg_replace failed
+        if ($result === null) {
+            // Fallback to original HTML if regex fails
+            $result = $html;
+        }
+
         // Strip remaining HTML tags
-        $text = strip_tags($html);
+        $text = strip_tags($result);
 
         // Decode HTML entities
         $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
         // Normalize whitespace
-        $text = (string) preg_replace('/\s+/', ' ', $text);
+        $text = preg_replace('/\s+/', ' ', $text);
+        
+        // Check if preg_replace failed
+        if ($text === null) {
+            // Fallback: at least decode entities from stripped HTML
+            $text = html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        }
 
         return trim($text);
     }
