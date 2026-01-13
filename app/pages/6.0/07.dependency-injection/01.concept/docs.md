@@ -62,7 +62,7 @@ $owl1 = new Owl($nest);
 $owl2 = new Owl($improvedNest);
 ```
 
-But how can an owl be sure it's receiving a *nest*, and not a *dog house*? That's where **Interfaces** comes into play. If both `Nest` and `ImprovedNest` implements a `NestInterface` Interface, then the *Owl* can be sure it will receive the proper object : 
+But how can an owl be sure it's receiving a *nest*, and not a *dog house*? That's where **Interfaces** come into play. If both `Nest` and `ImprovedNest` implement a `NestInterface` interface, then the *Owl* can be sure it will receive the proper object:
 
 ```php
 interface NestInterface
@@ -97,16 +97,16 @@ class Owl
 
     public function getNestSize(): string
     {
-        $this->nest->getSize();
+        return $this->nest->getSize();
     }
 }
 ```
 
-In the above example, it doesn't matter if `Owl` received a `Nest` or an `ImprovedNest`, or even a `SuperDuperNest`, as long as they all obey the same definition defined by the `NestInterface`. Moreover, the Owl class can confidently call the `getSize` method of the injected `$nest` property, because the interface makes sure that method is available, no matter which implementation of the `NestInterface` it receives. 
+In the above example, it doesn't matter if `Owl` receives a `Nest` or an `ImprovedNest`, or even a `SuperDuperNest`, as long as they all obey the same contract defined by the `NestInterface`. Moreover, the `Owl` class can confidently call the `getSize()` method of the injected `$nest` property, because the interface ensures that method is available, no matter which implementation of the `NestInterface` it receives. 
 
-Using interfaces to declare what kind of object a class is expected to receive, even if you don't plan to have multiple "nest" types, is a key element in *Autowiring* that we'll see shortly.
+Using interfaces to declare what kind of object a class is expected to receive, even if you don't plan to have multiple "nest" types, is a key element in *autowiring* that we'll see shortly.
 
 This is of course a contrived example, but the general strategy of keeping your classes loosely coupled is a good way to make your code more reusable and easily tested.
 
 > [!TIP]
-> You can learn more, and see other examples, on the [PHP-DI Website : Understanding Dependency Injection](https://php-di.org/doc/understanding-di.html).
+> You can learn more, and see other examples, on the [PHP-DI Website: Understanding Dependency Injection](https://php-di.org/doc/understanding-di.html).
