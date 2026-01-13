@@ -129,13 +129,16 @@ class SearchIndex
      */
     protected function stripHtmlTags(string $html): string
     {
-        // Convert HTML to plain text, preserving code blocks
-        // Add space before/after block elements to prevent word concatenation
-        $html = (string) preg_replace('/<(div|p|h[1-6]|li|pre|code|blockquote)[^>]*>/i', ' $0', $html);
-        $html = (string) preg_replace('/<\/(div|p|h[1-6]|li|pre|code|blockquote)>/i', '$0 ', $html);
-
-        // Remove script and style tags with their content
-        $html = (string) preg_replace('/<(script|style)[^>]*>.*?<\/\1>/is', '', $html);
+        // Combined regex: Add space before/after block elements to prevent word concatenation
+        $html = (string) preg_replace([
+            '/<(div|p|h[1-6]|li|pre|code|blockquote)[^>]*>/i',  // Opening tags
+            '/<\/(div|p|h[1-6]|li|pre|code|blockquote)>/i',     // Closing tags
+            '/<(script|style)[^>]*>.*?<\/\1>/is',               // Remove script/style with content
+        ], [
+            ' $0',  // Space before opening tags
+            '$0 ',  // Space after closing tags
+            '',     // Remove script/style entirely
+        ], $html);
 
         // Strip remaining HTML tags
         $text = strip_tags($html);

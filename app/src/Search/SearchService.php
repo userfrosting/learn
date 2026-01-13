@@ -95,15 +95,23 @@ class SearchService
             return $results;
         }
 
-        // Determine if query contains wildcards
+        // Determine if query contains wildcards (check once before loop)
         $hasWildcards = str_contains($query, '*') || str_contains($query, '?');
+
+        // Pre-compile regex for wildcard searches to avoid recompiling in loop
+        $wildcardRegex = null;
+        if ($hasWildcards) {
+            $pattern = preg_quote($query, '/');
+            $pattern = str_replace(['\*', '\?'], ['.*', '.'], $pattern);
+            $wildcardRegex = '/' . $pattern . '/i';
+        }
 
         foreach ($index as $page) {
             $matches = [];
 
             if ($hasWildcards) {
-                // Use wildcard matching
-                $matches = $this->searchWithWildcard($query, $page['content']);
+                // Use wildcard matching with pre-compiled regex
+                $matches = $this->searchWithWildcard($wildcardRegex, $page['content']);
             } else {
                 // Use simple case-insensitive search
                 $matches = $this->searchPlain($query, $page['content']);
@@ -153,26 +161,21 @@ class SearchService
     /**
      * Search for wildcard pattern matches.
      *
-     * @param string $pattern Pattern with wildcards (* and ?)
+     * @param string $regex Pre-compiled regex pattern
      * @param string $content
      *
      * @return array<int, int> Array of match positions
      */
-    protected function searchWithWildcard(string $pattern, string $content): array
+    protected function searchWithWildcard(string $regex, string $content): array
     {
         $matches = [];
-
-        // Convert wildcard pattern to regex
-        // Escape special regex characters except * and ?
-        $regex = preg_quote($pattern, '/');
-        $regex = str_replace(['\*', '\?'], ['.*', '.'], $regex);
-        $regex = '/' . $regex . '/i'; // Case-insensitive
 
         // Split content into words and check each word
         $words = preg_split('/\s+/', $content);
         $offset = 0;
 
         if ($words === false) {
+            // Log error if needed in the future, but for now just return empty
             return $matches;
         }
 
