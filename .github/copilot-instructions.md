@@ -36,6 +36,8 @@ When editing the documentation markdown files, references to code samples only t
 
 Suggest improvements to clarity, grammar, and formatting as needed, but do not change technical content unless verifying against the UserFrosting monorepo. Suggest adding new documentation pages or content only when there is a clear gap in coverage of UserFrosting features or concepts.
 
+You may search the web for relevant external resources to link to, but ensure they are reputable and accurate. Always prioritize official documentation from third-party libraries or tools used by UserFrosting. You may also use other resources as example and inspiration for writing style, but the content must be original and specific to UserFrosting, otherwise proper source must be cited.
+
 ### Identifying Obsolete Documentation
 **CRITICAL: Always check for the `obsolete: true` flag in page frontmatter.**
 
