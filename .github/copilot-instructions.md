@@ -57,7 +57,13 @@ Examples of checks to perform:
 When you encounter `obsolete: true` pages, inform the user that the content is outdated and may need to be rewritten to match current UF6 implementation.
 
 ### Documentation Style
-The documentation tone should be casual, clear, and aimed at PHP developers of varying experience levels, but mostly novices and non-developers. It should focus on practical usage, configuration, and extension of UserFrosting, with examples and best practices. It should link to relevant external resources where appropriate.
+The documentation tone should be casual, clear, fun and aimed at PHP developers of varying experience levels, but mostly novices and non-developers. The tone should be educational. UserFrosting is designed to bring new and returning developers up to speed with the modern PHP community. It should focus on learning best practices and coding first, and only teach the user how to use UserFrosting to build their project as a second step. It should do so with practical and fun examples. The end goal is to educate and empower users. 
+
+The documentation **SHOULD** avoid jargon and explain concepts in simple terms. Use analogies and examples where appropriate to clarify complex topics.
+
+The documentation **SHOULD** is meant to be read sequentially, with each chapter building on the previous ones. However, individual pages should also be understandable on their own.
+
+It should link to relevant external resources where appropriate.
 
 UserFrosting should always be referred to in the documentation as "UserFrosting" (with proper case) or "UF", never "UF6" or "UserFrosting 6" except when specifically discussing version differences.
 
@@ -78,14 +84,74 @@ Internal links should use absolute paths without version numbers to allow automa
 
 Pages have anchor links for sections (e.g., `#motivation`). Ensure links point to existing sections.
 
-### Chapter and Page Structure
+### Chapters and Pages
 Documentation pages are stored in `docs.md` or `chapter.md` files under `app/pages/{version}/` (e.g., `app/pages/6.0/01.quick-start/docs.md`).
 
-`docs.md` files are standalone documentation pages, while `chapter.md` files represent chapters that may contain multiple sections or sub-pages. Chapters are displayed with their own landing page summarizing the chapter content. The content of a chapter's is typically an introduction or overview of the chapter topic, consisting of a title and a short paragraph.
+`docs.md` files are standalone documentation pages, while `chapter.md` files represent chapters that may contain multiple sections or sub-pages. Chapters are displayed with their own landing page summarizing the chapter content. 
+
+**Chapter Structure Best Practice:**
+Chapter content should follow this pattern for maximum clarity:
+1. Start with `#### Chapter N` and `# Chapter Title` headings
+2. Provide a brief contextual introduction explaining the problem domain or why the topic matters
+3. Introduce the solution or approach UserFrosting uses
+4. Conclude with what the chapter will cover
+
+This problem → solution structure helps readers understand the "why" before diving into the "how". For example, the Asset Management chapter first explains the challenges of serving assets (locating files, URL generation, bundling, framework integration, dependencies), then introduces Vite as the solution, and finally outlines the chapter contents.
+
+Chapters **MUST** contain:
+- A level 4 heading with the chapter number (`#### Chapter 13`)  
+- A top-level heading with the chapter title (`# Asset Management`)
+- Descriptive content explaining the chapter's purpose and scope
 
 Folder names control the breadcrumb and tree hierarchy in the sidebar navigation. Numeric prefixes (e.g., `01.`) control ordering of pages in the navigation.
 
 When adding new pages, ensure they are placed in the correct folder structure to reflect their logical grouping and order. Update any relevant navigation or links to include the new pages. Update numbering if required.
+
+### Pages Frontmatter
+Each documentation page has YAML frontmatter at the top with metadata. Common fields include:
+- `title`: The page title displayed in the header and navigation
+- `description`: A short description of the page content (direct field, not nested under `metadata`)
+- `obsolete`: (boolean) Whether the page contains obsolete documentation, usually from a previous version, that requires updating
+- `tags`: (array) Optional tags displayed to the user for categorization
+- `keywords`: (array) Optional keywords for search optimization
+
+When creating or editing pages, ensure the frontmatter is accurate and complete. 
+
+Frontmatter **SHOULD NOT** include any other fields beyond those documented here, especially the outdated `taxonomy` and `metadata` fields.
+
+**Example (docs.md page):**
+```yaml
+---
+title: Getting Started
+description: Learn how to set up Vite for asset management in UserFrosting.
+---, images, fonts, and other resources — create the client-side experience of your web application. When dealing with assets on the server, our application needs to address some problems:
+
+1. How do we locate an assets that's usually not located in the publicly served folder and **generate an appropriate URL** proxy so it can be accessed publicly?
+2. When the client actually loads a page and **requests** an asset via the URL, how do we map the URL back to a file path on the server and return it to the client?
+3. How do we handle compiled assets and bundle assets together to improve efficiency?
+4. How do we integrate with modern frameworks, like Vue.JS, or preprocessors like Less or Sass? 
+5. How to we load external NPM dependencies?
+
+To answer this, UserFrosting uses **Vite** as its default asset bundler to manage, compile, and optimize these resources efficiently.
+
+Vite provides lightning-fast development with Hot Module Replacement (HMR), instant server start, and optimized production builds. It offers native support for modern web technologies including TypeScript, Vue 3, CSS preprocessors, and ESM modules.
+
+This chapter covers everything you need to know about managing assets in UserFrosting, from basic setup to advanced optimization techniques.
+```
+
+**Example (chapter.md page):**
+```yaml
+---
+title: Asset Management
+description: Learn how to manage, compile, and optimize frontend assets in UserFrosting using Vite.
+---
+
+#### Chapter 13
+
+# Asset Management
+
+Frontend assets — JavaScript, TypeScript, CSS, Vue components... [content continues]
+```
 
 ## Project-Specific Patterns
 Use these patterns when working on the documentation site codebase only (itself, not the documentation content).:
