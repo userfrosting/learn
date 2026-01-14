@@ -112,6 +112,7 @@ Each documentation page has YAML frontmatter at the top with metadata. Common fi
 - `title`: The page title displayed in the header and navigation
 - `description`: A short description of the page content (direct field, not nested under `metadata`)
 - `obsolete`: (boolean) Whether the page contains obsolete documentation, usually from a previous version, that requires updating
+- `wip`: (boolean) Whether the page is a work in progress and not yet complete. Compared to "obsolete", this indicates the page is valid for the current version, but is actively being worked on.
 - `tags`: (array) Optional tags displayed to the user for categorization
 - `keywords`: (array) Optional keywords for search optimization
 
