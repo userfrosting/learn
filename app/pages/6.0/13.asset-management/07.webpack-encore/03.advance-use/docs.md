@@ -1,8 +1,15 @@
 ---
 title: Enabling Sass, Less, Vue and React
 description: ""
-obsolete: true
 ---
+
+> [!WARNING]
+> **This documentation is obsolete.** UserFrosting 6 uses **Vite** as the default asset bundler, not Webpack Encore.
+> 
+> Please see:
+> - [Advanced Usage](/asset-management/advanced) for TypeScript, Vue 3, CSS preprocessors, and optimization
+> - [Sprinkle Assets](/asset-management/sprinkle-assets) for building sprinkles as libraries
+> - [Migration Guide](/asset-management/migration) to migrate from Webpack Encore
 
 By using Webpack Encore to manage frontend assets, Sass, Less, Vue and React can be used with UserFrosting out of the box.
 
