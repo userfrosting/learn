@@ -93,8 +93,8 @@ class SearchControllerTest extends TestCase
         $request = $this->createRequest('GET', '/api/search');
         $response = $this->handleRequest($request);
 
-        // Assert successful response
-        $this->assertResponseStatus(200, $response);
+        // Should return 400 Bad Request for invalid query
+        $this->assertResponseStatus(400, $response);
 
         // Parse JSON response
         $body = (string) $response->getBody();
@@ -103,6 +103,28 @@ class SearchControllerTest extends TestCase
         $this->assertIsArray($data);
         $this->assertSame(0, $data['count_filtered']);
         $this->assertEmpty($data['rows']);
+        $this->assertArrayHasKey('error', $data);
+    }
+    
+    /**
+     * Test search API endpoint with query too short.
+     */
+    public function testSearchEndpointQueryTooShort(): void
+    {
+        // Create request with query too short (less than min_length)
+        $request = $this->createRequest('GET', '/api/search?q=ab');
+        $response = $this->handleRequest($request);
+
+        // Should return 400 Bad Request for query too short
+        $this->assertResponseStatus(400, $response);
+
+        // Parse JSON response
+        $body = (string) $response->getBody();
+        $data = json_decode($body, true);
+
+        $this->assertIsArray($data);
+        $this->assertArrayHasKey('error', $data);
+        $this->assertStringContainsString('at least', $data['error']);
     }
 
     /**

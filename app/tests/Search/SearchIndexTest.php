@@ -104,6 +104,8 @@ class SearchIndexTest extends TestCase
         $this->assertArrayHasKey('route', $firstPage);
         $this->assertArrayHasKey('content', $firstPage);
         $this->assertArrayHasKey('version', $firstPage);
+        $this->assertArrayHasKey('keywords', $firstPage);
+        $this->assertArrayHasKey('metadata', $firstPage);
 
         // Content should be plain text (no HTML tags)
         $this->assertStringNotContainsString('<', $firstPage['content']);
