@@ -16,6 +16,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use UserFrosting\Config\Config;
 use UserFrosting\Learn\Search\SearchService;
+use UserFrosting\Learn\Search\SearchSprunje;
 
 /**
  * Controller for the documentation search API.
@@ -67,23 +68,19 @@ class SearchController
                 ->withStatus(400);
         }
 
-        // Get pagination parameters from config with fallbacks
-        $defaultPage = $this->config->get('learn.search.default_page', 1);
-        $defaultSize = $this->config->get('learn.search.default_size', 10);
-        $maxSize = $this->config->get('learn.search.max_size', 100);
-        
-        $page = isset($params['page']) ? max(1, (int) $params['page']) : $defaultPage;
-        $size = isset($params['size']) ? min($maxSize, max(1, (int) $params['size'])) : $defaultSize;
+        // Prepare options for Sprunje
+        $sprunjeOptions = [
+            'query'   => $query,
+            'version' => $params['version'] ?? null,
+            'page'    => isset($params['page']) ? (int) $params['page'] : null,
+            'size'    => $params['size'] ?? null,
+            'format'  => 'json',
+        ];
 
-        // Get version parameter
-        $version = $params['version'] ?? null;
+        // Create and execute Sprunje
+        $sprunje = new SearchSprunje($this->searchService, $this->config, $sprunjeOptions);
 
-        // Perform search
-        $result = $this->searchService->search($query, $version, $page, $size);
-
-        // Write JSON response
-        $response->getBody()->write(json_encode($result, JSON_THROW_ON_ERROR));
-
-        return $response->withHeader('Content-Type', 'application/json');
+        // Return response via Sprunje
+        return $sprunje->toResponse($response);
     }
 }
