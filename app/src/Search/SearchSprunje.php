@@ -63,10 +63,10 @@ class SearchSprunje extends Sprunje
     }
 
     /**
-     * Required by Sprunje abstract class, but not used for search functionality.
+     * Required by Sprunje abstract class, but should never be called in SearchSprunje.
      * 
-     * SearchSprunje uses SearchService instead of Eloquent queries, so this method
-     * is not called. We override getModels() to bypass the database query system.
+     * SearchSprunje uses SearchService instead of Eloquent queries. We override
+     * getModels() to use SearchService directly, bypassing the database query system.
      * 
      * @throws \RuntimeException if accidentally called
      * @return EloquentBuilderContract|QueryBuilderContract
@@ -89,10 +89,10 @@ class SearchSprunje extends Sprunje
         $page = $this->options['page'] ?? 1;
         $size = $this->options['size'] ?? $this->config->get('learn.search.default_size', 10);
         
-        // Handle 'all' size
+        // Handle 'all' size - return all results from first page
         if ($size === 'all') {
             $size = $this->config->get('learn.search.max_results', 1000);
-            $page = 1; // Start at page 1, not 0
+            $page = 1; // Reset to first page when returning all results
         } else {
             $size = (int) $size;
             $page = (int) $page;

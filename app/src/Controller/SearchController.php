@@ -49,7 +49,7 @@ class SearchController
         // Get query parameter
         $query = $params['q'] ?? '';
 
-        // Validate query before creating Sprunje (Sprunje will validate length)
+        // Create Sprunje which validates query length in its constructor
         try {
             // Prepare options for Sprunje
             $sprunjeOptions = [
@@ -60,7 +60,7 @@ class SearchController
                 'format'  => 'json',
             ];
 
-            // Create and execute Sprunje (validates query length internally)
+            // Create and execute Sprunje (validates query length in constructor)
             $sprunje = new SearchSprunje($this->searchService, $this->config, $sprunjeOptions);
 
             // Return response via Sprunje
