@@ -50,6 +50,12 @@ class SearchSprunje extends Sprunje
         $this->searchQuery = $options['query'] ?? '';
         $this->version = $options['version'] ?? null;
         
+        // Validate query here for consistency
+        $minLength = $this->config->get('learn.search.min_length', 3);
+        if ($this->searchQuery === '' || mb_strlen($this->searchQuery) < $minLength) {
+            throw new \InvalidArgumentException("Query must be at least {$minLength} characters long");
+        }
+        
         // Remove search-specific options before parent processes them
         unset($options['query'], $options['version']);
         
@@ -57,16 +63,19 @@ class SearchSprunje extends Sprunje
     }
 
     /**
-     * Required by Sprunje, but not used since we don't use Eloquent queries.
-     * Returns a dummy query builder.
-     *
+     * Required by Sprunje abstract class, but not used for search functionality.
+     * 
+     * SearchSprunje uses SearchService instead of Eloquent queries, so this method
+     * is not called. We override getModels() to bypass the database query system.
+     * 
+     * @throws \RuntimeException if accidentally called
      * @return EloquentBuilderContract|QueryBuilderContract
      */
     protected function baseQuery(): EloquentBuilderContract|QueryBuilderContract
     {
-        // This is never actually used since we override getModels
-        // But we need to return something to satisfy the abstract method
-        throw new \RuntimeException('baseQuery should not be called on SearchSprunje');
+        // This should never be called since we override getModels().
+        // If it is called, it indicates a problem with our implementation.
+        throw new \RuntimeException('SearchSprunje does not use database queries. Use getModels() directly.');
     }
 
     /**
@@ -83,7 +92,7 @@ class SearchSprunje extends Sprunje
         // Handle 'all' size
         if ($size === 'all') {
             $size = $this->config->get('learn.search.max_results', 1000);
-            $page = 0;
+            $page = 1; // Start at page 1, not 0
         } else {
             $size = (int) $size;
             $page = (int) $page;

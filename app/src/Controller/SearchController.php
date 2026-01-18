@@ -49,16 +49,29 @@ class SearchController
         // Get query parameter
         $query = $params['q'] ?? '';
 
-        // Get minimum length from config
-        $minLength = $this->config->get('learn.search.min_length', 3);
+        // Validate query before creating Sprunje (Sprunje will validate length)
+        try {
+            // Prepare options for Sprunje
+            $sprunjeOptions = [
+                'query'   => $query,
+                'version' => $params['version'] ?? null,
+                'page'    => isset($params['page']) ? (int) $params['page'] : null,
+                'size'    => $params['size'] ?? null,
+                'format'  => 'json',
+            ];
 
-        // Validate query length
-        if ($query === '' || mb_strlen($query) < $minLength) {
+            // Create and execute Sprunje (validates query length internally)
+            $sprunje = new SearchSprunje($this->searchService, $this->config, $sprunjeOptions);
+
+            // Return response via Sprunje
+            return $sprunje->toResponse($response);
+        } catch (\InvalidArgumentException $e) {
+            // Handle validation errors consistently
             $result = [
                 'rows'           => [],
                 'count'          => 0,
                 'count_filtered' => 0,
-                'error'          => "Query must be at least {$minLength} characters long",
+                'error'          => $e->getMessage(),
             ];
 
             $response->getBody()->write(json_encode($result, JSON_THROW_ON_ERROR));
@@ -67,20 +80,5 @@ class SearchController
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(400);
         }
-
-        // Prepare options for Sprunje
-        $sprunjeOptions = [
-            'query'   => $query,
-            'version' => $params['version'] ?? null,
-            'page'    => isset($params['page']) ? (int) $params['page'] : null,
-            'size'    => $params['size'] ?? null,
-            'format'  => 'json',
-        ];
-
-        // Create and execute Sprunje
-        $sprunje = new SearchSprunje($this->searchService, $this->config, $sprunjeOptions);
-
-        // Return response via Sprunje
-        return $sprunje->toResponse($response);
     }
 }
