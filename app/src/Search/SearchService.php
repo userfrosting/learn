@@ -21,7 +21,6 @@ use UserFrosting\Config\Config;
  * Performs searches against the indexed documentation content with:
  * - Wildcard pattern matching
  * - Snippet extraction with context
- * - Pagination support
  * - Result caching
  */
 class SearchService
@@ -33,77 +32,38 @@ class SearchService
     }
 
     /**
-     * Search for a query in the documentation for a specific version.
+     * Get the search index for a specific version from cache.
+     * Public method for use by SearchSprunje.
      *
-     * @param string      $query   The search query (supports wildcards: * and ?)
-     * @param string|null $version The version to search in, or null for latest
-     * @param int         $page    The page number (1-indexed)
-     * @param int         $perPage Number of results per page
+     * @param string $version
      *
-     * @return array{rows: array, count: int, count_filtered: int}
+     * @return array<int, array{title: string, slug: string, route: string, content: string, version: string, keywords: string, metadata: string}>
      */
-    public function search(string $query, ?string $version, int $page = 1, int $perPage = 10): array
+    public function getIndex(string $version): array
     {
-        // Get the version to search
-        $versionId = $version ?? $this->config->get('learn.versions.latest');
-        
-        if ($versionId === null) {
-            return [
-                'rows'           => [],
-                'count'          => 0,
-                'count_filtered' => 0,
-            ];
+        $keyFormat = $this->config->get('learn.search.index.key', 'learn.search-index.%1$s');
+        $cacheKey = sprintf($keyFormat, $version);
+
+        $index = $this->cache->get($cacheKey);
+
+        // Ensure we return an array even if cache returns null or unexpected type
+        if (!is_array($index)) {
+            return [];
         }
 
-        // Check cache for this search
-        $cacheKey = $this->getResultsCacheKey($query, $versionId, $page, $perPage);
-        $cached = $this->cache->get($cacheKey);
-        
-        if (is_array($cached)) {
-            return $cached;
-        }
-
-        // Get the index from cache
-        $index = $this->getIndex($versionId);
-
-        if (count($index) === 0) {
-            return [
-                'rows'           => [],
-                'count'          => 0,
-                'count_filtered' => 0,
-            ];
-        }
-
-        // Search through the index
-        $results = $this->performSearch($query, $index);
-
-        // Paginate results
-        $totalResults = count($results);
-        $offset = ($page - 1) * $perPage;
-        $paginatedResults = array_slice($results, $offset, $perPage);
-
-        $response = [
-            'rows'           => $paginatedResults,
-            'count'          => count($index),
-            'count_filtered' => $totalResults,
-        ];
-        
-        // Cache the results
-        $ttl = $this->config->get('learn.search.results_cache_ttl', 3600);
-        $this->cache->put($cacheKey, $response, $ttl);
-
-        return $response;
+        return $index;
     }
 
     /**
      * Perform the actual search and generate results with snippets.
+     * Public method for use by SearchSprunje.
      *
      * @param string                                                                                                          $query
      * @param array<int, array{title: string, slug: string, route: string, content: string, version: string, keywords: string, metadata: string}> $index
      *
      * @return array<int, array{title: string, slug: string, route: string, snippet: string, matches: int, version: string}>
      */
-    protected function performSearch(string $query, array $index): array
+    public function performSearch(string $query, array $index): array
     {
         $results = [];
         $query = trim($query);
@@ -263,42 +223,5 @@ class SearchService
 
         return $snippet;
     }
-
-    /**
-     * Get the cache key for search results.
-     *
-     * @param string $query
-     * @param string $version
-     * @param int    $page
-     * @param int    $perPage
-     *
-     * @return string
-     */
-    protected function getResultsCacheKey(string $query, string $version, int $page, int $perPage): string
-    {
-        $keyFormat = $this->config->get('learn.search.results_cache_key', 'learn.search-results.%1$s.%2$s.%3$s.%4$s');
-        return sprintf($keyFormat, md5($query), $version, $page, $perPage);
-    }
-
-    /**
-     * Get the search index for a specific version from cache.
-     *
-     * @param string $version
-     *
-     * @return array<int, array{title: string, slug: string, route: string, content: string, version: string, keywords: string, metadata: string}>
-     */
-    protected function getIndex(string $version): array
-    {
-        $keyFormat = $this->config->get('learn.index.key', 'learn.search-index.%1$s');
-        $cacheKey = sprintf($keyFormat, $version);
-
-        $index = $this->cache->get($cacheKey);
-
-        // Ensure we return an array even if cache returns null or unexpected type
-        if (!is_array($index)) {
-            return [];
-        }
-
-        return $index;
-    }
 }
+

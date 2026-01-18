@@ -68,10 +68,11 @@ return [
             'max_results'       => 1000,
             'results_cache_ttl' => 3600,
             'results_cache_key' => 'learn.search-results.%1$s.%2$s.%3$s.%4$s',
-        ],
-        'index' => [
-            'key' => 'learn.search-index.%1$s',
-            'ttl' => 86400 * 7, // 7 days
+            'index' => [
+                'key'             => 'learn.search-index.%1$s',
+                'ttl'             => 86400 * 7, // 7 days
+                'metadata_fields' => ['description', 'tags', 'category', 'author'],
+            ],
         ],
     ],
 

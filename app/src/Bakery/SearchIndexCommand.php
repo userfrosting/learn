@@ -16,7 +16,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
+use UserFrosting\Bakery\WithSymfonyStyle;
 use UserFrosting\Learn\Search\SearchIndex;
 
 /**
@@ -24,7 +24,7 @@ use UserFrosting\Learn\Search\SearchIndex;
  */
 class SearchIndexCommand extends Command
 {
-    protected SymfonyStyle $io;
+    use WithSymfonyStyle;
 
     /**
      * @param SearchIndex $searchIndex
@@ -43,7 +43,7 @@ class SearchIndexCommand extends Command
         $this->setName('search:index')
             ->setDescription('Build or rebuild the search index for documentation')
             ->addOption(
-                'version',
+                'doc-version',
                 null,
                 InputOption::VALUE_OPTIONAL,
                 'Documentation version to index (omit to index all versions)'
@@ -61,12 +61,10 @@ class SearchIndexCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->io = new SymfonyStyle($input, $output);
-        
         $this->io->title('Documentation Search Index');
 
         /** @var string|null $version */
-        $version = $input->getOption('version');
+        $version = $input->getOption('doc-version');
         $clear = $input->getOption('clear');
 
         // Clear index if requested

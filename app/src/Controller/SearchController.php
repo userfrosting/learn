@@ -17,6 +17,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use UserFrosting\Config\Config;
 use UserFrosting\Learn\Search\SearchService;
 use UserFrosting\Learn\Search\SearchSprunje;
+use UserFrosting\Sprinkle\Core\Exceptions\NotFoundException;
 
 /**
  * Controller for the documentation search API.
@@ -66,19 +67,8 @@ class SearchController
             // Return response via Sprunje
             return $sprunje->toResponse($response);
         } catch (\InvalidArgumentException $e) {
-            // Handle validation errors consistently
-            $result = [
-                'rows'           => [],
-                'count'          => 0,
-                'count_filtered' => 0,
-                'error'          => $e->getMessage(),
-            ];
-
-            $response->getBody()->write(json_encode($result, JSON_THROW_ON_ERROR));
-
-            return $response
-                ->withHeader('Content-Type', 'application/json')
-                ->withStatus(400);
+            // Throw NotFoundException for empty/invalid queries
+            throw new NotFoundException($e->getMessage());
         }
     }
 }

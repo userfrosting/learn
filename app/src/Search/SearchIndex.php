@@ -125,7 +125,7 @@ class SearchIndex
         
         // Extract other relevant metadata (description, tags, etc.)
         $metadata = [];
-        $metadataFields = ['description', 'tags', 'category', 'author'];
+        $metadataFields = $this->config->get('learn.search.index.metadata_fields', ['description', 'tags', 'category', 'author']);
         foreach ($metadataFields as $field) {
             if (isset($frontMatter[$field])) {
                 if (is_array($frontMatter[$field])) {
@@ -224,7 +224,7 @@ class SearchIndex
      */
     protected function getCacheKey(string $version): string
     {
-        $keyFormat = $this->config->get('learn.index.key', 'learn.search-index.%1$s');
+        $keyFormat = $this->config->get('learn.search.index.key', 'learn.search-index.%1$s');
 
         return sprintf($keyFormat, $version);
     }
@@ -236,7 +236,7 @@ class SearchIndex
      */
     protected function getCacheTtl(): int
     {
-        return $this->config->get('learn.index.ttl', 86400 * 7);
+        return $this->config->get('learn.search.index.ttl', 86400 * 7);
     }
 
     /**

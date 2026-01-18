@@ -12,8 +12,7 @@ declare(strict_types=1);
 
 namespace UserFrosting\Learn\Search;
 
-use Illuminate\Contracts\Database\Eloquent\Builder as EloquentBuilderContract;
-use Illuminate\Contracts\Database\Query\Builder as QueryBuilderContract;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Collection;
 use UserFrosting\Config\Config;
 use UserFrosting\Sprinkle\Core\Sprunje\Sprunje;
@@ -59,23 +58,26 @@ class SearchSprunje extends Sprunje
         // Remove search-specific options before parent processes them
         unset($options['query'], $options['version']);
         
+        // Call parent constructor which will initialize the query via baseQuery()
         parent::__construct($options);
     }
 
     /**
-     * Required by Sprunje abstract class, but should never be called in SearchSprunje.
+     * Required by Sprunje abstract class. Returns a dummy Eloquent builder.
      * 
-     * SearchSprunje uses SearchService instead of Eloquent queries. We override
-     * getModels() to use SearchService directly, bypassing the database query system.
-     * 
-     * @throws \RuntimeException if accidentally called
-     * @return EloquentBuilderContract|QueryBuilderContract
+     * SearchSprunje doesn't use database queries - we override getModels() 
+     * to use SearchService directly. This builder is never actually used for queries.
+     *
+     * @return EloquentBuilder
      */
-    protected function baseQuery(): EloquentBuilderContract|QueryBuilderContract
+    protected function baseQuery(): EloquentBuilder
     {
-        // This should never be called since we override getModels().
-        // If it is called, it indicates a problem with our implementation.
-        throw new \RuntimeException('SearchSprunje does not use database queries. Use getModels() directly.');
+        // Return a dummy Eloquent builder that won't be used
+        // We use a simple Eloquent model just to satisfy the type requirement
+        $model = new class extends \Illuminate\Database\Eloquent\Model {
+            protected $table = 'dummy';
+        };
+        return $model::query();
     }
 
     /**
@@ -85,28 +87,29 @@ class SearchSprunje extends Sprunje
      */
     public function getModels(): array
     {
-        // Get pagination parameters
-        $page = $this->options['page'] ?? 1;
-        $size = $this->options['size'] ?? $this->config->get('learn.search.default_size', 10);
+        // Get the version to search
+        $versionId = $this->version ?? $this->config->get('learn.versions.latest');
         
-        // Handle 'all' size - return all results from first page
-        if ($size === 'all') {
-            $size = $this->config->get('learn.search.max_results', 1000);
-            $page = 1; // Reset to first page when returning all results
-        } else {
-            $size = (int) $size;
-            $page = (int) $page;
+        if ($versionId === null) {
+            return [0, 0, collect([])];
         }
 
-        // Perform search via SearchService
-        $result = $this->searchService->search($this->searchQuery, $this->version, $page, $size);
+        // Get the index from cache
+        $index = $this->searchService->getIndex($versionId);
+
+        if (count($index) === 0) {
+            return [0, 0, collect([])];
+        }
+
+        // Search through the index (without pagination - Sprunje handles that)
+        $results = $this->searchService->performSearch($this->searchQuery, $index);
 
         // Convert to Collection for compatibility
-        $collection = collect($result['rows']);
+        $collection = collect($results);
 
         return [
-            $result['count'],
-            $result['count_filtered'],
+            count($index),
+            count($results),
             $collection,
         ];
     }
