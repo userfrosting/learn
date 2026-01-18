@@ -58,7 +58,7 @@ class SearchSprunje extends Sprunje
         // Remove search-specific options before parent processes them
         unset($options['query'], $options['version']);
         
-        // Call parent constructor which will initialize the query via baseQuery()
+        // Call parent constructor
         parent::__construct($options);
     }
 
@@ -66,18 +66,16 @@ class SearchSprunje extends Sprunje
      * Required by Sprunje abstract class. Returns a dummy Eloquent builder.
      * 
      * SearchSprunje doesn't use database queries - we override getModels() 
-     * to use SearchService directly. This builder is never actually used for queries.
+     * to use SearchService directly. This builder is only used internally
+     * by Sprunje for type requirements and is never actually queried.
      *
      * @return EloquentBuilder
      */
     protected function baseQuery(): EloquentBuilder
     {
-        // Return a dummy Eloquent builder that won't be used
-        // We use a simple Eloquent model just to satisfy the type requirement
-        $model = new class extends \Illuminate\Database\Eloquent\Model {
-            protected $table = 'dummy';
-        };
-        return $model::query();
+        // Return a dummy Eloquent builder that won't be used for actual queries
+        $model = new \UserFrosting\Learn\Search\DummySearchModel();
+        return $model->newQuery();
     }
 
     /**
