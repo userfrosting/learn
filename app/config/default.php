@@ -59,6 +59,20 @@ return [
             ],
             'latest' => '6.0',
         ],
+        'search' => [
+            'min_length'        => 3,
+            'default_page'      => 1,
+            'default_size'      => 10,
+            'max_size'          => 100,
+            'snippet_length'    => 150,
+            'max_results'       => 1000,
+            'results_cache_ttl' => 3600,
+            'results_cache_key' => 'learn.search-results.%1$s.%2$s.%3$s.%4$s',
+        ],
+        'index' => [
+            'key' => 'learn.search-index.%1$s',
+            'ttl' => 86400 * 7, // 7 days
+        ],
     ],
 
     /*

@@ -16,14 +16,16 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use UserFrosting\Learn\Search\SearchIndex;
-use UserFrosting\Sprinkle\Core\Bakery\BaseCommand;
 
 /**
  * Bakery command to rebuild the search index for documentation.
  */
-class SearchIndexCommand extends BaseCommand
+class SearchIndexCommand extends Command
 {
+    protected SymfonyStyle $io;
+
     /**
      * @param SearchIndex $searchIndex
      */
@@ -59,6 +61,8 @@ class SearchIndexCommand extends BaseCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->io = new SymfonyStyle($input, $output);
+        
         $this->io->title('Documentation Search Index');
 
         /** @var string|null $version */
@@ -66,7 +70,7 @@ class SearchIndexCommand extends BaseCommand
         $clear = $input->getOption('clear');
 
         // Clear index if requested
-        if ($clear) {
+        if ($clear === true) {
             $this->io->writeln('Clearing search index...');
             $this->searchIndex->clearIndex($version);
             $this->io->success('Search index cleared.');

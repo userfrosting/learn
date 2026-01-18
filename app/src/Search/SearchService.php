@@ -22,15 +22,10 @@ use UserFrosting\Config\Config;
  * - Wildcard pattern matching
  * - Snippet extraction with context
  * - Pagination support
+ * - Result caching
  */
 class SearchService
 {
-    /** @var int Default number of characters to show in snippet context */
-    protected const SNIPPET_CONTEXT_LENGTH = 150;
-
-    /** @var int Maximum number of results to return */
-    protected const MAX_RESULTS = 1000;
-
     public function __construct(
         protected Cache $cache,
         protected Config $config,
@@ -47,15 +42,31 @@ class SearchService
      *
      * @return array{rows: array, count: int, count_filtered: int}
      */
-    public function search(string $query, ?string $version = null, int $page = 1, int $perPage = 10): array
+    public function search(string $query, ?string $version, int $page = 1, int $perPage = 10): array
     {
         // Get the version to search
-        $versionId = $version ?? $this->config->get('learn.versions.latest', '6.0');
+        $versionId = $version ?? $this->config->get('learn.versions.latest');
+        
+        if ($versionId === null) {
+            return [
+                'rows'           => [],
+                'count'          => 0,
+                'count_filtered' => 0,
+            ];
+        }
+
+        // Check cache for this search
+        $cacheKey = $this->getResultsCacheKey($query, $versionId, $page, $perPage);
+        $cached = $this->cache->get($cacheKey);
+        
+        if (is_array($cached)) {
+            return $cached;
+        }
 
         // Get the index from cache
         $index = $this->getIndex($versionId);
 
-        if (empty($index)) {
+        if (count($index) === 0) {
             return [
                 'rows'           => [],
                 'count'          => 0,
@@ -71,18 +82,24 @@ class SearchService
         $offset = ($page - 1) * $perPage;
         $paginatedResults = array_slice($results, $offset, $perPage);
 
-        return [
+        $response = [
             'rows'           => $paginatedResults,
             'count'          => count($index),
             'count_filtered' => $totalResults,
         ];
+        
+        // Cache the results
+        $ttl = $this->config->get('learn.search.results_cache_ttl', 3600);
+        $this->cache->put($cacheKey, $response, $ttl);
+
+        return $response;
     }
 
     /**
      * Perform the actual search and generate results with snippets.
      *
-     * @param string                                                                                   $query
-     * @param array<int, array{title: string, slug: string, route: string, content: string, version: string}> $index
+     * @param string                                                                                                          $query
+     * @param array<int, array{title: string, slug: string, route: string, content: string, version: string, keywords: string, metadata: string}> $index
      *
      * @return array<int, array{title: string, slug: string, route: string, snippet: string, matches: int, version: string}>
      */
@@ -91,7 +108,7 @@ class SearchService
         $results = [];
         $query = trim($query);
 
-        if (empty($query)) {
+        if ($query === '') {
             return $results;
         }
 
@@ -107,32 +124,60 @@ class SearchService
         }
 
         foreach ($index as $page) {
-            $matches = [];
+            $titleMatches = [];
+            $keywordMatches = [];
+            $metadataMatches = [];
+            $contentMatches = [];
 
+            // Search in different fields with priority
             if ($hasWildcards) {
-                // Use wildcard matching with pre-compiled regex
-                $matches = $this->searchWithWildcard($wildcardRegex, $page['content']);
+                $titleMatches = $this->searchWithWildcard($wildcardRegex, $page['title']);
+                $keywordMatches = $this->searchWithWildcard($wildcardRegex, $page['keywords']);
+                $metadataMatches = $this->searchWithWildcard($wildcardRegex, $page['metadata']);
+                $contentMatches = $this->searchWithWildcard($wildcardRegex, $page['content']);
             } else {
-                // Use simple case-insensitive search
-                $matches = $this->searchPlain($query, $page['content']);
+                $titleMatches = $this->searchPlain($query, $page['title']);
+                $keywordMatches = $this->searchPlain($query, $page['keywords']);
+                $metadataMatches = $this->searchPlain($query, $page['metadata']);
+                $contentMatches = $this->searchPlain($query, $page['content']);
             }
 
-            if (!empty($matches)) {
+            // Calculate weighted score: title > keywords > metadata > content
+            $score = count($titleMatches) * 10 + count($keywordMatches) * 5 + count($metadataMatches) * 2 + count($contentMatches);
+
+            if ($score > 0) {
+                // Prefer snippet from title/keywords/metadata if found, otherwise content
+                $snippetPosition = 0;
+                if (count($titleMatches) > 0) {
+                    $snippetPosition = $titleMatches[0];
+                    $snippetContent = $page['title'];
+                } elseif (count($keywordMatches) > 0) {
+                    $snippetPosition = $keywordMatches[0];
+                    $snippetContent = $page['keywords'];
+                } elseif (count($metadataMatches) > 0) {
+                    $snippetPosition = $metadataMatches[0];
+                    $snippetContent = $page['metadata'];
+                } else {
+                    $snippetPosition = $contentMatches[0];
+                    $snippetContent = $page['content'];
+                }
+
                 $results[] = [
                     'title'   => $page['title'],
                     'slug'    => $page['slug'],
                     'route'   => $page['route'],
-                    'snippet' => $this->generateSnippet($page['content'], $matches[0]),
-                    'matches' => count($matches),
+                    'snippet' => $this->generateSnippet($snippetContent, $snippetPosition),
+                    'matches' => $score,
                     'version' => $page['version'],
                 ];
             }
         }
 
-        // Sort by number of matches (descending)
+        // Sort by weighted score (descending)
         usort($results, fn ($a, $b) => $b['matches'] <=> $a['matches']);
 
-        return array_slice($results, 0, self::MAX_RESULTS);
+        $maxResults = $this->config->get('learn.search.max_results', 1000);
+        return array_slice($results, 0, $maxResults);
     }
 
     /**
@@ -199,7 +244,7 @@ class SearchService
      */
     protected function generateSnippet(string $content, int $matchPosition): string
     {
-        $contextLength = self::SNIPPET_CONTEXT_LENGTH;
+        $contextLength = $this->config->get('learn.search.snippet_length', 150);
 
         // Calculate start and end positions
         $start = max(0, $matchPosition - $contextLength);
@@ -220,16 +265,32 @@ class SearchService
     }
 
     /**
+     * Get the cache key for search results.
+     *
+     * @param string $query
+     * @param string $version
+     * @param int    $page
+     * @param int    $perPage
+     *
+     * @return string
+     */
+    protected function getResultsCacheKey(string $query, string $version, int $page, int $perPage): string
+    {
+        $keyFormat = $this->config->get('learn.search.results_cache_key', 'learn.search-results.%1$s.%2$s.%3$s.%4$s');
+        return sprintf($keyFormat, md5($query), $version, $page, $perPage);
+    }
+
+    /**
      * Get the search index for a specific version from cache.
      *
      * @param string $version
      *
-     * @return array<int, array{title: string, slug: string, route: string, content: string, version: string}>
+     * @return array<int, array{title: string, slug: string, route: string, content: string, version: string, keywords: string, metadata: string}>
      */
     protected function getIndex(string $version): array
     {
-        $keyFormat = $this->config->get('learn.cache.key', '%s.%s');
-        $cacheKey = sprintf($keyFormat, 'search-index', $version);
+        $keyFormat = $this->config->get('learn.index.key', 'learn.search-index.%1$s');
+        $cacheKey = sprintf($keyFormat, $version);
 
         $index = $this->cache->get($cacheKey);
 

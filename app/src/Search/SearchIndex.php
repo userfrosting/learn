@@ -52,7 +52,7 @@ class SearchIndex
             // Index all available versions
             $available = $this->config->get('learn.versions.available', []);
             foreach (array_keys($available) as $versionId) {
-                $versions[] = $this->versionValidator->getVersion($versionId);
+                $versions[] = $this->versionValidator->getVersion((string) $versionId);
             }
         } else {
             // Index specific version
@@ -81,7 +81,7 @@ class SearchIndex
      *
      * @param Version $version
      *
-     * @return array<int, array{title: string, slug: string, route: string, content: string, version: string}>
+     * @return array<int, array{title: string, slug: string, route: string, content: string, version: string, keywords: string, metadata: string}>
      */
     protected function indexVersion(Version $version): array
     {
@@ -102,20 +102,49 @@ class SearchIndex
      *
      * @param PageResource $page
      *
-     * @return array{title: string, slug: string, route: string, content: string, version: string}
+     * @return array{title: string, slug: string, route: string, content: string, version: string, keywords: string, metadata: string}
      */
     protected function indexPage(PageResource $page): array
     {
         // Get the HTML content and strip HTML tags to get plain text
         $htmlContent = $page->getContent();
         $plainText = $this->stripHtmlTags($htmlContent);
+        
+        // Get frontmatter
+        $frontMatter = $page->getFrontMatter();
+        
+        // Extract keywords if present
+        $keywords = '';
+        if (isset($frontMatter['keywords'])) {
+            if (is_array($frontMatter['keywords'])) {
+                $keywords = implode(' ', $frontMatter['keywords']);
+            } elseif (is_string($frontMatter['keywords'])) {
+                $keywords = $frontMatter['keywords'];
+            }
+        }
+        
+        // Extract other relevant metadata (description, tags, etc.)
+        $metadata = [];
+        $metadataFields = ['description', 'tags', 'category', 'author'];
+        foreach ($metadataFields as $field) {
+            if (isset($frontMatter[$field])) {
+                if (is_array($frontMatter[$field])) {
+                    $metadata[] = implode(' ', $frontMatter[$field]);
+                } elseif (is_string($frontMatter[$field])) {
+                    $metadata[] = $frontMatter[$field];
+                }
+            }
+        }
+        $metadataString = implode(' ', $metadata);
 
         return [
-            'title'   => $page->getTitle(),
-            'slug'    => $page->getSlug(),
-            'route'   => $page->getRoute(),
-            'content' => $plainText,
-            'version' => $page->getVersion()->id,
+            'title'    => $page->getTitle(),
+            'slug'     => $page->getSlug(),
+            'route'    => $page->getRoute(),
+            'content'  => $plainText,
+            'version'  => $page->getVersion()->id,
+            'keywords' => $keywords,
+            'metadata' => $metadataString,
         ];
     }
 
@@ -177,8 +206,9 @@ class SearchIndex
 
         foreach ($tree as $page) {
             $flat[] = $page;
-            if ($page->getChildren()) {
-                $flat = array_merge($flat, $this->flattenTree($page->getChildren()));
+            $children = $page->getChildren();
+            if ($children !== null && count($children) > 0) {
+                $flat = array_merge($flat, $this->flattenTree($children));
             }
         }
 
@@ -194,9 +224,9 @@ class SearchIndex
      */
     protected function getCacheKey(string $version): string
     {
-        $keyFormat = $this->config->get('learn.cache.key', '%s.%s');
+        $keyFormat = $this->config->get('learn.index.key', 'learn.search-index.%1$s');
 
-        return sprintf($keyFormat, 'search-index', $version);
+        return sprintf($keyFormat, $version);
     }
 
     /**
@@ -206,8 +236,7 @@ class SearchIndex
      */
     protected function getCacheTtl(): int
     {
-        // Use a longer TTL for search index since it's expensive to rebuild
-        return $this->config->get('learn.cache.ttl', 3600) * 24; // 24 hours by default
+        return $this->config->get('learn.index.ttl', 86400 * 7);
     }
 
     /**
@@ -221,7 +250,7 @@ class SearchIndex
             // Clear all versions
             $available = $this->config->get('learn.versions.available', []);
             foreach (array_keys($available) as $versionId) {
-                $this->cache->forget($this->getCacheKey($versionId));
+                $this->cache->forget($this->getCacheKey((string) $versionId));
             }
         } else {
             // Clear specific version
