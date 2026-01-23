@@ -3,11 +3,11 @@
 declare(strict_types=1);
 
 /*
- * UserFrosting (http://www.userfrosting.com)
+ * UserFrosting Learn (http://www.userfrosting.com)
  *
- * @link      https://github.com/userfrosting/UserFrosting
- * @copyright Copyright (c) 2013-2024 Alexander Weissman & Louis Charette
- * @license   https://github.com/userfrosting/UserFrosting/blob/master/LICENSE.md (MIT License)
+ * @link      https://github.com/userfrosting/Learn
+ * @copyright Copyright (c) 2025 Alexander Weissman & Louis Charette
+ * @license   https://github.com/userfrosting/Learn/blob/main/LICENSE.md (MIT License)
  */
 
 /*
@@ -26,23 +26,18 @@ return [
         ],
     ],
 
-    /**
-     * Disable cache
-     */
-    'cache' => [
-        'driver' => 'array',
-    ],
+    // TODO : Disable page cache by default in dev mode, but keep search cache enabled.
 
     /**
-    * ----------------------------------------------------------------------
-    * Learn Settings
-    *
-    * Settings for the documentation application.
-    * - Cache : Enable/disable caching of documentation pages and menu.
-    * - Key   : Cache key prefix for cached documentation pages and menu.
-    * - TTL   : Time to live for cached documentation pages and menu, in seconds.
-    * ----------------------------------------------------------------------
-    */
+     * ----------------------------------------------------------------------
+     * Learn Settings
+     *
+     * Settings for the documentation application.
+     * - Cache : Enable/disable caching of documentation pages and menu.
+     * - Key   : Cache key prefix for cached documentation pages and menu.
+     * - TTL   : Time to live for cached documentation pages and menu, in seconds.
+     * ----------------------------------------------------------------------
+     */
     'learn' => [
         'cache' => [
             'key'     => 'learn.%1$s.%2$s',
@@ -60,17 +55,21 @@ return [
             'latest' => '6.0',
         ],
         'search' => [
-            'min_length'        => 3,
-            'default_page'      => 1,
-            'default_size'      => 10,
-            'max_size'          => 100,
-            'snippet_length'    => 150,
-            'max_results'       => 1000,
-            'results_cache_ttl' => 3600,
-            'results_cache_key' => 'learn.search-results.%1$s.%2$s.%3$s.%4$s',
-            'index' => [
-                'key'             => 'learn.search-index.%1$s',
-                'ttl'             => 86400 * 7, // 7 days
+            'min_length'        => 3,   // Minimum length of search query
+            'default_page'      => 1,   // Default page number for paginated results
+            'default_size'      => 10,  // Default number of results per page
+            'max_size'          => 10,  // Default maximum number of results per page
+            'snippet_length'    => 150, // Length of content snippets in results
+            'max_results'       => 150, // Maximum number of results to consider for pagination
+            'cache' => [
+                'key' => 'learn.search.%1$s', // %1$s = keyword hash
+                'ttl' => 86400 * 30,          // 30 days
+            ],
+            'index'             => [
+                'key' => 'learn.index.%1$s', // %1$s = version
+                'ttl' => 86400 * 30,         // 30 days
+
+                // Metadata fields to include in the search index
                 'metadata_fields' => ['description', 'tags', 'category', 'author'],
             ],
         ],

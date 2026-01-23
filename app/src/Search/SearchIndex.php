@@ -26,6 +26,8 @@ use UserFrosting\Learn\Documentation\VersionValidator;
  * - Parsing markdown to plain text
  * - Extracting page metadata
  * - Storing content with position information for snippet generation
+ *
+ * @phpstan-import-type IndexedPage from IndexedPageShape
  */
 class SearchIndex
 {
@@ -77,17 +79,42 @@ class SearchIndex
     }
 
     /**
+     * Get the search index for a specific version from cache.
+     * Public method for use by SearchSprunje.
+     *
+     * @param string $version
+     *
+     * @return list<IndexedPage>
+     */
+    public function getIndex(string $version): array
+    {
+        $keyFormat = $this->config->getString('learn.search.index.key', '');
+        $cacheKey = sprintf($keyFormat, $version);
+
+        // TODO : If the cache key is empty, it should build the index first
+        $index = $this->cache->get($cacheKey);
+
+        // Ensure we return an array even if cache returns null or unexpected type
+        if (!is_array($index)) {
+            return [];
+        }
+
+        return $index;
+    }
+
+    /**
      * Index all pages for a specific version.
      *
      * @param Version $version
      *
-     * @return array<int, array{title: string, slug: string, route: string, content: string, version: string, keywords: string, metadata: string}>
+     * @return list<IndexedPage>
      */
     protected function indexVersion(Version $version): array
     {
         $tree = $this->repository->getTree($version->id);
         $pages = $this->flattenTree($tree);
 
+        /** @var list<IndexedPage> */
         $indexed = [];
 
         foreach ($pages as $page) {
@@ -102,17 +129,17 @@ class SearchIndex
      *
      * @param PageResource $page
      *
-     * @return array{title: string, slug: string, route: string, content: string, version: string, keywords: string, metadata: string}
+     * @return IndexedPage
      */
     protected function indexPage(PageResource $page): array
     {
         // Get the HTML content and strip HTML tags to get plain text
         $htmlContent = $page->getContent();
         $plainText = $this->stripHtmlTags($htmlContent);
-        
+
         // Get frontmatter
         $frontMatter = $page->getFrontMatter();
-        
+
         // Extract keywords if present
         $keywords = '';
         if (isset($frontMatter['keywords'])) {
@@ -122,10 +149,10 @@ class SearchIndex
                 $keywords = $frontMatter['keywords'];
             }
         }
-        
+
         // Extract other relevant metadata (description, tags, etc.)
         $metadata = [];
-        $metadataFields = $this->config->get('learn.search.index.metadata_fields', ['description', 'tags', 'category', 'author']);
+        $metadataFields = $this->config->get('learn.search.metadata_fields', ['description', 'tags', 'category', 'author']);
         foreach ($metadataFields as $field) {
             if (isset($frontMatter[$field])) {
                 if (is_array($frontMatter[$field])) {
@@ -183,7 +210,7 @@ class SearchIndex
 
         // Normalize whitespace
         $text = preg_replace('/\s+/', ' ', $text);
-        
+
         // Check if preg_replace failed
         if ($text === null) {
             // Fallback: at least decode entities from stripped HTML

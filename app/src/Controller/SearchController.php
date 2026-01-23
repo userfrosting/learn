@@ -17,7 +17,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use UserFrosting\Config\Config;
 use UserFrosting\Learn\Search\SearchService;
 use UserFrosting\Learn\Search\SearchSprunje;
-use UserFrosting\Sprinkle\Core\Exceptions\NotFoundException;
 
 /**
  * Controller for the documentation search API.
@@ -27,6 +26,7 @@ class SearchController
     public function __construct(
         protected SearchService $searchService,
         protected Config $config,
+        protected SearchSprunje $sprunje,
     ) {
     }
 
@@ -36,7 +36,6 @@ class SearchController
      *
      * Query parameters:
      * - q: Search query (required, min length from config)
-     * - version: Documentation version to search (optional, defaults to latest)
      * - page: Page number for pagination (optional, from config)
      * - size: Number of results per page (optional, from config, max from config)
      *
@@ -47,28 +46,12 @@ class SearchController
     {
         $params = $request->getQueryParams();
 
-        // Get query parameter
-        $query = $params['q'] ?? '';
+        $this->sprunje->setOptions([
+            'query' => $params['q'] ?? '',
+            'page'  => $params['page'] ?? null,
+            'size'  => $params['size'] ?? null,
+        ]);
 
-        // Create Sprunje which validates query length in its constructor
-        try {
-            // Prepare options for Sprunje
-            $sprunjeOptions = [
-                'query'   => $query,
-                'version' => $params['version'] ?? null,
-                'page'    => isset($params['page']) ? (int) $params['page'] : null,
-                'size'    => $params['size'] ?? null,
-                'format'  => 'json',
-            ];
-
-            // Create and execute Sprunje (validates query length in constructor)
-            $sprunje = new SearchSprunje($this->searchService, $this->config, $sprunjeOptions);
-
-            // Return response via Sprunje
-            return $sprunje->toResponse($response);
-        } catch (\InvalidArgumentException $e) {
-            // Throw NotFoundException for empty/invalid queries
-            throw new NotFoundException($e->getMessage());
-        }
+        return $this->sprunje->toResponse($response);
     }
 }

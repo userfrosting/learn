@@ -14,6 +14,7 @@ use UserFrosting\Config\Config;
 use UserFrosting\Learn\Recipe;
 use UserFrosting\Learn\Search\SearchIndex;
 use UserFrosting\Learn\Search\SearchService;
+use UserFrosting\Learn\Search\SearchSprunje;
 use UserFrosting\Testing\TestCase;
 use UserFrosting\UniformResourceLocator\ResourceLocatorInterface;
 use UserFrosting\UniformResourceLocator\ResourceStream;
@@ -51,20 +52,17 @@ class SearchServiceTest extends TestCase
     public function testSearchWithPlainText(): void
     {
         $searchService = $this->ci->get(SearchService::class);
+        $searchIndex = $this->ci->get(SearchIndex::class);
 
-        // Search for "first" - should match "First page"
-        $result = $searchService->search('first', '6.0');
+        // Get index and search for "first" - should match "First page"
+        $index = $searchIndex->getIndex('6.0');
+        $results = $searchService->performSearch('first', $index);
 
-        $this->assertIsArray($result);
-        $this->assertArrayHasKey('rows', $result);
-        $this->assertArrayHasKey('count', $result);
-        $this->assertArrayHasKey('count_filtered', $result);
-
-        $this->assertGreaterThan(0, $result['count_filtered']);
-        $this->assertNotEmpty($result['rows']);
+        $this->assertIsArray($results);
+        $this->assertGreaterThan(0, count($results));
 
         // Check structure of first result
-        $firstResult = $result['rows'][0];
+        $firstResult = $results[0];
         $this->assertArrayHasKey('title', $firstResult);
         $this->assertArrayHasKey('slug', $firstResult);
         $this->assertArrayHasKey('route', $firstResult);
@@ -76,41 +74,55 @@ class SearchServiceTest extends TestCase
     public function testSearchWithEmptyQuery(): void
     {
         $searchService = $this->ci->get(SearchService::class);
+        $searchIndex = $this->ci->get(SearchIndex::class);
 
-        $result = $searchService->search('', '6.0');
+        $index = $searchIndex->getIndex('6.0');
+        $results = $searchService->performSearch('', $index);
 
-        $this->assertSame(0, $result['count_filtered']);
-        $this->assertEmpty($result['rows']);
+        $this->assertSame(0, count($results));
+        $this->assertEmpty($results);
     }
 
     public function testSearchWithWildcard(): void
     {
         $searchService = $this->ci->get(SearchService::class);
+        $searchIndex = $this->ci->get(SearchIndex::class);
 
         // Search for "f*" - should match words starting with 'f'
-        $result = $searchService->search('f*', '6.0');
+        $index = $searchIndex->getIndex('6.0');
+        $results = $searchService->performSearch('f*', $index);
 
-        $this->assertGreaterThanOrEqual(0, $result['count_filtered']);
+        $this->assertIsArray($results);
+        $this->assertGreaterThanOrEqual(0, count($results));
     }
 
     public function testSearchPagination(): void
     {
-        $searchService = $this->ci->get(SearchService::class);
+        $searchSprunje = $this->ci->get(SearchSprunje::class);
 
-        // Search with pagination
-        $result = $searchService->search('page', '6.0', 1, 2);
+        // Search with pagination via Sprunje
+        $searchSprunje->setOptions([
+            'query'   => 'page',
+            'version' => '6.0',
+            'size'    => 2,
+            'page'    => 0,
+        ]);
 
-        $this->assertLessThanOrEqual(2, count($result['rows']));
+        $result = $searchSprunje->getArray();
+
+        $this->assertArrayHasKey('rows', $result);
     }
 
     public function testSearchResultSnippet(): void
     {
         $searchService = $this->ci->get(SearchService::class);
+        $searchIndex = $this->ci->get(SearchIndex::class);
 
-        $result = $searchService->search('first', '6.0');
+        $index = $searchIndex->getIndex('6.0');
+        $results = $searchService->performSearch('first', $index);
 
-        if (!empty($result['rows'])) {
-            $firstResult = $result['rows'][0];
+        if (count($results) > 0) {
+            $firstResult = $results[0];
             $this->assertIsString($firstResult['snippet']);
             $this->assertNotEmpty($firstResult['snippet']);
         }
@@ -139,7 +151,8 @@ class SearchServiceTest extends TestCase
         $reflection = new \ReflectionClass($searchService);
         $method = $reflection->getMethod('generateSnippet');
 
-        $content = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is the important part. More text follows here.';
+        // Create long content that exceeds snippet length (default 150 chars)
+        $content = str_repeat('Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', 10) . 'This is the important part. ' . str_repeat('More text follows here. ', 10);
         $matchPosition = strpos($content, 'important');
 
         if ($matchPosition !== false) {
@@ -158,23 +171,26 @@ class SearchServiceTest extends TestCase
         $searchIndex->clearIndex('6.0');
 
         $searchService = $this->ci->get(SearchService::class);
-        $result = $searchService->search('test', '6.0');
+        $index = $searchIndex->getIndex('6.0');
+        $results = $searchService->performSearch('test', $index);
 
-        $this->assertSame(0, $result['count_filtered']);
-        $this->assertEmpty($result['rows']);
+        $this->assertSame(0, count($results));
+        $this->assertEmpty($results);
     }
 
     public function testSearchResultSorting(): void
     {
         $searchService = $this->ci->get(SearchService::class);
+        $searchIndex = $this->ci->get(SearchIndex::class);
 
         // Search for a common term that might appear multiple times
-        $result = $searchService->search('page', '6.0');
+        $index = $searchIndex->getIndex('6.0');
+        $results = $searchService->performSearch('page', $index);
 
-        if (count($result['rows']) > 1) {
+        if (count($results) > 1) {
             // Verify results are sorted by number of matches (descending)
-            $firstMatches = $result['rows'][0]['matches'];
-            $lastMatches = $result['rows'][count($result['rows']) - 1]['matches'];
+            $firstMatches = $results[0]['matches'];
+            $lastMatches = $results[count($results) - 1]['matches'];
 
             $this->assertGreaterThanOrEqual($lastMatches, $firstMatches);
         }

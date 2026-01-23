@@ -22,6 +22,9 @@ use UserFrosting\Config\Config;
  * - Wildcard pattern matching
  * - Snippet extraction with context
  * - Result caching
+ *
+ * @phpstan-import-type IndexedPage from IndexedPageShape
+ * @phpstan-import-type SearchResult from IndexedPageShape
  */
 class SearchService
 {
@@ -32,36 +35,13 @@ class SearchService
     }
 
     /**
-     * Get the search index for a specific version from cache.
-     * Public method for use by SearchSprunje.
-     *
-     * @param string $version
-     *
-     * @return array<int, array{title: string, slug: string, route: string, content: string, version: string, keywords: string, metadata: string}>
-     */
-    public function getIndex(string $version): array
-    {
-        $keyFormat = $this->config->get('learn.search.index.key', 'learn.search-index.%1$s');
-        $cacheKey = sprintf($keyFormat, $version);
-
-        $index = $this->cache->get($cacheKey);
-
-        // Ensure we return an array even if cache returns null or unexpected type
-        if (!is_array($index)) {
-            return [];
-        }
-
-        return $index;
-    }
-
-    /**
      * Perform the actual search and generate results with snippets.
      * Public method for use by SearchSprunje.
      *
-     * @param string                                                                                                          $query
-     * @param array<int, array{title: string, slug: string, route: string, content: string, version: string, keywords: string, metadata: string}> $index
+     * @param string                  $query
+     * @param array<int, IndexedPage> $index
      *
-     * @return array<int, array{title: string, slug: string, route: string, snippet: string, matches: int, version: string}>
+     * @return array<int, SearchResult>
      */
     public function performSearch(string $query, array $index): array
     {
@@ -137,6 +117,7 @@ class SearchService
         usort($results, fn ($a, $b) => $b['matches'] <=> $a['matches']);
 
         $maxResults = $this->config->get('learn.search.max_results', 1000);
+
         return array_slice($results, 0, $maxResults);
     }
 
@@ -166,7 +147,7 @@ class SearchService
     /**
      * Search for wildcard pattern matches.
      *
-     * @param string $regex Pre-compiled regex pattern
+     * @param string $regex   Pre-compiled regex pattern
      * @param string $content
      *
      * @return array<int, int> Array of match positions
@@ -185,7 +166,7 @@ class SearchService
         }
 
         foreach ($words as $word) {
-            if (preg_match($regex, $word)) {
+            if (preg_match($regex, $word) === 1) {
                 $matches[] = $offset;
             }
             $offset += mb_strlen($word) + 1; // +1 for space
@@ -207,8 +188,8 @@ class SearchService
         $contextLength = $this->config->get('learn.search.snippet_length', 150);
 
         // Calculate start and end positions
-        $start = max(0, $matchPosition - $contextLength);
-        $end = min(mb_strlen($content), $matchPosition + $contextLength);
+        $start = (int) max(0, $matchPosition - $contextLength);
+        $end = (int) min(mb_strlen($content), $matchPosition + $contextLength);
 
         // Extract snippet
         $snippet = mb_substr($content, $start, $end - $start);
@@ -224,4 +205,3 @@ class SearchService
         return $snippet;
     }
 }
-

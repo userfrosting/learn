@@ -52,16 +52,16 @@ class SearchIndexTest extends TestCase
 
         // Should have indexed pages (at least some)
         $this->assertGreaterThan(0, $count, 'Should have indexed at least one page');
-        
+
         // Verify it matches the number of test pages
         /** @var \UserFrosting\Learn\Documentation\DocumentationRepository $repository */
         $repository = $this->ci->get(\UserFrosting\Learn\Documentation\DocumentationRepository::class);
-        
+
         // Use reflection to get pages count
         $reflection = new \ReflectionClass($repository);
         $method = $reflection->getMethod('getFlattenedTree');
         $flatPages = $method->invoke($repository, '6.0');
-        
+
         $this->assertSame(count($flatPages), $count, 'Index count should match actual page count');
     }
 
@@ -201,7 +201,7 @@ class SearchIndexTest extends TestCase
         foreach ($flat as $page) {
             $this->assertInstanceOf(\UserFrosting\Learn\Documentation\PageResource::class, $page);
         }
-        
+
         // Verify flat count matches tree structure (all pages including nested)
         $countTreePages = function ($pages) use (&$countTreePages) {
             $count = 0;
@@ -211,9 +211,10 @@ class SearchIndexTest extends TestCase
                     $count += $countTreePages($page->getChildren());
                 }
             }
+
             return $count;
         };
-        
+
         $expectedCount = $countTreePages($tree);
         $this->assertSame($expectedCount, count($flat), 'Flattened tree should contain all pages');
     }

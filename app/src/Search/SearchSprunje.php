@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace UserFrosting\Learn\Search;
 
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Collection;
+use InvalidArgumentException;
 use UserFrosting\Config\Config;
 use UserFrosting\Sprinkle\Core\Sprunje\Sprunje;
 
@@ -22,94 +22,58 @@ use UserFrosting\Sprinkle\Core\Sprunje\Sprunje;
  *
  * Provides a Sprunje-compatible interface for searching documentation pages.
  * Adapts the SearchService to work with the Sprunje API.
+ *
+ * @phpstan-import-type IndexedPage from IndexedPageShape
+ * @phpstan-import-type SearchResult from IndexedPageShape
+ *
+ * @extends StaticSprunje<array{
+ *     query: string,
+ *     version: string|null,
+ *     size: string|int|null,
+ *     page: string|int|null,
+ * }, SearchResult>
  */
-class SearchSprunje extends Sprunje
+class SearchSprunje extends StaticSprunje
 {
-    /**
-     * @var string Name of this Sprunje
-     */
-    protected string $name = 'search';
-
-    /**
-     * @var string The search query
-     */
-    protected string $searchQuery = '';
-
-    /**
-     * @var string|null The version to search
-     */
-    protected ?string $version = null;
-
     public function __construct(
         protected SearchService $searchService,
-        protected Config $config,
-        array $options = []
+        protected SearchIndex $searchIndex,
+        protected Config $config
     ) {
-        // Extract search-specific options before passing to parent
-        $this->searchQuery = $options['query'] ?? '';
-        $this->version = $options['version'] ?? null;
-        
-        // Validate query here for consistency
-        $minLength = $this->config->get('learn.search.min_length', 3);
-        if ($this->searchQuery === '' || mb_strlen($this->searchQuery) < $minLength) {
-            throw new \InvalidArgumentException("Query must be at least {$minLength} characters long");
+    }
+
+    /**
+     * Get the underlying queryable object in its current state.
+     *
+     * @return Collection<int, SearchResult>
+     */
+    public function getQuery(): Collection
+    {
+        // Default version if not provided
+        if (!isset($this->options['version']) || $this->options['version'] === null) {
+            $this->options['version'] = $this->config->get('learn.versions.latest');
         }
-        
-        // Remove search-specific options before parent processes them
-        unset($options['query'], $options['version']);
-        
-        // Call parent constructor
-        parent::__construct($options);
-    }
 
-    /**
-     * Required by Sprunje abstract class. Returns a dummy Eloquent builder.
-     * 
-     * SearchSprunje doesn't use database queries - we override getModels() 
-     * to use SearchService directly. This builder is only used internally
-     * by Sprunje for type requirements and is never actually queried.
-     *
-     * @return EloquentBuilder
-     */
-    protected function baseQuery(): EloquentBuilder
-    {
-        // Return a dummy Eloquent builder that won't be used for actual queries
-        $model = new \UserFrosting\Learn\Search\DummySearchModel();
-        return $model->newQuery();
-    }
-
-    /**
-     * Override getModels to use SearchService instead of database queries.
-     *
-     * @return array{int, int, Collection<int, array>}
-     */
-    public function getModels(): array
-    {
-        // Get the version to search
-        $versionId = $this->version ?? $this->config->get('learn.versions.latest');
-        
-        if ($versionId === null) {
-            return [0, 0, collect([])];
+        // No version specified means no results
+        if ($this->options['version'] === null) {
+            return collect([]);
         }
 
         // Get the index from cache
-        $index = $this->searchService->getIndex($versionId);
+        $index = $this->searchIndex->getIndex($this->options['version']);
 
+        // No indexed pages means no results
         if (count($index) === 0) {
-            return [0, 0, collect([])];
+            return collect([]);
         }
 
         // Search through the index (without pagination - Sprunje handles that)
-        $results = $this->searchService->performSearch($this->searchQuery, $index);
+        $results = $this->searchService->performSearch($this->options['query'], $index);
 
         // Convert to Collection for compatibility
         $collection = collect($results);
 
-        return [
-            count($index),
-            count($results),
-            $collection,
-        ];
+        return $collection;
     }
 
     /**
@@ -119,10 +83,12 @@ class SearchSprunje extends Sprunje
      */
     protected function validateOptions(array $options): void
     {
-        // Don't validate query and version here as they're handled separately
-        $optionsToValidate = $options;
-        unset($optionsToValidate['query'], $optionsToValidate['version']);
-        
-        parent::validateOptions($optionsToValidate);
+        // Validate query here for consistency
+        $minLength = $this->config->get('learn.search.min_length', 3);
+        if (!is_string($options['query']) || $options['query'] === '' || mb_strlen($options['query']) < $minLength) {
+            throw new InvalidArgumentException("Query must be at least {$minLength} characters long");
+        }
+
+        parent::validateOptions($options);
     }
 }
