@@ -56,9 +56,8 @@ return [
         ],
         'search' => [
             'min_length'        => 3,   // Minimum length of search query
-            'default_page'      => 1,   // Default page number for paginated results
+            'default_page'      => 0,   // Default page number for paginated results
             'default_size'      => 10,  // Default number of results per page
-            'max_size'          => 10,  // Default maximum number of results per page
             'snippet_length'    => 150, // Length of content snippets in results
             'max_results'       => 150, // Maximum number of results to consider for pagination
             'cache' => [

@@ -41,15 +41,17 @@ abstract class StaticSprunje
      */
     protected array $columns = [];
 
-    /**
-     * @var string Array key for the total unfiltered object count.
-     */
+    /** @var string Array key for the total unfiltered object count. */
     protected string $countKey = 'count';
 
-    /**
-     * @var string Array key for the actual result set.
-     */
+    /** @var string Array key for the actual result set. */
     protected string $rowsKey = 'rows';
+
+    /** @var string Array key for the actual result set. */
+    protected string $sizeKey = 'size';
+
+    /** @var string Array key for the actual result set. */
+    protected string $pageKey = 'page';
 
     /**
      * Set Sprunje options.
@@ -60,7 +62,7 @@ abstract class StaticSprunje
      */
     public function setOptions(array $options): static
     {
-        $this->validateOptions($options);
+        $options = $this->validateOptions($options);
 
         // @phpstan-ignore-next-line - Can't make array_replace_recursive hint at TOptions
         $this->options = array_replace_recursive($this->options, $options);
@@ -69,13 +71,16 @@ abstract class StaticSprunje
     }
 
     /**
-     * Validate option using Validator.
+     * Validate option using Validator. Can also mutate options as needed,
+     * e.g., setting defaults.
      *
      * @param array<string, mixed> $options
      *
      * @throws ValidationException
+     *
+     * @return array<string, mixed>
      */
-    protected function validateOptions(array $options): void
+    protected function validateOptions(array $options): array
     {
         // Validation on input data
         $v = new Validator($options);
@@ -88,6 +93,8 @@ abstract class StaticSprunje
 
             throw $e;
         }
+
+        return $options;
     }
 
     /**
@@ -99,7 +106,7 @@ abstract class StaticSprunje
      */
     public function toResponse(ResponseInterface $response): ResponseInterface
     {
-        $payload = json_encode($this->getArray(), JSON_THROW_ON_ERROR);
+        $payload = json_encode($this->getArray(), JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
         $response->getBody()->write($payload);
 
         return $response->withHeader('Content-Type', 'application/json');
@@ -119,8 +126,10 @@ abstract class StaticSprunje
 
         // Return sprunjed results
         return [
-            $this->countKey           => $count,
-            $this->rowsKey            => $rows->values()->toArray(),
+            $this->countKey => $count,
+            $this->sizeKey  => (int) $this->options['size'],
+            $this->pageKey  => (int) $this->options['page'],
+            $this->rowsKey  => $rows->values()->toArray(),
         ];
     }
 

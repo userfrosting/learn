@@ -126,9 +126,17 @@ class SearchControllerTest extends TestCase
         $data = json_decode($body, true);
 
         $this->assertIsArray($data);
+        $this->assertArrayHasKey('count', $data);
+        $this->assertArrayHasKey('page', $data);
+        $this->assertArrayHasKey('size', $data);
+        $this->assertArrayHasKey('rows', $data);
 
         // Should return at most 2 results
         $this->assertLessThanOrEqual(2, count($data['rows']));
+
+        // Check that page and size are correct
+        $this->assertSame(1, $data['page']);
+        $this->assertSame(2, $data['size']);
     }
 
     /**
@@ -189,5 +197,71 @@ class SearchControllerTest extends TestCase
         $this->assertTrue($response->hasHeader('Content-Type'));
         $contentType = $response->getHeaderLine('Content-Type');
         $this->assertStringContainsString('application/json', $contentType);
+    }
+
+    /**
+     * Test search API endpoint with no version and no default version in config.
+     */
+    public function testSearchEndpointNoVersion(): void
+    {
+        // Temporarily unset the default version
+        /** @var Config $config */
+        $config = $this->ci->get(Config::class);
+        $originalVersion = $config->get('learn.versions.latest');
+        $config->set('learn.versions.latest', null);
+
+        // Create request without version parameter
+        $request = $this->createRequest('GET', '/api/search?q=test');
+        $response = $this->handleRequest($request);
+
+        // Restore original version
+        $config->set('learn.versions.latest', $originalVersion);
+
+        // Assert successful response but empty results
+        $this->assertResponseStatus(200, $response);
+
+        // Parse JSON response
+        $body = (string) $response->getBody();
+        $data = json_decode($body, true);
+
+        $this->assertIsArray($data);
+        $this->assertArrayHasKey('rows', $data);
+        $this->assertArrayHasKey('count', $data);
+
+        // Should have no results when version is null
+        $this->assertSame(0, $data['count']);
+        $this->assertEmpty($data['rows']);
+    }
+
+    /**
+     * Test search API endpoint with no indexed pages for version.
+     */
+    public function testSearchEndpointNoIndexedPages(): void
+    {
+        // Clear the index for version 6.0
+        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex->clearIndex('6.0');
+
+        // Create request to search
+        $request = $this->createRequest('GET', '/api/search?q=test&version=6.0');
+        $response = $this->handleRequest($request);
+
+        // Assert successful response but empty results
+        $this->assertResponseStatus(200, $response);
+
+        // Parse JSON response
+        $body = (string) $response->getBody();
+        $data = json_decode($body, true);
+
+        $this->assertIsArray($data);
+        $this->assertArrayHasKey('rows', $data);
+        $this->assertArrayHasKey('count', $data);
+
+        // Should have no results when index is empty
+        $this->assertSame(0, $data['count']);
+        $this->assertEmpty($data['rows']);
+
+        // Rebuild index for other tests
+        $searchIndex->buildIndex('6.0');
     }
 }

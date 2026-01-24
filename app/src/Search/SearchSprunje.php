@@ -49,11 +49,6 @@ class SearchSprunje extends StaticSprunje
      */
     public function getQuery(): Collection
     {
-        // Default version if not provided
-        if (!isset($this->options['version']) || $this->options['version'] === null) {
-            $this->options['version'] = $this->config->get('learn.versions.latest');
-        }
-
         // No version specified means no results
         if ($this->options['version'] === null) {
             return collect([]);
@@ -77,18 +72,21 @@ class SearchSprunje extends StaticSprunje
     }
 
     /**
-     * Override validateOptions to include search-specific validation.
-     *
-     * @param mixed[] $options
+     * {@inheritDoc}
      */
-    protected function validateOptions(array $options): void
+    protected function validateOptions(array $options): array
     {
-        // Validate query here for consistency
+        // Validate query length
         $minLength = $this->config->get('learn.search.min_length', 3);
         if (!is_string($options['query']) || $options['query'] === '' || mb_strlen($options['query']) < $minLength) {
             throw new InvalidArgumentException("Query must be at least {$minLength} characters long");
         }
 
-        parent::validateOptions($options);
+        // Define default options
+        $options['version'] ??= $this->config->get('learn.versions.latest');
+        $options['size'] ??= $this->config->get('learn.search.default_size', 'all');
+        $options['page'] ??= $this->config->get('learn.search.default_page', null);
+
+        return parent::validateOptions($options);
     }
 }
