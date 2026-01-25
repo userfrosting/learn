@@ -95,11 +95,11 @@ class SearchSprunje extends StaticSprunje
     }
 
     /**
-     * Get the underlying queryable object in its current state.
+     * Get the base collection of items to process.
      *
      * @return Collection<int, SearchResult>
      */
-    public function getQuery(): Collection
+    public function getItems(): Collection
     {
         // No version specified means no results
         if ($this->version === null) {

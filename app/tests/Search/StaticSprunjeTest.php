@@ -38,7 +38,7 @@ class StaticSprunjeTest extends TestCase
 
         $sprunje->setSize(10)->setPage(2);
 
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         $this->assertSame(10, $result['size']);
         $this->assertSame(2, $result['page']);
@@ -59,7 +59,7 @@ class StaticSprunjeTest extends TestCase
         $sprunje = $this->createSprunje();
 
         // Don't set any options
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         $this->assertSame(0, $result['size']); // null converts to 0
         $this->assertSame(1, $result['page']); // Default is 1
@@ -70,7 +70,7 @@ class StaticSprunjeTest extends TestCase
         $sprunje = $this->createSprunje();
 
         $sprunje->setSize(25);
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         $this->assertSame(25, $result['size']);
     }
@@ -80,7 +80,7 @@ class StaticSprunjeTest extends TestCase
         $sprunje = $this->createSprunje();
 
         $sprunje->setSize(null);
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         // null should convert to 0 in output (meaning all results)
         $this->assertSame(0, $result['size']);
@@ -107,7 +107,7 @@ class StaticSprunjeTest extends TestCase
         $sprunje = $this->createSprunje();
 
         $sprunje->setPage(3);
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         $this->assertSame(3, $result['page']);
     }
@@ -128,11 +128,11 @@ class StaticSprunjeTest extends TestCase
         $sprunje->setPage(-1);
     }
 
-    public function testGetArray(): void
+    public function testGetResultSet(): void
     {
         $sprunje = $this->createSprunje();
 
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         $this->assertIsArray($result); // @phpstan-ignore-line
         $this->assertArrayHasKey('count', $result);
@@ -141,26 +141,15 @@ class StaticSprunjeTest extends TestCase
         $this->assertArrayHasKey('rows', $result);
     }
 
-    public function testGetArrayWithData(): void
+    public function testGetResultSetWithData(): void
     {
         $sprunje = $this->createSprunje();
 
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         $this->assertSame(5, $result['count']); // Test data has 5 items
         $this->assertIsArray($result['rows']);
         $this->assertCount(5, $result['rows']);
-    }
-
-    public function testGetModels(): void
-    {
-        $sprunje = $this->createSprunje();
-
-        list($count, $rows) = $sprunje->getModels();
-
-        $this->assertSame(5, $count);
-        $this->assertInstanceOf(Collection::class, $rows); // @phpstan-ignore-line
-        $this->assertCount(5, $rows);
     }
 
     public function testApplyPaginationWithPageAndSize(): void
@@ -169,7 +158,7 @@ class StaticSprunjeTest extends TestCase
 
         $sprunje->setSize(2)->setPage(2); // Second page (1-based)
 
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         // Should return 2 items starting from offset 2
         $this->assertCount(2, $result['rows']);
@@ -182,7 +171,7 @@ class StaticSprunjeTest extends TestCase
 
         $sprunje->setSize(2)->setPage(1); // First page (1-based)
 
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         $this->assertCount(2, $result['rows']);
         $this->assertSame('Item 1', $result['rows'][0]['name']);
@@ -195,7 +184,7 @@ class StaticSprunjeTest extends TestCase
 
         $sprunje->setSize(null)->setPage(1);
 
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         // Should return all items when size is null
         $this->assertCount(5, $result['rows']);
@@ -209,7 +198,7 @@ class StaticSprunjeTest extends TestCase
 
         // Columns don't affect static collections (no select() support)
         // but we can verify the method works
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         $this->assertIsArray($result['rows']);
     }
@@ -218,7 +207,7 @@ class StaticSprunjeTest extends TestCase
     {
         $sprunje = new TestableStaticSprunjeWithTransformation();
 
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         // Transformation adds '_transformed' to each name
         $this->assertStringEndsWith('_transformed', $result['rows'][0]['name']);
@@ -228,7 +217,7 @@ class StaticSprunjeTest extends TestCase
     {
         $sprunje = $this->createSprunje();
 
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         $this->assertSame(5, $result['count']);
     }
@@ -280,7 +269,7 @@ class StaticSprunjeTest extends TestCase
 
         $sprunje->setSize(2)->setPage(10); // Way beyond available items
 
-        $result = $sprunje->getArray();
+        $result = $sprunje->getResultSet();
 
         // Should return empty rows when page is beyond available items
         $this->assertEmpty($result['rows']);
@@ -298,7 +287,7 @@ class StaticSprunjeTest extends TestCase
  */
 class TestableStaticSprunje extends StaticSprunje
 {
-    public function getQuery(): Collection
+    public function getItems(): Collection
     {
         // Return a simple collection for testing
         return collect([

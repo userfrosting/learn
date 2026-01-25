@@ -121,86 +121,72 @@ abstract class StaticSprunje
      */
     public function toResponse(ResponseInterface $response): ResponseInterface
     {
-        $payload = json_encode($this->getArray(), JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+        $payload = json_encode($this->getResultSet(), JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
         $response->getBody()->write($payload);
 
         return $response->withHeader('Content-Type', 'application/json');
     }
 
     /**
-     * Executes the sprunje query, applying all sorts, filters, and pagination.
+     * Execute processing to get the complete result set with metadata.
      *
-     * Returns an array containing `count` (the total number of rows, before filtering),
-     * and `rows` (the filtered result set).
+     * Returns an array containing `count` (total items), `size` (page size),
+     * `page` (current page), and `rows` (the filtered result set).
      *
      * @return array<string, mixed>
      */
-    public function getArray(): array
+    public function getResultSet(): array
     {
-        list($count, $rows) = $this->getModels();
+        $collection = $this->getItems();
 
-        // Return sprunjed results
+        // Count unfiltered total
+        $count = $this->count($collection);
+
+        // Paginate
+        $collection = $this->applyPagination($collection);
+
+        // Execute query - only apply select if not wildcard/empty
+        if ($this->columns !== []) {
+            $collection = $collection->select($this->columns); // @phpstan-ignore-line
+        }
+
+        $collection = collect($collection);
+
+        // Perform any additional transformations on the dataset
+        $collection = $this->applyTransformations($collection);
+
+        // Return complete result set with metadata
         return [
             $this->countKey => $count,
             $this->sizeKey  => $this->size ?? 0,
             $this->pageKey  => $this->page,
-            $this->rowsKey  => $rows->values()->toArray(),
+            $this->rowsKey  => $collection->values()->toArray(),
         ];
     }
 
     /**
-     * Executes the sprunje query, applying all sorts, filters, and pagination.
-     *
-     * Returns the filtered, paginated result set and the counts.
-     *
-     * @return array{int, Collection<int, TItem>}
-     */
-    public function getModels(): array
-    {
-        $query = $this->getQuery();
-
-        // Count unfiltered total
-        $count = $this->count($query);
-
-        // Paginate
-        $query = $this->applyPagination($query);
-
-        // Execute query - only apply select if not wildcard/empty
-        if ($this->columns !== []) {
-            $query = $query->select($this->columns); // @phpstan-ignore-line
-        }
-
-        $query = collect($query);
-
-        // Perform any additional transformations on the dataset
-        $query = $this->applyTransformations($query);
-
-        return [$count, $query];
-    }
-
-    /**
-     * Get the underlying queryable object in its current state.
+     * Get the base collection of items to process.
      *
      * @return Collection<int, TItem>
      */
-    abstract public function getQuery(): Collection;
+    abstract public function getItems(): Collection;
 
     /**
      * Apply pagination based on the `page` and `size` options.
      *
-     * @param Collection<int, TItem> $query
+     * @param Collection<int, TItem> $collection
      *
      * @return Collection<int, TItem>
      */
-    public function applyPagination(Collection $query): Collection
+    public function applyPagination(Collection $collection): Collection
     {
         if ($this->size !== null) {
             // Page is 1-based, so subtract 1 for offset calculation
             $offset = $this->size * ($this->page - 1);
-            $query = $query->skip($offset)->take($this->size);
+            $collection = $collection->skip($offset)->take($this->size);
         }
 
-        return $query;
+        return $collection;
     }
 
     /**
@@ -231,14 +217,14 @@ abstract class StaticSprunje
     }
 
     /**
-     * Get the unpaginated count of items (before filtering) in this query.
+     * Get the unpaginated count of items in the collection.
      *
-     * @param Collection<int, TItem> $query
+     * @param Collection<int, TItem> $collection
      *
      * @return int
      */
-    protected function count(Collection $query): int
+    protected function count(Collection $collection): int
     {
-        return $query->count();
+        return $collection->count();
     }
 }

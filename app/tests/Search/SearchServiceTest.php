@@ -107,7 +107,7 @@ class SearchServiceTest extends TestCase
             ->setSize(2)
             ->setPage(1);
 
-        $result = $searchSprunje->getArray();
+        $result = $searchSprunje->getResultSet();
 
         $this->assertArrayHasKey('rows', $result);
     }
