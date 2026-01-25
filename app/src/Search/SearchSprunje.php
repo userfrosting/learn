@@ -23,9 +23,6 @@ use UserFrosting\Sprinkle\Core\Sprunje\Sprunje;
  * Provides a Sprunje-compatible interface for searching documentation pages.
  * Adapts the SearchService to work with the Sprunje API.
  *
- * @phpstan-import-type IndexedPage from IndexedPageShape
- * @phpstan-import-type SearchResult from IndexedPageShape
- *
  * @extends StaticSprunje<SearchResult>
  */
 class SearchSprunje extends StaticSprunje

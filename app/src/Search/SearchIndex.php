@@ -26,8 +26,6 @@ use UserFrosting\Learn\Documentation\VersionValidator;
  * - Parsing markdown to plain text
  * - Extracting page metadata
  * - Storing content with position information for snippet generation
- *
- * @phpstan-import-type IndexedPage from IndexedPageShape
  */
 class SearchIndex
 {
@@ -131,7 +129,7 @@ class SearchIndex
      *
      * @return IndexedPage
      */
-    protected function indexPage(PageResource $page): array
+    protected function indexPage(PageResource $page): IndexedPage
     {
         // Get the HTML content and strip HTML tags to get plain text
         $htmlContent = $page->getContent();
@@ -164,15 +162,15 @@ class SearchIndex
         }
         $metadataString = implode(' ', $metadata);
 
-        return [
-            'title'    => $page->getTitle(),
-            'slug'     => $page->getSlug(),
-            'route'    => $page->getRoute(),
-            'content'  => $plainText,
-            'version'  => $page->getVersion()->id,
-            'keywords' => $keywords,
-            'metadata' => $metadataString,
-        ];
+        return new IndexedPage(
+            title: $page->getTitle(),
+            slug: $page->getSlug(),
+            route: $page->getRoute(),
+            content: $plainText,
+            version: $page->getVersion()->id,
+            keywords: $keywords,
+            metadata: $metadataString,
+        );
     }
 
     /**

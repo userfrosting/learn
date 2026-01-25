@@ -63,12 +63,13 @@ class SearchServiceTest extends TestCase
 
         // Check structure of first result
         $firstResult = $results[0];
-        $this->assertArrayHasKey('title', $firstResult);
-        $this->assertArrayHasKey('slug', $firstResult);
-        $this->assertArrayHasKey('route', $firstResult);
-        $this->assertArrayHasKey('snippet', $firstResult);
-        $this->assertArrayHasKey('matches', $firstResult);
-        $this->assertArrayHasKey('version', $firstResult);
+        $this->assertInstanceOf(\UserFrosting\Learn\Search\SearchResult::class, $firstResult);
+        $this->assertNotEmpty($firstResult->title);
+        $this->assertNotEmpty($firstResult->slug);
+        $this->assertNotEmpty($firstResult->route);
+        $this->assertNotEmpty($firstResult->snippet);
+        $this->assertGreaterThan(0, $firstResult->matches);
+        $this->assertNotEmpty($firstResult->version);
     }
 
     public function testSearchWithEmptyQuery(): void
@@ -122,8 +123,8 @@ class SearchServiceTest extends TestCase
 
         if (count($results) > 0) {
             $firstResult = $results[0];
-            $this->assertIsString($firstResult['snippet']);
-            $this->assertNotEmpty($firstResult['snippet']);
+            $this->assertIsString($firstResult->snippet);
+            $this->assertNotEmpty($firstResult->snippet);
         }
     }
 
@@ -188,8 +189,8 @@ class SearchServiceTest extends TestCase
 
         if (count($results) > 1) {
             // Verify results are sorted by number of matches (descending)
-            $firstMatches = $results[0]['matches'];
-            $lastMatches = $results[count($results) - 1]['matches'];
+            $firstMatches = $results[0]->matches;
+            $lastMatches = $results[count($results) - 1]->matches;
 
             $this->assertGreaterThanOrEqual($lastMatches, $firstMatches);
         }

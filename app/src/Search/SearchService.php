@@ -22,9 +22,6 @@ use UserFrosting\Config\Config;
  * - Wildcard pattern matching
  * - Snippet extraction with context
  * - Result caching
- *
- * @phpstan-import-type IndexedPage from IndexedPageShape
- * @phpstan-import-type SearchResult from IndexedPageShape
  */
 class SearchService
 {
@@ -71,15 +68,15 @@ class SearchService
 
             // Search in different fields with priority
             if ($hasWildcards) {
-                $titleMatches = $this->searchWithWildcard($wildcardRegex, $page['title']);
-                $keywordMatches = $this->searchWithWildcard($wildcardRegex, $page['keywords']);
-                $metadataMatches = $this->searchWithWildcard($wildcardRegex, $page['metadata']);
-                $contentMatches = $this->searchWithWildcard($wildcardRegex, $page['content']);
+                $titleMatches = $this->searchWithWildcard($wildcardRegex, $page->title);
+                $keywordMatches = $this->searchWithWildcard($wildcardRegex, $page->keywords);
+                $metadataMatches = $this->searchWithWildcard($wildcardRegex, $page->metadata);
+                $contentMatches = $this->searchWithWildcard($wildcardRegex, $page->content);
             } else {
-                $titleMatches = $this->searchPlain($query, $page['title']);
-                $keywordMatches = $this->searchPlain($query, $page['keywords']);
-                $metadataMatches = $this->searchPlain($query, $page['metadata']);
-                $contentMatches = $this->searchPlain($query, $page['content']);
+                $titleMatches = $this->searchPlain($query, $page->title);
+                $keywordMatches = $this->searchPlain($query, $page->keywords);
+                $metadataMatches = $this->searchPlain($query, $page->metadata);
+                $contentMatches = $this->searchPlain($query, $page->content);
             }
 
             // Calculate weighted score: title > keywords > metadata > content
@@ -90,31 +87,31 @@ class SearchService
                 $snippetPosition = 0;
                 if (count($titleMatches) > 0) {
                     $snippetPosition = $titleMatches[0];
-                    $snippetContent = $page['title'];
+                    $snippetContent = $page->title;
                 } elseif (count($keywordMatches) > 0) {
                     $snippetPosition = $keywordMatches[0];
-                    $snippetContent = $page['keywords'];
+                    $snippetContent = $page->keywords;
                 } elseif (count($metadataMatches) > 0) {
                     $snippetPosition = $metadataMatches[0];
-                    $snippetContent = $page['metadata'];
+                    $snippetContent = $page->metadata;
                 } else {
                     $snippetPosition = $contentMatches[0];
-                    $snippetContent = $page['content'];
+                    $snippetContent = $page->content;
                 }
 
-                $results[] = [
-                    'title'   => $page['title'],
-                    'slug'    => $page['slug'],
-                    'route'   => $page['route'],
-                    'snippet' => $this->generateSnippet($snippetContent, $snippetPosition),
-                    'matches' => $score,
-                    'version' => $page['version'],
-                ];
+                $results[] = new SearchResult(
+                    title: $page->title,
+                    slug: $page->slug,
+                    route: $page->route,
+                    snippet: $this->generateSnippet($snippetContent, $snippetPosition),
+                    matches: $score,
+                    version: $page->version,
+                );
             }
         }
 
         // Sort by weighted score (descending)
-        usort($results, fn ($a, $b) => $b['matches'] <=> $a['matches']);
+        usort($results, fn ($a, $b) => $b->matches <=> $a->matches);
 
         $maxResults = $this->config->get('learn.search.max_results', 1000);
 

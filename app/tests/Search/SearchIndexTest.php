@@ -99,17 +99,16 @@ class SearchIndexTest extends TestCase
 
         // Check first page structure
         $firstPage = $index[0];
-        $this->assertArrayHasKey('title', $firstPage);
-        $this->assertArrayHasKey('slug', $firstPage);
-        $this->assertArrayHasKey('route', $firstPage);
-        $this->assertArrayHasKey('content', $firstPage);
-        $this->assertArrayHasKey('version', $firstPage);
-        $this->assertArrayHasKey('keywords', $firstPage);
-        $this->assertArrayHasKey('metadata', $firstPage);
+        $this->assertInstanceOf(\UserFrosting\Learn\Search\IndexedPage::class, $firstPage);
+        $this->assertNotEmpty($firstPage->title);
+        $this->assertNotEmpty($firstPage->slug);
+        $this->assertNotEmpty($firstPage->route);
+        $this->assertNotEmpty($firstPage->content);
+        $this->assertNotEmpty($firstPage->version);
 
         // Content should be plain text (no HTML tags)
-        $this->assertStringNotContainsString('<', $firstPage['content']);
-        $this->assertStringNotContainsString('>', $firstPage['content']);
+        $this->assertStringNotContainsString('<', $firstPage->content);
+        $this->assertStringNotContainsString('>', $firstPage->content);
     }
 
     public function testStripHtmlTags(): void
