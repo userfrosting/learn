@@ -14,8 +14,6 @@ namespace UserFrosting\Learn\Controller;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use UserFrosting\Config\Config;
-use UserFrosting\Learn\Search\SearchService;
 use UserFrosting\Learn\Search\SearchSprunje;
 
 /**
@@ -24,8 +22,6 @@ use UserFrosting\Learn\Search\SearchSprunje;
 class SearchController
 {
     public function __construct(
-        protected SearchService $searchService,
-        protected Config $config,
         protected SearchSprunje $sprunje,
     ) {
     }
@@ -36,8 +32,9 @@ class SearchController
      *
      * Query parameters:
      * - q: Search query (required, min length from config)
-     * - page: Page number for pagination (optional, from config)
-     * - size: Number of results per page (optional, from config, max from config)
+     * - page: Page number for pagination (optional, default 1)
+     * - size: Number of results per page (optional, default from config, null means all results)
+     * - version: Documentation version (optional, defaults to latest)
      *
      * @param Request  $request
      * @param Response $response
@@ -46,11 +43,15 @@ class SearchController
     {
         $params = $request->getQueryParams();
 
-        $this->sprunje->setOptions([
-            'query' => $params['q'] ?? '',
-            'page'  => $params['page'] ?? null,
-            'size'  => $params['size'] ?? null,
-        ]);
+        $this->sprunje
+            ->setQuery($params['q'] ?? '')
+            ->setVersion($params['version'] ?? null)
+            ->setPage((int) ($params['page'] ?? 1));
+
+        // Only set size if explicitly provided
+        if (isset($params['size'])) {
+            $this->sprunje->setSize((int) $params['size']);
+        }
 
         return $this->sprunje->toResponse($response);
     }

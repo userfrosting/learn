@@ -101,12 +101,11 @@ class SearchServiceTest extends TestCase
         $searchSprunje = $this->ci->get(SearchSprunje::class);
 
         // Search with pagination via Sprunje
-        $searchSprunje->setOptions([
-            'query'   => 'page',
-            'version' => '6.0',
-            'size'    => 2,
-            'page'    => 0,
-        ]);
+        $searchSprunje
+            ->setQuery('page')
+            ->setVersion('6.0')
+            ->setSize(2)
+            ->setPage(1);
 
         $result = $searchSprunje->getArray();
 

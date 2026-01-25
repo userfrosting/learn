@@ -32,14 +32,11 @@ class StaticSprunjeTest extends TestCase
         return new TestableStaticSprunje();
     }
 
-    public function testSetOptions(): void
+    public function testSetSizeAndPage(): void
     {
         $sprunje = $this->createSprunje();
 
-        $sprunje->setOptions([
-            'size' => 10,
-            'page' => 2,
-        ]);
+        $sprunje->setSize(10)->setPage(2);
 
         $result = $sprunje->getArray();
 
@@ -47,62 +44,88 @@ class StaticSprunjeTest extends TestCase
         $this->assertSame(2, $result['page']);
     }
 
-    public function testSetOptionsWithDefaults(): void
+    public function testGettersAndSetters(): void
+    {
+        $sprunje = $this->createSprunje();
+
+        $sprunje->setSize(25)->setPage(3);
+
+        $this->assertSame(25, $sprunje->getSize());
+        $this->assertSame(3, $sprunje->getPage());
+    }
+
+    public function testDefaultValues(): void
     {
         $sprunje = $this->createSprunje();
 
         // Don't set any options
         $result = $sprunje->getArray();
 
-        $this->assertSame(0, $result['size']); // 'all' converts to 0
-        $this->assertSame(0, $result['page']); // null converts to 0
+        $this->assertSame(0, $result['size']); // null converts to 0
+        $this->assertSame(1, $result['page']); // Default is 1
     }
 
-    public function testValidateOptionsWithValidSize(): void
+    public function testSetSizeWithValidInteger(): void
     {
         $sprunje = $this->createSprunje();
 
-        $sprunje->setOptions(['size' => '25']);
+        $sprunje->setSize(25);
         $result = $sprunje->getArray();
 
         $this->assertSame(25, $result['size']);
     }
 
-    public function testValidateOptionsWithAllSize(): void
+    public function testSetSizeWithNull(): void
     {
         $sprunje = $this->createSprunje();
 
-        $sprunje->setOptions(['size' => 'all']);
+        $sprunje->setSize(null);
         $result = $sprunje->getArray();
 
-        // 'all' should be preserved and convert to 0 in output
+        // null should convert to 0 in output (meaning all results)
         $this->assertSame(0, $result['size']);
     }
 
-    public function testValidateOptionsWithInvalidSize(): void
+    public function testSetSizeWithInvalidValue(): void
     {
         $sprunje = $this->createSprunje();
 
         $this->expectException(ValidationException::class);
-        $sprunje->setOptions(['size' => 'invalid']);
+        $sprunje->setSize(0);
     }
 
-    public function testValidateOptionsWithValidPage(): void
+    public function testSetSizeWithNegativeValue(): void
     {
         $sprunje = $this->createSprunje();
 
-        $sprunje->setOptions(['page' => 3]);
+        $this->expectException(ValidationException::class);
+        $sprunje->setSize(-1);
+    }
+
+    public function testSetPageWithValidInteger(): void
+    {
+        $sprunje = $this->createSprunje();
+
+        $sprunje->setPage(3);
         $result = $sprunje->getArray();
 
         $this->assertSame(3, $result['page']);
     }
 
-    public function testValidateOptionsWithInvalidPage(): void
+    public function testSetPageWithInvalidValue(): void
     {
         $sprunje = $this->createSprunje();
 
         $this->expectException(ValidationException::class);
-        $sprunje->setOptions(['page' => 'invalid']);
+        $sprunje->setPage(0);
+    }
+
+    public function testSetPageWithNegativeValue(): void
+    {
+        $sprunje = $this->createSprunje();
+
+        $this->expectException(ValidationException::class);
+        $sprunje->setPage(-1);
     }
 
     public function testGetArray(): void
@@ -144,26 +167,20 @@ class StaticSprunjeTest extends TestCase
     {
         $sprunje = $this->createSprunje();
 
-        $sprunje->setOptions([
-            'size' => 2,
-            'page' => 1, // Second page (0-indexed)
-        ]);
+        $sprunje->setSize(2)->setPage(2); // Second page (1-based)
 
         $result = $sprunje->getArray();
 
         // Should return 2 items starting from offset 2
         $this->assertCount(2, $result['rows']);
-        $this->assertSame('Item 3', $result['rows'][0]['name']); // Third item (0-indexed)
+        $this->assertSame('Item 3', $result['rows'][0]['name']); // Third item (0-indexed array)
     }
 
     public function testApplyPaginationWithFirstPage(): void
     {
         $sprunje = $this->createSprunje();
 
-        $sprunje->setOptions([
-            'size' => 2,
-            'page' => 0, // First page
-        ]);
+        $sprunje->setSize(2)->setPage(1); // First page (1-based)
 
         $result = $sprunje->getArray();
 
@@ -172,33 +189,15 @@ class StaticSprunjeTest extends TestCase
         $this->assertSame('Item 2', $result['rows'][1]['name']);
     }
 
-    public function testApplyPaginationWithAllSize(): void
+    public function testApplyPaginationWithNullSize(): void
     {
         $sprunje = $this->createSprunje();
 
-        $sprunje->setOptions([
-            'size' => 'all',
-            'page' => 0,
-        ]);
+        $sprunje->setSize(null)->setPage(1);
 
         $result = $sprunje->getArray();
 
-        // Should return all items when size is 'all'
-        $this->assertCount(5, $result['rows']);
-    }
-
-    public function testApplyPaginationWithNullPage(): void
-    {
-        $sprunje = $this->createSprunje();
-
-        $sprunje->setOptions([
-            'size' => 2,
-            'page' => null,
-        ]);
-
-        $result = $sprunje->getArray();
-
-        // Should return all items when page is null
+        // Should return all items when size is null
         $this->assertCount(5, $result['rows']);
     }
 
@@ -279,10 +278,7 @@ class StaticSprunjeTest extends TestCase
     {
         $sprunje = $this->createSprunje();
 
-        $sprunje->setOptions([
-            'size' => 2,
-            'page' => 10, // Way beyond available items
-        ]);
+        $sprunje->setSize(2)->setPage(10); // Way beyond available items
 
         $result = $sprunje->getArray();
 
@@ -296,9 +292,6 @@ class StaticSprunjeTest extends TestCase
  * Concrete implementation of StaticSprunje for testing.
  *
  * @extends StaticSprunje<array{
- *     size: string|int|null,
- *     page: string|int|null,
- * }, array{
  *     id: int,
  *     name: string
  * }>

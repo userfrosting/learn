@@ -15,26 +15,19 @@ namespace UserFrosting\Learn\Search;
 use Illuminate\Support\Collection;
 use Psr\Http\Message\ResponseInterface;
 use UserFrosting\Sprinkle\Core\Exceptions\ValidationException;
-use Valitron\Validator;
 
 /**
  * Implements a simple version of Sprunje for paginating a static collection.
  *
- * @template TOptions of array{
- *     size: string|int|null,
- *     page: string|int|null,
- * }
  * @template TItem
  */
 abstract class StaticSprunje
 {
-    /**
-     * @var TOptions Default HTTP request parameters.
-     */
-    protected array $options = [
-        'size'    => 'all',
-        'page'    => null,
-    ];
+    /** @var int|null Number of results per page. Null means return all results. */
+    protected ?int $size = null;
+
+    /** @var int Page number (1-based). */
+    protected int $page = 1;
 
     /**
      * @var string[] Fields to show in output. Empty array will load all.
@@ -54,47 +47,69 @@ abstract class StaticSprunje
     protected string $pageKey = 'page';
 
     /**
-     * Set Sprunje options.
+     * Set the page size.
      *
-     * @param array<string, mixed> $options Partial TOptions
+     * @param int|null $size Number of results per page, or null for all results
+     *
+     * @throws ValidationException
      *
      * @return static
      */
-    public function setOptions(array $options): static
+    public function setSize(?int $size): static
     {
-        $options = $this->validateOptions($options);
+        if ($size !== null && $size < 1) {
+            $e = new ValidationException();
+            $e->addErrors(['size' => ['Size must be null or at least 1']]);
 
-        // @phpstan-ignore-next-line - Can't make array_replace_recursive hint at TOptions
-        $this->options = array_replace_recursive($this->options, $options);
+            throw $e;
+        }
+
+        $this->size = $size;
 
         return $this;
     }
 
     /**
-     * Validate option using Validator. Can also mutate options as needed,
-     * e.g., setting defaults.
+     * Get the page size.
      *
-     * @param array<string, mixed> $options
+     * @return int|null
+     */
+    public function getSize(): ?int
+    {
+        return $this->size;
+    }
+
+    /**
+     * Set the page number (1-based).
+     *
+     * @param int $page Page number
      *
      * @throws ValidationException
      *
-     * @return array<string, mixed>
+     * @return static
      */
-    protected function validateOptions(array $options): array
+    public function setPage(int $page): static
     {
-        // Validation on input data
-        $v = new Validator($options);
-        $v->rule('regex', 'size', '/all|[0-9]+/i');
-        $v->rule('integer', 'page');
-
-        if (!$v->validate()) {
+        if ($page < 1) {
             $e = new ValidationException();
-            $e->addErrors($v->errors()); // @phpstan-ignore-line errors returns array with no arguments
+            $e->addErrors(['page' => ['Page must be at least 1']]);
 
             throw $e;
         }
 
-        return $options;
+        $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * Get the page number.
+     *
+     * @return int
+     */
+    public function getPage(): int
+    {
+        return $this->page;
     }
 
     /**
@@ -127,8 +142,8 @@ abstract class StaticSprunje
         // Return sprunjed results
         return [
             $this->countKey => $count,
-            $this->sizeKey  => (int) $this->options['size'],
-            $this->pageKey  => (int) $this->options['page'],
+            $this->sizeKey  => $this->size ?? 0,
+            $this->pageKey  => $this->page,
             $this->rowsKey  => $rows->values()->toArray(),
         ];
     }
@@ -179,12 +194,10 @@ abstract class StaticSprunje
      */
     public function applyPagination(Collection $query): Collection
     {
-        $page = $this->options['page'];
-        $size = $this->options['size'];
-
-        if (!is_null($page) && !is_null($size) && $size !== 'all') {
-            $offset = (int) $size * (int) $page;
-            $query = $query->skip($offset)->take((int) $size);
+        if ($this->size !== null) {
+            // Page is 1-based, so subtract 1 for offset calculation
+            $offset = $this->size * ($this->page - 1);
+            $query = $query->skip($offset)->take($this->size);
         }
 
         return $query;

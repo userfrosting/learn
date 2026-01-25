@@ -26,20 +26,72 @@ use UserFrosting\Sprinkle\Core\Sprunje\Sprunje;
  * @phpstan-import-type IndexedPage from IndexedPageShape
  * @phpstan-import-type SearchResult from IndexedPageShape
  *
- * @extends StaticSprunje<array{
- *     query: string,
- *     version: string|null,
- *     size: string|int|null,
- *     page: string|int|null,
- * }, SearchResult>
+ * @extends StaticSprunje<SearchResult>
  */
 class SearchSprunje extends StaticSprunje
 {
+    /** @var string|null Documentation version to search */
+    protected ?string $version = null;
+
+    /** @var string Search query */
+    protected string $query = '';
+
     public function __construct(
         protected SearchService $searchService,
         protected SearchIndex $searchIndex,
         protected Config $config
     ) {
+        // Set default size from config
+        $defaultSize = $this->config->getInt('learn.search.default_size');
+        if ($defaultSize !== null) {
+            $this->size = $defaultSize;
+        }
+    }
+
+    /**
+     * Set the search query.
+     *
+     * @param string $query Search query
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return static
+     */
+    public function setQuery(string $query): static
+    {
+        // Validate query length
+        $minLength = $this->config->getInt('learn.search.min_length', 3);
+        if ($query === '' || mb_strlen($query) < $minLength) {
+            throw new InvalidArgumentException("Query must be at least {$minLength} characters long");
+        }
+
+        $this->query = $query;
+
+        return $this;
+    }
+
+    /**
+     * Set the documentation version.
+     *
+     * @param string|null $version Documentation version
+     *
+     * @return static
+     */
+    public function setVersion(?string $version): static
+    {
+        $this->version = $version ?? $this->config->get('learn.versions.latest');
+
+        return $this;
+    }
+
+    /**
+     * Get the documentation version.
+     *
+     * @return string|null
+     */
+    public function getVersion(): ?string
+    {
+        return $this->version;
     }
 
     /**
@@ -50,12 +102,12 @@ class SearchSprunje extends StaticSprunje
     public function getQuery(): Collection
     {
         // No version specified means no results
-        if ($this->options['version'] === null) {
+        if ($this->version === null) {
             return collect([]);
         }
 
         // Get the index from cache
-        $index = $this->searchIndex->getIndex($this->options['version']);
+        $index = $this->searchIndex->getIndex($this->version);
 
         // No indexed pages means no results
         if (count($index) === 0) {
@@ -63,30 +115,11 @@ class SearchSprunje extends StaticSprunje
         }
 
         // Search through the index (without pagination - Sprunje handles that)
-        $results = $this->searchService->performSearch($this->options['query'], $index);
+        $results = $this->searchService->performSearch($this->query, $index);
 
         // Convert to Collection for compatibility
         $collection = collect($results);
 
         return $collection;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function validateOptions(array $options): array
-    {
-        // Validate query length
-        $minLength = $this->config->get('learn.search.min_length', 3);
-        if (!is_string($options['query']) || $options['query'] === '' || mb_strlen($options['query']) < $minLength) {
-            throw new InvalidArgumentException("Query must be at least {$minLength} characters long");
-        }
-
-        // Define default options
-        $options['version'] ??= $this->config->get('learn.versions.latest');
-        $options['size'] ??= $this->config->get('learn.search.default_size', 'all');
-        $options['page'] ??= $this->config->get('learn.search.default_page', null);
-
-        return parent::validateOptions($options);
     }
 }
