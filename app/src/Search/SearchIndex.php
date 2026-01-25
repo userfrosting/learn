@@ -89,8 +89,13 @@ class SearchIndex
         $keyFormat = $this->config->getString('learn.search.index.key', '');
         $cacheKey = sprintf($keyFormat, $version);
 
-        // TODO : If the cache key is empty, it should build the index first
         $index = $this->cache->get($cacheKey);
+
+        // If cache is empty, build the index first
+        if (!is_array($index)) {
+            $this->buildIndex($version);
+            $index = $this->cache->get($cacheKey);
+        }
 
         // Ensure we return an array even if cache returns null or unexpected type
         if (!is_array($index)) {
