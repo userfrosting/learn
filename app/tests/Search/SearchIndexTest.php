@@ -11,6 +11,8 @@
 namespace UserFrosting\Tests\Learn\Search;
 
 use UserFrosting\Config\Config;
+use UserFrosting\Learn\Documentation\DocumentationRepository;
+use UserFrosting\Learn\Documentation\PageResource;
 use UserFrosting\Learn\Recipe;
 use UserFrosting\Learn\Search\SearchIndex;
 use UserFrosting\Testing\TestCase;
@@ -54,8 +56,8 @@ class SearchIndexTest extends TestCase
         $this->assertGreaterThan(0, $count, 'Should have indexed at least one page');
 
         // Verify it matches the number of test pages
-        /** @var \UserFrosting\Learn\Documentation\DocumentationRepository $repository */
-        $repository = $this->ci->get(\UserFrosting\Learn\Documentation\DocumentationRepository::class);
+        /** @var DocumentationRepository $repository */
+        $repository = $this->ci->get(DocumentationRepository::class);
 
         // Use reflection to get pages count
         $reflection = new \ReflectionClass($repository);
@@ -182,26 +184,21 @@ class SearchIndexTest extends TestCase
         // Build index to get tree
         $searchIndex->buildIndex('6.0');
 
-        // Use reflection to access the repository and get tree
-        /** @var \UserFrosting\Learn\Documentation\DocumentationRepository $repository */
-        $repository = $this->ci->get(\UserFrosting\Learn\Documentation\DocumentationRepository::class);
-        $tree = $repository->getTree('6.0');
-
-        // Use reflection to test flattenTree
-        $reflection = new \ReflectionClass($searchIndex);
-        $method = $reflection->getMethod('flattenTree');
-
-        $flat = $method->invoke($searchIndex, $tree);
+        // Use the repository's public getFlattenedTree method
+        /** @var DocumentationRepository $repository */
+        $repository = $this->ci->get(DocumentationRepository::class);
+        $flat = $repository->getFlattenedTree('6.0');
 
         // Should have multiple pages
         $this->assertGreaterThan(0, count($flat), 'Should have at least one page');
 
         // Verify they're all PageResource objects
         foreach ($flat as $page) {
-            $this->assertInstanceOf(\UserFrosting\Learn\Documentation\PageResource::class, $page);
+            $this->assertInstanceOf(PageResource::class, $page); // @phpstan-ignore-line
         }
 
         // Verify flat count matches tree structure (all pages including nested)
+        $tree = $repository->getTree('6.0');
         $countTreePages = function ($pages) use (&$countTreePages) {
             $count = 0;
             foreach ($pages as $page) {

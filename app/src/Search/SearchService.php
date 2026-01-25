@@ -42,71 +42,21 @@ class SearchService
      */
     public function performSearch(string $query, array $index): array
     {
-        $results = [];
         $query = trim($query);
-
         if ($query === '') {
-            return $results;
+            return [];
         }
 
-        // Determine if query contains wildcards (check once before loop)
         $hasWildcards = str_contains($query, '*') || str_contains($query, '?');
+        $wildcardRegex = $hasWildcards ? $this->buildWildcardRegex($query) : null;
 
-        // Pre-compile regex for wildcard searches to avoid recompiling in loop
-        $wildcardRegex = null;
-        if ($hasWildcards) {
-            $pattern = preg_quote($query, '/');
-            $pattern = str_replace(['\*', '\?'], ['.*', '.'], $pattern);
-            $wildcardRegex = '/' . $pattern . '/i';
-        }
-
+        $results = [];
         foreach ($index as $page) {
-            $titleMatches = [];
-            $keywordMatches = [];
-            $metadataMatches = [];
-            $contentMatches = [];
-
-            // Search in different fields with priority
-            if ($hasWildcards) {
-                $titleMatches = $this->searchWithWildcard($wildcardRegex, $page->title);
-                $keywordMatches = $this->searchWithWildcard($wildcardRegex, $page->keywords);
-                $metadataMatches = $this->searchWithWildcard($wildcardRegex, $page->metadata);
-                $contentMatches = $this->searchWithWildcard($wildcardRegex, $page->content);
-            } else {
-                $titleMatches = $this->searchPlain($query, $page->title);
-                $keywordMatches = $this->searchPlain($query, $page->keywords);
-                $metadataMatches = $this->searchPlain($query, $page->metadata);
-                $contentMatches = $this->searchPlain($query, $page->content);
-            }
-
-            // Calculate weighted score: title > keywords > metadata > content
-            $score = count($titleMatches) * 10 + count($keywordMatches) * 5 + count($metadataMatches) * 2 + count($contentMatches);
+            $matches = $this->searchInPage($page, $query, $wildcardRegex);
+            $score = $this->calculateScore($matches);
 
             if ($score > 0) {
-                // Prefer snippet from title/keywords/metadata if found, otherwise content
-                $snippetPosition = 0;
-                if (count($titleMatches) > 0) {
-                    $snippetPosition = $titleMatches[0];
-                    $snippetContent = $page->title;
-                } elseif (count($keywordMatches) > 0) {
-                    $snippetPosition = $keywordMatches[0];
-                    $snippetContent = $page->keywords;
-                } elseif (count($metadataMatches) > 0) {
-                    $snippetPosition = $metadataMatches[0];
-                    $snippetContent = $page->metadata;
-                } else {
-                    $snippetPosition = $contentMatches[0];
-                    $snippetContent = $page->content;
-                }
-
-                $results[] = new SearchResult(
-                    title: $page->title,
-                    slug: $page->slug,
-                    route: $page->route,
-                    snippet: $this->generateSnippet($snippetContent, $snippetPosition),
-                    matches: $score,
-                    version: $page->version,
-                );
+                $results[] = $this->createSearchResult($page, $matches, $score);
             }
         }
 
@@ -116,6 +66,114 @@ class SearchService
         $maxResults = $this->config->get('learn.search.max_results', 1000);
 
         return array_slice($results, 0, $maxResults);
+    }
+
+    /**
+     * Build wildcard regex pattern from query.
+     *
+     * @param string $query
+     *
+     * @return string
+     */
+    protected function buildWildcardRegex(string $query): string
+    {
+        $pattern = preg_quote($query, '/');
+        $pattern = str_replace(['\*', '\?'], ['.*', '.'], $pattern);
+
+        return '/' . $pattern . '/i';
+    }
+
+    /**
+     * Search in all page fields.
+     *
+     * @param IndexedPage $page
+     * @param string      $query
+     * @param string|null $wildcardRegex
+     *
+     * @return array<string, array<int, int>>
+     */
+    protected function searchInPage(IndexedPage $page, string $query, ?string $wildcardRegex): array
+    {
+        if ($wildcardRegex !== null) {
+            return [
+                'title'    => $this->searchWithWildcard($wildcardRegex, $page->title),
+                'keywords' => $this->searchWithWildcard($wildcardRegex, $page->keywords),
+                'metadata' => $this->searchWithWildcard($wildcardRegex, $page->metadata),
+                'content'  => $this->searchWithWildcard($wildcardRegex, $page->content),
+            ];
+        }
+
+        return [
+            'title'    => $this->searchPlain($query, $page->title),
+            'keywords' => $this->searchPlain($query, $page->keywords),
+            'metadata' => $this->searchPlain($query, $page->metadata),
+            'content'  => $this->searchPlain($query, $page->content),
+        ];
+    }
+
+    /**
+     * Calculate weighted score from matches.
+     *
+     * @param array<string, array<int, int>> $matches
+     *
+     * @return int
+     */
+    protected function calculateScore(array $matches): int
+    {
+        return count($matches['title']) * 10
+            + count($matches['keywords']) * 5
+            + count($matches['metadata']) * 2
+            + count($matches['content']);
+    }
+
+    /**
+     * Create search result with snippet.
+     *
+     * @param IndexedPage                    $page
+     * @param array<string, array<int, int>> $matches
+     * @param int                            $score
+     *
+     * @return SearchResult
+     */
+    protected function createSearchResult(IndexedPage $page, array $matches, int $score): SearchResult
+    {
+        // Determine best snippet source by priority
+        $snippetData = $this->selectSnippetSource($page, $matches);
+
+        return new SearchResult(
+            title: $page->title,
+            slug: $page->slug,
+            route: $page->route,
+            snippet: $this->generateSnippet($snippetData['content'], $snippetData['position']),
+            matches: $score,
+            version: $page->version,
+        );
+    }
+
+    /**
+     * Select the best snippet source from matches.
+     *
+     * @param IndexedPage                    $page
+     * @param array<string, array<int, int>> $matches
+     *
+     * @return array{content: string, position: int}
+     */
+    protected function selectSnippetSource(IndexedPage $page, array $matches): array
+    {
+        $priority = [
+            'title'    => $page->title,
+            'keywords' => $page->keywords,
+            'metadata' => $page->metadata,
+            'content'  => $page->content,
+        ];
+
+        foreach ($priority as $field => $content) {
+            if (isset($matches[$field]) && count($matches[$field]) > 0) {
+                return ['content' => $content, 'position' => $matches[$field][0]];
+            }
+        }
+
+        return ['content' => '', 'position' => 0];
     }
 
     /**

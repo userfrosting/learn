@@ -91,7 +91,7 @@ class SearchIndex
 
         $index = $this->cache->get($cacheKey);
 
-        // If cache is empty, build the index first
+        // If cache is empty, try to build the index first
         if (!is_array($index)) {
             $this->buildIndex($version);
             $index = $this->cache->get($cacheKey);
@@ -114,8 +114,7 @@ class SearchIndex
      */
     protected function indexVersion(Version $version): array
     {
-        $tree = $this->repository->getTree($version->id);
-        $pages = $this->flattenTree($tree);
+        $pages = $this->repository->getFlattenedTree($version->id);
 
         /** @var list<IndexedPage> */
         $indexed = [];
@@ -136,46 +135,58 @@ class SearchIndex
      */
     protected function indexPage(PageResource $page): IndexedPage
     {
-        // Get the HTML content and strip HTML tags to get plain text
-        $htmlContent = $page->getContent();
-        $plainText = $this->stripHtmlTags($htmlContent);
-
-        // Get frontmatter
         $frontMatter = $page->getFrontMatter();
-
-        // Extract keywords if present
-        $keywords = '';
-        if (isset($frontMatter['keywords'])) {
-            if (is_array($frontMatter['keywords'])) {
-                $keywords = implode(' ', $frontMatter['keywords']);
-            } elseif (is_string($frontMatter['keywords'])) {
-                $keywords = $frontMatter['keywords'];
-            }
-        }
-
-        // Extract other relevant metadata (description, tags, etc.)
-        $metadata = [];
-        $metadataFields = $this->config->get('learn.search.metadata_fields', ['description', 'tags', 'category', 'author']);
-        foreach ($metadataFields as $field) {
-            if (isset($frontMatter[$field])) {
-                if (is_array($frontMatter[$field])) {
-                    $metadata[] = implode(' ', $frontMatter[$field]);
-                } elseif (is_string($frontMatter[$field])) {
-                    $metadata[] = $frontMatter[$field];
-                }
-            }
-        }
-        $metadataString = implode(' ', $metadata);
 
         return new IndexedPage(
             title: $page->getTitle(),
             slug: $page->getSlug(),
             route: $page->getRoute(),
-            content: $plainText,
+            content: $this->stripHtmlTags($page->getContent()),
             version: $page->getVersion()->id,
-            keywords: $keywords,
-            metadata: $metadataString,
+            keywords: $this->extractFieldAsString($frontMatter, 'keywords'),
+            metadata: $this->extractMetadata($frontMatter),
         );
+    }
+
+    /**
+     * Extract a frontmatter field as string.
+     *
+     * @param array<string, mixed> $frontMatter
+     * @param string               $field
+     *
+     * @return string
+     */
+    protected function extractFieldAsString(array $frontMatter, string $field): string
+    {
+        if (!isset($frontMatter[$field])) {
+            return '';
+        }
+
+        $value = $frontMatter[$field];
+
+        return is_array($value) ? implode(' ', $value) : (string) $value;
+    }
+
+    /**
+     * Extract metadata fields as concatenated string.
+     *
+     * @param array<string, mixed> $frontMatter
+     *
+     * @return string
+     */
+    protected function extractMetadata(array $frontMatter): string
+    {
+        $fields = $this->config->get('learn.search.metadata_fields', []);
+        $values = [];
+
+        foreach ($fields as $field) {
+            $value = $this->extractFieldAsString($frontMatter, $field);
+            if ($value !== '') {
+                $values[] = $value;
+            }
+        }
+
+        return implode(' ', $values);
     }
 
     /**
@@ -188,61 +199,17 @@ class SearchIndex
      */
     protected function stripHtmlTags(string $html): string
     {
-        // Combined regex: Add space before/after block elements to prevent word concatenation
-        $result = preg_replace([
-            '/<(div|p|h[1-6]|li|pre|code|blockquote)[^>]*>/i',  // Opening tags
-            '/<\/(div|p|h[1-6]|li|pre|code|blockquote)>/i',     // Closing tags
-            '/<(script|style)[^>]*>.*?<\/\1>/is',               // Remove script/style with content
-        ], [
-            ' $0',  // Space before opening tags
-            '$0 ',  // Space after closing tags
-            '',     // Remove script/style entirely
-        ], $html);
+        // Remove script/style tags with content
+        $html = preg_replace('/<(script|style)[^>]*>.*?<\/\1>/is', '', $html) ?? $html;
 
-        // Check if preg_replace failed
-        if ($result === null) {
-            // Fallback to original HTML if regex fails
-            $result = $html;
-        }
+        // Add spaces around block elements to prevent word concatenation
+        $html = preg_replace('/<(div|p|h[1-6]|li|pre|code|blockquote)[^>]*>/i', ' ', $html) ?? $html;
 
-        // Strip remaining HTML tags
-        $text = strip_tags($result);
-
-        // Decode HTML entities
-        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        // Strip all remaining HTML tags and decode entities
+        $text = html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
         // Normalize whitespace
-        $text = preg_replace('/\s+/', ' ', $text);
-
-        // Check if preg_replace failed
-        if ($text === null) {
-            // Fallback: at least decode entities from stripped HTML
-            $text = html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        }
-
-        return trim($text);
-    }
-
-    /**
-     * Flatten a tree structure into a flat array of pages.
-     *
-     * @param PageResource[] $tree
-     *
-     * @return PageResource[]
-     */
-    protected function flattenTree(array $tree): array
-    {
-        $flat = [];
-
-        foreach ($tree as $page) {
-            $flat[] = $page;
-            $children = $page->getChildren();
-            if ($children !== null && count($children) > 0) {
-                $flat = array_merge($flat, $this->flattenTree($children));
-            }
-        }
-
-        return $flat;
+        return trim(preg_replace('/\s+/', ' ', $text) ?? $text);
     }
 
     /**
