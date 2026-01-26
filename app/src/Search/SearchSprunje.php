@@ -38,11 +38,9 @@ class SearchSprunje extends StaticSprunje
         protected SearchIndex $searchIndex,
         protected Config $config
     ) {
-        // Set default size from config
-        $defaultSize = $this->config->getInt('learn.search.default_size');
-        if ($defaultSize !== null) {
-            $this->size = $defaultSize;
-        }
+        // Set default size and version from config
+        $this->size = $this->config->getInt('learn.search.default_size', 10);
+        $this->version = $this->config->getString('learn.versions.latest');
     }
 
     /**
@@ -56,12 +54,6 @@ class SearchSprunje extends StaticSprunje
      */
     public function setQuery(string $query): static
     {
-        // Validate query length
-        $minLength = $this->config->getInt('learn.search.min_length', 3);
-        if ($query === '' || mb_strlen($query) < $minLength) {
-            throw new InvalidArgumentException("Query must be at least {$minLength} characters long");
-        }
-
         $this->query = $query;
 
         return $this;

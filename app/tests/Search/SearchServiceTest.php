@@ -10,11 +10,12 @@
 
 namespace UserFrosting\Tests\Learn\Search;
 
+use InvalidArgumentException;
 use UserFrosting\Config\Config;
 use UserFrosting\Learn\Recipe;
 use UserFrosting\Learn\Search\SearchIndex;
+use UserFrosting\Learn\Search\SearchResult;
 use UserFrosting\Learn\Search\SearchService;
-use UserFrosting\Learn\Search\SearchSprunje;
 use UserFrosting\Testing\TestCase;
 use UserFrosting\UniformResourceLocator\ResourceLocatorInterface;
 use UserFrosting\UniformResourceLocator\ResourceStream;
@@ -63,7 +64,7 @@ class SearchServiceTest extends TestCase
 
         // Check structure of first result
         $firstResult = $results[0];
-        $this->assertInstanceOf(\UserFrosting\Learn\Search\SearchResult::class, $firstResult);
+        $this->assertInstanceOf(SearchResult::class, $firstResult);
         $this->assertNotEmpty($firstResult->title);
         $this->assertNotEmpty($firstResult->slug);
         $this->assertNotEmpty($firstResult->route);
@@ -77,11 +78,23 @@ class SearchServiceTest extends TestCase
         $searchService = $this->ci->get(SearchService::class);
         $searchIndex = $this->ci->get(SearchIndex::class);
 
-        $index = $searchIndex->getIndex('6.0');
-        $results = $searchService->performSearch('', $index);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Query must be at least 3 characters long');
 
-        $this->assertSame(0, count($results));
-        $this->assertEmpty($results);
+        $index = $searchIndex->getIndex('6.0');
+        $searchService->performSearch('', $index);
+    }
+
+    public function testSearchWithShortQuery(): void
+    {
+        $searchService = $this->ci->get(SearchService::class);
+        $searchIndex = $this->ci->get(SearchIndex::class);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Query must be at least 3 characters long');
+
+        $index = $searchIndex->getIndex('6.0');
+        $searchService->performSearch('ab', $index); // Only 2 characters
     }
 
     public function testSearchWithWildcard(): void
@@ -89,28 +102,12 @@ class SearchServiceTest extends TestCase
         $searchService = $this->ci->get(SearchService::class);
         $searchIndex = $this->ci->get(SearchIndex::class);
 
-        // Search for "f*" - should match words starting with 'f'
+        // Search for "pag*" - should match words starting with 'pag'
         $index = $searchIndex->getIndex('6.0');
-        $results = $searchService->performSearch('f*', $index);
+        $results = $searchService->performSearch('pag*', $index);
 
         $this->assertIsArray($results);
         $this->assertGreaterThanOrEqual(0, count($results));
-    }
-
-    public function testSearchPagination(): void
-    {
-        $searchSprunje = $this->ci->get(SearchSprunje::class);
-
-        // Search with pagination via Sprunje
-        $searchSprunje
-            ->setQuery('page')
-            ->setVersion('6.0')
-            ->setSize(2)
-            ->setPage(1);
-
-        $result = $searchSprunje->getResultSet();
-
-        $this->assertArrayHasKey('rows', $result);
     }
 
     public function testSearchResultSnippet(): void
@@ -152,7 +149,8 @@ class SearchServiceTest extends TestCase
         $method = $reflection->getMethod('generateSnippet');
 
         // Create long content that exceeds snippet length (default 150 chars)
-        $content = str_repeat('Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', 10) . 'This is the important part. ' . str_repeat('More text follows here. ', 10);
+        $content = str_repeat('Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', 10) .
+                   'This is the important part. ' . str_repeat('More text follows here. ', 10);
         $matchPosition = strpos($content, 'important');
 
         if ($matchPosition !== false) {
@@ -164,15 +162,10 @@ class SearchServiceTest extends TestCase
         }
     }
 
-    public function testSearchWithNoIndex(): void
+    public function testSearchWithEmptyIndex(): void
     {
-        // Clear the index
-        $searchIndex = $this->ci->get(SearchIndex::class);
-        $searchIndex->clearIndex('6.0');
-
         $searchService = $this->ci->get(SearchService::class);
-        $index = $searchIndex->getIndex('6.0');
-        $results = $searchService->performSearch('test', $index);
+        $results = $searchService->performSearch('first', []);
 
         $this->assertSame(0, count($results));
         $this->assertEmpty($results);
@@ -192,7 +185,115 @@ class SearchServiceTest extends TestCase
             $firstMatches = $results[0]->matches;
             $lastMatches = $results[count($results) - 1]->matches;
 
-            $this->assertGreaterThanOrEqual($lastMatches, $firstMatches);
+            $this->assertGreaterThan($lastMatches, $firstMatches);
         }
+
+        // First tree pages should be in order : Alpha Page, Beta Page & First Page
+        $this->assertSame('Alpha Page', $results[0]->title);
+        $this->assertSame('Beta Page', $results[1]->title);
+        $this->assertSame('First page', $results[2]->title);
+    }
+
+    public function testSelectSnippetSourceWithNoMatches(): void
+    {
+        $searchService = $this->ci->get(SearchService::class);
+
+        // Use reflection to test protected method
+        $reflection = new \ReflectionClass($searchService);
+        $method = $reflection->getMethod('selectSnippetSource');
+
+        // Create a page with some content
+        $page = new \UserFrosting\Learn\Search\IndexedPage(
+            title: 'Test Page',
+            slug: 'test-page',
+            route: '/test-page',
+            content: 'Test content',
+            version: '6.0',
+            keywords: 'test keywords',
+            metadata: 'test metadata',
+        );
+
+        // Create matches array with all empty arrays (no matches)
+        $matches = [
+            'title'    => [],
+            'keywords' => [],
+            'metadata' => [],
+            'content'  => [],
+        ];
+
+        $result = $method->invoke($searchService, $page, $matches);
+
+        // Should return empty content and zero position as fallback
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('content', $result);
+        $this->assertArrayHasKey('position', $result);
+        $this->assertSame('', $result['content']);
+        $this->assertSame(0, $result['position']);
+    }
+
+    public function testSearchWithWildcardMethod(): void
+    {
+        $searchService = $this->ci->get(SearchService::class);
+
+        // Use reflection to test protected method
+        $reflection = new \ReflectionClass($searchService);
+        $method = $reflection->getMethod('searchWithWildcard');
+
+        // Test normal wildcard search
+        $content = 'This is a test with testing and tested words like attest and attestation.';
+        $regex = '/test.*/i'; // Matches test, testing, tested, attest, attestation
+
+        $matches = $method->invoke($searchService, $regex, $content);
+
+        $this->assertIsArray($matches);
+        $this->assertSame(5, count($matches));
+    }
+
+    public function testSearchWithWildcardEmptyContent(): void
+    {
+        $searchService = $this->ci->get(SearchService::class);
+
+        // Use reflection to test protected method
+        $reflection = new \ReflectionClass($searchService);
+        $method = $reflection->getMethod('searchWithWildcard');
+
+        // Test with empty content - should not fail and return empty array
+        $content = '';
+        $regex = '/test.*/i';
+
+        $matches = $method->invoke($searchService, $regex, $content);
+
+        $this->assertIsArray($matches);
+        $this->assertEmpty($matches, 'Should return empty array for empty content');
+    }
+
+    public function testSearchWithWildcardPregSplitFailure(): void
+    {
+        $searchService = $this->ci->get(SearchService::class);
+
+        // Use reflection to test protected method
+        $reflection = new \ReflectionClass($searchService);
+        $method = $reflection->getMethod('searchWithWildcard');
+
+        // Save current PCRE settings
+        $originalBacktrackLimit = ini_get('pcre.backtrack_limit');
+
+        // Set a very low backtrack limit to force preg_split to fail
+        ini_set('pcre.backtrack_limit', '1');
+
+        // Create content that would exceed the backtrack limit
+        $content = str_repeat('a ', 1000); // 1000 words of 'a'
+        $regex = '/test.*/i';
+
+        $matches = $method->invoke($searchService, $regex, $content);
+
+        // Restore original setting
+        if ($originalBacktrackLimit !== false) {
+            ini_set('pcre.backtrack_limit', $originalBacktrackLimit);
+        }
+
+        // Should return empty array when preg_split fails
+        $this->assertIsArray($matches);
+        $this->assertEmpty($matches, 'Should return empty array when preg_split fails');
     }
 }

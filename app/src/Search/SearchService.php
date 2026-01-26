@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace UserFrosting\Learn\Search;
 
 use Illuminate\Cache\Repository as Cache;
+use InvalidArgumentException;
 use UserFrosting\Config\Config;
 
 /**
@@ -43,8 +44,11 @@ class SearchService
     public function performSearch(string $query, array $index): array
     {
         $query = trim($query);
-        if ($query === '') {
-            return [];
+
+        // Validate query length
+        $minLength = $this->config->getInt('learn.search.min_length', 3);
+        if ($query === '' || mb_strlen($query) < $minLength) {
+            throw new InvalidArgumentException("Query must be at least {$minLength} characters long");
         }
 
         $hasWildcards = str_contains($query, '*') || str_contains($query, '?');
@@ -211,14 +215,10 @@ class SearchService
     {
         $matches = [];
 
-        // Split content into words and check each word
-        $words = preg_split('/\s+/', $content);
+        // Split content into words and check each word (default to empty array if preg_split fails)
+        // @phpstan-ignore-next-line : preg_split can return false, but only if an error occurs, which we can ignore here.
+        $words = preg_split('/\s+/', $content) ?: [];
         $offset = 0;
-
-        if ($words === false) {
-            // Log error if needed in the future, but for now just return empty
-            return $matches;
-        }
 
         foreach ($words as $word) {
             if (preg_match($regex, $word) === 1) {
