@@ -81,7 +81,7 @@ class SearchSprunjeTest extends TestCase
 
         // Make sure we have 2 results as per size
         $this->assertGreaterThanOrEqual(2, $result['rows']);
-        $this->assertSame(10, $result['size']);
+        $this->assertSame(25, $result['size']);
         $this->assertSame(1, $result['page']);
     }
 
