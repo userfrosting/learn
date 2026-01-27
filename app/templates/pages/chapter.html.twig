@@ -5,6 +5,7 @@
 
 {% block page_content %}
     <div class="chapter-content">
+        {% include "partials/wip.html.twig" %}
         {% include "partials/obsolete.html.twig" %}
         {{ page.getContent()|raw }}
     </div>

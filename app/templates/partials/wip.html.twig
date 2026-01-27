@@ -1,0 +1,6 @@
+{% if page.getFrontMatter().wip %}
+    <div class="uk-alert uk-alert-warning">
+        <p class="uk-alert-title"><i class="fa-solid fa-clock uk-icon"></i>Work in progress</p>
+        <p>This page is a work in progress. Help complete it by <a href="{{ page.github }}">contributing on GitHub</a>!</p>
+    </div>
+{% endif %}
