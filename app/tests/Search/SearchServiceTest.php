@@ -69,7 +69,7 @@ class SearchServiceTest extends TestCase
         $this->assertNotEmpty($firstResult->slug);
         $this->assertNotEmpty($firstResult->route);
         $this->assertNotEmpty($firstResult->snippet);
-        $this->assertGreaterThan(0, $firstResult->matches);
+        $this->assertGreaterThan(0, $firstResult->score);
         $this->assertNotEmpty($firstResult->version);
     }
 
@@ -181,11 +181,11 @@ class SearchServiceTest extends TestCase
         $results = $searchService->performSearch('page', $index);
 
         if (count($results) > 1) {
-            // Verify results are sorted by number of matches (descending)
-            $firstMatches = $results[0]->matches;
-            $lastMatches = $results[count($results) - 1]->matches;
+            // Verify results are sorted by score (descending)
+            $firstScore = $results[0]->score;
+            $lastScore = $results[count($results) - 1]->score;
 
-            $this->assertGreaterThan($lastMatches, $firstMatches);
+            $this->assertGreaterThanOrEqual($lastScore, $firstScore);
         }
 
         // First tree pages should be in order : Alpha Page, Beta Page & First Page

@@ -24,7 +24,7 @@ readonly class SearchResult implements JsonSerializable
         public string $slug,
         public string $route,
         public string $snippet,
-        public int $matches,
+        public int $score,
         public string $version,
     ) {
     }
@@ -39,7 +39,7 @@ readonly class SearchResult implements JsonSerializable
             'slug'    => $this->slug,
             'route'   => $this->route,
             'snippet' => $this->snippet,
-            'matches' => $this->matches,
+            'score'   => $this->score,
             'version' => $this->version,
         ];
     }

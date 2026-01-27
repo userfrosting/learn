@@ -26,6 +26,18 @@ use UserFrosting\Config\Config;
  */
 class SearchService
 {
+    /** @var int Score multiplier for title matches */
+    protected const SCORE_TITLE = 10;
+
+    /** @var int Score multiplier for keyword matches */
+    protected const SCORE_KEYWORDS = 5;
+
+    /** @var int Score multiplier for metadata matches */
+    protected const SCORE_METADATA = 2;
+
+    /** @var int Score multiplier for content matches */
+    protected const SCORE_CONTENT = 1;
+
     public function __construct(
         protected Cache $cache,
         protected Config $config,
@@ -65,7 +77,7 @@ class SearchService
         }
 
         // Sort by weighted score (descending)
-        usort($results, fn ($a, $b) => $b->matches <=> $a->matches);
+        usort($results, fn ($a, $b) => $b->score <=> $a->score);
 
         $maxResults = $this->config->get('learn.search.max_results', 1000);
 
@@ -124,10 +136,10 @@ class SearchService
      */
     protected function calculateScore(array $matches): int
     {
-        return count($matches['title']) * 10
-            + count($matches['keywords']) * 5
-            + count($matches['metadata']) * 2
-            + count($matches['content']);
+        return count($matches['title']) * self::SCORE_TITLE
+            + count($matches['keywords']) * self::SCORE_KEYWORDS
+            + count($matches['metadata']) * self::SCORE_METADATA
+            + count($matches['content']) * self::SCORE_CONTENT;
     }
 
     /**
@@ -149,7 +161,7 @@ class SearchService
             slug: $page->slug,
             route: $page->route,
             snippet: $this->generateSnippet($snippetData['content'], $snippetData['position']),
-            matches: $score,
+            score: $score,
             version: $page->version,
         );
     }
