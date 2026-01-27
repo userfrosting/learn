@@ -72,7 +72,7 @@ class SearchService
             $score = $this->calculateScore($matches);
 
             if ($score > 0) {
-                $results[] = $this->createSearchResult($page, $matches, $score);
+                $results[] = $this->createSearchResult($page, $matches, $score, $query);
             }
         }
 
@@ -148,10 +148,11 @@ class SearchService
      * @param IndexedPage                    $page
      * @param array<string, array<int, int>> $matches
      * @param int                            $score
+     * @param string                         $query
      *
      * @return SearchResult
      */
-    protected function createSearchResult(IndexedPage $page, array $matches, int $score): SearchResult
+    protected function createSearchResult(IndexedPage $page, array $matches, int $score, string $query): SearchResult
     {
         // Determine best snippet source by priority
         $snippetData = $this->selectSnippetSource($page, $matches);
@@ -160,7 +161,7 @@ class SearchService
             title: $page->title,
             slug: $page->slug,
             route: $page->route,
-            snippet: $this->generateSnippet($snippetData['content'], $snippetData['position']),
+            snippet: $this->generateSnippet($snippetData['content'], $snippetData['position'], $query),
             score: $score,
             version: $page->version,
         );
@@ -247,10 +248,11 @@ class SearchService
      *
      * @param string $content       Full content
      * @param int    $matchPosition Position of the match
+     * @param string $query         Search query for highlighting
      *
-     * @return string Snippet with context
+     * @return string Snippet with context and highlighted matches
      */
-    protected function generateSnippet(string $content, int $matchPosition): string
+    protected function generateSnippet(string $content, int $matchPosition, string $query): string
     {
         $contextLength = $this->config->get('learn.search.snippet_length', 150);
 
@@ -261,6 +263,9 @@ class SearchService
         // Extract snippet
         $snippet = mb_substr($content, $start, $end - $start);
 
+        // Highlight matches in the snippet
+        $snippet = $this->highlightMatches($snippet, $query);
+
         // Add ellipsis if we're not at the beginning/end
         if ($start > 0) {
             $snippet = '...' . $snippet;
@@ -270,5 +275,31 @@ class SearchService
         }
 
         return $snippet;
+    }
+
+    /**
+     * Highlight query matches in text with strong tags.
+     *
+     * @param string $text  Text to highlight
+     * @param string $query Search query
+     *
+     * @return string Text with highlighted matches
+     */
+    protected function highlightMatches(string $text, string $query): string
+    {
+        // Check if query contains wildcards
+        $hasWildcards = str_contains($query, '*') || str_contains($query, '?');
+
+        if ($hasWildcards) {
+            // Build regex for wildcard matching
+            $regex = $this->buildWildcardRegex($query);
+            // Replace wildcards in display (remove delimiters and flags)
+            $pattern = substr($regex, 1, -2); // Remove / and /i
+
+            return preg_replace('/(' . $pattern . ')/iu', '<strong>$1</strong>', $text) ?? $text;
+        }
+
+        // Simple case-insensitive replacement for plain text
+        return preg_replace('/(' . preg_quote($query, '/') . ')/iu', '<strong>$1</strong>', $text) ?? $text;
     }
 }

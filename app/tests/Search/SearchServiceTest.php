@@ -154,7 +154,7 @@ class SearchServiceTest extends TestCase
         $matchPosition = strpos($content, 'important');
 
         if ($matchPosition !== false) {
-            $snippet = $method->invoke($searchService, $content, $matchPosition);
+            $snippet = $method->invoke($searchService, $content, $matchPosition, 'important');
 
             $this->assertIsString($snippet);
             $this->assertStringContainsString('important', $snippet);
