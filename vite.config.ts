@@ -1,11 +1,14 @@
 import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
 
 // Get vite port from env, default to 3000
 const vitePort = parseInt(process.env.VITE_PORT || '5173', 10)
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [],
+    plugins: [
+        vue(),
+    ],
     server: {
         host: true, // Allows external access (needed for Docker)
         strictPort: true,
@@ -21,7 +24,8 @@ export default defineConfig({
         manifest: true,
         rollupOptions: {
             input: {
-                main: 'app/assets/main.ts'
+                main: 'app/assets/main.ts',
+                search: 'app/assets/search.ts'
             }
         }
     },
@@ -40,12 +44,6 @@ export default defineConfig({
     // Also, treat all sprinkles as source code (not prebuilt) and tell Vite 
     // not to prebundle them.
     optimizeDeps: {
-        include: ['uikit', 'uikit/dist/js/uikit-icons'],
-        exclude: [
-            '@userfrosting/sprinkle-core',
-            '@userfrosting/sprinkle-account',
-            '@userfrosting/sprinkle-admin',
-            '@userfrosting/theme-pink-cupcake'
-        ]
+        include: ['uikit', 'uikit/dist/js/uikit-icons']
     }
 })

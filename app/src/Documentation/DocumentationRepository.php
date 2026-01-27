@@ -283,7 +283,7 @@ class DocumentationRepository
      *
      * @return array<string, PageResource> Array keyed by page slug
      */
-    protected function getFlattenedTree(?string $version = null): array
+    public function getFlattenedTree(?string $version = null): array
     {
         $tree = $this->getTree($version);
         $flat = [];

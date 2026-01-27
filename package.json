@@ -3,16 +3,15 @@
     "version": "2.0.0",
     "private": true,
     "type": "module",
+    "engines": {
+        "node": ">= 18"
+    },
     "dependencies": {
-        "@userfrosting/sprinkle-core": "^6.0.0-beta",
         "@userfrosting/theme-pink-cupcake": "^6.0.0-beta",
         "axios": "^1.12.0",
         "highlight.js": "^11.11.1",
         "highlightjs-copy": "^1.0.6",
-        "pinia": "^2.1.6",
-        "pinia-plugin-persistedstate": "^3.2.0",
-        "vue": "^3.3.4",
-        "vue-router": "^4.2.4"
+        "vue": "^3.3.4"
     },
     "devDependencies": {
         "@eslint/js": "^9.35.0",
