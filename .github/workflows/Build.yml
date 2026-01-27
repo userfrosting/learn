@@ -143,7 +143,8 @@ jobs:
     name: Deploy code to prod
     runs-on: ubuntu-latest
     needs: [PHPUnit, PHPStan, Vite, Prettier, PHP-CS-Fixer]
-
+    if: github.event_name == 'push'
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
