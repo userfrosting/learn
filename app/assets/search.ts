@@ -1,7 +1,4 @@
-/** Create Vue App */
 import { createApp } from 'vue'
-import App from './SearchComponent.vue'
-const app = createApp(App)
-
-// Done
-app.mount('#search-box')
+import SearchComponent from './SearchComponent.vue'
+createApp(SearchComponent).mount('#search-box')
+createApp(SearchComponent).mount('#search-box-mobile')
