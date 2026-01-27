@@ -56,7 +56,7 @@ return [
         ],
         'search' => [
             'min_length'        => 3,   // Minimum length of search query
-            'default_size'      => 10,  // Default number of results per page
+            'default_size'      => 25,  // Default number of results per page
             'snippet_length'    => 150, // Length of content snippets in results
             'max_results'       => 150, // Maximum number of results to consider for pagination
             'cache' => [

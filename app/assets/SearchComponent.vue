@@ -6,20 +6,18 @@ import axios from 'axios'
  * Configuration Constants
  */
 const minLength: number = 3
-const defaultPage: number = 1
 const dataUrl: string = '/api/search'
 
 /**
  * Reactive Variables
  */
-const page = ref<number>(defaultPage)
 const searchQuery = ref<string>('')
 const loading = ref<boolean>(false)
 const error = ref<any>(null)
 const data = ref<ResultData>({
     count: 0,
     size: 0,
-    page: defaultPage,
+    page: 0,
     rows: []
 })
 
@@ -35,8 +33,7 @@ async function fetch() {
     axios
         .get<ResultData>(dataUrl, {
             params: {
-                q: searchQuery.value,
-                page: page.value
+                q: searchQuery.value
             }
         })
         .then((response) => {
