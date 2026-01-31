@@ -1,75 +1,280 @@
 ---
-title: Components
-description: UserFrosting comes with a number of custom jQuery plugins that simplify the interactions between the client-side components and the backend.
-obsolete: true
+title: Common UI Components
+description: Reusable Vue 3 components for building interactive user interfaces in UserFrosting
+wip: true
 ---
 
-UserFrosting also comes with a number of [custom jQuery plugins](client-side-code/components) that simplify the interactions between the client-side components and the backend. These can all be found in the `core` Sprinkle, under `assets/local/core/js/`.
+UserFrosting 6.0 provides patterns and examples for building common UI components with Vue 3. This section covers the most frequently used interactive elements in web applications.
 
-### ufAlerts
+## Component Categories
 
-Fetches and renders alerts from the [alert stream](routes-and-controllers/alert-stream). See the section on [alerts](client-side-code/components/alerts) for more information on using this plugin.
+### Forms
 
-### ufCollection
+Handle user input with validated, AJAX-powered forms. Learn how to:
+- Build reactive forms with two-way data binding
+- Implement client and server-side validation
+- Submit data with proper CSRF protection
+- Display loading states and error messages
+- Create reusable form composables
 
-A client-side widget that allows you to easily associate related entities in a one-to-many or many-to-many relationship by selecting them from a dropdown menu.
+**[Learn more about Forms →](client-side-code/components/forms)**
 
-For example, both the "user roles" and "role permissions" interfaces use this plugin:
+### Tables
 
-![ufCollection widget as used for the "user role" management interface.](images/uf-collection.png)
+Display and manipulate collections of data with sortable, filterable, paginated tables:
+- Client-side sorting and filtering
+- Server-side pagination with Sprunjes
+- Integration with TanStack Table library
+- Reusable table composables
+- Loading states and empty states
 
-See the documentation on [collections](client-side-code/components/collections) for more information on using this plugin.
+**[Learn more about Tables →](client-side-code/components/tables)**
 
-### ufCopy
+### Collections
 
-Helper to generate a tooltip alert for clipboard.js.
+Manage dynamic lists of items where users can add, remove, and reorder entries:
+- Dynamic form fields (add/remove)
+- Complex collection items with multiple fields
+- Drag-and-drop reordering
+- Validation for collection items
+- Server integration patterns
 
-![ufCopy widget.](images/uf-copy.png)
+**[Learn more about Collections →](client-side-code/components/collections)**
 
-**Markup:**
+### Alerts and Notifications
 
+Provide user feedback through alerts, notifications, and toast messages:
+- UIkit notification system
+- Alert stream integration
+- Reusable alert composables
+- Error handling patterns
+- Confirmation dialogs
+
+**[Learn more about Alerts →](client-side-code/components/alerts)**
+
+## Component Patterns
+
+### Reusability
+
+Build components that can be reused across your application:
+
+```vue
+<!-- Reusable Button Component -->
+<script setup lang="ts">
+interface Props {
+  variant?: 'primary' | 'default' | 'danger'
+  size?: 'small' | 'default' | 'large'
+  disabled?: boolean
+  loading?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  variant: 'default',
+  size: 'default',
+  disabled: false,
+  loading: false
+})
+
+const emit = defineEmits<{
+  click: [event: MouseEvent]
+}>()
+</script>
+
+<template>
+  <button 
+    :class="[
+      'uk-button',
+      `uk-button-${variant}`,
+      `uk-button-${size}`
+    ]"
+    :disabled="disabled || loading"
+    @click="emit('click', $event)"
+  >
+    <span v-if="loading" uk-spinner="ratio: 0.5"></span>
+    <slot v-else />
+  </button>
+</template>
+```
+
+### Composition
+
+Combine smaller components to build complex UIs:
+
+```vue
+<template>
+  <UserForm>
+    <FormField label="Username" v-model="user.username" />
+    <FormField label="Email" v-model="user.email" type="email" />
+    <FormActions>
+      <Button variant="primary" @click="save">Save</Button>
+      <Button @click="cancel">Cancel</Button>
+    </FormActions>
+  </UserForm>
+</template>
+```
+
+### Composables
+
+Extract and share logic across components:
+
+```typescript
+// composables/useForm.ts
+export function useForm(initialData, onSubmit) {
+  const form = ref({ ...initialData })
+  const errors = ref({})
+  const isSubmitting = ref(false)
+  
+  async function submit() {
+    isSubmitting.value = true
+    try {
+      await onSubmit(form.value)
+    } catch (e) {
+      errors.value = e.response?.data?.errors || {}
+    } finally {
+      isSubmitting.value = false
+    }
+  }
+  
+  return { form, errors, isSubmitting, submit }
+}
+```
+
+## UIkit Integration
+
+UserFrosting uses [UIkit](https://getuikit.com/) for styling. Common UIkit components you'll use:
+
+### Buttons
 ```html
-<div class="js-copy-container">
-    <span class="js-copy-target">{{row.email}}</span>
-    <button class="btn btn-xs js-copy-trigger"><i class="fa fa-copy"></i></button>
+<button class="uk-button uk-button-primary">Primary</button>
+<button class="uk-button uk-button-default">Default</button>
+<button class="uk-button uk-button-danger">Danger</button>
+```
+
+### Cards
+```html
+<div class="uk-card uk-card-default uk-card-body">
+  <h3 class="uk-card-title">Title</h3>
+  <p>Content</p>
 </div>
 ```
 
-### ufForm
-
-A convenient wrapper for AJAX form submission. Handles validation, loading icon during the submission process, and automatically fetching and displaying error messages after a failed submission.
-
-See the section on [forms](client-side-code/components/forms) for more information on using this plugin.
-
-### ufModal
-
-Renders and displays modal windows that dynamically fetch their content from a specified URL. Very useful for pop-up forms and dialog boxes.
-
-```js
-// Fetch and launch the modal
-$('body').ufModal({
-    // URL that serves the modal HTML
-    sourceUrl: site.uri.public + '/modals/users/roles',
-    // Additional request parameters
-    ajaxParams: {
-        user_name: userName
-    },
-    // Target element to display any errors generated by the modal request
-    msgTarget: $('#alerts-page')
-});
-
-// Additional code to run after the modal has been retrieved and displayed.
-// For example, setting up a form submission:
-$('body').on('renderSuccess.ufModal', function (data) {
-    var modal = $(this).ufModal('getModal');
-    var form = modal.find('.js-form');
-
-    ...
-});
+### Modals
+```html
+<div id="my-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Title</h2>
+    <p>Modal content</p>
+  </div>
+</div>
 ```
 
-### ufTable
+**Open programmatically**:
+```typescript
+import UIkit from 'uikit'
 
-A wrapper for [Tablesorter](https://mottie.github.io/tablesorter/docs/) that automatically fetches JSON data from a specified API endpoint, and dynamically builds paginated, sorted, filtered views on the fly. Very useful as a quick-and-easy way to get data from your database to the client.
+UIkit.modal('#my-modal').show()
+```
 
-See the section on [tables](client-side-code/components/tables) for more information on using this plugin.
+### Dropdowns
+```html
+<button class="uk-button uk-button-default" type="button">
+  Menu
+</button>
+<div uk-dropdown>
+  <ul class="uk-nav uk-dropdown-nav">
+    <li><a href="#">Item 1</a></li>
+    <li><a href="#">Item 2</a></li>
+  </ul>
+</div>
+```
+
+## Best Practices
+
+### 1. Component Organization
+
+Organize components by feature or function:
+
+```
+components/
+├── common/           # Reusable across app
+│   ├── Button.vue
+│   ├── Input.vue
+│   └── Modal.vue
+├── user/            # User-related
+│   ├── UserCard.vue
+│   ├── UserForm.vue
+│   └── UserTable.vue
+└── layout/          # Layout components
+    ├── Header.vue
+    ├── Sidebar.vue
+    └── Footer.vue
+```
+
+### 2. Props and Events
+
+Follow Vue's data flow pattern:
+- **Props down**: Parent passes data to child
+- **Events up**: Child notifies parent of changes
+
+```vue
+<!-- Parent -->
+<UserCard :user="user" @edit="handleEdit" @delete="handleDelete" />
+
+<!-- Child -->
+<script setup>
+const props = defineProps(['user'])
+const emit = defineEmits(['edit', 'delete'])
+</script>
+```
+
+### 3. Type Safety
+
+Use TypeScript for better developer experience:
+
+```typescript
+interface User {
+  id: number
+  username: string
+  email: string
+}
+
+const props = defineProps<{
+  user: User
+  editable?: boolean
+}>()
+```
+
+### 4. Error Handling
+
+Always handle errors gracefully:
+
+```typescript
+try {
+  await performAction()
+  showSuccess('Action completed')
+} catch (error) {
+  showError('Action failed')
+  console.error(error)
+}
+```
+
+## What's Next?
+
+Dive into specific component types:
+
+- **[Forms](client-side-code/components/forms)** - User input and validation
+- **[Tables](client-side-code/components/tables)** - Data display and manipulation  
+- **[Collections](client-side-code/components/collections)** - Dynamic lists
+- **[Alerts](client-side-code/components/alerts)** - User feedback
+
+Or explore foundational concepts:
+
+- **[Vue Components](client-side-code/vue-components)** - Vue 3 basics
+- **[Exporting Variables](client-side-code/exporting-variables)** - Data passing
+- **[Asset Management](asset-management)** - Building and bundling
+
+## Further Reading
+
+- [Vue 3 Component Basics](https://vuejs.org/guide/essentials/component-basics.html)
+- [UIkit Components](https://getuikit.com/docs/introduction)
+- [TypeScript with Vue](https://vuejs.org/guide/typescript/overview.html)

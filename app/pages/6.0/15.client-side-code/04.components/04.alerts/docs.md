@@ -1,106 +1,625 @@
 ---
-title: Alerts
-description: The `ufAlerts` plugin handles retrieving and rendering alerts and notifications from the alert stream.
-obsolete: true
+title: Alerts and Notifications
+description: Display user feedback with Vue 3 alert components and UIkit notifications
+wip: true
 ---
 
-For page loads, as well as requests made by most of UserFrosting's [client-side components](client-side-code/components), alerts are automatically fetched from the [alert stream](routes-and-controllers/alert-stream) and rendered for you. However, sometimes you will make your own custom AJAX requests that need to manually fetch and render alerts after the request is complete. To do this, you may create your own instance of the `ufAlerts` plugin.
+Providing feedback to users is essential for a good user experience. UserFrosting 6.0 uses Vue 3 components and UIkit notifications to display alerts, messages, and toasts throughout the application.
 
-## Initialization
+This guide covers different types of user feedback and how to implement them effectively.
 
-To initialize the `ufAlerts` plugin, simply call `.ufAlerts()` on the target element where alerts will be displayed. For example, you can do this in the `.fail()` callback for an AJAX request in jQuery:
+## UIkit Notifications
 
-```js
-$.ajax({
-    type: 'POST',
-    url: site.uri.public + '/api/owls',
-    data: {
-        species: 'Bubo'
+UIkit provides a built-in notification system for temporary messages:
+
+### Basic Usage
+
+```typescript
+import UIkit from 'uikit'
+
+// Simple notification
+UIkit.notification('User created successfully!')
+
+// With options
+UIkit.notification('Settings saved!', {
+  status: 'success',
+  pos: 'top-right',
+  timeout: 3000
+})
+
+// Different statuses
+UIkit.notification('Warning: This action cannot be undone', 'warning')
+UIkit.notification('Error: Failed to save', 'danger')
+UIkit.notification('Info: New features available', 'primary')
+```
+
+### Notification Options
+
+```typescript
+UIkit.notification(message, {
+  status: 'primary' | 'success' | 'warning' | 'danger',  // Style
+  pos: 'top-right' | 'top-center' | 'top-left' |         // Position
+       'bottom-right' | 'bottom-center' | 'bottom-left',
+  timeout: 5000,        // Auto-close after ms (0 = no auto-close)
+  group: null,          // Group name to stack related notifications
+  closeButton: true     // Show close button
+})
+```
+
+## Vue Alert Component
+
+Create a reusable alert component for persistent messages:
+
+**AlertBox.vue**:
+```vue
+<template>
+  <div 
+    v-if="visible"
+    class="uk-alert"
+    :class="alertClass"
+    uk-alert
+  >
+    <a class="uk-alert-close" uk-close @click="close"></a>
+    <h3 v-if="title">{{ title }}</h3>
+    <p>{{ message }}</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+
+interface Props {
+  type?: 'primary' | 'success' | 'warning' | 'danger'
+  title?: string
+  message: string
+  closeable?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  type: 'primary',
+  closeable: true
+})
+
+const emit = defineEmits<{
+  close: []
+}>()
+
+const visible = ref(true)
+
+const alertClass = computed(() => `uk-alert-${props.type}`)
+
+function close() {
+  visible.value = false
+  emit('close')
+}
+</script>
+```
+
+**Usage**:
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import AlertBox from './components/AlertBox.vue'
+
+const showAlert = ref(true)
+</script>
+
+<template>
+  <AlertBox
+    v-if="showAlert"
+    type="success"
+    title="Success!"
+    message="Your profile has been updated."
+    @close="showAlert = false"
+  />
+</template>
+```
+
+## Alert Stream Integration
+
+UserFrosting's alert stream system sends messages from the server. Here's how to fetch and display them:
+
+### Fetching Alerts
+
+```typescript
+import axios from 'axios'
+import UIkit from 'uikit'
+
+interface Alert {
+  type: 'success' | 'danger' | 'warning' | 'info'
+  message: string
+}
+
+async function fetchAndDisplayAlerts() {
+  try {
+    const response = await axios.get<Alert[]>(
+      `${site.uri.public}/alerts`
+    )
+    
+    response.data.forEach(alert => {
+      UIkit.notification(alert.message, {
+        status: alert.type === 'danger' ? 'danger' : alert.type,
+        timeout: 5000
+      })
+    })
+  } catch (error) {
+    console.error('Failed to fetch alerts:', error)
+  }
+}
+```
+
+### Alert Composable
+
+Create a composable for managing alerts:
+
+**composables/useAlerts.ts**:
+```typescript
+import { ref, Ref } from 'vue'
+import axios from 'axios'
+import UIkit from 'uikit'
+
+interface Alert {
+  id: string
+  type: 'success' | 'danger' | 'warning' | 'info'
+  message: string
+  title?: string
+}
+
+export function useAlerts() {
+  const alerts: Ref<Alert[]> = ref([])
+  const loading = ref(false)
+
+  async function fetchAlerts() {
+    loading.value = true
+    
+    try {
+      const response = await axios.get(`${site.uri.public}/alerts`)
+      alerts.value = response.data
+      
+      // Display as UIkit notifications
+      response.data.forEach((alert: Alert) => {
+        showNotification(alert.message, alert.type)
+      })
+    } catch (error) {
+      console.error('Failed to fetch alerts:', error)
+    } finally {
+      loading.value = false
     }
-}).fail(function (jqXHR) {
-    // Display errors on failure
-    var debugAjax = (typeof site !== "undefined") && site.debug.ajax;
+  }
 
-    if (debugAjax && jqXHR.responseText) {
-        document.write(jqXHR.responseText);
-        document.close();
-    } else {
-        // Destroy any previous instance
-        $("#alerts-page").ufAlerts('destroy');
-        // Create new instance of ufAlerts
-        $("#alerts-page").ufAlerts().ufAlerts('fetch').ufAlerts('render');
+  function showNotification(
+    message: string, 
+    type: 'success' | 'danger' | 'warning' | 'info' = 'info'
+  ) {
+    UIkit.notification(message, {
+      status: type === 'danger' ? 'danger' : type,
+      pos: 'top-right',
+      timeout: 5000
+    })
+  }
+
+  function showSuccess(message: string) {
+    showNotification(message, 'success')
+  }
+
+  function showError(message: string) {
+    showNotification(message, 'danger')
+  }
+
+  function showWarning(message: string) {
+    showNotification(message, 'warning')
+  }
+
+  function showInfo(message: string) {
+    showNotification(message, 'info')
+  }
+
+  function add(alert: Omit<Alert, 'id'>) {
+    const newAlert: Alert = {
+      ...alert,
+      id: Date.now().toString() + Math.random()
     }
-});
+    alerts.value.push(newAlert)
+    showNotification(alert.message, alert.type)
+  }
+
+  function remove(id: string) {
+    alerts.value = alerts.value.filter(alert => alert.id !== id)
+  }
+
+  function clear() {
+    alerts.value = []
+  }
+
+  return {
+    alerts,
+    loading,
+    fetchAlerts,
+    showNotification,
+    showSuccess,
+    showError,
+    showWarning,
+    showInfo,
+    add,
+    remove,
+    clear
+  }
+}
 ```
 
-The `fetch` method will retrieve any alerts that were added to the message stream, via the `/alerts` route. The `render` method will then display them in the element that you initialized `ufAlerts` on.
+**Usage in component**:
+```vue
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { useAlerts } from '@/composables/useAlerts'
+import axios from 'axios'
 
-## Methods
+const { showSuccess, showError, fetchAlerts } = useAlerts()
 
-Methods can be called after initialization by passing the method name as a string to subsequent calls of `ufAlerts`:
+onMounted(() => {
+  // Fetch alerts on component mount
+  fetchAlerts()
+})
 
-```js
-$(el).ufAlerts('<method name>');
+async function saveSettings() {
+  try {
+    await axios.post('/api/settings', { /* data */ })
+    showSuccess('Settings saved successfully!')
+  } catch (error) {
+    showError('Failed to save settings')
+  }
+}
+</script>
 ```
 
-### `fetch`
+## Toast Notifications Component
 
-Fetch alerts from the message stream resource url.
+For more advanced toast notifications, create a dedicated component:
 
-### `render`
+**ToastManager.vue**:
+```vue
+<template>
+  <teleport to="body">
+    <div class="toast-container">
+      <transition-group name="toast">
+        <div
+          v-for="toast in toasts"
+          :key="toast.id"
+          class="toast uk-alert"
+          :class="`uk-alert-${toast.type}`"
+        >
+          <a class="uk-alert-close" uk-close @click="removeToast(toast.id)"></a>
+          <p>{{ toast.message }}</p>
+        </div>
+      </transition-group>
+    </div>
+  </teleport>
+</template>
 
-Render all alert messages in the initialized element.
+<script setup lang="ts">
+import { ref } from 'vue'
 
-Alerts are rendered using a custom [Handlebars template](client-side-code/client-side-templating). The default template is located in `core/templates/pages/partials/alerts.html.twig`, and uses Bootstrap 3's [alert](https://getbootstrap.com/docs/3.3/components/#alerts) component to render each message. This partial template is automatically included in the `core/templates/pages/abstract/base.html.twig` template, in the `uf_alerts_template` block.
+interface Toast {
+  id: string
+  type: 'success' | 'danger' | 'warning' | 'info'
+  message: string
+  duration: number
+}
 
-If you wish you may include your own custom Handlebars template instead, overriding the `uf_alerts_template` block and and specifying its `id` with the `alertTemplateId` option when you initialize `ufAlerts`.
+const toasts = ref<Toast[]>([])
 
-### `push`
+function addToast(
+  message: string,
+  type: Toast['type'] = 'info',
+  duration = 5000
+) {
+  const id = Date.now().toString() + Math.random()
+  
+  toasts.value.push({ id, message, type, duration })
+  
+  if (duration > 0) {
+    setTimeout(() => removeToast(id), duration)
+  }
+  
+  return id
+}
 
-This method allows you to add additional alert messages in your client-side code. They will be rendered just like any messages that were retrieved with `fetch` the next time `render` is called:
+function removeToast(id: string) {
+  toasts.value = toasts.value.filter(toast => toast.id !== id)
+}
 
-```js
-$("#alerts-page").ufAlerts('push', 'danger', 'You messed up!').ufAlerts('render');
+defineExpose({
+  addToast,
+  removeToast
+})
+</script>
+
+<style scoped>
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  max-width: 400px;
+}
+
+.toast {
+  margin-bottom: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.toast-enter-active,
+.toast-leave-active {
+  transition: all 0.3s ease;
+}
+
+.toast-enter-from {
+  opacity: 0;
+  transform: translateX(50px);
+}
+
+.toast-leave-to {
+  opacity: 0;
+  transform: translateX(50px);
+}
+</style>
 ```
 
-### `clear`
+**App-level usage**:
+```typescript
+// main.ts
+import { createApp } from 'vue'
+import ToastManager from './components/ToastManager.vue'
 
-This method clears the internally loaded collection of alerts, as well as their rendered HTML from the initialized element:
+const app = createApp({})
 
-```js
-$("#alerts-page").ufAlerts('clear');
+// Make toast manager available globally
+const toastContainer = document.createElement('div')
+document.body.appendChild(toastContainer)
+
+const toastApp = createApp(ToastManager)
+const toastInstance = toastApp.mount(toastContainer)
+
+// Make it accessible globally
+app.config.globalProperties.$toast = toastInstance
+
+app.mount('#app')
 ```
 
-### `destroy`
+## Error Handling
 
-Destroy the `ufAlerts` instance on a DOM element:
+Display errors from AJAX requests:
 
-```js
-$("#alerts-page").ufAlerts('destroy');
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import axios, { AxiosError } from 'axios'
+import { useAlerts } from '@/composables/useAlerts'
+
+const { showError, showSuccess } = useAlerts()
+
+async function performAction() {
+  try {
+    await axios.post('/api/action')
+    showSuccess('Action completed!')
+    
+  } catch (error) {
+    handleError(error as AxiosError)
+  }
+}
+
+function handleError(error: AxiosError) {
+  if (error.response) {
+    // Server responded with error status
+    const message = error.response.data?.message || 'An error occurred'
+    showError(message)
+    
+    // Handle validation errors
+    if (error.response.status === 422 && error.response.data?.errors) {
+      Object.values(error.response.data.errors).forEach((msgs: any) => {
+        if (Array.isArray(msgs)) {
+          msgs.forEach(msg => showError(msg))
+        } else {
+          showError(msgs)
+        }
+      })
+    }
+  } else if (error.request) {
+    // Request made but no response
+    showError('Network error: Could not reach server')
+  } else {
+    // Something else went wrong
+    showError('An unexpected error occurred')
+  }
+}
+</script>
 ```
 
-## Options
+## Loading States with Alerts
 
-### `url`
+Show loading indicators and completion messages:
 
-The absolute URL from which to fetch flash alerts. Defaults to `site.uri.public + '/alerts'`.
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import UIkit from 'uikit'
 
-### `scrollToTop`
+const isLoading = ref(false)
 
-Whether to automatically scroll back to the top of the page after rendering alerts. Defaults to `true`.
+async function performLongOperation() {
+  isLoading.value = true
+  
+  // Show loading notification
+  const loadingNotification = UIkit.notification(
+    'Processing... Please wait',
+    { 
+      status: 'primary',
+      timeout: 0  // Don't auto-close
+    }
+  )
+  
+  try {
+    await longRunningTask()
+    
+    // Close loading, show success
+    loadingNotification.close()
+    UIkit.notification('Operation completed!', 'success')
+    
+  } catch (error) {
+    loadingNotification.close()
+    UIkit.notification('Operation failed', 'danger')
+    
+  } finally {
+    isLoading.value = false
+  }
+}
+</script>
+```
 
-### `scrollWhenVisible`
+## Confirmation Dialogs
 
-Whether to automatically scroll back to the top of the page even if the alerts are already visible in the current viewport. Only used when `scrollToTop` is `true`. Defaults to `false`.
+Use UIkit modals for confirmations:
 
-### `agglomerate`
+```vue
+<script setup lang="ts">
+import UIkit from 'uikit'
 
-Set to true to render all alerts in a single bulleted list (`ul/li`), applying styling based on the highest-priority alert being rendered. Defaults to `false`.
+async function deleteUser(userId: number) {
+  // UIkit doesn't have built-in confirm, use native or create modal
+  const confirmed = confirm('Are you sure you want to delete this user?')
+  
+  if (confirmed) {
+    try {
+      await axios.delete(`/api/users/${userId}`)
+      UIkit.notification('User deleted', 'success')
+    } catch (error) {
+      UIkit.notification('Failed to delete user', 'danger')
+    }
+  }
+}
 
-### `alertMessageClass`
+// Or create a custom modal component
+function showConfirmModal(message: string, onConfirm: () => void) {
+  // Create modal element
+  const modal = document.createElement('div')
+  modal.innerHTML = `
+    <div id="confirm-modal" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Confirm</h2>
+        <p>${message}</p>
+        <p class="uk-text-right">
+          <button class="uk-button uk-button-default uk-modal-close">Cancel</button>
+          <button class="uk-button uk-button-primary" id="confirm-btn">Confirm</button>
+        </p>
+      </div>
+    </div>
+  `
+  document.body.appendChild(modal)
+  
+  const confirmBtn = document.getElementById('confirm-btn')
+  confirmBtn?.addEventListener('click', () => {
+    onConfirm()
+    UIkit.modal('#confirm-modal').hide()
+    document.body.removeChild(modal)
+  })
+  
+  UIkit.modal('#confirm-modal').show()
+}
+</script>
+```
 
-The CSS class(es) to be applied to each alert message. Defaults to `uf-alert-message`.
+## Best Practices
 
-### `alertTemplateId`
+### 1. Use Appropriate Alert Types
 
-The id of the Handlebars alert template to use when rendering alerts. Defaults to `uf-alert-template`.
+Match the alert type to the message:
+- **Success**: Completed actions, confirmations
+- **Danger/Error**: Failures, critical issues
+- **Warning**: Cautions, reversible actions
+- **Info**: General information, tips
+
+### 2. Auto-Dismiss Non-Critical Alerts
+
+Success messages should auto-dismiss:
+```typescript
+UIkit.notification('Saved!', { 
+  status: 'success', 
+  timeout: 3000 
+})
+```
+
+Errors might need manual dismissal:
+```typescript
+UIkit.notification('Critical error occurred', {
+  status: 'danger',
+  timeout: 0  // Requires manual close
+})
+```
+
+### 3. Position Appropriately
+
+Top-right is standard for notifications:
+```typescript
+UIkit.notification(message, { pos: 'top-right' })
+```
+
+Use top-center for important announcements.
+
+### 4. Avoid Alert Spam
+
+Don't show multiple alerts for the same action:
+
+```typescript
+// ❌ Bad: Shows many alerts
+errors.forEach(error => showError(error))
+
+// ✅ Good: Combine into one message
+showError(`${errors.length} errors occurred`)
+```
+
+### 5. Provide Actionable Messages
+
+Be specific about what happened and what to do:
+
+✅ **Good**: "Failed to save. Please check your internet connection and try again."  
+❌ **Bad**: "Error occurred"
+
+## Integration with Forms
+
+Automatically show alerts after form submission:
+
+```vue
+<script setup lang="ts">
+import { useAlerts } from '@/composables/useAlerts'
+import { useForm } from '@/composables/useForm'
+
+const { showSuccess, showError } = useAlerts()
+
+const { form, submit } = useForm({
+  initialData: { name: '', email: '' },
+  onSuccess: () => {
+    showSuccess('Form submitted successfully!')
+  },
+  onError: (error) => {
+    showError(error.response?.data?.message || 'Submission failed')
+  }
+})
+
+async function handleSubmit() {
+  await submit('/api/endpoint')
+}
+</script>
+```
+
+## What's Next?
+
+- **[Forms](client-side-code/components/forms)**: Build validated forms that show alerts
+- **[Tables](client-side-code/components/tables)**: Display data with loading states
+- **[Collections](client-side-code/components/collections)**: Manage lists with feedback
+
+## Further Reading
+
+- [UIkit Notification Component](https://getuikit.com/docs/notification)
+- [UIkit Alert Component](https://getuikit.com/docs/alert)
+- [Vue 3 Teleport](https://vuejs.org/guide/built-ins/teleport.html)
+- [Vue 3 Transitions](https://vuejs.org/guide/built-ins/transition.html)
