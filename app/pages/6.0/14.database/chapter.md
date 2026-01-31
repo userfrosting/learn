@@ -8,6 +8,8 @@ wip: true
 
 # The Database and ORM Layer
 
-UserFrosting uses Laravel's [Eloquent](https://laravel.com/docs/8.x/eloquent) component to provide a convenient abstraction layer on top of your database. This allows you to quickly manipulate the database from within your controllers without needing to write tedious, repetitive queries each time.
+Every application needs to store data—user accounts, content, settings, and more. But writing raw SQL queries for every database operation leads to repetitive code, security vulnerabilities (like SQL injection), and maintenance headaches.
 
-We also discuss how to create database migrations, allowing you to easily set up your database tables, and database seeds, allowing your to populate the database with default values.
+UserFrosting uses Laravel's [Eloquent ORM](https://laravel.com/docs/eloquent) to solve these problems. An **ORM (Object-Relational Mapper)** lets you work with database records as PHP objects, automatically handling queries, relationships, and data validation. Instead of writing SQL, you write intuitive PHP code that's easier to read, test, and secure.
+
+This chapter covers everything you need to work with databases in UserFrosting: defining models, querying data, managing relationships, creating migrations to version your schema, and seeding initial data. You'll learn to build robust, maintainable data layers for your applications.
