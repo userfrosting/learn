@@ -118,11 +118,11 @@ function toggleExpanded() {
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: pointer;
-    
+
     &:hover {
         background: #f5f5f5;
     }
-    
+
     h3 {
         margin: 0 0 0.5rem 0;
     }
@@ -201,11 +201,11 @@ export const useUserStore = defineStore('user', {
         currentUser: null as User | null,
         isLoading: false
     }),
-    
+
     getters: {
         isAuthenticated: (state) => state.currentUser !== null
     },
-    
+
     actions: {
         async fetchCurrentUser() {
             this.isLoading = true
@@ -244,7 +244,7 @@ npm install -D less
 // Custom styles
 .custom-container {
     padding: @global-margin;
-    
+
     h1 {
         color: @global-primary-background;
     }
@@ -265,7 +265,7 @@ $primary-color: #0066cc;
 
 .button {
     background: $primary-color;
-    
+
     &:hover {
         background: darken($primary-color, 10%);
     }
@@ -273,7 +273,7 @@ $primary-color: #0066cc;
 ```
 
 > [!WARNING]
-> UserFrosting uses **Less** as its default CSS preprocessor for the default theme. If you choose to use SASS/SCSS instead, you will not be able to easily customize or extend the default theme's styles, as the theme's variables and mixins are written in Less. Consider this trade-off when choosing your preprocessor. 
+> UserFrosting uses **Less** as its default CSS preprocessor for the default theme. If you choose to use SASS/SCSS instead, you will not be able to easily customize or extend the default theme's styles, as the theme's variables and mixins are written in Less. Consider this trade-off when choosing your preprocessor.
 
 ## Next Steps
 

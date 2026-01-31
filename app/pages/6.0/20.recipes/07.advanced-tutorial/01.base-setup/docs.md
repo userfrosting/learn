@@ -16,7 +16,7 @@ Make sure the default skeleton app is working. Once the base website is created 
 
 ## The Route Class
 
-We can create the [route definition](routes-and-controllers) for the `/pastries` page. We'll *edit* the default `app/src/MyRoutes.php` file. 
+We can create the [route definition](routes-and-controllers) for the `/pastries` page. We'll *edit* the default `app/src/MyRoutes.php` file.
 
 **app/src/MyRoutes.php**:
 ```php
@@ -77,7 +77,7 @@ class PastriesPageAction
 }
 ```
 
-For now, the pastries array is empty. In the next page, we'll replace this empty array with a database model. 
+For now, the pastries array is empty. In the next page, we'll replace this empty array with a database model.
 
 ## The Template File
 

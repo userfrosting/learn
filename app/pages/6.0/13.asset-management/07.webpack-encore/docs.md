@@ -5,7 +5,7 @@ description: Asset bundles should be compiled in production to allow for faster 
 
 > [!WARNING]
 > **This documentation is obsolete.** UserFrosting 6 uses **Vite** as the default asset bundler, not Webpack Encore. Webpack Encore is still supported for backward compatibility but not recommended for new projects.
-> 
+>
 > Please see:
 > - [Asset Management Introduction](/asset-management/introduction) for Vite-based asset management
 > - [Getting Started with Vite](/asset-management/getting-started) for configuration guide
@@ -114,10 +114,10 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/assets')
-    
+
     // public path used by the web server to access the output path
     .setPublicPath('/assets/')
-    
+
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
 
@@ -137,7 +137,7 @@ Encore
     // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
     // .disableSingleRuntimeChunk()
-    
+
     /*
      * FEATURE CONFIG
      *
@@ -205,7 +205,7 @@ The watch option can be used when actively working on a file. It will compile as
 ```bash
 $ php bakery assets:build --watch
 
-# or 
+# or
 
 $ php bakery assets:webpack --watch
 ```
@@ -218,7 +218,7 @@ To compile assets for a **production** environment, simply use:
 ```bash
 $ php bakery assets:build --production
 
-# or 
+# or
 
 $ php bakery assets:webpack --production
 ```

@@ -40,7 +40,7 @@ use Owlfancy\Sprinkle\Owlery ; //don't forget to include the sprinkle's namespac
 > If the sprinkle does not include Javascript, you're done setting up--skip to the "Installing" section.
 
 ### Javascript
-If the sprinkle includes Javascript, you will need to add it to both the "dependencies" [in your `package.json`](asset-management/webpack-encore#npm-and-packages-json)... 
+If the sprinkle includes Javascript, you will need to add it to both the "dependencies" [in your `package.json`](asset-management/webpack-encore#npm-and-packages-json)...
 ```json
  "dependencies": {
         "@userfrosting/sprinkle-admin": "~5.1.0",
@@ -70,12 +70,12 @@ php bakery bake
 ```
 
 ### Database (optional)
-If needed, [migrations](cli/commands#migrate) and [seeds](cli/commands#seed) can be run manually through Bakery. 
+If needed, [migrations](cli/commands#migrate) and [seeds](cli/commands#seed) can be run manually through Bakery.
 ```txt
 php bakery migrate
 php bakery seed
 ```
-You can also use `php bakery migrate:status` and `php bakery seed:list` to check what migrations and seeds the sprinkle has added, and if any migrations have not yet been run. 
+You can also use `php bakery migrate:status` and `php bakery seed:list` to check what migrations and seeds the sprinkle has added, and if any migrations have not yet been run.
 
 > [!TIP]
 > `php bakery bake` should run migrations automatically, but you can use the above commands later if you don't want to run a full `bake`.
@@ -88,13 +88,13 @@ You can also use `php bakery migrate:status` and `php bakery seed:list` to check
 ### Basic prep work
 When you're ready to distribute your sprinkle, first use `composer update` to make sure it is up to date with the latest version of UserFrosting.
 
-Providing documentation and examples in a `README` file will encourage other devs to use your sprinkle. You should specify whether they need to add your sprinkle to `package.json`, if there are any seeds to run, and any other steps needed to fully set up. 
+Providing documentation and examples in a `README` file will encourage other devs to use your sprinkle. You should specify whether they need to add your sprinkle to `package.json`, if there are any seeds to run, and any other steps needed to fully set up.
 > [!TIP]
 > As an example, if your sprinkle adds a new permission, anyone installing your sprinkle may need to manually add that permission to the appropriate roles through the UserFrosting UI.
 
 Every sprinkle needs a valid `composer.json` file. This file is required to add any sort of class and PSR-4 definition to your sprinkle, so you already have one. Make sure it contains up-to-date information; your name and license details are always welcome. If you include a `type` key, be sure it's defined as `userfrosting-sprinkle` in your sprinkles `composer.json` file--but this is not required as of UserFrosting 5.
 
-We highly recommend publishing your community sprinkle on GitHub and adding it to [Packagist](https://packagist.org). This lets others include your sprinkle in `composer.json`, similar to how the default sprinkles are already defined. 
+We highly recommend publishing your community sprinkle on GitHub and adding it to [Packagist](https://packagist.org). This lets others include your sprinkle in `composer.json`, similar to how the default sprinkles are already defined.
 
 You may also have some extra steps depending on what features your sprinkle provides:
 

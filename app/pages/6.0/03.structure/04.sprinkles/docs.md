@@ -14,7 +14,7 @@ Your app can have as many sprinkles as you want. A sprinkle could even depend on
 
 ## Bundled Sprinkles
 
-A default UserFrosting installation comes with **four** sprinkles, each of which will be downloaded by [Composer](installation/requirements/essential-tools-for-php#composer) in the `/vendor` directory during installation. 
+A default UserFrosting installation comes with **four** sprinkles, each of which will be downloaded by [Composer](installation/requirements/essential-tools-for-php#composer) in the `/vendor` directory during installation.
 
 Because UserFrosting is modular, you can decide to use these bundled sprinkles or not. You may or may not need the functionality each provides in your app. We'll go over how to enable and disable them [later](sprinkles/recipe#removing-default-sprinkles). For now, let's focus on their features.
 

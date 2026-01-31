@@ -30,7 +30,7 @@ Three main steps are required to create the object:
 
 This is a lot of code to write just to create one measly object! It would be great if we could somehow encapsulate the creation of the object without creating tight couplings within the object itself.
 
-This is where the **dependency injection container (DIC)** comes into play. The DIC handles basic management of dependencies, encapsulating their creation into simple callbacks. We will call these callbacks **services**. 
+This is where the **dependency injection container (DIC)** comes into play. The DIC handles basic management of dependencies, encapsulating their creation into simple callbacks. We will call these callbacks **services**.
 
 > [!NOTE]
 > Dependency Injection (DI) and the Dependency Injection Container (DIC) are two separate concepts.
@@ -41,7 +41,7 @@ This is where the **dependency injection container (DIC)** comes into play. The 
 UserFrosting uses [_PHP-DI 7_](https://php-di.org) as it's DIC implementation since it provides many powerful features that we rely on:
 
 1. It creates dependencies lazily ("on demand"). Any service (and its dependencies) won't be created until the first time we access them.
-2. Once an object has been created in the container, the same object is returned in each subsequent call to the container. 
+2. Once an object has been created in the container, the same object is returned in each subsequent call to the container.
 3. It has the ability to automatically create and inject dependencies.
 4. It has powerful Slim 4 integration.
 
@@ -106,7 +106,7 @@ class LoggerServicesProvider implements ServicesProviderInterface
 
                 return $logger;
             },
-            
+
             StreamHandler::class => function () {
                 // 'userfrosting.log' could be fetched from a Config service here, for example.
                 return new StreamHandler('userfrosting.log');
@@ -121,7 +121,7 @@ class LoggerServicesProvider implements ServicesProviderInterface
 This definition uses the [PHP-DI factories](https://php-di.org/doc/php-definitions.html#factories) syntax. From the PHP-DI documentation:
 
 > Factories are PHP callables that return the instance. They allow to easily define objects lazily, i.e. each object will be created only when actually needed (because the callable will be called when actually needed).
-> 
+>
 > Just like any other definition, factories are called once and the same result is returned every time the factory needs to be resolved.
 >
 > Other services can be injected via type-hinting (as long as they are registered in the container or autowiring is enabled).
@@ -142,7 +142,7 @@ Earlier we discussed the benefits of using interfaces, as the constructor can ac
 public function __construct(NestInterface $nest) // Accept both `Nest` and `ImprovedNest`
 ```
 
-In this case, _Autowiring_ can't help us since the `NestInterface` cannot be instantiated: it's not a class, it's an interface! In this case, PHP Definitions can be used to match the interface with the correct class we want, using either a factory, or the [Autowired object](https://php-di.org/doc/php-definitions.html#autowired-objects) syntax: 
+In this case, _Autowiring_ can't help us since the `NestInterface` cannot be instantiated: it's not a class, it's an interface! In this case, PHP Definitions can be used to match the interface with the correct class we want, using either a factory, or the [Autowired object](https://php-di.org/doc/php-definitions.html#autowired-objects) syntax:
 
 ```php
 return [
@@ -151,7 +151,7 @@ return [
 ];
 ```
 
-The "nest of choice" can now be selected in the service provider. It could also be selected using another kind of logic, for example using a `Config` service and the new for PHP 8.0 [match expression](https://www.php.net/manual/en/control-structures.match.php): 
+The "nest of choice" can now be selected in the service provider. It could also be selected using another kind of logic, for example using a `Config` service and the new for PHP 8.0 [match expression](https://www.php.net/manual/en/control-structures.match.php):
 ```php
 return [
     // Inject Config to decide which nest to use, and the Container to get the actual class
@@ -165,7 +165,7 @@ return [
 ];
 ```
 
-But why are interfaces really needed? If `ImprovedNest` extends `Nest`, wouldn't the constructor accept an `ImprovedNest` anyway if you type-hinted against `Nest`? Well, yes... But it won't work the other way around. For example : 
+But why are interfaces really needed? If `ImprovedNest` extends `Nest`, wouldn't the constructor accept an `ImprovedNest` anyway if you type-hinted against `Nest`? Well, yes... But it won't work the other way around. For example :
 
 
 ```php
@@ -181,7 +181,7 @@ class AcceptNest {
 $improvedNest = $this->ci->get(Nest::class); // Return `ImprovedNest`, because service is configured this way
 $test = new AcceptNest($improvedNest); // Works, ImprovedNest is a subtype of Nest
 
-// This wont 
+// This wont
 
 class AcceptImprovedNest {
     public function __construct(protected ImprovedNest $nest)

@@ -21,7 +21,7 @@ app
 
 ### Create your service
 
-First, we'll create the service class. This class **must** implement the `UserFrosting\ServicesProvider\ServicesProviderInterface` interface. It must contain the `register` method, which returns an array of [service definitions](dependency-injection/the-di-container#service-providers-definitions). 
+First, we'll create the service class. This class **must** implement the `UserFrosting\ServicesProvider\ServicesProviderInterface` interface. It must contain the `register` method, which returns an array of [service definitions](dependency-injection/the-di-container#service-providers-definitions).
 
 **app/src/ServicesProvider/MapBuilderService.php**
 

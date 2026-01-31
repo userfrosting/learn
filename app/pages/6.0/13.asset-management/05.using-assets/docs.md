@@ -87,13 +87,13 @@ These blocks are then included in your base template:
 <head>
     <meta charset="utf-8">
     <title>{% block page_title %}{% endblock %}</title>
-    
+
     {# Include stylesheets #}
     {% include 'content/stylesheets_site.html.twig' %}
 </head>
 <body>
     <div id="app"></div>
-    
+
     {# Include scripts at end of body #}
     {% include 'content/scripts_site.html.twig' %}
 </body>

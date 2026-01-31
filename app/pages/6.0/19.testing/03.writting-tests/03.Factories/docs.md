@@ -11,7 +11,7 @@ Model factories can be used to insert test data into the database. See [Laravel 
 1. Create your factory, which must extend `UserFrosting\Sprinkle\Core\Database\Factories\Factory`;
 2. You model need to use the `Illuminate\Database\Eloquent\Factories\HasFactory` trait;
 3. Add `newFactory` method in your model, returning your factory:
-   ```php 
+   ```php
     /**
      * Create a new factory instance for the model.
      *

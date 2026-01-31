@@ -112,7 +112,7 @@ class Owl
 }
 ```
 
-In the above example, it doesn't matter if `Owl` receives a `Nest` or an `ImprovedNest`, or even a `SuperDuperNest`, as long as they all obey the same contract defined by the `NestInterface`. Moreover, the `Owl` class can confidently call the `getSize()` method of the injected `$nest` property, because the interface ensures that method is available, no matter which implementation of the `NestInterface` it receives. 
+In the above example, it doesn't matter if `Owl` receives a `Nest` or an `ImprovedNest`, or even a `SuperDuperNest`, as long as they all obey the same contract defined by the `NestInterface`. Moreover, the `Owl` class can confidently call the `getSize()` method of the injected `$nest` property, because the interface ensures that method is available, no matter which implementation of the `NestInterface` it receives.
 
 Using interfaces to declare what kind of object a class is expected to receive, even if you don't plan to have multiple "nest" types, is a key element in *autowiring* that we'll see shortly.
 

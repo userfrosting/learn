@@ -295,7 +295,7 @@ $ php bakery migrate:rollback [options]
 
 ### migrate:reset
 
-The `migrate:reset` command is the same as the _rollback_ command, but it will revert **every** migration. Without options, this is the same as wiping the database to a clean state. 
+The `migrate:reset` command is the same as the _rollback_ command, but it will revert **every** migration. Without options, this is the same as wiping the database to a clean state.
 
 > [!WARNING]
 > **Use this command with caution!**
@@ -525,19 +525,19 @@ $ php bakery sprinkle:list
 
 Example result:
 
-```txt 
+```txt
  Loaded Sprinkles
 ================
 
- ------------------ --------------------------------------- ---------------------------------------------------------------------- 
-  Sprinkle           Namespace                               Path                                                                
- ------------------ --------------------------------------- ---------------------------------------------------------------------- 
-  Core Sprinkle      UserFrosting\Sprinkle\Core\Core         /home/UserFrosting/vendor/userfrosting/sprinkle-core/app/src/../     
-  Account Sprinkle   UserFrosting\Sprinkle\Account\Account   /home/UserFrosting/vendor/userfrosting/sprinkle-account/app/src/../  
-  AdminLTE Theme     UserFrosting\Theme\AdminLTE\AdminLTE    /home/UserFrosting/vendor/userfrosting/theme-adminlte/app/src/../    
-  Admin Sprinkle     UserFrosting\Sprinkle\Admin\Admin       /home/UserFrosting/vendor/userfrosting/sprinkle-admin/app/src/../    
-  My Application     UserFrosting\App\MyApp                  /home/UserFrosting/app/src/../                                       
- ------------------ --------------------------------------- ---------------------------------------------------------------------- 
+ ------------------ --------------------------------------- ----------------------------------------------------------------------
+  Sprinkle           Namespace                               Path
+ ------------------ --------------------------------------- ----------------------------------------------------------------------
+  Core Sprinkle      UserFrosting\Sprinkle\Core\Core         /home/UserFrosting/vendor/userfrosting/sprinkle-core/app/src/../
+  Account Sprinkle   UserFrosting\Sprinkle\Account\Account   /home/UserFrosting/vendor/userfrosting/sprinkle-account/app/src/../
+  AdminLTE Theme     UserFrosting\Theme\AdminLTE\AdminLTE    /home/UserFrosting/vendor/userfrosting/theme-adminlte/app/src/../
+  Admin Sprinkle     UserFrosting\Sprinkle\Admin\Admin       /home/UserFrosting/vendor/userfrosting/sprinkle-admin/app/src/../
+  My Application     UserFrosting\App\MyApp                  /home/UserFrosting/app/src/../
+ ------------------ --------------------------------------- ----------------------------------------------------------------------
 ```
 
 

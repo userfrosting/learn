@@ -18,7 +18,7 @@ It's important to talk about why this system is important and why you should use
 
 Let's face it, it would be _waayyyy easier_ to simply hard code every public facing string in your common code. While using the translation system will make it easier to support additional languages in the future, it will also help separate your code from your site content.
 
-Imagine one day you decide to change the term **Users** to **Members**. If you hardcoded everything inside your code, you now have to go through all of the files, look for everwhere the word **User** (and **User_s_** !) is written and change it, one by one, everywhere. Keep in mind, this word is also used in the core code of UserFrosting! This means, if we were to hardcode everything too, that you would have to update all UserFrosting provided files too!
+Imagine one day you decide to change the term **Users** to **Members**. If you hardcoded everything inside your code, you now have to go through all of the files, look for everywhere the word **User** (and **User_s_** !) is written and change it, one by one, everywhere. Keep in mind, this word is also used in the core code of UserFrosting! This means, if we were to hardcode everything too, that you would have to update all UserFrosting provided files too!
 
 However, having all the _content_ in a single location can help in this situation. Since a common **messages key** is used in your code, you now have to fix only the **localized message**. The same goes if you made a typo somewhere...
 

@@ -28,7 +28,7 @@ In this same vein, any framework or CMS that has you do a "one-click install" is
 
 ## Setting up a local development environment
 
-If you think that setting up a local environment is too much work, think again! On a MacOS or Linux computer, setting up a local environment simply consist of installing a couple of apps through the command line. On a Windows 10 or 11 machine, an additional step is required : Installing the *Windows Subsystem for Linux (WSL2)*! 
+If you think that setting up a local environment is too much work, think again! On a MacOS or Linux computer, setting up a local environment simply consist of installing a couple of apps through the command line. On a Windows 10 or 11 machine, an additional step is required : Installing the *Windows Subsystem for Linux (WSL2)*!
 
 And the sprinkle on the cupcake is the [next chapter](installation) will teach you how to do everything yourself!
 

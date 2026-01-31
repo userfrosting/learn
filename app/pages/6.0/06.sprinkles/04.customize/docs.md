@@ -17,7 +17,7 @@ The most important part to edit here is the Namespace. The namespace tells Compo
 > [!NOTE]
 > Compared to previous version of UserFrosting, **starting from UserFrosting 5**, the namespace isn't strict anymore. There's no more convention to follow.
 
-The namespace is defined in the `composer.json` file in the base directory of your sprinkle. The default file looks like this : 
+The namespace is defined in the `composer.json` file in the base directory of your sprinkle. The default file looks like this :
 
 Original **composer.json**
 ```json
@@ -82,7 +82,7 @@ Original **composer.json**
 }
 ```
 
-Let's change thing up. All the metadata can be customized to reflect your project, and we'll define the new namespace to `Owlfancy\Site` : 
+Let's change thing up. All the metadata can be customized to reflect your project, and we'll define the new namespace to `Owlfancy\Site` :
 
 Modified **composer.json**
 ```json
@@ -149,7 +149,7 @@ $ composer update
 
 ### The recipe
 
-The next step is to update every reference of `UserFrosting\App` to `Owlfancy\Site`, in each PHP files inside `app/src/`. But there's one file that might require a bit more attention. The recipe, located in `app/src/MyApp.php` can be renamed to reflect your project. For example, we can rename it to `app/src/Owlfancy.php`. The class name should also be renamed to `Owlfancy`. We'll also edit the `getName()` method, to reflect our project name : 
+The next step is to update every reference of `UserFrosting\App` to `Owlfancy\Site`, in each PHP files inside `app/src/`. But there's one file that might require a bit more attention. The recipe, located in `app/src/MyApp.php` can be renamed to reflect your project. For example, we can rename it to `app/src/Owlfancy.php`. The class name should also be renamed to `Owlfancy`. We'll also edit the `getName()` method, to reflect our project name :
 
 ```php
 <?php

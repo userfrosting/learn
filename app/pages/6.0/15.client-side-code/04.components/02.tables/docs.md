@@ -17,19 +17,19 @@ Start with a basic sortable table:
 <template>
   <div>
     <!-- Search/Filter -->
-    <input 
-      v-model="searchQuery" 
-      type="text" 
+    <input
+      v-model="searchQuery"
+      type="text"
       placeholder="Search users..."
       class="uk-input uk-width-1-1"
     />
-    
+
     <!-- Table -->
     <table class="uk-table uk-table-striped uk-table-hover">
       <thead>
         <tr>
           <th @click="sort('name')">
-            Name 
+            Name
             <span v-if="sortKey === 'name'">{{ sortOrder === 'asc' ? '▲' : '▼' }}</span>
           </th>
           <th @click="sort('email')">
@@ -49,19 +49,19 @@ Start with a basic sortable table:
         </tr>
       </tbody>
     </table>
-    
+
     <!-- Pagination -->
     <div class="uk-flex uk-flex-between">
-      <button 
-        @click="previousPage" 
+      <button
+        @click="previousPage"
         :disabled="currentPage === 1"
         class="uk-button uk-button-default"
       >
         Previous
       </button>
       <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <button 
-        @click="nextPage" 
+      <button
+        @click="nextPage"
         :disabled="currentPage === totalPages"
         class="uk-button uk-button-default"
       >
@@ -97,15 +97,15 @@ onMounted(async () => {
 // Filtering
 const filteredUsers = computed(() => {
   let filtered = users.value
-  
+
   // Search filter
   if (searchQuery.value) {
-    filtered = filtered.filter(user => 
+    filtered = filtered.filter(user =>
       user.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       user.email.toLowerCase().includes(searchQuery.value.toLowerCase())
     )
   }
-  
+
   // Sort
   filtered = [...filtered].sort((a, b) => {
     const aVal = a[sortKey.value]
@@ -113,13 +113,13 @@ const filteredUsers = computed(() => {
     const modifier = sortOrder.value === 'asc' ? 1 : -1
     return aVal < bVal ? -modifier : modifier
   })
-  
+
   // Pagination
   const start = (currentPage.value - 1) * perPage
   return filtered.slice(start, start + perPage)
 })
 
-const totalPages = computed(() => 
+const totalPages = computed(() =>
   Math.ceil(users.value.length / perPage)
 )
 
@@ -179,7 +179,7 @@ onMounted(fetchData)
 
 async function fetchData() {
   loading.value = true
-  
+
   try {
     const response = await axios.get<TableData>('/api/users', {
       params: {
@@ -189,7 +189,7 @@ async function fetchData() {
         filters: filters.value
       }
     })
-    
+
     data.value = response.data.rows
     totalRecords.value = response.data.count_filtered
   } finally {
@@ -271,7 +271,7 @@ const table = useVueTable({
       <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
         <th v-for="header in headerGroup.headers" :key="header.id">
           <div @click="header.column.getToggleSortingHandler()?.($event)">
-            <component 
+            <component
               :is="flexRender(header.column.columnDef.header, header.getContext())"
             />
           </div>
@@ -301,15 +301,15 @@ export function useTable<T extends Record<string, any>>(
   const data: Ref<T[]> = ref([])
   const loading = ref(false)
   const total = ref(0)
-  
+
   const page = ref(1)
   const perPage = ref(25)
   const sortKey = ref<keyof T | ''>('')
   const sortOrder = ref<'asc' | 'desc'>('asc')
   const search = ref('')
-  
+
   const totalPages = computed(() => Math.ceil(total.value / perPage.value))
-  
+
   async function fetch() {
     loading.value = true
     try {
@@ -326,7 +326,7 @@ export function useTable<T extends Record<string, any>>(
       loading.value = false
     }
   }
-  
+
   function sort(key: keyof T) {
     if (sortKey.value === key) {
       sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
@@ -336,7 +336,7 @@ export function useTable<T extends Record<string, any>>(
     }
     fetch()
   }
-  
+
   return {
     data,
     loading,

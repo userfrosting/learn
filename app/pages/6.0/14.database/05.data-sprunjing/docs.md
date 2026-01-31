@@ -90,7 +90,7 @@ class OwlSprunje extends Sprunje
         'name',
         'species'
     ];
-    
+
     // ...
 }
 ```
@@ -117,7 +117,7 @@ use UserFrosting\Sprinkle\MySprinkle\Sprunje\OwlSprunje;
 
 class OwlsSprunjeAction
 {
-    /** 
+    /**
      * Inject Sprunje and other services using DI
      */
     public function __construct(
@@ -200,7 +200,7 @@ To do this, you can define custom methods in your Sprunje:
      *
      * @param EloquentBuilder|QueryBuilder|Relation $query
      * @param string                                $value
-     * 
+     *
      * @return static
      */
     protected function filterScientificName($query, string $value): static

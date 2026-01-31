@@ -29,7 +29,7 @@ userfrosting/theme-adminlte     (AdminLTE Theme)
 userfrosting/monorepo           (Everything)
 ```
 
-**Impact**: 
+**Impact**:
 - Simpler dependency management
 - Consistent versioning across all components
 - Easier development and contribution workflow

@@ -95,7 +95,7 @@ public function __construct(
     protected Twig $twig,
     protected Mailer $mailer,
 ) {
-}    
+}
 
 // ...
 

@@ -10,7 +10,7 @@ wip: true
 2. [setup](cli/commands#setup)
 3. [debug](cli/commands#debug)
 
-Those commands are typically used as "installation" steps. It this situation, it's much more simpler to run one command than multiple ones. You can easily add your own command(s) to any of these aggregators using [event listeners](advanced/events#listener). 
+Those commands are typically used as "installation" steps. It this situation, it's much more simpler to run one command than multiple ones. You can easily add your own command(s) to any of these aggregators using [event listeners](advanced/events#listener).
 
 ## Adding Custom Commands to the `bake` command
 
@@ -42,7 +42,7 @@ The [`bake` command](cli/commands#bake) combines many CLI commands into one and 
 
     namespace UserFrosting\App;
 
-    // ... 
+    // ...
     use UserFrosting\Event\EventListenerRecipe; // <-- Add this
     use UserFrosting\App\Bakery\BakeCommandListener; // <-- Add this
     // ...
@@ -63,17 +63,17 @@ The [`bake` command](cli/commands#bake) combines many CLI commands into one and 
             ];
         }
         //<--
-        
+
         // ...
     }
     ```
 
-In the recipe, you're telling UserFrosting to execute `BakeCommandListener` when the `BakeCommandEvent` is fired by the UserFrosting event dispatcher. The listener itself isn't required to implement any interface. It simply needs to be callable, which the [`__invoke()`](https://www.php.net/manual/en/language.oop5.magic.php#object.invoke) magic method enables. This method accepts a single argument, which will be the event itself. 
+In the recipe, you're telling UserFrosting to execute `BakeCommandListener` when the `BakeCommandEvent` is fired by the UserFrosting event dispatcher. The listener itself isn't required to implement any interface. It simply needs to be callable, which the [`__invoke()`](https://www.php.net/manual/en/language.oop5.magic.php#object.invoke) magic method enables. This method accepts a single argument, which will be the event itself.
 
 > [!TIP]
 > A single listener can handle multiple events. The or (`|`) syntax can be used to type-hint against multiple event classes, or type-hinting can be omitted, or in this case the parent `AbstractAggregateCommandEvent` can be used to type-hint.
 
-The event listener uses `$event->addCommand('hello');` to add the "hello" command to the event. The command is passed by its name as a string, not the class itself. This method will add the hello command to the end of the list of commands which "bake" will run. Other public methods exist on `$event` to place the command exactly where you need it: 
+The event listener uses `$event->addCommand('hello');` to add the "hello" command to the event. The command is passed by its name as a string, not the class itself. This method will add the hello command to the end of the list of commands which "bake" will run. Other public methods exist on `$event` to place the command exactly where you need it:
 
 | Command                        | Description                                          |
 | ------------------------------ | ---------------------------------------------------- |

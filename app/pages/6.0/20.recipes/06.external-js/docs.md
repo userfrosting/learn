@@ -10,7 +10,7 @@ wip: true
 > [!TIP]
 > A complete example of this guide can be found on GitHub : [https://github.com/userfrosting/recipe-js-package](https://github.com/userfrosting/recipe-js-package)
 
-This recipe will guide you on how to add a 3rd party javascript package on a default UserFrosting installation. The process is simple, but can be challenging to understand as most 3rd party package won't provides instructions for UserFrosting Webpack setup.  
+This recipe will guide you on how to add a 3rd party javascript package on a default UserFrosting installation. The process is simple, but can be challenging to understand as most 3rd party package won't provides instructions for UserFrosting Webpack setup.
 
 For this example, we will add [Dark Reader](https://www.npmjs.com/package/darkreader) to the UserFrosting Skeleton. Dark Reader is designed to analyze web pages and generate a dark mode for any website. To enable it, we simply need to load it with the package manager, create a script which will initialize Dark Reader and finally register a new entrypoint.
 
@@ -18,12 +18,12 @@ For this example, we will add [Dark Reader](https://www.npmjs.com/package/darkre
 
 First thing to do is add a new dependency. The important point here is since Dark Reader is a **frontend** dependency, we won't load it with Composer. Composer is dedicated to PHP, or **backend** dependencies. Instead, we will use the **N**ode **P**acakge **M**anager, or **NPM**.
 
-From the command line, run : 
+From the command line, run :
 ```bash
 $ npm i darkreader --save
 ```
 
-This will add the following line to your `package.json` and load to `node_modules` : 
+This will add the following line to your `package.json` and load to `node_modules` :
 ```json
 "dependencies": {
     "@userfrosting/sprinkle-admin": "~5.1.0",
@@ -40,15 +40,15 @@ One big difference with traditional website, each file referenced as a Webpack e
 
 This is important, as a module doesn't work the same a traditional javascript file, also known as **browser JavaScript**. One big difference between Node.js modules and browser JavaScript is how one script's code is accessed from another script's code.
 
-The difference can be explained as [this StackOverflow answer](https://stackoverflow.com/a/9901097/445757) does : 
+The difference can be explained as [this StackOverflow answer](https://stackoverflow.com/a/9901097/445757) does :
 
 > In browser JavaScript, scripts are added via the `<script>` element. When they execute, they all have direct access to the global scope, a "shared space" among all scripts. Any script can freely define/modify/remove/call anything on the global scope.
 
 > In Node.js, each **module** has its own scope. A module cannot directly access things defined in another module unless it chooses to expose them. To expose things from a module, they must be assigned to exports or module.exports. For a module to access another module's exports or module.exports, it must use `require()`.
 
-The `require()` function is a built-in CommonJS module function supported in Node.js that lets you include modules within your project. We already use it to include the `theme-adminlte` main module, this time we'll use it to include the Dark Reader main module. 
+The `require()` function is a built-in CommonJS module function supported in Node.js that lets you include modules within your project. We already use it to include the `theme-adminlte` main module, this time we'll use it to include the Dark Reader main module.
 
-In the default `app.js` main entry point, add the following code at the bottom : 
+In the default `app.js` main entry point, add the following code at the bottom :
 
 `app/assets/app.js`
 ```js
@@ -61,7 +61,7 @@ const DarkReader = require('darkreader/darkreader');
 DarkReader.enable();
 ```
 
-Since we changed a JavaScript file, we need to rebuilt the assets : 
+Since we changed a JavaScript file, we need to rebuilt the assets :
 ```bash
 $ php bakery assets:build
 ```
@@ -74,7 +74,7 @@ Refresh the page, and you should see the default page in a beautiful dark mode !
 
 Right now, the code is directly in the main entry point. While it works for now, as your code grows, it will be more difficult to maintain. By moving your custom code to a dedicated module, it also help with *separation of concerns*. Each task in it's own module !
 
-For this example, let's move the code previously added to `app/assets/app.js` to a new `app/assets/darkreader.js` file. 
+For this example, let's move the code previously added to `app/assets/app.js` to a new `app/assets/darkreader.js` file.
 
 `app/assets/darkreader.js`
 ```js
@@ -96,7 +96,7 @@ require('@userfrosting/theme-adminlte');
 require('./darkreader.js')
 ```
 
-Again, since we changed a JavaScript file, we need to rebuilt the assets : 
+Again, since we changed a JavaScript file, we need to rebuilt the assets :
 ```bash
 $ php bakery assets:build
 ```
@@ -105,7 +105,7 @@ Refresh the page, the dark mode should still be applied.
 
 ## Adding a toggle
 
-At this point, Dark Reader will be enabled by default on every page. Wouldn't it be nice to have a toggle button for it? 
+At this point, Dark Reader will be enabled by default on every page. Wouldn't it be nice to have a toggle button for it?
 
 First order of business, we need to add the toggle button to the navbars. Yes, plurals. UserFrosting default theme has a dedicated navbar for the dashboard layout as well as the standard layout!
 
@@ -164,13 +164,13 @@ function toggleDarkMode() {
 }
 
 // Init when document is ready
-$(function() { 
+$(function() {
     // Init event listener for button
     $('.darkmode-btn').on( "click", function() {
         toggleDarkMode();
     });
 
-    // Set initial state as saved in local storage 
+    // Set initial state as saved in local storage
     const enabled = localStorage.getItem('UF-DarkMode-enabled');
     if (enabled === "true") { DarkReader.enable(); }
 });

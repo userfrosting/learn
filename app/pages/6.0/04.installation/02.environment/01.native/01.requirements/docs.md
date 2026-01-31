@@ -34,27 +34,27 @@ If you followed the previous pages, you probably noticed two pieces of software 
 
 ### PHP
 
-Installing PHP 8.3 locally will make it easier to develop locally, as it will allow you to run Composer locally, too. 
+Installing PHP 8.3 locally will make it easier to develop locally, as it will allow you to run Composer locally, too.
 
 #### MacOS
 The easiest way to install PHP on MacOS is through Homebrew:
 1. Install XCode Command Line Tools : `xcode-select --install`
 2. Install [Homebrew](https://brew.sh) using their guide
-3. Install PHP 8.3, from the terminal : `brew install shivammathur/php/php@8.3` 
+3. Install PHP 8.3, from the terminal : `brew install shivammathur/php/php@8.3`
 
 > [!TIP]
 > It's possible to use multiple versions of PHP on MacOS. See [shivammathur/php documentation](https://github.com/shivammathur/homebrew-php#switch-between-php-versions).
 
 #### Linux & Windows WSL2
-Install PHP through the package manager. For example, on Ubuntu : 
+Install PHP through the package manager. For example, on Ubuntu :
 
-1. Add [Ondřej Surý PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php/) to get the latest version : 
+1. Add [Ondřej Surý PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php/) to get the latest version :
     ```bash
     sudo add-apt-repository ppa:ondrej/php
     sudo apt update
     ```
 
-2. Install PHP and the necessary extensions : 
+2. Install PHP and the necessary extensions :
    ```bash
    sudo apt install php8.3 php8.3-gd php8.3-dom php8.3-zip php8.3-sqlite3 php8.3-pdo_mysql php8.3-curl php8.3-mbstring unzip
    ```
@@ -165,7 +165,7 @@ While multiple solutions are available, two are recommended by UserFrosting : **
 
 Mailpit can be installed on [MacOS through Homebrew](https://github.com/axllent/mailpit#install-via-package-managers), on Linux/WSL2 through their Bash Script](https://github.com/axllent/mailpit#install-via-bash-script-linux--mac), or through [Docker](https://mailpit.axllent.org/docs/install/docker/). By default, Mailpit UI can be access at [http://0.0.0.0:8025](http://0.0.0.0:8025).
 
-When using Mailpit with UserFrosting, the following parameters will need to be provided during UserFrosting installation, which we'll see on the next page : 
+When using Mailpit with UserFrosting, the following parameters will need to be provided during UserFrosting installation, which we'll see on the next page :
 
 | Param       | Value     |
 |-------------|-----------|
@@ -176,11 +176,11 @@ When using Mailpit with UserFrosting, the following parameters will need to be p
 
 #### Mailtrap
 
-[Mailtrap](https://mailtrap.io/) is similar to Mailpit, but it runs in the cloud, so there's nothing to install. However, Mailtrap is not open source. Mailtrap features a forever free plan that offers basic functionality for personal use. The *Free Sandbox* provides one inbox and up to 100 emails per month. It's a great way to get started, as it's super easy and fast to setup. For a more permanent solution however, Mailpit should be preferred. 
+[Mailtrap](https://mailtrap.io/) is similar to Mailpit, but it runs in the cloud, so there's nothing to install. However, Mailtrap is not open source. Mailtrap features a forever free plan that offers basic functionality for personal use. The *Free Sandbox* provides one inbox and up to 100 emails per month. It's a great way to get started, as it's super easy and fast to setup. For a more permanent solution however, Mailpit should be preferred.
 
-To get started, simply create your account on [Mailtrap's website](https://mailtrap.io/register/signup). 
+To get started, simply create your account on [Mailtrap's website](https://mailtrap.io/register/signup).
 
-When using Mailtrap with UserFrosting, the following parameters will need to be provided during UserFrosting installation, which we'll see on the next page : 
+When using Mailtrap with UserFrosting, the following parameters will need to be provided during UserFrosting installation, which we'll see on the next page :
 
 | Param         | Value                    |
 |---------------|--------------------------|
@@ -193,7 +193,7 @@ The *user* and *password* are unique to your Mailtrap inbox, and can be found in
 
 ## Optional Installation
 
-The next tools are not required in your local development environment to run UserFrosting. However, you may be interested in installing them anyway; or the instructions may be helpful for those tools which apply to you. 
+The next tools are not required in your local development environment to run UserFrosting. However, you may be interested in installing them anyway; or the instructions may be helpful for those tools which apply to you.
 
 ### Git
 

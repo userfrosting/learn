@@ -218,7 +218,7 @@ We can also arbitrarily send manual debugging messages to `app/logs/userfrosting
 #[\DI\Attribute\Inject]
 protected DebugLoggerInterface $logger;
 
-// ... 
+// ...
 
 $this->logger->debug("Fetching owls from database...");
 $this->logger->debug("Owls found:", $owls);

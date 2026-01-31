@@ -4,12 +4,12 @@ description: Once your routes definitions are ready, you have to register them i
 wip: true
 ---
 
-So far we've seen how to [create route definitions](routes-and-controllers/front-controller) and [controller classes](routes-and-controllers/controller-classes). However, there one last step required for our routes to be enabled inside our application. That is registering the route class inside the [Sprinkle Recipe](sprinkles/recipe#routes). 
+So far we've seen how to [create route definitions](routes-and-controllers/front-controller) and [controller classes](routes-and-controllers/controller-classes). However, there one last step required for our routes to be enabled inside our application. That is registering the route class inside the [Sprinkle Recipe](sprinkles/recipe#routes).
 
 > [!NOTE]
 > Previous versions of UserFrosting relied on a naming convention for registering routes. Routes were expected to be placed in a special directory, and would automatically be registered at runtime. To provide more flexibility, the naming convention has been dropped in UserFrosting 5. You now have to register every class you wish to register, in the order you want them to be registered, inside the Sprinkle Recipe.
 
-The first step is to create a new class that will return the Slim route definition. This class **must** implement the `UserFrosting\Routes\RouteDefinitionInterface` interface from the UserFrosting Framework. For example : 
+The first step is to create a new class that will return the Slim route definition. This class **must** implement the `UserFrosting\Routes\RouteDefinitionInterface` interface from the UserFrosting Framework. For example :
 
 **app/src/MyRoutes.php**
 ```php
@@ -30,7 +30,7 @@ class MyRoutes implements RouteDefinitionInterface
 }
 ```
 
-Note in the previous example how the class has a [FQN](https://www.php.net/manual/en/language.namespaces.rules.php) of `\UserFrosting\App\MyRoutes`. 
+Note in the previous example how the class has a [FQN](https://www.php.net/manual/en/language.namespaces.rules.php) of `\UserFrosting\App\MyRoutes`.
 
 To register this class inside your application, you need to add it to the `getRoutes()` method of the Sprinkle Recipe. Don't forget to add the previous class to the `use` block at the top. For example :
 
@@ -46,8 +46,8 @@ use UserFrosting\App\MyRoutes; // <-- Add here !
 // ...
 
 class MyApp implements SprinkleRecipe {
-    
-    // ... 
+
+    // ...
 
     /**
      * Returns a list of routes definition in PHP files.

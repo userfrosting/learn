@@ -20,7 +20,7 @@ To run UserFrosting, you'll need four things :
 
 To run any website, you need *web server software*. Its tasks are to receive client requests, execute them, and send a reply. For a PHP website, the web server software won't execute the PHP code itself. Instead, it passes it to PHP which interprets the code and returns a response for the web server to display.
 
-The most popular web servers today are : 
+The most popular web servers today are :
 
 - [Nginx](https://www.nginx.com)
 - [Apache](https://httpd.apache.org)
@@ -49,7 +49,7 @@ As for your local development environment ([You _do_ have a local development en
 
 ### PHP Extensions
 
-UserFrosting and its dependencies requires some PHP Libraries and Extensions to be installed and enabled : 
+UserFrosting and its dependencies requires some PHP Libraries and Extensions to be installed and enabled :
 
 - [GD](https://www.php.net/manual/en/book.image.php)
 - [DOM](https://www.php.net/manual/en/book.dom.php)

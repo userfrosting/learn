@@ -258,4 +258,4 @@ Now that you understand the stack, explore how to:
 - **[Show Alerts](client-side-code/components/alerts)**: Provide user feedback
 
 > [!NOTE]
-> Don't feel overwhelmed! You don't need to master everything at once. Start with the basics and gradually explore more advanced features as needed. 
+> Don't feel overwhelmed! You don't need to master everything at once. Start with the basics and gradually explore more advanced features as needed.

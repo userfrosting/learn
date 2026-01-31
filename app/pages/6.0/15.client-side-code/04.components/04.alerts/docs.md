@@ -53,7 +53,7 @@ Create a reusable alert component for persistent messages:
 **AlertBox.vue**:
 ```vue
 <template>
-  <div 
+  <div
     v-if="visible"
     class="uk-alert"
     :class="alertClass"
@@ -135,7 +135,7 @@ async function fetchAndDisplayAlerts() {
     const response = await axios.get<Alert[]>(
       `${site.uri.public}/alerts`
     )
-    
+
     response.data.forEach(alert => {
       UIkit.notification(alert.message, {
         status: alert.type === 'danger' ? 'danger' : alert.type,
@@ -171,11 +171,11 @@ export function useAlerts() {
 
   async function fetchAlerts() {
     loading.value = true
-    
+
     try {
       const response = await axios.get(`${site.uri.public}/alerts`)
       alerts.value = response.data
-      
+
       // Display as UIkit notifications
       response.data.forEach((alert: Alert) => {
         showNotification(alert.message, alert.type)
@@ -188,7 +188,7 @@ export function useAlerts() {
   }
 
   function showNotification(
-    message: string, 
+    message: string,
     type: 'success' | 'danger' | 'warning' | 'info' = 'info'
   ) {
     UIkit.notification(message, {
@@ -314,13 +314,13 @@ function addToast(
   duration = 5000
 ) {
   const id = Date.now().toString() + Math.random()
-  
+
   toasts.value.push({ id, message, type, duration })
-  
+
   if (duration > 0) {
     setTimeout(() => removeToast(id), duration)
   }
-  
+
   return id
 }
 
@@ -402,7 +402,7 @@ async function performAction() {
   try {
     await axios.post('/api/action')
     showSuccess('Action completed!')
-    
+
   } catch (error) {
     handleError(error as AxiosError)
   }
@@ -413,7 +413,7 @@ function handleError(error: AxiosError) {
     // Server responded with error status
     const message = error.response.data?.message || 'An error occurred'
     showError(message)
-    
+
     // Handle validation errors
     if (error.response.status === 422 && error.response.data?.errors) {
       Object.values(error.response.data.errors).forEach((msgs: any) => {
@@ -448,27 +448,27 @@ const isLoading = ref(false)
 
 async function performLongOperation() {
   isLoading.value = true
-  
+
   // Show loading notification
   const loadingNotification = UIkit.notification(
     'Processing... Please wait',
-    { 
+    {
       status: 'primary',
       timeout: 0  // Don't auto-close
     }
   )
-  
+
   try {
     await longRunningTask()
-    
+
     // Close loading, show success
     loadingNotification.close()
     UIkit.notification('Operation completed!', 'success')
-    
+
   } catch (error) {
     loadingNotification.close()
     UIkit.notification('Operation failed', 'danger')
-    
+
   } finally {
     isLoading.value = false
   }
@@ -487,7 +487,7 @@ import UIkit from 'uikit'
 async function deleteUser(userId: number) {
   // UIkit doesn't have built-in confirm, use native or create modal
   const confirmed = confirm('Are you sure you want to delete this user?')
-  
+
   if (confirmed) {
     try {
       await axios.delete(`/api/users/${userId}`)
@@ -515,14 +515,14 @@ function showConfirmModal(message: string, onConfirm: () => void) {
     </div>
   `
   document.body.appendChild(modal)
-  
+
   const confirmBtn = document.getElementById('confirm-btn')
   confirmBtn?.addEventListener('click', () => {
     onConfirm()
     UIkit.modal('#confirm-modal').hide()
     document.body.removeChild(modal)
   })
-  
+
   UIkit.modal('#confirm-modal').show()
 }
 </script>
@@ -542,9 +542,9 @@ Match the alert type to the message:
 
 Success messages should auto-dismiss:
 ```typescript
-UIkit.notification('Saved!', { 
-  status: 'success', 
-  timeout: 3000 
+UIkit.notification('Saved!', {
+  status: 'success',
+  timeout: 3000
 })
 ```
 
@@ -581,7 +581,7 @@ showError(`${errors.length} errors occurred`)
 
 Be specific about what happened and what to do:
 
-✅ **Good**: "Failed to save. Please check your internet connection and try again."  
+✅ **Good**: "Failed to save. Please check your internet connection and try again."
 ❌ **Bad**: "Error occurred"
 
 ## Integration with Forms

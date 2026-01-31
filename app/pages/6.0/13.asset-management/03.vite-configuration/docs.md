@@ -294,17 +294,17 @@ The Vite integration can be configured in your UserFrosting config file (`app/co
 ```php
 'assets' => [
     'bundler' => env('ASSETS_BUNDLER', 'vite'), // Either 'vite' or 'webpack'
-    
+
     'vite' => [
         // Path to Vite's manifest.json file
         'manifest' => 'assets://.vite/manifest.json',
-        
+
         // Enable development mode (use Vite dev server)
         'dev' => env('VITE_DEV_ENABLED', true),
-        
+
         // Public base path for assets
         'base' => '/assets/',
-        
+
         // Vite development server URL
         'server' => 'http://[::1]:' . env('VITE_PORT', 5173),
     ],

@@ -81,7 +81,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <button 
+  <button
     :class="[
       'uk-button',
       `uk-button-${variant}`,
@@ -123,7 +123,7 @@ export function useForm(initialData, onSubmit) {
   const form = ref({ ...initialData })
   const errors = ref({})
   const isSubmitting = ref(false)
-  
+
   async function submit() {
     isSubmitting.value = true
     try {
@@ -134,7 +134,7 @@ export function useForm(initialData, onSubmit) {
       isSubmitting.value = false
     }
   }
-  
+
   return { form, errors, isSubmitting, submit }
 }
 ```
@@ -263,7 +263,7 @@ try {
 Dive into specific component types:
 
 - **[Forms](client-side-code/components/forms)** - User input and validation
-- **[Tables](client-side-code/components/tables)** - Data display and manipulation  
+- **[Tables](client-side-code/components/tables)** - Data display and manipulation
 - **[Collections](client-side-code/components/collections)** - Dynamic lists
 - **[Alerts](client-side-code/components/alerts)** - User feedback
 

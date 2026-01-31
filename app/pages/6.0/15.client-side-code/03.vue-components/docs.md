@@ -12,7 +12,7 @@ This guide introduces Vue 3 components and shows you how to use them in UserFros
 
 A Vue component is a self-contained piece of UI with its own:
 - **Template** (HTML structure)
-- **Logic** (JavaScript/TypeScript behavior)  
+- **Logic** (JavaScript/TypeScript behavior)
 - **Styles** (CSS, scoped to the component)
 
 Think of components as custom HTML elements you can reuse throughout your application.
@@ -90,7 +90,7 @@ const props = defineProps<{
 const messageCount = ref(0)
 
 // Computed values
-const avatarUrl = computed(() => 
+const avatarUrl = computed(() =>
   props.avatar || `/images/default-avatar.png`
 )
 
@@ -271,12 +271,12 @@ Bind reactive data to HTML attributes:
   <button :disabled="isLoading" :class="buttonClass">
     Submit
   </button>
-  
+
   <!-- Dynamic classes -->
   <div :class="{ active: isActive, disabled: isDisabled }">
     ...
   </div>
-  
+
   <!-- Dynamic styles -->
   <div :style="{ color: textColor, fontSize: fontSize + 'px' }">
     ...
@@ -296,11 +296,11 @@ Listen to DOM events:
   <form @submit.prevent="onSubmit">
     ...
   </form>
-  
+
   <!-- Event modifiers -->
   <button @click.stop="handleClick">Stop propagation</button>
   <button @click.once="initialize">Run once</button>
-  
+
   <!-- Keyboard modifiers -->
   <input @keyup.enter="submit" @keyup.esc="cancel" />
 </template>
@@ -362,14 +362,14 @@ Loop through arrays or objects:
       {{ user.name }}
     </li>
   </ul>
-  
+
   <!-- With index -->
   <ul>
     <li v-for="(user, index) in users" :key="user.id">
       {{ index + 1 }}. {{ user.name }}
     </li>
   </ul>
-  
+
   <!-- Object properties -->
   <ul>
     <li v-for="(value, key) in userObject" :key="key">
@@ -400,23 +400,23 @@ const multiSelect = ref([])
   <!-- Text input -->
   <input v-model="message" />
   <p>{{ message }}</p>
-  
+
   <!-- Checkbox -->
   <input type="checkbox" v-model="checked" />
-  
+
   <!-- Select -->
   <select v-model="selected">
     <option value="a">Option A</option>
     <option value="b">Option B</option>
   </select>
-  
+
   <!-- Multi-select -->
   <select v-model="multiSelect" multiple>
     <option value="a">A</option>
     <option value="b">B</option>
     <option value="c">C</option>
   </select>
-  
+
   <!-- Modifiers -->
   <input v-model.trim="message" /> <!-- trim whitespace -->
   <input v-model.number="age" /> <!-- convert to number -->
@@ -433,7 +433,7 @@ Pass data from parent to child components:
 **Parent.vue**:
 ```vue
 <template>
-  <UserCard 
+  <UserCard
     :user-id="123"
     :username="'alex'"
     :email="'alex@example.com'"
@@ -510,7 +510,7 @@ function changeStatus(status: string) {
 **Parent.vue**:
 ```vue
 <template>
-  <UserCard 
+  <UserCard
     @user-deleted="handleUserDeleted"
     @status-changed="handleStatusChange"
   />
@@ -534,7 +534,7 @@ Run code at specific points in a component's life:
 
 ```vue
 <script setup lang="ts">
-import { 
+import {
   onBeforeMount,
   onMounted,
   onBeforeUpdate,
@@ -634,7 +634,7 @@ app.mount('#app')
 ```twig
 {# Make sure you have a mount point #}
 <div id="app">
-    <user-greeting 
+    <user-greeting
         username="{{ current_user.username }}"
         :message-count="{{ messageCount }}"
         @view-messages="handleViewMessages"
@@ -660,13 +660,13 @@ export function useAuth() {
   const user = ref(null)
   const loading = ref(false)
   const error = ref<Error | null>(null)
-  
+
   const isLoggedIn = computed(() => user.value !== null)
 
   async function login(username: string, password: string) {
     loading.value = true
     error.value = null
-    
+
     try {
       const response = await axios.post('/api/login', {
         username,
@@ -684,13 +684,13 @@ export function useAuth() {
     user.value = null
   }
 
-  return { 
-    user, 
-    loading, 
-    error, 
-    isLoggedIn, 
-    login, 
-    logout 
+  return {
+    user,
+    loading,
+    error,
+    isLoggedIn,
+    login,
+    logout
   }
 }
 ```
@@ -819,7 +819,7 @@ export function useFetch<T>(url: string) {
   const data = ref<T | null>(null)
   const loading = ref(false)
   const error = ref<Error | null>(null)
-  
+
   async function fetch() {
     loading.value = true
     try {
@@ -831,7 +831,7 @@ export function useFetch<T>(url: string) {
       loading.value = false
     }
   }
-  
+
   return { data, loading, error, fetch }
 }
 ```

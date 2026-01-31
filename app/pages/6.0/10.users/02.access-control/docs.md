@@ -132,7 +132,7 @@ UserFrosting ships with a number of predefined access condition callbacks, which
 
 ### Custom callbacks
 
-To add your own access condition callbacks, simply extend `UserFrosting\Sprinkle\Account\Authorize\AccessConditions` and replace it in a custom Service Provider. For example : 
+To add your own access condition callbacks, simply extend `UserFrosting\Sprinkle\Account\Authorize\AccessConditions` and replace it in a custom Service Provider. For example :
 
 ```php
 use UserFrosting\ServicesProvider\ServicesProviderInterface;
@@ -152,7 +152,7 @@ final class CustomAccessConditionsService implements ServicesProviderInterface
 }
 ```
 <!-- TODO : Requires update in Account Sprinkle (UserFrosting\Sprinkle\Account\Authorize\AccessConditions) -->
-<!-- 
+<!--
 Alternatively, to add your own access condition callbacks, simply [decorate](dependency-injection/extending-services) the `AccessConditions` service:
 
 ```php

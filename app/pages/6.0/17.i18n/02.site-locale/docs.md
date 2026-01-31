@@ -4,7 +4,7 @@ description: Configuration options are available to control the overall language
 wip: true
 ---
 
-UserFrosting is translated in a variaty of languages provided by our community. While a default locale will be used for new visitors, each user can  choose their prefered language.
+UserFrosting is translated in a variety of languages provided by our community. While a default locale will be used for new visitors, each user can  choose their preferred language.
 
 ## The default locale
 
@@ -17,7 +17,7 @@ For example, to use _French_ as the default locale :
 ```
 
 > [!NOTE]
-> When returned by the browser, the browser prefered locale will be used as the default locale for guest user.
+> When returned by the browser, the browser preferred locale will be used as the default locale for guest user.
 
 ## The available user locales
 

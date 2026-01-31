@@ -5,7 +5,7 @@ description: ""
 
 > [!WARNING]
 > **This documentation is obsolete.** UserFrosting 6 uses **Vite** as the default asset bundler, not Webpack Encore.
-> 
+>
 > Please see:
 > - [Advanced Usage](/asset-management/advanced) for TypeScript, Vue 3, CSS preprocessors, and optimization
 > - [Sprinkle Assets](/asset-management/sprinkle-assets) for building sprinkles as libraries
@@ -21,7 +21,7 @@ By using Webpack Encore to manage frontend assets, Sass, Less, Vue and React can
 To enable [Sass/SCSS](https://sass-lang.com) support, first enable Sass loader inside `webpack.config.js`, install the required npm dependencies, and restart Webpack.
 
 1. Edit `webpack.config.js`
-    
+
     **webpack.config.js**
     ```js
     Encore
@@ -63,7 +63,7 @@ For more information, check out [Encore Documentation](https://symfony.com/doc/c
 To enable [Less](https://lesscss.org) support, first enable Less loader inside `webpack.config.js`, install the required npm dependencies, and restart Webpack.
 
 1. Edit `webpack.config.js`
-    
+
     **webpack.config.js**
     ```js
     Encore
@@ -111,9 +111,9 @@ Encore
 
 Then restart Encore. When you do, it will give you a command you can run to install any missing dependencies. After running that command and restarting Encore, you're done!
 
-Any `.vue` files that you require will be processed correctly. You can also configure the `vue-loader` options by passing an options callback to `enableVueLoader()`. 
+Any `.vue` files that you require will be processed correctly. You can also configure the `vue-loader` options by passing an options callback to `enableVueLoader()`.
 
-For more information, check out [Encore Documentation](https://symfony.com/doc/current/frontend/encore/vuejs.html). 
+For more information, check out [Encore Documentation](https://symfony.com/doc/current/frontend/encore/vuejs.html).
 
 > [!NOTE]
 > Future version of UserFrosting will make use of Vue.JS. You can checkout a proof of concept of a Vue based interface running inside UserFrosting [on Github](https://github.com/userfrosting/demo-vue/tree/main)

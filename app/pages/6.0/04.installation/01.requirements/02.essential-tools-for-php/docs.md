@@ -47,7 +47,7 @@ Composer also handles autoloading, which means that the days of needing long blo
 
 ## Node.js
 
-**[Node.js](https://nodejs.org/en/)** is an an extremely popular JavaScript runtime built on Chrome's V8 JavaScript Engine. In recent years it has become extremely popular for creating multiplatform applications, and for its role in providing a means to run platform independent build tools like `gulp` and `grunt` (to name just a few). Node.js also includes `npm` (Node.js Package Manager).
+**[Node.js](https://nodejs.org/en/)** is an extremely popular JavaScript runtime built on Chrome's V8 JavaScript Engine. In recent years it has become extremely popular for creating multiplatform applications, and for its role in providing a means to run platform independent build tools like `gulp` and `grunt` (to name just a few). Node.js also includes `npm` (Node.js Package Manager).
 
 Although UserFrosting does not _run_ on Node.js, it does use several Node-based tools to fetch client-side Javascript and CSS dependencies, as well as perform critical build tasks.
 
@@ -59,7 +59,7 @@ Although UserFrosting does not _run_ on Node.js, it does use several Node-based 
 
 ## npm
 
-[npm](https://www.npmjs.com) stands for **N**ode **P**ackage **M**anager. npm is to Node.js what Composer is to PHP. It is used to grab the various Node packages that are required by UserFrosting's installation and build tools. 
+[npm](https://www.npmjs.com) stands for **N**ode **P**ackage **M**anager. npm is to Node.js what Composer is to PHP. It is used to grab the various Node packages that are required by UserFrosting's installation and build tools.
 
 > [!NOTE]
 > UserFrosting 5 requires **NPM 9** or above.

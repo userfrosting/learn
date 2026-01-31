@@ -33,7 +33,7 @@ When you run the main UserFrosting migration script (`php bakery migrate`), it w
 
 Each migration class needs to extend the base `UserFrosting\Sprinkle\Core\Database\Migration` class. A migration class must contains two methods: `up` and `down`. The `up` method is used to add new tables, columns, or indexes to your database, while the `down` method should simply reverse the operations performed by the `up` method.
 
-The base class for a `MyTable` migration looks like this : 
+The base class for a `MyTable` migration looks like this :
 
 **app/src/Database/Migrations/MyTable.php**
 ```php

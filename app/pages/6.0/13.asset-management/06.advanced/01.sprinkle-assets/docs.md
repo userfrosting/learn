@@ -223,10 +223,10 @@ export default {
     install: (app: App) => {
         // Setup axios interceptors
         useAxiosInterceptor()
-        
+
         // Load configuration
         useConfigStore().load()
-        
+
         // Setup translator
         const translator = useTranslator()
         translator.load()

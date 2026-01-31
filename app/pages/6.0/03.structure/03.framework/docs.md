@@ -11,7 +11,7 @@ Aside from managing sprinkles (through the cleverly named _SprinkleManager_), th
 ## Shared Usage
 The UserFrosting Framework also contains some parts that are not tied directly to UserFrosting. These parts could be used outside of UserFrosting, in a completely separate application.
 
-The documentation for each part is embedded in the next chapters, but you can still see each part's documentation on it's own : 
+The documentation for each part is embedded in the next chapters, but you can still see each part's documentation on it's own :
  - [Cache](https://github.com/userfrosting/framework/tree/5.1/src/Cache) : Wrapper function for Laravel cache system for easier integration of the cache system in standalone projects.
  - [Config](https://github.com/userfrosting/framework/tree/5.1/src/Config) : Configuration files aggregator
  - [Fortress](https://github.com/userfrosting/framework/tree/5.1/src/Fortress) : A schema-driven system for elegant whitelisting, transformation and validation of user input, on both the client and server sides, from a unified set of rules.

@@ -114,9 +114,9 @@ class OwlController
     public function __construct(
         protected Twig $view,
         protected VoleFinder $voleFinder)
-    {        
+    {
     }
-    
+
     public function getOwls(string $genus, Request $request, Response $response): Response
     {
         // ...

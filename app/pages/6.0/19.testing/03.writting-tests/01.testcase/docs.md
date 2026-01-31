@@ -31,15 +31,15 @@ class MyTest extends TestCase
 }
 ```
 
-You could also use the code above as a new test case, instead of defining `$mainSprinkle` in every tests. Instead of naming the class `MyTest`, name it `MyTestCase` and make every test class extend `MyTestCase`. 
+You could also use the code above as a new test case, instead of defining `$mainSprinkle` in every tests. Instead of naming the class `MyTest`, name it `MyTestCase` and make every test class extend `MyTestCase`.
 
 The biggest advantage is you don't *need* to use your Recipe. Alternatively, you can create a recipe stub. Simply create a *second* recipe in your testing directory. This other recipe can register only the class you want to test.
 
 ## Helping methods & properties
 
-When extending `UserFrosting\Testing\TestCase`, you have access to many helper methods and properties. 
+When extending `UserFrosting\Testing\TestCase`, you have access to many helper methods and properties.
 
-### Properties 
+### Properties
 | Property              | Description                    |
 | --------------------- | ------------------------------ |
 | `$this->ci`           | Dependency Injection Container |
@@ -55,7 +55,7 @@ When extending `UserFrosting\Testing\TestCase`, you have access to many helper m
 This methods can be used to create a basic `ServerRequestInterface`.
 
 ```php
-$this->createRequest( 
+$this->createRequest(
     string $method, // The HTTP method : GET, POST, PUT, DELETE, etc.
     string|UriInterface $uri, // The URI
     array $serverParams = [] // The POST data
@@ -104,7 +104,7 @@ assertResponse(string $expected, ResponseInterface $response)
 ```php
 $this->assertResponse('fr_FR', $response);
 
-// Same as 
+// Same as
 
 $this->assertSame('fr_FR', (string) $response->getBody());
 ```
@@ -120,7 +120,7 @@ assertResponseStatus(int $expected, ResponseInterface $response)
 ```php
 $this->assertResponseStatus(400, $response);
 
-// Same as 
+// Same as
 
 $this->assertSame(400, $response->getStatusCode());
 ```
@@ -137,7 +137,7 @@ assertJsonResponse(mixed $expected, ResponseInterface $response, ?string $key = 
 $this->assertJsonResponse(['foo' => 'bar'], $response);
 $this->assertJsonResponse('bar', $response), 'foo';
 
-// Same as 
+// Same as
 
 $this->assertJsonEquals(['foo' => 'bar'], (string) $response->getBody());
 $this->assertJsonEquals('bar', (string) $response->getBody(), 'foo');
@@ -219,7 +219,7 @@ $this->assertHtmlTagCount(0, $html, 'p');
 
 To methods above can be used to test routes endpoints. The basic concept is to use `createRequest` or `createJsonRequest` to create the `ServerRequestInterface`. Then pass this request to `handleRequest` which will invoked the correct route and return the response from the controller. Finally use custom assertions to make sure the response contains the right content.
 
-For example : 
+For example :
 
 ### HTML Routes
 ```php

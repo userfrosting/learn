@@ -4,7 +4,7 @@ description: UserFrosting's default services provide most of the tools needed to
 wip: true
 ---
 
-As mentioned in the last section, each sprinkle can set up its own services through **service providers**. The [bundled sprinkles](structure/sprinkles#bundled-sprinkles) set up many services that are essential to UserFrosting's functionality. These services can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory. 
+As mentioned in the last section, each sprinkle can set up its own services through **service providers**. The [bundled sprinkles](structure/sprinkles#bundled-sprinkles) set up many services that are essential to UserFrosting's functionality. These services can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory.
 
 But this is just the tip of the iceberg, since _Autowiring_ is also used throughout the source code to inject other types of classes pretty much everywhere.
 
@@ -112,7 +112,7 @@ The `GuestGuard` middleware, which is bound to routes that require a guest (non 
 
 Monolog `Logger` object for logging detailed information about access control checks. See [Chapter 10](users/access-control) for more information about access control. Note that access control checks will only be logged if `debug.auth` is set to `true` in the configuration.
 
-### `UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager` 
+### `UserFrosting\Sprinkle\Account\Authorize\AuthorizationManager`
 
 *Associated Interface : `UserFrosting\Sprinkle\Account\Authorize\AuthorizationManagerInterface`*
 

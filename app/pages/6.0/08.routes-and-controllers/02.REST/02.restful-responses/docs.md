@@ -95,7 +95,7 @@ use UserFrosting\Sprinkle\Core\Exceptions\NotFoundException;
     public function updateField()
     {
         $user = // ...
-        
+
         // Will cause a 404 response
         if ($user === null) {
             throw new NotFoundException();

@@ -5,17 +5,17 @@ description: Entrypoints bundles allow you to group one or more asset references
 
 > [!WARNING]
 > **This documentation is obsolete.** UserFrosting 6 uses **Vite** as the default asset bundler, not Webpack Encore.
-> 
+>
 > Please see:
 > - [Sprinkle Assets](/asset-management/sprinkle-assets) for multi-sprinkle asset architecture
 > - [Advanced Usage](/asset-management/advanced) for code splitting and optimization
 > - [Migration Guide](/asset-management/migration) to migrate from Webpack Encore
 
-Most CSS and Javascript resources should be integrated into your pages through **entrypoints**. Entrypoints defines groups of assets for which UserFrosting can automatically render `<link>` or `<script>` tags in your pages. 
+Most CSS and Javascript resources should be integrated into your pages through **entrypoints**. Entrypoints defines groups of assets for which UserFrosting can automatically render `<link>` or `<script>` tags in your pages.
 
 ## Concept
 
-Webpack is a module bundler, which means that you can import other JavaScript files. A single javascript file can require all of the dependencies we needs (e.g. jQuery or React), including any CSS, in a single place. You can see this with a JavaScript require (or [import](https://stackoverflow.com/questions/46677752/the-difference-between-requirex-and-import-x)) statement : 
+Webpack is a module bundler, which means that you can import other JavaScript files. A single javascript file can require all of the dependencies we needs (e.g. jQuery or React), including any CSS, in a single place. You can see this with a JavaScript require (or [import](https://stackoverflow.com/questions/46677752/the-difference-between-requirex-and-import-x)) statement :
 
 **app/assets/main.js**
 ```js
@@ -23,7 +23,7 @@ Webpack is a module bundler, which means that you can import other JavaScript fi
 require('theme-adminlte');
 ```
 
-Encore's job (via Webpack) is simple: to read and follow all of the import/require statements and create one final `main.js` (and `main.css`) that contains everything you need. 
+Encore's job (via Webpack) is simple: to read and follow all of the import/require statements and create one final `main.js` (and `main.css`) that contains everything you need.
 
 Encore may split the end result into multiple files for performance (using [split chunks feature](https://symfony.com/doc/current/frontend/encore/split-chunks.html)), but all of that code is still downloaded on every page if you were to include the `main.js` file.
 
@@ -51,7 +51,7 @@ The shared resources (e.g. template resources) can be loaded on every page along
 Now that the "entry" files have been created, we need to register them with Encore as entrypoints. Entrypoints are configured in `/webpack.entries.js` by default.
 
 > [!NOTE]
-> Entrypoints can also be defined in `/webpack.config.js` directly. However, UserFrosting defines them in a separate file, as it's easier to include other sprinkles entries. 
+> Entrypoints can also be defined in `/webpack.config.js` directly. However, UserFrosting defines them in a separate file, as it's easier to include other sprinkles entries.
 
 **webpack.entries.js**
 ```js
@@ -65,7 +65,7 @@ module.exports = {
 
 This tells Encore to load the `app/assets/main.js` file (for example) and follow all of the `require()` statements. It will then package everything together and - thanks to the first `main` argument - output final `public/assets/main.js` and `public/assets/main.css` files.
 
-Sprinkle's overriding properties also applies to the entries themselves. In other words, naming an entry `page.account` in your own sprinkle will replace the one defined in the `account` sprinkle with yours, for example. In the process, it will probably break core user management functionality. In general, be careful to provide your entries with a unique name to avoid difficult to diagnose runtime errors. 
+Sprinkle's overriding properties also applies to the entries themselves. In other words, naming an entry `page.account` in your own sprinkle will replace the one defined in the `account` sprinkle with yours, for example. In the process, it will probably break core user management functionality. In general, be careful to provide your entries with a unique name to avoid difficult to diagnose runtime errors.
 
 ## Rendering entrypoints
 

@@ -18,15 +18,15 @@ Here's a simple login form component to get started:
   <form @submit.prevent="handleSubmit" class="uk-form-stacked">
     <!-- CSRF Token (UserFrosting requirement) -->
     <input type="hidden" :name="csrfName" :value="csrfValue" />
-    
+
     <!-- Username Field -->
     <div class="uk-margin">
       <label class="uk-form-label" for="username">Username</label>
       <div class="uk-form-controls">
-        <input 
+        <input
           id="username"
-          v-model="form.username" 
-          type="text" 
+          v-model="form.username"
+          type="text"
           class="uk-input"
           :class="{ 'uk-form-danger': errors.username }"
           placeholder="Enter your username"
@@ -36,15 +36,15 @@ Here's a simple login form component to get started:
         </div>
       </div>
     </div>
-    
+
     <!-- Password Field -->
     <div class="uk-margin">
       <label class="uk-form-label" for="password">Password</label>
       <div class="uk-form-controls">
-        <input 
+        <input
           id="password"
-          v-model="form.password" 
-          type="password" 
+          v-model="form.password"
+          type="password"
           class="uk-input"
           :class="{ 'uk-form-danger': errors.password }"
           placeholder="Enter your password"
@@ -54,7 +54,7 @@ Here's a simple login form component to get started:
         </div>
       </div>
     </div>
-    
+
     <!-- Remember Me Checkbox -->
     <div class="uk-margin">
       <label>
@@ -62,18 +62,18 @@ Here's a simple login form component to get started:
         Remember me
       </label>
     </div>
-    
+
     <!-- Submit Button -->
     <div class="uk-margin">
-      <button 
-        type="submit" 
+      <button
+        type="submit"
         class="uk-button uk-button-primary"
         :disabled="isSubmitting"
       >
         {{ isSubmitting ? 'Signing in...' : 'Sign in' }}
       </button>
     </div>
-    
+
     <!-- Error/Success Messages -->
     <div v-if="successMessage" class="uk-alert-success" uk-alert>
       <p>{{ successMessage }}</p>
@@ -104,15 +104,15 @@ const csrfValue = computed(() => site.csrf.name)
 // Validation
 function validateForm(): boolean {
   errors.value = {}
-  
+
   if (!form.value.username.trim()) {
     errors.value.username = 'Username is required'
   }
-  
+
   if (!form.value.password) {
     errors.value.password = 'Password is required'
   }
-  
+
   return Object.keys(errors.value).length === 0
 }
 
@@ -121,11 +121,11 @@ async function handleSubmit() {
   if (!validateForm()) {
     return
   }
-  
+
   isSubmitting.value = true
   errors.value = {}
   successMessage.value = ''
-  
+
   try {
     const response = await axios.post(
       `${site.uri.public}/account/login`,
@@ -140,14 +140,14 @@ async function handleSubmit() {
         }
       }
     )
-    
+
     successMessage.value = 'Login successful! Redirecting...'
-    
+
     // Redirect after success
     setTimeout(() => {
       window.location.href = response.data.redirect || '/dashboard'
     }, 1000)
-    
+
   } catch (error: any) {
     if (error.response?.data?.errors) {
       // Server validation errors
@@ -189,13 +189,13 @@ const form = ref({
 <template>
   <!-- Text input -->
   <input v-model="form.email" type="email" />
-  
+
   <!-- Number input -->
   <input v-model.number="form.age" type="number" />
-  
+
   <!-- Checkbox -->
   <input v-model="form.newsletter" type="checkbox" />
-  
+
   <!-- Select dropdown -->
   <select v-model="form.role">
     <option value="user">User</option>
@@ -224,26 +224,26 @@ function validateEmail(email: string): boolean {
 
 function validateForm(): boolean {
   errors.value = {}
-  
+
   // Required fields
   if (!form.value.username.trim()) {
     errors.value.username = 'Username is required'
   } else if (form.value.username.length < 3) {
     errors.value.username = 'Username must be at least 3 characters'
   }
-  
+
   // Email validation
   if (!form.value.email) {
     errors.value.email = 'Email is required'
   } else if (!validateEmail(form.value.email)) {
     errors.value.email = 'Please enter a valid email'
   }
-  
+
   // Password strength
   if (form.value.password.length < 8) {
     errors.value.password = 'Password must be at least 8 characters'
   }
-  
+
   return Object.keys(errors.value).length === 0
 }
 ```
@@ -311,7 +311,7 @@ const isSubmitting = ref(false)
 
 async function handleSubmit() {
   isSubmitting.value = true
-  
+
   try {
     await axios.post('/api/endpoint', form.value)
   } finally {
@@ -321,8 +321,8 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <button 
-    type="submit" 
+  <button
+    type="submit"
     :disabled="isSubmitting"
     class="uk-button uk-button-primary"
   >
@@ -367,10 +367,10 @@ export function useForm<T extends Record<string, any>>(
 
   function setErrors(serverErrors: Record<string, string | string[]>) {
     errors.value = {}
-    
+
     for (const [field, messages] of Object.entries(serverErrors)) {
-      errors.value[field] = Array.isArray(messages) 
-        ? messages[0] 
+      errors.value[field] = Array.isArray(messages)
+        ? messages[0]
         : messages
     }
   }
@@ -378,7 +378,7 @@ export function useForm<T extends Record<string, any>>(
   async function submit(url: string, method: 'post' | 'put' | 'patch' = 'post') {
     isSubmitting.value = true
     errors.value = {}
-    
+
     try {
       const response = await axios[method](url, form.value, {
         headers: {
@@ -386,18 +386,18 @@ export function useForm<T extends Record<string, any>>(
           [site.csrf.keys.value]: site.csrf.value
         }
       })
-      
+
       options.onSuccess?.(response.data)
       return response.data
-      
+
     } catch (error: any) {
       if (error.response?.data?.errors) {
         setErrors(error.response.data.errors)
       }
-      
+
       options.onError?.(error)
       throw error
-      
+
     } finally {
       isSubmitting.value = false
     }
@@ -447,7 +447,7 @@ async function handleSubmit() {
   <form @submit.prevent="handleSubmit">
     <input v-model="form.username" />
     <span v-if="errors.username">{{ errors.username }}</span>
-    
+
     <button type="submit" :disabled="isSubmitting">
       Submit
     </button>
@@ -475,15 +475,15 @@ function onFileSelected(event: Event) {
 
 async function uploadFile() {
   if (!selectedFile.value) return
-  
+
   const formData = new FormData()
   formData.append('file', selectedFile.value)
   formData.append(site.csrf.keys.name, site.csrf.name)
   formData.append(site.csrf.keys.value, site.csrf.value)
-  
+
   isUploading.value = true
   uploadProgress.value = 0
-  
+
   try {
     await axios.post('/api/upload', formData, {
       headers: {
@@ -497,9 +497,9 @@ async function uploadFile() {
         }
       }
     })
-    
+
     alert('File uploaded successfully!')
-    
+
   } finally {
     isUploading.value = false
   }
@@ -509,14 +509,14 @@ async function uploadFile() {
 <template>
   <div>
     <input type="file" @change="onFileSelected" />
-    
-    <button 
-      @click="uploadFile" 
+
+    <button
+      @click="uploadFile"
       :disabled="!selectedFile || isUploading"
     >
       Upload
     </button>
-    
+
     <div v-if="isUploading">
       <progress :value="uploadProgress" max="100"></progress>
       {{ uploadProgress }}%
@@ -561,7 +561,7 @@ function removeEmail(id: number) {
     <input v-model="email.value" type="email" />
     <button @click="removeEmail(email.id)">Remove</button>
   </div>
-  
+
   <button @click="addEmail">Add Email</button>
 </template>
 ```
@@ -604,10 +604,10 @@ const onSubmit = handleSubmit((values) => {
   <form @submit="onSubmit">
     <input v-model="email" type="email" />
     <span>{{ errors.email }}</span>
-    
+
     <input v-model="password" type="password" />
     <span>{{ errors.password }}</span>
-    
+
     <button type="submit">Submit</button>
   </form>
 </template>
@@ -650,7 +650,7 @@ Always validate on both client and server:
 
 Provide specific, actionable error messages:
 
-✅ **Good**: "Email must be in format: user@example.com"  
+✅ **Good**: "Email must be in format: user@example.com"
 ❌ **Bad**: "Invalid input"
 
 ### 3. Disable Submit During Processing
@@ -658,8 +658,8 @@ Provide specific, actionable error messages:
 Prevent duplicate submissions:
 
 ```vue
-<button 
-  type="submit" 
+<button
+  type="submit"
   :disabled="isSubmitting || !isValid"
 >
   Submit

@@ -79,7 +79,7 @@ Now, you simply need to register your command in your [Sprinkle Recipe](sprinkle
 
 namespace UserFrosting\App;
 
-// ... 
+// ...
 use UserFrosting\App\Bakery\HelloCommand; // <-- Add this
 // ...
 use UserFrosting\Sprinkle\BakeryRecipe; // <-- Add this
@@ -99,7 +99,7 @@ class MyApp implements
         ];
     }
     //<--
-    
+
     // ...
 }
 
@@ -117,6 +117,6 @@ $ php bakery hello
 Hello !
 =======
 
- [OK] Hello world                                                                                                       
-                                                                                                                        
+ [OK] Hello world
+
 ```

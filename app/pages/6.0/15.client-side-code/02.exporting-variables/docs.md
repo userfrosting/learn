@@ -118,7 +118,7 @@ When using Vue 3 components, pass data directly as props through the component's
 
 **Twig Template**:
 ```twig
-<div id="user-profile" 
+<div id="user-profile"
      data-user-id="{{ user.id }}"
      data-username="{{ user.username }}"
      data-email="{{ user.email }}">
@@ -185,8 +185,8 @@ For simple, element-specific data, use HTML5 `data-*` attributes. This is ideal 
 
 **Twig Template**:
 ```twig
-<button 
-    class="delete-user" 
+<button
+    class="delete-user"
     data-user-id="{{ user.id }}"
     data-user-name="{{ user.username }}">
     Delete User
@@ -200,7 +200,7 @@ document.querySelectorAll('.delete-user').forEach(button => {
     const target = e.currentTarget as HTMLButtonElement
     const userId = target.dataset.userId
     const userName = target.dataset.userName
-    
+
     if (confirm(`Delete user ${userName}?`)) {
       await deleteUser(userId)
     }
@@ -270,7 +270,7 @@ export function useUsers() {
   async function fetchUsers() {
     loading.value = true
     error.value = null
-    
+
     try {
       const response = await axios.get(`${site.uri.public}/api/users`)
       users.value = response.data

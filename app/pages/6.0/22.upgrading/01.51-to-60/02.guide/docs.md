@@ -582,7 +582,7 @@ php bakery cache:clear-routes
 
 **Symptom**: Vite can't find imported modules
 
-**Solution**: 
+**Solution**:
 ```bash
 # Clear node_modules and reinstall
 rm -rf node_modules package-lock.json

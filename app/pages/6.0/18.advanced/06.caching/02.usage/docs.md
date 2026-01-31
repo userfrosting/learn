@@ -18,7 +18,7 @@ class MyClass
         protected Cache $cache
     ) {
     }
-    
+
     public function users(): UserInterface
     {
         return $this->cache->get('users', function () {

@@ -17,21 +17,21 @@ Here's a simple component for managing a list of items:
 <template>
   <div class="collection">
     <h3>{{ title }}</h3>
-    
+
     <!-- List of items -->
     <div v-for="(item, index) in items" :key="item.id" class="collection-item">
       <div class="uk-grid-small" uk-grid>
         <div class="uk-width-expand">
-          <input 
-            v-model="item.value" 
-            type="text" 
+          <input
+            v-model="item.value"
+            type="text"
             class="uk-input"
             :placeholder="placeholder"
           />
         </div>
         <div class="uk-width-auto">
-          <button 
-            @click="removeItem(index)" 
+          <button
+            @click="removeItem(index)"
             class="uk-button uk-button-danger uk-button-small"
           >
             <span uk-icon="trash"></span>
@@ -39,7 +39,7 @@ Here's a simple component for managing a list of items:
         </div>
       </div>
     </div>
-    
+
     <!-- Add button -->
     <button @click="addItem" class="uk-button uk-button-default uk-margin-top">
       <span uk-icon="plus"></span> Add {{ itemName }}
@@ -118,7 +118,7 @@ function handleChange(items) {
 </script>
 
 <template>
-  <Collection 
+  <Collection
     title="Phone Numbers"
     item-name="Phone Number"
     placeholder="Enter phone number"
@@ -136,7 +136,7 @@ For more complex items with multiple fields:
 <template>
   <div class="role-collection">
     <h3>User Roles</h3>
-    
+
     <div v-for="(role, index) in roles" :key="role.id" class="uk-card uk-card-default uk-card-body uk-margin-small">
       <div class="uk-grid-small" uk-grid>
         <!-- Role Selection -->
@@ -148,31 +148,31 @@ For more complex items with multiple fields:
             </option>
           </select>
         </div>
-        
+
         <!-- Start Date -->
         <div class="uk-width-1-4">
           <label class="uk-form-label">Start Date</label>
-          <input 
-            v-model="role.start_date" 
-            type="date" 
+          <input
+            v-model="role.start_date"
+            type="date"
             class="uk-input"
           />
         </div>
-        
+
         <!-- End Date -->
         <div class="uk-width-1-4">
           <label class="uk-form-label">End Date</label>
-          <input 
-            v-model="role.end_date" 
-            type="date" 
+          <input
+            v-model="role.end_date"
+            type="date"
             class="uk-input"
           />
         </div>
-        
+
         <!-- Remove Button -->
         <div class="uk-width-1-1">
-          <button 
-            @click="removeRole(index)" 
+          <button
+            @click="removeRole(index)"
             class="uk-button uk-button-danger uk-button-small"
           >
             Remove Role
@@ -180,7 +180,7 @@ For more complex items with multiple fields:
         </div>
       </div>
     </div>
-    
+
     <button @click="addRole" class="uk-button uk-button-primary uk-margin-top">
       Add Role
     </button>
@@ -244,8 +244,8 @@ export function useCollection<T extends CollectionItem>(
   itemFactory: () => Omit<T, 'id'>
 ) {
   const items: Ref<T[]> = ref([...initialItems])
-  let nextId = items.value.length > 0 
-    ? Math.max(...items.value.map(i => i.id)) + 1 
+  let nextId = items.value.length > 0
+    ? Math.max(...items.value.map(i => i.id)) + 1
     : 1
 
   function add(): T {
@@ -253,7 +253,7 @@ export function useCollection<T extends CollectionItem>(
       id: nextId++,
       ...itemFactory()
     } as T
-    
+
     items.value.push(newItem)
     return newItem
   }
@@ -284,8 +284,8 @@ export function useCollection<T extends CollectionItem>(
 
   function reset(newItems: T[]) {
     items.value = [...newItems]
-    nextId = items.value.length > 0 
-      ? Math.max(...items.value.map(i => i.id)) + 1 
+    nextId = items.value.length > 0
+      ? Math.max(...items.value.map(i => i.id)) + 1
       : 1
   }
 
@@ -363,8 +363,8 @@ function logOrder() {
 </script>
 
 <template>
-  <draggable 
-    v-model="items" 
+  <draggable
+    v-model="items"
     item-key="id"
     @end="logOrder"
   >
@@ -422,7 +422,7 @@ async function saveEmails() {
         [site.csrf.keys.value]: site.csrf.value
       }
     })
-    
+
     alert('Emails saved!')
   } catch (error) {
     console.error('Failed to save:', error)
@@ -447,7 +447,7 @@ const errors = ref<Record<number, string>>({})
 
 const isValid = computed(() => {
   errors.value = {}
-  
+
   items.value.forEach(item => {
     if (!item.email) {
       errors.value[item.id] = 'Email is required'
@@ -455,7 +455,7 @@ const isValid = computed(() => {
       errors.value[item.id] = 'Invalid email format'
     }
   })
-  
+
   return Object.keys(errors.value).length === 0
 })
 </script>

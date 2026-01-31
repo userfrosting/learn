@@ -126,7 +126,7 @@ Modify `app/config/default.php`:
 'assets' => [
     // Change bundler from 'webpack' to 'vite'
     'bundler' => env('ASSETS_BUNDLER', 'vite'),
-    
+
     // Add/update Vite configuration
     'vite' => [
         'manifest' => 'assets://.vite/manifest.json',
