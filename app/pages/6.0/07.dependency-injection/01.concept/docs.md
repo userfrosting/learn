@@ -1,10 +1,20 @@
 ---
 title: Understanding Dependency Injection
-description: Dependency Injection (DI) is the backbone of modern programming
+description: Dependency Injection (DI) is the backbone of modern programming and the key to writing testable, flexible code.
 wip: true
 ---
 
-[Dependency Injection](http://www.phptherightway.com/#dependency_injection) is one of the fundamental pillars of modern object-oriented software design - it is a prime example of the **D** in [**SOLID**](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)). The idea is that instead of creating objects _inside_ other objects, you create your "inner objects" (dependencies) separately and then _inject_ (by passing as an argument to the constructor or a setter method) them into the "outer object" (dependent).
+Here's a problem every developer faces: **how do you write code that's easy to test and modify?** When objects create their own dependencies internally, you end up with rigid, tightly coupled code. Want to test a class? You can't—it's hardwired to specific implementations. Need to swap a dependency? You're rewriting the class. Want to mock something for testing? Impossible.
+
+**Dependency Injection (DI)** solves this elegantly. Instead of objects creating what they need, they declare their needs (dependencies), and someone else provides them. This simple shift—dependencies coming from outside rather than being created inside—makes your code testable, flexible, and maintainable. It's the **D** in [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)) principles.
+
+Think of it like a restaurant: A bad restaurant has chefs who grow their own ingredients, make their own equipment, and handle everything internally (tightly coupled). A good restaurant has chefs who receive quality ingredients from suppliers (dependency injection). The chef focuses on cooking; the suppliers focus on ingredients. Everyone does their job better.
+
+This page explains dependency injection with concrete examples, showing you why it matters and how UserFrosting uses it throughout.
+
+## The Problem: Tight Coupling
+
+[Dependency Injection](http://www.phptherightway.com/#dependency_injection) is one of the fundamental pillars of modern object-oriented software design. The idea is that instead of creating objects _inside_ other objects, you create your "inner objects" (dependencies) separately and then _inject_ (by passing as an argument to the constructor or a setter method) them into the "outer object" (dependent).
 
 For example, if you have class `Owl`:
 

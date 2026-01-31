@@ -4,7 +4,11 @@ description: UserFrosting uses Eloquent, Laravel's powerful ORM, to provide a fl
 wip: true
 ---
 
-Even in relatively simple applications, writing out the same types of database queries over and over can get tedious. To make things easier and your code [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself)er, UserFrosting takes advantage of Laravel's excellent object-relation mapper, **[Eloquent](https://laravel.com/docs/8.x/eloquent#introduction)**.
+Writing database queries can get tedious fast. Every time you need user data, you're writing `SELECT * FROM users WHERE id = ?`. Want to find users by email? Another query. Need related data? Now you're juggling multiple queries and manually joining results. Your code becomes a mess of repetitive SQL strings and error-prone manual data handling.
+
+**Eloquent**, Laravel's powerful ORM (Object-Relational Mapper), eliminates this tedium. Instead of writing SQL, you work with intuitive PHP objects and methods. Need a user? `User::find($id)`. Want to filter? `User::where('email', $email)->first()`. Loading relationships? `$user->roles`. Eloquent handles all the SQL behind the scenes, making your code cleaner, safer (automatic escaping prevents SQL injection), and more maintainable.
+
+UserFrosting leverages Eloquent throughout, giving you professional database tools without the overhead of writing raw queries. This page covers Eloquent configuration in UserFrosting and points you to Laravel's excellent documentation for learning the ORM in depth.
 
 ## Configuration
 

@@ -1,12 +1,14 @@
 ---
 title: Basic concept
-description: ""
+description: Learn how sprinkles provide a modular system for extending UserFrosting without modifying core code.
 wip: true
 ---
 
-In previous versions of UserFrosting, you had to directly modify the files that come with the default installation in order to add your own functionality. For example, if you wanted to add a field to the user registration page, you had to actually modify `register.twig`. Or, if you wanted to add a new relation on the `User` class, you had to modify the actual `User.php` class that comes with UserFrosting.
+Here's a problem every developer faces: **how do you customize a framework without creating a maintenance nightmare?** If you modify framework files directly, updates become treacherous—merge conflicts, lost changes, and the constant fear of breaking things. Your customizations become entangled with core code, making upgrades nearly impossible.
 
-Starting in version 4, this is no longer the case! **UserFrosting 4** introduced the **[Sprinkle system](structure/sprinkles)** as a way to completely isolate the code and content that you and your team produce from the core UserFrosting installation, as well as third-party code. **UserFrosting 5** took this a step further, by allowing Composer to manage sprinkles and decoupling even more functionality from the base install. 
+In earlier versions of UserFrosting, you had no choice—customizing meant editing core files. Want to add a field to the registration page? Modify `register.twig` directly. Need to extend the `User` class? Edit `User.php` itself. Every framework update risked breaking your work.
+
+**UserFrosting's sprinkle system** eliminates this problem entirely. Sprinkles let you extend, override, and customize functionality while keeping your code completely separate from the core framework. Updates become safe again—your customizations stay intact, isolated in your own sprinkle. Think of it like adding layers to a cake: each layer (sprinkle) builds on the previous one without destroying what's underneath. 
 
 ## What is a "Sprinkle"?
 

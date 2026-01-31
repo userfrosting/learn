@@ -4,11 +4,15 @@ description: UserFrosting ships with everything you need to create user accounts
 wip: true
 ---
 
-You were probably attracted to UserFrosting because you wanted to "make a site where users can sign in", or you already have a project in progress and your boss asked you to "put it behind a login," or you need to have some "protected pages." These are nontechnical terms. It will be easier for us to communicate if we first establish a common vocabulary, so that we can explain the concepts with more precision.
+Most web applications need user accounts—the ability for people to create profiles, sign in, and access personalized content or features. But building a secure, full-featured authentication system from scratch is surprisingly complex: password hashing, email verification, password reset flows, session management, account lockouts, role-based permissions... the list goes on.
+
+UserFrosting provides a **complete, production-ready user account system** right out of the box. Registration, login, email verification, password reset, user administration—it's all there, fully implemented and ready to use. You get professional-grade security features like bcrypt password hashing, CSRF protection, and rate limiting without writing a line of code.
+
+This page covers UserFrosting's account features, explains key terminology (authentication vs authorization), and shows you how to work with user data in your application.
 
 ## Authentication and authorization
 
-The proper term for the process of "signing in" or "logging in" is **authentication**. When a user has successfully logged in, we say that they are an **authenticated user**.
+Let's start with vocabulary to communicate precisely. The proper term for "signing in" or "logging in" is **authentication**. When a user has successfully logged in, we say that they are an **authenticated user**.
 
 As we've [explained before](background/the-client-server-conversation), a web application is really a conversation between two agents with poor memory. When you have a feature or some part of your site that is only supposed to be accessible to authenticated users, the server needs to check that the client is who they say they are and that they've already successfully authenticated.
 

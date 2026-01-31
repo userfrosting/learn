@@ -4,6 +4,12 @@ description: Authorization is sometimes referred to as "access control" or "prot
 wip: true
 ---
 
+Authenticating users (knowing who they are) is only half the battle. The harder question is: **what should each user be allowed to do?** Not every user should access administrative features, delete data, or view sensitive information. Without proper authorization, your application becomes either a security hole (everyone can do everything) or a maintenance nightmare (hardcoded permissions scattered everywhere).
+
+UserFrosting solves this with a powerful, flexible **role-based access control (RBAC)** system. But it goes beyond simple RBAC—UserFrosting adds **conditional permissions** that let you define rules like "users can edit their own posts" or "managers can approve requests in their department." This gives you fine-grained control without drowning in complexity.
+
+This page explains how roles and permissions work, how to perform access checks in your code, and how to create sophisticated permission rules that adapt to your application's needs.
+
 ## Roles
 
 UserFrosting implements an extended version of [role-based access control](https://en.wikipedia.org/wiki/Role-based_access_control), which allows for very fine-grained control over user permissions. Every user can have zero or more **roles**, and every role can have zero or more **permissions**. Users' effective permissions are determined through their roles.

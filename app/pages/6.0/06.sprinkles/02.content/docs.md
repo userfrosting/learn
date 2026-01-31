@@ -1,8 +1,16 @@
 ---
 title: Contents
-description: Detailed breakdown of a Sprinkle's contents.
+description: Detailed breakdown of a Sprinkle's contents and how each directory serves a specific purpose.
 wip: true
 ---
+
+Now that you understand what sprinkles are, let's explore what goes inside them. A sprinkle isn't just a random collection of files—it's an organized package where each directory has a specific purpose. Understanding this structure helps you know exactly where to put your code, templates, assets, and other resources.
+
+Think of a sprinkle like a well-organized kitchen: ingredients (code) go in the pantry, tools (assets) have their drawer, recipes (templates) are in the cookbook, and seasonings (configuration) sit on the spice rack. Everything has its place, making it easy to find what you need and add new items.
+
+This page details each directory in a sprinkle and explains what belongs there.
+
+## Directory Structure
 
 Within each sprinkle, you will find any or all of the following directories and files:
 
