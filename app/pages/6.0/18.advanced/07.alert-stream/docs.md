@@ -8,7 +8,7 @@ The **alert stream** is UserFrosting's implementation of a flash messaging syste
 
 Rather than including alerts directly in a request's response, they are persisted through a separate `AlertStream` interface. They can then be retrieved by making a separate request to `/alerts`, which will return a JSON object containing each alert message and its corresponding type:
 
-![A diagram of the alert creation and retrieval process.](images/alert-stream.png)
+![A diagram of the alert creation and retrieval process.](/images/alert-stream.png)
 
 You may wonder why we have this complicated process and use a separate request to retrieve alerts, rather than embedding them directly in the original response. The reason is that sometimes you may not be ready to immediately display the alerts after you receive the original request's response. For example, you may have a situation where you need to redirect or refresh the page before displaying alerts.
 

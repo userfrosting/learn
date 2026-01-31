@@ -60,7 +60,7 @@ You can now access UserFrosting at: [http://localhost:8080](http://localhost:808
 
 At this point, you should be able to access your application. You should see the default front page:
 
-![Basic front page of a UserFrosting installation](images/front-page.png)
+![Basic front page of a UserFrosting installation](/images/front-page.png)
 
 ## What's Next
 

@@ -48,7 +48,7 @@ Check [Stack Overflow](http://stackoverflow.com/tags/userfrosting) and the [issu
 
 Markdown is the _de facto_ standard for basic text formatting on the web. If you are unfamiliar with Markdown, please [take a few minutes to learn](https://guides.github.com/features/mastering-markdown/#what). It will help you all over the web! In particular, please make sure you know where the **backtick** key (`) is located on your keyboard:
 
-![Location of backtick key](images/backtick.png)
+![Location of backtick key](/images/backtick.png)
 
 ##### Inline code
 

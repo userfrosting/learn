@@ -269,7 +269,7 @@ In `default.php`, add the following:
 
 This customizes some basic properties for our application - you can set your site title, author, author's URL, and timezone. Reload the page, and you should see the new site title appear in the upper left corner:
 
-![Overriding site settings in config file](images/site-title.png)
+![Overriding site settings in config file](/images/site-title.png)
 
 The template for this page dynamically pulls that particular piece of text from your new configuration file. Note that your value for `site.title` overrides the value of `site.title` in the core sprinkle's configuration file.
 

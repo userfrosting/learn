@@ -32,7 +32,7 @@ UserFrosting [i18n module](https://github.com/userfrosting/i18n) is composed of 
 
 A **Locale** is used to create a **Dictionary**, which is then used by the **Translator**. The overall flow can be visualized as :
 
-![](images/i18n/diagram.png)
+![](/images/i18n/diagram.png)
 
 ### The Locale
 

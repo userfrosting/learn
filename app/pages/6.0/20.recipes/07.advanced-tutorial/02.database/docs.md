@@ -384,4 +384,4 @@ Let's get a closer look at our `for` block:
 
 This is the same as using `foreach` in PHP to loop through all the items available in an array. The `{% for pastry in pastries %}` will loop through `pastries` and create a HTML table row for each item. If you refresh the page, you should now see this in your browser:
 
-![Pastries page](images/pastries/02.png)
+![Pastries page](/images/pastries/02.png)

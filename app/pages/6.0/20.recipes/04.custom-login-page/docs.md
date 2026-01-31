@@ -45,7 +45,7 @@ Inside your newly created config file, you add any configuration options you wan
 
 Save the file, reload the login page and voilà! Not only will the registration link disappear, but all relevant registration endpoints will also be deactivated. You will still be able to create a new user manually using the administration interface.
 
-![Login form without registration](images/login-no-registration.png)
+![Login form without registration](/images/login-no-registration.png)
 
 See the [Configuration Files](configuration/config-files) chapter for more information about editing configuration.
 
@@ -216,7 +216,7 @@ $ php bakery assets:build
 
 Once you refresh the page, you should see the result:
 
-![Custom login template](images/custom-login.png)
+![Custom login template](/images/custom-login.png)
 
 ### Customizing the CSS
 
@@ -266,4 +266,4 @@ php bakery assets:build
 
 Your new CSS file should be loaded when you refresh the page and you should see the result:
 
-![Custom login style](images/custom-login2.png)
+![Custom login style](/images/custom-login2.png)

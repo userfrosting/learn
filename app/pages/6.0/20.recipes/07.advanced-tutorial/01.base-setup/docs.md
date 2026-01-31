@@ -115,6 +115,6 @@ Finally, we need to *create* the template file. We use the same file name as the
 
 You should now be able to manually go to the `/pastries` page in your browser and see the result:
 
-![Pastries page](images/pastries/01.png)
+![Pastries page](/images/pastries/01.png)
 
 You'll notice that at this point, we're not actually displaying any useful content on the page. In the next section, we'll discuss how to display content dynamically retrieved from the database.

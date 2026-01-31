@@ -6,7 +6,7 @@ wip: true
 
 By default, user activities are logged to the `activities` database table. Logged information includes the activity time and an activity type, the `user_id`, the user's IP address, and a description of the activity. The administrative interface provides convenient tables for viewing these logs:
 
-![User activity logging](images/user-activities.png)
+![User activity logging](/images/user-activities.png)
 
 ## Default activity types
 

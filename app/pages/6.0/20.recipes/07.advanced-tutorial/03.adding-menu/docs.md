@@ -26,4 +26,4 @@ The second key part is `{{ urlFor('pastries') }}`. This uses UserFrosting custom
 
 You should now see the new link in the menu:
 
-![Pastries menu link](images/pastries/03.png)
+![Pastries menu link](/images/pastries/03.png)

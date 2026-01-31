@@ -30,7 +30,7 @@ UserFrosting Fortress solves this problem by providing a uniform interface for v
 
 This process is summarized in the following flowchart:
 
-![Flowchart for unified client- and server-side validation.](images/flowchart-fortress.png?resize=800,600)
+![Flowchart for unified client- and server-side validation.](/images/flowchart-fortress.png?resize=800,600)
 
 ### Creating a Schema
 

@@ -8,7 +8,7 @@ By default, UserFrosting is configured to use an external SMTP mail server of yo
 
 Why? Because dual-purposing your web server as an ad hoc mail server (i.e., what you get when you use PHP's `mail()` function) tends to lead to [all sorts of problems](http://blog.teamtreehouse.com/sending-email-with-phpmailer-and-smtp). The biggest problem is that your messages stand a good chance of being marked as spam, or blocked outright, by other mail servers. To understand this, consider how email works:
 
-![Mail transport chain](images/mail-transport.png)
+![Mail transport chain](/images/mail-transport.png)
 
 To send a message to someone's email address, the sending mail server must ultimately ask another mail server to deliver the message to the email address on your behalf - there is no way to directly place a message in someone's inbox! For example, when you send a message to `grandma@compuserve.net`, you are actually asking some other mail server (e.g., `mail.compuserve.net`) to deliver your message to the address.
 
