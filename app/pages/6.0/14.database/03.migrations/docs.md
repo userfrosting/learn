@@ -4,6 +4,16 @@ description: Extend the database and add your own tables in a consistent and eas
 wip: true
 ---
 
+Every application evolves. You add tables, modify columns, create indexes, and adjust your database schema as requirements change. But how do you keep databases in sync across your development team, staging servers, and production? Manual SQL scripts are fragile, error-prone, and impossible to version control effectively. One missed script and environments fall out of sync.
+
+**Database migrations** solve this problem elegantly. A migration is version-controlled PHP code that defines database changes (create table, add column, etc.) using Laravel's intuitive Schema Builder. Migrations are tracked automatically—UserFrosting knows which have run and which haven't. Running `php bakery migrate` applies all pending changes in the correct order, keeping every environment perfectly synchronized.
+
+Migrations also make testing safer by setting up clean test databases automatically, and they're reversible—the `down()` method can undo changes if needed.
+
+This page explains how to create and use migrations to manage your database schema professionally.
+
+## Why Migrations Matter
+
 When you start building your application with UserFrosting, you'll no doubt be adding your own tables to the data model. After all, what's the point of having users if there's nothing in your application for them to use?
 
 Though you could add new tables to your database through the command line, phpMyAdmin, MySQL Workbench or another tool, you will probably want something that is portable, allowing you to set up your database on other developers' machines or on your test and production servers. To do this, you should use a **migration**. Migrations bring version control to your database. If you have ever had to share sql files or manually edit a database schema, you've faced the problem that database migrations solve.

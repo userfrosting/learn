@@ -4,6 +4,14 @@ description: Getting UserFrosting up and running in your development environment
 wip: true
 ---
 
+Before you can start building with UserFrosting, you need the right tools installed. Think of these as your development toolkit—without them, you can't run UserFrosting or build your application. Some developers already have everything set up; others are starting fresh.
+
+This guide walks you through installing each required component: **PHP 8.1+**, **Composer** (PHP's package manager), **Node.js** and **npm** (for frontend assets), and a **command-line interface**. We intentionally skip web servers and databases here—UserFrosting can use PHP's built-in server and SQLite initially, so you can get started quickly and add those later if needed.
+
+By the end of this page, you'll have a complete development environment ready to run UserFrosting.
+
+## What You'll Install
+
 If your local development environment doesn't already have the [required stack and tools](installation/requirements), we'll now set them up. We'll go through the following:
 
 - [Command Line Interface](#cli)
