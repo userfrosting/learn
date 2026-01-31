@@ -1,7 +1,7 @@
 ---
 title: Application Setup
 description: This section covers installing and using Composer, running Bakery, and configuring the webserver in the production environment.
-obsolete: true
+wip: true
 ---
 <!-- [plugin:content-inject](modular/_updateRequired) -->
 

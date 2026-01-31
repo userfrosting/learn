@@ -1,7 +1,7 @@
 ---
 title: Testing
 description: An introduction to Unit and Integration testing, your most powerful ally.
-obsolete: true
+wip: true
 ---
 
 #### Chapter 19

@@ -1,7 +1,7 @@
 ---
 title: Server Setup
 description: No matter which VPS option you choose, you'll need to make sure that you have the required software installed and properly configured for UserFrosting.
-obsolete: true
+wip: true
 ---
 <!-- [plugin:content-inject](modular/_updateRequired) -->
 

@@ -1,7 +1,7 @@
 ---
 title: Creating a custom locale
 description: Creating a custom locale is easy, and will allow to reach more users.
-obsolete: true
+wip: true
 ---
 
 Whether to add an unsupported language (Klingon anyone?), to create a new dialect (eg. French Canadian), or simply to modify the predefined values, a custom locale can help you communicate with your end users.

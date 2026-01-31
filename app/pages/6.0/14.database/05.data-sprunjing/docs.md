@@ -1,7 +1,7 @@
 ---
 title: Data Sprunjing
 description: Sprunjing is our term for the common task of filtering, sorting, and paginating data from the database.  Data can be sprunjed for JSON or CSV output.
-obsolete: true
+wip: true
 ---
 
 Once your users log in, you'll probably want to have them interact with your data models in some way. One very common UI pattern is to present a list or table of data to a user, and allow them to **sort**, **paginate**, and **search/filter** the data. For example, the [tablesorter](https://mottie.github.io/tablesorter/docs/) and [select2](http://select2.github.io/) plugins follow this pattern.

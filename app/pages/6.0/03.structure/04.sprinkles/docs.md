@@ -1,7 +1,7 @@
 ---
 title: Sprinkles, what are they?
 description: Detailed breakdown of a sprinkle's contents.
-obsolete: true
+wip: true
 ---
 
 Sprinkles are an integral part of UserFrosting. We'll see in detail how they work in [a later chapter](sprinkles), but for now it's important to have an overview.

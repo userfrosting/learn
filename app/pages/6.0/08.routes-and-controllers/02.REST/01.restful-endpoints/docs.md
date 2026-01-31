@@ -1,7 +1,7 @@
 ---
 title: RESTful Endpoints
 description: Together, a specific url and method are commonly referred to as an **endpoint**.  It is important to use a consistent, RESTful approach to the URLs and methods you choose for each endpoint.
-obsolete: true
+wip: true
 ---
 
 A RESTful url should represent a _thing_, not an _action_. We want to avoid putting any verbs in the name of the url. Instead, the action should be defined by the HTTP method. For example:

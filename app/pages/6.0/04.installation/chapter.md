@@ -1,7 +1,7 @@
 ---
 title: Installation
 description: Configuring a development environment with the necessary dependencies for UserFrosting, and using Bakery to get started on your first UserFrosting project.
-obsolete: true
+wip: true
 ---
 
 #### Chapter 4

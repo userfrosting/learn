@@ -1,7 +1,7 @@
 ---
 title: Adding Services
 description: You may extend UserFrosting's default services for additional functionality, or define completely new services in your Sprinkles.
-obsolete: true
+wip: true
 ---
 
 You'll probably want to create your own services to modularize certain aspects of your own project. For example, if your application needs to interact with some third-party API like Google Maps, you might create a `MapBuilder` class that encapsulates all of that functionality. This is a cleaner and more manageable alternative to simply stuffing all of your code directly into your controller classes.

@@ -1,7 +1,7 @@
 ---
 title: Basic concept
 description: ""
-obsolete: true
+wip: true
 ---
 
 In previous versions of UserFrosting, you had to directly modify the files that come with the default installation in order to add your own functionality. For example, if you wanted to add a field to the user registration page, you had to actually modify `register.twig`. Or, if you wanted to add a new relation on the `User` class, you had to modify the actual `User.php` class that comes with UserFrosting.

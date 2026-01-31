@@ -1,7 +1,7 @@
 ---
 title: Installing UserFrosting
 description: Getting UserFrosting up and running in your development environment.
-obsolete: true
+wip: true
 ---
 
 Now that your local development environment is setup and ready to go, it's finally time to download and access your first UserFrosting application for the first time !

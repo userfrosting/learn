@@ -1,7 +1,7 @@
 ---
 title: Using Custom Data Models
 description: The dependency injector makes it easy to override entire data models in your Sprinkle.
-obsolete: true
+wip: true
 ---
 
 Extending PHP classes is a little different from extending other types of entities. You cannot simply replace a class by redefining it in a custom Sprinkle. In fact, classes with the same name in two different Sprinkles would be treated as two different fully-qualified classes per the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/). For example, if I loaded the Sprinkles `Account` and `Site`, and I had the following structure:

@@ -1,7 +1,7 @@
 ---
 title: Changing user permissions
 description: An example of how to give access to UserFrosting's default user and group pages to any registered users. Users are granted additional permissions through their roles.
-obsolete: true
+wip: true
 ---
 
 This recipe will guide you on how to give access to the users and groups pages to any registered users. To see the results, you'll need to use two user accounts: The root account and a non-root account. The root account will be used to change the roles from the UI and the non-root user to test those changes.

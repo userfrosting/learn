@@ -1,7 +1,7 @@
 ---
 title: Exceptions and Error Handling
 description: UserFrosting provides a rich set of features for catching errors and exceptions, logging or displaying detailed error information, and providing appropriate responses to the client.
-obsolete: true
+wip: true
 ---
 
 Things don't always go the way they were intended in your application. Sometimes this is the client's fault, and sometimes it is the server's (i.e. _your_) fault. When this happens, it is important that your application:

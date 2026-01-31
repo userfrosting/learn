@@ -1,7 +1,7 @@
 ---
 title: Vite Configuration
 description: Learn how to configure Vite, understand entry points, and manage environment variables in UserFrosting.
-wip: true
+# Verified for UF 6.0
 ---
 
 The `vite.config.ts` file in your project root configures how Vite processes your assets. This file is included in the Skeleton template and already contains everything you need, but understanding its structure helps you customize the build process for your specific needs.

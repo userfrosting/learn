@@ -1,7 +1,7 @@
 ---
 title: Advanced tutorial
 description: A complete step-by-step guide to creating a complex page for UserFrosting. We'll set up a new "Pastry" database table and data model, and implement a page that displays a sortable, searchable table of these entities.
-obsolete: true
+wip: true
 ---
 
 # Advanced tutorial

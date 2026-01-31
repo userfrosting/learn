@@ -1,7 +1,7 @@
 ---
 title: Advanced Usage
 description: Advanced techniques for asset management including TypeScript, Vue 3, preprocessors, code splitting, and optimization.
-wip: true
+# Verified for UF 6.0
 ---
 
 Ready to level up your asset management skills? This guide covers advanced techniques that will help you build more sophisticated applications. Don't let the word "advanced" intimidate you—we'll explain each concept clearly, and you can adopt these techniques gradually as your needs grow.

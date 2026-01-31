@@ -1,7 +1,7 @@
 ---
 title: Unix Primer for Ubuntu
 description: This chapter covers the most common commands and files that web developers might encounter when working with Ubuntu.
-obsolete: true
+wip: true
 ---
 <!-- [plugin:content-inject](modular/_updateRequired) -->
 

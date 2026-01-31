@@ -1,7 +1,7 @@
 ---
 title: Mail
 description: Email is essential for many of UserFrosting's account features, including account verification and password reset requests.
-obsolete: true
+wip: true
 ---
 
 #### Chapter 16

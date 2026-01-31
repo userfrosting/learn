@@ -1,7 +1,7 @@
 ---
 title: Security
 description: It is essential to understand some basic security concepts before diving into web development. With an understanding of how the most common  vulnerabilities work and some diligence in configuring your system, UserFrosting sets you up with an application that is robust against most common attack vectors.
-obsolete: true
+wip: true
 ---
 
 It is essential to understand some basic security concepts before diving into web development.

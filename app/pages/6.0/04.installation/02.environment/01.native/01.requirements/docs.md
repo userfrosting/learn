@@ -1,7 +1,7 @@
 ---
 title: Installing Requirements
 description: Getting UserFrosting up and running in your development environment.
-obsolete: true
+wip: true
 ---
 
 If your local development environment doesn't already have the [required stack and tools](installation/requirements), we'll now set them up. We'll go through the following:

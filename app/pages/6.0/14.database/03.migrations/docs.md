@@ -1,7 +1,7 @@
 ---
 title: Migrations
 description: Extend the database and add your own tables in a consistent and easily replicable way with a migration.
-obsolete: true
+wip: true
 ---
 
 When you start building your application with UserFrosting, you'll no doubt be adding your own tables to the data model. After all, what's the point of having users if there's nothing in your application for them to use?

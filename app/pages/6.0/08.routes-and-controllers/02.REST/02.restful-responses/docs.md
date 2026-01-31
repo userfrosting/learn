@@ -1,7 +1,7 @@
 ---
 title: RESTful Responses
 description: Your responses should use headers and status codes consistent with the HTTP specifications.  This section lists the HTTP codes commonly used by UserFrosting.
-obsolete: true
+wip: true
 ---
 
 ## RESTful Responses

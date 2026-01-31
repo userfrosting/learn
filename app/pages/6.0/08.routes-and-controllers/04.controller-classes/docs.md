@@ -1,7 +1,7 @@
 ---
 title: Controller Classes
 description: Controller classes allow you to easily separate the logic for your routes from your endpoint definitions.
-obsolete: true
+wip: true
 ---
 
 To keep your code organized, it is highly recommended to use **controller** or **action** classes. By separating your code in this way, you can easily see a list of the endpoints that a Sprinkle defines by looking at its route definitions. The implementation can then be tucked away in separate files.

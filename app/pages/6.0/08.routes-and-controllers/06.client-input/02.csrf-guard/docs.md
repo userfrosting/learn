@@ -1,7 +1,7 @@
 ---
 title: CSRF Protection
 description: Cross-site request forgeries (CSRF) are a type of social engineering attack in which a malicious agent tricks a user into submitting a valid, but unintended request to your server. UserFrosting mitigates this risk with a secret token embedded into all forms on your website.
-obsolete: true
+wip: true
 ---
 
 Cross-site request forgeries (CSRF) are a type of social engineering attack in which a malicious agent tricks a user into submitting a valid, but unintended request to your server. This can happen, for example, when a user opens a malicious email or website while they are still signed in to your website.

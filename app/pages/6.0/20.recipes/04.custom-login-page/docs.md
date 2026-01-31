@@ -1,7 +1,7 @@
 ---
 title: Customizing the login page
 description: An example of how to modify UserFrosting's default login page and behavior.
-obsolete: true
+wip: true
 ---
 
 > [!NOTE]

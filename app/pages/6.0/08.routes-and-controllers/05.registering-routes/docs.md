@@ -1,7 +1,7 @@
 ---
 title: Registering Routes
 description: Once your routes definitions are ready, you have to register them inside your Sprinkle Recipe.
-obsolete: true
+wip: true
 ---
 
 So far we've seen how to [create route definitions](routes-and-controllers/front-controller) and [controller classes](routes-and-controllers/controller-classes). However, there one last step required for our routes to be enabled inside our application. That is registering the route class inside the [Sprinkle Recipe](sprinkles/recipe#routes). 

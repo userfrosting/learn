@@ -1,7 +1,7 @@
 ---
 title: Customizing the Skeleton
 description: The default skeleton can easily be changed
-obsolete: true
+wip: true
 ---
 
 ## Custom Namespace

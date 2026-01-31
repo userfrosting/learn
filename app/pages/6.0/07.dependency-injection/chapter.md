@@ -1,7 +1,7 @@
 ---
 title: Dependency Injection
 description: Services are a way to allow objects that perform specific, commonly used functions to be reused throughout your application. Mail, logging, and authorization are all examples of services.
-obsolete: true
+wip: true
 ---
 
 #### Chapter 7

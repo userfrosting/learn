@@ -1,7 +1,7 @@
 ---
 title: Setting up the basics
 description: Setting up the basic sprinkle
-obsolete: true
+wip: true
 ---
 
 ## The Base Sprinkle

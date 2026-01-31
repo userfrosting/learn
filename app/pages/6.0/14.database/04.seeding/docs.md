@@ -1,7 +1,7 @@
 ---
 title: Database Seeding
 description: Seeding is a simple way to populate the database with default data.
-obsolete: true
+wip: true
 ---
 
 Seeding can be used to populate the database. A seed is perfect to add test or default data to the database at any moment.

@@ -1,7 +1,7 @@
 ---
 title: Docker
 description: Docker is a containerization platform that helps maintain consistent behavior across different development and production environments.
-obsolete: true
+wip: true
 ---
 
 If you don't already have a local development environment set up, this page will guide you through installing UserFrosting using Docker.

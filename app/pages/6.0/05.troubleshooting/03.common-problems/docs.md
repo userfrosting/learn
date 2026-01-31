@@ -1,7 +1,7 @@
 ---
 title: Common Problems
 description: Commonly encountered issues when setting up, developing, or deploying a UserFrosting project.
-obsolete: true
+wip: true
 ---
 
 ## Installation

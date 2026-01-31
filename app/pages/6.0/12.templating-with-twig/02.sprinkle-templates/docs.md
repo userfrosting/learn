@@ -1,7 +1,7 @@
 ---
 title: Sprinkle Templates
 description: ""
-obsolete: true
+wip: true
 ---
 
 ## Template organization

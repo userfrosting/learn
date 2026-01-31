@@ -1,7 +1,7 @@
 ---
 title: Custom Commands
 description: You may extend the UserFrosting\System\Bakery\BaseCommand class to implement your own CLI commands that can be run through Bakery.
-obsolete: true
+wip: true
 ---
 
 While the Bakery CLI tool comes with great built-in commands, your sprinkles can also take advantage of the Bakery by adding their own cli commands.
