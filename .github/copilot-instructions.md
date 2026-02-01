@@ -73,14 +73,14 @@ All code snippets should use triple backticks with language specified for syntax
 
 ### Images and Links
 
-**CRITICAL - Image Paths**: Images are stored in `app/pages/{version}/images` alongside the markdown files, and **MUST always use absolute paths starting with `/`**. 
-- ✅ Correct: `![Alt text](/images/screenshot.png)`
-- ❌ Wrong: `![Alt text](images/screenshot.png)` or `![Alt text](../images/screenshot.png)`
+**CRITICAL - Image Paths**: Images are stored in `app/pages/{version}/images` alongside the markdown files, and **MUST always use a path relative to the version folder, _without_ a starting `/`**. 
+- ✅ Correct: `![Alt text](images/screenshot.png)`
+- ❌ Wrong: `![Alt text](/images/screenshot.png)` or `![Alt text](../images/screenshot.png)`
 Images should be checked to ensure the file exists at the specified path.
 
-Internal links should use absolute paths without version numbers to allow automatic version switching.
-- ✅ Correct: `[Requirements](/installation/requirements)`
-- ❌ Wrong: `[Requirements](installation/requirements)` or `[Requirements](/04.installation/01.requirements)`
+Internal links should use relative paths to the version folder, without version numbers to allow automatic version switching.
+- ✅ Correct: `[Requirements](installation/requirements)`
+- ❌ Wrong: `[Requirements](/installation/requirements)` or `[Requirements](04.installation/01.requirements)`
 
 Pages have anchor links for sections (e.g., `#motivation`). Ensure links point to existing sections.
 
