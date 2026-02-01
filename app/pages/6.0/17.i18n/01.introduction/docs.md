@@ -1,24 +1,18 @@
 ---
 title: Introduction
-description: An introduction to UserFrosting's i18n system for building multilingual applications.
+description: An introduction to UserFrosting i18n system
 wip: true
 ---
 
-Your application might start with English speakers, but what about when your user base grows to include Spanish, French, Chinese, or Arabic speakers? Hardcoding English text throughout your code creates a localization nightmare. Every piece of text would need changing in dozens of files. Supporting multiple languages becomes practically impossible.
+UserFrosting provides a complete framework for translating strings and sentences easily and efficiently. UserFrosting allows you to [define the default locale](i18n/site-locale#the-default-locale) your UI should present to guest users, while allowing resgistered users to [choose their prefered locale](i18n/site-locale#the-available-user-locales).
 
-**Internationalization (i18n)** solves this by separating text content from code. Instead of hardcoded strings, you use translation keys—`'USER_WELCOME'` instead of `"Welcome, user!"`. All translations live in language files that anyone can edit without touching code. Supporting a new language means adding a new language file, not modifying PHP.
+## Why use translation on a single locale app ?
 
-UserFrosting provides a complete i18n framework with locale management, pluralization rules, and powerful translation features. Users can choose their preferred language, and your application automatically displays content in that language.
-
-This page introduces UserFrosting's translation system and explains why it matters even for single-language applications.
-
-## Why Use Translation Keys (Even for Single Language Apps)?
-
-It's important to talk about why this system is important and why you should use it in your sprinkles, even if you plan on supporting only a single locale in your app.
+It's important to talk about why this system is important and why you should use it too in your sprinkles, even if you plan on supporting only a single locale in your app.
 
 Let's face it, it would be _waayyyy easier_ to simply hard code every public facing string in your common code. While using the translation system will make it easier to support additional languages in the future, it will also help separate your code from your site content.
 
-Imagine one day you decide to change the term **Users** to **Members**. If you hardcoded everything inside your code, you now have to go through all of the files, look for everywhere the word **User** (and **User_s_** !) is written and change it, one by one, everywhere. Keep in mind, this word is also used in the core code of UserFrosting! This means, if we were to hardcode everything too, that you would have to update all UserFrosting provided files too!
+Imagine one day you decide to change the term **Users** to **Members**. If you hardcoded everything inside your code, you now have to go through all of the files, look for everwhere the word **User** (and **User_s_** !) is written and change it, one by one, everywhere. Keep in mind, this word is also used in the core code of UserFrosting! This means, if we were to hardcode everything too, that you would have to update all UserFrosting provided files too!
 
 However, having all the _content_ in a single location can help in this situation. Since a common **messages key** is used in your code, you now have to fix only the **localized message**. The same goes if you made a typo somewhere...
 
@@ -38,7 +32,7 @@ UserFrosting [i18n module](https://github.com/userfrosting/i18n) is composed of 
 
 A **Locale** is used to create a **Dictionary**, which is then used by the **Translator**. The overall flow can be visualized as :
 
-![](/images/i18n/diagram.png)
+![](images/i18n/diagram.png)
 
 ### The Locale
 

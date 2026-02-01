@@ -29,7 +29,7 @@ Google can tell when you're copying content from another page. When it sees copi
 
 Having lots of words on a page gives Google more to work with when it determines how relevant that page is. While you may not _need_ a lot of words to get your point across, it signals to search engines that your pages' contents have real value. At the same time, you need to avoid [keyword stuffing](https://en.wikipedia.org/wiki/Keyword_stuffing) - putting an unnatural number of keywords in your content in an attempt to game the ranking algorithm. This used to work in the past, but nowadays search engines will detect and penalize you if every other sentence is "Garden shed painting."
 
-![Real world SEO](/images/real-world-seo.png)
+![Real world SEO](images/real-world-seo.png)
 
 To summarize, you need to write the text of your pages so that they have a healthy balance of your target keywords without appearing overly spammy. You _do_ know what your target keywords are, right?
 

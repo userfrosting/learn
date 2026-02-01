@@ -16,7 +16,7 @@ Make sure the default skeleton app is working. Once the base website is created 
 
 ## The Route Class
 
-We can create the [route definition](routes-and-controllers) for the `/pastries` page. We'll *edit* the default `app/src/MyRoutes.php` file.
+We can create the [route definition](routes-and-controllers) for the `/pastries` page. We'll *edit* the default `app/src/MyRoutes.php` file. 
 
 **app/src/MyRoutes.php**:
 ```php
@@ -77,7 +77,7 @@ class PastriesPageAction
 }
 ```
 
-For now, the pastries array is empty. In the next page, we'll replace this empty array with a database model.
+For now, the pastries array is empty. In the next page, we'll replace this empty array with a database model. 
 
 ## The Template File
 
@@ -115,6 +115,6 @@ Finally, we need to *create* the template file. We use the same file name as the
 
 You should now be able to manually go to the `/pastries` page in your browser and see the result:
 
-![Pastries page](/images/pastries/01.png)
+![Pastries page](images/pastries/01.png)
 
 You'll notice that at this point, we're not actually displaying any useful content on the page. In the next section, we'll discuss how to display content dynamically retrieved from the database.

@@ -86,7 +86,7 @@ Now visit [http://localhost:8080](http://localhost:8080) to see your UserFrostin
 
 You should see the default UserFrosting pages and be able to log in with the newly created admin account.
 
-![Basic front page of a UserFrosting installation](/images/front-page.png)
+![Basic front page of a UserFrosting installation](images/front-page.png)
 
 To stop the containers, run:
 

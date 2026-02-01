@@ -19,17 +19,17 @@ To open the console in Firefox, use the following shortcuts:
  - Windows: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd>
  - MacOS: <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>K</kbd>
 
-![Firefox developer tools](/images/firefox-console-1.png)
+![Firefox developer tools](images/firefox-console-1.png)
 
 The tool panel will open (usually docked at the bottom) and you'll notice some tabs at the top of this panel: **Inspector**, **Console**, **Debugger**, **Style Editor**, **Performance**, **Network**, and **Settings**. By default, the Console tab should be selected (if not, click it).
 
-![Firefox developer tools - Console tab](/images/firefox-console-2.png)
+![Firefox developer tools - Console tab](images/firefox-console-2.png)
 
 Underneath that, you'll probably see a long list of URLs. These are the requests that your web browser has made so far. To the left of each URL is the request method (GET, POST, PUT, DELETE, etc). To the right is the server response summary. For example, the server responded **HTTP/1.1 200 OK** for the request to **http://localhost/userfrosting/public/alerts**. The status code **200** is used to mean that the request completed "successfully". "Success" is something that your server defines - it's just a way for the server to tell your browser that everything went as expected and that it doesn't need to do anything else.
 
 If you click the response summary, Firefox will open the **Network** tab and show you more details about the request:
 
-![Firefox developer tools - Network tab](/images/firefox-console-3.png)
+![Firefox developer tools - Network tab](images/firefox-console-3.png)
 
 To the right, you'll see tabs for **Headers**, **Cookies**, **Params**, **Response**, and **Timings**. If you scroll down in the Headers tab, you'll see a list of the request and response headers. The request headers contain metadata sent with a particular request, and contain information about your browser, the contents of any cookies for the site, and other information. The response headers contain metadata returned by the server for that request. This can include information like cookies that the site wants the client to store or update, as well as things like the type of content (HTML, image, CSS, JSON, etc) being returned.
 
@@ -37,13 +37,13 @@ The **Cookies** tab just displays the contents of any cookie headers in a more e
 
 #### Params tab
 
-![Firefox developer tools - Params tab](/images/firefox-console-4.png)
+![Firefox developer tools - Params tab](images/firefox-console-4.png)
 
 **Params** shows any data sent in the *body* of the request. **This is extremely useful for debugging client-side code.** Often times, a web application appears to "not work" because the server isn't actually being sent the data it expected. The **Params** tab is a good way to check the actual data that was sent with a particular request.
 
 #### Response tab
 
-![Firefox developer tools - Response tab](/images/firefox-console-5.png)
+![Firefox developer tools - Response tab](images/firefox-console-5.png)
 
 The **Response** tab shows the data sent in the *body* of the response. For requests to a URL representing a web page (like the URL in your browser's navigation bar), the response body simply contains the actual HTML returned from the server, that your browser initially renders. For other requests, it could contain images, Javascript, or structured data in some other format. For example in the request shown above, the response contains structured JSON data representing a list of users currently registered with the application.
 
@@ -100,7 +100,7 @@ For example, we can use it to inspect the contents of a JSON object returned by 
 
 Now, when we do something that triggers this request, the `console.log` statement will print the contents of the variable `data` to the browser console:
 
-![Firefox developer tools - Debug print statement](/images/firefox-console-6.png)
+![Firefox developer tools - Debug print statement](images/firefox-console-6.png)
 
 As you can see in the last line of the console output, `data` is an array containing Javascript objects. If we click on "Object", a panel opens to the right that displays the contents of that object.
 
@@ -114,7 +114,7 @@ UserFrosting uses a sophisticated error-handling system to capture exceptions th
 
 By default _in development mode only_, UserFrosting will show a detailed debugging page that contains a full stack trace. For example:
 
-![Sample debug error page](/images/debug-page.png)
+![Sample debug error page](images/debug-page.png)
 
 This page will also show you the contents of your request, the current session variables, and your server/environment variables. For [obvious reasons](background/security/server-misconfiguration), this debugging page is disabled in production.
 
@@ -218,7 +218,7 @@ We can also arbitrarily send manual debugging messages to `app/logs/userfrosting
 #[\DI\Attribute\Inject]
 protected DebugLoggerInterface $logger;
 
-// ...
+// ... 
 
 $this->logger->debug("Fetching owls from database...");
 $this->logger->debug("Owls found:", $owls);
@@ -272,7 +272,7 @@ The best approach is to develop your API in isolation from the page or widget th
 
 As it turns out, you can visit `/api/members` _directly in your browser_, and it will show you the output of the data source! Since **visiting a page in your browser is equivalent to making a GET request**, you can append query strings as well:
 
-![Directly viewing the output of a JSON API](/images/debug-api.png)
+![Directly viewing the output of a JSON API](images/debug-api.png)
 
 Make sure you get the data API itself working properly and producing the kind of output you expect, before you fiddle with the page and/or Javascript that is consuming the API.
 

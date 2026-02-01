@@ -45,7 +45,7 @@ Inside your newly created config file, you add any configuration options you wan
 
 Save the file, reload the login page and voilà! Not only will the registration link disappear, but all relevant registration endpoints will also be deactivated. You will still be able to create a new user manually using the administration interface.
 
-![Login form without registration](/images/login-no-registration.png)
+![Login form without registration](images/login-no-registration.png)
 
 See the [Configuration Files](configuration/config-files) chapter for more information about editing configuration.
 
@@ -54,9 +54,9 @@ See the [Configuration Files](configuration/config-files) chapter for more infor
 
 ## Changing the post-login destination
 
-When a successful login occurs, by default, the user will be taken to the `/dashboard` page if it has access to this page, or `/settings` otherwise.
+When a successful login occurs, by default, the user will be taken to the `/dashboard` page if it has access to this page, or `/settings` otherwise. 
 
-To understand how this redirect works, when the user is logging in, the `UserRedirectedAfterLoginEvent` event will be dispatched. The **Admin Sprinkle** listen to this event, through the `UserRedirectedToSettings` and `UserRedirectedToDashboard` listeners :
+To understand how this redirect works, when the user is logging in, the `UserRedirectedAfterLoginEvent` event will be dispatched. The **Admin Sprinkle** listen to this event, through the `UserRedirectedToSettings` and `UserRedirectedToDashboard` listeners : 
 
 `vendor/userfrosting/sprinkle-admin/app/src/Admin.php`
 ```php
@@ -74,7 +74,7 @@ public function getEventListeners(): array
 }
 ```
 
-You'll notice two listeners are listening to the event. First `UserRedirectedToDashboard` will be executed and if the user has access to the Dashboard, the redirect will be set to `/dashboard`. If the user doesn't have access (via the authenticator checkAccess method), `UserRedirectedToSettings` will be called.
+You'll notice two listeners are listening to the event. First `UserRedirectedToDashboard` will be executed and if the user has access to the Dashboard, the redirect will be set to `/dashboard`. If the user doesn't have access (via the authenticator checkAccess method), `UserRedirectedToSettings` will be called. 
 
 This process can be easily customized by adding our own event listener. Let's change the default behavior to redirect every user to the about page (`/about` route) upon login.
 
@@ -113,7 +113,7 @@ class UserRedirectedToAbout
 ```
 
 > [!NOTE]
-> Note that we use Slim's route parser `urlFor` method to get the route definition from its name. This is the same as hardcoding `'/about'`. Check out [Slim's documentation](https://www.slimframework.com/docs/objects/router.html#route-names) for more info on named routes.
+> Note that we use Slim's route parser `urlFor` method to get the route definition from it's name. This is the same as hardcoding `'/about'`. Check out [Slim's documentation](https://www.slimframework.com/docs/objects/router.html#route-names) for more info on named routes.
 
 The last step is to register the new listener in your Sprinkle Recipe. The recipe itself will also need to implement the `UserFrosting\Event\EventListenerRecipe` interface.
 
@@ -147,7 +147,7 @@ class MyApp implements
             ],
         ];
     }
-
+    
     // ...
 }
 ```
@@ -199,7 +199,7 @@ Now we will modify the login page to show the site logo. The base base template 
 A couple of elements to point out here :
 1. We start by using the `extend` tag with the reference to `@adminlte-theme` template. This tells Twig to use the original template as base.
 2. We add the `loginLogo`, but leave it empty to remove the default logo/title.
-3. We define a custom `loginBox` block with our modified code. The `login-logo` div is now inside the `login-box-body` and the image is added.
+3. We define a custom `loginBox` block with our modified code. The `login-logo` div is now inside the `login-box-body` and the image is added. 
 4. Since we still want to use both `loginForm` and `loginLinks` blocks, but don't want to change their content, we include them and use `{{ parent() }}` to render the content from the `@adminlte-theme` version
 
 The last missing piece is the image we used isn't loaded in your app right now. This image is located in the AdminLTE theme sprinkle and must be copied to the `public/`. Fortunately, AdminLTE sprinkle provides an helper module to do this with Webpack. Simply add the following line to your `app/assets/app.js` and run Webpack.
@@ -209,18 +209,18 @@ The last missing piece is the image we used isn't loaded in your app right now. 
 require('@userfrosting/theme-adminlte/app/assets/cupcake');
 ```
 
-Run :
+Run : 
 ```
 $ php bakery assets:build
 ```
 
 Once you refresh the page, you should see the result:
 
-![Custom login template](/images/custom-login.png)
+![Custom login template](images/custom-login.png)
 
 ### Customizing the CSS
 
-Customizing the CSS is different than overriding the template. Our change will be small, so we won't be replacing a full css file, but add a new, smaller one. Two steps are required to achieve this :
+Customizing the CSS is different than overriding the template. Our change will be small, so we won't be replacing a full css file, but add a new, smaller one. Two steps are required to achieve this : 
 
 1. Create a new css file
 2. Register a new webpack entry
@@ -258,7 +258,7 @@ Next, we add the entry to the login page. At the bottom of the file, outside any
 {% endblock %}
 ```
 
-Last, we need to rebuild the assets, by running the bakery command :
+Last, we need to rebuild the assets, by running the bakery command : 
 
 ```bash
 php bakery assets:build
@@ -266,4 +266,4 @@ php bakery assets:build
 
 Your new CSS file should be loaded when you refresh the page and you should see the result:
 
-![Custom login style](/images/custom-login2.png)
+![Custom login style](images/custom-login2.png)

@@ -156,6 +156,6 @@ Don't worry if Vue is new to you—it's designed to be approachable, and the nex
 
 ## Next Steps
 
-Now that you understand Vue's role in UserFrosting, you're ready to learn how to [use assets in your application](/asset-management/using-assets). The next page covers how to reference and load your Vue components, styles, and other assets in UserFrosting's Twig templates.
+Now that you understand Vue's role in UserFrosting, you're ready to learn how to [use assets in your application](asset-management/using-assets). The next page covers how to reference and load your Vue components, styles, and other assets in UserFrosting's Twig templates.
 
-For hands-on Vue development, check out the [Advanced Topics](/asset-management/advanced) section, which covers Vue 3 Single File Components, TypeScript integration, and building complex interactive features.
+For hands-on Vue development, check out the [Advanced Topics](asset-management/advanced) section, which covers Vue 3 Single File Components, TypeScript integration, and building complex interactive features.

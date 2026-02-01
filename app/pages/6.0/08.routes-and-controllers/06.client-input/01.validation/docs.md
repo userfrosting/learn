@@ -30,7 +30,7 @@ UserFrosting Fortress solves this problem by providing a uniform interface for v
 
 This process is summarized in the following flowchart:
 
-![Flowchart for unified client- and server-side validation.](/images/flowchart-fortress.png?resize=800,600)
+![Flowchart for unified client- and server-side validation.](images/flowchart-fortress.png?resize=800,600)
 
 ### Creating a Schema
 
@@ -368,7 +368,7 @@ screech:
 > Regular expressions should _not_ be wrapped in quotes in YAML. Also the jQuery Validation plugin wraps regular expressions on the client side with `^...$`. Please see [this issue](https://github.com/jquery-validation/jquery-validation/issues/1967).
 
 ### Input arrays, multidimensional arrays & associative arrays
-If your form uses [input arrays](https://stackoverflow.com/a/42969920/445757) such as `<input name='nameList[]'...`, you can reference the array itself in your validation schema as `nameList` and each element of the array as `nameList.*`. This can be useful with dynamic form with a variable or unknown number of input of the same nature. For example, a list of names :
+If your form uses [input arrays](https://stackoverflow.com/a/42969920/445757) such as `<input name='nameList[]'...`, you can reference the array itself in your validation schema as `nameList` and each element of the array as `nameList.*`. This can be useful with dynamic form with a variable or unknown number of input of the same nature. For example, a list of names : 
 
 ```html
 <input name="nameList[]" type="text" />
@@ -409,7 +409,7 @@ nameList.*:
   - trim
 ```
 
-However, with associative arrays, this is useful if different rules are required for each associations. For example, the schema below will apply the `purge` transformation to `nameList.*.first` only, `escape` will be only apply to `nameList.*.last`, but `trim` will be applied to both.
+However, with associative arrays, this is useful if different rules are required for each associations. For example, the schema below will apply the `purge` transformation to `nameList.*.first` only, `escape` will be only apply to `nameList.*.last`, but `trim` will be applied to both. 
 
 ```yaml
 nameList:
@@ -458,7 +458,7 @@ phoneList.*:
       message: The phone number you provided is not a valid US phone number.
 ```
 
-Please check [Valitron's usage directions](https://github.com/vlucas/valitron#usage) for more information on arrays and [multidimensional arrays](https://mattstauffer.com/blog/a-little-trick-for-grouping-fields-in-an-html-form/).
+Please check [Valitron's usage directions](https://github.com/vlucas/valitron#usage) for more information on arrays and [multidimensional arrays](https://mattstauffer.com/blog/a-little-trick-for-grouping-fields-in-an-html-form/). 
 
 Keep in mind, each field **not** in the schema will be removed from the transformed data by default. If your schema contains `nameList.*.first` and `nameList.*.last`, and the associative array / form contains an `email` key, it will be removed as the schema doesn't contains `nameList.*.email`.
 

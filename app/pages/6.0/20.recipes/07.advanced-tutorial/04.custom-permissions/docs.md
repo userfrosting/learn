@@ -199,7 +199,7 @@ $ php bakery migrate
 
 You can make sure the migration was successful by logging in as the root user and going to the permissions page:
 
-![Pastries permission list](/images/pastries/permission-list.png)
+![Pastries permission list](images/pastries/permission-list.png)
 
 ## Adding permission to the page
 
@@ -272,11 +272,11 @@ The link should now be hidden from the menu when you refresh the page.
 
 Now to make sure everything works correctly, let's add that `see_pastries` permission to the **User** role. Once this is done, a normal user will regain access to the page. Using a root account, navigate to the **Roles** page and select **Manage permissions** from the Actions dropdown menu of the **User** role.
 
-![Role page](/images/pastries/role-page.png)
+![Role page](images/pastries/role-page.png)
 
 Select the `see_pastries` permission from the bottom dropdown (use the search field to easily find it) and then click `update permissions`.
 
-![Adding permission](/images/pastries/adding-permission.png)
+![Adding permission](images/pastries/adding-permission.png)
 
 Your non-root user should now have access to the pastry page again (assuming they have the User role).
 

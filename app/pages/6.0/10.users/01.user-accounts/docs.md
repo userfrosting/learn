@@ -4,15 +4,11 @@ description: UserFrosting ships with everything you need to create user accounts
 wip: true
 ---
 
-Most web applications need user accounts—the ability for people to create profiles, sign in, and access personalized content or features. But building a secure, full-featured authentication system from scratch is surprisingly complex: password hashing, email verification, password reset flows, session management, account lockouts, role-based permissions... the list goes on.
-
-UserFrosting provides a **complete, production-ready user account system** right out of the box. Registration, login, email verification, password reset, user administration—it's all there, fully implemented and ready to use. You get professional-grade security features like bcrypt password hashing, CSRF protection, and rate limiting without writing a line of code.
-
-This page covers UserFrosting's account features, explains key terminology (authentication vs authorization), and shows you how to work with user data in your application.
+You were probably attracted to UserFrosting because you wanted to "make a site where users can sign in", or you already have a project in progress and your boss asked you to "put it behind a login," or you need to have some "protected pages." These are nontechnical terms. It will be easier for us to communicate if we first establish a common vocabulary, so that we can explain the concepts with more precision.
 
 ## Authentication and authorization
 
-Let's start with vocabulary to communicate precisely. The proper term for "signing in" or "logging in" is **authentication**. When a user has successfully logged in, we say that they are an **authenticated user**.
+The proper term for the process of "signing in" or "logging in" is **authentication**. When a user has successfully logged in, we say that they are an **authenticated user**.
 
 As we've [explained before](background/the-client-server-conversation), a web application is really a conversation between two agents with poor memory. When you have a feature or some part of your site that is only supposed to be accessible to authenticated users, the server needs to check that the client is who they say they are and that they've already successfully authenticated.
 
@@ -66,7 +62,7 @@ UserFrosting comes with two built-in mechanisms for creating new accounts: publi
 
 In many instances, you will want people to be able to register for your website or application through a publicly accessible page. By default, the registration form is available at `/account/register`.
 
-![Account registration form](/images/registration.png)
+![Account registration form](images/registration.png)
 
 When the registration form is submitted, it will `POST` to the `/account/register` endpoint (which invokes the `RegisterAction` method).
 
@@ -93,17 +89,17 @@ To disable this behavior, set the `site.registration.require_email_verification`
 
 Sometimes, you want to have a site administrator create an account on behalf of a specific user. For some applications, you may want this to be the _only_ way that new accounts can be created. To create a new user as an administrator, use the "create user" button at the bottom of the main user listing page:
 
-![User creation button](/images/create-user-button.png)
+![User creation button](images/create-user-button.png)
 
 You can then fill out details for the user. After you create the user, an email will be automatically sent to them that allows them to set their own password.
 
-![User creation](/images/create-user.png)
+![User creation](images/create-user.png)
 
 ## Login form
 
 By default, the login form is available at `/account/sign-in`. The user provides their email or username as their identity, along with their password. The form is submitted to `/account/login`, which invokes `LoginAction`. This processes the authentication request.
 
-![User sign-in](/images/login.png)
+![User sign-in](images/login.png)
 
 The `/account/login` route is throttled via the `throttles.sign_in_attempt` throttle rule. This mitigates against the possibility of brute-force attempts to guess your users' passwords.
 
@@ -127,7 +123,7 @@ After the page containing the sign-in form receives a response from the server t
 
 Users can reset their passwords by visiting `/account/forgot-password`. They will be asked for their account email address:
 
-![Password reset](/images/password-reset.png)
+![Password reset](images/password-reset.png)
 
 Upon submitting a password reset request, a secret token will be issued for the user's account (stored in `password_resets` table), and emailed to them in the form of a link (`/account/set-password/confirm`). The link will take them to a form with the secret token embedded in the page, where they can set their new password. The form is then submitted to `/account/set-password`, which updates the user's password and signs them in.
 
@@ -147,7 +143,7 @@ For the precise implementation of the password reset and account verification re
 
 Users can update certain attributes of their accounts through the account settings/profile page. By default, this is available at `/account/settings`:
 
-![Account settings page](/images/account-settings.png)
+![Account settings page](images/account-settings.png)
 
 As a security measure, users are required to verify their current password before they can update their email address or password. Other fields, like name and locale, do not require the authenticated user to re-enter their password.
 
@@ -198,7 +194,7 @@ Basic user details (name, email, locale, group) can be modified via the "Edit us
 
 Roles can be added to or removed from a user account via the `Manage roles` button on the user's profile page, or in the dropdown menu in the user table.
 
-![User role management](/images/uf-collection.png)
+![User role management](images/uf-collection.png)
 
 By default, only the root account can change users' roles. You may want to modify this to allow site admins to grant a **subset** of the available roles to other users - but be careful! You may not want site administrators to be allowed to elevate other users to site administrator, for example. See the section on [access control](users/access-control) for more information.
 
@@ -206,7 +202,7 @@ By default, only the root account can change users' roles. You may want to modif
 
 Administrators may be able to perform a password reset on behalf of users. This is useful, for example, when you have users who have difficulty with the self-service password reset tool. Password resets can be performed via the "Password" button in the user's profile page, or the "change password" option in the dropdown menu of the user table.
 
-![User password management](/images/change-password.png)
+![User password management](images/change-password.png)
 
 You may send a password reset link to the user so that they can change it themselves, or even set a password directly when dealing with particularly technology-adverse users over the phone.
 
@@ -222,7 +218,7 @@ User accounts can be deleted from the user profile page, or the user dropdown me
 
 Deleting user accounts presents a problem because the user may have related data in the database that would become orphaned, potentially breaking other functionality in your site. For this reason, UserFrosting performs [soft deletes](https://laravel.com/docs/8.x/eloquent#soft-deleting) by default. The user record is not actually deleted, but instead a `deleted_at` timestamp is added to the record and the user is no longer able to sign in. Deleted users are also excluded from all queries unless the `withTrashed` method is added to the Eloquent query. Related entities (activities, roles, etc) are left alone.
 
-If you really want to completely remove the user from the database, you can call the `User::forceDelete` method in your controller logic.
+If you really want to completely remove the user from the database, you can call the `User::forceDelete` method in your controller logic. 
 
 Here's an example using `User::forceDelete` in a custom UserActions class:
 
@@ -235,7 +231,7 @@ class UserActions {
 
     public function delete($userId) {
         $userModel = new User();
-
+        
         //includes soft-deleted users
         $user = $userModel->withTrashed()->find($userId);
 

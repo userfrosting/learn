@@ -228,7 +228,7 @@ import AccountSprinkle from '@userfrosting/sprinkle-account'
 app.use(AccountSprinkle, { router })
 ```
 
-Registers UserFrosting's [Sprinkles](/sprinkles)—modular packages that add functionality. Core provides base features, while Account handles user authentication and management. Each sprinkle can register Vue components, routes, and store modules.
+Registers UserFrosting's [Sprinkles](sprinkles)—modular packages that add functionality. Core provides base features, while Account handles user authentication and management. Each sprinkle can register Vue components, routes, and store modules.
 
 ```ts
 /** Setup Theme */
@@ -313,7 +313,7 @@ The Vite integration can be configured in your UserFrosting config file (`app/co
 
 **`manifest`**
 - Path to Vite's build manifest file
-- Uses the [Uniform Resource Locator](/advanced/locator) scheme
+- Uses the [Uniform Resource Locator](advanced/locator) scheme
 - Default: `assets://.vite/manifest.json` resolves to `public/assets/.vite/manifest.json`
 
 **`dev`**
@@ -398,4 +398,4 @@ When using pre-built assets:
 
 ## Next Steps
 
-Now that you understand Vite configuration and entry points, learn about the [Vue Framework](/asset-management/vue-framework) that powers UserFrosting's modern interactive interfaces.
+Now that you understand Vite configuration and entry points, learn about the [Vue Framework](asset-management/vue-framework) that powers UserFrosting's modern interactive interfaces.

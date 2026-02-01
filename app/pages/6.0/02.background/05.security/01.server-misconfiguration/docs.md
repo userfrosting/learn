@@ -10,7 +10,7 @@ Many PHP developers are used to seeing server-side error messages and stack trac
 
 This is fine in development, and it makes the development cycle tighter by providing immediate feedback to the developer with a simple page refresh or click of a button. However in production (live server), this can lead to serious security breaches:
 
-![Mysql password dumped to browser in PHP](/images/display-errors-on.png)
+![Mysql password dumped to browser in PHP](images/display-errors-on.png)
 
 The lesson here is that code can contain sensitive information that we do not want to share with the end user - for example, passwords and API keys. If something goes wrong with the database connection code, it will generate a stack trace that contains the database credentials. By dumping this trace into the response, your application is risking making this information public.
 

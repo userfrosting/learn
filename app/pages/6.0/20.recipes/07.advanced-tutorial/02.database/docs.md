@@ -187,14 +187,14 @@ class PastriesTable extends Migration
 
 ## Registering the migration and seed in the sprinkle recipe
 
-We also need to tell our Recipe that it will be providing migrations and seeds. To do so, your recipe class must implement, on top of `SprinkleRecipe`, `UserFrosting\Sprinkle\Core\Sprinkle\Recipe\MigrationRecipe` and `use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\SeedRecipe`.
+We also need to tell our Recipe that it will be providing migrations and seeds. To do so, your recipe class must implement, on top of `SprinkleRecipe`, `UserFrosting\Sprinkle\Core\Sprinkle\Recipe\MigrationRecipe` and `use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\SeedRecipe`. 
 
-We'll then list our migration in the `getMigrations()` method, and our seed in the `getSeeds()` method.
+We'll then list our migration in the `getMigrations()` method, and our seed in the `getSeeds()` method. 
 
 > [!NOTE]
 > Note the seed can still work if it's not registered because we're calling it directly in the migration. However, if the seed is not registered, it won't show up when running `php bakery seed`.
 
-The **MyApp** recipe should now look like this :
+The **MyApp** recipe should now look like this : 
 
 **app/src/MyApp.php**
 ```php
@@ -211,8 +211,8 @@ use UserFrosting\Sprinkle\Pastries\Database\Seeds\DefaultPastries; // <-- Add he
 use UserFrosting\Sprinkle\SprinkleRecipe;
 use UserFrosting\Theme\AdminLTE\AdminLTE;
 
-class MyApp implements
-    SprinkleRecipe,
+class MyApp implements 
+    SprinkleRecipe, 
     MigrationRecipe, // <-- Add here !
     SeedRecipe // <-- Add here !
 {
@@ -239,12 +239,12 @@ class MyApp implements
             DefaultPastries::class, // <-- Add this block
         ];
     }
-
+    
     // ...
 }
 ```
 
-We are now ready to run our migration. From the command line, use the [Bakery migrate command](cli/commands#migrate) to run the migration up:
+We are now ready to run our migration. From the command line, use the [Bakery migrate command](cli/commands#migrate) to run the migration up: 
 
 ```bash
 $ php bakery migrate
@@ -260,13 +260,13 @@ Now it's time to go back to our controller and fetch the data from our new datab
 use UserFrosting\Sprinkle\Pastries\Database\Models\Pastries;
 ```
 
-Now that we've defined this convenient alias for our model, it's time to interact with it and select all the available rows. Replace :
+Now that we've defined this convenient alias for our model, it's time to interact with it and select all the available rows. Replace : 
 
 ```php
 $pastries = [];
 ```
 
-With :
+With : 
 ```php
 $pastries = Pastry::all();
 ```
@@ -274,11 +274,11 @@ $pastries = Pastry::all();
 > [!NOTE]
 > Fetching all the available rows is not an ideal solution since, in production, it can involve an arbitrarily large number of rows. This can clutter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server resource usage). It is recommended to use AJAX and [**Sprunging**](database/data-sprunjing) to display paginated data in this situation.
 
-The `$pastries` variable should now contains an [Eloquent Collection](https://laravel.com/docs/8.x/eloquent-collections) of `Pastry` objects.
+The `$pastries` variable should now contains an [Eloquent Collection](https://laravel.com/docs/8.x/eloquent-collections) of `Pastry` objects. 
 
 ### Debugging
 
-At this point, it's a good idea to use [**debugging**](troubleshooting/debugging#debug-statements) to make sure everything works as it should. We'll use the `DebugLogger` service to do so.
+At this point, it's a good idea to use [**debugging**](troubleshooting/debugging#debug-statements) to make sure everything works as it should. We'll use the `DebugLogger` service to do so. 
 
 Start by adding the facade class to the usage declaration of your class:
 
@@ -384,4 +384,4 @@ Let's get a closer look at our `for` block:
 
 This is the same as using `foreach` in PHP to loop through all the items available in an array. The `{% for pastry in pastries %}` will loop through `pastries` and create a HTML table row for each item. If you refresh the page, you should now see this in your browser:
 
-![Pastries page](/images/pastries/02.png)
+![Pastries page](images/pastries/02.png)

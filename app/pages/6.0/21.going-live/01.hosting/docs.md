@@ -31,7 +31,7 @@ Their cheapest option is a USD $4/mo server, which provides 512MB memory, 10GB s
 
 They also provide a convenient web-based control panel, which lets you perform some basic administrative tasks and monitor your Droplet's resource usage:
 
-![Droplet control panel](/images/droplet.png)
+![Droplet control panel](images/droplet.png)
 
 ### Promotions
 
