@@ -1,28 +1,33 @@
-{% macro tree(items, currentPage) %}
+{% macro tree(items, currentPage, isChild = false) %}
     {% for item in items %}
+        {% set indexLabel = isChild ? '' : '%02d.'|format(loop.index) %}
         {% if item.children is not empty %}
-            {{ _self.dropdown(item, currentPage, isChildActive(item.children, currentPage) or currentPage.getSlug() == item.getSlug()) }}
+            {{ _self.dropdown(item, currentPage, isChildActive(item.children, currentPage) or currentPage.getSlug() == item.getSlug(), indexLabel) }}
         {% else %}
-            {{ _self.link(item.getTitle(), item.getRoute(), currentPage.getSlug() == item.getSlug()) }}
+            {{ _self.link(item.getTitle(), item.getRoute(), currentPage.getSlug() == item.getSlug(), indexLabel) }}
         {% endif %}
     {% endfor %}
 {% endmacro %}
 
-{% macro link(label, href = '#', active = false) %}
+{% macro link(label, href = '#', active = false, indexLabel = '') %}
     <li class="{{ active ? 'uk-active' : '' }}">
-        <a href="{{ href }}">{{ label }}</a>
+        <a href="{{ href }}">{{ _self.index(indexLabel) }}{{ label }}</a>
     </li>
 {% endmacro %}
 
-{% macro dropdown(item, currentPage, open = false) %}
+{% macro dropdown(item, currentPage, open = false, indexLabel = '') %}
     <li class="uk-parent {{ open ? 'uk-open' : '' }} {{ currentPage.getSlug() == item.getSlug() ? 'uk-active' : '' }}">
         <a href="{{ item.getRoute() }}">
-            {{ item.getTitle() }}
+            {{ _self.index(indexLabel) }}{{ item.getTitle() }}
         </a>
         <ul class="uk-nav-sub">
-            {{ _self.tree(item.children, currentPage) }}
+            {{ _self.tree(item.children, currentPage, true) }}
         </ul>
     </li>
+{% endmacro %}
+
+{% macro index(indexLabel = '') %}
+    {% if indexLabel %}<span class="sidebar-index" aria-hidden="true">{{ indexLabel }}</span> {% endif %}
 {% endmacro %}
 
 {% macro label(label) %}

@@ -11,15 +11,10 @@
         border-left: @sidebar-item-border-width solid transparent;
     }
 
-    // Numbered list style for sidebar navigation
-    .uf-nav-chaptered {
-        list-style-type: decimal-leading-zero;
-        list-style-position: inside;
-    }
-
-    // Revert link Flex to fix alignment issue with numbers
-    .uk-nav-default li > a {
-        display: inline-block;
+    // Chapter index styles
+    .sidebar-index {
+        color: @sidebar-item-color;
+        padding-right: 5px;
     }
 
     // Move padding from a to li.
@@ -43,6 +38,11 @@
         border-left: @sidebar-item-border-width solid @sidebar-item-border-color;
         background-color: @inverse-sidebar-active-background; // Apply dark mode by default
         color: @inverse-sidebar-item-active-color; // Apply dark mode by default
+
+        // Restore index color on active/hover
+        .sidebar-index {
+            color: inherit;
+        }
     }
     .uk-nav-default > li > a:hover,
     .uk-nav-default > li.uk-open > a,
@@ -54,7 +54,7 @@
 
     // Remove <a> left border and adjust padding
     .uk-nav-default > li > a {
-        padding: 0px @sidebar-item-padding-horizontal 0px 5px;
+        padding: 0px @sidebar-item-padding-horizontal 0px 0px;
         border-left: 0px;
     }
 
