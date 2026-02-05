@@ -1,7 +1,6 @@
 ---
 title: Search Engine Optimization
 description: Search Engine Optimization (SEO) is an integral part of the design and development process. We discuss the major important factors in getting a page to rank well, and how they fit in with UserFrosting's features and overall architecture.
-wip: true
 ---
 
 Search Engine Optimization (SEO) is an integral part of the design and development process. Getting the public side of your website to rank well in search results should be something you consider from the very beginning, and not an afterthought once you're getting ready to deploy.
@@ -63,17 +62,18 @@ Make your image files exactly the size at which you intend to display them (in s
 
 ### Use compiled assets in production
 
-The way UserFrosting [serves assets](asset-management) is great for development and debugging, but not so much for production. The asset files themselves (Javascript and CSS) are larger than they need to be to perform their function.
+The way UserFrosting [serves assets](asset-management) is great for development and debugging, but not so much for production. The asset files themselves (JavaScript and CSS) are larger than they need to be to perform their function.
 
-Using Webpack solves all of these problems:
+Using **Vite** (UserFrosting's build tool) solves all of these problems:
 
-1. It **minifies** your Javascript and CSS files, making files smaller by making variable names shorter and removing comments and whitespace;
-2. It **concatenates** Javascript and CSS files, reducing the number of requests needed by the page;
-3. It copies the assets to the `public/` directory, so that they can be served directly by your webserver instead of going through the application lifecycle.
+1. It **minifies** your JavaScript and CSS files, making files smaller by removing comments, whitespace, and optimizing code;
+2. It **bundles** JavaScript and CSS files efficiently using code splitting and tree shaking, reducing the amount of code loaded;
+3. It optimizes assets for production with automatic hashing for cache busting;
+4. It generates optimized builds that are served directly by your webserver for maximum performance.
 
 ### Caching
 
-[Caching](advanced/caching/intro) should happen on a number of levels throughout your application, on both the server and client sides. On the server, UserFrosting automatically caches route resolutions and fully-rendered Twig templates when you use the `production` configuration profile. You can also configure the webserver itself to cache entire responses. For example, see [nginx's caching documentation](https://www.nginx.com/resources/admin-guide/content-caching/).
+[Caching](advanced/caching) should happen on a number of levels throughout your application, on both the server and client sides. On the server, UserFrosting automatically caches route resolutions and fully-rendered Twig templates when you use the `production` environment mode. You can also configure the webserver itself to cache entire responses. For example, see [nginx's caching documentation](https://www.nginx.com/resources/admin-guide/content-caching/).
 
 Caching can also happen in the client's browser. For example, you don't want the client to have to retrieve images and Javascript files each time they visit your page, if those assets haven't changed since their last visit. Browser caching is handled by the `Cache-Control` response header, which is the server's way of telling the client's browser how long they should cache the response of a particular request.
 
@@ -81,7 +81,7 @@ Setting the value of the `Cache-Control` header is also typically handled direct
 
 The main issue with client-side caching is that you need some way of forcing the browser to refresh cached assets when they have changed (for example, when the site developers add a feature, fix a bug, or change some content). This is called **cache busting**, and the most common approach is to simply change the name of the asset so that browsers assume that it is a new resource to be loaded.
 
-Fortunately, UserFrosting's build tools take care of this as well. Each time you compile your assets, a random hash is used to name the compiled files. References to these assets in your pages are automatically updated to reflect these new names.
+Fortunately, Vite takes care of this automatically. Each time you build your assets for production, a content-based hash is used in the filename of compiled assets. References to these assets in your pages are automatically updated through Vite's manifest to reflect these new names.
 
 > [!TIP]
 > There are other steps that can be taken to further improve page performance, such as deferring the loading of Javascript and CSS, and inlining "above-the-fold" CSS. Google has recently released its [Pagespeed webserver module](https://developers.google.com/speed/pagespeed/module/) for Apache and nginx, which can automatically perform optimizations like these automatically and behind the scenes. We highly recommend that you look into installing and configuring this module if you use a supported webserver.
