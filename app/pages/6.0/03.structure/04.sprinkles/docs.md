@@ -1,7 +1,6 @@
 ---
 title: Sprinkles, what are they?
 description: Detailed breakdown of a sprinkle's contents.
-wip: true
 ---
 
 Sprinkles are an integral part of UserFrosting. We'll see in detail how they work in [a later chapter](sprinkles), but for now it's important to have an overview.
@@ -32,9 +31,9 @@ The Account sprinkle depends on the Core sprinkle.
 ### Admin Sprinkle
 The **Admin** sprinkle contains the routes and controllers to implement the administrative user management interface, as well as the group, role, and permission management interfaces.
 
-The Admin sprinkle depends on the Core, Account and AdminLTE sprinkles.
+The Admin sprinkle depends on the Core, Account and Pink Cupcake sprinkles.
 
-### AdminLTE Theme
-The **AdminLTE** theme sprinkle contains all the twig files and frontend assets to implement the [AdminLTE](https://adminlte.io) template.
+### Pink Cupcake Theme
+The **Pink Cupcake** theme sprinkle contains all the Twig templates and frontend assets built with [UiKit](https://getuikit.com). It provides a modern, responsive interface with Vue 3 components for interactive features.
 
-The AdminLTE sprinkle depends on the Core and Account sprinkles.
+The Pink Cupcake sprinkle depends on the Core and Account sprinkles.
