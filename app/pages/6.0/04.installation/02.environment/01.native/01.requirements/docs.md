@@ -1,7 +1,6 @@
 ---
 title: Installing Requirements
 description: Getting UserFrosting up and running in your development environment.
-wip: true
 ---
 
 Before you can start building with UserFrosting, you need the right tools installed. Think of these as your development toolkit—without them, you can't run UserFrosting or build your application. Some developers already have everything set up; others are starting fresh.
@@ -30,17 +29,35 @@ If you followed the previous pages, you probably noticed two pieces of software 
 
 ### CLI
 
-[plugin:content-inject](04.installation/_modular/cli)
+The [command line interface](installation/requirements/essential-tools-for-php#the-command-line-cli) will be required to perform most tasks in this guide. It's usage depends on your OS :
+
+#### MacOS
+If you're using MacOS, the **Terminal** is already installed on your computer. You'll find the app in `/System/Applications/Utilities/Terminal`.
+
+#### Linux
+Every Linux distro uses the command line. On Ubuntu for example, you can find a launcher for the terminal by clicking on the Activities item at the top left of the screen, then typing the first few letters of "terminal", "command", "prompt" or "shell".
+
+#### Windows
+The easiest way to setup a local dev environnement on Windows is through *Windows Subsystem for Linux* (WSL2). This is basically running Linux inside Windows. Best of both worlds! This also means most installation instructions for Windows you'll find on the internet won't work, as we're not technically *on* Windows, **we're on Ubuntu**. We'll instead use the Ubuntu installation instructions!
+
+See this guide for more detail on this process : [Set up a WSL development environment](https://learn.microsoft.com/en-us/windows/wsl/setup/environment). The gist of it is :
+
+1. Open *Windows Terminal*, which can be found in the [Microsoft Store](https://apps.microsoft.com/detail/9N0DX20HK701?hl=en-us&gl=US).
+2. Open the terminal and install WSL2 distro : `wsl --install`.
+3. During installation, enter a unix user with a password. Remember this password, you'll need it later!
+4. Restart Windows Terminal and open a new ***Ubuntu*** terminal. Each subsequent CLI usage on Windows will be from this Ubuntu terminal.
+
+When using Windows and WSL2, keep in mind your project files will be stored inside the Linux file system. For example, your project files will be in the Linux file system root directory (`\\wsl$\<DistroName>\home\<UserName>\Project`), not the Windows file system root directory (`C:\Users\<UserName>\Project or /mnt/c/Users/<UserName>/Project$`). See [Microsoft guide on file storage](https://learn.microsoft.com/en-us/windows/wsl/setup/environment#file-storage) for more information.
 
 ### PHP
 
-Installing PHP 8.3 locally will make it easier to develop locally, as it will allow you to run Composer locally, too.
+Installing PHP 8.5 locally will make it easier to develop locally, as it will allow you to run Composer locally, too.
 
 #### MacOS
 The easiest way to install PHP on MacOS is through Homebrew:
 1. Install XCode Command Line Tools : `xcode-select --install`
 2. Install [Homebrew](https://brew.sh) using their guide
-3. Install PHP 8.3, from the terminal : `brew install shivammathur/php/php@8.3`
+3. Install PHP 8.5, from the terminal : `brew install shivammathur/php/php@8.5`
 
 > [!TIP]
 > It's possible to use multiple versions of PHP on MacOS. See [shivammathur/php documentation](https://github.com/shivammathur/homebrew-php#switch-between-php-versions).
@@ -56,7 +73,7 @@ Install PHP through the package manager. For example, on Ubuntu :
 
 2. Install PHP and the necessary extensions :
    ```bash
-   sudo apt install php8.3 php8.3-gd php8.3-dom php8.3-zip php8.3-sqlite3 php8.3-pdo_mysql php8.3-curl php8.3-mbstring unzip
+   sudo apt install php8.5 php8.5-gd php8.5-dom php8.5-zip php8.5-sqlite3 php8.5-pdo_mysql php8.5-curl php8.5-mbstring unzip
    ```
 
 #### Preflight checks
@@ -71,11 +88,11 @@ php -v
 You should then see a message like:
 
 ```txt
-PHP 8.3.0 (cli) (built: Nov 21 2023 14:40:35) (NTS)
+PHP 8.5.0 (cli) (built: Dec 20 2024 12:30:45) (NTS)
 Copyright (c) The PHP Group
-Zend Engine v4.3.0, Copyright (c) Zend Technologies
-    with Xdebug v3.3.0, Copyright (c) 2002-2023, by Derick Rethans
-    with Zend OPcache v8.3.0, Copyright (c), by Zend Technologies
+Zend Engine v4.5.0, Copyright (c) Zend Technologies
+    with Xdebug v3.4.0, Copyright (c) 2002-2024, by Derick Rethans
+    with Zend OPcache v8.5.0, Copyright (c), by Zend Technologies
 ```
 
 This is the version of PHP which will be used by Composer. Make sure it meets the minimum required version for UserFrosting!
@@ -112,7 +129,7 @@ Composer version 2.5.4 2023-02-15 13:10:06
 
 ### Node
 
-It's now time to install [Node.js](https://nodejs.org/en/). Any version above **18.0** will work with UserFrosting 5, however we recommend using the latest LTS version of Node.js (18.18.2 LTS as of October 2023).
+It's now time to install [Node.js](https://nodejs.org/en/). Any version above **18.0** will work with UserFrosting, however we recommend using the latest LTS version of Node.js (20.x LTS as of 2025).
 
 #### MacOS
 

@@ -1,7 +1,6 @@
 ---
 title: Basic Stack Requirements
 description: UserFrosting requires a web server, PHP, and some sort of database.
-wip: true
 ---
 
 The basic stack requirements for running UserFrosting are pretty typical of any web framework or CMS. Those requirements are the software required to _run_ UserFrosting, usually on a "server". These are different from the [developer tools used to build your website](installation/requirements/essential-tools-for-php) which we'll see on the next page.
@@ -30,22 +29,22 @@ Any of these can be used to run UserFrosting. However, when developing locally (
 
 ## PHP Requirements
 
-You're probably here because you already know what PHP is. Great! The only thing left to say is UserFrosting requires **PHP 8.1** or higher. However, it's highly recommended you use the latest supported version, which is *PHP 8.3*.
+You're probably here because you already know what PHP is. Great! The only thing left to say is UserFrosting requires **PHP 8.1** or higher. However, it's highly recommended you use the latest supported version, which is *PHP 8.5*.
 
 ### But my host only supports PHP 7.x! Why do I need PHP 8.1?
 
 Look, programming languages evolve, and PHP is no exception. Actually, PHP and other web languages have it particularly tough because they have so many responsibilities. PHP is the bouncer at the door: it has to be prepared to defend against constantly evolving security threats to your server. At the same time, it has to keep up with demand for faster performance, and satisfy the demand for new features from the [enormous](https://w3techs.com/technologies/overview/programming_language/all) PHP community.
 
-Honestly, PHP 8.1 isn't exactly cutting edge - in fact, **PHP 8.1 was no longer in active support as of [November 25th, 2023](http://php.net/supported-versions.php) and will be declared "End of Life" as of [November 25th, 2024](http://php.net/supported-versions.php)**.
+Honestly, PHP 8.1 isn't exactly cutting edge - in fact, **PHP 8.1 is already past its "End of Life" date ([November 25th, 2024](http://php.net/supported-versions.php)) and was no longer in active support as of [November 25th, 2023](http://php.net/supported-versions.php)**.
 
-In fact, we didn't make this decision directly. UserFrosting depends on a lot of third-party components, and *those* components require a minimum PHP version of _8.1_. As the whole community moves forward, UserFrosting does too. And fast! PHP 8.3 will only be supported until [November 23th, 2025](http://php.net/supported-versions.php) !
+In fact, we didn't make this decision directly. UserFrosting depends on a lot of third-party components, and *those* components require a minimum PHP version of _8.1_. As the whole community moves forward, UserFrosting does too. And fast! PHP 8.5 will only be supported until [November 2027](http://php.net/supported-versions.php) !
 
-If your hosting service doesn't have PHP 8.1 or above installed, call them and ask them to upgrade. If they refuse, point out that PHP 7.4 has been out of life for {{ date("now").diff(date("2022-11-28")).m }} months! To be honest, there is little reason to use a shared hosting (e.g. cPanel) service these days, especially when VPS providers like DigitalOcean and Amazon EC2 are so inexpensive. Unless you're stuck with shared hosting for some reason or another (fussy boss), [there's no real reason not to switch to a VPS](https://www.hostt.com/still-use-shared-hosting-theres-vps/).
+If your hosting service doesn't have PHP 8.1 or above installed, call them and ask them to upgrade. If they refuse, point out that PHP 7.4 has been out of life for more than **3 years**! To be honest, there is little reason to use a shared hosting (e.g. cPanel) service these days, especially when VPS providers like DigitalOcean and Amazon EC2 are so inexpensive. Unless you're stuck with shared hosting for some reason or another (fussy boss), [there's no real reason not to switch to a VPS](https://www.hostt.com/still-use-shared-hosting-theres-vps/).
 
 As for your local development environment ([You _do_ have a local development environment, right ?](background/develop-locally-serve-globally)), if it's that much of a burden then... I don't know what to tell you. So what are you waiting for? Upgrade!
 
 > [!NOTE]
-> As a reminder, as of UserFrosting 5.1, **PHP 8.3** is officially recommended. While you can still use UserFrosting 5 with PHP 8.1 and 8.2, upgrading to PHP 8.3 is highly recommended. Both PHP 8.1 and 8.2 support will eventually be removed the future.
+> As a reminder, **PHP 8.5** is officially recommended for UserFrosting 6. While you can still use UserFrosting with PHP 8.1, 8.2, 8.3 or 8.4, upgrading to PHP 8.5 is highly recommended for optimal performance and security.
 
 ### PHP Extensions
 

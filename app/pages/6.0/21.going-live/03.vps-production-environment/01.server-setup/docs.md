@@ -78,7 +78,7 @@ Some notes:
 Install gd and curl:
 
 ```bash
-sudo apt-get install php8.3-gd
+sudo apt-get install php8.5-gd
 sudo apt-get install php-curl
 sudo service nginx restart
 ```
@@ -87,12 +87,12 @@ sudo service nginx restart
 
 PHP's [`get_browser()`](http://php.net/manual/en/function.get-browser.php) function uses the `User-Agent` header to guess information about your visitors such as browser, OS, etc. For it to work properly, you need to download a copy of `browscap.ini` from the [Browscap Project](https://browscap.org) and configure your `php.ini` to find the file.
 
-Assuming that your PHP installation is in `/etc/php/8.0`, do the following:
+Assuming that your PHP installation is in `/etc/php/8.5`, do the following:
 
 ```bash
-cd /etc/php/8.3/fpm
+cd /etc/php/8.5/fpm
 sudo mkdir extra
-sudo curl -o /etc/php/8.3/fpm/extra/browscap.ini https://browscap.org/stream?q=Lite_PHP_BrowsCapINI
+sudo curl -o /etc/php/8.5/fpm/extra/browscap.ini https://browscap.org/stream?q=Lite_PHP_BrowsCapINI
 ```
 
 This will download the "lite" browscap database, which is supposed to be adequate for most websites. Visit [Browscap Project](https://browscap.org) for other options.
@@ -100,7 +100,7 @@ This will download the "lite" browscap database, which is supposed to be adequat
 Now, we need to edit our `php.ini` to tell PHP where this file is located:
 
 ```bash
-sudo nano /etc/php/8.0/fpm/php.ini
+sudo nano /etc/php/8.5/fpm/php.ini
 ```
 
 Use Ctrl+W to search for the `browscap` section. Uncomment the `browscap = ` line. When you're done, it should look like this:
@@ -147,7 +147,7 @@ Notes:
 
 ```bash
 sudo phpenmod mcrypt
-sudo service php8.3-fpm restart
+sudo service php8.5-fpm restart
 ```
 
 To disable root login and restrict access to specific users:

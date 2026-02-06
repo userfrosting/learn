@@ -1,7 +1,6 @@
 ---
 title: Essential Tools for Modern PHP
 description: A minimal set of tools that every PHP developer should have installed in their development environment.
-wip: true
 ---
 
 On the previous page, we saw the softwares required to run UserFrosting. Now it's time to look at tools you'll need during development to build your UserFrosting application. These tools are not strictly required to be installed on your production server, which we'll cover in a [later chapter](going-live).
@@ -43,7 +42,7 @@ If you've been out of the PHP world for a while, you might have missed this crit
 Composer also handles autoloading, which means that the days of needing long blocks of `include` or `require` statements in your code are over. It fully implements the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/) for autoloading, which further helps the PHP community develop a consistent approach to releasing and consuming packages.
 
 > [!NOTE]
-> Following its release in October 2020, UserFrosting 5 now requires [**Composer 2**](https://getcomposer.org).
+> Following its release in October 2020, UserFrosting requires [**Composer 2**](https://getcomposer.org).
 
 ## Node.js
 
@@ -55,14 +54,14 @@ Although UserFrosting does not _run_ on Node.js, it does use several Node-based 
 > Even though we'll be using these tools to get our application ready for deployment, you don't need to install Node.js on your live server. You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.
 
 > [!NOTE]
-> UserFrosting 5 requires **Node 18** or above.
+> UserFrosting requires **Node 18** or above.
 
 ## npm
 
 [npm](https://www.npmjs.com) stands for **N**ode **P**ackage **M**anager. npm is to Node.js what Composer is to PHP. It is used to grab the various Node packages that are required by UserFrosting's installation and build tools.
 
 > [!NOTE]
-> UserFrosting 5 requires **NPM 9** or above.
+> UserFrosting requires **NPM 9** or above.
 
 ## Code Editor
 

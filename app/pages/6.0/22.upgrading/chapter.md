@@ -39,7 +39,7 @@ UserFrosting 5.1 continues to receive security updates, so there's no immediate 
 > **Back up your application and database** before starting the upgrade process. Test the upgrade in a development environment first, never directly in production.
 
 Requirements for UserFrosting 6.0:
-- PHP 8.1 or higher (8.4 recommended)
+- PHP 8.1 or higher (8.5 recommended)
 - Composer 2
 - Node.js 18.0 or higher (24 LTS recommended)
 - npm 9.0 or higher
