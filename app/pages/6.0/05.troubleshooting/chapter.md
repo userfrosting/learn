@@ -1,7 +1,6 @@
 ---
 title: Troubleshooting
 description: Troubleshooting installation and your application.
-wip: true
 ---
 
 #### Chapter 5

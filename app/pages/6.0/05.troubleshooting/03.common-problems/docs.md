@@ -1,13 +1,9 @@
 ---
 title: Common Problems
 description: Commonly encountered issues when setting up, developing, or deploying a UserFrosting project.
-wip: true
 ---
 
 ## Installation
-
-<!-- ### Route error -->
-<!-- TODO -->
 
 ### I get a Node/npm error when running `php bakery bake`.
 
@@ -25,7 +21,7 @@ This is an indication that asset build failed or you missed a step in the instal
 
 ### Installation went fine, except I don't see any styling on my home page. I am using Apache.
 
-UserFrosting uses a [dynamic routing system](asset-management/basic-usage) for serving assets in a development environment. For this to work on an Apache webserver, `mod_rewrite` needs to be enabled, **and** you need to give Apache permission to use the `.htaccess` file in `public/`.
+UserFrosting uses a [dynamic routing system](/asset-management/basic-usage) for serving assets in a development environment. For this to work on an Apache webserver, `mod_rewrite` needs to be enabled, **and** you need to give Apache permission to use the `.htaccess` file in `public/`.
 
 #### Enabling `mod_rewrite`
 
