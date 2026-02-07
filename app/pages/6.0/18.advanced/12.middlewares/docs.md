@@ -11,7 +11,7 @@ UserFrosting implement Slim's approach to handle middleware. Slim adds middlewar
 
 When you run your UserFrosting application, the Request object traverses the middleware structure from the outside in. They first enter the outermost middleware, then the next outermost middleware, (and so on), until they ultimately arrive at the Slim application itself. After the Slim application dispatches the appropriate route, the resultant Response object exits the Slim application and traverses the middleware structure from the inside out. Ultimately, a final Response object exits the outermost middleware, is serialized into a raw HTTP response, and is returned to the HTTP client. Here's a diagram that illustrates the middleware process flow:
 
-![Middleware](middleware.png)
+![Middleware](/middleware.png)
 [Source](https://www.slimframework.com/docs/v4/concepts/middleware.html)
 
 ## How do I write middleware?

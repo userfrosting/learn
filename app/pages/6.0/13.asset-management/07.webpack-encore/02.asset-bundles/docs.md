@@ -7,9 +7,9 @@ description: Entrypoints bundles allow you to group one or more asset references
 > **This documentation is obsolete.** UserFrosting 6 uses **Vite** as the default asset bundler, not Webpack Encore.
 >
 > Please see:
-> - [Sprinkle Assets](asset-management/sprinkle-assets) for multi-sprinkle asset architecture
-> - [Advanced Usage](asset-management/advanced) for code splitting and optimization
-> - [Migration Guide](asset-management/migration) to migrate from Webpack Encore
+> - [Sprinkle Assets](/asset-management/sprinkle-assets) for multi-sprinkle asset architecture
+> - [Advanced Usage](/asset-management/advanced) for code splitting and optimization
+> - [Migration Guide](/asset-management/migration) to migrate from Webpack Encore
 
 Most CSS and Javascript resources should be integrated into your pages through **entrypoints**. Entrypoints defines groups of assets for which UserFrosting can automatically render `<link>` or `<script>` tags in your pages.
 

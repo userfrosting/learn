@@ -42,22 +42,22 @@ If you're coming from jQuery or vanilla JavaScript, Vue 3 might seem like a sign
 
 This chapter is your guide to building client-side features in UserFrosting:
 
-- **[Overview](client-side-code/overview)**: Understanding the client-side stack and available tools
-- **[Exporting Variables](client-side-code/exporting-variables)**: Passing data from PHP/Twig to JavaScript
-- **[Vue Components](client-side-code/vue-components)**: Building reactive components with Vue 3
-- **[Forms](client-side-code/components/forms)**: Creating validated, AJAX-powered forms
-- **[Tables](client-side-code/components/tables)**: Building data tables with sorting and filtering
-- **[Collections](client-side-code/components/collections)**: Managing dynamic lists of items
-- **[Alerts](client-side-code/components/alerts)**: Displaying notifications and messages
+- **[Overview](/client-side-code/overview)**: Understanding the client-side stack and available tools
+- **[Exporting Variables](/client-side-code/exporting-variables)**: Passing data from PHP/Twig to JavaScript
+- **[Vue Components](/client-side-code/vue-components)**: Building reactive components with Vue 3
+- **[Forms](/client-side-code/components/forms)**: Creating validated, AJAX-powered forms
+- **[Tables](/client-side-code/components/tables)**: Building data tables with sorting and filtering
+- **[Collections](/client-side-code/components/collections)**: Managing dynamic lists of items
+- **[Alerts](/client-side-code/components/alerts)**: Displaying notifications and messages
 
 > [!TIP]
 > If you're new to Vue 3, don't worry! This chapter explains concepts as we go. You don't need to be a Vue expert to build great features with UserFrosting.
 
 ## Learning Path
 
-**If you're new to Vue**: Start with [Overview](client-side-code/overview) to understand the basics, then work through the component examples.
+**If you're new to Vue**: Start with [Overview](/client-side-code/overview) to understand the basics, then work through the component examples.
 
-**If you know Vue 2**: The [Vue Components](client-side-code/vue-components) section highlights what's different in Vue 3.
+**If you know Vue 2**: The [Vue Components](/client-side-code/vue-components) section highlights what's different in Vue 3.
 
 **If you're upgrading from UserFrosting 5.1**: The component sections show how to migrate from jQuery plugins to Vue 3 patterns.
 

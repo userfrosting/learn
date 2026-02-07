@@ -4,15 +4,15 @@ description: Adding custom authorization rules to control access to our Pastries
 obsolete: true
 ---
 
-Now it's time to add custom authorization rules to our page. We will use these rules to control two things: visibility of the page itself, and visibility of the `origin` column in the table. Each one will require a new [permission](users/access-control#permissions).
+Now it's time to add custom authorization rules to our page. We will use these rules to control two things: visibility of the page itself, and visibility of the `origin` column in the table. Each one will require a new [permission](/users/access-control#permissions).
 
 ## Creating the permission in the database
 
 ### The migration
 
-UserFrosting doesn't have a UI to create new [Permissions](users/access-control#permissions). This is done on purpose because, as you'll see, permission *slugs* are tightly coupled with the code and it doesn't make sense for an admin user to create new permissions through the UI when they'll need to modify the code to actually use them.
+UserFrosting doesn't have a UI to create new [Permissions](/users/access-control#permissions). This is done on purpose because, as you'll see, permission *slugs* are tightly coupled with the code and it doesn't make sense for an admin user to create new permissions through the UI when they'll need to modify the code to actually use them.
 
-To [create a new permission](users/access-control#creating-new-permissions), we instead have to create a new row in the `permissions` database table. To do this, we'll use a **migration**. We've already explained how to create migration earlier, but we will now create a new migration whose role will be solely to create the new entry into the database table, and drop them on rollback. We could also use that migration to assign our new permission to existing roles, even though this _can_ be done in the admin interface.
+To [create a new permission](/users/access-control#creating-new-permissions), we instead have to create a new row in the `permissions` database table. To do this, we'll use a **migration**. We've already explained how to create migration earlier, but we will now create a new migration whose role will be solely to create the new entry into the database table, and drop them on rollback. We could also use that migration to assign our new permission to existing roles, even though this _can_ be done in the admin interface.
 
 > [!NOTE]
 > A seed can also be used to create permission entries. However, since a seed is only a one way operation (up) and can be run multiple times, it's best to use a migration for permissions entries. This will allow to remove the entries if the sprinkle/permission is not required anymore. Plus, since the permissions cannot be manually removed from the UI (unlike default pastries eventually, for example), there's no benefits of being able to run the seed twice.
@@ -199,7 +199,7 @@ $ php bakery migrate
 
 You can make sure the migration was successful by logging in as the root user and going to the permissions page:
 
-![Pastries permission list](images/pastries/permission-list.png)
+![Pastries permission list](/images/pastries/permission-list.png)
 
 ## Adding permission to the page
 
@@ -272,11 +272,11 @@ The link should now be hidden from the menu when you refresh the page.
 
 Now to make sure everything works correctly, let's add that `see_pastries` permission to the **User** role. Once this is done, a normal user will regain access to the page. Using a root account, navigate to the **Roles** page and select **Manage permissions** from the Actions dropdown menu of the **User** role.
 
-![Role page](images/pastries/role-page.png)
+![Role page](/images/pastries/role-page.png)
 
 Select the `see_pastries` permission from the bottom dropdown (use the search field to easily find it) and then click `update permissions`.
 
-![Adding permission](images/pastries/adding-permission.png)
+![Adding permission](/images/pastries/adding-permission.png)
 
 Your non-root user should now have access to the pastry page again (assuming they have the User role).
 
@@ -323,4 +323,4 @@ The non-root user should no longer be able to see the origin column. You can now
 
 ## Going further
 
-In this example we used `always()` as the [callback](users/access-control#callbacks) for our permission. If you want to learn more about the **Authorization System**, you could try adding [conditions](users/access-control#performing-access-checks) to a new `see_pastry_details` permission to control which columns can be viewed using the same slug, and passing the column name to the callback.
+In this example we used `always()` as the [callback](/users/access-control#callbacks) for our permission. If you want to learn more about the **Authorization System**, you could try adding [conditions](/users/access-control#performing-access-checks) to a new `see_pastry_details` permission to control which columns can be viewed using the same slug, and passing the column name to the callback.

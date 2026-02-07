@@ -27,7 +27,7 @@ If you haven't already, set up an empty UserFrosting install [using the Skeleton
 
 We'll use a migration to create an auxiliary table, `members`, that stores our additional user columns.
 
-Follow the directions in [Database Migrations](database/migrations) for creating a new migration in your Sprinkle. For our example, let's assume we want to add the fields `city` and `country`:
+Follow the directions in [Database Migrations](/database/migrations) for creating a new migration in your Sprinkle. For our example, let's assume we want to add the fields `city` and `country`:
 
 ```php
 <?php
@@ -277,7 +277,7 @@ This class only has one method, `apply`, which takes the base query builder obje
 
 The problem, of course, is that all of the controllers in the Sprinkle that _defined_ the `User` model, are still _using_ the `User` model (this is simply how inheritance works).
 
-Fortunately, the default Sprinkles never directly reference the `User` class. Instead, they **[inject](dependency-injection)** the `UserInterface`. All we need to do, then, is remap the `UserInterface` to our new class, `Member`. This can be done via [Autowire](dependency-injection/the-di-container#binding-interfaces) in a [service provider](services/extending-services).
+Fortunately, the default Sprinkles never directly reference the `User` class. Instead, they **[inject](/dependency-injection)** the `UserInterface`. All we need to do, then, is remap the `UserInterface` to our new class, `Member`. This can be done via [Autowire](/dependency-injection/the-di-container#binding-interfaces) in a [service provider](/services/extending-services).
 
 Create a class `src/ServicesProvider/MemberModelService.php` :
 

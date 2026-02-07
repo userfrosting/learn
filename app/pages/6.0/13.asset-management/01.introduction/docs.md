@@ -20,7 +20,7 @@ Here's what makes Vite special:
 - **Simpler configuration**: Compared to Webpack, Vite's configuration is more intuitive and requires less boilerplate code
 - **Better Vue 3 support**: Vite's official Vue plugin provides optimized handling of Single File Components (`.vue` files)
 
-While Vite is the recommended bundler, UserFrosting 6 maintains backward compatibility with [Webpack Encore](asset-management/webpack-encore) for existing projects that require it. You're not forced to migrate immediately—you can take your time!
+While Vite is the recommended bundler, UserFrosting 6 maintains backward compatibility with [Webpack Encore](/asset-management/webpack-encore) for existing projects that require it. You're not forced to migrate immediately—you can take your time!
 
 ## Asset Workflow Overview
 
@@ -78,4 +78,4 @@ This chapter will guide you through:
 - **Sprinkle Assets**: Managing assets across multiple sprinkles
 - **Migration**: Transitioning from Webpack Encore to Vite
 
-Ready to get started? Continue to the [Getting Started](asset-management/getting-started) guide.
+Ready to get started? Continue to the [Getting Started](/asset-management/getting-started) guide.

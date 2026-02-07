@@ -317,7 +317,7 @@ You can add your own scripts for project-specific tasks. For example, you might 
 
 ## Managing Dependencies with Bakery
 
-While you can run NPM commands directly, UserFrosting provides convenient [Bakery commands](cli/commands) that wrap NPM functionality and integrate with your UserFrosting workflow. Think of these as UserFrosting's way of helping you manage frontend dependencies without leaving the PHP environment.
+While you can run NPM commands directly, UserFrosting provides convenient [Bakery commands](/cli/commands) that wrap NPM functionality and integrate with your UserFrosting workflow. Think of these as UserFrosting's way of helping you manage frontend dependencies without leaving the PHP environment.
 
 ### Installing Dependencies
 
@@ -390,4 +390,4 @@ You can use either NPM commands or Bakery commands—they accomplish the same go
 
 ## Next Steps
 
-Now that you understand package.json, NPM scripts, and dependency management, learn about [Vite Configuration](asset-management/vite-configuration) to customize how assets are built and served.
+Now that you understand package.json, NPM scripts, and dependency management, learn about [Vite Configuration](/asset-management/vite-configuration) to customize how assets are built and served.

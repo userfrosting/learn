@@ -380,7 +380,7 @@ export function useForm<T extends Record<string, any>>(
     errors.value = {}
 
     try {
-      const response = await axios[method](url, form.value, {
+      const response = await axios[method](/url, form.value, {
         headers: {
           [site.csrf.keys.name]: site.csrf.name,
           [site.csrf.keys.value]: site.csrf.value
@@ -694,9 +694,9 @@ async function handleSubmit() {
 
 ## What's Next?
 
-- **[Tables](client-side-code/components/tables)**: Display data in sortable, filterable tables
-- **[Collections](client-side-code/components/collections)**: Manage dynamic lists of items
-- **[Alerts](client-side-code/components/alerts)**: Show notifications to users
+- **[Tables](/client-side-code/components/tables)**: Display data in sortable, filterable tables
+- **[Collections](/client-side-code/components/collections)**: Manage dynamic lists of items
+- **[Alerts](/client-side-code/components/alerts)**: Show notifications to users
 
 ## Further Reading
 

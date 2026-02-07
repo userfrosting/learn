@@ -16,8 +16,8 @@ UserFrosting recognizes the following environment variables:
 
 |       Variable       | Description                                                                             |
 |:--------------------:|-----------------------------------------------------------------------------------------|
-|      `UF_MODE`       | The current [environment Modes](configuration/config-files#environment-modes)          |
-|    `CSRF_ENABLED`    | The global switch for the [CSRF Guard](routes-and-controllers/client-input/csrf-guard) |
+|      `UF_MODE`       | The current [environment Modes](/configuration/config-files#environment-modes)          |
+|    `CSRF_ENABLED`    | The global switch for the [CSRF Guard](/routes-and-controllers/client-input/csrf-guard) |
 |   `DB_CONNECTION`    | The database connection to use                                                          |
 | `DB_TEST_CONNECTION` | The database connection to use in the test environment                                  |
 |     `DB_DRIVER`      | The database driver to use (choice of `mysql`, `pgsql`, `sqlite` or `sqlsrv`)           |
@@ -50,4 +50,4 @@ $ cp app/.env.example app/.env
 
 Now, you can set values in the `.env` file and UserFrosting will pick them up _as if_ they were actual environment variables.
 
-You may also want to configure your SMTP server settings as well at this point so that you can use features that require mail, such as password reset and email verification. See [Chapter 16](mail) for more information on the mail service.
+You may also want to configure your SMTP server settings as well at this point so that you can use features that require mail, such as password reset and email verification. See [Chapter 16](/mail) for more information on the mail service.

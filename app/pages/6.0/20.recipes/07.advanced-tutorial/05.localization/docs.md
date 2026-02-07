@@ -109,4 +109,4 @@ return [
 
 At this point, you can visit the user preferences and change your language to French. Once this is done, go back to the pastries page and _voilà, tout en français_ !
 
-![Pastries in French](images/pastries/04.png)
+![Pastries in French](/images/pastries/04.png)

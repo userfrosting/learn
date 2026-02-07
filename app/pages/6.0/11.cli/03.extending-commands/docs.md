@@ -6,15 +6,15 @@ wip: true
 
 *Aggregator commands* is a fancy term to identify core bakery commands that just run multiple sub-commands in one operation. UserFrosting uses 3 of those special commands:
 
-1. [bake](cli/commands#bake)
-2. [setup](cli/commands#setup)
-3. [debug](cli/commands#debug)
+1. [bake](/cli/commands#bake)
+2. [setup](/cli/commands#setup)
+3. [debug](/cli/commands#debug)
 
-Those commands are typically used as "installation" steps. It this situation, it's much more simpler to run one command than multiple ones. You can easily add your own command(s) to any of these aggregators using [event listeners](advanced/events#listener).
+Those commands are typically used as "installation" steps. It this situation, it's much more simpler to run one command than multiple ones. You can easily add your own command(s) to any of these aggregators using [event listeners](/advanced/events#listener).
 
 ## Adding Custom Commands to the `bake` command
 
-The [`bake` command](cli/commands#bake) combines many CLI commands into one and is meant to be used as an "installation" process. Sprinkles can add new commands to `bake` by listening to the `\UserFrosting\Sprinkle\Core\Bakery\Event\BakeCommandEvent` in two easy steps. For example, let's add the `hello` command to `bake` :
+The [`bake` command](/cli/commands#bake) combines many CLI commands into one and is meant to be used as an "installation" process. Sprinkles can add new commands to `bake` by listening to the `\UserFrosting\Sprinkle\Core\Bakery\Event\BakeCommandEvent` in two easy steps. For example, let's add the `hello` command to `bake` :
 
 1. Create a custom listener
 
@@ -87,7 +87,7 @@ The same command event can be listened by many sprinkles. In this case, dependen
 If you need to place your command at a specific place in the stack, you can use the `getCommands` method to retrieve the current list, modify it, and place it back using `setCommands` method. This method can also be used to **remove** commands.
 
 > [!NOTE]
-> You can learn more about Event Listening in [Chapter 18](advanced/events).
+> You can learn more about Event Listening in [Chapter 18](/advanced/events).
 
 ## Adding Custom Commands to the `setup` command
 

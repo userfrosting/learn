@@ -3,7 +3,7 @@ title: Essential Tools for Modern PHP
 description: A minimal set of tools that every PHP developer should have installed in their development environment.
 ---
 
-On the previous page, we saw the softwares required to run UserFrosting. Now it's time to look at tools you'll need during development to build your UserFrosting application. These tools are not strictly required to be installed on your production server, which we'll cover in a [later chapter](going-live).
+On the previous page, we saw the softwares required to run UserFrosting. Now it's time to look at tools you'll need during development to build your UserFrosting application. These tools are not strictly required to be installed on your production server, which we'll cover in a [later chapter](/going-live).
 
 During development, and before you're ready to deploy, you'll want to have the following tools installed:
 
@@ -37,7 +37,7 @@ Git is one of the most popular [version control systems](https://en.wikipedia.or
 
 Up until March of 2012, PHP didn't really have a good project-level package manager. There was PEAR, but it [failed to keep up with the evolution of the PHP community](https://benramsey.com/blog/2013/11/the-fall-of-pear-and-the-rise-of-composer/). In March of 2012, on the heels of the [PHP Standard Recommendations (PSR)](http://www.php-fig.org/psr/) project, [Composer](https://getcomposer.org) was released and a new era of PHP began.
 
-If you've been out of the PHP world for a while, you might have missed this critical shift. Over the past few years, Composer has risen to become the *de facto* package manager for PHP, with [Packagist](https://packagist.org/) as its main public package repository. This means that the best way to incorporate third-party code (which you [definitely should do](background/dont-reinvent-the-wheel)) is by installing and using Composer - at the very least, in your development environment.
+If you've been out of the PHP world for a while, you might have missed this critical shift. Over the past few years, Composer has risen to become the *de facto* package manager for PHP, with [Packagist](https://packagist.org/) as its main public package repository. This means that the best way to incorporate third-party code (which you [definitely should do](/background/dont-reinvent-the-wheel)) is by installing and using Composer - at the very least, in your development environment.
 
 Composer also handles autoloading, which means that the days of needing long blocks of `include` or `require` statements in your code are over. It fully implements the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/) for autoloading, which further helps the PHP community develop a consistent approach to releasing and consuming packages.
 

@@ -20,9 +20,9 @@ This guide walks you through the upgrade process step-by-step. While the changes
 
 This section provides detailed information about:
 
-- **[Changelog](upgrading/51-to-60/changelog)**: Comprehensive list of changes, additions, and removals in 6.0
-- **[Migration Guide](upgrading/51-to-60/guide)**: Step-by-step instructions for upgrading your application
-- **[What to Expect](upgrading/51-to-60/what-to-expect)**: Future roadmap and what comes next after 6.0
+- **[Changelog](/upgrading/51-to-60/changelog)**: Comprehensive list of changes, additions, and removals in 6.0
+- **[Migration Guide](/upgrading/51-to-60/guide)**: Step-by-step instructions for upgrading your application
+- **[What to Expect](/upgrading/51-to-60/what-to-expect)**: Future roadmap and what comes next after 6.0
 
 ## Quick Overview
 
@@ -78,9 +78,9 @@ The frontend migration (Webpack → Vite) typically requires the most attention,
 
 If you encounter issues during the upgrade:
 
-1. Check the [Troubleshooting](troubleshooting) chapter
+1. Check the [Troubleshooting](/troubleshooting) chapter
 2. Search existing [GitHub issues](https://github.com/userfrosting/monorepo/issues)
 3. Ask in the [UserFrosting chat](https://chat.userfrosting.com)
 4. Open a new issue with detailed information about your setup
 
-Ready to begin? Start with the [Changelog](upgrading/51-to-60/changelog) to understand what's changed, then follow the [Migration Guide](upgrading/51-to-60/guide) for step-by-step instructions.
+Ready to begin? Start with the [Changelog](/upgrading/51-to-60/changelog) to understand what's changed, then follow the [Migration Guide](/upgrading/51-to-60/guide) for step-by-step instructions.

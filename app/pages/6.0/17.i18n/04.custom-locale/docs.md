@@ -39,7 +39,7 @@ A list of authors for the locale.
 
 ### plural_rule
 
-The plural rule number associated with the locale. See [Pluralization](i18n/latranslator#pluralization) for more details.
+The plural rule number associated with the locale. See [Pluralization](/i18n/latranslator#pluralization) for more details.
 
 ### parents
 

@@ -212,7 +212,7 @@ templates/
 
 ### Mail templates
 
-`mail/` contains email templates - see [Mail](mail) for more information.
+`mail/` contains email templates - see [Mail](/mail) for more information.
 
 ## Overriding Sprinkle templates
 

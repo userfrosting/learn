@@ -9,7 +9,7 @@ The PHP community has evolved considerably over the past two decades, beginning 
 
 This breakneck pace has caused a lot of people to get left behind. For someone who hasn't been doing web development continuously for the past decade or more, it can feel like an overwhelming task to get acquainted with all of the new tools and frameworks that seem to be coming out every day. Relevant comic from [Abstruse Goose](http://abstrusegoose.com/503):
 
-![BlooP and FlooP and GlooP](images/theoretical_mathematics_however_never_goes_out_of_fashion.png)
+![BlooP and FlooP and GlooP](/images/theoretical_mathematics_however_never_goes_out_of_fashion.png)
 
 The problem is that when you're a busy developer with real-world projects to work on, it's very difficult to set aside time to read a book about technology X - especially when you're not even sure that you really _need_ to learn X!
 

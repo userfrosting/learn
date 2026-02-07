@@ -9,9 +9,9 @@ On Github, UserFrosting Chat, and Stack Overflow, please keep in mind the follow
 
 1. Remember that courtesy and proper grammar go a long way. Please take the time to craft a **precise, polite issue**. We will do our best to help, but remember that this is an open-source project - none of us are getting paid a salary to develop this project, or to act as your personal support hotline ;-). We understand the language barrier can be an issue for some people, so don't be afraid to ask questions even if your English is not perfect!
 
-2. Report any errors in detail. Vague issues like "it doesn't work when I do this" are not helpful. Show that you have put some effort into identifying the cause of the error. See the [previous section](troubleshooting/debugging) for information on how to get more details about errors and other problems. Including a stack trace with your report is the best way we can help you.
+2. Report any errors in detail. Vague issues like "it doesn't work when I do this" are not helpful. Show that you have put some effort into identifying the cause of the error. See the [previous section](/troubleshooting/debugging) for information on how to get more details about errors and other problems. Including a stack trace with your report is the best way we can help you.
 
-3. You should always test your code in a [local development environment](background/develop-locally-serve-globally), to separate **code-related** issues from **server** issues. In general, we recommend that you install a local development server on your computer, rather than [testing your code directly on the production server](https://pbs.twimg.com/media/BxfENwpIYAAcHqQ.png). This means you can test your code directly on your own computer, making development faster and without the risk of exposing sensitive information to the public.
+3. You should always test your code in a [local development environment](/background/develop-locally-serve-globally), to separate **code-related** issues from **server** issues. In general, we recommend that you install a local development server on your computer, rather than [testing your code directly on the production server](https://pbs.twimg.com/media/BxfENwpIYAAcHqQ.png). This means you can test your code directly on your own computer, making development faster and without the risk of exposing sensitive information to the public.
 
 ## Chat
 
@@ -47,7 +47,7 @@ Check [Stack Overflow](http://stackoverflow.com/tags/userfrosting) and the [issu
 
 Markdown is the _de facto_ standard for basic text formatting on the web. If you are unfamiliar with Markdown, please [take a few minutes to learn](https://guides.github.com/features/mastering-markdown/#what). It will help you all over the web! In particular, please make sure you know where the **backtick** key (`) is located on your keyboard:
 
-![Location of backtick key](images/backtick.png)
+![Location of backtick key](/images/backtick.png)
 
 ##### Inline code
 

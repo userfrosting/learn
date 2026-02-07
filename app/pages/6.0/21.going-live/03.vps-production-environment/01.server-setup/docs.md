@@ -3,7 +3,7 @@ title: Server Setup
 description: No matter which VPS option you choose, you'll need to make sure that you have the required software installed and properly configured for UserFrosting.
 obsolete: true
 ---
-<!-- [plugin:content-inject](modular/_updateRequired) -->
+<!-- [plugin:content-inject](/modular/_updateRequired) -->
 
 > [!NOTE]
 > This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).

@@ -3,7 +3,7 @@ title: Debugging
 description: When your application "doesn't work", it's not always obvious where the problem lies. Modern web browsers come with a built-in tool for identifying problems in client-side code, as well as problems in the communication between your browser and the server.
 ---
 
-As we mentioned in [Chapter 2](background/the-client-server-conversation), a web application is not a single piece of software. It consists of the server running PHP code, the client (browser) running Javascript and rendering the web page, and the conversation between the two parties. Things can go wrong in any of these three places.
+As we mentioned in [Chapter 2](/background/the-client-server-conversation), a web application is not a single piece of software. It consists of the server running PHP code, the client (browser) running Javascript and rendering the web page, and the conversation between the two parties. Things can go wrong in any of these three places.
 
 ## Client-side Debugging
 
@@ -18,17 +18,17 @@ To open the console in Firefox, use the following shortcuts:
  - Windows: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd>
  - MacOS: <kbd>Cmd</kbd> + <kbd>Opt</kbd> + <kbd>K</kbd>
 
-![Firefox developer tools](images/firefox-console-1.png)
+![Firefox developer tools](/images/firefox-console-1.png)
 
 The tool panel will open (usually docked at the bottom) and you'll notice some tabs at the top of this panel: **Inspector**, **Console**, **Debugger**, **Style Editor**, **Performance**, **Network**, and **Settings**. By default, the Console tab should be selected (if not, click it).
 
-![Firefox developer tools - Console tab](images/firefox-console-2.png)
+![Firefox developer tools - Console tab](/images/firefox-console-2.png)
 
 Underneath that, you'll probably see a long list of URLs. These are the requests that your web browser has made so far. To the left of each URL is the request method (GET, POST, PUT, DELETE, etc). To the right is the server response summary. For example, the server responded **HTTP/1.1 200 OK** for the request to **http://localhost/userfrosting/public/alerts**. The status code **200** is used to mean that the request completed "successfully". "Success" is something that your server defines - it's just a way for the server to tell your browser that everything went as expected and that it doesn't need to do anything else.
 
 If you click the response summary, Firefox will open the **Network** tab and show you more details about the request:
 
-![Firefox developer tools - Network tab](images/firefox-console-3.png)
+![Firefox developer tools - Network tab](/images/firefox-console-3.png)
 
 To the right, you'll see tabs for **Headers**, **Cookies**, **Params**, **Response**, and **Timings**. If you scroll down in the Headers tab, you'll see a list of the request and response headers. The request headers contain metadata sent with a particular request, and contain information about your browser, the contents of any cookies for the site, and other information. The response headers contain metadata returned by the server for that request. This can include information like cookies that the site wants the client to store or update, as well as things like the type of content (HTML, image, CSS, JSON, etc) being returned.
 
@@ -36,13 +36,13 @@ The **Cookies** tab just displays the contents of any cookie headers in a more e
 
 #### Params tab
 
-![Firefox developer tools - Params tab](images/firefox-console-4.png)
+![Firefox developer tools - Params tab](/images/firefox-console-4.png)
 
 **Params** shows any data sent in the *body* of the request. **This is extremely useful for debugging client-side code.** Often times, a web application appears to "not work" because the server isn't actually being sent the data it expected. The **Params** tab is a good way to check the actual data that was sent with a particular request.
 
 #### Response tab
 
-![Firefox developer tools - Response tab](images/firefox-console-5.png)
+![Firefox developer tools - Response tab](/images/firefox-console-5.png)
 
 The **Response** tab shows the data sent in the *body* of the response. For requests to a URL representing a web page (like the URL in your browser's navigation bar), the response body simply contains the actual HTML returned from the server, that your browser initially renders. For other requests, it could contain images, Javascript, or structured data in some other format. For example in the request shown above, the response contains structured JSON data representing a list of users currently registered with the application.
 
@@ -99,7 +99,7 @@ For example, we can use it to inspect the contents of a JSON object returned by 
 
 Now, when we do something that triggers this request, the `console.log` statement will print the contents of the variable `data` to the browser console:
 
-![Firefox developer tools - Debug print statement](images/firefox-console-6.png)
+![Firefox developer tools - Debug print statement](/images/firefox-console-6.png)
 
 As you can see in the last line of the console output, `data` is an array containing Javascript objects. If we click on "Object", a panel opens to the right that displays the contents of that object.
 
@@ -113,16 +113,16 @@ UserFrosting uses a sophisticated error-handling system to capture exceptions th
 
 By default _in development mode only_, UserFrosting will show a detailed debugging page that contains a full stack trace. For example:
 
-![Sample debug error page](images/debug-page.png)
+![Sample debug error page](/images/debug-page.png)
 
-This page will also show you the contents of your request, the current session variables, and your server/environment variables. For [obvious reasons](background/security/server-misconfiguration), this debugging page is disabled in production.
+This page will also show you the contents of your request, the current session variables, and your server/environment variables. For [obvious reasons](/background/security/server-misconfiguration), this debugging page is disabled in production.
 
 If a user encounters a runtime error in production (hopefully this will never happen to you!), they will see a generic "server error" message instead, and the details will be logged on the server in `app/logs/userfrosting.log`. By configuring a custom Monolog processor it is also possible to have runtime errors in production [emailed to you](https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md#send-alerts-and-emails), in case you want to be woken up at 4am when the unthinkable occurs.
 
-You can read more about how the error-handling system as a whole works in the [Advanced](advanced/error-handling) chapter.
+You can read more about how the error-handling system as a whole works in the [Advanced](/advanced/error-handling) chapter.
 
 > [!WARNING]
-> Some runtime errors cannot be caught by the error-handling system - for example, PHP fatal errors, syntax errors or exception in the error handling system itself. If these occur, a plainly formatted error message will be generated. Depending on your settings for PHP's `log_errors` and `display_errors` settings, you can determine whether the fatal error message is displayed and/or logged. Both `display_errors` and `log_errors` are automatically set by UserFrosting under the `php` key in your [configuration files](configuration/config-files). If UF detects that `display_errors` is disabled, it will display a generic "server error" message instead of the actual error. If `log_errors` is enabled, the actual error message will be logged with PHP's [native error logging](http://php.net/manual/en/book.errorfunc.php). You should make sure that you have specified a path to an error log file (what we will call the **php error log**) with the `error_log` directive.
+> Some runtime errors cannot be caught by the error-handling system - for example, PHP fatal errors, syntax errors or exception in the error handling system itself. If these occur, a plainly formatted error message will be generated. Depending on your settings for PHP's `log_errors` and `display_errors` settings, you can determine whether the fatal error message is displayed and/or logged. Both `display_errors` and `log_errors` are automatically set by UserFrosting under the `php` key in your [configuration files](/configuration/config-files). If UF detects that `display_errors` is disabled, it will display a generic "server error" message instead of the actual error. If `log_errors` is enabled, the actual error message will be logged with PHP's [native error logging](http://php.net/manual/en/book.errorfunc.php). You should make sure that you have specified a path to an error log file (what we will call the **php error log**) with the `error_log` directive.
 
 ### Logic Errors
 
@@ -132,7 +132,7 @@ Aside from writing [unit tests](http://www.phptherightway.com/#test_driven_devel
 
 #### Query debugging
 
-Query debugging allows you to view the raw SQL queries that are executed in your [Eloquent](database/overview) data models and queries. To enable query debugging, set the `debug.queries` config to `true` in your [configuration file](configuration/config-files). All successful SQL queries will be logged to `app/logs/userfrosting.log`:
+Query debugging allows you to view the raw SQL queries that are executed in your [Eloquent](/database/overview) data models and queries. To enable query debugging, set the `debug.queries` config to `true` in your [configuration file](/configuration/config-files). All successful SQL queries will be logged to `app/logs/userfrosting.log`:
 
 ```txt
 [2017-06-16 03:41:42] query.DEBUG: Query executed on database [default]: {
@@ -146,7 +146,7 @@ Query debugging allows you to view the raw SQL queries that are executed in your
 
 #### Authorization debugging
 
-Authorization debugging shows you a detailed breakdown of how UserFrosting's [authorization component](users/access-control) determines whether or not a user passes a particular access control check. To enable authorization debugging, set the `debug.auth` config to `true` in your [configuration file](configuration/config-files). Detailed evaluation information will be logged to `app/logs/userfrosting.log`:
+Authorization debugging shows you a detailed breakdown of how UserFrosting's [authorization component](/users/access-control) determines whether or not a user passes a particular access control check. To enable authorization debugging, set the `debug.auth` config to `true` in your [configuration file](/configuration/config-files). Detailed evaluation information will be logged to `app/logs/userfrosting.log`:
 
 ```txt
 [2017-05-22 13:41:11] auth.DEBUG: Evaluating access condition '!has_role(user.id,2) && subset(fields,['name','email','locale','group','flag_enabled','flag_verified','password'])' with parameters: {
@@ -257,9 +257,9 @@ When an error is generated during an AJAX request, any error messages we receive
 
 This is hardly a convenient and predictable way to get at debugging and error messages!
 
-To solve this problem, UserFrosting's [client-side components](client-side-code/components) can automatically replace the current window's contents with the contents of the response body when an error (4xx or 5xx) code is returned during an AJAX request.
+To solve this problem, UserFrosting's [client-side components](/client-side-code/components) can automatically replace the current window's contents with the contents of the response body when an error (4xx or 5xx) code is returned during an AJAX request.
 
-To enable this behavior, set `site.debug.ajax` to `true` in your sprinkle's [configuration file](configuration/config-files).
+To enable this behavior, set `site.debug.ajax` to `true` in your sprinkle's [configuration file](/configuration/config-files).
 
 ### Debugging APIs
 
@@ -271,7 +271,7 @@ The best approach is to develop your API in isolation from the page or widget th
 
 As it turns out, you can visit `/api/members` _directly in your browser_, and it will show you the output of the data source! Since **visiting a page in your browser is equivalent to making a GET request**, you can append query strings as well:
 
-![Directly viewing the output of a JSON API](images/debug-api.png)
+![Directly viewing the output of a JSON API](/images/debug-api.png)
 
 Make sure you get the data API itself working properly and producing the kind of output you expect, before you fiddle with the page and/or Javascript that is consuming the API.
 

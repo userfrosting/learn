@@ -4,7 +4,7 @@ description: Managing assets across multiple sprinkles in UserFrosting, includin
 # Verified for UF 6.0
 ---
 
-One of UserFrosting's most powerful features is its [Sprinkle system](structure/sprinkles)—a way to organize your application into modular, reusable packages. Each sprinkle can have its own assets, and these assets can be shared across your application. This is perfect for building reusable components, creating themes, or organizing large applications into manageable pieces.
+One of UserFrosting's most powerful features is its [Sprinkle system](/structure/sprinkles)—a way to organize your application into modular, reusable packages. Each sprinkle can have its own assets, and these assets can be shared across your application. This is perfect for building reusable components, creating themes, or organizing large applications into manageable pieces.
 
 ## Multi-Sprinkle Architecture
 
@@ -399,4 +399,4 @@ npm install /path/to/my-sprinkle
 
 ## Next Steps
 
-Learn how to [migrate from Webpack Encore](asset-management/migration) if you have an existing UserFrosting 5 project, or explore the [Sprinkle System](structure/sprinkles) in more depth.
+Learn how to [migrate from Webpack Encore](/asset-management/migration) if you have an existing UserFrosting 5 project, or explore the [Sprinkle System](/structure/sprinkles) in more depth.

@@ -613,9 +613,9 @@ async function handleSubmit() {
 
 ## What's Next?
 
-- **[Forms](client-side-code/components/forms)**: Build validated forms that show alerts
-- **[Tables](client-side-code/components/tables)**: Display data with loading states
-- **[Collections](client-side-code/components/collections)**: Manage lists with feedback
+- **[Forms](/client-side-code/components/forms)**: Build validated forms that show alerts
+- **[Tables](/client-side-code/components/tables)**: Display data with loading states
+- **[Collections](/client-side-code/components/collections)**: Manage lists with feedback
 
 ## Further Reading
 

@@ -19,7 +19,7 @@ The 24/7 uptime is critical for your live application - no doubt about that. But
 
 1. Convenience. I've seen people who write their code in a text editor or IDE, but then upload their code to their hosting service and refresh the page *at their live URL* to "test" their code. This introduces an entire extra step into your development cycle. And what a pain it is! It's much easier if you can just test your code directly on your own machine.
 
-2. Security. There are all sorts of opportunities for PHP to inadvertently disclose sensitive data, like database passwords and API keys. This is especially true if you are [dumping stack traces to the response](background/security/server-misconfiguration), which many PHP installations and frameworks do by default!  Developing in a local environment that only you can access ensures that you'll have the opportunity to iron out these vulnerabilities before the application goes live.
+2. Security. There are all sorts of opportunities for PHP to inadvertently disclose sensitive data, like database passwords and API keys. This is especially true if you are [dumping stack traces to the response](/background/security/server-misconfiguration), which many PHP installations and frameworks do by default!  Developing in a local environment that only you can access ensures that you'll have the opportunity to iron out these vulnerabilities before the application goes live.
 
 Ultimately, you should not think of writing code as the only activity involved in building a website. Making a website or web application really consists of two distinct phases: **development** and **production**, each of which should happen in their own separate environments and involve automated testing, managing dependencies, compiling assets, and a variety of other tasks.
 
@@ -42,12 +42,12 @@ Docker allows you to run software in packages called *containers*. Because Docke
 
 Docker makes abstraction of what environmental changes you have configured on your machine. When using Docker, you create a whole environment and this travels with your project. If your colleague needs to work on it, they can use the same Docker configuration and have your project running on their machine within minutes. Docker can also be used for continuous integration testing and even into production. In every step, you are sure to use the exact same configuration. The risk of a feature working on your machine, but not your colleague computer are minimal.
 
-To get started with Docker, head over to our documentation on [development environments](installation/environment/docker).
+To get started with Docker, head over to our documentation on [development environments](/installation/environment/docker).
 
 ## Collaboration and deployment
 
 Even after you have a local development environment set up, you'll still need a way to collaborate with the rest of your team and, when you're ready to launch, push your code to a live server.
 
-It turns out that `git`, the popular version control software, can be used to do both! For collaborating with your team, we suggest that you set up a free private repository on [Github](https://github.com/). You should agree upon a proper [git flow](http://nvie.com/posts/a-successful-git-branching-model/), and each member of your team should have their own local development environment. For more information, see the installation guide, [Essential Tools for Modern PHP](installation/requirements/essential-tools-for-php).
+It turns out that `git`, the popular version control software, can be used to do both! For collaborating with your team, we suggest that you set up a free private repository on [Github](https://github.com/). You should agree upon a proper [git flow](http://nvie.com/posts/a-successful-git-branching-model/), and each member of your team should have their own local development environment. For more information, see the installation guide, [Essential Tools for Modern PHP](/installation/requirements/essential-tools-for-php).
 
-When it comes time to actually deploy your application, you can [set up a special git remote on your live server](https://www.digitalocean.com/community/tutorials/how-to-set-up-automatic-deployment-with-git-with-a-vps). For more about deployment, see the chapter on [Going Live](going-live).
+When it comes time to actually deploy your application, you can [set up a special git remote on your live server](https://www.digitalocean.com/community/tutorials/how-to-set-up-automatic-deployment-with-git-with-a-vps). For more about deployment, see the chapter on [Going Live](/going-live).

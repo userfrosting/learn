@@ -62,7 +62,7 @@ This starts the Vite development server with Hot Module Replacement (HMR) for in
 
 You can now access UserFrosting at [http://localhost:8080](http://localhost:8080). You should see the default UserFrosting pages and login with the newly created master account. 
 
-![Basic front page of a UserFrosting installation](images/front-page.png)
+![Basic front page of a UserFrosting installation](/images/front-page.png)
 
 > [!TIP]
 > To stop either server, hit `ctrl+c` in its respective terminal.
@@ -71,6 +71,6 @@ You can now access UserFrosting at [http://localhost:8080](http://localhost:8080
 
 It will help us a lot if you could star [the UserFrosting project on GitHub](https://github.com/userfrosting/UserFrosting). Just look for the button in the upper right-hand corner!
 
-[![How to star](images/how-to-star.png)](https://github.com/userfrosting/UserFrosting)
+[![How to star](/images/how-to-star.png)](https://github.com/userfrosting/UserFrosting)
 
-Congratulations! Now that this is complete, you're ready to start developing your application. Learn more about [Sprinkles](sprinkles) to understand how to structure and extend your UserFrosting application.
+Congratulations! Now that this is complete, you're ready to start developing your application. Learn more about [Sprinkles](/sprinkles) to understand how to structure and extend your UserFrosting application.

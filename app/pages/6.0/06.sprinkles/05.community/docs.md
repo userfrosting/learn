@@ -54,14 +54,14 @@ You may also need to configure Vite to properly handle the sprinkle's assets. Se
 > In the `package.json` example above, we're loading the Userfrosting core sprinkles from npm, and the Owlery sprinkle from Github. Each community sprinkle decides where it is published, and should include this in their README.
 
 ## Installing a community sprinkle
-Once you've added the sprinkle to the recipe, `composer.json`, and (if needed) `package.json`, you're ready to use Composer and [Bakery](cli/commands#bake) to download and install the files.
+Once you've added the sprinkle to the recipe, `composer.json`, and (if needed) `package.json`, you're ready to use Composer and [Bakery](/cli/commands#bake) to download and install the files.
 ```
 composer update
 php bakery bake
 ```
 
 ### Database (optional)
-If needed, [migrations](cli/commands#migrate) and [seeds](cli/commands#seed) can be run manually through Bakery.
+If needed, [migrations](/cli/commands#migrate) and [seeds](/cli/commands#seed) can be run manually through Bakery.
 ```txt
 php bakery migrate
 php bakery seed
@@ -90,7 +90,7 @@ We highly recommend publishing your community sprinkle on GitHub and adding it t
 You may also have some extra steps depending on what features your sprinkle provides:
 
 ### Database?
-If your sprinkle changes the database structure, make sure you bundle a working [migration](database/migrations) with your sprinkle.
+If your sprinkle changes the database structure, make sure you bundle a working [migration](/database/migrations) with your sprinkle.
 You might also consider whether any seeds would help manage those changes.
 
 ### Javascript?

@@ -7,7 +7,7 @@ wip: true
 
 ## The Cache service
 
-The UserFrosting cache service instantiates the [Laravel Cache](https://laravel.com/docs/8.x/cache) component for global caching. The [Laravel documentation](https://laravel.com/docs/8.x/cache#cache-usage) provides excellent examples on how to use the caching API. The only difference is that UserFrosting provides the required setup for you. Plus, instead of using a `Cache` facade, you simply inject the **cache service** using the [The DI Container](services/the-di-container):
+The UserFrosting cache service instantiates the [Laravel Cache](https://laravel.com/docs/8.x/cache) component for global caching. The [Laravel documentation](https://laravel.com/docs/8.x/cache#cache-usage) provides excellent examples on how to use the caching API. The only difference is that UserFrosting provides the required setup for you. Plus, instead of using a `Cache` facade, you simply inject the **cache service** using the [The DI Container](/services/the-di-container):
 
 ```php
 use Illuminate\Cache\Repository as Cache;
@@ -46,7 +46,7 @@ $userCache->get('key'); // Return 'Bar'
 
 ## Clearing the cache
 
-While the `forget` and `flush` methods will work to flush the entire application cache, you can also use the `clear-cache` command from the [Bakery CLI](cli/commands#clearcache):
+While the `forget` and `flush` methods will work to flush the entire application cache, you can also use the `clear-cache` command from the [Bakery CLI](/cli/commands#clearcache):
 
 ```bash
 $ php bakery clear-cache

@@ -10,7 +10,7 @@ You were probably attracted to UserFrosting because you wanted to "make a site w
 
 The proper term for the process of "signing in" or "logging in" is **authentication**. When a user has successfully logged in, we say that they are an **authenticated user**.
 
-As we've [explained before](background/the-client-server-conversation), a web application is really a conversation between two agents with poor memory. When you have a feature or some part of your site that is only supposed to be accessible to authenticated users, the server needs to check that the client is who they say they are and that they've already successfully authenticated.
+As we've [explained before](/background/the-client-server-conversation), a web application is really a conversation between two agents with poor memory. When you have a feature or some part of your site that is only supposed to be accessible to authenticated users, the server needs to check that the client is who they say they are and that they've already successfully authenticated.
 
 To do this, the client tells the server their **identity** (email or username) and their password, and in exchange the server associates that identity with their current session (since session data cannot be directly manipulated by the client, this is secure). This is the process of authentication.
 
@@ -24,9 +24,9 @@ use use UserFrosting\Sprinkle\Account\Authenticate\AuthGuard;
 $app->get('/account/settings', SettingsPageAction::class)->add(AuthGuard::class);
 ```
 
-UserFrosting will throw an `AuthGuardException` if the client is not authenticated, or if their account has been disabled or deleted in the time since they were authenticated. This exception can then be caught by an [exception handler](advanced/error-handling) to display an error page or perform some other appropriate action.
+UserFrosting will throw an `AuthGuardException` if the client is not authenticated, or if their account has been disabled or deleted in the time since they were authenticated. This exception can then be caught by an [exception handler](/advanced/error-handling) to display an error page or perform some other appropriate action.
 
-Of course, not all authenticated users should have the same permissions on your site. Determining whether a given authenticated user has permission to access a particular resource or perform a specific action is called **authorization**. Together with **roles**, **permissions**, and **conditions**, authorization constitutes UserFrosting's **access control** system. To learn more about UserFrosting's powerful access control features, see the [next section](users/access-control).
+Of course, not all authenticated users should have the same permissions on your site. Determining whether a given authenticated user has permission to access a particular resource or perform a specific action is called **authorization**. Together with **roles**, **permissions**, and **conditions**, authorization constitutes UserFrosting's **access control** system. To learn more about UserFrosting's powerful access control features, see the [next section](/users/access-control).
 
 ## User attributes
 
@@ -48,7 +48,7 @@ There is also a "suggest username" feature, that will use a built-in dictionary 
 
 ### Locale
 
-UserFrosting supports a rich set of [multi-language](i18n) features. If your audience consists of users who speak different languages, they can set their `locale` so that they may interact with UserFrosting in the language of their choice.
+UserFrosting supports a rich set of [multi-language](/i18n) features. If your audience consists of users who speak different languages, they can set their `locale` so that they may interact with UserFrosting in the language of their choice.
 
 ### Password
 
@@ -62,7 +62,7 @@ UserFrosting comes with two built-in mechanisms for creating new accounts: publi
 
 In many instances, you will want people to be able to register for your website or application through a publicly accessible page. By default, the registration form is available at `/account/register`.
 
-![Account registration form](images/registration.png)
+![Account registration form](/images/registration.png)
 
 When the registration form is submitted, it will `POST` to the `/account/register` endpoint (which invokes the `RegisterAction` method).
 
@@ -77,7 +77,7 @@ All publicly accessible forms are susceptible to spam. Some of this is "dumb" sp
 - A [honeypot](https://nedbatchelder.com/text/stopbots.html) field that is hidden from humans using CSS. The theory is that bots will fill it out (like any other field), and thus all you need to do after the form has been submitted is check if the field has a value. If it does, you know that a bot submitted the form and you reject the request.
 - A simple captcha. In today's world of cloud computing and Mechanical Turk, even the most sophisticated captchas can be defeated by a determined attacker. However, captcha will still help thwart the majority of "dumb" attacks. To disable captcha, set the `site.registration.captcha` config setting to `false`.
 
-Of course, neither of these will protect you from malevolent targeted attacks. Fortunately, UserFrosting comes with a built in [throttling](routes-and-controllers/client-input/throttle) ("rate-limiting") system, which gradually limits the number of times that a single IP address can submit your registration form. This will help to prevent large volumes of targeted spam, as well as account enumeration attacks (which could use the registration form to determine which usernames and email addresses have already been used).
+Of course, neither of these will protect you from malevolent targeted attacks. Fortunately, UserFrosting comes with a built in [throttling](/routes-and-controllers/client-input/throttle) ("rate-limiting") system, which gradually limits the number of times that a single IP address can submit your registration form. This will help to prevent large volumes of targeted spam, as well as account enumeration attacks (which could use the registration form to determine which usernames and email addresses have already been used).
 
 #### Account verification
 
@@ -89,17 +89,17 @@ To disable this behavior, set the `site.registration.require_email_verification`
 
 Sometimes, you want to have a site administrator create an account on behalf of a specific user. For some applications, you may want this to be the _only_ way that new accounts can be created. To create a new user as an administrator, use the "create user" button at the bottom of the main user listing page:
 
-![User creation button](images/create-user-button.png)
+![User creation button](/images/create-user-button.png)
 
 You can then fill out details for the user. After you create the user, an email will be automatically sent to them that allows them to set their own password.
 
-![User creation](images/create-user.png)
+![User creation](/images/create-user.png)
 
 ## Login form
 
 By default, the login form is available at `/account/sign-in`. The user provides their email or username as their identity, along with their password. The form is submitted to `/account/login`, which invokes `LoginAction`. This processes the authentication request.
 
-![User sign-in](images/login.png)
+![User sign-in](/images/login.png)
 
 The `/account/login` route is throttled via the `throttles.sign_in_attempt` throttle rule. This mitigates against the possibility of brute-force attempts to guess your users' passwords.
 
@@ -110,12 +110,12 @@ The sign-in form can automatically redirect users to a specific landing page aft
 
 The first method is typically used with users whose sessions have expired, to automatically redirect them to the last page they were on after they re-authenticate. For example, if a user was on `/users` when their session expired, the `AuthExpiredExceptionHandler` will take them to the URL `/account/sign-in?redirect=users`. This gives them the opportunity to sign in again, but this time it tells UF to automatically redirect to the `/users` page after successfully re-authenticating.
 
-The second method is for "regular" sign-ins, to determine how to redirect the user based on some server-side criteria. This is used when you want different users to have different landing pages, depending on their roles and/or permissions. The `AccountController::login` method will dispatch the [`UserRedirectedAfterLoginEvent` event](advanced/events) after the user has been successfully authenticated, which sets the `UF-Redirect` header in the response.
+The second method is for "regular" sign-ins, to determine how to redirect the user based on some server-side criteria. This is used when you want different users to have different landing pages, depending on their roles and/or permissions. The `AccountController::login` method will dispatch the [`UserRedirectedAfterLoginEvent` event](/advanced/events) after the user has been successfully authenticated, which sets the `UF-Redirect` header in the response.
 
 After the page containing the sign-in form receives a response from the server that authentication has succeeded, it will attempt to perform the redirect. The `redirectOnLogin` Javascript function in `sprinkles/account/assets/local/pages/js/sign-in.js` will first check for a `redirect` query string parameter. If none is present, it will check for the `UF-Redirect` header in the login response. It will then perform a redirect to the appropriate URL by using the `window.location.replace` Javascript function.
 
 > [!TIP]
-> Checkout [this recipe](recipes/custom-login-page#changing-the-post-login-destination) for an example on how to customize the post login destination.
+> Checkout [this recipe](/recipes/custom-login-page#changing-the-post-login-destination) for an example on how to customize the post login destination.
 
 ## Other self-service account features
 
@@ -123,7 +123,7 @@ After the page containing the sign-in form receives a response from the server t
 
 Users can reset their passwords by visiting `/account/forgot-password`. They will be asked for their account email address:
 
-![Password reset](images/password-reset.png)
+![Password reset](/images/password-reset.png)
 
 Upon submitting a password reset request, a secret token will be issued for the user's account (stored in `password_resets` table), and emailed to them in the form of a link (`/account/set-password/confirm`). The link will take them to a form with the secret token embedded in the page, where they can set their new password. The form is then submitted to `/account/set-password`, which updates the user's password and signs them in.
 
@@ -143,7 +143,7 @@ For the precise implementation of the password reset and account verification re
 
 Users can update certain attributes of their accounts through the account settings/profile page. By default, this is available at `/account/settings`:
 
-![Account settings page](images/account-settings.png)
+![Account settings page](/images/account-settings.png)
 
 As a security measure, users are required to verify their current password before they can update their email address or password. Other fields, like name and locale, do not require the authenticated user to re-enter their password.
 
@@ -180,7 +180,7 @@ Depending on the permissions you have assigned, users with the "Administrator" r
 
 The user listing page is available at `/users` (`UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction`). The actual table of users is implemented through a combination of the page itself, which generates the "skeleton" of the table, and AJAX calls to the `/api/users` route, which fetches the actual data as a JSON object (`UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction::sprunje`). This allows the page to efficiently retrieve paginated, filtered, sorted results without needing to reload the page.
 
-See [Data Sprunjing](database/data-sprunjing) for more details on how this works.
+See [Data Sprunjing](/database/data-sprunjing) for more details on how this works.
 
 ### View a list of user activities
 
@@ -194,15 +194,15 @@ Basic user details (name, email, locale, group) can be modified via the "Edit us
 
 Roles can be added to or removed from a user account via the `Manage roles` button on the user's profile page, or in the dropdown menu in the user table.
 
-![User role management](images/uf-collection.png)
+![User role management](/images/uf-collection.png)
 
-By default, only the root account can change users' roles. You may want to modify this to allow site admins to grant a **subset** of the available roles to other users - but be careful! You may not want site administrators to be allowed to elevate other users to site administrator, for example. See the section on [access control](users/access-control) for more information.
+By default, only the root account can change users' roles. You may want to modify this to allow site admins to grant a **subset** of the available roles to other users - but be careful! You may not want site administrators to be allowed to elevate other users to site administrator, for example. See the section on [access control](/users/access-control) for more information.
 
 ### Reset a user's password
 
 Administrators may be able to perform a password reset on behalf of users. This is useful, for example, when you have users who have difficulty with the self-service password reset tool. Password resets can be performed via the "Password" button in the user's profile page, or the "change password" option in the dropdown menu of the user table.
 
-![User password management](images/change-password.png)
+![User password management](/images/change-password.png)
 
 You may send a password reset link to the user so that they can change it themselves, or even set a password directly when dealing with particularly technology-adverse users over the phone.
 

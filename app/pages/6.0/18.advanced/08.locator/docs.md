@@ -5,7 +5,7 @@ wip: true
 
 The locator service goal is to provides an abstraction layer for the different files and folders available across different sprinkles inside UserFrosting. In other words, it is a way of aggregating many search paths together. As you've seen in the previous chapters, each sprinkle can provides multiple resources and sprinkles can have the ability to overwrite a previous sprinkle resources. All of those resources, combined with the overwriting properties of a sprinkle is handled by the locator service. _Templates_ and _config_ files are a good example of those resources.
 
-While the locator can be used to find files inside the sprinkles main directory (i.e. `app/`), it can't be directly used to handle _PHP Class Inheritance_. The [Dependency Injection](dependency-injection) needs to be used in such cases. The locator *can* however be used where it's necessary to list PHP files.
+While the locator can be used to find files inside the sprinkles main directory (i.e. `app/`), it can't be directly used to handle _PHP Class Inheritance_. The [Dependency Injection](/dependency-injection) needs to be used in such cases. The locator *can* however be used where it's necessary to list PHP files.
 
 ## Streams and Locations
 
@@ -20,20 +20,20 @@ The following streams are defined by default by UserFrosting :
 | Stream    |  Defined By   | Path              | Shared | Description / Use                                                                |
 |-----------|:-------------:|-------------------|:------:|----------------------------------------------------------------------------------|
 | sprinkles | Core Sprinkle | `./`              |   No   | Generic path to each sprinkles                                                   |
-| config    | Core Sprinkle | `./config`        |   No   | [Config files](configuration/config-files) location                             |
+| config    | Core Sprinkle | `./config`        |   No   | [Config files](/configuration/config-files) location                             |
 | extra     | Core Sprinkle | `./extra`         |   No   | Misc directory, used to store files unrelated to any other stream                |
-| locale    | Core Sprinkle | `./locale`        |   No   | [Translation files](i18n)                                                       |
-| schema    | Core Sprinkle | `./schema`        |   No   | [Request Schema](routes-and-controllers/client-input/validation#fortress) files |
-| templates | Core Sprinkle | `./templates`     |   No   | [Templates files](templating-with-twig/sprinkle-templates)                      |
-| cache     | Core Sprinkle | `./cache`         |  Yes   | Shared [cache](advanced/caching) directory                                      |
+| locale    | Core Sprinkle | `./locale`        |   No   | [Translation files](/i18n)                                                       |
+| schema    | Core Sprinkle | `./schema`        |   No   | [Request Schema](/routes-and-controllers/client-input/validation#fortress) files |
+| templates | Core Sprinkle | `./templates`     |   No   | [Templates files](/templating-with-twig/sprinkle-templates)                      |
+| cache     | Core Sprinkle | `./cache`         |  Yes   | Shared [cache](/advanced/caching) directory                                      |
 | database  | Core Sprinkle | `./database`      |  Yes   | Location of any file based database, for example SQLite database                 |
 | logs      | Core Sprinkle | `./logs`          |  Yes   | Shared log directory                                                             |
-| sessions  | Core Sprinkle | `./sessions`      |  Yes   | Shared [sessions](advanced/sessions#file-driver) directory                      |
-| storage   | Core Sprinkle | `./storage`       |  Yes   | The [local disk](advanced/storage#the-local-disk) file storage                  |
-| public    | Core Sprinkle | `/public`         |  Yes   | Absolute path to the [public directory](sprinkles/content#-public)              |
-| assets    | Core Sprinkle | `public://assets` |  Yes   | Path to the public [assets](asset-management) directory. Sub-stream of *public* |
+| sessions  | Core Sprinkle | `./sessions`      |  Yes   | Shared [sessions](/advanced/sessions#file-driver) directory                      |
+| storage   | Core Sprinkle | `./storage`       |  Yes   | The [local disk](/advanced/storage#the-local-disk) file storage                  |
+| public    | Core Sprinkle | `/public`         |  Yes   | Absolute path to the [public directory](/sprinkles/content#-public)              |
+| assets    | Core Sprinkle | `public://assets` |  Yes   | Path to the public [assets](/asset-management) directory. Sub-stream of *public* |
 
-The paths for non-shared streams are calculated relatively from each [sprinkle path](sprinkles/recipe#getpath), usually `./app`. The paths for shared streams are relative from the Main Sprinkle path only, unless otherwise noted.
+The paths for non-shared streams are calculated relatively from each [sprinkle path](/sprinkles/recipe#getpath), usually `./app`. The paths for shared streams are relative from the Main Sprinkle path only, unless otherwise noted.
 
 > [!TIP]
 > The `sprinkles` stream can be used as wildcard to access pretty much anything inside a sprinkle without defining a new [custom stream](#registering-a-custom-stream).

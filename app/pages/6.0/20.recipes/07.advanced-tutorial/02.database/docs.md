@@ -13,7 +13,7 @@ Now that we have a sprinkle with an empty page to work with, it's time to get st
 
 ## Creating a data model
 
-First, we create the [data model](database/overview#data-models). In this model, we define the table name, list the columns we want to be [mass assignable](https://laravel.com/docs/8.x/eloquent#mass-assignment) and enable automatic timestamp creation.
+First, we create the [data model](/database/overview#data-models). In this model, we define the table name, list the columns we want to be [mass assignable](https://laravel.com/docs/8.x/eloquent#mass-assignment) and enable automatic timestamp creation.
 
 **app/src/Database/Models/Pastries.php**:
 ```php
@@ -76,11 +76,11 @@ class PastriesTable extends Migration
 }
 ```
 
-As described in the [Migration](database/migrations) chapter, the `up` method contains the instructions to create the new table while the `down` method contains the instructions to undo the changes made by the `up` method - in this case, removing the `pastries` table.
+As described in the [Migration](/database/migrations) chapter, the `up` method contains the instructions to create the new table while the `down` method contains the instructions to undo the changes made by the `up` method - in this case, removing the `pastries` table.
 
 ## Populating the database with default data using a seed
 
-Next we'll populate our newly created table with some default data. To do this, we'll create a [**seed**](database/seeding). While this could be done in a migration, it is recommended to create default database values using a seed as it enabled the data to be recreated if it get deleted. We call this seed `DefaultPastries`:
+Next we'll populate our newly created table with some default data. To do this, we'll create a [**seed**](/database/seeding). While this could be done in a migration, it is recommended to create default database values using a seed as it enabled the data to be recreated if it get deleted. We call this seed `DefaultPastries`:
 
 **app/src/Database/Seeds/DefaultPastries.php**:
 ```php
@@ -244,7 +244,7 @@ class MyApp implements
 }
 ```
 
-We are now ready to run our migration. From the command line, use the [Bakery migrate command](cli/commands#migrate) to run the migration up: 
+We are now ready to run our migration. From the command line, use the [Bakery migrate command](/cli/commands#migrate) to run the migration up: 
 
 ```bash
 $ php bakery migrate
@@ -272,13 +272,13 @@ $pastries = Pastry::all();
 ```
 
 > [!NOTE]
-> Fetching all the available rows is not an ideal solution since, in production, it can involve an arbitrarily large number of rows. This can clutter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server resource usage). It is recommended to use AJAX and [**Sprunging**](database/data-sprunjing) to display paginated data in this situation.
+> Fetching all the available rows is not an ideal solution since, in production, it can involve an arbitrarily large number of rows. This can clutter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server resource usage). It is recommended to use AJAX and [**Sprunging**](/database/data-sprunjing) to display paginated data in this situation.
 
 The `$pastries` variable should now contains an [Eloquent Collection](https://laravel.com/docs/8.x/eloquent-collections) of `Pastry` objects. 
 
 ### Debugging
 
-At this point, it's a good idea to use [**debugging**](troubleshooting/debugging#debug-statements) to make sure everything works as it should. We'll use the `DebugLogger` service to do so. 
+At this point, it's a good idea to use [**debugging**](/troubleshooting/debugging#debug-statements) to make sure everything works as it should. We'll use the `DebugLogger` service to do so. 
 
 Start by adding the facade class to the usage declaration of your class:
 
@@ -384,4 +384,4 @@ Let's get a closer look at our `for` block:
 
 This is the same as using `foreach` in PHP to loop through all the items available in an array. The `{% for pastry in pastries %}` will loop through `pastries` and create a HTML table row for each item. If you refresh the page, you should now see this in your browser:
 
-![Pastries page](images/pastries/02.png)
+![Pastries page](/images/pastries/02.png)

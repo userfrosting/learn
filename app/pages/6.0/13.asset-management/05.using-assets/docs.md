@@ -207,4 +207,4 @@ app/assets/
 
 ## Next Steps
 
-Learn about [Advanced Usage](asset-management/advanced) including TypeScript, Vue components, preprocessors, and optimization techniques.
+Learn about [Advanced Usage](/asset-management/advanced) including TypeScript, Vue components, preprocessors, and optimization techniques.

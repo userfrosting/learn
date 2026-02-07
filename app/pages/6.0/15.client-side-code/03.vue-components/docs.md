@@ -879,10 +879,10 @@ watchEffect(() => {
 
 Now that you understand Vue 3 components, learn how to build specific UI patterns:
 
-- **[Forms](client-side-code/components/forms)**: Build validated, AJAX-powered forms
-- **[Tables](client-side-code/components/tables)**: Create sortable, filterable data tables
-- **[Alerts](client-side-code/components/alerts)**: Display notifications and messages
-- **[Collections](client-side-code/components/collections)**: Manage dynamic lists
+- **[Forms](/client-side-code/components/forms)**: Build validated, AJAX-powered forms
+- **[Tables](/client-side-code/components/tables)**: Create sortable, filterable data tables
+- **[Alerts](/client-side-code/components/alerts)**: Display notifications and messages
+- **[Collections](/client-side-code/components/collections)**: Manage dynamic lists
 
 ## Further Learning
 

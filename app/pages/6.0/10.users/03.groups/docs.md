@@ -12,6 +12,6 @@ To set the default group for newly registered users, use the `site.registration.
 
 #### Conditioning permissions on group membership
 
-Groups are not directly associated with roles or permissions. A user in Baltimore and a user in London could have the exact same roles, but be in different groups. However, group membership can still influence a user's effective permissions _indirectly_ through a permission's [access conditions](users/access-control#Accessconditions).
+Groups are not directly associated with roles or permissions. A user in Baltimore and a user in London could have the exact same roles, but be in different groups. However, group membership can still influence a user's effective permissions _indirectly_ through a permission's [access conditions](/users/access-control#Accessconditions).
 
 For example, consider the default permission `view_group_field` with condition `equals_num(self.group_id,group.id) && in(property,['name','icon','slug','description','users'])`. A Baltimore user and a London user might both have this same permission, for example through the "Group Administrator" role.  But since the condition requires that the user's `group_id` match the target `group.id`, the Baltimore user will only see group fields for the Baltimore group, and the London user will only see group fields for the London group.

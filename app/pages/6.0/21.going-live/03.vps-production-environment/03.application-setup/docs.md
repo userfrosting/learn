@@ -3,7 +3,7 @@ title: Application Setup
 description: This section covers installing and using Composer, running Bakery, and configuring the webserver in the production environment.
 obsolete: true
 ---
-<!-- [plugin:content-inject](modular/_updateRequired) -->
+<!-- [plugin:content-inject](/modular/_updateRequired) -->
 
 > [!NOTE]
 > This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
@@ -134,4 +134,4 @@ We can use Bakery again to compile our asset bundles for production, and copy al
 $ php bakery webpack -p
 ```
 
-If everything worked out successfully, you should now be able to access the `http` version of your live site in your browser! The next step is to [install an SSL certificate](going-live/vps-production-environment/ssl).
+If everything worked out successfully, you should now be able to access the `http` version of your live site in your browser! The next step is to [install an SSL certificate](/going-live/vps-production-environment/ssl).

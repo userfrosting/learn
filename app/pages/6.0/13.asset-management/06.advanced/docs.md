@@ -277,4 +277,4 @@ $primary-color: #0066cc;
 
 ## Next Steps
 
-Learn about managing assets across [multiple sprinkles](asset-management/sprinkle-assets) or how to [migrate from Webpack](asset-management/migration).
+Learn about managing assets across [multiple sprinkles](/asset-management/sprinkle-assets) or how to [migrate from Webpack](/asset-management/migration).

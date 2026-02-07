@@ -464,7 +464,7 @@ app/sprinkles/mysprinkle/
 
 ### Update Sprinkle Recipe
 
-Verify your sprinkle's Recipe class is compatible with UserFrosting 6.0. Most sprinkle recipes should work without changes, but review the [Sprinkles documentation](sprinkles) for any API changes.
+Verify your sprinkle's Recipe class is compatible with UserFrosting 6.0. Most sprinkle recipes should work without changes, but review the [Sprinkles documentation](/sprinkles) for any API changes.
 
 ## Step 10: Database Migrations
 
@@ -654,8 +654,8 @@ npm install
 
 After successfully upgrading:
 
-1. **Review Documentation**: Read through the updated [Asset Management](asset-management) chapter
-2. **Optimize Assets**: Learn about [Vite Configuration](asset-management/vite-configuration) for performance tuning
+1. **Review Documentation**: Read through the updated [Asset Management](/asset-management) chapter
+2. **Optimize Assets**: Learn about [Vite Configuration](/asset-management/vite-configuration) for performance tuning
 3. **Modernize Code**: Gradually convert jQuery to Vue 3 components
 4. **Add TypeScript**: Consider adding type safety to your custom code
 5. **Explore Features**: Check out new Vite features like HMR and code splitting

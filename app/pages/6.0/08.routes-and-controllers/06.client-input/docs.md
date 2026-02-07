@@ -7,13 +7,13 @@ There is no such thing as a `$_GET` array or a `$_POST` array - at least, not ac
 
 The problem with `$_GET` and `$_POST` is that despite their names, they don't actually have anything to do with the request methods `GET` and `POST` at all. Rather, `$_GET` retrieves variables from the [URL query string](http://php.net/manual/en/reserved.variables.get.php), while `$_POST` retrieves variables submitted as part of a form. For some reason, PHP has arbitrarily tangled up the *data representation* with the request method. Not to mention that [global variables are a terrible idea](http://softwareengineering.stackexchange.com/questions/148108/why-is-global-state-so-evil) in general!
 
-Fortunately, Slim saves the day by providing a more HTTP-friendly way of accessing data supplied by the request. Rather than thinking in terms of "GET parameters" and "POST parameters", we should think in terms of the different components of the HTTP request. [Recall](routes-and-controllers/rest) that a request consists of a **url**, **method**, **headers**, and optionally, a **body** - any of these could potentially contain data that we'd want to use in one of our controller methods.
+Fortunately, Slim saves the day by providing a more HTTP-friendly way of accessing data supplied by the request. Rather than thinking in terms of "GET parameters" and "POST parameters", we should think in terms of the different components of the HTTP request. [Recall](/routes-and-controllers/rest) that a request consists of a **url**, **method**, **headers**, and optionally, a **body** - any of these could potentially contain data that we'd want to use in one of our controller methods.
 
 ## Retrieving URL Parameters
 
 There are really two places in the URL that could contain information we'd want to retrieve - the path itself, and the query string.
 
-Variables that we'd want to retrieve from the path itself are typically declared in the [route definition](routes-and-controllers/front-controller). These can be retrieved using [Route Placeholder Injection](https://php-di.org/doc/frameworks/slim.html#route-placeholder-injection) by simply adding a parameter with the same name to the controller. PHP-DI will directly inject it by indexing it with the name of the placeholder. For example, suppose we have a route defined as:
+Variables that we'd want to retrieve from the path itself are typically declared in the [route definition](/routes-and-controllers/front-controller). These can be retrieved using [Route Placeholder Injection](https://php-di.org/doc/frameworks/slim.html#route-placeholder-injection) by simply adding a parameter with the same name to the controller. PHP-DI will directly inject it by indexing it with the name of the placeholder. For example, suppose we have a route defined as:
 
 ```php
 $app->get('/api/users/u/{username}', function (string $username, Request $request, Response $response) {

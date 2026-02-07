@@ -17,7 +17,7 @@ Handle user input with validated, AJAX-powered forms. Learn how to:
 - Display loading states and error messages
 - Create reusable form composables
 
-**[Learn more about Forms →](client-side-code/components/forms)**
+**[Learn more about Forms →](/client-side-code/components/forms)**
 
 ### Tables
 
@@ -28,7 +28,7 @@ Display and manipulate collections of data with sortable, filterable, paginated 
 - Reusable table composables
 - Loading states and empty states
 
-**[Learn more about Tables →](client-side-code/components/tables)**
+**[Learn more about Tables →](/client-side-code/components/tables)**
 
 ### Collections
 
@@ -39,7 +39,7 @@ Manage dynamic lists of items where users can add, remove, and reorder entries:
 - Validation for collection items
 - Server integration patterns
 
-**[Learn more about Collections →](client-side-code/components/collections)**
+**[Learn more about Collections →](/client-side-code/components/collections)**
 
 ### Alerts and Notifications
 
@@ -50,7 +50,7 @@ Provide user feedback through alerts, notifications, and toast messages:
 - Error handling patterns
 - Confirmation dialogs
 
-**[Learn more about Alerts →](client-side-code/components/alerts)**
+**[Learn more about Alerts →](/client-side-code/components/alerts)**
 
 ## Component Patterns
 
@@ -262,16 +262,16 @@ try {
 
 Dive into specific component types:
 
-- **[Forms](client-side-code/components/forms)** - User input and validation
-- **[Tables](client-side-code/components/tables)** - Data display and manipulation
-- **[Collections](client-side-code/components/collections)** - Dynamic lists
-- **[Alerts](client-side-code/components/alerts)** - User feedback
+- **[Forms](/client-side-code/components/forms)** - User input and validation
+- **[Tables](/client-side-code/components/tables)** - Data display and manipulation
+- **[Collections](/client-side-code/components/collections)** - Dynamic lists
+- **[Alerts](/client-side-code/components/alerts)** - User feedback
 
 Or explore foundational concepts:
 
-- **[Vue Components](client-side-code/vue-components)** - Vue 3 basics
-- **[Exporting Variables](client-side-code/exporting-variables)** - Data passing
-- **[Asset Management](asset-management)** - Building and bundling
+- **[Vue Components](/client-side-code/vue-components)** - Vue 3 basics
+- **[Exporting Variables](/client-side-code/exporting-variables)** - Data passing
+- **[Asset Management](/asset-management)** - Building and bundling
 
 ## Further Reading
 

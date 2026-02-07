@@ -522,9 +522,9 @@ function addItem() {
 
 ## What's Next?
 
-- **[Forms](client-side-code/components/forms)**: Submit collections as part of forms
-- **[Tables](client-side-code/components/tables)**: Display collections in tables
-- **[Alerts](client-side-code/components/alerts)**: Show feedback when modifying collections
+- **[Forms](/client-side-code/components/forms)**: Submit collections as part of forms
+- **[Tables](/client-side-code/components/tables)**: Display collections in tables
+- **[Alerts](/client-side-code/components/alerts)**: Show feedback when modifying collections
 
 ## Further Reading
 

@@ -84,7 +84,7 @@ The default environment mode includes:
 |  default   | The default mode. Should be used only for development.                        |
 | production | Serve optimized assets and error management for the front user facing application |
 |   debug    | Enables all debugging options                                                 |
-|  testing   | Mode used for [automated testing](testing)                                   |
+|  testing   | Mode used for [automated testing](/testing)                                   |
 
 > [!TIP]
 > The Bakery command `php bakery setup:env` can be used to switch from one environment to the other.
@@ -114,7 +114,7 @@ Any configuration values under the `site` subarray are automatically passed to T
 <a href="https://twitter.com/{{site.twitter}}">Follow me on Twitter!</a>
 ```
 
-Alternatively, the [config function](templating-with-twig/filters-and-functions#config) can be used to access any configuration values:
+Alternatively, the [config function](/templating-with-twig/filters-and-functions#config) can be used to access any configuration values:
 
 ```twig
 <a href="https://twitter.com/{{ config('site.twitter') }}">Follow me on Twitter!</a>

@@ -172,4 +172,4 @@ $this->mailer->sendDistinct($message);
 
 ### Error handling
 
-If a problem arises while attempting to send a message, a `phpmailerException` will be thrown. By default, this exception is caught by the `Error/Handler/PhpMailerExceptionHandler` (defined in the `core` Sprinkle). Of course, you can [define your own exception handler](advanced/error-handling) instead.
+If a problem arises while attempting to send a message, a `phpmailerException` will be thrown. By default, this exception is caught by the `Error/Handler/PhpMailerExceptionHandler` (defined in the `core` Sprinkle). Of course, you can [define your own exception handler](/advanced/error-handling) instead.

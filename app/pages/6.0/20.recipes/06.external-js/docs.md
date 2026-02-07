@@ -68,7 +68,7 @@ $ php bakery assets:build
 
 Refresh the page, and you should see the default page in a beautiful dark mode !
 
-![DarkMode Screenshot](images/DarkReader1.png)
+![DarkMode Screenshot](/images/DarkReader1.png)
 
 ## Creating our own module
 
@@ -124,7 +124,7 @@ For the standard layout, we need to add our custom navbar element in the `main-n
 ```
 
 [center]
-![DarkMode Lightbulb](images/DarkReader2.png)
+![DarkMode Lightbulb](/images/DarkReader2.png)
 [size=14]The lightbulb icon is added in the standard layout[/size]
 [/center]
 
@@ -142,7 +142,7 @@ For the dashboard layout, we need to add our custom navbar element in the `navba
 ```
 
 [center]
-![DarkMode Lightbulb Admin](images/DarkReader3.png)
+![DarkMode Lightbulb Admin](/images/DarkReader3.png)
 [size=14]The lightbulb icon now is added in the dashboard layout[/size]
 [/center]
 

@@ -8,7 +8,7 @@ UserFrosting is translated in a variety of languages provided by our community. 
 
 ## The default locale
 
-The site default languages can be set in the [config](configuration/config-files) parameters. The `site.locales.default` contains the locale to use for global, guest users.
+The site default languages can be set in the [config](/configuration/config-files) parameters. The `site.locales.default` contains the locale to use for global, guest users.
 
 For example, to use _French_ as the default locale :
 
@@ -41,4 +41,4 @@ To remove one locale from the available ones, simply set the unwanted locale to 
     ],
 ```
 > [!TIP]
-> Want to add a new locale to UserFrosting? Feel free to [contribute](contributing/supporting-userfrosting#contributing-code-and-content) on GitHub
+> Want to add a new locale to UserFrosting? Feel free to [contribute](/contributing/supporting-userfrosting#contributing-code-and-content) on GitHub

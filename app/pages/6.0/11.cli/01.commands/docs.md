@@ -49,9 +49,9 @@ $ php bakery assets:build [options]
 | -w, --watch      | Watch for changes and recompile automatically                   |
 
 > [!NOTE]
-> The `production` option is automatically applied when the [environment mode](configuration/config-files#environment-modes) is set to `production`.
+> The `production` option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.
 
-See the [Asset Management](asset-management) chapter for more information about asset bundles and these options.
+See the [Asset Management](/asset-management) chapter for more information about asset bundles and these options.
 
 ### assets:install
 
@@ -72,12 +72,12 @@ The `assets:webpack` command is an alias for the **Webpack Encore** scripts used
 | -w, --watch      | Watch for changes and recompile automatically. Only available in development environment. | `npm run watch` |
 
 > [!NOTE]
-> The `production` option is automatically applied when the [environment mode](configuration/config-files#environment-modes) is set to `production`.
+> The `production` option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.
 
 > [!NOTE]
 > If both `watch` and `production` options are used, _watch_ will be ignored and assets will be build for production.
 
-See the [Asset Management](asset-management) chapter for more information about asset bundles and these options.
+See the [Asset Management](/asset-management) chapter for more information about asset bundles and these options.
 
 ### bake
 
@@ -88,15 +88,15 @@ $ php bakery bake
 ```
 
 > [!TIP]
-> This command should be executed every time you run `composer update`, change assets, create a new migration, create a new sprinkle or install a [community sprinkle](sprinkles/community).
+> This command should be executed every time you run `composer update`, change assets, create a new migration, create a new sprinkle or install a [community sprinkle](/sprinkles/community).
 
 > [!TIP]
-> It is possible and easy to add your own command to the `bake` command. See [Extending Aggregator Commands](cli/extending-commands) for more information.
+> It is possible and easy to add your own command to the `bake` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.
 
 
 ### clear-cache
 
-The `clear-cache` command takes care of deleting all cached data. See [Chapter 17](advanced/caching) for more information.
+The `clear-cache` command takes care of deleting all cached data. See [Chapter 17](/advanced/caching) for more information.
 
 ```bash
 $ php bakery clear-cache
@@ -140,7 +140,7 @@ $ php bakery create:user [options]
 
 The `debug` command will run a series of tests to make sure everything is ready to run UserFrosting on your system. If you have trouble accessing your UserFrosting installation, you should run this command first to make sure basic requirements are met.
 
-The information displayed by this command can also be useful to other people when [asking for help](troubleshooting/getting-help) or submitting new issues on GitHub.
+The information displayed by this command can also be useful to other people when [asking for help](/troubleshooting/getting-help) or submitting new issues on GitHub.
 
 ```bash
 $ php bakery debug
@@ -168,7 +168,7 @@ The debug command is in fact an aggregator of sub-commands, similar to `bake`. I
 Some results will be only displayed when the verbose mode is active.
 
 > [!TIP]
-> It is also possible (and easy) to add your own command to the `debug` command. See [Extending Aggregator Commands](cli/extending-commands) for more information.
+> It is also possible (and easy) to add your own command to the `debug` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.
 
 ### locale:compare
 
@@ -244,7 +244,7 @@ Example output :
 > [!WARNING]
 > Database migrations have the potential to destroy data. **Always** back up production databases, and databases with important data, before running migrations on them.
 
-The `migrate` command runs all the pending [database migrations](database/migrations). Migrations consist of special PHP classes used to manipulate the database structure and data, creating new tables or modifying existing ones. UserFrosting comes with a handful of migrations to create the [default tables](database/default-tables). The built-in migrations also handle the changes in the database between versions. See the [Migrations](database/migrations) section for more information about migrations.
+The `migrate` command runs all the pending [database migrations](/database/migrations). Migrations consist of special PHP classes used to manipulate the database structure and data, creating new tables or modifying existing ones. UserFrosting comes with a handful of migrations to create the [default tables](/database/default-tables). The built-in migrations also handle the changes in the database between versions. See the [Migrations](/database/migrations) section for more information about migrations.
 
 ```bash
 $ php bakery migrate [options]
@@ -357,7 +357,7 @@ $ php bakery migrate:status [options]
 
 ### route:list
 
-Display the list of all registered [routes](routes-and-controllers/front-controller).
+Display the list of all registered [routes](/routes-and-controllers/front-controller).
 
 ```bash
 $ php bakery route:list [options]
@@ -397,7 +397,7 @@ Registered Routes
 
 ### seed
 
-The `seed` command can be used to run any registered seed classes. See [Chapter 12](database/seeding) for more info on database seeds.
+The `seed` command can be used to run any registered seed classes. See [Chapter 12](/database/seeding) for more info on database seeds.
 
 ```bash
 $ php bakery seed [options] [--] <class> (<class>)...
@@ -418,7 +418,7 @@ $ php bakery seed Class1 Class2
 
 ### seed:list
 
-The `seed:list` command will list all database seeds available. See [Chapter 12](database/seeding) for more info on database seeds.
+The `seed:list` command will list all database seeds available. See [Chapter 12](/database/seeding) for more info on database seeds.
 
 ```bash
 $ php bakery seed:list
@@ -437,7 +437,7 @@ Seeds List
 
 ### setup:db
 
-The `setup:db` command can be used to setup the database configuration interactively. This configuration will be saved in the `app/.env` file. This can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](configuration/environment-vars) for more information about these variables.
+The `setup:db` command can be used to setup the database configuration interactively. This configuration will be saved in the `app/.env` file. This can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
 
 ```bash
 $ php bakery setup:db [options]
@@ -465,7 +465,7 @@ php bakery setup:db --db_driver=mysql --db_name=userfrosting --db_port=3306 --db
 
 The `setup:mail` command can be used to setup the outgoing email configuration. Different setup methods can be selected to guide you into configuring outgoing email support. This configuration will be saved in the `app/.env` file.
 
-As with the database setup, this can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](configuration/environment-vars) for more information about these variables.
+As with the database setup, this can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
 
 ```bash
 $ php bakery setup:mail [options]
@@ -486,9 +486,9 @@ Options can also be used to defined each variable individually in a non-interact
 
 ### setup:env
 
-The `setup:env` command can be used to select the desired [Environment Mode](configuration/config-files#environment-modes). The default choices are `default`, `production` and `debug`. A custom value can also be defined.
+The `setup:env` command can be used to select the desired [Environment Mode](/configuration/config-files#environment-modes). The default choices are `default`, `production` and `debug`. A custom value can also be defined.
 
-As with the database and outgoing email setup, this can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](configuration/environment-vars) for more information about these variables.
+As with the database and outgoing email setup, this can also be done manually by editing the `app/.env` file or using global server environment variables. See [Environment Variables](/configuration/environment-vars) for more information about these variables.
 
 ```bash
 $ php bakery setup:env [options]
@@ -513,7 +513,7 @@ $ php bakery setup
 ```
 
 > [!TIP]
-> It is also possible (and easy) to add your own command to the `setup` command. See [Extending Aggregator Commands](cli/extending-commands) for more information.
+> It is also possible (and easy) to add your own command to the `setup` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.
 
 ### sprinkle:list
 
@@ -562,7 +562,7 @@ The `test` command is used to execute [PHPUnit](https://phpunit.de/) tests.
 
 Tests from a specific sprinkle can optionally be run using the 'testscope' argument (eg. `php bakery test SprinkleName`). This argument can also run a specific test class (eg. `php bakery test 'UserFrosting\Sprinkle\SprinkleName\Tests\TestClass'`) or a specific test method (eg. `php bakery test 'UserFrosting\Sprinkle\SprinkleName\Tests\TestClass::method'`).
 
-See the [Automated Testing](testing) section for more information.
+See the [Automated Testing](/testing) section for more information.
 
 ```bash
 $ php bakery test [options] [--] [<testscope>]
@@ -576,7 +576,7 @@ $ php bakery test [options] [--] [<testscope>]
 
 > [!WARNING]
 > UserFrosting's built-in integration tests use a temporary in-memory SQLite database.  For testing to run successfully, you must have the `php-sqlite3` package installed and enabled.
-> Alternatively, you can create a separate testing database and override the `test_integration` database settings in `testing.php` [environment mode](configuration/config-files).
+> Alternatively, you can create a separate testing database and override the `test_integration` database settings in `testing.php` [environment mode](/configuration/config-files).
 
 
 ### test:mail

@@ -7,9 +7,9 @@ description: Referencing statics assets in your Twig templates.
 > **This documentation is obsolete.** UserFrosting 6 uses **Vite** as the default asset bundler, not Webpack Encore.
 >
 > Please see:
-> - [Using Assets in Templates](asset-management/using-assets) for how to include assets with Vite
-> - [Bakery Commands](asset-management/bakery-commands) for build commands
-> - [Migration Guide](asset-management/migration) to migrate from Webpack Encore
+> - [Using Assets in Templates](/asset-management/using-assets) for how to include assets with Vite
+> - [Bakery Commands](/asset-management/bakery-commands) for build commands
+> - [Migration Guide](/asset-management/migration) to migrate from Webpack Encore
 
 When a user loads a page of your website in their browser, it includes a number of `<link ...>`, `<img ...>`, `<script ...>` and other tags that tell their browser how to fetch these additional resources from the server. Since the client must issue a separate request to retrieve an asset after loading a page, we need a way to generate asset URLs in our templates. To automatically build a url for a single asset in a Twig template, you may use the `asset()` helper. This helper takes a file path to an asset, and generates an appropriate absolute url:
 

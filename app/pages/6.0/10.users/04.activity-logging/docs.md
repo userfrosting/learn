@@ -6,7 +6,7 @@ wip: true
 
 By default, user activities are logged to the `activities` database table. Logged information includes the activity time and an activity type, the `user_id`, the user's IP address, and a description of the activity. The administrative interface provides convenient tables for viewing these logs:
 
-![User activity logging](images/user-activities.png)
+![User activity logging](/images/user-activities.png)
 
 ## Default activity types
 
@@ -112,7 +112,7 @@ $usersWithActivities = User::joinLastActivity()->get();
 
 By default, UserFrosting implements a [custom Monolog handler](https://github.com/Seldaek/monolog/blob/master/doc/04-extending.md), `UserFrosting\Sprinkles\Account\Log\UserActivityDatabaseHandler`, that sends user activity logs to the `activities` database table.
 
-This is all assembled in the `LoggersService` service. If you'd prefer, you can [extend or override](services/extending-services) the `\UserFrosting\Sprinkle\Account\Log\UserActivityLogger` class reference in the DI Container to add additional handlers, or even completely replace the custom handler altogether. For example, to replace the `UserActivityDatabaseHandler` with `StreamHandler` :
+This is all assembled in the `LoggersService` service. If you'd prefer, you can [extend or override](/services/extending-services) the `\UserFrosting\Sprinkle\Account\Log\UserActivityLogger` class reference in the DI Container to add additional handlers, or even completely replace the custom handler altogether. For example, to replace the `UserActivityDatabaseHandler` with `StreamHandler` :
 
 ```php
 UserActivityLogger::class => function () {

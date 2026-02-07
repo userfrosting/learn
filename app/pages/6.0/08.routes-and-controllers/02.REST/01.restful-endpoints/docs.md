@@ -47,4 +47,4 @@ Here's an example of routes used by UserFrosting :
 > Notice that some requests use the exact same url, and only differ in the HTTP method used. For example, `/api/users/u/bob` can be used to retrieve, update, or delete Bob's account depending on which HTTP verb we are using.
 
 > [!TIP]
-> The `route:list` [Bakery Command](cli/commands#route-list) will display the full list of provided routes.
+> The `route:list` [Bakery Command](/cli/commands#route-list) will display the full list of provided routes.

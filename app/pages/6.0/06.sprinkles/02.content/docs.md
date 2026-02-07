@@ -67,23 +67,23 @@ The `vite.config.ts` file is used for configuring **Vite** and defining how your
 
 ### /app/assets
 
-The `assets` directory contains all of the Javascript, CSS, images, and other static content for your site. See [Chapter 13](asset-management) for more information about asset management and usage.
+The `assets` directory contains all of the Javascript, CSS, images, and other static content for your site. See [Chapter 13](/asset-management) for more information about asset management and usage.
 
 ### /app/cache
 
-The `cache` directory is used by the [Cache system](advanced/caching) to store the cached files. This directory is only required for main sprinkles.
+The `cache` directory is used by the [Cache system](/advanced/caching) to store the cached files. This directory is only required for main sprinkles.
 
 ### /app/config
 
-`config` contains the configuration parameters for your sprinkle. You can define configuration files for different environments (development, testing, production, etc). For each environment, the configuration files in each sprinkle will be merged together at runtime. See [Chapter 9](configuration/config-files) for more information.
+`config` contains the configuration parameters for your sprinkle. You can define configuration files for different environments (development, testing, production, etc). For each environment, the configuration files in each sprinkle will be merged together at runtime. See [Chapter 9](/configuration/config-files) for more information.
 
 ### /app/locale
 
-The `locale` directory contains [translation files](i18n) for your sprinkle. Like configuration files, translation files simply return an associative array.
+The `locale` directory contains [translation files](/i18n) for your sprinkle. Like configuration files, translation files simply return an associative array.
 
 Just as with configuration files, UserFrosting will recursively merge translation files for the currently selected language(s) from each loaded sprinkle. This means that each subsequently loaded sprinkle can override translations from previous sprinkles, or define new ones entirely.
 
-See [Chapter 17](i18n) for more information on UserFrosting's internationalization and localization system.
+See [Chapter 17](/i18n) for more information on UserFrosting's internationalization and localization system.
 
 ### /app/logs
 
@@ -114,7 +114,7 @@ The `test` directory is similar to `/src`, but for your [Tests](/testing).
 
 ### /app/.env
 
-The `.env` file is used to store your local [environment variables](configuration/environment-vars). This file is only required for main sprinkles.
+The `.env` file is used to store your local [environment variables](/configuration/environment-vars). This file is only required for main sprinkles.
 
 ### /public
 

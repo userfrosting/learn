@@ -353,12 +353,12 @@ export function useTable<T extends Record<string, any>>(
 
 ## What's Next?
 
-- **[Forms](client-side-code/components/forms)**: Create and edit table data
-- **[Collections](client-side-code/components/collections)**: Manage dynamic lists
-- **[Alerts](client-side-code/components/alerts)**: Show operation feedback
+- **[Forms](/client-side-code/components/forms)**: Create and edit table data
+- **[Collections](/client-side-code/components/collections)**: Manage dynamic lists
+- **[Alerts](/client-side-code/components/alerts)**: Show operation feedback
 
 ## Further Reading
 
 - [TanStack Table Documentation](https://tanstack.com/table/v8)
 - [UIkit Tables](https://getuikit.com/docs/table)
-- [Data Sprunjing](database/data-sprunjing)
+- [Data Sprunjing](/database/data-sprunjing)

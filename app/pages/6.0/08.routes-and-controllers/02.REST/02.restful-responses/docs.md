@@ -48,7 +48,7 @@ Note that most major browsers perform the redirect automatically when they recei
 
 ### 400 (Bad Request)
 
-Respond with this code when the client has submitted an "invalid" request. In most cases where the user's request has failed [validation](routes-and-controllers/client-input/validation), `400` is the appropriate code to return.
+Respond with this code when the client has submitted an "invalid" request. In most cases where the user's request has failed [validation](/routes-and-controllers/client-input/validation), `400` is the appropriate code to return.
 
 > [!NOTE]
 > Don't return a 400 code if the error isn't the client's fault, or if the request was valid but refused for some other reason (like failing authorization, or a CSRF token check).
@@ -80,7 +80,7 @@ if (!$authorizer->checkAccess($currentUser, 'uri_users')) {
 
 The default exception handler that handles `ForbiddenException`s will automatically generate an error message/page response with a 403 response code.
 
-In some cases, you may not want to disclose to unauthorized users that the resource even _exists_. In this case, you can [override](advanced/error-handling#creating-a-custom-exception-handler) the `ForbiddenExceptionHandler` with your own handler and have it return a 404 error instead.
+In some cases, you may not want to disclose to unauthorized users that the resource even _exists_. In this case, you can [override](/advanced/error-handling#creating-a-custom-exception-handler) the `ForbiddenExceptionHandler` with your own handler and have it return a 404 error instead.
 
 ### 404 (Not Found)
 
@@ -110,7 +110,7 @@ This code is automatically returned by the router when a route exists for a give
 
 ### 429 (Too Many Requests)
 
-This code is returned by the [throttler](routes-and-controllers/client-input/throttle) when a request's rate limit has been exceeded.
+This code is returned by the [throttler](/routes-and-controllers/client-input/throttle) when a request's rate limit has been exceeded.
 
 ### 500 (Internal Server Error)
 

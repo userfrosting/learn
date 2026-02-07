@@ -3,7 +3,7 @@ title: Basic Stack Requirements
 description: UserFrosting requires a web server, PHP, and some sort of database.
 ---
 
-The basic stack requirements for running UserFrosting are pretty typical of any web framework or CMS. Those requirements are the software required to _run_ UserFrosting, usually on a "server". These are different from the [developer tools used to build your website](installation/requirements/essential-tools-for-php) which we'll see on the next page.
+The basic stack requirements for running UserFrosting are pretty typical of any web framework or CMS. Those requirements are the software required to _run_ UserFrosting, usually on a "server". These are different from the [developer tools used to build your website](/installation/requirements/essential-tools-for-php) which we'll see on the next page.
 
 To run UserFrosting, you'll need four things :
 
@@ -41,7 +41,7 @@ In fact, we didn't make this decision directly. UserFrosting depends on a lot of
 
 If your hosting service doesn't have PHP 8.1 or above installed, call them and ask them to upgrade. If they refuse, point out that PHP 7.4 has been out of life for more than **3 years**! To be honest, there is little reason to use a shared hosting (e.g. cPanel) service these days, especially when VPS providers like DigitalOcean and Amazon EC2 are so inexpensive. Unless you're stuck with shared hosting for some reason or another (fussy boss), [there's no real reason not to switch to a VPS](https://www.hostt.com/still-use-shared-hosting-theres-vps/).
 
-As for your local development environment ([You _do_ have a local development environment, right ?](background/develop-locally-serve-globally)), if it's that much of a burden then... I don't know what to tell you. So what are you waiting for? Upgrade!
+As for your local development environment ([You _do_ have a local development environment, right ?](/background/develop-locally-serve-globally)), if it's that much of a burden then... I don't know what to tell you. So what are you waiting for? Upgrade!
 
 > [!NOTE]
 > As a reminder, **PHP 8.5** is officially recommended for UserFrosting 6. While you can still use UserFrosting with PHP 8.1, 8.2, 8.3 or 8.4, upgrading to PHP 8.5 is highly recommended for optimal performance and security.
@@ -74,10 +74,10 @@ To store data, UserFrosting requires a [relational database](https://www.techtar
 MySQL and MariaDB are the most popular choice of database provider. However, when developing locally, you can skip installing additional software by using **SQLite** as your database provider. SQLite support is built-in to PHP and the data is stored as a file within the UserFrosting directory structure. This option isn't suited for production websites as it's slower than other solutions, but it's perfectly viable when testing your application locally.
 
 > [!TIP]
-> It is not required to develop with the same database provider as the one you'll be using in production. It's totally fine to develop locally using SQLite and use MySQL on your production server. A [testing environment](testing) can be used to make sure your code runs smoothly on both.
+> It is not required to develop with the same database provider as the one you'll be using in production. It's totally fine to develop locally using SQLite and use MySQL on your production server. A [testing environment](/testing) can be used to make sure your code runs smoothly on both.
 
 > [!TIP]
-> One additional reason not to use SQLite in production: it does not fully support `ALTER TABLE` operations, and [the official workaround is twelve steps long](https://www.sqlite.org/lang_altertable.html#otheralter).  This is most likely to cause issues when [rolling back a migration](cli/commands#migrate-rollback), or if you decide to [remove foreign keys or columns (or tables!)](https://www.sqlite.org/lang_altertable.html#altertabdropcol) in a later migration. There is an easier [workaround for dropping entire tables](database/migrations#running-your-migration), but this is usually not acceptable in production. In development, it's much easier to drop a table if needed, re-run any needed migrations, and restore any missing (test) data.
+> One additional reason not to use SQLite in production: it does not fully support `ALTER TABLE` operations, and [the official workaround is twelve steps long](https://www.sqlite.org/lang_altertable.html#otheralter).  This is most likely to cause issues when [rolling back a migration](/cli/commands#migrate-rollback), or if you decide to [remove foreign keys or columns (or tables!)](https://www.sqlite.org/lang_altertable.html#altertabdropcol) in a later migration. There is an easier [workaround for dropping entire tables](/database/migrations#running-your-migration), but this is usually not acceptable in production. In development, it's much easier to drop a table if needed, re-run any needed migrations, and restore any missing (test) data.
 
 ## SMTP (Mail) Server
 

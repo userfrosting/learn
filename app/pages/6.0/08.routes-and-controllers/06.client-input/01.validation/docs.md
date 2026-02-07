@@ -11,7 +11,7 @@ Data from the outside world is the Achilles' heel of modern interactive web serv
 
 ### Server-side
 
-Many new developers [fail to realize](http://security.stackexchange.com/questions/147216/hacker-used-picture-upload-to-get-php-code-into-my-site) that a malicious user could submit any type of request, with any content they like, to your server at any time. This is possible regardless of the forms and widgets that your web application presents to the client - it is a trivial matter to change their behavior using the [browser console](troubleshooting/debugging#client-side-debugging), or bypass them completely using a command line tool such as [cURL](https://curl.haxx.se/docs/httpscripting.html).
+Many new developers [fail to realize](http://security.stackexchange.com/questions/147216/hacker-used-picture-upload-to-get-php-code-into-my-site) that a malicious user could submit any type of request, with any content they like, to your server at any time. This is possible regardless of the forms and widgets that your web application presents to the client - it is a trivial matter to change their behavior using the [browser console](/troubleshooting/debugging#client-side-debugging), or bypass them completely using a command line tool such as [cURL](https://curl.haxx.se/docs/httpscripting.html).
 
 For this reason, it is **imperative** to validate user input on the server side - *after* the request has left the control of the submitter.
 
@@ -29,7 +29,7 @@ UserFrosting Fortress solves this problem by providing a uniform interface for v
 
 This process is summarized in the following flowchart:
 
-![Flowchart for unified client- and server-side validation.](images/flowchart-fortress.png?resize=800,600)
+![Flowchart for unified client- and server-side validation.](/images/flowchart-fortress.png?resize=800,600)
 
 ### Creating a Schema
 
@@ -124,7 +124,7 @@ If your page includes the `pages/partials/page.js.twig` partial template, then t
 
 > [!TIP]
 > For an example of how this all fits together, see the `UserFrosting\Theme\AdminLTE\Controller\RegisterPageAction` controller, and the template `pages/register.html.twig` from the AdminLTE sprinkle. At the bottom of the template you will see the include for `pages/partials/page.js.twig`.
-> If you visit the page `/account/register` and use "View Source", you can see how the validation rules have been injected into the page. See [exporting variables](client-side-code/exporting-variables#page-specific-variables) for more details on exporting server-side variables to Javascript variables on a page.
+> If you visit the page `/account/register` and use "View Source", you can see how the validation rules have been injected into the page. See [exporting variables](/client-side-code/exporting-variables#page-specific-variables) for more details on exporting server-side variables to Javascript variables on a page.
 
 ### Server-side Validation
 
@@ -229,7 +229,7 @@ comment:
 
 A validator consists of a **validator name**, and a set of validator **attributes**. Each validator must have at least one attribute.
 
-In addition to the rule-specific attributes described below, each validator may contain a **validation message** assigned to a `message` attribute. The validation message will be recorded during the call to `ServerSideValidator::validate` in the event that the field fails the validation rule. This can be a simple text message, or you may [reference a translatable string key](i18n#the-placeholder) using the `&` prefix.
+In addition to the rule-specific attributes described below, each validator may contain a **validation message** assigned to a `message` attribute. The validation message will be recorded during the call to `ServerSideValidator::validate` in the event that the field fails the validation rule. This can be a simple text message, or you may [reference a translatable string key](/i18n#the-placeholder) using the `&` prefix.
 
 **Example:**
 ```yaml
@@ -247,7 +247,7 @@ Note there are two validators for `talons`. The `required` validator fails if th
 
 The `message` key for each validator is simply the message that will be displayed if the validator parameters are not met. E.g. if a value of over 120 characters is provided, the user will see an alert message `Talons must be less than 120 characters.`
 
-To integrate a translatable string key simply add your key using the `&` prefix. For example, your [translation file](i18n#the-translation-files) might look like:
+To integrate a translatable string key simply add your key using the `&` prefix. For example, your [translation file](/i18n#the-translation-files) might look like:
 
 **locale/en_US/talons.php**
 ```php

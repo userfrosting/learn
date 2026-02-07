@@ -7,9 +7,9 @@ description: Asset bundles should be compiled in production to allow for faster 
 > **This documentation is obsolete.** UserFrosting 6 uses **Vite** as the default asset bundler, not Webpack Encore. Webpack Encore is still supported for backward compatibility but not recommended for new projects.
 >
 > Please see:
-> - [Asset Management Introduction](asset-management/introduction) for Vite-based asset management
-> - [Getting Started with Vite](asset-management/getting-started) for configuration guide
-> - [Migration Guide](asset-management/migration) if you need to migrate from Webpack Encore to Vite
+> - [Asset Management Introduction](/asset-management/introduction) for Vite-based asset management
+> - [Getting Started with Vite](/asset-management/getting-started) for configuration guide
+> - [Migration Guide](/asset-management/migration) if you need to migrate from Webpack Encore to Vite
 
 In a minimalistic setup, asset retrieval is fairly straightforward. We might just keep all of our Javascript files in a `js/` directory directly under our public document root directory. Then the URL is simply `http://example.com/js/whatever.js`, the web server matches the _URL path_ `/js/whatever.js` to the _filesystem_ path `/path/to/document/root/public/js/whatever.js` and finally places the contents of that file in the HTTP response. In most web servers, this happens so transparently that a lot of new developers assume that they're somehow giving direct access to the server's file system. In reality the web server is mediating the interaction, and generating an HTTP response using the _contents_ of these files.
 
@@ -192,7 +192,7 @@ This is a list of dependent sprinkles entry files list, plus our own list. Every
 
 ## Compiling assets
 
-To build the assets, run the following [Bakery command](cli/commands#assets:build):
+To build the assets, run the following [Bakery command](/cli/commands#assets:build):
 
 ```bash
 $ php bakery assets:build
@@ -224,7 +224,7 @@ $ php bakery assets:webpack --production
 ```
 
 > [!TIP]
-> If you have shell access (for example, [using a VPS](going-live/vps-production-environment)), you can build production assets directly on your host server as part of your deployment process. Otherwise, you can build them locally before transferring your application to the host server. Unlike Composer, frontend dependencies don't depend on any server configuration, so it is safe to build locally and upload the resulting build.
+> If you have shell access (for example, [using a VPS](/going-live/vps-production-environment)), you can build production assets directly on your host server as part of your deployment process. Otherwise, you can build them locally before transferring your application to the host server. Unlike Composer, frontend dependencies don't depend on any server configuration, so it is safe to build locally and upload the resulting build.
 
 Alternatively, the underlying npm scripts can also be executed directly. However, be aware some preflight checks are executed by Bakery (e.g., make sure `webpack.config.js` exists), and won't be executed if running the scripts directly.
 

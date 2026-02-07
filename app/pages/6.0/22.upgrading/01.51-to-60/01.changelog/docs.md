@@ -6,7 +6,7 @@ wip: true
 
 # UserFrosting 6.0 Changelog
 
-This page provides a comprehensive overview of changes in UserFrosting 6.0. For detailed migration instructions, see the [Migration Guide](upgrading/51-to-60/guide).
+This page provides a comprehensive overview of changes in UserFrosting 6.0. For detailed migration instructions, see the [Migration Guide](/upgrading/51-to-60/guide).
 
 ## Major Changes
 
@@ -229,7 +229,7 @@ app/sprinkles/custom/
 
 **Migration Path**:
 - Plan migration to Vite for long-term projects
-- Follow [Webpack to Vite migration guide](asset-management/webpack-encore)
+- Follow [Webpack to Vite migration guide](/asset-management/webpack-encore)
 - No immediate pressure to migrate stable applications
 
 ## New Features
@@ -331,4 +331,4 @@ vendor/bin/phpunit
 
 ## What's Next?
 
-See [What to Expect](upgrading/51-to-60/what-to-expect) for information about the future roadmap and planned features beyond 6.0.
+See [What to Expect](/upgrading/51-to-60/what-to-expect) for information about the future roadmap and planned features beyond 6.0.

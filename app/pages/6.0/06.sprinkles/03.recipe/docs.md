@@ -14,7 +14,7 @@ Every sprinkle **must have** a recipe—it's how UserFrosting knows your sprinkl
 
 ## The `SprinkleRecipe` Interface
 
-The Sprinkle Recipe is a simple PHP class that provides standard methods which will be called by services to retrieve information about your sprinkle structure and the class it's registering. Every sprinkle recipe **MUST** implement the `UserFrosting\Sprinkle\SprinkleRecipe` interface. If you started from the [Skeleton](structure/introduction#the-app-skeleton-your-project-s-template), you already have a basic recipe.
+The Sprinkle Recipe is a simple PHP class that provides standard methods which will be called by services to retrieve information about your sprinkle structure and the class it's registering. Every sprinkle recipe **MUST** implement the `UserFrosting\Sprinkle\SprinkleRecipe` interface. If you started from the [Skeleton](/structure/introduction#the-app-skeleton-your-project-s-template), you already have a basic recipe.
 
 This interface requires you to implement the following method in your recipe:
 - [`getName`](#name): Returns the name of the sprinkle.
@@ -141,7 +141,7 @@ public function getRoutes(): array
 
 ### Services
 
-Return an array of services definitions. These will be explored in [Chapter 7 - Dependency Injection](dependency-injection)
+Return an array of services definitions. These will be explored in [Chapter 7 - Dependency Injection](/dependency-injection)
 
 Example:
 ```php
@@ -193,12 +193,12 @@ The available sub-recipes includes:
 
 | Recipe                                      | Features                                                                                            |
 | ------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| [BakeryRecipe](#bakeryrecipe)               | Registering [Bakery commands](cli/custom-commands)                                                 |
-| [MigrationRecipe](#migrationrecipe)         | Registering [Migrations](database/migrations)                                                      |
-| [SeedRecipe](#seedrecipe)                   | Registering [Seeds](database/seeding)                                                               |
-| [MiddlewareRecipe](#middlewarerecipe)       | Registering [Middlewares](advanced/middlewares)                                                     |
-| [EventListenerRecipe](#eventlistenerrecipe) | Registering [Event Listeners](advanced/events)                                                     |
-| [TwigExtensionRecipe](#twigextensionrecipe) | Registering [Twig Extension](templating-with-twig/filters-and-functions#extending-twig-extensions) |
+| [BakeryRecipe](#bakeryrecipe)               | Registering [Bakery commands](/cli/custom-commands)                                                 |
+| [MigrationRecipe](#migrationrecipe)         | Registering [Migrations](/database/migrations)                                                      |
+| [SeedRecipe](#seedrecipe)                   | Registering [Seeds](/database/seeding)                                                               |
+| [MiddlewareRecipe](#middlewarerecipe)       | Registering [Middlewares](/advanced/middlewares)                                                     |
+| [EventListenerRecipe](#eventlistenerrecipe) | Registering [Event Listeners](/advanced/events)                                                     |
+| [TwigExtensionRecipe](#twigextensionrecipe) | Registering [Twig Extension](/templating-with-twig/filters-and-functions#extending-twig-extensions) |
 
 Your recipe simply needs to implement the corresponding interface. Classes may implement more than one interface if desired by separating each interface with a comma. For example :
 
@@ -220,7 +220,7 @@ class MyApp implements
 Interface : `UserFrosting\Sprinkle\BakeryRecipe`
 
 Methods to implements :
-- `getBakeryCommands` : Return a list of [Bakery commands](cli/custom-commands) classes
+- `getBakeryCommands` : Return a list of [Bakery commands](/cli/custom-commands) classes
 
     **Example:**
     ```php
@@ -237,7 +237,7 @@ Methods to implements :
 Interface : `UserFrosting\Sprinkle\Core\Sprinkle\Recipe\MigrationRecipe`
 
 Methods to implement :
-- `getMigrations` : Return a list of [Migrations](database/migrations) classes
+- `getMigrations` : Return a list of [Migrations](/database/migrations) classes
 
     **Example:**
     ```php
@@ -254,7 +254,7 @@ Methods to implement :
 Interface : `UserFrosting\Sprinkle\Core\Sprinkle\Recipe\SeedRecipe`
 
 Methods to implement :
-- `getSeeds` : Return a list of [Seeds](database/seeding) classes
+- `getSeeds` : Return a list of [Seeds](/database/seeding) classes
 
     **Example:**
     ```php
@@ -272,7 +272,7 @@ Methods to implement :
 Interface : `UserFrosting\Sprinkle\MiddlewareRecipe`
 
 Methods to implement :
-- `getMiddlewares` : Return a list of [Middlewares](advanced/middlewares) classes
+- `getMiddlewares` : Return a list of [Middlewares](/advanced/middlewares) classes
 
     **Example:**
     ```php
@@ -289,7 +289,7 @@ Methods to implement :
 Interface : `UserFrosting\Event\EventListenerRecipe`
 
 Methods to implement :
-- `getEventListeners` : Allows to register [Event Listeners](advanced/events#listener)
+- `getEventListeners` : Allows to register [Event Listeners](/advanced/events#listener)
 
     **Example:**
     ```php
@@ -316,7 +316,7 @@ Methods to implement :
 Interface : `UserFrosting\Sprinkle\Core\Sprinkle\Recipe\TwigExtensionRecipe`
 
 Methods to implement :
-- `getTwigExtensions` : Return a list of [Twig Extension](templating-with-twig/filters-and-functions#extending-twig-extensions) classes
+- `getTwigExtensions` : Return a list of [Twig Extension](/templating-with-twig/filters-and-functions#extending-twig-extensions) classes
 
     **Example:**
     ```php
@@ -331,7 +331,7 @@ Methods to implement :
 
 ## Removing default sprinkles
 
-A default install, from the Skeleton, enables every [default sprinkle](structure/sprinkles#bundled-sprinkles). But your app may not require every feature provided by these default sprinkles. For example, you might not need the Admin sprinkle if you don't need any user management features.
+A default install, from the Skeleton, enables every [default sprinkle](/structure/sprinkles#bundled-sprinkles). But your app may not require every feature provided by these default sprinkles. For example, you might not need the Admin sprinkle if you don't need any user management features.
 
 In this case, two files need to be edited : `composer.json` and the Sprinkle Recipe.
 

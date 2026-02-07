@@ -86,7 +86,7 @@ function greetUser(user: User): string {
 
 ### Vite - Modern Build Tool
 
-[Vite](https://vitejs.dev/) (covered in [Asset Management](asset-management)) handles building and bundling your frontend code.
+[Vite](https://vitejs.dev/) (covered in [Asset Management](/asset-management)) handles building and bundling your frontend code.
 
 **Development benefits**:
 - **Instant server start**: No bundling during development
@@ -251,11 +251,11 @@ app/assets/
 
 Now that you understand the stack, explore how to:
 
-- **[Export Variables](client-side-code/exporting-variables)**: Pass data from PHP to JavaScript
-- **[Build Vue Components](client-side-code/vue-components)**: Create reactive user interfaces
-- **[Work with Forms](client-side-code/components/forms)**: Handle user input and validation
-- **[Create Tables](client-side-code/components/tables)**: Display and manipulate data
-- **[Show Alerts](client-side-code/components/alerts)**: Provide user feedback
+- **[Export Variables](/client-side-code/exporting-variables)**: Pass data from PHP to JavaScript
+- **[Build Vue Components](/client-side-code/vue-components)**: Create reactive user interfaces
+- **[Work with Forms](/client-side-code/components/forms)**: Handle user input and validation
+- **[Create Tables](/client-side-code/components/tables)**: Display and manipulate data
+- **[Show Alerts](/client-side-code/components/alerts)**: Provide user feedback
 
 > [!NOTE]
 > Don't feel overwhelmed! You don't need to master everything at once. Start with the basics and gradually explore more advanced features as needed.

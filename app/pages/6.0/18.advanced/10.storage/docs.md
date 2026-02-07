@@ -3,7 +3,7 @@ title: File Storage
 wip: true
 ---
 
-The filesystem service provides access to locally and remotely stored files using the [Flysystem](https://github.com/thephpleague/flysystem) PHP package by Frank de Jonge. Based on [Laravel Flysystem integration](https://laravel.com/docs/8.x/filesystem), UserFrosting integration provides simple to use drivers for working with local filesystems, Amazon S3, and Rackspace Cloud Storage. Even better, it's amazingly simple to switch between these storage options as the API remains the same for each system. You can even [add your own adapter](advanced/storage#custom-driver-setup) in your sprinkle if you need access to the many adapter supported by Flysystem.
+The filesystem service provides access to locally and remotely stored files using the [Flysystem](https://github.com/thephpleague/flysystem) PHP package by Frank de Jonge. Based on [Laravel Flysystem integration](https://laravel.com/docs/8.x/filesystem), UserFrosting integration provides simple to use drivers for working with local filesystems, Amazon S3, and Rackspace Cloud Storage. Even better, it's amazingly simple to switch between these storage options as the API remains the same for each system. You can even [add your own adapter](/advanced/storage#custom-driver-setup) in your sprinkle if you need access to the many adapter supported by Flysystem.
 
 ## Disks Configuration
 
@@ -159,7 +159,7 @@ In order to set up the custom filesystem you will need a Flysystem adapter. Let'
 "nao-pon/flysystem-google-drive": "~1.1"
 ```
 
-Next, you should [decorate the `UserFrosting\Sprinkle\Core\Filesystem\FilesystemManager` service](services/extending-services#extending-existing-services) in your sprinkle. There you can use the filesystem `extend` method to define the custom driver:
+Next, you should [decorate the `UserFrosting\Sprinkle\Core\Filesystem\FilesystemManager` service](/services/extending-services#extending-existing-services) in your sprinkle. There you can use the filesystem `extend` method to define the custom driver:
 
 ```php
 $filesystem->extend('gdrive', function ($config, $diskConfig) {
