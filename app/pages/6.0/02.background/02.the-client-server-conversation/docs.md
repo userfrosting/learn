@@ -1,12 +1,11 @@
 ---
 title: The Client-Server Conversation
 description: Many developers do not really understand the basics of how HTTP and web applications work. This discussion attempts to clarify some common misconceptions.
-obsolete: true
 ---
 
 One of the most common misconceptions is that web applications are coherent pieces of software that sit on a server somewhere, and that the client "runs" this application in their browser. This is actually an illusion, carefully crafted to provide a smooth experience for the end user.
 
-In reality, web applications are *conversations* between two agents with very poor memory - the **server**, and the **client** - which may be a web browser, mobile app, or another application. In modern web applications both the client *and* the server are typically going to need to run some code throughout their conversation. What's more, in the case of a PHP application, the client and server don't even speak the same language! The server runs only PHP, while the client runs only Javascript. (Note that there *are* server-side Javascript stacks, but we do not use them.)
+In reality, web applications are *conversations* between two agents with very poor memory - the **server**, and the **client** - which may be a web browser, mobile app, or another application. In modern web applications both the client *and* the server are typically going to need to run some code throughout their conversation. What's more, in the case of a PHP application, the client and server don't even speak the same language! The server runs PHP (via UserFrosting's Slim-based backend), while the client runs JavaScript (often with frameworks like Vue). Note that there *are* server-side JavaScript stacks, but UserFrosting is built on PHP.
 
 ## Server-side versus client-side code
 
@@ -32,59 +31,52 @@ You don't need to do anything. Your web server is configured to do this automati
 
 > How do I get PHP in my Javascript?
 
-Again, clients can't run PHP in their browsers. If you want to pass along the values of some PHP variables to the Javascript you send back to the client, you need to explicitly *generate* Javascript variables using PHP. For example:
+Again, clients can't run PHP in their browsers. If you want to pass along the values of some PHP variables to the JavaScript you send back to the client, you need to explicitly *generate* JavaScript variables using your templating engine. UserFrosting uses **Twig** for this. For example:
 
-```html
-<?php
-
-    // This is a PHP variable - (note the leading $)
-    $baseUrl = "https://owlfancy.com";
-
-?>
-
+```twig
 <button id="updateButton" type="button">Update My Owl</button>
 
 <script>
-    // This is a Javascript variable - (note no leading $)
+    // JavaScript variable populated by PHP
     let baseUrl = <?php echo $baseUrl; ?> ;
 
-    // Our Javascript code can now reference the Javascript variable baseUrl
-    $("#updateButton").on("click", function () {
-        $("#myOwlLink").prop("attr", baseUrl + "/great-horned-owl");
+    // Our JavaScript code can now reference the baseUrl variable
+    document.getElementById('updateButton').addEventListener('click', () => {
+        document.getElementById('myOwlLink').href = `${baseUrl}/great-horned-owl`;
     });
 </script>
 ```
 
-UserFrosting has a cleaner way of doing this using the Twig templating engine, but the principle is still the same.
+This uses PHP syntax to inject server-side values into the client-side JavaScript. It can also be done using Twig's `{{ }}` syntax. The templating happens server-side before the HTML is sent to the browser.
 
 For more complex PHP code that needs to be run in the middle of a block of Javascript code (for example, querying the database, which can *only* be done server-side), we'll need a way to let Javascript code ask the server to run some code on its behalf. Remember, the only way we can run code on the server is by making requests and then waiting for a response!
 
-Fortunately, modern browsers support something called AJAX, which allows Javascript code to automatically make requests to the server. Thus, you might see something like:
+Fortunately, modern browsers support something called AJAX (Asynchronous JavaScript and XML), which allows JavaScript code to make requests to the server without reloading the page. Applications typically use the modern `fetch()` API for this. For example:
 
-```php
-<?php
-    $baseUrl = "https://owlfancy.com";
-    $owlId = getUserOwlId();
-?>
-
+```twig
 <button id="seeVoleHuntResults" type="button">See Vole Hunt Results</button>
 
 <script>
     let baseUrl = "<?php echo $baseUrl; ?>";
     let owlId = "<?php echo $owlId; ?>";
 
-    $("#seeVoleHuntResults").on("click", function () {
-        // This is a jQuery AJAX function that generates another request to the server!
-        $.getJSON(baseUrl + "/vole-hunt/today",
-        {
-            "owl_id": owlId
-        }).done(function(data) {
-            // This is what the browser does when the request is complete successfuly.
-            alert(data['voles_caught']);
-        });
+    document.getElementById('seeVoleHuntResults').addEventListener('click', async () => {
+        try {
+            // Modern fetch API generates an asynchronous request to the server
+            const response = await fetch(`${baseUrl}/api/vole-hunt/today?owl_id=${owlId}`);
+            const data = await response.json();
+            
+            // Display the result when the request completes successfully
+            alert(`Voles caught: ${data.voles_caught}`);
+        } catch (error) {
+            console.error('Failed to fetch vole hunt results:', error);
+        }
     });
 </script>
 ```
+
+> [!NOTE]
+> For more complex interactions, UserFrosting supports **Vue 3** components, which provide a more structured way to build reactive user interfaces. Vue components handle state management, reactive data binding, and component lifecycle automatically, making it easier to build sophisticated client-side features. You'll learn more about Vue integration in the [Asset Management](/asset-management) chapter.
 
 ### The Big Picture
 
@@ -94,9 +86,9 @@ Let's take a step back and talk about what's really going on here.
 
 *requests a dynamically generated resource from the server...*
 
-*which contains some HTML and Javascript...*
+*which contains some HTML, JavaScript, CSS, and references to other assets...*
 
-*that Javascript contains instructions for the user's browser...*
+*that JavaScript contains instructions for the user's browser...*
 
 *one of which is to automatically ask the server for some JSON data whenever the user presses a certain button...*
 
@@ -114,13 +106,13 @@ It might be easier to understand this whole process if we provide an example of 
 
 **owlfancy.com:** "Sure. Looks like for that resource, I'm supposed to run this bit of code over here. Let's see what happens when I do that...Ok, it's done!  Looks like it returned some HTML. Here you go. The status code is 200. Let me know if you need anything else. Bye!"
 
-**Your browser:** "Hmm, according to this, I'm supposed to ask you for *jquery.js*, *bootstrap.js*, *pellet.js*, *bootstrap.css*, and something called */images/preening.jpg*. Can I have those as well please?  I'm also supposed to get *https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic*, but that's not your problem. I can ask *fonts.googleapis.com* myself.
+**Your browser:** "Hmm, according to this, I'm supposed to ask you for some JavaScript bundles (*app.js*, *vendor.js*), some CSS (*theme.css*), and something called */images/preening.jpg*. Can I have those as well please?  I'm also supposed to get *https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic*, but that's not your problem. I can ask *fonts.googleapis.com* myself.
 
 **owlfancy.com: (for each requested item):** "Sure, here you go. Let me know if you need anything else. Bye!"
 
-**Your browser:** "Ok, now I'll run all this CSS and Javascript code."  *Runs jquery.js, bootstrap.js, and pellet.js*
+**Your browser:** "Ok, now I'll run all this CSS and JavaScript code."  *Runs app.js and vendor.js*
 
-**Your browser:** "Hmm, looks like I'm supposed to give these boxes over here a border and shadow, change the font for this to Lora, and set it up so that when someone clicks "Forage", a picture of an owl swoops across the screen. Oh, it also wants me to tell Google Analytics and Facebook what I just did. Sure, after all my owner didn't tell me *not* to do that...I'll just send that information right now.
+**Your browser:** "Hmm, looks like I'm supposed to give these boxes over here a border and shadow, change the font for this to Lora, mount some Vue components, and set it up so that when someone clicks "Forage", a picture of an owl swoops across the screen. Oh, it also wants me to tell Google Analytics and Facebook what I just did. Sure, after all my owner didn't tell me *not* to do that...I'll just send that information right now.
 
 **Your browser:** "La la, waiting for my user to do something..."
 

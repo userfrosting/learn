@@ -126,7 +126,7 @@ Modify `app/config/default.php`:
 'assets' => [
     // Change bundler from 'webpack' to 'vite'
     'bundler' => env('ASSETS_BUNDLER', 'vite'),
-    
+
     // Add/update Vite configuration
     'vite' => [
         'manifest' => 'assets://.vite/manifest.json',
@@ -430,4 +430,4 @@ After migrating to Vite:
 
 4. **Optimize your Vite configuration** based on your needs
 
-Explore the [Vite Configuration](/asset-management/vite-configuration) guide to learn more about Vite configuration, or jump to [Advanced Usage](/asset-management/advanced) for optimization techniques.
+Explore the [Vite Configuration](asset-management/vite-configuration) guide to learn more about Vite configuration, or jump to [Advanced Usage](asset-management/advanced) for optimization techniques.

@@ -1,7 +1,7 @@
 ---
 title: Database Seeding
 description: Seeding is a simple way to populate the database with default data.
-obsolete: true
+wip: true
 ---
 
 Seeding can be used to populate the database. A seed is perfect to add test or default data to the database at any moment.
@@ -17,7 +17,7 @@ A seed is actually the most versatile yet simple way to interact with the databa
 
 ## Seed structure
 
-Each seed class needs to implement the `\UserFrosting\Sprinkle\Core\Seeder\SeedInterface` interface and must at least implement the `run(): void` method. This method will be the one ran by the `seed` Bakery command. Of course your class may contains other helper methods, but they need to be called by the `run` one. 
+Each seed class needs to implement the `\UserFrosting\Sprinkle\Core\Seeder\SeedInterface` interface and must at least implement the `run(): void` method. This method will be the one ran by the `seed` Bakery command. Of course your class may contains other helper methods, but they need to be called by the `run` one.
 
 > [!TIP]
 > Any services you require inside your seed class can be [injected in the constructor via Autowire](dependency-injection/the-di-container#autowiring).
@@ -42,7 +42,7 @@ class MySeed implements SeedInterface
 
 ## Registering Seeds
 
-To be picked up by the `seed` bakery command, a seed class files must first be registered in the *Sprinkle Recipe*, using the `SeedRecipe` sub-recipe and the `getSeeds():array` method: 
+To be picked up by the `seed` bakery command, a seed class files must first be registered in the *Sprinkle Recipe*, using the `SeedRecipe` sub-recipe and the `getSeeds():array` method:
 
 ```php
 <?php
@@ -89,7 +89,7 @@ Seeder
   [1] UserFrosting\Sprinkle\Account\Database\Seeds\DefaultPermissions
   [2] UserFrosting\Sprinkle\Account\Database\Seeds\DefaultRoles
   [3] UserFrosting\Sprinkle\MySprinkle\Database\Seeds\MySeed
- > 
+ >
 ```
 
 The `seed:list` command can also be used to display a list of all available seeds:

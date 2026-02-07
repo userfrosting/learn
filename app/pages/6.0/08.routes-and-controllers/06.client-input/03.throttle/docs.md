@@ -1,7 +1,6 @@
 ---
 title: Throttling
 description: Throttling, also known as rate-limiting, is a technique for slowing down attackers by limiting the frequency with which they can make certain types of requests.
-obsolete: true
 ---
 
 People tend to be bad at picking strong passwords. [Publicly available lists of passwords](https://github.com/danielmiessler/SecLists/tree/master/Passwords) recovered from hacked databases reveal that, despite efforts to educate, users still pick the same highly predictable passwords over and over. These lists make it easy for brute-force attackers to gain unauthorized access to a large number of your users' accounts.
@@ -55,7 +54,7 @@ This process is generally implemented using the `getDelay` and `logEvent` method
 
 // Inject Throttler into the class
 public function __construct(
-    // ... 
+    // ...
     protected Throttler $throttler,
     // ...
 ) {
@@ -85,12 +84,12 @@ $this->db->transaction(function () use ($data) {
     $this->throttler->logEvent('password_reset_request', [
         'email' => $data['email'],
     ]);
-    
+
     // ...
 
 });
 
-// ... 
+// ...
 ```
 
 You'll notice that we first check the `password_reset_request` throttle (the client IP address is automatically retrieved by the `throttler` service) and return an error if the computed delay is greater than 0. We do this *before* the call to `logEvent` - which adds a record of this attempt to the database - so that requests which are rejected because of the throttle rule do not further exacerbate the timeout period.

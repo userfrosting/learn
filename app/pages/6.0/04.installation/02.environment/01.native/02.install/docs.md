@@ -1,7 +1,6 @@
 ---
 title: Installing UserFrosting
 description: Getting UserFrosting up and running in your development environment.
-obsolete: true
 ---
 
 Now that your local development environment is setup and ready to go, it's finally time to download and access your first UserFrosting application for the first time !
@@ -10,8 +9,9 @@ Now that your local development environment is setup and ready to go, it's final
 
 Use Composer to create an empty project with the latest version of UserFrosting skeleton into a new `UserFrosting` folder:
 
+<!-- TODO : UPDATE FOR OFFICIAL RELEASE -->
 ```bash
-composer create-project userfrosting/userfrosting UserFrosting "^5.1"
+composer create-project userfrosting/userfrosting UserFrosting "^6.0" --stability=beta
 ```
 
 > [!TIP]
@@ -22,10 +22,7 @@ This may take some time to complete. If Composer has completed successfully, you
 Next the **Bakery** will execute it's magic. You'll have to answer some questions, which will guide you into the configuration process. These will help you set up the **database** credentials, create the first **admin user** and install the third-party **assets**.
 
 > [!NOTE]
-> If any error is encountered at this point, in the main project directory, run:
-> ```bash
-> $ php bakery bake
-> ```
+> If any error is encountered at this point, in the main project directory, run `php bakery bake` to re-attempt the installation.
 
 You will first be prompted for your database credentials. This is the information PHP needs to connect to your database. If you followed our guide to setup, you can select **SQLite** and the default path when asked. If PHP can't connect to your database using these credentials, make sure you have entered the right information and re-run the `bake` command.
 
@@ -42,27 +39,38 @@ If the database connection is successful, the installer will then check that the
 
 ## Serve and visit your website
 
-At this point you can run locally using the PHP Built-in server : 
+UserFrosting requires two servers to run locally: the PHP backend server and the Vite development server for frontend assets.
+
+**Terminal 1 - Start the PHP server:**
 
 ```bash
 php bakery serve
 ```
+
+This starts the backend on [http://localhost:8080](http://localhost:8080).
+
+**Terminal 2 - Start the Vite dev server:**
+
+```bash
+npm run dev
+```
+
+This starts the Vite development server with Hot Module Replacement (HMR) for instant frontend updates.
+
+> [!TIP]
+> You can use the `==> Serve` VS Code task to start both servers simultaneously if you're using VS Code.
 
 You can now access UserFrosting at [http://localhost:8080](http://localhost:8080). You should see the default UserFrosting pages and login with the newly created master account. 
 
 ![Basic front page of a UserFrosting installation](images/front-page.png)
 
 > [!TIP]
-> To stop the server, hit `ctrl+c`.
+> To stop either server, hit `ctrl+c` in its respective terminal.
 
-## Star the project and follow us on Twitter
+## Star the project
 
 It will help us a lot if you could star [the UserFrosting project on GitHub](https://github.com/userfrosting/UserFrosting). Just look for the button in the upper right-hand corner!
 
 [![How to star](images/how-to-star.png)](https://github.com/userfrosting/UserFrosting)
 
-You should also follow us on Twitter for real-time news and updates:
-
-<a class="twitter-follow-button" href="https://twitter.com/userfrosting" data-size="large">Follow @userfrosting</a>
-
-Congratulations! Now that this is complete, you're ready to start developing your application by [creating your first Sprinkle](sprinkles).
+Congratulations! Now that this is complete, you're ready to start developing your application. Learn more about [Sprinkles](sprinkles) to understand how to structure and extend your UserFrosting application.

@@ -1,7 +1,6 @@
 ---
 title: Debugging
 description: When your application "doesn't work", it's not always obvious where the problem lies. Modern web browsers come with a built-in tool for identifying problems in client-side code, as well as problems in the communication between your browser and the server.
-obsolete: true
 ---
 
 As we mentioned in [Chapter 2](background/the-client-server-conversation), a web application is not a single piece of software. It consists of the server running PHP code, the client (browser) running Javascript and rendering the web page, and the conversation between the two parties. Things can go wrong in any of these three places.
@@ -182,7 +181,7 @@ Authorization debugging shows you a detailed breakdown of how UserFrosting's [au
 
 #### Mail debugging
 
-The underlying [phpMailer](https://github.com/PHPMailer/PHPMailer) instance that we use can generate _very_ detailed information on the low-level processes involved when your code attempts to send email via SMTP. To have PHPMailer send this information to `app/logs/userfrosting.log`, set `debug.smtp` to `true` in your configuration file.
+The underlying [phpMailer](https://github.com/PHPMailer/PHPMailer) instance that we use can generate _very_ detailed information on the low-level processes involved when your code attempts to send email via SMTP. To have PHPMailer send this information to `app/logs/userfrosting.log`, set `mail.smtp_debug` to a non-zero value in your configuration file.
 
 The level of detail can be specified with the `mail.smtp_debug` configuration value, using the values specified in the [PHPMailer documentation](https://github.com/PHPMailer/PHPMailer/blob/239d0ef38c1eea3e9f40bb949a9683aee9ca5c28/class.phpmailer.php#L318-L325):
 

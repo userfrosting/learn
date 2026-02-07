@@ -1,10 +1,18 @@
 ---
 title: Environment Variables
 description: The .env file is used to define important values in development such as database credentials, which should be placed directly in environment variables during production.
-obsolete: true
+wip: true
 ---
 
-The basic database settings for UserFrosting can be set through environment variables. By default, UserFrosting looks for the following environment variables:
+Every application needs configuration—database credentials, API keys, SMTP settings, feature flags. But hardcoding these values directly in your code creates serious problems: security vulnerabilities (credentials in version control), inflexibility (can't easily change settings), and deployment headaches (different environments need different values).
+
+UserFrosting uses **environment variables** to solve these challenges. Environment variables keep sensitive data out of your codebase, allow different configuration for each environment (development, staging, production), and let you change settings without modifying code. It's the [twelve-factor app](https://12factor.net/config) approach that professional applications follow.
+
+For local development, UserFrosting uses `.env` files to make managing environment variables easy. In production, you set real environment variables directly on your server for maximum security.
+
+## Available Environment Variables
+
+UserFrosting recognizes the following environment variables:
 
 |       Variable       | Description                                                                             |
 |:--------------------:|-----------------------------------------------------------------------------------------|

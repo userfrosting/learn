@@ -1,10 +1,17 @@
 ---
 title: Understanding Dependency Injection
-description: Dependency Injection (DI) is the backbone of modern programming
-obsolete: true
+description: Dependency Injection (DI) is the backbone of modern programming and the key to writing testable, flexible code.
 ---
 
-[Dependency Injection](http://www.phptherightway.com/#dependency_injection) is one of the fundamental pillars of modern object-oriented software design - it is a prime example of the **D** in [**SOLID**](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)). The idea is that instead of creating objects _inside_ other objects, you create your "inner objects" (dependencies) separately and then _inject_ (by passing as an argument to the constructor or a setter method) them into the "outer object" (dependent).
+When objects create their own dependencies internally, you end up with rigid, tightly coupled code. Want to test a class? You can't—it's hardwired to specific implementations. Need to swap a dependency? You're rewriting the class. Want to mock something for testing? Impossible.
+
+**Dependency Injection (DI)** solves this elegantly. Instead of objects creating what they need, they declare their needs (dependencies), and someone else provides them. This simple shift—dependencies coming from outside rather than being created inside—makes your code testable, flexible, and maintainable. It's the **D** in [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)) principles.
+
+Think of it like a restaurant: A bad restaurant has chefs who grow their own ingredients, make their own equipment, and handle everything internally (tightly coupled). A good restaurant has chefs who receive quality ingredients from suppliers (dependency injection). The chef focuses on cooking; the suppliers focus on ingredients. Everyone does their job better.
+
+This page explains dependency injection with concrete examples, showing you why it matters and how UserFrosting uses it throughout.
+
+## The Problem: Tight Coupling
 
 For example, if you have class `Owl`:
 
@@ -44,7 +51,7 @@ class Owl
 }
 ```
 
-now, we create our `Nest` externally to our `Owl`, and then pass it in:
+Now, we create our `Nest` externally to our `Owl`, and then pass it in:
 
 ```php
 $nest = new Nest();
@@ -102,7 +109,7 @@ class Owl
 }
 ```
 
-In the above example, it doesn't matter if `Owl` receives a `Nest` or an `ImprovedNest`, or even a `SuperDuperNest`, as long as they all obey the same contract defined by the `NestInterface`. Moreover, the `Owl` class can confidently call the `getSize()` method of the injected `$nest` property, because the interface ensures that method is available, no matter which implementation of the `NestInterface` it receives. 
+In the above example, it doesn't matter if `Owl` receives a `Nest` or an `ImprovedNest`, or even a `SuperDuperNest`, as long as they all obey the same contract defined by the `NestInterface`. Moreover, the `Owl` class can confidently call the `getSize()` method of the injected `$nest` property, because the interface ensures that method is available, no matter which implementation of the `NestInterface` it receives.
 
 Using interfaces to declare what kind of object a class is expected to receive, even if you don't plan to have multiple "nest" types, is a key element in *autowiring* that we'll see shortly.
 

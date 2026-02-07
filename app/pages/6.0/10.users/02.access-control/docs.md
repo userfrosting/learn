@@ -1,8 +1,14 @@
 ---
 title: Authorization
 description: Authorization is sometimes referred to as "access control" or "protecting pages". UserFrosting implements an extended version of role-based access control that supports procedural conditions on user permissions.
-obsolete: true
+wip: true
 ---
+
+Authenticating users (knowing who they are) is only half the battle. The harder question is: **what should each user be allowed to do?** Not every user should access administrative features, delete data, or view sensitive information. Without proper authorization, your application becomes either a security hole (everyone can do everything) or a maintenance nightmare (hardcoded permissions scattered everywhere).
+
+UserFrosting solves this with a powerful, flexible **role-based access control (RBAC)** system. But it goes beyond simple RBAC—UserFrosting adds **conditional permissions** that let you define rules like "users can edit their own posts" or "managers can approve requests in their department." This gives you fine-grained control without drowning in complexity.
+
+This page explains how roles and permissions work, how to perform access checks in your code, and how to create sophisticated permission rules that adapt to your application's needs.
 
 ## Roles
 
@@ -126,7 +132,7 @@ UserFrosting ships with a number of predefined access condition callbacks, which
 
 ### Custom callbacks
 
-To add your own access condition callbacks, simply extend `UserFrosting\Sprinkle\Account\Authorize\AccessConditions` and replace it in a custom Service Provider. For example : 
+To add your own access condition callbacks, simply extend `UserFrosting\Sprinkle\Account\Authorize\AccessConditions` and replace it in a custom Service Provider. For example :
 
 ```php
 use UserFrosting\ServicesProvider\ServicesProviderInterface;
@@ -146,7 +152,7 @@ final class CustomAccessConditionsService implements ServicesProviderInterface
 }
 ```
 <!-- TODO : Requires update in Account Sprinkle (UserFrosting\Sprinkle\Account\Authorize\AccessConditions) -->
-<!-- 
+<!--
 Alternatively, to add your own access condition callbacks, simply [decorate](dependency-injection/extending-services) the `AccessConditions` service:
 
 ```php

@@ -1,6 +1,6 @@
 ---
 title: Helper Traits & Class
-obsolete: true
+wip: true
 ---
 
 UserFrosting provides some helper Traits to easily enable features and tools for your tests. Some of those tools make it easier to test your code against a testing database.
@@ -24,7 +24,7 @@ $ci->set(Foo::class, $foo);
 $ci->get(Foo::class);
 ```
 
-The `create` method can also accept services definition: 
+The `create` method can also accept services definition:
 
 ```php
 $provider = new AlertStreamService();
@@ -33,7 +33,7 @@ $ci = ContainerStub::create($provider->register());
 
 ## BakeryTester
 
-`UserFrosting\Testing\BakeryTester` can be used to test bakery commands. This class has one static command, and returns the result of the executed command. 
+`UserFrosting\Testing\BakeryTester` can be used to test bakery commands. This class has one static command, and returns the result of the executed command.
 
 ```php
 public static function runCommand(
@@ -50,7 +50,7 @@ The `$command` argument must be an instance of the command class. `$input` is an
 ```php
 use UserFrosting\Testing\BakeryTester;
 
-// ... 
+// ...
 
 $command = $this->ci->get(ClearCacheCommand::class);
 $result = BakeryTester::runCommand($command);

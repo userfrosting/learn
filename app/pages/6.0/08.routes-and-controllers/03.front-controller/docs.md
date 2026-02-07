@@ -1,7 +1,6 @@
 ---
 title: Front Controller
 description: The front controller consists of the route definitions that UserFrosting uses to process incoming requests from the client.
-obsolete: true
 ---
 
 The front controller is a collective term for the **routes** that your web application defines for its various **endpoints**. This is how UserFrosting links URLs and methods to your application's code.
@@ -11,7 +10,7 @@ Sprinkles define their routes in classes and register them in their Recipe. Ther
 The following is an example of a `GET` route:
 
 ```php
-$app->get('/api/users/u/{username}', function (string $username, Request $request, Response $response, array $args) 
+$app->get('/api/users/u/{username}', function (string $username, Request $request, Response $response, array $args)
 {
     $getParams = $request->getQueryParams();
 

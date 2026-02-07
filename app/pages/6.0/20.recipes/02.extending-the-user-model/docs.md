@@ -279,7 +279,7 @@ The problem, of course, is that all of the controllers in the Sprinkle that _def
 
 Fortunately, the default Sprinkles never directly reference the `User` class. Instead, they **[inject](dependency-injection)** the `UserInterface`. All we need to do, then, is remap the `UserInterface` to our new class, `Member`. This can be done via [Autowire](dependency-injection/the-di-container#binding-interfaces) in a [service provider](services/extending-services).
 
-Create a class `src/ServicesProvider/MemberModelService.php` : 
+Create a class `src/ServicesProvider/MemberModelService.php` :
 
 ```php
 <?php
@@ -303,7 +303,7 @@ class MemberModelService implements ServicesProviderInterface
 
 Plus, add `MemberModelService` to your Sprinkle recipe:
 
-```php 
+```php
 public function getServices(): array
 {
     return [
@@ -386,7 +386,7 @@ $fieldNames = ['user_name', 'name', 'email', 'locale', 'group', 'roles'];
 
 ...and add the `city` and `country` fields in your copied method.
 
-We'll also need to link the route endpoints to this new class. To do this, we'll once again use the dependency injector to remap the `UserPageAction` to our new `MemberPageAction` class : 
+We'll also need to link the route endpoints to this new class. To do this, we'll once again use the dependency injector to remap the `UserPageAction` to our new `MemberPageAction` class :
 
 ```php
 <?php

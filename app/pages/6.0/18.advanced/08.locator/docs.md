@@ -1,6 +1,6 @@
 ---
 title: Locator Service
-obsolete: true
+wip: true
 ---
 
 The locator service goal is to provides an abstraction layer for the different files and folders available across different sprinkles inside UserFrosting. In other words, it is a way of aggregating many search paths together. As you've seen in the previous chapters, each sprinkle can provides multiple resources and sprinkles can have the ability to overwrite a previous sprinkle resources. All of those resources, combined with the overwriting properties of a sprinkle is handled by the locator service. _Templates_ and _config_ files are a good example of those resources.
@@ -40,7 +40,7 @@ The paths for non-shared streams are calculated relatively from each [sprinkle p
 
 ### Debugging locations
 
-The bakery command provide a debugging command to help you understand and validate all the paths returned by the locator service: 
+The bakery command provide a debugging command to help you understand and validate all the paths returned by the locator service:
 
 ```bash
 $ php bakery debug:locator
@@ -186,7 +186,7 @@ A new stream can be registered pretty much anywhere. If the stream is tied to a 
 
 When the locator service is initialized, the `ResourceLocatorInitiatedEvent` will be dispatched by the global event dispatcher. Each sprinkle can listen for this even and use it to register their own stream on the locator service. In fact, even the default stream are registered this way!
 
-To register a new service, a new instance of `UserFrosting\UniformResourceLocator\ResourceStream` can be created and passed to the locator through the `addStream` method. 
+To register a new service, a new instance of `UserFrosting\UniformResourceLocator\ResourceStream` can be created and passed to the locator through the `addStream` method.
 
 For example, let's create a listener class that will register a `foo` stream, and a `bar` shared stream:
 
@@ -210,7 +210,7 @@ class ResourceLocatorInitiated
         // Normal Stream
         $stream = new ResourceStream('foo');
         $event->locator->addStream($stream);
-        
+
         // Shared Stream with custom path
         $stream = new ResourceStream('bar', path: 'foobar', shared: true),
         $event->locator->addStream($stream);
@@ -226,7 +226,7 @@ The listener then need to be registered in the Sprinkle Recipe:
 ```php
 namespace UserFrosting\Sprinkle\Site;
 
-// ... 
+// ...
 use UserFrosting\Event\EventListenerRecipe; // <-- Add this
 use UserFrosting\Sprinkle\Site\Listeners\ResourceLocatorInitiated; // <-- Add this
 // ...
@@ -247,7 +247,7 @@ class MyApp implements
         ];
     }
     //<--
-    
+
     // ...
 }
 ```

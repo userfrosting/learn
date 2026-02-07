@@ -1,8 +1,15 @@
 ---
 title: Contents
-description: Detailed breakdown of a Sprinkle's contents.
-obsolete: true
+description: Detailed breakdown of a Sprinkle's contents and how each directory serves a specific purpose.
 ---
+
+Now that you understand what sprinkles are, let's explore what goes inside them. A sprinkle isn't just a random collection of files—it's an organized package where each directory has a specific purpose. Understanding this structure helps you know exactly where to put your code, templates, assets, and other resources.
+
+Think of a sprinkle like a well-organized kitchen: ingredients (code) go in the pantry, tools (assets) have their drawer, recipes (templates) are in the cookbook, and seasonings (configuration) sit on the spice rack. Everything has its place, making it easy to find what you need and add new items.
+
+This page details each directory in a sprinkle and explains what belongs there.
+
+## Directory Structure
 
 Within each sprinkle, you will find any or all of the following directories and files:
 
@@ -30,7 +37,7 @@ Within each sprinkle, you will find any or all of the following directories and 
 ├── vendor/
 ├── composer.json
 ├── package.json
-└── webpack.config.js
+└── vite.config.ts
 ```
 
 > [!NOTE]
@@ -46,17 +53,17 @@ The sprinkle `composer.json` should also define the sprinkles this one depends o
 
 ### /package.json
 
-The `package.json` file is used for retrieving frontend dependencies via [npm](https://www.npmjs.com), like [Bootstrap](http://getbootstrap.com/). Dependencies specified in `package.json` will be downloaded to `/node_modules`.
+The `package.json` file is used for retrieving frontend dependencies via [npm](https://www.npmjs.com), like [Vue](https://vuejs.org/) components. Dependencies specified in `package.json` will be downloaded to `/node_modules`.
 
 To download frontend dependencies, from the project root directory:
 
 ```bash
-$ php bakery webpack
+$ php bakery bake
 ```
 
-### /webpack.config.js
+### /vite.config.ts
 
-The `webpack.config.js` file is used for defining **asset entries** which can be referenced by templates. The advantage of using asset entries (as compared to referencing specific files) is that multiple files can be quickly referenced by the name of their entries. In production the individual files in each bundle are merged by Webpack Encore, reducing the number of HTTP requests that need to be made and thus reducing client latency and server load. See [Chapter 13](asset-management/asset-bundles) for more information about asset bundles.
+The `vite.config.ts` file is used for configuring **Vite** and defining how your assets are built and bundled. See [Chapter 13](/asset-management) for more information about asset management with Vite.
 
 ### /app/assets
 
@@ -84,11 +91,11 @@ The `logs` directory is used to store UserFrosting debug logs. This directory is
 
 ### /app/schema
 
-The `schema` directory contains the [request schema](routes-and-controllers/client-input/validation) for your sprinkle. Schema files in other sprinkles can be extended by using a custom loader.
+The `schema` directory contains the [request schema](/routes-and-controllers/client-input/validation) for your sprinkle. Schema files in other sprinkles can be extended by using a custom loader.
 
 ### /app/src
 
-The `src` directory contains the (preferably) [PSR-4](http://www.php-fig.org/psr/psr-4/) compatible PHP code for your sprinkle. This directory will contain your controllers, database models, [migrations](database/migrations), [routes](routes-and-controllers), [service providers](services), [data sprunjers](database/data-sprunjing), and any other custom classes that your sprinkle uses. This is where your sprinkle's Recipe will be found.
+The `src` directory contains the (preferably) [PSR-4](http://www.php-fig.org/psr/psr-4/) compatible PHP code for your sprinkle. This directory will contain your controllers, database models, [migrations](/database/migrations), [routes](/routes-and-controllers), [service providers](/services), [data sprunjers](/database/data-sprunjing), and any other custom classes that your sprinkle uses. This is where your sprinkle's Recipe will be found.
 
 > [!NOTE]
 > The content of `app/src/` can be customized and doesn't need to follow any strict convention.
@@ -99,11 +106,11 @@ The `storage` directory is used to store files managed by Filesystem service. Th
 
 ### /app/templates
 
-To separate content and logic, UserFrosting uses the popular [Twig](http://twig.symfony.com/) templating engine. Since Twig has its own system for [loading templates](http://twig.symfony.com/doc/api.html#built-in-loaders), UserFrosting builds upon this to allow overriding templates in sprinkles. See [Templating with Twig](templating-with-twig) for more information on how Twig is integrated into UserFrosting.
+To separate content and logic, UserFrosting uses the popular [Twig](http://twig.symfony.com/) templating engine. Since Twig has its own system for [loading templates](http://twig.symfony.com/doc/api.html#built-in-loaders), UserFrosting builds upon this to allow overriding templates in sprinkles. See [Templating with Twig](/templating-with-twig) for more information on how Twig is integrated into UserFrosting.
 
 ### /app/test
 
-The `test` directory is similar to `/src`, but for your [Tests](testing).
+The `test` directory is similar to `/src`, but for your [Tests](/testing).
 
 ### /app/.env
 

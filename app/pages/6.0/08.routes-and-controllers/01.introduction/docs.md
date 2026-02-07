@@ -1,10 +1,17 @@
 ---
 title: Introduction
 description: If you're new to object-oriented programming, you may not be familiar with the MVC pattern, a popular and very flexible design paradigm for scalable, easily maintained web applications.
-obsolete: true
 ---
 
-UserFrosting is built to follow the [Model-View-Controller (MVC)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) design paradigm. If you come from a "traditional" PHP background, you may be used to seeing code that looks like this:
+Imagine building a web application where all your code lives in single files—database queries mixed with HTML output, business logic tangled with form processing, everything in one giant mess. This is **spaghetti code**, and it's a maintenance nightmare. Want to change the database? You're rewriting HTML. Need to update the UI? You're touching business logic. Testing becomes impossible.
+
+The **Model-View-Controller (MVC)** pattern solves this by separating concerns into three distinct layers: the **model** (data and business logic), the **view** (presentation/HTML), and the **controller** (coordinates between model and view). Each layer has one job, making your code easier to understand, test, and maintain.
+
+UserFrosting embraces MVC fully. Models use [Eloquent](database) for database interactions, views use [Twig templates](templating-with-twig) for clean HTML generation, and controllers (built on [Slim 4](https://www.slimframework.com/)) tie everything together. This chapter focuses on controllers—the starting point for adding new features to your application.
+
+## Understanding Spaghetti Code
+
+If you come from a "traditional" PHP background, you may be used to seeing code that looks like this:
 
 **users.php**
 ```php

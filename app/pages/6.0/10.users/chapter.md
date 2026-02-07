@@ -1,7 +1,7 @@
 ---
 title: Users
 description: In this chapter, you'll learn about the various user account features that come built-in and fully implemented in UserFrosting.
-obsolete: true
+wip: true
 ---
 
 #### Chapter 10

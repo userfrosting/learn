@@ -1,7 +1,7 @@
 ---
 title: Using Custom Data Models
 description: The dependency injector makes it easy to override entire data models in your Sprinkle.
-obsolete: true
+wip: true
 ---
 
 Extending PHP classes is a little different from extending other types of entities. You cannot simply replace a class by redefining it in a custom Sprinkle. In fact, classes with the same name in two different Sprinkles would be treated as two different fully-qualified classes per the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/). For example, if I loaded the Sprinkles `Account` and `Site`, and I had the following structure:
@@ -46,9 +46,9 @@ Now, we can start using `\UserFrosting\Sprinkle\Site\Database\Models\User` to ex
 
 Of course, the limitations of object-oriented inheritance becomes clear when you want to change the behavior of the original class in other places where it has been used. For example, if I extended `Account\Database\Models\User` and redefined the `onLogin` method in my `Site\Database\Models\User` class, this would let me use `Site\Database\Models\User` going forward in any code I write in the `site` Sprinkle. However, it wouldn't affect references to `User` in the `account` Sprinkle - they would still be referring to the base class.
 
-To allow this sort of "_retroactive extendability_", the Dependency Injector can be used to resolves interface identifiers to specific class names at runtime [through Interface Binding and custom Autowiring](dependency-injection/the-di-container#binding-interfaces). 
+To allow this sort of "_retroactive extendability_", the Dependency Injector can be used to resolves interface identifiers to specific class names at runtime [through Interface Binding and custom Autowiring](dependency-injection/the-di-container#binding-interfaces).
 
-UserFrosting uses this feature to solve this issue when dealing with data Models **by binding each default model to an interface**. Rather than hardcoding references to `UserFrosting\Sprinkle\Account\Database\Models\User`, UserFrosting reference the `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface` interface and map the interface with the correct model in the Account Sprinkle service provider. 
+UserFrosting uses this feature to solve this issue when dealing with data Models **by binding each default model to an interface**. Rather than hardcoding references to `UserFrosting\Sprinkle\Account\Database\Models\User`, UserFrosting reference the `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface` interface and map the interface with the correct model in the Account Sprinkle service provider.
 
 For example, a controller in the account Sprinkle will do something like:
 
@@ -94,7 +94,7 @@ The following interface-model association are defined by default in the *Account
 
 ## Overwriting existing map
 
-It is possible for any sprinkle to overwrite the default mapping in a service provider. Then every time `UserInterface` is referenced for example, your model will actually be injected instead of the default `User` Model.  
+It is possible for any sprinkle to overwrite the default mapping in a service provider. Then every time `UserInterface` is referenced for example, your model will actually be injected instead of the default `User` Model.
 
 **app/src/ServicesProvider/ModelsServices.php**:
 ```php

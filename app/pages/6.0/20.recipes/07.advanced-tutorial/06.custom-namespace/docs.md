@@ -6,7 +6,7 @@ obsolete: true
 
 ## Custom Namespace
 
-The default namespace provided in the Skeleton, `UserFrosting\App\{Path}`, can easily be changed in your app. 
+The default namespace provided in the Skeleton, `UserFrosting\App\{Path}`, can easily be changed in your app.
 
 Previous version of UserFrosting required a strict namespace (`UserFrosting\Sprinkle\{SprinkleName}\{Path}`). Starting with UserFrosting 5, the namespace can be whatever you want. It doesn't event need to include **UserFrosting** or **Sprinkle**. It *can* still be like this, but it could also be `YourName/YourApp/{Path}` or `App/{Path}`.
 
@@ -14,7 +14,7 @@ In this example, we'll replace the default namespace for `UserFrosting\Sprinkle\
 
 ### composer.json
 
-First thing to do is to replace the namespace in your `composer.json` in **autoload** and **autoload-dev**: 
+First thing to do is to replace the namespace in your `composer.json` in **autoload** and **autoload-dev**:
 
 **composer.json**:
 ```json
@@ -32,7 +32,7 @@ First thing to do is to replace the namespace in your `composer.json` in **autol
 // ...
 ```
 
-Now we need to update **Composer** so our new [PSR4 mapping](http://www.php-fig.org/psr/psr-4/#3-examples) is picked up. From the command line, run in the **root directory** of your UserFrosting project: 
+Now we need to update **Composer** so our new [PSR4 mapping](http://www.php-fig.org/psr/psr-4/#3-examples) is picked up. From the command line, run in the **root directory** of your UserFrosting project:
 
 ```bash
 $ composer update
@@ -40,7 +40,7 @@ $ composer update
 
 ### Class reference
 
-You can now find and replace every reference of `UserFrosting\App\` for `UserFrosting\Sprinkle\Pastries` in your classes. Don't forget that you'll need to replace it in : 
+You can now find and replace every reference of `UserFrosting\App\` for `UserFrosting\Sprinkle\Pastries` in your classes. Don't forget that you'll need to replace it in :
 
 - Namespace at the top of every classes (`namespace UserFrosting\App\{...};` -> `namespace UserFrosting\Sprinkle\Pastries\{...};`);
 - Every class importation (`use UserFrosting\App\{...};` -> `use UserFrosting\Sprinkle\Pastries\{...};`);
@@ -169,7 +169,7 @@ class MyApp implements SprinkleRecipe, MigrationRecipe, SeedRecipe
 ```
 
 ### Routes
-One caveat of removing the default Skeleton pages, the index page won't exist anymore. Your app won't have an entry page (eg. https://yourapp/) and an error will be thrown. One way to get around this problem is to replace the default routes with a redirect, from `/` to the `/dashboard`. For example : 
+One caveat of removing the default Skeleton pages, the index page won't exist anymore. Your app won't have an entry page (eg. https://yourapp/) and an error will be thrown. One way to get around this problem is to replace the default routes with a redirect, from `/` to the `/dashboard`. For example :
 
 **app/src/MyRoutes.php**:
 ```php

@@ -1,133 +1,391 @@
 ---
-title: Exporting Variables to Javascript
-description: The server-side variables that UserFrosting automatically exports to your pages as Javascript variables, and suggestions for exporting additional variables in your application.
-obsolete: true
+title: Passing Data from Server to Client
+description: How to pass server-side data to your Vue components and JavaScript code in UserFrosting 6.0
+wip: true
 ---
 
-We often need to access the value of some server-side variable in our client-side code. For example, we use the value `site.uri.public` throughout our Javascript code when building urls for AJAX requests. The value of this variable is taken directly from UserFrosting's configuration variable of the same name, and embedded into a Javascript variable on every page.
+Modern web applications need to pass data from the backend (PHP) to the frontend (JavaScript/Vue). UserFrosting provides several strategies for this, depending on your needs.
 
-There are a number of ways to get the values of specific variables from the server to the client. For example:
+This page covers the main approaches: global configuration objects, page-specific data, component props, and data attributes. Choose the right approach based on your use case.
 
-- Embedding data in the page DOM (HTML attributes), and then retrieving it from the DOM using `.prop`, `.val`, `.data`, or some other Javascript method
-- Making a separate AJAX request for the value of the variable
-- Printing the value of a PHP/Twig variable directly into a `<script>` tag and assigning it to a Javascript variable
+## Understanding the Client-Server Boundary
 
-Depending on the context of your application, one of these options might be more appropriate than the others. For the purposes of this section however, we will focus on the last option, and the "global" Javascript variables that UserFrosting makes available on each page. This is the best choice when you have miscellaneous values that aren't closely associated with any specific element of the DOM, and are generic enough that they don't warrant the trouble of making a separate AJAX request for their values.
+Before we dive in, remember that **JavaScript cannot directly access PHP variables**. When your browser loads a page:
 
-No matter how you go about it, it's important to keep in mind that **you're not directly accessing server-side variables in Javascript.** Keep in mind our [discussion on the client-server conversation](background/the-client-server-conversation) - the client makes a **request** for the page and receives a fixed piece of HTML in the **response**.
+1. **Server renders**: PHP/Twig generates HTML with embedded data
+2. **Client receives**: Browser gets a static HTML document
+3. **JavaScript runs**: Your code accesses the embedded data
 
-Any PHP variables we receive in the response are really just **copies of their server-side values** when the page was rendered. Our page can't change these values on the server without making another request - and even then, changes won't persist from one request to the next unless we use some sort of persistence mechanism (sessions, database, etc).
+Any data you need on the client must be included in the HTML response. Changes in JavaScript don't affect PHP variables unless you make an API request.
 
-## Site variables
+> [!NOTE]
+> This is a fundamental limitation of web architecture, not a UserFrosting quirk. The server and client are separate programs running on different machines.
 
-By default, UserFrosting will create a global `site` Javascript variable on every page. `site` is a JSON object that contains a copy of the main `site` config array, [defined in PHP](configuration/config-files) (ie. `app/sprinkles/core/config/default.php`). The following values are among the ones contained in the `site` object :
+## Approaches to Passing Data
 
-- `site.uri.public`: Base url of your site (e.g., `https://example.com`).
-- `site.debug.ajax`: `true` if AJAX debugging mode is enabled, false otherwise.
-- `site.csrf.keys.name`: The name of the CSRF `name` attribute expected by the CSRF middleware (Defaults to `csrf_name`).
-- `site.csrf.keys.value`: The name of the CSRF `value` attribute expected by the CSRF middleware (Defaults to `csrf_value`).
-- `site.csrf.name`: The value of the CSRF `name` attribute.
-- `site.csrf.value`: The value of the CSRF `value` attribute.
+### 1. Global Configuration Object (Best for Site-Wide Settings)
 
-Notice that all of these variables are nested under a single, top-level `site` object which is constructed in the `core/templates/pages/partials/config.js.twig` template. By formatting these as keys in a JSON object, rather than making each one an individual variable, we avoid polluting Javascript's global namespace with too many identifiers.
+UserFrosting creates a global `site` JavaScript object on every page containing configuration values. This is ideal for settings you'll need across multiple pages.
 
-To add, remove, or modify the contents of the `site` object, simply extends the `site` configuration [in your Sprinkle](configuration/config-files#file-structure).
+**Available in**: `window.site` or just `site`
 
-Alternatively, you can override `config.js.twig` in your Sprinkle. `config.js.twig` itself pulls its values from Twig's global variables (`site`, `current_user`, etc). Keep in mind that you can add global variables to Twig by [creating a Twig extension](https://twig.sensiolabs.org/doc/2.x/advanced.html#creating-an-extension) and then loading your extension by [extending the `view` service](services/extending-services#extending-existing-services). This process is summarized in this diagram:
+**Common values**:
+- `site.uri.public` - Base URL of your site (e.g., `https://example.com`)
+- `site.debug.ajax` - Whether AJAX debugging is enabled
+- `site.csrf.name` - CSRF token name
+- `site.csrf.value` - CSRF token value
 
-![Extending UserFrosting's client-side site variable](images/extending-site-variable.png)
+**Example usage** in TypeScript:
+```typescript
+// Making an API request with base URL
+import axios from 'axios'
+
+const response = await axios.get(`${site.uri.public}/api/users`)
+
+// Including CSRF token in POST requests
+await axios.post(`${site.uri.public}/api/users`, userData, {
+  headers: {
+    [site.csrf.keys.name]: site.csrf.name,
+    [site.csrf.keys.value]: site.csrf.value
+  }
+})
+```
+
+**How it works**: The `site` object is generated by `core/templates/pages/partials/config.js.twig` and pulls values from your [configuration files](configuration/config-files).
+
+**Customizing**: To add custom values to `site`:
+
+1. **Option A**: Extend your sprinkle's configuration:
+   ```php
+   // app/sprinkles/mysprinkle/config/default.php
+   return [
+       'site' => [
+           'myapp' => [
+               'feature_flag' => true,
+               'api_version' => 'v2'
+           ]
+       ]
+   ];
+   ```
+
+2. **Option B**: Override `config.js.twig` in your sprinkle to add custom logic
 
 > [!WARNING]
-> Remember, any data you place in the `site` variable will be visible to the end-user - all they have to do is "View source"! Don't put any sensitive or private information in this variable.
+> Everything in `site` is visible in the page source! Never put sensitive information (API keys, passwords, private user data) in this object.
 
-## Page-specific variables
+### 2. Page-Specific Data (Best for Page Initialization)
 
-For your convenience, the `core/templates/pages/partials/page.js.twig` template will generate a `page` JSON object. This is similar to `site`, but is populated by passing an array of data to the `page` key when rendering a template:
+For data specific to a single page, use the `page` global object. This is populated by passing data to the `page` key when rendering your Twig template.
 
+**PHP Controller**:
 ```php
-public function __invoke(Request $request, Response $response): Response
+public function displayUsers(Request $request, Response $response): Response
 {
-    // ...
-
-    // Load validation rules
-    $schema = new RequestSchema("schema://requests/register.yaml");
-    $validatorRegister = new JqueryValidationJsonAdapter($this->translator);
-
-    // Pass them to the `page` key of the template placeholders
-    return $this->view->render($response, 'pages/register.html.twig', [
-        "page" => [
-            "validators" => [
-                "register" => $validatorRegister->rules($schema)
-            ]
+    return $this->view->render($response, 'pages/users.html.twig', [
+        'page' => [
+            'api_endpoint' => '/api/users',
+            'per_page' => 25,
+            'initial_data' => $this->userRepository->all()
         ]
     ]);
 }
 ```
 
-You can then include the `page.js.twig` component in your page template's `scripts_page` block, before any page-specific asset bundles:
-
+**Twig Template** (include in your page):
 ```twig
 {% block scripts_page %}
-    <!-- Include page-specific variables -->
     <script>
         {% include "pages/partials/page.js.twig" %}
     </script>
 {% endblock %}
 ```
 
-Twig will automatically convert the array you passed to `render` in your page controller method to a JSON object:
+**JavaScript/TypeScript Access**:
+```typescript
+// The page object is now available globally
+console.log(page.api_endpoint) // "/api/users"
+console.log(page.per_page) // 25
 
-```js
-
-// Appears in the rendered page DOM for /account/register
-
-var page = {
-    "validators": {
-        "register": {
-            "rules": {
-                "user_name": {
-                    "rangelength": [
-                        1,
-                        50
-                    ],
-                    "noLeadingWhitespace": true,
-                    "noTrailingWhitespace": true,
-                    "required": true,
-                    "username": true
-                },
-                ...
-            },
-            "messages": {
-                "user_name": {
-                    "rangelength": "Username must be between 1 and 50 characters in length.",
-                    "noLeadingWhitespace": "The value for 'Username' cannot begin with spaces, tabs, or other whitespace.",
-                    "noTrailingWhitespace": "The value for 'Username' cannot end with spaces, tabs, or other whitespace.",
-                    "required": "Please specify a value for 'Username'.",
-                    "username": "Username may consist only of lowercase letters, numbers, '.', '-', and '_'."
-                },
-                ...
-            }
-        }
-    }
-};
+// Use it in your Vue components or vanilla JS
+const users = page.initial_data
 ```
 
-## Dynamically extending JSON objects
+This approach works well for validation rules, API endpoints, initial data loads, and feature flags specific to a page.
 
-Occasionally, you will want to dynamically modify the contents of `site`, `page`, or some other JSON variable. For example, you might want to override a variable on a specific page. To do this, you can use jQuery's `extend` method:
+### 3. Vue Component Props (Best for Component Data)
 
-```js
-<script>
-    site = $.extend(
-        true, // deep extend
-        {
-            "debug" : {
-                "ajax" : false // Disable AJAX debugging on this page only
-            }
-        },
-        site
-    );
+When using Vue 3 components, pass data directly as props through the component's mounting HTML.
+
+**Twig Template**:
+```twig
+<div id="user-profile"
+     data-user-id="{{ user.id }}"
+     data-username="{{ user.username }}"
+     data-email="{{ user.email }}">
+</div>
+```
+
+**Vue Component** (`UserProfile.vue`):
+```vue
+<template>
+  <div>
+    <h2>{{ username }}</h2>
+    <p>Email: {{ email }}</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+
+const userId = ref<number>(0)
+const username = ref<string>('')
+const email = ref<string>('')
+
+onMounted(() => {
+  const el = document.getElementById('user-profile')
+  if (el) {
+    userId.value = parseInt(el.dataset.userId || '0')
+    username.value = el.dataset.username || ''
+    email.value = el.dataset.email || ''
+  }
+})
 </script>
 ```
 
-You should do this in your page template's `scripts_page` block, after loading the original versions of the variables but before loading any page asset bundles.
+Or, better yet, pass props when creating the Vue app:
+
+**Twig Template**:
+```twig
+<div id="user-profile"></div>
+
+<script>
+    window.userProfileData = {
+        userId: {{ user.id }},
+        username: "{{ user.username }}",
+        email: "{{ user.email }}"
+    };
+</script>
+```
+
+**TypeScript**:
+```typescript
+import { createApp } from 'vue'
+import UserProfile from './components/UserProfile.vue'
+
+createApp(UserProfile, {
+  userId: window.userProfileData.userId,
+  username: window.userProfileData.username,
+  email: window.userProfileData.email
+}).mount('#user-profile')
+```
+
+### 4. Data Attributes (Best for Small Amounts of Data)
+
+For simple, element-specific data, use HTML5 `data-*` attributes. This is ideal when your JavaScript needs to know about specific elements on the page.
+
+**Twig Template**:
+```twig
+<button
+    class="delete-user"
+    data-user-id="{{ user.id }}"
+    data-user-name="{{ user.username }}">
+    Delete User
+</button>
+```
+
+**TypeScript**:
+```typescript
+document.querySelectorAll('.delete-user').forEach(button => {
+  button.addEventListener('click', async (e) => {
+    const target = e.currentTarget as HTMLButtonElement
+    const userId = target.dataset.userId
+    const userName = target.dataset.userName
+
+    if (confirm(`Delete user ${userName}?`)) {
+      await deleteUser(userId)
+    }
+  })
+})
+```
+
+**Vue 3 Alternative** (using template refs):
+```vue
+<template>
+  <button @click="handleDelete" :data-user-id="userId">
+    Delete User
+  </button>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const props = defineProps<{
+  userId: number
+  userName: string
+}>()
+
+const handleDelete = async () => {
+  if (confirm(`Delete user ${props.userName}?`)) {
+    await deleteUser(props.userId)
+  }
+}
+</script>
+```
+
+### 5. API Requests (Best for Dynamic Data)
+
+For data that changes frequently or is too large to embed, fetch it via API calls after the page loads.
+
+**TypeScript**:
+```typescript
+import axios from 'axios'
+
+interface User {
+  id: number
+  username: string
+  email: string
+}
+
+// Fetch data after page load
+async function loadUsers(): Promise<User[]> {
+  const response = await axios.get<User[]>(`${site.uri.public}/api/users`)
+  return response.data
+}
+
+// Use in your code
+const users = await loadUsers()
+```
+
+**Vue 3 Composable** (reusable logic):
+```typescript
+// composables/useUsers.ts
+import { ref, Ref } from 'vue'
+import axios from 'axios'
+
+export function useUsers() {
+  const users: Ref<User[]> = ref([])
+  const loading = ref(false)
+  const error = ref<Error | null>(null)
+
+  async function fetchUsers() {
+    loading.value = true
+    error.value = null
+
+    try {
+      const response = await axios.get(`${site.uri.public}/api/users`)
+      users.value = response.data
+    } catch (e) {
+      error.value = e as Error
+    } finally {
+      loading.value = false
+    }
+  }
+
+  return { users, loading, error, fetchUsers }
+}
+```
+
+## Choosing the Right Approach
+
+Use this decision tree:
+
+| Data Type | Best Approach | Why |
+|-----------|---------------|-----|
+| Site-wide config (URLs, CSRF) | Global `site` object | Available everywhere, cached |
+| Page-specific settings | Global `page` object | Page scope, easy access |
+| Component initialization | Vue props | Type-safe, reactive |
+| Element metadata | Data attributes | Semantic, standard HTML |
+| Large/dynamic data | API requests | Reduces initial page size |
+| Real-time data | API + polling/WebSockets | Always current |
+
+## Modern ES Modules and TypeScript
+
+With Vite and modern JavaScript, avoid global variables when possible. Instead, export and import values:
+
+**config.ts**:
+```typescript
+// Re-export site config with types
+export interface SiteConfig {
+  uri: {
+    public: string
+  }
+  csrf: {
+    name: string
+    value: string
+    keys: {
+      name: string
+      value: string
+    }
+  }
+}
+
+// Access global site object with type safety
+export const siteConfig: SiteConfig = (window as any).site
+```
+
+**Usage**:
+```typescript
+import { siteConfig } from './config'
+
+// Now fully typed!
+const url = `${siteConfig.uri.public}/api/users`
+```
+
+## Security Considerations
+
+> [!WARNING]
+> **Never expose sensitive data to the client:**
+> - Database credentials
+> - API keys or secrets
+> - Other users' private information
+> - Internal system paths
+> - Unfiltered user input (XSS risk)
+
+**Safe to expose:**
+- Public URLs and endpoints
+- CSRF tokens (designed for client use)
+- Current user's own data
+- Public configuration settings
+
+**Remember**: Anything in the HTML can be viewed by the user. Treat all client-side data as potentially compromised.
+
+## Debugging Data Transfer
+
+### View Available Data
+
+Open your browser's console and type:
+```javascript
+console.log('Site config:', site)
+console.log('Page data:', page)
+```
+
+### Validate JSON Structure
+
+If data isn't working as expected, check that your PHP array converts correctly to JSON:
+
+```php
+// Good - simple types convert cleanly
+'count' => 42,
+'name' => 'John',
+'active' => true
+
+// Problematic - resource types don't serialize
+'database' => $pdo, // ❌ Won't work
+
+// Solution - extract only the data you need
+'user' => [
+    'id' => $user->id,
+    'name' => $user->username
+]
+```
+
+## What's Next?
+
+Now that you know how to pass data from server to client, learn how to use it in:
+
+- **[Vue Components](client-side-code/vue-components)**: Build reactive UIs with the data
+- **[Forms](client-side-code/components/forms)**: Submit data back to the server
+- **[Tables](client-side-code/components/tables)**: Display collections of data
+
+> [!TIP]
+> Start simple with global objects (`site`, `page`), then graduate to Vue props and API calls as your application grows in complexity.

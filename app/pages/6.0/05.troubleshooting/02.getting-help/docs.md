@@ -1,7 +1,6 @@
 ---
 title: Getting Help
 description: Don't be afraid to ask for help! Just, please be sure to read and understand our rules first.
-obsolete: true
 ---
 
 ## General tips for support

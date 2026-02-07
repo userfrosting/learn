@@ -1,9 +1,8 @@
 ---
 title: Requirements
 description: UserFrosting has a few basic, sensible requirements - requirements that just about any modern web developer should already have set up!
-obsolete: true
 ---
 
 # Requirements
 
-UserFrosting has a few basic requirements and makes use of some modern development tools - requirements and tools that just about any modern web developer should already have set up! 
+UserFrosting has a few basic requirements and makes use of some modern development tools - requirements and tools that just about any modern web developer should already have set up!

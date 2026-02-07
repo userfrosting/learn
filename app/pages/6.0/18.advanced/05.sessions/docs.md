@@ -1,12 +1,12 @@
 ---
 title: Sessions
 description: UserFrosting offers an easy to use wrapper for PHP sessions, and supports session drivers for file and database storage mechanisms.
-obsolete: true
+wip: true
 ---
 
 HTTP itself is stateless - you may recall that we compare a web application to a [conversation between two agents with very poor memory](background/the-client-server-conversation). This presents a problem if we want to implement a "login" functionality - the server needs to be able to remember that someone has already authenticated in an earlier request!
 
-Like other web frameworks, UserFrosting uses [PHP sessions](http://php.net/manual/en/intro.session.php) to solve this problem. When a user visits your site, PHP will place a random, hard-to-guess string called the **session id** in the the `Set-Cookie` header of the response. This is automatically stored by the user's browser in a cookie. It uniquely identifies the user and cannot easily be guessed by anyone without access to the user's browser.
+Like other web frameworks, UserFrosting uses [PHP sessions](http://php.net/manual/en/intro.session.php) to solve this problem. When a user visits your site, PHP will place a random, hard-to-guess string called the **session id** in the `Set-Cookie` header of the response. This is automatically stored by the user's browser in a cookie. It uniquely identifies the user and cannot easily be guessed by anyone without access to the user's browser.
 
 The next time a user makes a request _on your site_ (for example, visiting a page), your browser automatically sends the session id back to the server in the `Cookie` request header. By sending the session id to the server with each subsequent request, the server can resume the user's session that was saved after the last request. You can think of the session id as a temporary "password" that your browser automatically sends to the server with each request.
 

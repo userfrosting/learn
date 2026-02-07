@@ -1,7 +1,7 @@
 ---
 title: Bakery CLI
 description: Bakery is UserFrosting's very own command line interface (CLI) tool.
-obsolete: true
+wip: true
 ---
 
 #### Chapter 11

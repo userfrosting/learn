@@ -1,7 +1,7 @@
 ---
 title: Supporting UserFrosting
 description: Donate your time, money, or expertise to furthering the development of UserFrosting.
-obsolete: true
+wip: true
 ---
 
 ## Financial support

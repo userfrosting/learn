@@ -73,16 +73,41 @@ All code snippets should use triple backticks with language specified for syntax
 
 ### Images and Links
 
-**CRITICAL - Image Paths**: Images are stored in `app/pages/{version}/images` alongside the markdown files, and **MUST always use absolute paths starting with `/`**. 
-- ✅ Correct: `![Alt text](/images/screenshot.png)`
-- ❌ Wrong: `![Alt text](images/screenshot.png)` or `![Alt text](../images/screenshot.png)`
+**CRITICAL - Image Paths**: Images are stored in `app/pages/{version}/images/` alongside the markdown files, and **MUST always use a path relative to the _version_ folder, _without_ a starting `/`**. 
+- ✅ Correct: `![Alt text](images/screenshot.png)`
+- ❌ Wrong: `![Alt text](/images/screenshot.png)` or `![Alt text](../images/screenshot.png)`
 Images should be checked to ensure the file exists at the specified path.
 
-Internal links should use absolute paths without version numbers to allow automatic version switching.
-- ✅ Correct: `[Requirements](/installation/requirements)`
-- ❌ Wrong: `[Requirements](installation/requirements)` or `[Requirements](/04.installation/01.requirements)`
+Internal links should use relative paths to the version folder, without version numbers to allow automatic version switching.
+- ✅ Correct: `[Requirements](installation/requirements)`
+- ❌ Wrong: `[Requirements](/installation/requirements)` or `[Requirements](04.installation/01.requirements)`
 
 Pages have anchor links for sections (e.g., `#motivation`). Ensure links point to existing sections.
+
+### Alert Syntax
+
+Alerts can be used to emphasize critical information or provide tips to the user. They are displayed with distinctive colors and icons to indicate the significance of the content.
+
+Use alerts only when they are crucial for user success or to add helpful information. Additionally, you should avoid placing alerts consecutively. Alerts cannot be nested within other elements.
+
+Five types of alerts are available:
+
+```
+> [!NOTE]  
+> Highlights information that users should take into account, even when skimming.
+
+> [!TIP]
+> Optional information to help a user be more successful.
+
+> [!IMPORTANT]  
+> Crucial information necessary for users to succeed.
+
+> [!WARNING]  
+> Critical content demanding immediate user attention due to potential risks.
+
+> [!CAUTION]
+> Negative potential consequences of an action.
+```
 
 ### Chapters and Pages
 Documentation pages are stored in `docs.md` or `chapter.md` files under `app/pages/{version}/` (e.g., `app/pages/6.0/01.quick-start/docs.md`).

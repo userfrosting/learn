@@ -1,9 +1,9 @@
 ---
 title: Middlewares
-obsolete: true
+wip: true
 ---
 
-Sometimes it can be useful to run code _before_ or _after_ the the request is handled, to either manipulate the Request and/or the Response objects. This can be done by _middlewares_. Middlewares can be used to add many feature to every page or simple routes, for example to add protection to the website, handle some configuration, inject some variable, etc.
+Sometimes it can be useful to run code _before_ or _after_ the request is handled, to either manipulate the Request and/or the Response objects. This can be done by _middlewares_. Middlewares can be used to add many feature to every page or simple routes, for example to add protection to the website, handle some configuration, inject some variable, etc.
 
 ## How does middleware work?
 
@@ -64,7 +64,7 @@ class ExampleAfterMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);
-        
+
         // Do something ...
 
         return $response;
@@ -81,9 +81,9 @@ You may add middleware to the entire application, to an individual route or to a
 
 ### Application middleware
 
-Application middleware is invoked for every **incoming** HTTP request. To add an application wide middleware, it must be registered in your Sprinkle Recipe, via the 
+Application middleware is invoked for every **incoming** HTTP request. To add an application wide middleware, it must be registered in your Sprinkle Recipe, via the
 
-```php 
+```php
 use UserFrosting\Sprinkle\MiddlewareRecipe; // Don't forget to import !
 
 // ...
@@ -93,7 +93,7 @@ class MyApp implements
     MiddlewareRecipe, // <-- Add this !
 {
 
-// ... 
+// ...
 
 /**
  * Returns a list of all Middlewares classes.

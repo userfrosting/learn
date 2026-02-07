@@ -74,7 +74,7 @@ class PageMembers
 }
 ```
 
-Notice that `PageMembers` only does one thing - it renders the contents of a template file (`pages/members.html.twig`), and appends it to the response. We then return this (modified) response to the main application, which sends it off to the client. Both arguments of the `__invoke` method, the Response as well as the Twig Services, will be [injected by the Dependency Injector Container](dependency-injection) to perform these operations. 
+Notice that `PageMembers` only does one thing - it renders the contents of a template file (`pages/members.html.twig`), and appends it to the response. We then return this (modified) response to the main application, which sends it off to the client. Both arguments of the `__invoke` method, the Response as well as the Twig Services, will be [injected by the Dependency Injector Container](dependency-injection) to perform these operations.
 
 Next we'll create the page template itself, which contains the actual HTML content we want to render.
 

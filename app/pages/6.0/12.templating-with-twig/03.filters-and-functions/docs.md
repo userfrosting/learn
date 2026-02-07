@@ -1,7 +1,7 @@
 ---
 title: Twig Filters and Functions
 description: ""
-obsolete: true
+wip: true
 ---
 
 ### config
@@ -64,7 +64,7 @@ class Extension extends AbstractExtension implements GlobalsInterface
 {
     /**
      * Inject required services.
-     * 
+     *
      * @param Config $config The config service
      */
     public function __construct(
@@ -110,7 +110,7 @@ class Core implements
             Extension::class,
         ];
     }
-    
+
     // ...
 }
 ```

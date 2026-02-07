@@ -1,7 +1,7 @@
 ---
 title: The Mailer Service
 description: UserFrosting's mailer service integrates smoothly with Twig to create dynamically generated messages.  Templated messages can be sent to large groups of recipients, customizing the content for each recipient.
-obsolete: true
+wip: true
 ---
 
 ## Configuration
@@ -95,7 +95,7 @@ public function __construct(
     protected Twig $twig,
     protected Mailer $mailer,
 ) {
-}    
+}
 
 // ...
 

@@ -5,11 +5,11 @@ description: Asset bundles should be compiled in production to allow for faster 
 
 > [!WARNING]
 > **This documentation is obsolete.** UserFrosting 6 uses **Vite** as the default asset bundler, not Webpack Encore. Webpack Encore is still supported for backward compatibility but not recommended for new projects.
-> 
+>
 > Please see:
-> - [Asset Management Introduction](/asset-management/introduction) for Vite-based asset management
-> - [Getting Started with Vite](/asset-management/getting-started) for configuration guide
-> - [Migration Guide](/asset-management/migration) if you need to migrate from Webpack Encore to Vite
+> - [Asset Management Introduction](asset-management/introduction) for Vite-based asset management
+> - [Getting Started with Vite](asset-management/getting-started) for configuration guide
+> - [Migration Guide](asset-management/migration) if you need to migrate from Webpack Encore to Vite
 
 In a minimalistic setup, asset retrieval is fairly straightforward. We might just keep all of our Javascript files in a `js/` directory directly under our public document root directory. Then the URL is simply `http://example.com/js/whatever.js`, the web server matches the _URL path_ `/js/whatever.js` to the _filesystem_ path `/path/to/document/root/public/js/whatever.js` and finally places the contents of that file in the HTTP response. In most web servers, this happens so transparently that a lot of new developers assume that they're somehow giving direct access to the server's file system. In reality the web server is mediating the interaction, and generating an HTTP response using the _contents_ of these files.
 
@@ -114,10 +114,10 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/assets')
-    
+
     // public path used by the web server to access the output path
     .setPublicPath('/assets/')
-    
+
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
 
@@ -137,7 +137,7 @@ Encore
     // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
     // .disableSingleRuntimeChunk()
-    
+
     /*
      * FEATURE CONFIG
      *
@@ -205,7 +205,7 @@ The watch option can be used when actively working on a file. It will compile as
 ```bash
 $ php bakery assets:build --watch
 
-# or 
+# or
 
 $ php bakery assets:webpack --watch
 ```
@@ -218,7 +218,7 @@ To compile assets for a **production** environment, simply use:
 ```bash
 $ php bakery assets:build --production
 
-# or 
+# or
 
 $ php bakery assets:webpack --production
 ```

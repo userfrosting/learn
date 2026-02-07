@@ -1,10 +1,18 @@
 ---
 title: Why use Twig?
 description: UserFrosting uses the extremely popular Twig templating engine to facilitate clean separation between content and logic in your application.
-obsolete: true
+wip: true
 ---
 
-Twig is a [templating engine](http://twig.sensiolabs.org/), which is designed to help maintain a clean separation between your application's logic and its content.
+Remember the spaghetti code problem from [Chapter 8](routes-and-controllers/introduction)? HTML mixed with PHP logic, `echo` statements building markup, database queries intermingled with presentation—it's a maintenance nightmare. Changing the design means wading through PHP code. Testing becomes nearly impossible. Security vulnerabilities like XSS attacks lurk in every string interpolation.
+
+**Twig** solves this by cleanly separating your HTML templates from your PHP logic. Twig is a templating engine that gives you a simple, secure syntax for displaying data, looping through collections, and building layouts—all while automatically escaping output to prevent XSS attacks. Your PHP code stays in controllers and models where it belongs; your HTML stays in beautiful, readable template files.
+
+The result? Designers can work on templates without touching PHP. Developers can change logic without breaking layouts. Security is built-in. Code becomes testable. Everyone's happier.
+
+This page introduces Twig's benefits and shows you why templating engines matter for professional applications.
+
+## The Problem with Embedded PHP
 
 If you recall the spaghetti code example from [Chapter 8](routes-and-controllers/introduction):
 

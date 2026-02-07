@@ -1,10 +1,18 @@
 ---
 title: Built-in Commands
-description: An overview of the commands available in Bakery.
-obsolete: true
+description: An overview of the commands available in Bakery, UserFrosting's powerful CLI tool.
+wip: true
 ---
 
-UserFrosting's CLI, or [*Command-line Interface*](https://en.wikipedia.org/wiki/Command-line_interface), is called the **Bakery**. It provides a number of helpful commands that can assist you while you build, manage, and install your application. To view a list of all available Bakery commands, you may use the `list` command from your UserFrosting root directory:
+Web applications need more than just a web interface. You need to run database migrations, clear caches, seed test data, build assets, and perform maintenance tasks. Doing these through a browser is awkward at best. Command-line tools are perfect for these tasks—fast, automatable, and scriptable.
+
+UserFrosting provides **Bakery**, a powerful CLI (Command-Line Interface) that handles installation, maintenance, and development tasks. Need to set up your database? `php bakery bake`. Need to clear caches? `php bakery clear:cache`. Bakery makes these common tasks simple and consistent.
+
+This page documents all built-in Bakery commands, their options, and when to use them.
+
+## Using Bakery
+
+UserFrosting's CLI is called the **Bakery**. It provides helpful commands that assist you while you build, manage, and install your application. To view a list of all available Bakery commands, you may use the `list` command from your UserFrosting root directory:
 
 ```bash
 $ php bakery list
@@ -287,7 +295,7 @@ $ php bakery migrate:rollback [options]
 
 ### migrate:reset
 
-The `migrate:reset` command is the same as the _rollback_ command, but it will revert **every** migration. Without options, this is the same as wiping the database to a clean state. 
+The `migrate:reset` command is the same as the _rollback_ command, but it will revert **every** migration. Without options, this is the same as wiping the database to a clean state.
 
 > [!WARNING]
 > **Use this command with caution!**
@@ -517,19 +525,19 @@ $ php bakery sprinkle:list
 
 Example result:
 
-```txt 
+```txt
  Loaded Sprinkles
 ================
 
- ------------------ --------------------------------------- ---------------------------------------------------------------------- 
-  Sprinkle           Namespace                               Path                                                                
- ------------------ --------------------------------------- ---------------------------------------------------------------------- 
-  Core Sprinkle      UserFrosting\Sprinkle\Core\Core         /home/UserFrosting/vendor/userfrosting/sprinkle-core/app/src/../     
-  Account Sprinkle   UserFrosting\Sprinkle\Account\Account   /home/UserFrosting/vendor/userfrosting/sprinkle-account/app/src/../  
-  AdminLTE Theme     UserFrosting\Theme\AdminLTE\AdminLTE    /home/UserFrosting/vendor/userfrosting/theme-adminlte/app/src/../    
-  Admin Sprinkle     UserFrosting\Sprinkle\Admin\Admin       /home/UserFrosting/vendor/userfrosting/sprinkle-admin/app/src/../    
-  My Application     UserFrosting\App\MyApp                  /home/UserFrosting/app/src/../                                       
- ------------------ --------------------------------------- ---------------------------------------------------------------------- 
+ ------------------ --------------------------------------- ----------------------------------------------------------------------
+  Sprinkle           Namespace                               Path
+ ------------------ --------------------------------------- ----------------------------------------------------------------------
+  Core Sprinkle      UserFrosting\Sprinkle\Core\Core         /home/UserFrosting/vendor/userfrosting/sprinkle-core/app/src/../
+  Account Sprinkle   UserFrosting\Sprinkle\Account\Account   /home/UserFrosting/vendor/userfrosting/sprinkle-account/app/src/../
+  AdminLTE Theme     UserFrosting\Theme\AdminLTE\AdminLTE    /home/UserFrosting/vendor/userfrosting/theme-adminlte/app/src/../
+  Admin Sprinkle     UserFrosting\Sprinkle\Admin\Admin       /home/UserFrosting/vendor/userfrosting/sprinkle-admin/app/src/../
+  My Application     UserFrosting\App\MyApp                  /home/UserFrosting/app/src/../
+ ------------------ --------------------------------------- ----------------------------------------------------------------------
 ```
 
 

@@ -5,11 +5,11 @@ description: Referencing statics assets in your Twig templates.
 
 > [!WARNING]
 > **This documentation is obsolete.** UserFrosting 6 uses **Vite** as the default asset bundler, not Webpack Encore.
-> 
+>
 > Please see:
-> - [Using Assets in Templates](/asset-management/using-assets) for how to include assets with Vite
-> - [Bakery Commands](/asset-management/bakery-commands) for build commands
-> - [Migration Guide](/asset-management/migration) to migrate from Webpack Encore
+> - [Using Assets in Templates](asset-management/using-assets) for how to include assets with Vite
+> - [Bakery Commands](asset-management/bakery-commands) for build commands
+> - [Migration Guide](asset-management/migration) to migrate from Webpack Encore
 
 When a user loads a page of your website in their browser, it includes a number of `<link ...>`, `<img ...>`, `<script ...>` and other tags that tell their browser how to fetch these additional resources from the server. Since the client must issue a separate request to retrieve an asset after loading a page, we need a way to generate asset URLs in our templates. To automatically build a url for a single asset in a Twig template, you may use the `asset()` helper. This helper takes a file path to an asset, and generates an appropriate absolute url:
 
@@ -17,7 +17,7 @@ When a user loads a page of your website in their browser, it includes a number 
 <img src="{{ asset('assets/images/barn-owl.jpg') }}">
 ```
 
-You'll notice that we reference the file path with abstraction of where it is actually located within the filesystem, if it's a node dependency, or which sprinkle defines it. Instead, when we refer to an asset using the path `assets/images/barn-owl.jpg`, we give a reference relative to the `public/` directory. 
+You'll notice that we reference the file path with abstraction of where it is actually located within the filesystem, if it's a node dependency, or which sprinkle defines it. Instead, when we refer to an asset using the path `assets/images/barn-owl.jpg`, we give a reference relative to the `public/` directory.
 
 The assets building process will compile or copy assets inside the `public/assets/images` folder by default and UserFrosting will use a special manifest file generated at build time to pin-point where the requested file is located.
 
@@ -25,7 +25,7 @@ If you need to copy other static assets from outside of a JavaScript file that's
 
 **webpack.config.js**
 ```js
-Encore 
+Encore
     // Copy images
     .copyFiles({ from: './app/assets/images', to: 'images/[path][name].[hash:8].[ext]' })
     // Copy other assets

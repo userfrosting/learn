@@ -1,11 +1,7 @@
 ---
 title: The DI Container
 description: The Dependency Injection (DI) container provides an elegant and loosely coupled way to make various services available globally in your application.
-obsolete: true
 ---
-
-### The Dependency Injection (DI) Container
-
 The obvious issue with dependency injection, of course, is that it becomes harder to encapsulate functionality. Injecting a `Nest` into an `Owl`'s constructor requires that we build the Nest ourselves, instead of delegating it to the Owl. For classes with many, many dependencies, we can end up with a lot of code just to create an instance. Imagine an *Owl* that requires a *Nest*, that requires a *Tree*, that requires a *Forest*, etc.
 
 As a more concrete example, let's look at the code required to create a new Monolog logging object:
@@ -30,18 +26,21 @@ Three main steps are required to create the object:
 
 This is a lot of code to write just to create one measly object! It would be great if we could somehow encapsulate the creation of the object without creating tight couplings within the object itself.
 
-This is where the **dependency injection container (DIC)** comes into play. The DIC handles basic management of dependencies, encapsulating their creation into simple callbacks. We will call these callbacks **services**. 
+### The Dependency Injection (DI) Container
+
+This is where the **dependency injection container (DIC)** comes into play. The DIC handles basic management of dependencies, encapsulating their creation into simple callbacks. We will call these callbacks **services**.
 
 > [!NOTE]
 > Dependency Injection (DI) and the Dependency Injection Container (DIC) are two separate concepts.
-> 1. dependency injection is a method for writing better code
-> 2. a container is a tool to help injecting dependencies
+> 1. Dependency injection (DI) is a method for writing better code
+> 2. Dependency injection container (DIC) is a tool to help injecting dependencies
+> 
 > You don't need a container to do dependency injection. However, a container can make injections easier.
 
 UserFrosting uses [_PHP-DI 7_](https://php-di.org) as it's DIC implementation since it provides many powerful features that we rely on:
 
 1. It creates dependencies lazily ("on demand"). Any service (and its dependencies) won't be created until the first time we access them.
-2. Once an object has been created in the container, the same object is returned in each subsequent call to the container. 
+2. Once an object has been created in the container, the same object is returned in each subsequent call to the container.
 3. It has the ability to automatically create and inject dependencies.
 4. It has powerful Slim 4 integration.
 
@@ -77,16 +76,17 @@ $owl = $container->get(Owl::class);
 
 It's very simple, doesn't require any configuration, and it just works !
 
-> Autowiring is an exotic word that represents something very simple: the ability of the container to automatically create and inject dependencies.
 
 > [!NOTE]
+> Autowiring is an exotic word that represents something very simple: the ability of the container to automatically create and inject dependencies.
+> 
 > You can learn more about autowiring in the [PHP-DI Documentation](https://php-di.org/doc/autowiring.html)
 
 ### Service Providers & Definitions
 
 Sometimes classes might be a bit more complex to instantiate, especially third party ones (eg. the logger object from before). Or you might want to use a different class based on some configuration value. You might also want a class to be replaced by another one (eg. our `ImprovedNest`). In these cases, autowiring cannot be used. This is where PHP-DI **definition** comes handy. PHP-DI loads the definitions you have written and uses them like instructions on how to create objects.
 
-UserFrosting sets up its services through **service provider** classes. Each sprinkle can define as many service providers as it needs and register them in the [Recipe](dependency-injection/adding-services). For example, the Services Provider class for the previous `Logger` example would look like this:
+UserFrosting sets up its services through **service provider** classes. Each sprinkle can define as many service providers as it needs and register them in the [Recipe](/dependency-injection/adding-services). For example, the Services Provider class for the previous `Logger` example would look like this:
 
 ```php
 use Monolog\Formatter\LineFormatter;
@@ -106,7 +106,7 @@ class LoggerServicesProvider implements ServicesProviderInterface
 
                 return $logger;
             },
-            
+
             StreamHandler::class => function () {
                 // 'userfrosting.log' could be fetched from a Config service here, for example.
                 return new StreamHandler('userfrosting.log');
@@ -121,7 +121,7 @@ class LoggerServicesProvider implements ServicesProviderInterface
 This definition uses the [PHP-DI factories](https://php-di.org/doc/php-definitions.html#factories) syntax. From the PHP-DI documentation:
 
 > Factories are PHP callables that return the instance. They allow to easily define objects lazily, i.e. each object will be created only when actually needed (because the callable will be called when actually needed).
-> 
+>
 > Just like any other definition, factories are called once and the same result is returned every time the factory needs to be resolved.
 >
 > Other services can be injected via type-hinting (as long as they are registered in the container or autowiring is enabled).
@@ -142,7 +142,7 @@ Earlier we discussed the benefits of using interfaces, as the constructor can ac
 public function __construct(NestInterface $nest) // Accept both `Nest` and `ImprovedNest`
 ```
 
-In this case, _Autowiring_ can't help us since the `NestInterface` cannot be instantiated: it's not a class, it's an interface! In this case, PHP Definitions can be used to match the interface with the correct class we want, using either a factory, or the [Autowired object](https://php-di.org/doc/php-definitions.html#autowired-objects) syntax: 
+In this case, _Autowiring_ can't help us since the `NestInterface` cannot be instantiated: it's not a class, it's an interface! In this case, PHP Definitions can be used to match the interface with the correct class we want, using either a factory, or the [Autowired object](https://php-di.org/doc/php-definitions.html#autowired-objects) syntax:
 
 ```php
 return [
@@ -151,7 +151,7 @@ return [
 ];
 ```
 
-The "nest of choice" can now be selected in the service provider. It could also be selected using another kind of logic, for example using a `Config` service and the new for PHP 8.0 [match expression](https://www.php.net/manual/en/control-structures.match.php): 
+The "nest of choice" can now be selected in the service provider. It could also be selected using another kind of logic, for example using a `Config` service and the new for PHP 8.0 [match expression](https://www.php.net/manual/en/control-structures.match.php):
 ```php
 return [
     // Inject Config to decide which nest to use, and the Container to get the actual class
@@ -165,7 +165,7 @@ return [
 ];
 ```
 
-But why are interfaces really needed? If `ImprovedNest` extends `Nest`, wouldn't the constructor accept an `ImprovedNest` anyway if you type-hinted against `Nest`? Well, yes... But it won't work the other way around. For example : 
+But why are interfaces really needed? If `ImprovedNest` extends `Nest`, wouldn't the constructor accept an `ImprovedNest` anyway if you type-hinted against `Nest`? Well, yes... But it won't work the other way around. For example :
 
 
 ```php
@@ -181,7 +181,7 @@ class AcceptNest {
 $improvedNest = $this->ci->get(Nest::class); // Return `ImprovedNest`, because service is configured this way
 $test = new AcceptNest($improvedNest); // Works, ImprovedNest is a subtype of Nest
 
-// This wont 
+// This wont
 
 class AcceptImprovedNest {
     public function __construct(protected ImprovedNest $nest)

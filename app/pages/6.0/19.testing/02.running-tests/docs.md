@@ -1,9 +1,9 @@
 ---
 title: Running Tests
-obsolete: true
+wip: true
 ---
 
-You can execute tests using [Phpunit](https://phpunit.de) directly : 
+You can execute tests using [Phpunit](https://phpunit.de) directly :
 
 ```bash
 ./vendor/bin/phpunit

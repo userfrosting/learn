@@ -1,8 +1,18 @@
 ---
 title: Migrations
 description: Extend the database and add your own tables in a consistent and easily replicable way with a migration.
-obsolete: true
+wip: true
 ---
+
+Every application evolves. You add tables, modify columns, create indexes, and adjust your database schema as requirements change. But how do you keep databases in sync across your development team, staging servers, and production? Manual SQL scripts are fragile, error-prone, and impossible to version control effectively. One missed script and environments fall out of sync.
+
+**Database migrations** solve this problem elegantly. A migration is version-controlled PHP code that defines database changes (create table, add column, etc.) using Laravel's intuitive Schema Builder. Migrations are tracked automatically—UserFrosting knows which have run and which haven't. Running `php bakery migrate` applies all pending changes in the correct order, keeping every environment perfectly synchronized.
+
+Migrations also make testing safer by setting up clean test databases automatically, and they're reversible—the `down()` method can undo changes if needed.
+
+This page explains how to create and use migrations to manage your database schema professionally.
+
+## Why Migrations Matter
 
 When you start building your application with UserFrosting, you'll no doubt be adding your own tables to the data model. After all, what's the point of having users if there's nothing in your application for them to use?
 
@@ -23,7 +33,7 @@ When you run the main UserFrosting migration script (`php bakery migrate`), it w
 
 Each migration class needs to extend the base `UserFrosting\Sprinkle\Core\Database\Migration` class. A migration class must contains two methods: `up` and `down`. The `up` method is used to add new tables, columns, or indexes to your database, while the `down` method should simply reverse the operations performed by the `up` method.
 
-The base class for a `MyTable` migration looks like this : 
+The base class for a `MyTable` migration looks like this :
 
 **app/src/Database/Migrations/MyTable.php**
 ```php

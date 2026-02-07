@@ -1,7 +1,7 @@
 ---
 title: User Accounts
 description: UserFrosting ships with everything you need to create user accounts, and a rich set of features for users and administrators.
-obsolete: true
+wip: true
 ---
 
 You were probably attracted to UserFrosting because you wanted to "make a site where users can sign in", or you already have a project in progress and your boss asked you to "put it behind a login," or you need to have some "protected pages." These are nontechnical terms. It will be easier for us to communicate if we first establish a common vocabulary, so that we can explain the concepts with more precision.
