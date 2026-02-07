@@ -6,7 +6,7 @@ wip: true
 
 Web applications need more than just a web interface. You need to run database migrations, clear caches, seed test data, build assets, and perform maintenance tasks. Doing these through a browser is awkward at best. Command-line tools are perfect for these tasks—fast, automatable, and scriptable.
 
-UserFrosting provides **Bakery**, a powerful CLI (Command-Line Interface) that handles installation, maintenance, and development tasks. Need to set up your database? `php bakery bake`. Want to create a new user? `php bakery create:admin`. Need to clear caches? `php bakery clear:cache`. Bakery makes these common tasks simple and consistent.
+UserFrosting provides **Bakery**, a powerful CLI (Command-Line Interface) that handles installation, maintenance, and development tasks. Need to set up your database? `php bakery bake`. Need to clear caches? `php bakery clear:cache`. Bakery makes these common tasks simple and consistent.
 
 This page documents all built-in Bakery commands, their options, and when to use them.
 

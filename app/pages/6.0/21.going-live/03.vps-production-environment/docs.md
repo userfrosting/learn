@@ -1,7 +1,7 @@
 ---
 title: VPS Production Environment
 description: The place where your application lives and runs is known as the production environment, and the act of transferring your code from the development environment to the production environment is known as deployment. This chapter explains how to set up a production environment on a VPS.
-wip: true
+obsolete: true
 ---
 <!-- [plugin:content-inject](modular/_update5.0) -->
 

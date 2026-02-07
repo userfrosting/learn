@@ -1,7 +1,7 @@
 ---
 title: Vue Framework
 description: Learn how Vue 3 powers modern UserFrosting applications and why it replaced jQuery for building interactive user interfaces.
-# Verified for UF 6.0
+wip: true
 ---
 
 UserFrosting embraces modern JavaScript by using [Vue 3](https://vuejs.org/) as its frontend framework. If you're coming from older versions of UserFrosting or traditional server-rendered applications, this represents a significant shift in how you build user interfaces. Let's explore what Vue is, why it matters, and how UserFrosting leverages it.

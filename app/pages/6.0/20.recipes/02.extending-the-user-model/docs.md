@@ -1,7 +1,7 @@
 ---
 title: Extending the User model
 description: Extend the user model, adding custom fields and views.
-wip: true
+obsolete: true
 ---
 
 > [!TIP]

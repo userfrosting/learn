@@ -1,7 +1,7 @@
 ---
 title: Additional Recommendations
 description: Additional recommended configuration steps to get the most out of your VPS production server.
-wip: true
+obsolete: true
 ---
 <!-- [plugin:content-inject](modular/_updateRequired) -->
 

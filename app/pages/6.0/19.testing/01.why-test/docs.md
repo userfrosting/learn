@@ -18,4 +18,4 @@ UserFrosting includes PHPUnit for testing, and this chapter shows you how to wri
 - **Faster debugging**: Tests pinpoint exactly what broke
 - **Better design**: Testable code is usually better-structured code
 
-This page explains the value of testing and why every professional application needs it.
+This chapter explains the value of testing and why every professional application needs it.

@@ -1,7 +1,7 @@
 ---
 title: Migration from Webpack
 description: Guide for migrating from Webpack Encore to Vite in UserFrosting 6, including backward compatibility options.
-# Verified for UF 6.0
+wip: true
 ---
 
 If you're upgrading an existing UserFrosting 5 project, you might be wondering about migrating from Webpack Encore to Vite. Good news: you have options! You can migrate to Vite for improved performance, or continue using Webpack if that works better for your project. This guide will help you decide and walk you through both paths.

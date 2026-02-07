@@ -1,7 +1,7 @@
 ---
 title: Using Assets in Templates
 description: Learn how to load JavaScript, CSS, and other assets in your Twig templates using Vite's helper functions.
-# Verified for UF 6.0
+wip: true
 ---
 
 Now that Vite is compiling your assets, let's learn how to actually use them in your templates! UserFrosting provides simple Twig functions that handle all the complexity behind the scenes. You'll be amazed at how easy this is.

@@ -1,7 +1,7 @@
 ---
 title: Using Git for Deployment
 description: Once you've set up a remote repository in your production environment, deployment can be as simple as a single `git push` command.
-wip: true
+obsolete: true
 ---
 <!-- [plugin:content-inject](modular/_update5.0) -->
 

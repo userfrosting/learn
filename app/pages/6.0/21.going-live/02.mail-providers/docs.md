@@ -1,7 +1,7 @@
 ---
 title: Mail Providers
 description: Email is essential for many of UserFrosting's account features, including account verification and password reset requests.
-wip: true
+obsolete: true
 ---
 
 By default, UserFrosting is configured to use an external SMTP mail server of your choice.

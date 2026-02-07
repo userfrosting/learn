@@ -1,7 +1,7 @@
 ---
 title: Going Live
 description: This chapter discusses options for where to deploy your UserFrosting application (hosting), how to deploy, and what additional steps you should take to ensure security, reliability, and a good experience for your users.
-wip: true
+obsolete: true
 ---
 
 #### Chapter 21
