@@ -1,7 +1,6 @@
 ---
 title: Introduction
 description: If you're new to object-oriented programming, you may not be familiar with the MVC pattern, a popular and very flexible design paradigm for scalable, easily maintained web applications.
-wip: true
 ---
 
 Imagine building a web application where all your code lives in single files—database queries mixed with HTML output, business logic tangled with form processing, everything in one giant mess. This is **spaghetti code**, and it's a maintenance nightmare. Want to change the database? You're rewriting HTML. Need to update the UI? You're touching business logic. Testing becomes impossible.
