@@ -1,10 +1,7 @@
 ---
 title: Basic concept
 description: Learn how sprinkles provide a modular system for extending UserFrosting without modifying core code.
-wip: true
 ---
-
-Here's a problem every developer faces: **how do you customize a framework without creating a maintenance nightmare?** If you modify framework files directly, updates become treacherous—merge conflicts, lost changes, and the constant fear of breaking things. Your customizations become entangled with core code, making upgrades nearly impossible.
 
 In earlier versions of UserFrosting, you had no choice—customizing meant editing core files. Want to add a field to the registration page? Modify `register.twig` directly. Need to extend the `User` class? Edit `User.php` itself. Every framework update risked breaking your work.
 

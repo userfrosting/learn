@@ -1,7 +1,6 @@
 ---
 title: The Sprinkle Recipe
 description: The recipe is your sprinkle's blueprint, telling UserFrosting how to integrate your code into the application.
-wip: true
 ---
 
 Every sprinkle needs a way to tell UserFrosting what it contains and how to use it. Without this information, UserFrosting wouldn't know which routes to register, which services to load, or how your sprinkle fits into the application. Imagine trying to bake a cake without a recipe—you'd have ingredients but no idea how to combine them.
@@ -9,6 +8,9 @@ Every sprinkle needs a way to tell UserFrosting what it contains and how to use 
 The **Sprinkle Recipe** solves this problem. It's a simple PHP class that serves as your sprinkle's blueprint, declaring what your sprinkle provides: its name, location, routes, services, and dependencies. UserFrosting reads this recipe to integrate your sprinkle seamlessly into the application framework.
 
 Every sprinkle **must have** a recipe—it's how UserFrosting knows your sprinkle exists and what it contains. This page explains the recipe's structure and how to configure each part.
+
+> [!NOTE]
+> There is one exception where a sprinkle may not have a recipe: if it only provides static assets (like CSS or JS files) and no PHP code. In this case, the sprinkle does not need to be registered with a recipe since there are no dynamic components for the PHP runtime to consider. However, this is a rare case, and most sprinkles will require a recipe to function properly.
 
 ## The `SprinkleRecipe` Interface
 
@@ -54,7 +56,7 @@ This method returns the path of the sprinkle. This path should point where the `
 ├── vendor/
 ├── composer.json
 ├── package.json
-└── webpack.config.js
+└── vite.config.ts
 ```
 
 ...`getPath()` should point to `/app`, or in this case the parent directory of where the recipe file is located :
@@ -83,12 +85,11 @@ public function getSprinkles(): array
         Core::class,
         Account::class,
         Admin::class,
-        AdminLTE::class,
     ];
 }
 ```
 
-Since `Admin` depends on `Core`, `Account` and `AdminLTE`, it's not mandatory to relist them in your recipe. In fact, the code above is equivalent to this, since the other one will be registered by `Admin`:
+Since `Admin` depends on `Core` and `Account`, it's not mandatory to relist them in your recipe. In fact, the code above is equivalent to this, since the other sprinkles will be registered by `Admin`:
 ```php
 public function getSprinkles(): array
 {
@@ -98,14 +99,13 @@ public function getSprinkles(): array
 }
 ```
 
-This also mean removing `AdminLTE` as a dependency for example **cannot be done by simply removing it from your recipe**! It's impossible to remove `AdminLTE` without removing `Admin`, since `Admin` cannot work without its dependency.
+This also means removing a dependency **cannot be done by simply removing it from your recipe**! For example, you cannot remove `Account` without also removing `Admin`, since `Admin` depends on `Account`.
 
 However, it also means the next example **is also equivalent**:
 ```php
 public function getSprinkles(): array
 {
     return [
-        AdminLTE::class,
         Admin::class,
         Account::class,
         Core::class,
@@ -113,22 +113,21 @@ public function getSprinkles(): array
 }
 ```
 
-Let's look at the process for the above code :
+Let's look at the process for the above code:
 
-1. AdminLTE will be loaded first. AdminLTE depends on Core first, and Account second. Core doesn't depend on anything. So **Core** is the first sprinkle loaded;
+1. Admin will be loaded first. Admin depends on Core first, and Account second. Core doesn't depend on anything. So **Core** is the first sprinkle loaded;
 2. Account is then checked. It depends on Core, which is already loaded, so **Account** is the second loaded sprinkle;
-3. AdminLTE doesn't have any more dependencies, so **AdminLTE** is loaded in third;
-4. Admin is now checked. It depends on Core, Account and AdminLTE. All are already loaded, so everything is good. **Admin** is loaded fourth;
-5. This sprinkle's dependencies are all good, so it is loaded last.
+3. Admin doesn't have any more dependencies not already loaded, so **Admin** is loaded third;
+4. This sprinkle's dependencies are all good, so it is loaded last.
 
-Because of sprinkle dependencies, in all three examples the order will be `Core -> Account -> AdminLTE -> Admin -> YOUR APP`.
+Because of sprinkle dependencies, in all three examples the order will be `Core -> Account -> Admin -> YOUR APP`.
 
 > [!TIP]
 > An easy way to see the final order sprinkles are loaded is via the command line `php bakery sprinkle:list` command. The registered sprinkles will be displayed in the order they are registered.
 
 ### Routes
 
-Return an array of routes classes. More details about this will be explored in [Chapter 8 - Routes and Controllers](routes-and-controllers).
+Return an array of routes classes. More details about this will be explored in [Chapter 8 - Routes and Controllers](/routes-and-controllers).
 
 For example, to register `MyRoutes` class:
 ```php
@@ -343,7 +342,7 @@ In this case, two files need to be edited : `composer.json` and the Sprinkle Rec
 
 2. Since changes were made to *composer.json*, composer need to be updated (`composer update`).
 
-3. In the Sprinkle Recipe, `Admin:class` can be removed from the `getSprinkles()` method:
+3. In the Sprinkle Recipe, `Admin::class` can be removed from the `getSprinkles()` method:
     ```php
     public function getSprinkles(): array
     {
@@ -351,7 +350,6 @@ In this case, two files need to be edited : `composer.json` and the Sprinkle Rec
             Core::class,
             Account::class,
             //Admin::class,
-            AdminLTE::class,
         ];
     }
     ```

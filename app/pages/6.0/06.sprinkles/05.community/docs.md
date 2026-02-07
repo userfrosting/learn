@@ -1,7 +1,6 @@
 ---
 title: Community Sprinkles
 description: Sprinkles shared between projects are called community sprinkles.
-wip: true
 ---
 
 One great thing about the **Sprinkle system** is its ability to wrap complete functionality inside a single package. This makes it a great tool to write your website isolated from the core UserFrosting code. It also means it's super easy to share sprinkles between projects... and with other members of the UserFrosting community! That's what we call a **community sprinkle**.
@@ -11,53 +10,45 @@ The best place to look for community sprinkles is on [GitHub](https://github.com
 
 ## Loading a community sprinkle
 ### Sprinkle recipe
-Once you've found a sprinkle you'd like to use in your own project, the first step is to `require` it in [your `composer.json`](sprinkles/customize#composer-json), along with the core UserFrosting sprinkles.
+Once you've found a sprinkle you'd like to use in your own project, the first step is to `require` it in [your `composer.json`](/sprinkles/customize#composer-json), along with the core UserFrosting sprinkles.
 ```json
     "require": {
-...
-        "userfrosting/theme-adminlte": "~5.1.0",
+        [...]
         "owlfancy/owlery-sprinkle": "^0.1"
     },
 ```
 
 Next, add *their* recipe to *your* recipe, in the `getSprinkles()` method.
 ```php
-use Owlfancy\Sprinkle\Owlery ; //don't forget to include the sprinkle's namespace!
-...
+use Owlfancy\Sprinkle\Owlery; //don't forget to include the sprinkle's namespace!
+
+[...]
+
     public function getSprinkles(): array
     {
         return [
             Core::class,
             Account::class,
             Admin::class,
-            AdminLTE::class, // include any base sprinkles you might need
-            Owlery::class, // add the community sprinkle as well!
+            Owlery::class, // add the community sprinkle
         ];
     }
 ```
 
 > [!NOTE]
-> If the sprinkle does not include Javascript, you're done setting up--skip to the "Installing" section.
+> If the sprinkle does not include frontend assets (JavaScript, TypeScript, Vue components, etc.), you're done setting up--skip to the "Installing" section.
 
-### Javascript
-If the sprinkle includes Javascript, you will need to add it to both the "dependencies" [in your `package.json`](asset-management/webpack-encore#npm-and-packages-json)...
+### Frontend Assets
+If the sprinkle includes frontend assets like JavaScript, TypeScript, or Vue components, you will need to add it to the "dependencies" in your `package.json`:
 ```json
  "dependencies": {
-        "@userfrosting/sprinkle-admin": "~5.1.0",
-        "@userfrosting/theme-adminlte": "~5.1.0",
+        "@userfrosting/sprinkle-admin": "^6.0",
+        "@userfrosting/theme-pink-cupcake": "^6.0",
         "sprinkle-owlery":"github:owlfancy/sprinkle-owlery"
     },
 ```
-...*and* to the "sprinkles" [in `/webpack.config.js`](asset-management/webpack-encore#webpack-encore-configuration).
-```js
-// List dependent sprinkles and local entries files
-const sprinkles = {
-    AdminLTE: require('@userfrosting/theme-adminlte/webpack.entries'),
-    Admin: require('@userfrosting/sprinkle-admin/webpack.entries'), // core sprinkles come included
-    Owlery: require('sprinkle-owlery/webpack.entries'),// add any community sprinkles as well
-}
-```
-(We'll talk more about these files in the [Assets chapter](asset-management)).
+
+You may also need to configure Vite to properly handle the sprinkle's assets. See [Chapter 13](/asset-management) for more information about managing assets with Vite.
 
 > [!TIP]
 > In the `package.json` example above, we're loading the Userfrosting core sprinkles from npm, and the Owlery sprinkle from Github. Each community sprinkle decides where it is published, and should include this in their README.

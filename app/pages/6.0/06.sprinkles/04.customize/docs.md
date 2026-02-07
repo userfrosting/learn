@@ -1,7 +1,6 @@
 ---
 title: Customizing Your Sprinkle
 description: This guide walks you though the process of setting up your application by implementing a new sprinkle.
-wip: true
 ---
 
 This guide assumes that you've already completed the [installation guide](installation) and successfully managed to get UserFrosting working in your [local development environment](background/develop-locally-serve-globally) using the [Skeleton](structure/introduction#the-app-skeleton-your-project-s-template). If not, please do that now - feel free to [ask for help](troubleshooting/getting-help) if you're running into trouble!
@@ -46,11 +45,10 @@ Original **composer.json**
     "require": {
         "php": "^8.1",
         "ext-gd": "*",
-        "userfrosting/framework": "^5.1",
-        "userfrosting/sprinkle-core": "^5.1",
-        "userfrosting/sprinkle-account": "^5.1",
-        "userfrosting/sprinkle-admin": "^5.1",
-        "userfrosting/theme-adminlte": "^5.1"
+        "userfrosting/framework": "^6.0",
+        "userfrosting/sprinkle-core": "^6.0",
+        "userfrosting/sprinkle-account": "^6.0",
+        "userfrosting/sprinkle-admin": "^6.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -100,11 +98,10 @@ Modified **composer.json**
     "require": {
         "php": "^8.1",
         "ext-gd": "*",
-        "userfrosting/framework": "^5.1",
-        "userfrosting/sprinkle-core": "^5.1",
-        "userfrosting/sprinkle-account": "^5.1",
-        "userfrosting/sprinkle-admin": "^5.1",
-        "userfrosting/theme-adminlte": "^5.1"
+        "userfrosting/framework": "^6.0",
+        "userfrosting/sprinkle-core": "^6.0",
+        "userfrosting/sprinkle-account": "^6.0",
+        "userfrosting/sprinkle-admin": "^6.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -162,7 +159,6 @@ use UserFrosting\Sprinkle\Admin\Admin;
 use UserFrosting\Sprinkle\BakeryRecipe;
 use UserFrosting\Sprinkle\Core\Core;
 use UserFrosting\Sprinkle\SprinkleRecipe;
-use UserFrosting\Theme\AdminLTE\AdminLTE;
 
 class Owlfancy implements
     SprinkleRecipe,
