@@ -17,4 +17,14 @@ return [
     'cache' => [
         'driver' => 'memcached',
     ],
+    'learn' => [
+        'cache' => [
+            'enabled' => true,
+        ],
+        'search' => [
+            'index' => [
+                'enabled' => true,
+            ],
+        ],
+    ],
 ];

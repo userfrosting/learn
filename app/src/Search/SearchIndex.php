@@ -66,11 +66,13 @@ class SearchIndex
             $totalPages += count($pages);
 
             // Store in cache
-            $this->cache->put(
-                $this->getCacheKey($versionObj->id),
-                $pages,
-                $this->getCacheTtl()
-            );
+            if ($this->isCacheEnabled()) {
+                $this->cache->put(
+                    $this->getCacheKey($versionObj->id),
+                    $pages,
+                    $this->getCacheTtl()
+                );
+            }
         }
 
         return $totalPages;
@@ -86,6 +88,12 @@ class SearchIndex
      */
     public function getIndex(string $version): array
     {
+        if (!$this->isCacheEnabled()) {
+            $versionObj = $this->versionValidator->getVersion($version);
+
+            return $this->indexVersion($versionObj);
+        }
+
         $keyFormat = $this->config->getString('learn.search.index.key', '');
         $cacheKey = sprintf($keyFormat, $version);
 
@@ -243,6 +251,10 @@ class SearchIndex
      */
     public function clearIndex(?string $version = null): void
     {
+        if (!$this->isCacheEnabled()) {
+            return;
+        }
+
         if ($version === null) {
             // Clear all versions
             $available = $this->config->get('learn.versions.available', []);
@@ -253,5 +265,13 @@ class SearchIndex
             // Clear specific version
             $this->cache->forget($this->getCacheKey($version));
         }
+    }
+
+    /**
+     * Determine if search index caching is enabled.
+     */
+    protected function isCacheEnabled(): bool
+    {
+        return $this->config->getBool('learn.search.index.enabled', true);
     }
 }

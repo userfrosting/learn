@@ -190,6 +190,29 @@ class SearchIndexTest extends TestCase
         $this->assertNull($index);
     }
 
+    public function testClearIndexBypassesCacheWhenDisabled(): void
+    {
+        $searchIndex = $this->ci->get(SearchIndex::class);
+
+        /** @var Config $config */
+        $config = $this->ci->get(Config::class);
+        $config->set('learn.search.index.enabled', false);
+
+        $mockCache = $this->getMockBuilder(\Illuminate\Cache\Repository::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['get', 'put', 'forget'])
+            ->getMock();
+
+        $mockCache->expects($this->never())->method('forget');
+
+        $reflection = new \ReflectionClass($searchIndex);
+        $cacheProperty = $reflection->getProperty('cache');
+        $cacheProperty->setValue($searchIndex, $mockCache);
+
+        // Should no-op when cache is disabled
+        $searchIndex->clearIndex('6.0');
+    }
+
     public function testGetIndex(): void
     {
         $searchIndex = $this->ci->get(SearchIndex::class);
@@ -337,5 +360,32 @@ class SearchIndexTest extends TestCase
 
         $this->assertIsArray($index);
         $this->assertEmpty($index, 'Should return empty array when cache persistently returns non-array data');
+    }
+
+    public function testGetIndexBypassesCacheWhenDisabled(): void
+    {
+        $searchIndex = $this->ci->get(SearchIndex::class);
+
+        /** @var Config $config */
+        $config = $this->ci->get(Config::class);
+        $config->set('learn.search.index.enabled', false);
+
+        $mockCache = $this->getMockBuilder(\Illuminate\Cache\Repository::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['get', 'put', 'forget'])
+            ->getMock();
+
+        $mockCache->expects($this->never())->method('get');
+        $mockCache->expects($this->never())->method('put');
+        $mockCache->expects($this->never())->method('forget');
+
+        $reflection = new \ReflectionClass($searchIndex);
+        $cacheProperty = $reflection->getProperty('cache');
+        $cacheProperty->setValue($searchIndex, $mockCache);
+
+        $index = $searchIndex->getIndex('6.0');
+
+        $this->assertNotEmpty($index);
+        $this->assertContainsOnlyInstancesOf(IndexedPage::class, $index);
     }
 }

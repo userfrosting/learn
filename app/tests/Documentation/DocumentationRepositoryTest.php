@@ -246,6 +246,57 @@ class DocumentationRepositoryTest extends TestCase
         $this->assertGreaterThan(0, $ttl);
     }
 
+    public function testCacheBypassesWhenDisabled(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        /** @var Config $config */
+        $config = $this->ci->get(Config::class);
+        $config->set('learn.cache.enabled', false);
+
+        $mockCache = $this->getMockBuilder(\Illuminate\Cache\Repository::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['remember'])
+            ->getMock();
+
+        $mockCache->expects($this->never())
+            ->method('remember');
+
+        $reflection = new \ReflectionClass($pagesManager);
+        $cacheProperty = $reflection->getProperty('cache');
+        $cacheProperty->setValue($pagesManager, $mockCache);
+
+        $files = $pagesManager->getTree();
+
+        $this->assertNotEmpty($files);
+    }
+
+    public function testCacheUsedWhenEnabled(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        /** @var Config $config */
+        $config = $this->ci->get(Config::class);
+        $config->set('learn.cache.enabled', true);
+
+        $mockCache = $this->getMockBuilder(\Illuminate\Cache\Repository::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['remember'])
+            ->getMock();
+
+        $mockCache->expects($this->once())
+            ->method('remember')
+            ->willReturnCallback(fn ($key, $ttl, $callback) => $callback());
+
+        $reflection = new \ReflectionClass($pagesManager);
+        $cacheProperty = $reflection->getProperty('cache');
+        $cacheProperty->setValue($pagesManager, $mockCache);
+
+        $files = $pagesManager->getTree();
+
+        $this->assertNotEmpty($files);
+    }
+
     public function testGetTreeWithEmptyPages(): void
     {
         /** @var ResourceLocatorInterface $locator */

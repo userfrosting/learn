@@ -26,8 +26,6 @@ return [
         ],
     ],
 
-    // TODO : Disable page cache by default in dev mode, but keep search cache enabled.
-
     /**
      * ----------------------------------------------------------------------
      * Learn Settings
@@ -40,6 +38,7 @@ return [
      */
     'learn' => [
         'cache' => [
+            'enabled' => false,
             'key'     => 'learn.%1$s.%2$s',
             'ttl'     => 86400,
         ],
@@ -64,6 +63,7 @@ return [
                 'ttl' => 86400 * 30,          // 30 days
             ],
             'index'             => [
+                'enabled' => true,
                 'key' => 'learn.index.%1$s', // %1$s = version
                 'ttl' => 86400 * 30,         // 30 days
 

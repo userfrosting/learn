@@ -10,6 +10,7 @@
 
 namespace UserFrosting\Learn\Documentation;
 
+use Closure;
 use Illuminate\Cache\Repository as Cache;
 use UserFrosting\Config\Config;
 use UserFrosting\Sprinkle\Core\Util\RouteParserInterface;
@@ -43,15 +44,15 @@ class DocumentationRepository
      */
     public function getTree(?string $version = null): array
     {
-        return $this->cache->remember(
-            $this->getCacheKey('tree', $version ?? 'latest'),
-            $this->getCacheTtl(),
+        return $this->remember(
+            'tree',
+            $version ?? 'latest',
             function () use ($version) {
                 // Get version object (throws exception if invalid)
                 $versionObj = $this->versionValidator->getVersion($version);
 
-                // Get all files for the version
-                $pages = $this->getPages($versionObj);
+                // Get all files for the version without double-caching
+                $pages = $this->getPages($versionObj, false);
 
                 // Sort the files by relative path
                 usort($pages, fn ($a, $b) => strcmp($a->getBasePath(), $b->getBasePath()));
@@ -72,9 +73,9 @@ class DocumentationRepository
      */
     public function getAlternateVersions(string $path): array
     {
-        return $this->cache->remember(
-            $this->getCacheKey('versions', $path),
-            $this->getCacheTtl(),
+        return $this->remember(
+            'versions',
+            $path,
             function () use ($path) {
                 $available = $this->config->get('learn.versions.available', []);
 
@@ -127,15 +128,15 @@ class DocumentationRepository
      */
     public function getPage(string $slug, ?string $version = null): PageResource
     {
-        return $this->cache->remember(
-            $this->getCacheKey('page', $slug . ($version ?? 'latest')),
-            $this->getCacheTtl(),
+        return $this->remember(
+            'page',
+            $slug . ($version ?? 'latest'),
             function () use ($slug, $version) {
                 // Get version object (throws exception if invalid)
                 $versionObj = $this->versionValidator->getVersion($version);
 
-                // Get all pages for the version
-                $pages = $this->getPages($versionObj);
+                // Get all pages for the version without double-caching
+                $pages = $this->getPages($versionObj, false);
 
                 // If page slug is empty, we want the "home" page, aka the first page found
                 if ($slug === '') {
@@ -161,28 +162,28 @@ class DocumentationRepository
      *
      * @return PageResource[] An array of absolute paths
      */
-    protected function getPages(Version $version): array
+    protected function getPages(Version $version, bool $useCache = true): array
     {
-        return $this->cache->remember(
-            $this->getCacheKey('pages', $version->id),
-            $this->getCacheTtl(),
-            function () use ($version) {
-                // Get all pages
-                $resources = $this->locator->listResources("pages://{$version->id}/");
+        $resolver = function () use ($version) {
+            // Get all pages
+            $resources = $this->locator->listResources("pages://{$version->id}/");
 
-                // Keep only markdown files
-                $resources = array_filter(
-                    $resources,
-                    fn (ResourceInterface $res) => $res->getExtension() === 'md'
-                );
+            // Keep only markdown files
+            $resources = array_filter(
+                $resources,
+                fn (ResourceInterface $res) => $res->getExtension() === 'md'
+            );
 
-                // Convert each to our custom "PageResource" objects using the factory
-                return array_map(
-                    fn (ResourceInterface $res) => $this->pageFactory->createFromResource($version, $res),
-                    $resources
-                );
-            }
-        );
+            // Convert each to our custom "PageResource" objects using the factory
+            return array_map(
+                fn (ResourceInterface $res) => $this->pageFactory->createFromResource($version, $res),
+                $resources
+            );
+        };
+
+        return $useCache
+            ? $this->remember('pages', $version->id, $resolver)
+            : $resolver();
     }
 
     /**
@@ -339,6 +340,34 @@ class DocumentationRepository
         $keyFormat = $this->config->get('learn.cache.key', '%s.%s');
 
         return sprintf($keyFormat, $type, $identifier);
+    }
+
+    /**
+     * Execute a caching operation if enabled, otherwise compute directly.
+     *
+     * @param string  $type       Cache entry type (tree, page, etc.)
+     * @param string  $identifier Cache identifier
+     * @param Closure $callback   Value generator when cache miss or disabled
+     */
+    protected function remember(string $type, string $identifier, Closure $callback): mixed
+    {
+        if (!$this->isCacheEnabled()) {
+            return $callback();
+        }
+
+        return $this->cache->remember(
+            $this->getCacheKey($type, $identifier),
+            $this->getCacheTtl(),
+            $callback
+        );
+    }
+
+    /**
+     * Determine if documentation caching is enabled.
+     */
+    protected function isCacheEnabled(): bool
+    {
+        return $this->config->getBool('learn.cache.enabled', true);
     }
 
     /**
