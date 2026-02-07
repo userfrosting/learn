@@ -7,6 +7,6 @@
     <div class="chapter-content">
         {% include "partials/wip.html.twig" %}
         {% include "partials/obsolete.html.twig" %}
-        {{ page.getContent()|raw }}
+        {{ page.getContent()|version_paths(page.getVersion())|raw }}
     </div>
 {% endblock %}

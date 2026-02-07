@@ -1,5 +1,13 @@
 {% extends "pages/abstract/base.html.twig" %}
 
+{% block head_extra %}
+    {{ parent() }}
+    {% if page is defined and page.getVersion() is not null %}
+        {% set base_href = '/' ~ (page.getVersion().uri() ? page.getVersion().uri() ~ '/' : '') %}
+        <base href="{{ base_href }}">
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 <div>
     {% include "partials/header.html.twig" %}

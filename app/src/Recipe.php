@@ -20,6 +20,7 @@ use UserFrosting\Learn\Listeners\ResourceLocatorInitiated;
 use UserFrosting\Learn\ServicesProvider\MarkdownService;
 use UserFrosting\Learn\ServicesProvider\SearchServicesProvider;
 use UserFrosting\Learn\Twig\Extensions\FileTreeExtension;
+use UserFrosting\Learn\Twig\Extensions\VersionedPathExtension;
 use UserFrosting\Sprinkle\BakeryRecipe;
 use UserFrosting\Sprinkle\Core\Bakery\Event\BakeCommandEvent;
 use UserFrosting\Sprinkle\Core\Bakery\Event\DebugCommandEvent;
@@ -155,6 +156,7 @@ class Recipe implements
     {
         return [
             FileTreeExtension::class,
+            VersionedPathExtension::class,
         ];
     }
 }
