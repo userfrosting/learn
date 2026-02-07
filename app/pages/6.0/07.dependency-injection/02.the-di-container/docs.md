@@ -1,11 +1,7 @@
 ---
 title: The DI Container
 description: The Dependency Injection (DI) container provides an elegant and loosely coupled way to make various services available globally in your application.
-wip: true
 ---
-
-### The Dependency Injection (DI) Container
-
 The obvious issue with dependency injection, of course, is that it becomes harder to encapsulate functionality. Injecting a `Nest` into an `Owl`'s constructor requires that we build the Nest ourselves, instead of delegating it to the Owl. For classes with many, many dependencies, we can end up with a lot of code just to create an instance. Imagine an *Owl* that requires a *Nest*, that requires a *Tree*, that requires a *Forest*, etc.
 
 As a more concrete example, let's look at the code required to create a new Monolog logging object:
@@ -30,12 +26,15 @@ Three main steps are required to create the object:
 
 This is a lot of code to write just to create one measly object! It would be great if we could somehow encapsulate the creation of the object without creating tight couplings within the object itself.
 
+### The Dependency Injection (DI) Container
+
 This is where the **dependency injection container (DIC)** comes into play. The DIC handles basic management of dependencies, encapsulating their creation into simple callbacks. We will call these callbacks **services**.
 
 > [!NOTE]
 > Dependency Injection (DI) and the Dependency Injection Container (DIC) are two separate concepts.
-> 1. dependency injection is a method for writing better code
-> 2. a container is a tool to help injecting dependencies
+> 1. Dependency injection (DI) is a method for writing better code
+> 2. Dependency injection container (DIC) is a tool to help injecting dependencies
+> 
 > You don't need a container to do dependency injection. However, a container can make injections easier.
 
 UserFrosting uses [_PHP-DI 7_](https://php-di.org) as it's DIC implementation since it provides many powerful features that we rely on:
@@ -77,16 +76,17 @@ $owl = $container->get(Owl::class);
 
 It's very simple, doesn't require any configuration, and it just works !
 
-> Autowiring is an exotic word that represents something very simple: the ability of the container to automatically create and inject dependencies.
 
 > [!NOTE]
+> Autowiring is an exotic word that represents something very simple: the ability of the container to automatically create and inject dependencies.
+> 
 > You can learn more about autowiring in the [PHP-DI Documentation](https://php-di.org/doc/autowiring.html)
 
 ### Service Providers & Definitions
 
 Sometimes classes might be a bit more complex to instantiate, especially third party ones (eg. the logger object from before). Or you might want to use a different class based on some configuration value. You might also want a class to be replaced by another one (eg. our `ImprovedNest`). In these cases, autowiring cannot be used. This is where PHP-DI **definition** comes handy. PHP-DI loads the definitions you have written and uses them like instructions on how to create objects.
 
-UserFrosting sets up its services through **service provider** classes. Each sprinkle can define as many service providers as it needs and register them in the [Recipe](dependency-injection/adding-services). For example, the Services Provider class for the previous `Logger` example would look like this:
+UserFrosting sets up its services through **service provider** classes. Each sprinkle can define as many service providers as it needs and register them in the [Recipe](/dependency-injection/adding-services). For example, the Services Provider class for the previous `Logger` example would look like this:
 
 ```php
 use Monolog\Formatter\LineFormatter;
