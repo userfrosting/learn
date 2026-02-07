@@ -77,17 +77,17 @@ If `UF_MODE` is empty or not set, UserFrosting will only load the `default.php` 
 > Use environment variables to easily set the appropriate configuration parameters for different environments. In addition to setting the `UF_MODE` environment variable to select different configuration files, you can assign sensitive information like database passwords and API keys directly to environment variables, and then reference them in your configuration files using `env()`.
 > See [the Twelve-Factor App](https://12factor.net/config) for more information on why this is a good idea.
 
-The default environment mode includes:
+The default environment modes are:
 
-|    Mode    | Description                                                                   |
-| :--------: | ----------------------------------------------------------------------------- |
-|  default   | The default mode. Should be used only for development.                        |
-| production | Serve optimized assets and error management for the front user facing application |
-|   debug    | Enables all debugging options                                                 |
-|  testing   | Mode used for [automated testing](/testing)                                   |
+|    Mode    | Description                                                                       |
+|:----------:|-----------------------------------------------------------------------------------|
+|  default   | Development mode with basic debugging enabled                                     |
+| production | Production deployment with caching enabled, debugging disabled, and error logging |
+|   debug    | Full debugging mode with query logging, Twig debugging, and verbose output        |
+|  testing   | Automated testing mode with array cache, in-memory database, and CSRF disabled    |
 
 > [!TIP]
-> The Bakery command `php bakery setup:env` can be used to switch from one environment to the other.
+> The Bakery command `php bakery setup:env` can be used to easily switch between environments.
 
 ## Accessing Config Values
 
