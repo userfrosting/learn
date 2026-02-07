@@ -1,7 +1,6 @@
 ---
 title: Environment Variables
 description: The .env file is used to define important values in development such as database credentials, which should be placed directly in environment variables during production.
-wip: true
 ---
 
 Every application needs configuration—database credentials, API keys, SMTP settings, feature flags. But hardcoding these values directly in your code creates serious problems: security vulnerabilities (credentials in version control), inflexibility (can't easily change settings), and deployment headaches (different environments need different values).
