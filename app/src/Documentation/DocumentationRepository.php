@@ -345,9 +345,12 @@ class DocumentationRepository
     /**
      * Execute a caching operation if enabled, otherwise compute directly.
      *
-     * @param string  $type       Cache entry type (tree, page, etc.)
-     * @param string  $identifier Cache identifier
-     * @param Closure $callback   Value generator when cache miss or disabled
+     * @template T
+     * @param string      $type       Cache entry type (tree, page, etc.)
+     * @param string      $identifier Cache identifier
+     * @param Closure():T $callback   Value generator when cache miss or disabled
+     *
+     * @return T
      */
     protected function remember(string $type, string $identifier, Closure $callback): mixed
     {
