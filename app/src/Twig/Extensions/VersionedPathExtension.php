@@ -39,7 +39,7 @@ class VersionedPathExtension extends AbstractExtension
         $prefix = $version->latest ? '' : '/' . trim($version->id, '/') . '/';
 
         return (string) preg_replace_callback(
-            '/\b(href|src)="\/(?!\/)([^"#]+)"/i',
+            '/\b(href|src)="\/(?!\/)([^"]+)"/i',
             function (array $matches) use ($prefix, $version): string {
                 // If already versioned (e.g., /6.0/...), leave untouched
                 $path = $matches[2];

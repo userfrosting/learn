@@ -3,7 +3,8 @@
 {% block head_extra %}
     {{ parent() }}
     {% if page is defined and page.getVersion() is not null %}
-        {% set base_href = '/' ~ (page.getVersion().uri() ? page.getVersion().uri() ~ '/' : '') %}
+        {% set route = page.getRoute() %}
+        {% set base_href = route ~ (route ends with '/' ? '' : '/') %}
         <base href="{{ base_href }}">
     {% endif %}
 {% endblock %}

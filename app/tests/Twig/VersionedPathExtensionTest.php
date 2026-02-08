@@ -62,4 +62,16 @@ class VersionedPathExtensionTest extends TestCase
 
         $this->assertSame($html, $converted, 'Relative paths must not be rewritten by the filter');
     }
+
+    public function testRootPathsWithFragmentsOrQueriesAreVersioned(): void
+    {
+        $ext = new VersionedPathExtension();
+        $version = new Version('5.0', '5.0', false);
+
+        $html = '<a href="/installation#toc">TOC</a><img src="/images/logo.png?v=1#hero">';
+        $converted = $ext->addVersionPrefix($html, $version);
+
+        $this->assertStringContainsString('href="/5.0/installation#toc"', $converted);
+        $this->assertStringContainsString('src="/5.0/images/logo.png?v=1#hero"', $converted);
+    }
 }
