@@ -1,14 +1,14 @@
 ---
 title: Extending Aggregator Commands
 description: You may add custom sub-commands to the bake, setup, and debug commands through events.
-wip: true
 ---
 
-*Aggregator commands* is a fancy term to identify core bakery commands that just run multiple sub-commands in one operation. UserFrosting uses 3 of those special commands:
+*Aggregator commands* is a fancy term to identify core bakery commands that just run multiple sub-commands in one operation. UserFrosting uses 4 of those special commands:
 
-1. [bake](/cli/commands#bake)
-2. [setup](/cli/commands#setup)
-3. [debug](/cli/commands#debug)
+1. [assets:build](/cli/commands#assetsbuild)
+2. [bake](/cli/commands#bake)
+3. [setup](/cli/commands#setup)
+4. [debug](/cli/commands#debug)
 
 Those commands are typically used as "installation" steps. It this situation, it's much more simpler to run one command than multiple ones. You can easily add your own command(s) to any of these aggregators using [event listeners](/advanced/events#listener).
 
@@ -88,6 +88,12 @@ If you need to place your command at a specific place in the stack, you can use 
 
 > [!NOTE]
 > You can learn more about Event Listening in [Chapter 18](/advanced/events).
+
+## Adding Custom Commands to the `assets:build` command
+
+To add custom sub-commands to the `assets:build` aggregator, the same process as for the "bake" command can be used, but instead of listening to the `BakeCommandEvent` in the recipe, the listener is matched to the `AssetsBuildCommandEvent`.
+
+This is particularly useful if you want to add custom asset compilation steps. For example, you might want to run additional build tools or post-processing steps after the default asset build commands.
 
 ## Adding Custom Commands to the `setup` command
 

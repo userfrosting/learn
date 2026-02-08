@@ -1,7 +1,6 @@
 ---
 title: Built-in Commands
 description: An overview of the commands available in Bakery, UserFrosting's powerful CLI tool.
-wip: true
 ---
 
 Web applications need more than just a web interface. You need to run database migrations, clear caches, seed test data, build assets, and perform maintenance tasks. Doing these through a browser is awkward at best. Command-line tools are perfect for these tasks—fast, automatable, and scriptable.
@@ -78,6 +77,27 @@ The `assets:webpack` command is an alias for the **Webpack Encore** scripts used
 > If both `watch` and `production` options are used, _watch_ will be ignored and assets will be build for production.
 
 See the [Asset Management](/asset-management) chapter for more information about asset bundles and these options.
+
+### assets:vite
+
+The `assets:vite` command is an alias for the **Vite** scripts used to compile frontend dependencies to `/public/assets` or run the Vite development server. Behind the scenes, it's an alias for the npm commands `npm run vite:dev` and `npm run vite:build`. 
+
+```bash
+$ php bakery assets:vite [options]
+```
+
+| Option           | Description                                             | Alias of              |
+|------------------|---------------------------------------------------------|-----------------------|
+| _no options_     | Run Vite development server (when `assets.vite.dev` is `true`) or compile the assets for production (when `assets.vite.dev` is `false`)        | `npm run vite:dev` or `npm run vite:build` |
+| -p, --production | Force the creation of a production build                | `npm run vite:build`  |
+
+> [!NOTE]
+> The `assets.vite.dev` config value (default `true`) determines whether the Vite development server runs or a production build is created. In production mode, this defaults to `false`.
+
+> [!NOTE]  
+> This command will skip execution if no `vite.config.js` or `vite.config.ts` file is found in the current directory.
+
+See the [Asset Management](/asset-management) chapter for more information about Vite and asset bundles.
 
 ### bake
 
@@ -354,6 +374,24 @@ $ php bakery migrate:status [options]
 | ----------------------- | ------------------------------ |
 | -d, --database=DATABASE | The database connection to use |
 
+
+### migrate:clean
+
+The `migrate:clean` command removes stale migrations from the migration repository (database). A migration becomes "stale" when it was previously run but its migration class file no longer exists in the codebase.
+
+> [!CAUTION]
+> This command should be used as a **last resort**. If a stale migration is a dependency of another migration, you should try restoring the migration files instead of running this command, to avoid further issues.
+
+```bash
+$ php bakery migrate:clean [options]
+```
+
+| Option                  | Description                            |
+| ----------------------- | -------------------------------------- |
+| -d, --database=DATABASE | The database connection to use         |
+| -f, --force             | Do not prompt for confirmation         |
+
+Common use case: If you ran a migration and then deleted the migration class file before running `down()` for that migration, the migration entry will remain in the database but cannot be rolled back. This command will remove such stale entries from the migration repository.
 
 ### route:list
 
