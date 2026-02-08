@@ -1,7 +1,6 @@
 ---
 title: Activity Logging
 description: The activity logger allows you to capture and log user activities. By default this information is sent to the database, but you can use Monolog to customize how this information is stored - even having critical activity alerts sent to an administrator!
-wip: true
 ---
 
 By default, user activities are logged to the `activities` database table. Logged information includes the activity time and an activity type, the `user_id`, the user's IP address, and a description of the activity. The administrative interface provides convenient tables for viewing these logs:
@@ -16,20 +15,23 @@ The following activity types are logged by the core UserFrosting features:
 |---------------|-------------|
 | `sign_up` | The user signed up via the public registration page. |
 | `sign_in` | The user signed in to their account. |
+| `sign_out` | The user explicitly signed out of their account (note, this does not capture when a user's session expires on its own). |
+| `verified` | The user verified their email address. |
+| `password_reset` | The user reset their password. |
+| `password_upgraded` | The user's password hash was automatically upgraded to modern hashing. |
 | `update_profile_settings` | The user updated their profile settings (name, locale, etc). |
 | `update_account_settings` | The user updated their account settings (email or password). |
-| `sign_out` | The user explicitly signed out of their account (note, this does not capture when a user's session expires on its own). |
 | `group_create` | The user created a new group. |
 | `group_delete` | The user deleted a group. |
-| `group_update_info` | The user updated information for a group. |
+| `group_update_info` | The user updated the details of a group. |
 | `role_create` | The user created a new role. |
 | `role_delete` | The user deleted a role. |
-| `role_update_info` | The user updated general information for a role. |
+| `role_update_info` | The user updated the details of a role. |
 | `role_update_field` | The user updated a specific attribute of a role (this includes modifying the permissions for a role). |
 | `account_create` | The user created an account for another user. |
 | `account_delete` | The user deleted another user's account. |
-| `account_update_info` | The user updated general account info (name, locale, etc) for another user. |
-| `account_update_field` | The user updated a specific field for another user (this includes modifying a user's roles or password, and enabling/disabling their account). |
+| `account_update_info` | The user updated basic account info for another user (name, email, locale, group). |
+| `account_update_field` | The user updated a specific field for another user account (e.g., enabled/disabled status, verification status, password, roles). |
 
 > [!NOTE]
 > These activities are only logged _when successful_. If a user is unable to perform one of these activities, for example because they don't have the necessary permissions or there is some other problem, the attempt won't be logged.

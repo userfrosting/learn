@@ -1,7 +1,6 @@
 ---
 title: Authorization
 description: Authorization is sometimes referred to as "access control" or "protecting pages". UserFrosting implements an extended version of role-based access control that supports procedural conditions on user permissions.
-wip: true
 ---
 
 Authenticating users (knowing who they are) is only half the battle. The harder question is: **what should each user be allowed to do?** Not every user should access administrative features, delete data, or view sensitive information. Without proper authorization, your application becomes either a security hole (everyone can do everything) or a maintenance nightmare (hardcoded permissions scattered everywhere).
