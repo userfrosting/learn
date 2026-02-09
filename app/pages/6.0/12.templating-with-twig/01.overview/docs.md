@@ -1,7 +1,6 @@
 ---
 title: Why use Twig?
 description: UserFrosting uses the extremely popular Twig templating engine to facilitate clean separation between content and logic in your application.
-wip: true
 ---
 
 Remember the spaghetti code problem from [Chapter 8](/routes-and-controllers/introduction)? HTML mixed with PHP logic, `echo` statements building markup, database queries intermingled with presentation—it's a maintenance nightmare. Changing the design means wading through PHP code. Testing becomes nearly impossible. Security vulnerabilities like XSS attacks lurk in every string interpolation.

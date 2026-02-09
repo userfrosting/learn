@@ -1,7 +1,6 @@
 ---
 title: Sprinkle Templates
-description: ""
-wip: true
+description: Learn how to organize templates in your sprinkles and override or extend templates from other sprinkles.
 ---
 
 ## Template organization
