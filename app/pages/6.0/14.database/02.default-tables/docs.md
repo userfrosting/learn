@@ -1,7 +1,6 @@
 ---
 title: Default Tables
 description: UserFrosting's installer creates a number of tables by default.  Here, we explain the purpose of each table.
-wip: true
 ---
 
 When you install UserFrosting with the [Bakery CLI](/cli), a number of tables will automatically added to your database. These tables are required for UserFrosting's built-in features, such as user accounts, request throttling, persistent sessions, and access control.
@@ -61,23 +60,22 @@ The `account` Sprinkle depends on the following tables:
 
 This table contains records for each user.
 
-| Column             | Type           | Description                                                                                                                                               |
-| ------------------ | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`               | `string`       | The unique identifier for the user.                                                                                                                       |
-| `user_name`        | `string(50)`   | A unique text identifier for the user. Only `[a-zA-Z0-9_-]` characters are allowed.                                                                       |
-| `email`            | `string(255)`  | The email address of the user. Must be unique.                                                                                                            |
-| `first_name`       | `string(20)`   | The user's first name. Optional.                                                                                                                          |
-| `last_name`        | `string(30)`   | The user's last name. Optional.                                                                                                                           |
-| `locale`           | `string(10)`   | The [language and locale](/i18n) to use for this user.                                                                                                    |
-| `theme`            | `string(100)`  | The user theme (not yet fully implemented).                                                                                                               |
-| `group_id`         | unsigned `int` | The id of the user's [group](/users/groups).                                                                                                              |
-| `flag_verified`    | `bool`         | Set to 1 if the user has verified their account via email, 0 otherwise.                                                                                   |
-| `flag_enabled`     | `bool`         | Set to 1 if the user account is currently enabled, 0 otherwise. Disabled accounts cannot be logged in to, but they retain all of their data and settings. |
-| `last_activity_id` | unsigned `int` | The id of the last [activity](/users/activity-logging) performed by this user.                                                                            |
-| `password`         | `string(255)`  | The hashed password (including the salt and cost function identifier) of the user.                                                                        |
-| `deleted_at`       | `timestamp`    | The time when this record was deleted (when using soft deletes).                                                                                          |
-| `created_at`       | `timestamp`    | The time when this record was created.                                                                                                                    |
-| `updated_at`       | `timestamp`    | The time when this record was last updated.                                                                                                               |
+| Column              | Type           | Description                                                                                                                                               |
+| ------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                | `string`       | The unique identifier for the user.                                                                                                                       |
+| `user_name`         | `string(50)`   | A unique text identifier for the user. Only `[a-zA-Z0-9_-]` characters are allowed.                                                                       |
+| `email`             | `string(255)`  | The email address of the user. Must be unique.                                                                                                            |
+| `first_name`        | `string(20)`   | The user's first name. Optional.                                                                                                                          |
+| `last_name`         | `string(30)`   | The user's last name. Optional.                                                                                                                           |
+| `locale`            | `string(10)`   | The [language and locale](/i18n) to use for this user.                                                                                                    |
+| `group_id`          | unsigned `int` | The id of the user's [group](/users/groups). Can be null.                                                                                                 |
+| `flag_verified`     | `bool`         | Set to 1 if the user has verified their account via email, 0 otherwise.                                                                                   |
+| `flag_enabled`      | `bool`         | Set to 1 if the user account is currently enabled, 0 otherwise. Disabled accounts cannot be logged in to, but they retain all of their data and settings. |
+| `password`          | `string(255)`  | The hashed password (including the salt and cost function identifier) of the user.                                                                        |
+| `password_last_set` | `timestamp`    | The time when the user's password was last set or changed.                                                                                                |
+| `deleted_at`        | `timestamp`    | The time when this record was deleted (when using soft deletes).                                                                                          |
+| `created_at`        | `timestamp`    | The time when this record was created.                                                                                                                    |
+| `updated_at`        | `timestamp`    | The time when this record was last updated.                                                                                                               |
 
 ### `roles`
 
@@ -133,35 +131,22 @@ This table contains records for each [user group](/users/groups).
 | `created_at`  | `timestamp`   | The time when this record was created.                                                                                                   |
 | `updated_at`  | `timestamp`   | The time when this record was last updated.                                                                                              |
 
-### `password_resets`
+### `user_verifications`
 
-This table contains records for each [password reset request](/users/user-accounts#Passwordresetrequests) that is issued.
+This table manages all user verification requests via one-time passwords (OTPs), including email verification, password resets, and other verification workflows.
 
-| Column         | Type           | Description                                                                                     |
-| -------------- | -------------- | ----------------------------------------------------------------------------------------------- |
-| `id`           | `string`       | The unique identifier for the record.                                                           |
-| `user_id`      | unsigned `int` | The `user_id` of the user who requested the password reset.                                     |
-| `hash`         | `string(255)`  | The secret token, emailed to the user, that they must present to complete the reset.            |
-| `completed`    | `bool`         | Flags whether or not the reset was completed successfully.                                      |
-| `expires_at`   | `timestamp`    | The time when this request will expire, after which the user will need to submit a new request. |
-| `completed_at` | `timestamp`    | The time when this request was completed.                                                       |
-| `created_at`   | `timestamp`    | The time when this record was created.                                                          |
-| `updated_at`   | `timestamp`    | The time when this record was last updated.                                                     |
+| Column         | Type           | Description                                                                                      |
+| -------------- | -------------- | ------------------------------------------------------------------------------------------------ |
+| `id`           | `string`       | The unique identifier for the record.                                                            |
+| `user_id`      | unsigned `int` | The `user_id` of the user associated with this verification.                                     |
+| `code`         | `string`       | The verification code (one-time password) that the user must present to complete verification.   |
+| `expires_at`   | `timestamp`    | The time when this verification will expire, after which the user will need a new verification.  |
+| `completed_at` | `timestamp`    | The time when this verification was completed (null if not yet completed).                       |
+| `created_at`   | `timestamp`    | The time when this record was created.                                                           |
+| `updated_at`   | `timestamp`    | The time when this record was last updated.                                                      |
 
-### `verifications`
-
-This table contains records for [new account verification](/users/user-accounts#account-verification) tokens.
-
-| Column         | Type           | Description                                                                                                |
-| -------------- | -------------- | ---------------------------------------------------------------------------------------------------------- |
-| `id`           | `string`       | The unique identifier for the record.                                                                      |
-| `user_id`      | unsigned `int` | The `user_id` of the user to be verified.                                                                  |
-| `hash`         | `string(255)`  | The secret token, emailed to the user, that they must present to complete the verification.                |
-| `completed`    | `bool`         | Flags whether or not the verification was completed successfully.                                          |
-| `expires_at`   | `timestamp`    | The time when this request will expire, after which the user will need to resend the verification request. |
-| `completed_at` | `timestamp`    | The time when this request was completed.                                                                  |
-| `created_at`   | `timestamp`    | The time when this record was created.                                                                     |
-| `updated_at`   | `timestamp`    | The time when this record was last updated.                                                                |
+> [!NOTE]
+> As of UserFrosting 6.0, the separate `password_resets` and `verifications` tables have been consolidated into the unified `user_verifications` table to provide a more flexible verification system.
 
 ### `persistences`
 
@@ -171,8 +156,8 @@ This table stores records for recreating expired user sessions from a "Remember 
 | ------------------ | -------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `id`               | `string`       | The unique identifier for the record.                                                                                        |
 | `user_id`          | unsigned `int` | The `user_id` of the user to be persistently authenticated.                                                                  |
-| `token`            | `string(40)`   | The token that the user must present to recreate their session.                                                              |
-| `persistent_token` | `bool`         | The [series identifier](http://jaspan.com/improved_persistent_login_cookie_best_practice) for the user's persistent session. |
+| `token`            | `char(64)`     | The token that the user must present to recreate their session.                                                              |
+| `persistent_token` | `char(64)`     | The [series identifier](http://jaspan.com/improved_persistent_login_cookie_best_practice) for the user's persistent session. |
 | `expires_at`       | `timestamp`    | The time when the persistent session will expire, and the user will have to reauthenticate.                                  |
 | `created_at`       | `timestamp`    | The time when this record was created.                                                                                       |
 | `updated_at`       | `timestamp`    | The time when this record was last updated.                                                                                  |

@@ -1,7 +1,6 @@
 ---
 title: Overview
 description: UserFrosting uses Eloquent, Laravel's powerful ORM, to provide a fluent query builder and active record layer on top of your database.
-wip: true
 ---
 
 Writing database queries can get tedious fast. Every time you need user data, you're writing `SELECT * FROM users WHERE id = ?`. Want to find users by email? Another query. Need related data? Now you're juggling multiple queries and manually joining results. Your code becomes a mess of repetitive SQL strings and error-prone manual data handling.
@@ -45,7 +44,7 @@ return [
 
 ## Data models
 
-Eloquent works by having you define [model classes](https://laravel.com/docs/8.x/eloquent#eloquent-model-conventions). Generally speaking, each model maps to a table in your database. Interactions with the table are then handled through the corresponding model.
+Eloquent works by having you define [model classes](https://laravel.com/docs/10.x/eloquent#eloquent-model-conventions). Generally speaking, each model maps to a table in your database. Interactions with the table are then handled through the corresponding model.
 
 UserFrosting has already implemented all of the models needed for interacting with its [default tables](/database/default-tables). These can be found in the `src/Database/Models/` subdirectories of your sprinkles. Among the three default Sprinkles (`core`, `account`, and `admin`), UserFrosting implements:
 
@@ -88,7 +87,7 @@ $user->save();
 
 #### Select
 
-Records can be fetched from the database using Eloquent's sophisticated [query builder](https://laravel.com/docs/8.x/eloquent#retrieving-models). This is typically done by calling a static method on the corresponding model class:
+Records can be fetched from the database using Eloquent's sophisticated [query builder](https://laravel.com/docs/10.x/eloquent#retrieving-models). This is typically done by calling a static method on the corresponding model class:
 
 ```php
 <?php
@@ -109,7 +108,7 @@ foreach ($users as $user) {
 
 The query builder allows us to "chain" various criteria for a query, generating and executing a (usually) single query at the end. For example, the method `where()` allows us to filter the user table by the value of a column. If we then chain this with the `get()` method, we'll get a collection of Users filtered by that criteria.
 
-If our model implements a [relationship](https://laravel.com/docs/8.x/eloquent-relationships), we can also fetch related models through the query builder:
+If our model implements a [relationship](https://laravel.com/docs/10.x/eloquent-relationships), we can also fetch related models through the query builder:
 
 ```php
 <?php
@@ -161,4 +160,4 @@ $user->delete();
 
 ### Advanced usage
 
-We've only touched on the very basics of how Eloquent and the query builder works. You will likely want to learn how to [define relationships between models](https://laravel.com/docs/8.x/eloquent-relationships), [encapsulate longer queries](https://laravel.com/docs/8.x/eloquent#local-scopes), and perform more advanced queries, for example. For this, we urge you to spend some time reading through [Laravel Eloquent excellent documentation](https://laravel.com/docs/8.x/eloquent).
+We've only touched on the very basics of how Eloquent and the query builder works. You will likely want to learn how to [define relationships between models](https://laravel.com/docs/10.x/eloquent-relationships), [encapsulate longer queries](https://laravel.com/docs/10.x/eloquent#local-scopes), and perform more advanced queries, for example. For this, we urge you to spend some time reading through [Laravel Eloquent excellent documentation](https://laravel.com/docs/10.x/eloquent).
