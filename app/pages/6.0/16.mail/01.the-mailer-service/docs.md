@@ -1,21 +1,23 @@
 ---
 title: The Mailer Service
 description: UserFrosting's mailer service integrates smoothly with Twig to create dynamically generated messages.  Templated messages can be sent to large groups of recipients, customizing the content for each recipient.
-wip: true
 ---
 
 ## Configuration
 
 Once you have selected a mail service provider, you can configure your host, username, and password in your environment variables (or `.env` file):
 
-| Variable        | Description                                                         |
-|-----------------|---------------------------------------------------------------------|
-| `SMTP_HOST`     | Your mail host (e.g., `smtp.gmail.com`)                             |
-| `SMTP_USER`     | Your account username (e.g., `owlfancy@gmail.com`)                  |
-| `SMTP_PASSWORD` | Your account password                                               |
-| `SMTP_PORT`     | SMTP server port                                                    |
-| `SMTP_AUTH`     | SMTP server authentication enabled (true or false)                  |
-| `SMTP_SECURE`   | Enable TLS encryption. Set to `tls`, `ssl` or `false` (to disabled) |
+| Variable            | Description                                                        |
+|---------------------|--------------------------------------------------------------------|
+| `MAIL_MAILER`       | Mail driver to use (smtp, mail, qmail, sendmail). Default: `smtp`  |
+| `MAIL_FROM_ADDRESS` | Default sender email address (e.g., `noreply@example.com`)         |
+| `MAIL_FROM_NAME`    | Default sender name (e.g., `Site Administrator`)                   |
+| `SMTP_HOST`         | Your mail host (e.g., `smtp.gmail.com`)                            |
+| `SMTP_USER`         | Your account username (e.g., `owlfancy@gmail.com`)                 |
+| `SMTP_PASSWORD`     | Your account password                                              |
+| `SMTP_PORT`         | SMTP server port (default: `587`)                                  |
+| `SMTP_AUTH`         | SMTP server authentication enabled (default: `true`)               |
+| `SMTP_SECURE`       | Enable TLS encryption. Set to `tls`, `ssl` or `false` (to disable) |
 
 
 For more advanced configuration, you can override the `mail` configuration values in your site sprinkle configuration :
@@ -99,7 +101,7 @@ public function __construct(
 
 // ...
 
-$message = new TwigMailMessage($this->view, "mail/confirm-owl.html.twig");
+$message = new TwigMailMessage($this->twig, "mail/confirm-owl.html.twig");
 ```
 
 ### Senders, recipients, and customized content
@@ -172,4 +174,4 @@ $this->mailer->sendDistinct($message);
 
 ### Error handling
 
-If a problem arises while attempting to send a message, a `phpmailerException` will be thrown. By default, this exception is caught by the `Error/Handler/PhpMailerExceptionHandler` (defined in the `core` Sprinkle). Of course, you can [define your own exception handler](/advanced/error-handling) instead.
+If a problem arises while attempting to send a message, a `PHPMailerException` will be thrown. By default, this exception is caught by the `PhpMailerExceptionHandler` (defined in the `core` Sprinkle). Of course, you can [define your own exception handler](/advanced/error-handling) instead.
