@@ -32,12 +32,27 @@ class MyRoutes implements RouteDefinitionInterface
             ->add(TwigGlobals::class)
             ->setName('documentation.image');
 
-        // Route for versioned and non-versioned documentation pages
+        // Route for versioned and non-versioned documentation pages (with and without trailing slash)
         $app->get('/{version:\d+\.\d+}[/{path:.*}]', [DocumentationController::class, 'pageVersioned'])
             ->add(TwigGlobals::class)
             ->setName('documentation.versioned');
         $app->get('[/{path:.*}]', [DocumentationController::class, 'page'])
             ->add(TwigGlobals::class)
             ->setName('documentation');
+
+        // Redirect path that ends with a slash to the same path without the slash
+        $app->get('/{version:\d+\.\d+}/{path:.*}/', function ($request, $response, array $args) use ($app) {
+            $version = $args['version'];
+            $path = rtrim($args['path'] ?? '', '/');
+            $target = '/' . $version . ($path !== '' ? '/' . $path : '');
+
+            return $app->redirect($response, $target, 301);
+        });
+        $app->get('/{path:.*}/', function ($request, $response, array $args) use ($app) {
+            $path = rtrim($args['path'] ?? '', '/');
+            $target = $path === '' ? '/' : '/' . $path;
+
+            return $app->redirect($response, $target, 301);
+        });
     }
 }
