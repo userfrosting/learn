@@ -4,7 +4,7 @@
     {{ parent() }}
     {% if page is defined and page.getVersion() is not null %}
         {% set route = page.getRoute() %}
-        {% set base_href = route ~ (route ends with '/' ? '' : '/') %}
+        {% set base_href = route == '' ? '/' : route %}
         <base href="{{ base_href }}">
     {% endif %}
 {% endblock %}
