@@ -1,7 +1,6 @@
 ---
 title: Setting up the site language
 description: Configuration options are available to control the overall language presented by UserFrosting.
-wip: true
 ---
 
 UserFrosting is translated in a variety of languages provided by our community. While a default locale will be used for new visitors, each user can  choose their preferred language.
@@ -21,24 +20,27 @@ For example, to use _French_ as the default locale :
 
 ## The available user locales
 
-A user can also use its own language, which he can chose in is profile settings. All available locales the users can choose from are defined in the `site.locales.available` config.
+A user can also use their own language, which they can choose in their profile settings. All available locales the users can choose from are defined in the `site.locales.available` config.
 
-To remove one locale from the available ones, simply set the unwanted locale to `false` in your sprinkle config. For example, the following config will only present the English, Spanish and French locale to the user :
+By default, UserFrosting 6 provides two locales:
 
 ```php
-    'available' => [
-        'en_US' => true,
-        'zh_CN' => false,
-        'es_ES' => true,
-        'ar'    => false,
-        'pt_PT' => false,
-        'ru_RU' => false,
-        'de_DE' => false,
-        'fr_FR' => true,
-        'tr'    => false,
-        'it_IT' => false,
-        'th_TH' => false,
-    ],
+'available' => [
+    'en_US' => true,
+    'fr_FR' => true,
+],
 ```
+
+To disable a locale, set it to `false` in your sprinkle config. To add additional locales, first [create the custom locale](/i18n/custom-locale) with its translation files, then add it to the available list:
+
+```php
+'available' => [
+    'en_US' => true,
+    'fr_FR' => true,
+    'es_ES' => true,  // Add Spanish
+    'de_DE' => false, // Disable German (if previously enabled)
+],
+```
+
 > [!TIP]
 > Want to add a new locale to UserFrosting? Feel free to [contribute](/contributing/supporting-userfrosting#contributing-code-and-content) on GitHub
