@@ -1,6 +1,6 @@
 ---
 title: Events
-wip: true
+description: Learn how to use PSR-14 event dispatching in UserFrosting to customize built-in features by listening to events and implementing listeners in your sprinkles.
 ---
 
 UserFrosting makes uses of *Event Dispatching* to enable customization of some built-in features. For example, when someone uses the login form, the following process is done :
@@ -180,9 +180,10 @@ These are the events the Framework and default sprinkles uses. You can easily li
 |------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
 | `UserFrosting\Event\AppInitiatedEvent`                           | Dispatched when the Slim App is ready to be run.                                                                  |
 | `UserFrosting\Event\BakeryInitiatedEvent`                        | Dispatched when the Symfony Console App is ready to be run.                                                       |
+| `UserFrosting\Sprinkle\Core\Bakery\Event\AssetsBuildCommandEvent` | Dispatched when the `assets:build` command is about to be run. The list of subcommands that will be run can be manipulated using this event to insert custom subcommands into the callstack. |
 | `UserFrosting\Sprinkle\Core\Bakery\Event\BakeCommandEvent`       | Dispatched when the `bake` command is about to be run. The list of subcommands that will be run can be manipulated using this event to insert custom subcommands into the callstack. |
 | `UserFrosting\Sprinkle\Core\Bakery\Event\DebugCommandEvent`      | Dispatched when the `debug` command is about to be run.                                                           |
-| `UserFrosting\Sprinkle\Core\Bakery\Event\DebugVerboseCommandEvent` | Dispatched when the `debug` command is about to be run ins verbose mode                                         |
+| `UserFrosting\Sprinkle\Core\Bakery\Event\DebugVerboseCommandEvent` | Dispatched when the `debug` command is about to be run in verbose mode                                         |
 | `UserFrosting\Sprinkle\Core\Bakery\Event\SetupCommandEvent`      | Dispatched when the `setup` command is about to be run.                                                           |
 | `UserFrosting\Sprinkle\Core\Event\ResourceLocatorInitiatedEvent` | Dispatched when the ResourceLocatorInterface is ready to be used. The locator itself is available in the handler. |
 | `UserFrosting\Sprinkle\Account\Event\UserCreatedEvent`           | Dispatched when a user is created. User can be mutated by the listener (N.B.: any modification to the user need to be saved to the db by the listener) |

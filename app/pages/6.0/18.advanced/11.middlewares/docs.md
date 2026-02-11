@@ -1,6 +1,6 @@
 ---
 title: Middlewares
-wip: true
+description: Learn how to use middlewares in UserFrosting to run code before or after requests are handled, manipulate Request and Response objects, and add functionality to routes and route groups.
 ---
 
 Sometimes it can be useful to run code _before_ or _after_ the request is handled, to either manipulate the Request and/or the Response objects. This can be done by _middlewares_. Middlewares can be used to add many feature to every page or simple routes, for example to add protection to the website, handle some configuration, inject some variable, etc.

@@ -1,7 +1,6 @@
 ---
 title: Exceptions and Error Handling
 description: UserFrosting provides a rich set of features for catching errors and exceptions, logging or displaying detailed error information, and providing appropriate responses to the client.
-wip: true
 ---
 
 Things don't always go the way they were intended in your application. Sometimes this is the client's fault, and sometimes it is the server's (i.e. _your_) fault. When this happens, it is important that your application:
@@ -52,24 +51,27 @@ It's worth noting at this point that some Exception are *user facing*, while oth
 
 | Exception                     | Description                                                                              |
 |-------------------------------|------------------------------------------------------------------------------------------|
-| AccountDisabledException      | Used when an account has been disabled.                                                  |
+| AccountDisabledException      | Used when an account has been disabled. Implements *LoginException*.                     |
 | AccountInvalidException       | Used when an account has been removed during an active session.                          |
 | AccountNotFoundException      | Used when an account has been removed during an active session.                          |
-| AccountNotVerifiedException   | Used when an account is required to complete email verification, but hasn't done so yet. |
+| AccountNotVerifiedException   | Used when an account is required to complete email verification, but hasn't done so yet. Implements *LoginException*. |
 | AuthCompromisedException      | Used when we suspect theft of the rememberMe cookie.                                     |
 | AuthExpiredException          | Used when the user needs to authenticate/reauthenticate.                                 |
 | AuthGuardException            | Used when a page requires the user to be logged-in.                                      |
 | DefaultGroupException         | Used when the default group is not found.                                                |
 | EmailNotUniqueException       | Used when an the username is not unique.                                                 |
+| FailedVerificationException   | Used when two-factor verification fails.                                                 |
 | ForbiddenException            | Used when an account doesn't have access to a resource.                                  |
 | InvalidCredentialsException   | Used when an account fails authentication for some reason.                               |
 | LocaleNotFoundException       | Used when the user needs to authenticate/reauthenticate.                                 |
-| LoggedInException             | Used when the user needs to authenticate/reauthenticate.                                 |
+| LoggedInException             | Used when the user is already logged in and tries to access guest-only pages.            |
 | MissingRequiredParamException | Used when an the a model property is not found.                                          |
+| PasswordExpiredException      | Used when the user's password has expired and must be changed. Implements *LoginException*. |
 | PasswordInvalidException      | Used when current password doesn't match the one we have on record.                      |
 | PasswordResetInvalidException | Used when an account doesn't have access to a resource.                                  |
 | RegistrationException         | Used when an exception is encountered by the registration mechanism.                     |
 | UsernameNotUniqueException    | Used when an the username is not unique.                                                 |
+| VerificationDisabledException | Used when user tries to verify but verification is disabled for their account.           |
 
 **Child of `NotFoundException`:**
 
@@ -83,6 +85,17 @@ It's worth noting at this point that some Exception are *user facing*, while oth
 > [!NOTE]
 > Notice how `ForbiddenException` extends `AccountException`, which extends `UserFacingException`, which *implements* `UserMessageException`. In the same way, `AccountNotFoundException` extends `NotFoundException`, which *also* extends `UserFacingException`. Both `ForbiddenException` and `AccountNotFoundException` ultimately implements `UserMessageException`.
 
+#### LoginException Interface
+
+The `LoginException` interface is a marker interface for login-related exceptions. Exceptions implementing this interface indicate issues that occur specifically during the login process. These exceptions are shown directly to the user during login attempts to provide clear feedback about authentication problems, rather than being rethrown or masked.
+
+Exceptions implementing `LoginException`:
+- `AccountDisabledException` - account is disabled
+- `AccountNotVerifiedException` - account email not yet verified  
+- `PasswordExpiredException` - password must be changed
+
+This interface helps the authentication system identify which exceptions should be displayed immediately to users attempting to log in.
+
 ### Exception handlers
 In most cases, when an exception is thrown, the `UserFrosting\Sprinkle\Core\Error\ExceptionHandlerMiddleware` will catch the exception. Rather than handling the exception directly, `ExceptionHandlerMiddleware` checks to see if the exception type has been registered with a custom **exception handler**. If so, it invokes the corresponding exception handler; otherwise, it invokes a generic one.
 
@@ -93,37 +106,30 @@ The base implementation of this interface is `UserFrosting\Sprinkle\Core\Error\H
 2. Decide if the exception should be saved to log. If so, uses `writeToErrorLog()` to write the detailed error information and stack trace to the UserFrosting error log service (which defaults to writing to the `logs/userfrosting.log` file), using a specific Error Renderer;
 3. Render the Response using the appropriate *Error Renderer*;
 
-A single handler isn't necessarily bind to a single Exception. Each handler can handle [Subtypes](https://www.php.net/manual/en/function.is-subclass-of.php) of an Exception natively. For example, `UserMessageExceptionHandler` handles `UserMessageException`, but also any exception that is a child of `UserMessageException`, since the handler also accept subtype handling. Since `ForbiddenException` extend `AccountException`, which extends `UserFacingException`, which *implements* `UserMessageException`, which is *handled* by `UserMessageExceptionHandler`, `ForbiddenException` will be handled by `UserMessageExceptionHandler`.
-
-However, `AuthExpiredException` will be handled by `RedirectToLoginDangerHandler`, even it extends `AccountException` because a handler is directly defined for this exception.
+A single handler isn't necessarily bound to a single Exception. Each handler can handle [Subtypes](https://www.php.net/manual/en/function.is-subclass-of.php) of an Exception natively. For example, `UserMessageExceptionHandler` handles `UserMessageException`, but also any exception that is a child of `UserMessageException`, since the handler accepts subtype handling. Since `ForbiddenException` extends `AccountException`, which extends `UserFacingException`, which *implements* `UserMessageException`, which is *handled* by `UserMessageExceptionHandler`, `ForbiddenException` will be handled by `UserMessageExceptionHandler`.
 
 #### Provided Exception Handler
 
 | Handler                      | Description                                                                               |
 |------------------------------|-------------------------------------------------------------------------------------------|
 | ExceptionHandler             | Default handler.                                                                          |
+| AlertStreamExceptionHandler  | Extends ExceptionHandler. Adds UserMessageException messages to the deprecated Alert Stream. Does not log exceptions or display error details. |
 | HttpExceptionHandler         | Custom handler for all HttpException. Force log and error detail to be off. Use the HTTP status code instead of Exception status code.                                                                                                     |
 | PhpMailerExceptionHandler    | Handler for phpMailer exceptions. Force error message.                                    |
-| UserMessageExceptionHandler  | Force log and error detail to be off. Add the user facing message to the [Alert Stream]() |
-| LoggedInExceptionHandler     | Handler for LoggedInException. Redirect to index.                                         |
-| RedirectToLoginDangerHandler | Redirect the user to the login page with danger alert.                                    |
-| RedirectToLoginInfoHandler   | Redirect the user to the login page with info alert.                                      |
+| UserMessageExceptionHandler  | Force log and error detail to be off. For user-facing exceptions only.                    |
 
-By default, these exceptions are handled by these handlers :
+By default, these exceptions are handled by these handlers:
 
-| Exception to handle           | Assigned handler             | Handle Subtypes? |
-|-------------------------------|------------------------------|------------------|
-| HttpException                 | HttpExceptionHandler         | Yes              |
-| UserMessageException          | UserMessageExceptionHandler  | Yes              |
-| PHPMailerException            | PhpMailerExceptionHandler    | No               |
-| LoggedInException             | LoggedInExceptionHandler     | No               |
-| AuthGuardException            | RedirectToLoginInfoHandler   | No               |
-| AuthExpiredException          | RedirectToLoginDangerHandler | No               |
-| PasswordResetInvalidException | RedirectToLoginDangerHandler | No               |
+| Exception to handle  | Assigned handler            | Handle Subtypes? |
+|----------------------|-----------------------------|------------------|
+| HttpException        | HttpExceptionHandler        | Yes              |
+| UserMessageException | UserMessageExceptionHandler | Yes              |
+| PHPMailerException   | PhpMailerExceptionHandler   | No               |
 
+Because `UserMessageExceptionHandler` handles subtypes, it will catch most user-facing exceptions in UserFrosting, including all `UserFacingException` instances (which implement `UserMessageException`) and their children like `AccountException`, `NotFoundException`, and all their descendants.
 
 > [!NOTE]
-> A special `ShutdownHandler` is also used. This is handler will only be called when the aboves handlers themselves throws an exception, or the exception is thrown before the handlers can be registered. Some PHP fatal errors will always be handled by the *Shutdown Handler*.
+> A special `ShutdownHandler` is also used. This handler will only be called when the above handlers themselves throw an exception, or the exception is thrown before the handlers can be registered. Some PHP fatal errors will always be handled by the *Shutdown Handler*.
 
 ### Error Renderers
 
@@ -177,16 +183,6 @@ For example, by default in a dev environment, the `PrettyPageHandler` will rende
 Similarly, when `logs.exception` config is set to **true**, the exception will be saved to the log, along with a stack trace. When this is set to **false**, no error will be logged. By default, this is set to false in a dev environnement, and true in production.
 
 However, keep in mind some handlers/renderers might force configuration value. For example, an exception is thrown when a user is not logged in. There's no point to display a detailed stack trace or log for this kind of exception, in any environment. In fact, this exception is mostly used to display an alert to the end user and redirect the user to the login page. In this case, the handler/renderer won't obey the general configuration value.
-
-<!-- TODO : Need to update and Test this Ajax stuff -->
-### site.debug.ajax
-
-Normally, when `displayErrorDetails` is enabled and an error is generated during an AJAX request that requests a JSON response, the `JsonRenderer` will be invoked to return a JSON object containing the debugging information.
-
-However for some types of exceptions, you may wish to display a debugging page in the browser instead - even for AJAX requests! When this setting is enabled, `ExceptionHandler` will ignore the requested content type and generate an HTML response instead. In [client side code](/client-side-code), when `site.debug.ajax` is enabled and an error code is received by an AJAX call, your Javascript can use this information to decide whether or not to completely replace the current page with the HTML debug page that was returned in the response.
-
-> [!WARNING]
-> Any detailed error message can, in fact, leak sensitive information to the client! That's why, by default, both `debug.exception` and `site.debug.ajax` are disabled in the **production** configuration environment. Do not change this! Displaying detailed exception traces in production is an extreme security risk and could leak sensitive passwords to your users and/or the public.
 
 ## Creating a custom Exception Handler
 
@@ -287,9 +283,9 @@ final class HttpExceptionHandler extends ExceptionHandler
 
 As you can see, this handler extends the `ExceptionHandler`, declare that any exception handled by it shouldn't be logged and error details should never be displayed (bypassing the general config), and finally use the http status code from the exception, instead of the normal exception status code. Notice that, no matter what, we never display a debugging page when handling an `HttpException`. This is because `HttpException` is not an error at all, but rather an exception that can be thrown during production when the application itself is functioning perfectly normally.
 
-As another example, you can take a look at the `UserMessageExceptionHandler` class, which handles most of the user facing exception, defined by the `UserMessageException` interface. This handler will send the user facing message to the alert stream. The `UserFacingException` exception also implement `TwigRenderedException`, which is used by the PrettyPageRenderer to determine which Twig template file to use to render this specific exception.
+As another example, you can take a look at the `UserMessageExceptionHandler` class, which handles most of the user-facing exceptions, defined by the `UserMessageException` interface. Since this handler accepts subtypes, it will handle all exceptions that implement `UserMessageException`, including `UserFacingException` and all its children like `AccountException`. The `UserFacingException` exception also implements `TwigRenderedException`, which is used by the PrettyPageRenderer to determine which Twig template file to use to render this specific exception.
 
-Handlers can also perform redirection. For example `RedirectToLoginDangerHandler` is used when the `AuthExpiredException` is thrown (when a user has been logged out) to redirect the user to the login page.
+Most user-facing exceptions in UserFrosting are handled by `UserMessageExceptionHandler` through subtype handling. For example, when `AuthExpiredException` is thrown (because a user session has expired), it extends `AccountException`, which extends `UserFacingException`, which implements `UserMessageException`, so it will be caught and handled by `UserMessageExceptionHandler`.
 
 ### Registering custom exception handlers
 

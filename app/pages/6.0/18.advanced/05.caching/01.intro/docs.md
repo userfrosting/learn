@@ -1,8 +1,6 @@
 ---
 title: What, Why, and When?
-description:
-    metadata: This section explains the motivation and rationale behind caching, and presents several scenarios where caching can help improve the performance of your server and application, as well as improve user experience.
-wip: true
+description: This section explains the motivation and rationale behind caching, and presents several scenarios where caching can help improve the performance of your server and application, as well as improve user experience.
 ---
 
 PHP scripts are executed at run time. This means that every time someone refreshes a page from your website in their browser, all the code defined in your app needs to be interpreted by the PHP engine. Modern hardware and processing power means that even complex PHP scripts can be executed in seconds. However, this is not _always_ the case, especially when dealing with external data.

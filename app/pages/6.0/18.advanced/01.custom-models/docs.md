@@ -1,38 +1,37 @@
 ---
 title: Using Custom Data Models
 description: The dependency injector makes it easy to override entire data models in your Sprinkle.
-wip: true
 ---
 
-Extending PHP classes is a little different from extending other types of entities. You cannot simply replace a class by redefining it in a custom Sprinkle. In fact, classes with the same name in two different Sprinkles would be treated as two different fully-qualified classes per the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/). For example, if I loaded the Sprinkles `Account` and `Site`, and I had the following structure:
+Extending PHP classes is a little different from extending other types of entities. You cannot simply replace a class by redefining it in a custom Sprinkle. In fact, classes with the same name in two different Sprinkles would be treated as two different fully-qualified classes per the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/). For example, if the `Account` Sprinkles and your `app` have the following structure:
 
 ```
-sprinkles
-├── account
-│   └── src
-│       └── Database
-│           └── Models
-│               └── User.php
-├── site
-│   └── src
-│       └── Database
-│           └── Models
-│               └── User.php
+account
+└── src
+    └── Database
+        └── Models
+            └── User.php
+
+app
+└── src
+    └── Database
+        └── Models
+            └── User.php
 ```
 
-...then `User.php` in `site` would *not* override `User.php` in `account`. Rather, I'd have two different classes because both classes would have two different **namespace** : `\UserFrosting\Sprinkle\Account\Database\Models\User` and `\UserFrosting\Sprinkle\Site\Database\Models\User`.
+...then `User.php` in `app` would *not* override `User.php` in `account`. Rather, you'd have two different classes because both classes would have two different **namespace** : `\UserFrosting\Sprinkle\Account\Database\Models\User` and `\UserFrosting\Sprinkle\App\Database\Models\User`.
 
 To actually override and replace the functionality of a class, we have two tools available:
 
 ## Class Inheritance
 
-We could, for example, define our `User` class in the `site` Sprinkle to inherit from the `User` class in `account` using the `extends` keyword:
+We could, for example, define our `User` class in the `app` Sprinkle to inherit from the `User` class in `account` using the `extends` keyword:
 
 **app/src/Database/Models/User.php** :
 ```php
 <?php
 
-namespace \UserFrosting\Sprinkle\MySprinkle\Database\Models;
+namespace \UserFrosting\Sprinkle\App\Database\Models;
 
 class User extends \UserFrosting\Sprinkle\Account\Database\Models\User
 {
@@ -40,11 +39,11 @@ class User extends \UserFrosting\Sprinkle\Account\Database\Models\User
 }
 ```
 
-Now, we can start using `\UserFrosting\Sprinkle\Site\Database\Models\User` to extend the functionality provided by the `User` class in the `Account` sprinkle.
+Now, we can start using `\UserFrosting\Sprinkle\App\Database\Models\User` to extend the functionality provided by the `User` class in the `Account` sprinkle.
 
 ## Dynamic Model Mapper
 
-Of course, the limitations of object-oriented inheritance becomes clear when you want to change the behavior of the original class in other places where it has been used. For example, if I extended `Account\Database\Models\User` and redefined the `onLogin` method in my `Site\Database\Models\User` class, this would let me use `Site\Database\Models\User` going forward in any code I write in the `site` Sprinkle. However, it wouldn't affect references to `User` in the `account` Sprinkle - they would still be referring to the base class.
+Of course, the limitations of object-oriented inheritance becomes clear when you want to change the behavior of the original class in other places where it has been used. For example, if I extended `Account\Database\Models\User` and redefined the `onLogin` method in my `App\Database\Models\User` class, this would let me use `App\Database\Models\User` going forward in any code I write in the `app` Sprinkle. However, it wouldn't affect references to `User` in the `account` Sprinkle - they would still be referring to the base class.
 
 To allow this sort of "_retroactive extendability_", the Dependency Injector can be used to resolves interface identifiers to specific class names at runtime [through Interface Binding and custom Autowiring](/dependency-injection/the-di-container#binding-interfaces).
 
@@ -81,16 +80,15 @@ public function __invoke(Request $request, Response $response): Response
 
 The following interface-model association are defined by default in the *Account* sprinkle :
 
-| Interface                                                                         | Model                                                         |
-| --------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\ActivityInterface`      | `UserFrosting\Sprinkle\Account\Database\Models\Activity`      |
-| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\GroupInterface`         | `UserFrosting\Sprinkle\Account\Database\Models\Group`         |
-| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\PasswordResetInterface` | `UserFrosting\Sprinkle\Account\Database\Models\PasswordReset` |
-| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\PermissionInterface`    | `UserFrosting\Sprinkle\Account\Database\Models\Permission`    |
-| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\PersistenceInterface`   | `UserFrosting\Sprinkle\Account\Database\Models\Persistence`   |
-| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\RoleInterface`          | `UserFrosting\Sprinkle\Account\Database\Models\Role`          |
-| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface`          | `UserFrosting\Sprinkle\Account\Database\Models\User`          |
-| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\VerificationInterface`  | `UserFrosting\Sprinkle\Account\Database\Models\Verification`  |
+| Interface                                                                              | Model                                                              |
+| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\ActivityInterface`           | `UserFrosting\Sprinkle\Account\Database\Models\Activity`           |
+| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\GroupInterface`              | `UserFrosting\Sprinkle\Account\Database\Models\Group`              |
+| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\PermissionInterface`         | `UserFrosting\Sprinkle\Account\Database\Models\Permission`         |
+| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\PersistenceInterface`        | `UserFrosting\Sprinkle\Account\Database\Models\Persistence`        |
+| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\RoleInterface`               | `UserFrosting\Sprinkle\Account\Database\Models\Role`               |
+| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserInterface`               | `UserFrosting\Sprinkle\Account\Database\Models\User`               |
+| `UserFrosting\Sprinkle\Account\Database\Models\Interfaces\UserVerificationInterface`   | `UserFrosting\Sprinkle\Account\Database\Models\UserVerification`   |
 
 ## Overwriting existing map
 

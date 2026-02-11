@@ -1,6 +1,6 @@
 ---
 title: Locator Service
-wip: true
+description: Learn how the Locator service provides an abstraction layer for accessing files and folders across sprinkles using streams and locations, and how to register custom streams.
 ---
 
 The locator service goal is to provides an abstraction layer for the different files and folders available across different sprinkles inside UserFrosting. In other words, it is a way of aggregating many search paths together. As you've seen in the previous chapters, each sprinkle can provides multiple resources and sprinkles can have the ability to overwrite a previous sprinkle resources. All of those resources, combined with the overwriting properties of a sprinkle is handled by the locator service. _Templates_ and _config_ files are a good example of those resources.
@@ -13,25 +13,28 @@ The locator uses the concept of *Streams* and *Locations* to represent *director
 
 Two types of streams are available within the locator : **shared** and **non-shared** streams. The shared streams (or normal streams) represent a directory within the Sprinkles folder, which can usually be found in every sprinkles. Shared streams exists only in one place. Note that both type can coexist. For example, a stream can be defined twice, once shared and once non-shared. This allows to find resources inside each sprinkles as well as inside the public directory.
 
+Streams can also be marked as **readonly**, which protects files accessed using that stream against destructive operations at the stream wrapper level. This is useful for resources that should never be modified programmatically.
+
 ### Default streams
 
 The following streams are defined by default by UserFrosting :
 
-| Stream    |  Defined By   | Path              | Shared | Description / Use                                                                |
-|-----------|:-------------:|-------------------|:------:|----------------------------------------------------------------------------------|
-| sprinkles | Core Sprinkle | `./`              |   No   | Generic path to each sprinkles                                                   |
-| config    | Core Sprinkle | `./config`        |   No   | [Config files](/configuration/config-files) location                             |
-| extra     | Core Sprinkle | `./extra`         |   No   | Misc directory, used to store files unrelated to any other stream                |
-| locale    | Core Sprinkle | `./locale`        |   No   | [Translation files](/i18n)                                                       |
-| schema    | Core Sprinkle | `./schema`        |   No   | [Request Schema](/routes-and-controllers/client-input/validation#fortress) files |
-| templates | Core Sprinkle | `./templates`     |   No   | [Templates files](/templating-with-twig/sprinkle-templates)                      |
-| cache     | Core Sprinkle | `./cache`         |  Yes   | Shared [cache](/advanced/caching) directory                                      |
-| database  | Core Sprinkle | `./database`      |  Yes   | Location of any file based database, for example SQLite database                 |
-| logs      | Core Sprinkle | `./logs`          |  Yes   | Shared log directory                                                             |
-| sessions  | Core Sprinkle | `./sessions`      |  Yes   | Shared [sessions](/advanced/sessions#file-driver) directory                      |
-| storage   | Core Sprinkle | `./storage`       |  Yes   | The [local disk](/advanced/storage#the-local-disk) file storage                  |
-| public    | Core Sprinkle | `/public`         |  Yes   | Absolute path to the [public directory](/sprinkles/content#-public)              |
-| assets    | Core Sprinkle | `public://assets` |  Yes   | Path to the public [assets](/asset-management) directory. Sub-stream of *public* |
+| Stream    |  Defined By   | Path              | Shared | Readonly | Description / Use                                                                |
+|-----------|:-------------:|-------------------|:------:|:--------:|----------------------------------------------------------------------------------|
+| sprinkles | Core Sprinkle | `./`              |   No   |    No    | Generic path to each sprinkles                                                   |
+| config    | Core Sprinkle | `./config`        |   No   |    No    | [Config files](/configuration/config-files) location                             |
+| extra     | Core Sprinkle | `./extra`         |   No   |    No    | Misc directory, used to store files unrelated to any other stream                |
+| locale    | Core Sprinkle | `./locale`        |   No   |    No    | [Translation files](/i18n)                                                       |
+| schema    | Core Sprinkle | `./schema`        |   No   |    No    | [Request Schema](/routes-and-controllers/client-input/validation#fortress) files |
+| templates | Core Sprinkle | `./templates`     |   No   |    No    | [Templates files](/templating-with-twig/sprinkle-templates)                      |
+| markdown  | Core Sprinkle | `./markdown`      |   No   |   Yes    | Markdown files, protected against destructive operations                         |
+| cache     | Core Sprinkle | `./cache`         |  Yes   |    No    | Shared [cache](/advanced/caching) directory                                      |
+| database  | Core Sprinkle | `./database`      |  Yes   |    No    | Location of any file based database, for example SQLite database                 |
+| logs      | Core Sprinkle | `./logs`          |  Yes   |    No    | Shared log directory                                                             |
+| sessions  | Core Sprinkle | `./sessions`      |  Yes   |    No    | Shared [sessions](/advanced/sessions#file-driver) directory                      |
+| storage   | Core Sprinkle | `./storage`       |  Yes   |    No    | The [local disk](/advanced/storage#the-local-disk) file storage                  |
+| public    | Core Sprinkle | `/public`         |  Yes   |    No    | Absolute path to the [public directory](/sprinkles/content#-public)              |
+| assets    | Core Sprinkle | `public://assets` |  Yes   |    No    | Path to the public [assets](/asset-management) directory. Sub-stream of *public* |
 
 The paths for non-shared streams are calculated relatively from each [sprinkle path](/sprinkles/recipe#getpath), usually `./app`. The paths for shared streams are relative from the Main Sprinkle path only, unless otherwise noted.
 
@@ -117,7 +120,7 @@ $this->locator->getResource('schema://default.json');
 // 'app/sprinkles/MySite/schema/default.json',
 ```
 
-The locator will return an instance of the `Resource` object (or an array of `Resource` objects). These objects can be cast as string and will return the absolute path to the resource (file or directory). Further [public methods](https://github.com/userfrosting/framework/tree/5.1/src/UniformResourceLocator/docs#resource-instance) can be used on the Resource object to get more information about the returned resource. For example, to return the sprinkle name where it was found :
+The locator will return an instance of the `Resource` object (or an array of `Resource` objects). These objects can be cast as string and will return the absolute path to the resource (file or directory). Further [public methods](https://github.com/userfrosting/framework/tree/6.0/src/UniformResourceLocator/docs#resource-instance) can be used on the Resource object to get more information about the returned resource. For example, to return the sprinkle name where it was found :
 
 ```php
 $schema = $this->locator->getResource('schema://default.json');
@@ -188,7 +191,7 @@ When the locator service is initialized, the `ResourceLocatorInitiatedEvent` wil
 
 To register a new service, a new instance of `UserFrosting\UniformResourceLocator\ResourceStream` can be created and passed to the locator through the `addStream` method.
 
-For example, let's create a listener class that will register a `foo` stream, and a `bar` shared stream:
+For example, let's create a listener class that will register a `foo` stream, a `bar` shared stream, and a `baz` readonly stream:
 
 ```php
 <?php
@@ -201,7 +204,7 @@ use UserFrosting\UniformResourceLocator\ResourceStream;
 class ResourceLocatorInitiated
 {
     /**
-     * Add a new `foo` stream.
+     * Add new streams.
      *
      * @param ResourceLocatorInitiatedEvent $event
      */
@@ -213,6 +216,10 @@ class ResourceLocatorInitiated
 
         // Shared Stream with custom path
         $stream = new ResourceStream('bar', path: 'foobar', shared: true),
+        $event->locator->addStream($stream);
+
+        // Readonly Stream
+        $stream = new ResourceStream('baz', path: 'readonly', readonly: true),
         $event->locator->addStream($stream);
     }
 }
@@ -254,4 +261,4 @@ class MyApp implements
 
 ## Going further
 
-For more information about the locator, you can refer to the detailed documentation, API reference and examples on [the Framework repository](https://github.com/userfrosting/framework/tree/5.1/src/UniformResourceLocator/docs).
+For more information about the locator, you can refer to the detailed documentation, API reference and examples on [the Framework repository](https://github.com/userfrosting/framework/tree/6.0/src/UniformResourceLocator/docs).
