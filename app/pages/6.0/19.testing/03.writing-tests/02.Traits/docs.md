@@ -1,6 +1,6 @@
 ---
 title: Helper Traits & Class
-wip: true
+description: Discover testing utilities like ContainerStub, BakeryTester, RefreshDatabase, and WithTestUser for easier test setup.
 ---
 
 UserFrosting provides some helper Traits to easily enable features and tools for your tests. Some of those tools make it easier to test your code against a testing database.
@@ -16,7 +16,7 @@ use App\MySite\Foo;
 // ...
 
 $ci = ContainerStub::create();
-$foo = = Mockery::mock(Foo::class)
+$foo = Mockery::mock(Foo::class);
 $ci->set(Foo::class, $foo);
 
 // ...
@@ -73,7 +73,7 @@ $this->assertStringContainsString('Cache cleared', $result->getDisplay());
 By default all tests are run against an in-memory SQLite database. This database is temporary and independent from the database used by your UserFrosting instance. That means your data is safe when tests are run. If you prefer to use a real database for tests, you can overwrite the `test_integration` connection config in your own sprinkle for the `testing` environment.
 
 > [!WARNING]
-> While you **can** test your code against the main database, it usually not a good idea to do so with a production database. Those are _tests_ after all. They _can_ fail. **Catastrophically**. UserFrosting built-in tests are all run against a test database.
+> While you **can** test your code against the main database, it's usually not a good idea to do so with a production database. Those are _tests_ after all. They _can_ fail. **Catastrophically**. UserFrosting built-in tests are all run against a test database.
 
 Note that the in-memory database is empty by default. If your test requires the standard tables to be up, you need to use the `UserFrosting\Sprinkle\Core\Testing\RefreshDatabase` trait to run all migrations up. You could also use the migrator service to run a particular migration up.
 
@@ -98,14 +98,14 @@ class MyTest extends TestCase
 }
 ```
 
-It's good practice to reset your database before each test so that data from a previous test does not interfere with your tests. The `RefreshDatabase` trait will help you wipe the database clean and run all migration up.
+It's good practice to reset your database before each test so that data from a previous test does not interfere with your tests. The `RefreshDatabase` trait will help you wipe the database clean and run all migrations up.
 
 > [!WARNING]
 > This is **destructive**! All existing data in the database will be lost. Use it along the in-memory SQLite database to avoid losing data in your production database
 
 ## WithTestUser
 
-This trait contains many useful methods for tests that require an actual user. To use any of the methods, you first need to add the `UserFrosting\Sprinkle\Account\Testing\WithTestUser` trait to your class. This trait add a single public method, `actAsUser`:
+This trait contains many useful methods for tests that require an actual user. To use any of the methods, you first need to add the `UserFrosting\Sprinkle\Account\Testing\WithTestUser` trait to your class. This trait adds a single method, `actAsUser`:
 
 ```php
 protected function actAsUser(
@@ -116,7 +116,7 @@ protected function actAsUser(
 )
 ```
 
-The method accept a UserInterface class. Optionally, you can use the `$isMaster` to force the user to be a master user (useful to bypass any permission checks!), pass roles to assign to this user (as an array of `RoleInterface`), or permissions (as an array of `PermissionInterface` or permissions slugs).
+The method accepts a UserInterface class. Optionally, you can use the `$isMaster` to force the user to be a master user (useful to bypass any permission checks!), pass roles to assign to this user (as an array of `RoleInterface`), or permissions (as an array of `PermissionInterface` or permissions slugs).
 
 **Example: Create a user using Factories, and assign `test_permissions`**
 ```php

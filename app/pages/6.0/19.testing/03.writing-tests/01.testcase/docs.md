@@ -1,6 +1,6 @@
 ---
 title: Sprinkle Test Case
-wip: true
+description: Master the UserFrosting TestCase class with helper methods for testing routes, JSON responses, and HTTP requests.
 ---
 
 To make it easier to run your tests in your Sprinkle environment, that is with every routes, middlewares and other class registered in your Recipe, UserFrosting provides a base TestCase you can use. You simply need to tell the TestCase to use your Recipe. It will create a simple UserFrosting app instance, and cleanly destroy it when the test is done. It also provides some additional helper methods.
@@ -10,7 +10,7 @@ To make it easier to run your tests in your Sprinkle environment, that is with e
 
 ## Integrating with your Sprinkle
 
-To begin testing your Sprinkle, your test case simply need to extends `UserFrosting\Testing\TestCase`. Then, define your Sprinkle Recipe in the `$mainSprinkle` property. For example:
+To begin testing your Sprinkle, your test case simply needs to extend `UserFrosting\Testing\TestCase`. Then, define your Sprinkle Recipe in the `$mainSprinkle` property. For example:
 
 ```php
 <?php
@@ -31,9 +31,11 @@ class MyTest extends TestCase
 }
 ```
 
-You could also use the code above as a new test case, instead of defining `$mainSprinkle` in every tests. Instead of naming the class `MyTest`, name it `MyTestCase` and make every test class extend `MyTestCase`.
+> [!TIP] 
+> You could also use the code above as a new test case, instead of defining `$mainSprinkle` in every tests. Instead of naming the class `MyTest`, name it `MyTestCase` and make every test class extend `MyTestCase`.
 
-The biggest advantage is you don't *need* to use your Recipe. Alternatively, you can create a recipe stub. Simply create a *second* recipe in your testing directory. This other recipe can register only the class you want to test.
+> [!TIP] 
+> You don't *need* to use **your** Recipe. Alternatively, you can create a recipe stub only for testing. Simply create a *second* recipe in your testing directory. This other recipe can register only the class you want to test.
 
 ## Helping methods & properties
 
@@ -48,11 +50,11 @@ When extending `UserFrosting\Testing\TestCase`, you have access to many helper m
 | `$this->mainSprinkle` | The main sprinkle identifier   |
 
 > [!NOTE]
-> The default PHPUnit `setUp` method will create the application, while `tearDown` will delete the application. All properties needs to be access after invoking the parent method.
+> The default PHPUnit `setUp` method will create the application, while `tearDown` will delete the application. All properties need to be accessed after invoking the parent method.
 
 ### createRequest
 
-This methods can be used to create a basic `ServerRequestInterface`.
+This method can be used to create a basic `ServerRequestInterface`.
 
 ```php
 $this->createRequest(
@@ -135,7 +137,7 @@ assertJsonResponse(mixed $expected, ResponseInterface $response, ?string $key = 
 **Example**
 ```php
 $this->assertJsonResponse(['foo' => 'bar'], $response);
-$this->assertJsonResponse('bar', $response), 'foo';
+$this->assertJsonResponse('bar', $response, 'foo');
 
 // Same as
 
