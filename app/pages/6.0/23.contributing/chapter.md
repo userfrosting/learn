@@ -1,11 +1,12 @@
 ---
 title: Giving Back to UF
 description: UserFrosting is possible thanks to the generous contributions of users like you!
-wip: true
 ---
 
 #### Chapter 23
 
 # Giving Back to UF
 
-UserFrosting is possible thanks to the generous contributions of users like you! Please make a donation of time and/or [money](https://opencollective.com/userfrosting) if possible.
+UserFrosting is possible thanks to the generous contributions of users like you! Whether through financial support, helping others in our community, contributing code, or improving documentation, every contribution helps make UserFrosting better.
+
+This open-source project thrives because of community involvement. Please consider supporting UserFrosting with your time, expertise, or [financial contribution](https://opencollective.com/userfrosting).

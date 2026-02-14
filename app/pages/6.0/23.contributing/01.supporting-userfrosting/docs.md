@@ -1,8 +1,81 @@
 ---
 title: Supporting UserFrosting
 description: Donate your time, money, or expertise to furthering the development of UserFrosting.
-wip: true
 ---
+
+## Contributing time
+
+Our [chat room](https://chat.userfrosting.com) welcomes users from all over the world seeking help 24/7. The core development team appreciates community members who help answer questions and support fellow users.
+
+If you feel comfortable with UserFrosting, consider keeping a browser tab open to our [chat room](https://chat.userfrosting.com) and helping other users when you have time. Your assistance is invaluable to the community!
+
+## Contributing code and content
+
+We welcome pull requests! Based on your skills and interests, you might contribute:
+
+- **Documentation improvements** - Fix typos, clarify explanations, add examples
+- **Language translations** - Help internationalize UserFrosting
+- **Bug fixes** - Resolve issues and improve stability
+- **Feature enhancements** - Implement requested features (after discussion)
+- **Testing** - Write or improve unit/integration tests
+
+> [!NOTE]
+> **Before starting work on a new feature**, discuss it with the dev team in our [chat room](https://chat.userfrosting.com) or [GitHub Discussions](https://github.com/userfrosting/UserFrosting/discussions). This ensures your contribution aligns with the project's vision and technical requirements.
+> 
+> UserFrosting is fully modular - additional features might be better implemented as a custom [Sprinkle](/sprinkles) rather than added to the core framework. Join us in chat to discuss the best approach for your feature.
+
+### Style and Coding Standards
+
+All contributions should follow these standards:
+
+- **PHP**: Follow [PSR-12](https://www.php-fig.org/psr/psr-12/) coding style standard
+- **TypeScript/JavaScript**: Follow project conventions (check existing code)
+- **Vue Components**: Use Vue 3 Composition API patterns
+- **CSS**: Follow the project's existing styling patterns
+- **Documentation**: Use clear, concise language with proper Markdown formatting
+
+Consider using automated tools:
+- **PHP**: [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) and [PHPStan](https://phpstan.org/)
+- **Frontend**: ESLint and Prettier (configured in the project)
+
+### Contributing to the Monorepo
+
+UserFrosting uses a centralized [monorepo](https://github.com/userfrosting/monorepo) for core development. This repository contains the framework and core sprinkles.
+
+**Pull request guidelines:**
+
+1. **Fork** the repository and create a feature branch from `main`
+2. **Write clear commit messages** describing your changes
+3. **Test your changes** - add or update tests as needed
+4. **Update documentation** if you're changing public APIs
+5. **Submit a pull request** against the `main` branch
+6. **Update CHANGELOG.md** with your changes
+
+**Branch naming conventions:**
+- `feature/description` - New features
+- `fix/description` - Bug fixes
+- `docs/description` - Documentation updates
+- `refactor/description` - Code refactoring
+
+> [!TIP]
+> Before submitting your pull request, make sure all tests pass and there are no linting errors. Run `composer test` and `npm run lint` to verify.
+
+## Contributing to Documentation
+
+Documentation lives in the [learn repository](https://github.com/userfrosting/learn). To contribute:
+
+1. Fork the repository
+2. Edit Markdown files in `app/pages/{version}/`
+3. Follow the [documentation style guide](#documentation-style)
+4. Test locally by running the documentation site
+5. Submit a pull request
+
+**Documentation best practices:**
+- Use clear, educational language aimed at varying skill levels
+- Include practical code examples
+- Add images where they clarify concepts (store in `app/pages/{version}/images/`)
+- Cross-reference related pages
+- Test all code snippets to ensure accuracy
 
 ## Financial support
 
@@ -12,45 +85,20 @@ That being said, yes, we'll take your money!
 
 Your financial contribution will help keep our chat and demo servers going. And, who knows? Maybe enough people will donate and we can make UserFrosting our full-time job ;-)
 
-The easiest way to contribute financially is through [Open Collective](https://opencollective.com/userfrosting). Suggested donations are as follows:
-
-- Personal use: $10
-- Local nonprofit use (e.g. local chapters of Scouts, Elk Lodge, etc): $30
-- National nonprofit, municipal, and business use: $100
-- Super donor: $500
-
-We can also accept donations via bitcoin: `18Ew1xGy1E3kjH1UyPEgJ3nnDN3ZWUY1N1`
+The easiest way to contribute financially is through [Open Collective](https://opencollective.com/userfrosting) or [Ko-fi](https://ko-fi.com/lcharette).
 
 You can also help pay for our web and chat server costs by signing up with DigitalOcean using our [referral link](https://m.do.co/c/833058cf3824). Once you've spent $25 with them, we'll earn $25 towards our own DigitalOcean account.
 
-## Contributing time
+## Code of Conduct
 
-Our chat room can get very busy! We have users from all over the world, looking for help 24/7. Although we tends to spend *nearly* every waking minute on our computer, the majority of the main developers, who mostly live in the UTC-4 timezone, do need to sleep, eat, and work from time to time.
+UserFrosting follows a [Code of Conduct](https://github.com/userfrosting/UserFrosting/blob/main/CODE_OF_CONDUCT.md) to ensure a welcoming, inclusive community. By participating, you agree to uphold these standards.
 
-If you feel like you've gotten a handle on UserFrosting, it would be extremely helpful if you can simply keep a browser tab open to our [chat room](https://chat.userfrosting.com), and help out other users when you have a chance.
+## Questions?
 
-## Contributing code and content
+If you have questions about contributing:
 
-Yes, we welcome pull requests! Based on your level of skill and background, you might consider contributing to any of the following:
+- Join our [chat room](https://chat.userfrosting.com)
+- Start a [GitHub Discussion](https://github.com/userfrosting/UserFrosting/discussions)
+- Check the [contributing guidelines](https://github.com/userfrosting/UserFrosting/blob/main/CONTRIBUTING.md) in the repository
 
-- Language translations
-- Implementing feature requests
-- Fixing bugs
-
-> [!TIP]
-> Don't start working on a new feature until you've discussed it with a member of the dev team in chat first. It's always a tragedy when someone spends a lot of time working on a feature, only to have their pull request rejected because their code doesn't fit the technical requirements and/or general vision for UF's future.
-> Since UF4 is fully modular and extendable, additional features might be best implemented as a new [Sprinkle](/sprinkles) rather than being added to the core UserFrosting project. Join us in chat to discuss an appropriate development plan for your feature.
-
-Requirements are as follows:
-
-### Style and Coding Standards
-
-Please make sure any PHP code conforms to the [PSR](http://www.php-fig.org/psr/). CSS and HTML should adhere to the [Code Guide](http://codeguide.co/).
-
-### Git Flow
-
-When making a pull request for a bug fix or translation pack, set your "base branch" to the `hotfix-development` branch. Accepted pull requests will be merged into `master` in batches with a new hotfix number as needed. This will allow us to keep track of which version number every change belongs to, which is useful when tracking down other users' issues.
-
-### Change Log
-
-When submitting code, make sure to add feature/major changes to `README.md` and **all** changes to `CHANGELOG.md`.
+Thank you for helping make UserFrosting better! 🙏
