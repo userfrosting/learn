@@ -9,6 +9,7 @@
         {% include "partials/tags.html.twig" %}
         {% include "partials/wip.html.twig" %}
         {% include "partials/obsolete.html.twig" %}
+        {% include "partials/outdated.html.twig" %}
         {{ page.getContent()|version_paths(page.getVersion())|raw }}
     </div>
 {% endblock %}

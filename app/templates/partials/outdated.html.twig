@@ -1,0 +1,6 @@
+{% if page.getFrontMatter().outdated %}
+    <div class="uk-alert uk-alert-warning">
+        <p class="uk-alert-title"><i class="fa-solid fa-clock uk-icon"></i>Outdated page</p>
+        <p>This page may be outdated and could benefit from updates. You can help by <a href="{{ page.github }}">contributing on GitHub</a>.</p>
+    </div>
+{% endif %}
