@@ -1,14 +1,13 @@
 ---
 title: Additional Recommendations
 description: Additional recommended configuration steps to get the most out of your VPS production server.
-obsolete: true
+outdated: true
 ---
-<!-- [plugin:content-inject](/modular/_updateRequired) -->
 
 > [!NOTE]
-> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
+> Google's PageSpeed module for nginx has been deprecated as of 2021. Modern alternatives include using Cloudflare CDN or nginx's built-in optimization features. This section is kept for reference but may not reflect current best practices.
 
-## Install and configure Google's Pagespeed module
+## Install and configure Google's Pagespeed module (Legacy)
 
 To ensure the best possible experience for your users, we highly recommend that you install Google's [Pagespeed module](https://developers.google.com/speed/pagespeed/module/) on your production server. This module will automatically optimize your web pages for speed and performance before they are served to the client.
 

@@ -1,14 +1,10 @@
 ---
 title: Application Setup
 description: This section covers installing and using Composer, running Bakery, and configuring the webserver in the production environment.
-obsolete: true
+outdated: true
 ---
-<!-- [plugin:content-inject](/modular/_updateRequired) -->
 
-> [!NOTE]
-> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
-
-To actually get our application up and running, we need to do a few more things on the remote server:
+To get your application running on the production server, complete these steps:
 
 1. Set the base URL.
 2. Run Composer to install PHP dependencies;
@@ -44,11 +40,11 @@ cd /var/www/<repo name>
 composer install
 ```
 
-If you get errors related to the `php-zip` package, you may need to install it:
+If you get errors related to the `php-zip` package, install it for your PHP version:
 
 ```bash
-sudo apt-get install zip unzip php7.0-zip
-sudo service nginx restart
+sudo apt-get install zip unzip php8.1-zip  # Or php8.2-zip, php8.3-zip, etc.
+sudo systemctl restart nginx
 ```
 
 We can add the following line to our `post-receive` hook to automatically rerun `composer install` each time we push changes:
@@ -84,14 +80,15 @@ server_name owlfancy.com;
 
 Again, `<repo name>` should be replaced with your project repo name, and `owlfancy.com` should be changed to your site's planned domain or subdomain.
 
-Next, we'll tell nginx to run our application with PHP 7. Why? Because it's super fast! Find the lines that say "For FPM". Comment out the line for PHP 5, and _uncomment_ the line for PHP 7:
+Next, we'll tell nginx to run our application with PHP-FPM. Find the lines that say "For FPM" and ensure you're using PHP 8.1 or higher:
 
 ```
-# For FPM (PHP 5.x)
-#fastcgi_pass unix:/var/run/php5-fpm.sock;
-# For FPM (PHP 7)
-fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+# For FPM (PHP 8.1+)
+fastcgi_pass unix:/run/php/php8.1-fpm.sock;
 ```
+
+> [!NOTE]
+> The exact socket path may vary depending on your PHP version (e.g., `php8.2-fpm.sock` or `php8.3-fpm.sock`). Check your installed PHP version with `php -v`.
 
 Save your changes. We can now use `scp` to copy this file from your local machine to nginx's configuration directory on the remote repository. Since we disabled remote root login, and only the root user can write to `/etc/nginx/sites-available` by default, we'll first copy to our home directory on the remote server, and then use `sudo` on the remote server to move it into nginx's directory.
 

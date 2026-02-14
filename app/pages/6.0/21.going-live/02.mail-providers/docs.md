@@ -1,7 +1,7 @@
 ---
 title: Mail Providers
 description: Email is essential for many of UserFrosting's account features, including account verification and password reset requests.
-obsolete: true
+outdated: true
 ---
 
 By default, UserFrosting is configured to use an external SMTP mail server of your choice.
@@ -53,18 +53,25 @@ Use our [referral link](https://elasticemail.com/account#/create-account?r=a4a35
 
 #### Gmail
 
-If you have a Gmail account, you can use Gmail's SMTP servers to send mail from your application. The main limitation, though, is that you can only send _as_ your Gmail account user (and not, for example, `webmaster@owlfancy.com`), and you can't send more than 99 messages per day.
+Gmail can be used for sending mail from your application with some limitations: you can only send as your Gmail account (not custom addresses like `webmaster@owlfancy.com`), and you're limited to approximately 500 messages per day.
 
-You should also be aware that Google may deem your application as "less secure", and so you will need to [allow less secure applications](https://support.google.com/accounts/answer/6010255) to connect with your Gmail credentials. Please note that the label "less secure" does not mean that UserFrosting has security flaws; rather this label is triggered [because you are allowing third parties to authenticate with your Gmail password rather than a revokeable API key](https://security.stackexchange.com/a/72371/74909).
+> [!IMPORTANT]
+> Google deprecated "less secure app" access. You must now use **App Passwords** to authenticate third-party applications.
 
-| Setting             | Value                 |
-| ------------------- | --------------------- |
-| SMTP server address | `smtp.gmail.com`      |
-| SMTP user name      | [Your Gmail address]  |
-| SMTP password       | [Your Gmail password] |
-| SMTP port           | `465`                 |
+**Setup steps:**
 
-For more information, see [this guide](https://www.digitalocean.com/community/tutorials/how-to-use-google-s-smtp-server).
+1. Enable [2-Factor Authentication](https://myaccount.google.com/security) on your Google account
+2. Generate an [App Password](https://myaccount.google.com/apppasswords) specifically for your UserFrosting application
+3. Use the generated 16-character App Password (not your regular Gmail password) in your configuration
+
+| Setting             | Value                           |
+| ------------------- | ------------------------------- |
+| SMTP server address | `smtp.gmail.com`                |
+| SMTP user name      | [Your Gmail address]            |
+| SMTP password       | [16-character App Password]     |
+| SMTP port           | `587` (TLS) or `465` (SSL)      |
+
+For detailed setup instructions, see [Google's App Password guide](https://support.google.com/accounts/answer/185833).
 
 ### Zoho Mail
 
@@ -72,7 +79,15 @@ For more information, see [this guide](https://www.digitalocean.com/community/tu
 
 ### Paid services
 
-To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
+For production applications with higher email volumes, consider these professional SMTP providers:
+
+- **[SendGrid](https://sendgrid.com/)** - Up to 100 emails/day free, then paid plans from $15/month
+- **[Mailgun](https://www.mailgun.com/)** - First 5,000 emails free for 3 months, then pay-as-you-go
+- **[Amazon SES](https://aws.amazon.com/ses/)** - $0.10 per 1,000 emails (requires AWS account)
+- **[Postmark](https://postmarkapp.com/)** - Starting at $15/month for 10,000 emails
+- **[Brevo (formerly Sendinblue)](https://www.brevo.com/)** - 300 emails/day free, then paid plans
+
+These services typically offer better deliverability, detailed analytics, and webhook support for tracking bounces and opens.
 
 ### Running your own mail server
 

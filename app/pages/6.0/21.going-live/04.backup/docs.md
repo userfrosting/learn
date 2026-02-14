@@ -1,14 +1,13 @@
 ---
 title: Backing up Your Data
 description: If you're using version control and use a reliable central repository, your code is generally safe from data loss due to hardware failure, and accidents. But what about your live database? In this chapter, we'll show you how to set up automated, encrypted daily backups with Duplicity.
-obsolete: true
+outdated: true
 ---
-<!-- [plugin:content-inject](/modular/_updateRequired) -->
 
-> [!NOTE]
-> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
+> [!WARNING]
+> **Never skip database backups!** Even with version control protecting your code, database loss can be catastrophic. Automate your backups to prevent human error.
 
-It is extremely important to have a system in place to make regular, automated backups of your production database. Even if no one is [maliciously targeting your data](http://fieldguide.gizmodo.com/a-solid-backup-system-is-the-best-protection-against-ra-1795682989), [accidents](https://about.gitlab.com/2017/02/01/gitlab-dot-com-database-incident/) happen [all the time](https://np.reddit.com/r/cscareerquestions/comments/6ez8ag/accidentally_destroyed_production_database_on/).
+This guide walks you through setting up automated, encrypted backups of your production database using Duplicity and Google Drive. Even if no one is [maliciously targeting your data](http://fieldguide.gizmodo.com/a-solid-backup-system-is-the-best-protection-against-ra-1795682989), [accidents](https://about.gitlab.com/2017/02/01/gitlab-dot-com-database-incident/) happen [all the time](https://np.reddit.com/r/cscareerquestions/comments/6ez8ag/accidentally_destroyed_production_database_on/).
 
 In this guide, we'll use a free open-source program called Duplicity to set this up. Our goals are that this system should:
 

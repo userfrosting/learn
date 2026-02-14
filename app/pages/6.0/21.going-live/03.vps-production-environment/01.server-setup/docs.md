@@ -1,35 +1,57 @@
 ---
 title: Server Setup
 description: No matter which VPS option you choose, you'll need to make sure that you have the required software installed and properly configured for UserFrosting.
-obsolete: true
+outdated: true
 ---
-<!-- [plugin:content-inject](/modular/_updateRequired) -->
+
+We recommend starting with a 1GB+ memory VPS and installing a LEMP stack (Ubuntu 24.04 LTS, nginx, MariaDB, and PHP 8.1+). You can use a pre-configured [one-click LEMP stack](https://marketplace.digitalocean.com/apps/lemp) or manually install the components. While Apache is also supported, nginx offers superior performance and requires less configuration.
 
 > [!NOTE]
-> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
+> UserFrosting requires PHP 8.1 or higher. Make sure your server stack includes a compatible PHP version.
 
-We recommend that you start with a $4/month Droplet and [install a LEMP stack](https://marketplace.digitalocean.com/apps/lemp) (Ubuntu 20.04, nginx, MariaDB, and PHP 8.1). If you prefer you may [install Apache instead](https://marketplace.digitalocean.com/apps/lamp), but nginx offers superior performance and requires less configuration.
-
-When you go to create your Droplet, DigitalOcean will ask you some initial configuration questions. Choose Ubuntu 22.04 as your distribution, and select a datacenter that is nearest to you and your customers. **Do NOT set up SSH keys at this time** - if you do, DigitalOcean won't email you a root user password. We will set up SSH later, after we've logged in with a password first.
+When creating your VPS, select **Ubuntu 24.04 LTS** (or 22.04 LTS) as your distribution, and choose a datacenter that is geographically close to you and your users for optimal latency. **Do NOT set up SSH keys at this time** - if you do, DigitalOcean won't email you a root user password. We will set up SSH later, after we've logged in with a password first.
 
 From here, you can follow DigitalOcean's tutorials to set up your server:
 
-## Initial Server Setup with Ubuntu 22.04
+## Initial Server Setup with Ubuntu
 
-First, follow [**this tutorial**](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04).
+Follow [**this tutorial for Ubuntu 24.04**](hhttps://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu) or [Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04).
 
-Some notes:
+Key configuration steps:
 
-1. On Windows, you may find it easier to generate an SSH key in Putty and manually copy it to the `authorized_keys` file on your Droplet.
-2. When you create your non-root user account in Ubuntu, we recommend adding them to the `www-data` group, which is the group to which your webserver belongs. That way, you can set the group owner of your UserFrosting application files to `www-data`, and both your account _and_ the webserver account will have ownership. To do this, do `sudo usermod -a -G www-data alex`, replacing `alex` with your user account name.
-3. Their instructions for the `ufw` firewall only have you open up the `ssh` port by default. Obviously for a web server, you will also need to open up ports 80 or `http` and/or 443 or `https`. See [this guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-20-04#step-5-allowing-other-connections) for help opening up additional ports. DigitalOcean also provides a [cloud firewall](https://docs.digitalocean.com/products/networking/firewalls/) which can be set up through the dashboard, rather than the commandline.
-4. For additional security, you may also want to disable root login via SSH by setting `PermitRootLogin` to `no` in your `/etc/ssh/sshd_config` file.
+1. **SSH Keys**: On Windows, use [Windows Terminal](https://aka.ms/terminal) or [PuTTY](https://www.putty.org/) to generate SSH keys. Modern Windows includes OpenSSH by default.
+
+2. **User Groups**: Add your non-root user to the `www-data` group so both your account and the webserver can access application files:
+   ```bash
+   sudo usermod -a -G www-data <your-username>
+   ```
+
+3. **Firewall Configuration**: Configure `ufw` to allow web traffic:
+   ```bash
+   sudo ufw allow 'Nginx Full'  # Allows both HTTP (80) and HTTPS (443)
+   sudo ufw allow OpenSSH
+   sudo ufw enable
+   ```
+   
+   Alternatively, use your hosting provider's cloud firewall dashboard.
+
+4. **Disable Root Login**: For security, set `PermitRootLogin no` in `/etc/ssh/sshd_config` and reload SSH:
+   ```bash
+   sudo systemctl reload sshd
+   ```
 
 ## Additional server configuration
 
-### Set your server's **timezone**
+### Set your server's timezone
 
-See [**this guide from DigitalOcean**](https://www.digitalocean.com/community/tutorials/how-to-set-up-time-synchronization-on-ubuntu-22-04).
+Configure your server to use the correct timezone:
+
+```bash
+sudo timedatectl set-timezone America/New_York  # Replace with your timezone
+timedatectl  # Verify the change
+```
+
+For more details, see [**this DigitalOcean guide**](https://www.digitalocean.com/community/tutorials/how-to-set-up-time-synchronization-on-ubuntu-22-04).
 
 ### Configure the `nano` command-line editor to convert tabs to spaces
 

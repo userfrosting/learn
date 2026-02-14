@@ -1,14 +1,10 @@
 ---
 title: Using Git for Deployment
 description: Once you've set up a remote repository in your production environment, deployment can be as simple as a single `git push` command.
-obsolete: true
+outdated: true
 ---
-<!-- [plugin:content-inject](/modular/_update5.0) -->
 
-> [!NOTE]
-> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
-
-As we explained earlier, `git` is a good tool for deployment because it keeps track of the changes to your codebase between commits. Once you've set up a remote repository in your production environment, deployment can be as simple as a single `git push` command. Git will automatically determine which files need to be updated on the live server.
+Using `git` for deployment is efficient because it tracks changes between commits and only transfers modified files. Once you've set up a remote repository in your production environment, deployment can be as simple as a single `git push` command. Git will automatically determine which files need to be updated on the live server.
 
 We can also use the git `post-receive` hook to run additional build tasks after the code base is updated, like clearing the cache and recompiling assets.
 

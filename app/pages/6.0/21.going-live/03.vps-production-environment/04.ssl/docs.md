@@ -1,14 +1,13 @@
 ---
 title: SSL/HTTPS
-description: It is extremely important to use an SSL certificate when you go live.  Using SSL will prevent malicious agents on unsecured networks from intercepting your users' passwords when they log in to your application, as well as other sensitive information.
-obsolete: true
+description: It is extremely important to use an SSL certificate when you go live. Using SSL will prevent malicious agents on unsecured networks from intercepting your users' passwords when they log in to your application, as well as other sensitive information.
+outdated: true
 ---
-<!-- [plugin:content-inject](/modular/_updateRequired) -->
 
-> [!NOTE]
-> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
+> [!IMPORTANT]
+> **Always use HTTPS in production.** Modern browsers flag HTTP sites as "Not Secure", and search engines penalize non-HTTPS sites.
 
-Let's Encrypt has put an enormous amount of effort into making `certbot` very user-friendly.  Most problems that come up when installing an SSL certificate with `certbot` can be traced back to file permissions issues.  Make sure that you understand how Linux file permissions work before attempting this task.
+Let's Encrypt provides free SSL certificates, and `certbot` makes the installation process straightforward.  Most problems that come up when installing an SSL certificate with `certbot` can be traced back to file permissions issues.  Make sure that you understand how Linux file permissions work before attempting this task.
 
 ## Confirm that the webserver can serve acme challenges
 
