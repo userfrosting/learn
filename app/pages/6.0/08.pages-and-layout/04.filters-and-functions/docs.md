@@ -78,21 +78,8 @@ Preloads assets for better performance by telling the browser to fetch them earl
 
 This generates `<link rel="modulepreload">` tags for JavaScript modules and `<link rel="preload">` tags for other assets, allowing the browser to fetch them in parallel with the page load.
 
-**Complete example** in a base template:
-
-```twig
-{% block stylesheets_site %}
-    {{ vite_css('main.ts') }}
-    {{ vite_preload('main.ts') }}
-{% endblock %}
-
-{% block scripts_site %}
-    {{ vite_js('main.ts') }}
-{% endblock %}
-```
-
-> [!TIP]
-> In development mode with `npm run vite:dev`, these functions automatically point to the Vite dev server for hot module replacement (HMR). In production builds, they reference the compiled assets with hashed filenames.
+> [!NOTE]
+> Further information on how to use these functions and how they work under the hood will be covered in the [Assets and Vite](/assets-vite) chapter.
 
 ## Filters
 

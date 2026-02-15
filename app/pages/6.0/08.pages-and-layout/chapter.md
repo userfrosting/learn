@@ -11,4 +11,4 @@ Building web pages by mixing PHP logic and HTML markup in the same file creates 
 
 UserFrosting uses **Twig**, a powerful templating engine that cleanly separates your presentation (HTML) from your application logic (PHP). Twig provides a simple, secure syntax for displaying data, building layouts, and composing reusable template components—all while automatically escaping output to prevent security issues.
 
-This chapter teaches you how to create templates, use Twig's features effectively, organize templates in your sprinkles, and leverage UserFrosting's custom Twig extensions. You'll learn to build beautiful, maintainable page layouts that keep your code clean and secure.
+This chapter teaches you how to create templates, use Twig's features effectively, organize templates in your sprinkles, leverage UserFrosting's custom Twig extensions, and load assets in your pages. You'll learn to build beautiful, maintainable page layouts that keep your code clean and secure.

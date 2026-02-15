@@ -1,5 +1,5 @@
 ---
-title: Advanced Usage
+title: TypeScript
 description: Advanced techniques for asset management including TypeScript, Vue 3, preprocessors, code splitting, and optimization.
 wip: true
 ---

@@ -1,14 +1,13 @@
 ---
 title: Using Assets in Templates
 description: Learn how to load JavaScript, CSS, and other assets in your Twig templates using Vite's helper functions.
-wip: true
 ---
 
 Now that Vite is compiling your assets, let's learn how to actually use them in your templates! UserFrosting provides simple Twig functions that handle all the complexity behind the scenes. You'll be amazed at how easy this is.
 
 ## Twig Helper Functions
 
-UserFrosting includes three main Twig functions for loading Vite assets:
+UserFrosting includes three main Twig functions for loading Vite [entry points](/assets-vite/vite-configuration#understanding-entry-points): 
 
 ### vite_js()
 
@@ -18,16 +17,23 @@ Loads a JavaScript entry point and includes the proper `<script>` tag.
 {{ vite_js('main.ts') }}
 ```
 
+> [!NOTE]
+> The argument to `vite_js()` should match the name of an [entry point](assets-vite/vite-configuration#understanding-entry-points) defined in your `vite.config.ts`. For example, if you have an entry point defined as `main: 'app/assets/main.ts'`, you would use `vite_js('main.ts')` to load it.
+
 **Output in development mode:**
 ```html
 <script type="module" src="http://localhost:5173/@vite/client"></script>
 <script type="module" src="http://localhost:5173/main.ts"></script>
 ```
 
+These points to the Vite dev server, which serves your assets with hot module replacement (HMR) for instant updates.
+
 **Output in production mode:**
 ```html
 <script type="module" crossorigin src="/assets/main-a1b2c3d4.js"></script>
 ```
+
+In production, it points to the optimized, hashed bundle in `public/assets/` for cache busting.
 
 ### vite_css()
 
@@ -99,8 +105,6 @@ These blocks are then included in your base template:
 </body>
 </html>
 ```
-
-
 
 ## Loading Multiple Entry Points
 
@@ -204,7 +208,3 @@ app/assets/
 2. Check the import path is relative or uses an alias
 3. Restart Vite dev server
 4. Clear Vite cache: `rm -rf node_modules/.vite`
-
-## Next Steps
-
-Learn about [Advanced Usage](/assets-vite/advanced) including TypeScript, Vue components, preprocessors, and optimization techniques.

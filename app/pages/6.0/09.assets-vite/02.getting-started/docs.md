@@ -223,6 +223,9 @@ This generates production-ready assets with:
 
 Output goes to `public/assets/` and includes a manifest file for UserFrosting to reference assets.
 
+> [!TIP]
+> Both command can also be run from Bakery for a more integrated experience. See bellow for details.
+
 #### Quality Assurance Scripts
 
 **`npm run typecheck`** - Type-checks TypeScript without compilation
@@ -364,6 +367,26 @@ For example, if your `package.json` specifies `"vue": "^3.4.0"`, running `assets
 
 > [!WARNING]
 > Running `assets:update` may introduce breaking changes if packages don't follow semantic versioning strictly. Always test thoroughly after updating dependencies, especially before deploying to production.
+
+### Building Assets
+
+To build your assets:
+
+```bash
+php bakery assets:vite
+```
+
+This runs the Vite development server for local development or run the production build based on your environnement configuration. By default, it runs in development mode (`assets.vite.dev = true`), but you can force production builds with the `--production` flag. 
+
+```bash
+php bakery assets:vite --production
+```
+
+The `assets:build` command is an alias for building assets with Vite or Webpack (depending on your configuration). In development mode, it runs `assets:install`. In production mode, it also builds the assets for deployment. This command in part of the `bake` command.
+
+```bash
+php bakery assets:build
+```
 
 ### NPM vs Bakery Commands
 

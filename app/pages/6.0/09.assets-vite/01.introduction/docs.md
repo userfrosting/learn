@@ -3,7 +3,7 @@ title: Introduction
 description: Overview of asset management in UserFrosting 6, including the transition from Webpack Encore to Vite.
 ---
 
-UserFrosting uses a modern asset bundling system to compile and manage frontend assets like JavaScript, TypeScript, Vue components, and stylesheets. Think of it as a smart assistant that transforms your development files into optimized, production-ready resources that browsers love.
+UserFrosting uses a modern asset bundling system to compile and manage frontend assets like JavaScript, TypeScript, Vue components, and stylesheets. Think of it as a production line in a factory: raw materials (your source code) come in one end, get processed and refined through various stages, and emerge as finished products (optimized bundles) ready to ship to customers (your users' browsers).
 
 Starting with UserFrosting 6, the framework has transitioned from Webpack Encore to **Vite** as its default and recommended asset bundler. Don't worry if you're new to build tools—this chapter will guide you through everything you need to know!
 
@@ -13,14 +13,15 @@ UserFrosting 6 adopts [Vite](https://vitejs.dev) as its primary asset bundler. I
 
 Here's what makes Vite special:
 
-- **Lightning-fast dev server**: Vite uses native ES modules during development. What does this mean for you? Your development server starts instantly—no more waiting for bundling—and changes appear in your browser almost immediately thanks to Hot Module Replacement (HMR)
+- **Lightning-fast dev server**: Vite uses native ES modules during development. What does this mean for you? Your development server starts instantly—no more waiting for bundling—and changes appear in your browser almost immediately thanks to **H**ot **M**odule **R**eplacement (HMR)
 - **Optimized builds**: For production, Vite uses Rollup to create highly optimized bundles with automatic code splitting (breaking your code into smaller chunks) and tree-shaking (removing unused code)
 - **First-class TypeScript support**: Write TypeScript without any additional configuration—Vite handles it automatically
 - **Modern by default**: Built for modern browsers while still supporting older ones when needed
 - **Simpler configuration**: Compared to Webpack, Vite's configuration is more intuitive and requires less boilerplate code
 - **Better Vue 3 support**: Vite's official Vue plugin provides optimized handling of Single File Components (`.vue` files)
 
-While Vite is the recommended bundler, UserFrosting 6 maintains backward compatibility with [Webpack Encore](/advanced/webpack-encore) for existing projects that require it. You're not forced to migrate immediately—you can take your time!
+> [!NOTE]
+> While Vite is the recommended bundler, UserFrosting 6 maintains backward compatibility with [Webpack Encore](/advanced/webpack-encore) for existing projects that require it. You're not forced to migrate immediately—you can take your time!
 
 ## Asset Workflow Overview
 
@@ -38,14 +39,14 @@ Let's walk through how assets flow from your development files to your user's br
 
 3. **Compiled assets** are output to `public/assets/`:
    - JavaScript bundles with automatic code splitting (your app is broken into smaller chunks that load on-demand)
-   - Extracted CSS files
+   - CSS files extracted and optimized
    - Manifest file (`.vite/manifest.json`) that maps your source files to the compiled versions
    - Copied static assets
 
 4. **Twig templates** reference assets using helper functions:
-   - `{{ vite_js('main.ts') }}` - Load JavaScript entry points
-   - `{{ vite_css('main.ts') }}` - Load CSS from entry points
-   - `{{ vite_preload('component.ts') }}` - Preload modules for better performance
+   - `{{ vite_js('...') }}` - Load JavaScript entry points
+   - `{{ vite_css('...') }}` - Load CSS from entry points
+   - `{{ vite_preload('...') }}` - Preload modules for better performance
 
 ## Development vs Production
 
@@ -54,7 +55,7 @@ Vite behaves differently depending on whether you're developing your application
 **Development Mode** (`assets.vite.dev = true`):
 - Vite development server runs on port 5173 (configurable)
 - Assets are served directly from memory—no build step required, changes are instant!
-- Hot Module Replacement enables updates without page refresh (your form data stays intact while code updates)
+- Hot Module Replacement (HMR) enables updates without page refresh (your form data stays intact while code updates)
 - Source maps and detailed error messages help you debug issues quickly
 - Twig functions point to the Vite dev server
 
@@ -66,16 +67,3 @@ Vite behaves differently depending on whether you're developing your application
 - Twig functions point to the manifest-mapped filenames
 
 You'll spend most of your time in development mode, but understanding production mode is important for deployment and troubleshooting.
-
-## What's Next?
-
-This chapter will guide you through:
-
-- **Getting Started**: Setting up Vite configuration and understanding the project structure
-- **Bakery Commands**: Using CLI commands to build and serve assets
-- **Using Assets**: Integrating assets into your Twig templates
-- **Advanced Usage**: TypeScript, Vue 3, preprocessors, and optimization techniques
-- **Sprinkle Assets**: Managing assets across multiple sprinkles
-- **Migration**: Transitioning from Webpack Encore to Vite
-
-Ready to get started? Continue to the [Getting Started](/assets-vite/getting-started) guide.

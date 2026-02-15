@@ -1,7 +1,6 @@
 ---
 title: Vite Configuration
 description: Learn how to configure Vite, understand entry points, and manage environment variables in UserFrosting.
-wip: true
 ---
 
 The `vite.config.ts` file in your project root configures how Vite processes your assets. This file is included in the Skeleton template and already contains everything you need, but understanding its structure helps you customize the build process for your specific needs.
@@ -16,8 +15,12 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import ViteYaml from '@modyfi/vite-plugin-yaml'
 
+// Load environment variables from the app directory where UserFrosting stores its .env file
+const envDir = 'app'
+const env = loadEnv('development', envDir, ['VITE_', 'UF_'])
+
 // Get vite port from env, default to 5173
-const vitePort = parseInt(process.env.VITE_PORT || '5173', 10)
+const vitePort = parseInt(env.VITE_PORT || process.env.VITE_PORT || '5173', 10)
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -28,6 +31,8 @@ export default defineConfig({
             appendTo: 'app/assets/main.ts'
         })
     ],
+    // Load .env from app directory (where UserFrosting stores its .env file)
+    envDir: 'app',
     server: {
         host: true,               // Allow external access (needed for Docker)
         strictPort: true,         // Fail if port is already in use
@@ -160,6 +165,9 @@ optimizeDeps: {
 
 Entry points are the starting files where Vite begins building your application. Think of them as the front door to your house—everything else is connected through them.
 
+> [!NOTE]
+> The main entry point for UserFrosting is `app/assets/main.ts`. It's the JavaScript equivalent to PHP's Recipe.
+
 ### What is an Entry Point?
 
 An entry point is a JavaScript or TypeScript file that imports everything your application needs. When Vite builds your assets, it:
@@ -169,7 +177,7 @@ An entry point is a JavaScript or TypeScript file that imports everything your a
 3. Bundles everything together into optimized output files
 4. Generates a dependency graph showing how files relate
 
-In UserFrosting, the main entry point is `app/assets/main.ts`, configured in `vite.config.ts`:
+In UserFrosting, the main entry point is `app/assets/main.ts`, as configured in `vite.config.ts`:
 
 ```ts
 export default defineConfig({
@@ -183,80 +191,7 @@ export default defineConfig({
 })
 ```
 
-### The Main Entry Point: main.ts
-
-Let's break down UserFrosting's main entry point to understand what each section does:
-
-```ts
-/** Create App */
-import { createApp } from 'vue'
-import App from './App.vue'
-const app = createApp(App)
-```
-
-This creates the root Vue application instance. `App.vue` is the root component that wraps your entire application.
-
-```ts
-/** Setup Pinia */
-import { createPinia } from 'pinia'
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-const pinia = createPinia()
-pinia.use(piniaPluginPersistedstate)
-app.use(pinia)
-```
-
-[Pinia](https://pinia.vuejs.org/) is Vue's official state management library. This code:
-- Creates a Pinia instance for managing global state
-- Adds the persistence plugin so state survives page refreshes (stored in localStorage)
-- Registers Pinia with the Vue app
-
-```ts
-/** Setup Router */
-import router from './router'
-app.use(router)
-```
-
-Configures [Vue Router](https://router.vuejs.org/) for single-page application navigation. The router lets users navigate between different pages without full page reloads.
-
-```ts
-/** Setup Core Sprinkle */
-import CoreSprinkle from '@userfrosting/sprinkle-core'
-app.use(CoreSprinkle)
-
-/** Setup Account Sprinkle */
-import AccountSprinkle from '@userfrosting/sprinkle-account'
-app.use(AccountSprinkle, { router })
-```
-
-Registers UserFrosting's [Sprinkles](/sprinkles)—modular packages that add functionality. Core provides base features, while Account handles user authentication and management. Each sprinkle can register Vue components, routes, and store modules.
-
-```ts
-/** Setup Theme */
-import PinkCupcake from '@userfrosting/theme-pink-cupcake'
-app.use(PinkCupcake)
-
-// Import custom theme overrides
-import './theme.less'
-```
-
-Applies the Pink Cupcake theme (UserFrosting's default UI styling) and loads your custom style overrides from `theme.less`.
-
-```ts
-// Mount the app
-app.mount('#app')
-```
-
-Finally, this attaches the Vue application to the DOM element with id `app` (found in your PHP template). This is when your Vue app becomes visible and interactive.
-
-### Why Entry Points Matter
-
-Understanding entry points helps you:
-
-1. **Add new libraries** - Know where to import and register new dependencies
-2. **Customize initialization** - Control the order plugins and sprinkles load
-3. **Debug loading issues** - Trace where components and features are registered
-4. **Optimize bundles** - Understand what's included in your main bundle
-5. **Create multiple bundles** - Split code for different parts of your application
+We'll cover in detail the default `main.ts` file in the next chapter. For now, just understand that this file is where you import your main application code, register Vue components, and initialize your frontend logic. It's the central hub for your client-side code.
 
 ### Multiple Entry Points
 
@@ -317,7 +252,7 @@ The Vite integration can be configured in your UserFrosting config file (`app/co
 - Default: `assets://.vite/manifest.json` resolves to `public/assets/.vite/manifest.json`
 
 **`dev`**
-- Controls whether to use the Vite dev server or built assets
+- Controls whether to use the Vite dev server or built assets when using Bakery's asset commands and Twig asset functions
 - Set to `true` in development, `false` in production
 - Tied to `VITE_DEV_ENABLED` environment variable
 
@@ -358,44 +293,4 @@ ASSETS_BUNDLER=vite
 Selects which bundler to use. While Vite is the default and recommended option, you can switch to Webpack Encore if needed for backward compatibility.
 
 > [!NOTE]
-> Variables prefixed with `VITE_` are exposed to your client-side code and can be accessed using `import.meta.env.VITE_*`. Other variables are only available during the build process and to the PHP backend.
-
-## Development vs Production
-
-The behavior of asset functions changes based on the `assets.vite.dev` setting:
-
-### Development Mode (`dev = true`)
-
-When the Vite dev server is running:
-
-1. **JavaScript files** are loaded directly from the Vite server
-2. **CSS** is injected by Vite's HMR system
-3. **Hot Module Replacement** updates modules without page refresh
-4. **Source maps** are available for debugging
-5. No build step required - changes are instant
-
-**Example output:**
-```html
-<script type="module" src="http://localhost:5173/@vite/client"></script>
-<script type="module" src="http://localhost:5173/main.ts"></script>
-```
-
-### Production Mode (`dev = false`)
-
-When using pre-built assets:
-
-1. **Manifest file** maps entry points to hashed filenames
-2. **JavaScript** uses hash-based filenames for cache busting
-3. **CSS** is extracted into separate files
-4. **Minification** reduces file sizes
-5. **Code splitting** optimizes load times
-
-**Example output:**
-```html
-<script type="module" crossorigin src="/assets/main-a1b2c3d4.js"></script>
-<link rel="stylesheet" href="/assets/main-a1b2c3d4.css">
-```
-
-## Next Steps
-
-Now that you understand Vite configuration and entry points, learn about the [Vue Framework](/javascript-vue/vue-introduction) that powers UserFrosting's modern interactive interfaces.
+> Variables prefixed with `VITE_` and `UF_` are exposed to your client-side code and can be accessed using `import.meta.env.VITE_*` or `import.meta.env.UF_*`. Other variables are only available during the build process and to the PHP backend.

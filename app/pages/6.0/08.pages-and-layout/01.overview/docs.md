@@ -11,6 +11,9 @@ The result? Designers can work on templates without touching PHP. Developers can
 
 This page introduces Twig's benefits and shows you why templating engines matter for professional applications.
 
+> [!NOTE]
+> **About Vue and Interactive Pages**: While Twig handles your page layouts and basic HTML structure, UserFrosting's built-in pages (like the admin dashboard) use **Vue 3** for rich, interactive user interfaces. Vue is optional for your custom pages—use Twig alone for simple pages, or combine Twig layouts with Vue components when you need dynamic, reactive functionality. We'll explore Vue in the [JavaScript & Vue](/javascript-vue/) chapter.
+
 ## The Problem with Embedded PHP
 
 If you recall the spaghetti code example from [Chapter 8](/routes-and-controllers/introduction):

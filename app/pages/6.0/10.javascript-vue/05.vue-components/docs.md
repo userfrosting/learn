@@ -1,247 +1,84 @@
 ---
 title: Building Vue 3 Components
-description: Learn how to create reactive, reusable UI components with Vue 3 Single File Components
+description: Master advanced Vue 3 patterns including reactivity, template directives, component communication, lifecycle hooks, and composables.
 wip: true
 ---
 
-Vue 3 is UserFrosting's recommended approach for building interactive user interfaces. Unlike the imperative jQuery patterns of the past, Vue uses declarative, component-based architecture that makes your code easier to understand, test, and maintain.
+Now that you understand [how to create basic Vue components](/javascript-vue/working-with-vue), it's time to dive deeper. This page covers the advanced patterns, template syntax, and communication techniques you'll need to build complex, production-ready Vue applications in UserFrosting.
 
-This guide introduces Vue 3 components and shows you how to use them in UserFrosting applications.
+> [!TIP]
+> If you're new to Vue, start with [Working with Vue](/javascript-vue/working-with-vue) first. This page assumes you're comfortable with SFC structure, basic reactivity (`ref`, `reactive`, `computed`), and component basics.
 
-## What Are Vue Components?
+## Advanced Reactivity Patterns
 
-A Vue component is a self-contained piece of UI with its own:
-- **Template** (HTML structure)
-- **Logic** (JavaScript/TypeScript behavior)
-- **Styles** (CSS, scoped to the component)
+While [Working with Vue](/javascript-vue/working-with-vue) covered the basics of `ref()`, `reactive()`, and `computed()`, let's explore more advanced patterns you'll encounter in real applications.
 
-Think of components as custom HTML elements you can reuse throughout your application.
+### Watching Values with watch()
 
-**Simple example**:
+Sometimes you need to perform side effects when reactive data changes. That's where `watch()` comes in:
+
 ```vue
-<template>
-  <button @click="count++">
-    Clicked {{ count }} times
-  </button>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+
+const searchQuery = ref('')
+const searchResults = ref([])
+
+// Watch a single value
+watch(searchQuery, async (newQuery, oldQuery) => {
+  console.log(`Search changed from "${oldQuery}" to "${newQuery}"`)
+  searchResults.value = await fetchSearchResults(newQuery)
+})
+
+// Watch multiple values
+const firstName = ref('')
+const lastName = ref('')
+
+watch([firstName, lastName], ([newFirst, newLast], [oldFirst, oldLast]) => {
+  console.log(`Name changed: ${newFirst} ${newLast}`)
+})
+
+// Immediate execution (run on mount)
+watch(searchQuery, (value) => {
+  // ...
+}, { immediate: true })
+
+// Deep watching (for nested objects)
+const user = ref({ profile: { name: 'Alex' } })
+
+watch(user, (newUser) => {
+  console.log('User changed:', newUser)
+}, { deep: true })
+</script>
+```
+
+**When to use `watch()`**:
+- Fetching data when a value changes
+- Updating localStorage/sessionStorage
+- Logging or analytics
+- Complex side effects
+
+### watchEffect() - Automatic Dependency Tracking
+
+`watchEffect()` automatically tracks dependencies and re-runs when any of them change:
+
+```vue
+<script setup lang="ts">
+import { ref, watchEffect } from 'vue'
 
 const count = ref(0)
-</script>
+const doubled = ref(0)
 
-<style scoped>
-button {
-  padding: 0.5rem 1rem;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-</style>
-```
-
-This single file defines everything the component needs. When used in your application, it creates an interactive button that tracks how many times it's been clicked.
-
-## Single File Components (SFCs)
-
-Vue 3 components in UserFrosting are written as **Single File Components** with a `.vue` extension. Each file contains everything the component needs in one place.
-
-**File structure**:
-```
-app/assets/
-└── components/
-    ├── UserCard.vue
-    ├── UserForm.vue
-    └── shared/
-        ├── Button.vue
-        └── Modal.vue
-```
-
-### Anatomy of an SFC
-
-**UserCard.vue** - A complete component example:
-```vue
-<!-- Template: What the component renders -->
-<template>
-  <div class="user-card">
-    <img :src="avatarUrl" :alt="username" />
-    <h3>{{ username }}</h3>
-    <p>{{ email }}</p>
-    <button @click="sendMessage">Message</button>
-  </div>
-</template>
-
-<!-- Script: Component logic and state -->
-<script setup lang="ts">
-import { ref, computed } from 'vue'
-
-// Props (inputs from parent)
-const props = defineProps<{
-  userId: number
-  username: string
-  email: string
-  avatar?: string
-}>()
-
-// Reactive state
-const messageCount = ref(0)
-
-// Computed values
-const avatarUrl = computed(() =>
-  props.avatar || `/images/default-avatar.png`
-)
-
-// Methods
-function sendMessage() {
-  messageCount.value++
-  // Send message logic...
-}
-</script>
-
-<!-- Styles: Scoped to this component only -->
-<style scoped>
-.user-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
-  text-align: center;
-}
-
-.user-card img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-}
-</style>
-```
-
-The beauty of SFCs is that everything related to the component lives in one file, making it easy to understand and maintain.
-
-## Composition API with Script Setup
-
-UserFrosting uses Vue 3's `<script setup>` syntax, which is more concise than the Options API. Everything you define in `<script setup>` is automatically available in the template—no need to explicitly return or export.
-
-```vue
-<script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-
-// Reactive state - automatically available in template
-const user = ref({ name: 'Alex', age: 25 })
-
-// Computed property - recalculates when dependencies change
-const greeting = computed(() => `Hello, ${user.value.name}!`)
-
-// Lifecycle hook - runs when component mounts
-onMounted(() => {
-  console.log('Component is ready!')
-})
-
-// Method - can be called from template
-function updateAge(newAge: number) {
-  user.value.age = newAge
-}
-</script>
-
-<template>
-  <!-- All script variables are available here -->
-  <div>
-    <p>{{ greeting }}</p>
-    <p>Age: {{ user.age }}</p>
-    <button @click="updateAge(26)">Update Age</button>
-  </div>
-</template>
-```
-
-**Why we prefer `<script setup>`**:
-- Less boilerplate code
-- Better TypeScript inference
-- Easier to organize complex logic
-- Slightly better performance
-
-## Reactivity System
-
-Vue's reactivity is what makes it "magical"—when data changes, the UI updates automatically. No manual DOM manipulation required!
-
-### ref() - For Primitives
-
-Use `ref()` for simple values (numbers, strings, booleans):
-
-```typescript
-import { ref } from 'vue'
-
-const count = ref(0)
-const message = ref('Hello')
-const isActive = ref(true)
-
-// Access/modify with .value in JavaScript
-count.value++
-message.value = 'Goodbye'
-isActive.value = !isActive.value
-```
-
-In templates, Vue automatically unwraps refs (no `.value` needed):
-```vue
-<template>
-  <!-- Vue unwraps automatically -->
-  <p>Count: {{ count }}</p>
-  <p>{{ message }}</p>
-  <p v-if="isActive">Active!</p>
-</template>
-```
-
-### reactive() - For Objects
-
-Use `reactive()` for objects and arrays:
-
-```typescript
-import { reactive } from 'vue'
-
-const user = reactive({
-  name: 'Alex',
-  email: 'alex@example.com',
-  roles: ['user', 'moderator']
-})
-
-// Mutate directly (no .value)
-user.name = 'Jordan'
-user.roles.push('admin')
-```
-
-**When to use which**:
-- `ref()` - Primitives, single values, or when you might reassign the whole value
-- `reactive()` - Objects/arrays you'll mutate properties of
-
-### computed() - Derived Values
-
-Computed properties automatically update when their dependencies change and cache the result:
-
-```vue
-<script setup lang="ts">
-import { ref, computed } from 'vue'
-
-const firstName = ref('John')
-const lastName = ref('Doe')
-
-// Recalculates only when firstName or lastName change
-const fullName = computed(() => `${firstName.value} ${lastName.value}`)
-
-// Can also be writable
-const fullNameWritable = computed({
-  get: () => `${firstName.value} ${lastName.value}`,
-  set: (value) => {
-    [firstName.value, lastName.value] = value.split(' ')
-  }
+// Automatically tracks `count` and runs when it changes
+watchEffect(() => {
+  doubled.value = count.value * 2
+  console.log(`Count: ${count.value}, Doubled: ${doubled.value}`)
 })
 </script>
-
-<template>
-  <p>{{ fullName }}</p>
-  <input v-model="fullNameWritable" />
-</template>
 ```
+
+> [!TIP]
+> Use `computed()` for derived values, `watch()` for side effects with specific dependencies, and `watchEffect()` for side effects with automatic dependency tracking.
 
 ## Template Syntax
 

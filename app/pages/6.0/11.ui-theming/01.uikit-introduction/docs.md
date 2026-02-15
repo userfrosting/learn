@@ -6,6 +6,24 @@ wip: true
 
 [UIkit](https://getuikit.com/) is a lightweight, modular front-end framework that provides the CSS foundation for UserFrosting's default theme. This page introduces you to UIkit's core components and how to use them in your UserFrosting application.
 
+<!-- ### UIkit - Modern CSS Framework
+
+[UIkit](https://getuikit.com/) is a lightweight, modular CSS framework that provides the building blocks for UserFrosting's default AdminLTE theme.
+
+**Key features**:
+- **Lightweight**: Smaller bundle size than Bootstrap
+- **Modular**: Import only the components you need
+- **LESS-based**: Easy theme customization with variables
+- **Responsive**: Mobile-first design out of the box
+- **Rich components**: Modals, dropdowns, accordions, and more
+
+**Example** - UIkit button:
+```html
+<button class="uk-button uk-button-primary">
+  Primary Action
+</button>
+``` -->
+
 ## What is UIkit?
 
 UIkit is a comprehensive CSS framework that provides:
