@@ -26,7 +26,7 @@ The following streams are defined by default by UserFrosting :
 | extra     | Core Sprinkle | `./extra`         |   No   |    No    | Misc directory, used to store files unrelated to any other stream                |
 | locale    | Core Sprinkle | `./locale`        |   No   |    No    | [Translation files](/i18n)                                                       |
 | schema    | Core Sprinkle | `./schema`        |   No   |    No    | [Request Schema](/routes-and-controllers/client-input/validation#fortress) files |
-| templates | Core Sprinkle | `./templates`     |   No   |    No    | [Templates files](/templating-with-twig/sprinkle-templates)                      |
+| templates | Core Sprinkle | `./templates`     |   No   |    No    | [Templates files](/pages-and-layout/sprinkle-templates)                      |
 | markdown  | Core Sprinkle | `./markdown`      |   No   |   Yes    | Markdown files, protected against destructive operations                         |
 | cache     | Core Sprinkle | `./cache`         |  Yes   |    No    | Shared [cache](/advanced/caching) directory                                      |
 | database  | Core Sprinkle | `./database`      |  Yes   |    No    | Location of any file based database, for example SQLite database                 |

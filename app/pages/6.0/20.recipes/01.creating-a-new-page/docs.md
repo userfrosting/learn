@@ -97,7 +97,7 @@ In `app/templates/pages` create your template file, `members.html.twig`, which s
 {% endblock %}
 ```
 
-Notice that we extend the `default.html.twig` abstract template, which is the same [abstract template](/templating-with-twig/sprinkle-templates#abstract-templates) used by the "home" and "about" pages. If we wanted to create a "dashboard" style page, we would extend the `pages/abstract/dashboard.html.twig` template instead.
+Notice that we extend the `default.html.twig` abstract template, which is the same [abstract template](/pages-and-layout/sprinkle-templates#abstract-templates) used by the "home" and "about" pages. If we wanted to create a "dashboard" style page, we would extend the `pages/abstract/dashboard.html.twig` template instead.
 
 Then, we simply have to fill in some of the [blocks](https://twig.symfony.com/doc/3.x/tags/extends.html) defined in the abstract template with our page content. As a simple example of using Twig to produce dynamic content, we reference the `current_user` global Twig variable to get and display the user's first name.
 

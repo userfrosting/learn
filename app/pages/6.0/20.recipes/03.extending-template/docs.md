@@ -7,7 +7,7 @@ obsolete: true
 > [!NOTE]
 > This recipe assumes that the reader is familiar with [Twig templating](/templating-with-twig).
 
-While sprinkles are able to [overwrite an entire Twig template](/templating-with-twig/sprinkle-templates#overriding-sprinkle-templates) defined in another sprinkle, they can also replace part of a template instead of overwriting everything in them.
+While sprinkles are able to [overwrite an entire Twig template](/pages-and-layout/sprinkle-templates#overriding-sprinkle-templates) defined in another sprinkle, they can also replace part of a template instead of overwriting everything in them.
 
 This is achieved by referencing another sprinkle directly in the `extends` Twig tag. Typically, page template files will extend a base template. For example:
 

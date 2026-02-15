@@ -98,4 +98,4 @@ The `/pages/abstract/default.html.twig` template in the Admin-LTE sprinkle and t
 <div id="alerts-page"></div>
 ```
 
-For details on how to use the `ufAlerts` plugin manually, see the documentation in [client side components](/client-side-code/components/alerts).
+For details on how to use the `ufAlerts` plugin manually, see the documentation in [client side components](/ui-theming/alerts).

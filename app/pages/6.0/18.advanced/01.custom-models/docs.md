@@ -123,4 +123,4 @@ class ModelsService implements ServicesProviderInterface
 > Keep in mind the last Sprinkle to be loaded, via the dependency tree, will be the last one to take effect. For example, if *Site* depends on *Feature* which depend on *Account*, and they each associate a custom model to `UserInterface` interface, the **Site** version will be used.
 
 
-Note that it's not just database models that you can dynamically remap (though they are the most common use case!) Any class references that haven't been hardcoded can be dynamically remapped in another Sprinkle's service. You can learn more about services in [Chapter 15](/services).
+Note that it's not just database models that you can dynamically remap (though they are the most common use case!) Any class references that haven't been hardcoded can be dynamically remapped in another Sprinkle's service. You can learn more about services in [Chapter 7](/dependency-injection).

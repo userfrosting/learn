@@ -1,11 +1,11 @@
 ---
-title: Advanced Dev Features
+title: Advanced Features
 description: A look under the hood, at some of UserFrosting's less well-known features.
 ---
 
 #### Chapter 18
 
-# Advanced Dev Features
+# Advanced Features
 
 As your UserFrosting application grows in complexity, you'll need to leverage more sophisticated features to build robust, maintainable applications. Beyond the basics of routes, controllers, and database models lies a rich ecosystem of services and patterns that give you fine-grained control over your application's behavior.
 
