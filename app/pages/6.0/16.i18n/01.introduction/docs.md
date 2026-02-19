@@ -103,6 +103,9 @@ return [
 
 When processed using the English locale, `ACCOUNT_SPECIFY_USERNAME` will be linked to the phrase `Enter your name!`.
 
+> [!NOTE]
+> After updating your language files, you need to clear the dictionary cache using the ```php bakery clear-cache``` command from the CLI for the changes to be visible.
+
 ### The Translator
 
 Finally, the **Translator** use the information from a specific Dictionary to perform the actual association, aka finding the proper _localized messages_ and returning it to the system, while replacing the placeholder with the specified values.
