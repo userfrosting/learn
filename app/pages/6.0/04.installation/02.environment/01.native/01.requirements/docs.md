@@ -73,7 +73,7 @@ Install PHP through the package manager. For example, on Ubuntu :
 
 2. Install PHP and the necessary extensions :
    ```bash
-   sudo apt install php8.5 php8.5-gd php8.5-dom php8.5-zip php8.5-sqlite3 php8.5-pdo_mysql php8.5-curl php8.5-mbstring unzip
+   sudo apt install php8.5 php8.5-gd php8.5-dom php8.5-zip php8.5-sqlite3 php8.5-mysql php8.5-curl php8.5-mbstring unzip
    ```
 
 #### Preflight checks
@@ -112,7 +112,7 @@ php -m
 Next step is to install [Composer 2](/installation/requirements/essential-tools-for-php#composer-2). At this point, the installation is the same for MacOS, Linux and Windows WSL2. The full instructions for installing Composer can be found at their [website](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx). We **strongly recommend that you install [Composer globally](https://getcomposer.org/doc/00-intro.md#globally)** on your system. This will let you run Composer using the `composer` command.
 
 ```bash
-mv composer.phar /usr/local/bin/composer
+sudo mv composer.phar /usr/local/bin/composer
 ```
 
 > [!WARNING]
@@ -137,7 +137,7 @@ Node.js has an installer that you can use for MacOS - [Node.js Download](https:/
 
 #### Linux & Windows WSL2
 
-Node.js binary distributions are available from [NodeSource](https://github.com/nodesource/distributions#nodejs).
+Node.js binary distributions are available from [NodeSource](https://nodesource.com/products/distributions).
 
 #### Preflight checks
 
@@ -145,7 +145,7 @@ To check if Node.js is installed:
 
 ```bash
 $ node -v
-v18.17.1
+v24.14.0
 ```
 
 ### npm
@@ -160,7 +160,7 @@ To check which version of Npm is installed:
 
 ```bash
 $ npm -v
-10.1.0
+11.11.1
 ```
 
 UserFrosting build scripts will automatically install all other Node and NPM dependencies for you !
@@ -180,7 +180,7 @@ While multiple solutions are available, two are recommended by UserFrosting : **
 
 [Mailpit](https://github.com/axllent/mailpit) is a small, fast, low memory, zero-dependency, multi-platform email testing tool & API for developers. Mailpit runs locally, acts as a *fake* SMTP server and provides a modern web interface to view & test captured emails. Oh, and **it's free and Open Source**!
 
-Mailpit can be installed on [MacOS through Homebrew](https://github.com/axllent/mailpit#install-via-package-managers), on Linux/WSL2 through their Bash Script](https://github.com/axllent/mailpit#install-via-bash-script-linux--mac), or through [Docker](https://mailpit.axllent.org/docs/install/docker/). By default, Mailpit UI can be access at [http://0.0.0.0:8025](http://0.0.0.0:8025).
+Mailpit can be installed on [MacOS through Homebrew](https://github.com/axllent/mailpit#install-via-package-managers), on [Linux/WSL2 through their Bash Script](https://github.com/axllent/mailpit#install-via-bash-script-linux--mac), or through [Docker](https://mailpit.axllent.org/docs/install/docker/). By default, Mailpit UI can be access at [http://0.0.0.0:8025](http://0.0.0.0:8025).
 
 When using Mailpit with UserFrosting, the following parameters will need to be provided during UserFrosting installation, which we'll see on the next page :
 
