@@ -269,7 +269,7 @@ Dive into specific component types:
 
 Or explore foundational concepts:
 
-- **[Vue Components](/client-side-code/vue-components)** - Vue 3 basics
+- **[Advanced Vue Features](/javascript-vue/advanced-vue-features)** - Vue 3 basics
 - **[Exporting Variables](/client-side-code/exporting-variables)** - Data passing
 - **[Asset Management](/asset-management)** - Building and bundling
 

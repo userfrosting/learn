@@ -138,7 +138,3 @@ Don't worry if Vue is new to you—it's designed to be approachable, and the nex
 - [Vue Tutorial](https://vuejs.org/tutorial/) - Interactive step-by-step tutorial
 - [Vue Examples](https://vuejs.org/examples/) - Common patterns and use cases
 - [Vue School](https://vueschool.io/) - Video courses from beginner to advanced
-
-## Next Steps
-
-Now that you understand Vue's role in UserFrosting, you're ready to learn how 

@@ -1,5 +1,5 @@
 ---
-title: UI Framework & Theming
+title: UI Frontend & Theming
 description: Master UIkit components, Pink-Cupcake theme, and create beautiful user interfaces in UserFrosting.
 wip: true
 ---

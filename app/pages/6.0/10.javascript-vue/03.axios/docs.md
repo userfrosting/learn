@@ -1,6 +1,6 @@
 ---
-title: Passing Data from Server to Client
-description: How to pass server-side data to your Vue components and JavaScript code in UserFrosting 6.0
+title: Axios HTTP Client
+description: How to pass server-side data to your Vue components and JavaScript code in UserFrosting
 wip: true
 ---
 
@@ -383,7 +383,7 @@ If data isn't working as expected, check that your PHP array converts correctly 
 
 Now that you know how to pass data from server to client, learn how to use it in:
 
-- **[Vue Components](/javascript-vue/vue-components)**: Build reactive UIs with the data
+- **[Advanced Vue Features](/javascript-vue/advanced-vue-features)**: Build reactive UIs with the data
 - **[Forms](/ui-theming/forms)**: Submit data back to the server
 - **[Tables](/ui-theming/tables)**: Display collections of data
 

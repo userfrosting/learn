@@ -1,5 +1,5 @@
 ---
-title: Using Assets in Templates
+title: Using Assets in Twig
 description: Learn how to load JavaScript, CSS, and other assets in your Twig templates using Vite's helper functions.
 ---
 

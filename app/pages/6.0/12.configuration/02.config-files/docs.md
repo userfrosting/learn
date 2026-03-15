@@ -118,3 +118,7 @@ Alternatively, the [config function](/pages-and-layout/filters-and-functions#con
 ```twig
 <a href="https://twitter.com/{{ config('site.twitter') }}">Follow me on Twitter!</a>
 ```
+
+### In Vue Templates
+
+TODO

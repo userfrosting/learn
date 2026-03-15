@@ -153,7 +153,3 @@ PHP handle request and responds with JSON
     ↓
 Vue updates UI reactively
 ```
-
-## Next Steps
-
-Ready to add interactivity to your UserFrosting application? Let's start by diving deeper into Vue 3 and why UserFrosting chose it as the foundation for interactive features.

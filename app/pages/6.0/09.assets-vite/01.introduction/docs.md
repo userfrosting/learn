@@ -9,7 +9,7 @@ Starting with UserFrosting 6, the framework has transitioned from Webpack Encore
 
 ## Why Vite?
 
-UserFrosting 6 adopts [Vite](https://vitejs.dev) as its primary asset bundler. If you've worked with build tools before, you'll immediately notice the difference. If this is your first time with asset bundling, you're starting with one of the best tools available!
+UserFrosting adopts [Vite](https://vitejs.dev) as its primary asset bundler. If you've worked with build tools before, you'll immediately notice the difference. If this is your first time with asset bundling, you're starting with one of the best tools available!
 
 Here's what makes Vite special:
 
@@ -21,7 +21,7 @@ Here's what makes Vite special:
 - **Better Vue 3 support**: Vite's official Vue plugin provides optimized handling of Single File Components (`.vue` files)
 
 > [!NOTE]
-> While Vite is the recommended bundler, UserFrosting 6 maintains backward compatibility with [Webpack Encore](/advanced/webpack-encore) for existing projects that require it. You're not forced to migrate immediately—you can take your time!
+> While Vite is the recommended bundler, UserFrosting maintains backward compatibility with [Webpack Encore](/advanced/webpack-encore) for existing projects that require it. You're not forced to migrate immediately—you can take your time! But not too much, because Webpack Encore is no longer actively maintained and may not receive updates or support in the future.
 
 ## Asset Workflow Overview
 

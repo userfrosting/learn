@@ -222,8 +222,9 @@ Each entry point can import different components, libraries, and styles, giving 
 > [!TIP]
 > Start with a single entry point and only create multiple entries if you notice performance issues or have distinct application sections with minimal code sharing.
 
-## Configuration
+## Configuration Options
 
+### UserFrosting Configuration
 The Vite integration can be configured in your UserFrosting config file (`app/config/default.php`). Below is the default configuration provided by the Core Sprinkle:
 
 ```php

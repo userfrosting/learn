@@ -6,6 +6,44 @@ wip: true
 
 Ready to level up your asset management skills? This guide covers advanced techniques that will help you build more sophisticated applications. Don't let the word "advanced" intimidate you—we'll explain each concept clearly, and you can adopt these techniques gradually as your needs grow.
 
+<!-- ## TypeScript in Vue
+
+UserFrosting uses TypeScript for better developer experience. You get:
+- **Autocomplete** in your editor
+- **Type checking** to catch errors early
+- **Better refactoring** tools
+
+Basic TypeScript usage in components:
+
+```vue
+<script setup lang="ts">
+import { ref, Ref } from 'vue'
+
+// Define interfaces for complex types
+interface User {
+  id: number
+  username: string
+  email: string
+}
+
+// Type your props
+const props = defineProps<{
+  user: User
+}>()
+
+// Type your refs
+const count: Ref<number> = ref(0)
+const users: Ref<User[]> = ref([])
+
+// Type your functions
+function selectUser(user: User): void {
+  console.log('Selected:', user.username)
+}
+</script>
+```
+
+Don't worry if TypeScript feels unfamiliar—you can start with basic types and gradually learn more as you go. The [TypeScript](/javascript-vue/typescript) page covers this in more detail. -->
+
 ## TypeScript Support
 
 Vite provides first-class TypeScript support with zero configuration. Simply use `.ts` files and Vite will compile them automatically.
