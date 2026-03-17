@@ -67,7 +67,7 @@ This same pattern scales to complex data tables, forms, and interactive dashboar
 
 ## Axios: Communicating with the Server
 
-[Axios](https://axios-http.com/) is a promise-based HTTP client for making API requests. It provides a clean and consistent API for sending requests and handling responses, making it easier to communicate with your backend. In other words, **Axios is the bridge between your Vue components and the UserFrosting backend API**.**
+[Axios](https://axios-http.com/) is a promise-based HTTP client for making API requests. It provides a clean and consistent API for sending requests and handling responses, making it easier to communicate with your backend. In other words, **Axios is the bridge between your Vue components and the UserFrosting backend API**.
 
 **Key benefits of using Axios**:
 - **Consistent API**: Works the same in browsers and Node.js

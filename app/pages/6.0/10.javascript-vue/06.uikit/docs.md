@@ -19,9 +19,9 @@ Unlike heavier frameworks like Bootstrap, UIkit maintains a smaller footprint wh
 
 ## Core Components
 
-Below are some of the most commonly used UIkit components. For a complete list and detailed documentation, visit the [UIkit documentation](https://getuikit.com/docs/). 
+Below are some of the most commonly used UIkit components. For a complete list and detailed documentation, visit the [UIkit documentation](https://getuikit.com/docs/).
 
-> [!NOTE] UserFrosting also includes custom styles and components built on top of UIkit, so be sure to check out the [UI Frontend & Theming](/javascript-vue/uikit) for more details.
+> [!NOTE] UserFrosting also includes custom styles and components built on top of UIkit, so be sure to check out [UI Frontend & Theming](/ui-theming) for more details.
 
 ### Buttons
 

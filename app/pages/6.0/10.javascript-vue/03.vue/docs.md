@@ -104,11 +104,11 @@ Other pages can be traditional server-side rendering (Twig templates) but includ
 
 ### Key Vue Features Provided by UserFrosting
 
-The UI that's is included in a default UserFrosting installation is built as a set of Vue components, provided by each sprinkles. 
+The UI that is included in a default UserFrosting installation is built as a set of Vue components provided by the different Sprinkles.
 
 UserFrosting's **Core Sprinkle** provides Vue components and utilities that form the foundation of the frontend:
 - **Full Translator** - Vue components and composables for working with UserFrosting's translation system
-- **Base components** - Common helper composable to handle CSRF, Sprunjer, etc.
+- **Base components** - Common helper composables to handle CSRF, Sprunje, etc.
 - **Fortress integration** - Vue components for working with UserFrosting's validation system
 - **Router configuration** - Pre-configured Vue Router setup
 - **Store modules** - Pinia stores for common application state : Alerts, Configuration, etc.
@@ -121,8 +121,8 @@ The **Account Sprinkle** builds on Core with authentication-related components:
 
 The **Admin Sprinkle** extends Account with administrative components and interfaces. It provides the admin dashboard you see when you log into a fresh UserFrosting installation.
 
-Finally, the **Pink Cupcake** theme provides the frontend theme. It include:
-- **Custom styling** - Custom styles based on UiKit
+Finally, the **Pink Cupcake** theme provides the frontend theme. It includes:
+- **Custom styling** - Custom styles based on UIkit
 - **Layout customization** - Overall page structure and navigation
 - **Component variants** - Provide themed versions of core components
 

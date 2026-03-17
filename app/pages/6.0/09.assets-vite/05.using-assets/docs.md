@@ -18,7 +18,7 @@ Loads a JavaScript entry point and includes the proper `<script>` tag.
 ```
 
 > [!NOTE]
-> The argument to `vite_js()` should match the name of an [entry point](assets-vite/vite-configuration#understanding-entry-points) defined in your `vite.config.ts`. For example, if you have an entry point defined as `main: 'app/assets/main.ts'`, you would use `vite_js('main.ts')` to load it.
+> The argument to `vite_js()` should match the name of an [entry point](/assets-vite/vite-configuration#understanding-entry-points) defined in your `vite.config.ts`. For example, if you have an entry point defined as `main: 'app/assets/main.ts'`, you would use `vite_js('main.ts')` to load it.
 
 **Output in development mode:**
 ```html
@@ -26,7 +26,7 @@ Loads a JavaScript entry point and includes the proper `<script>` tag.
 <script type="module" src="http://localhost:5173/main.ts"></script>
 ```
 
-These points to the Vite dev server, which serves your assets with hot module replacement (HMR) for instant updates.
+These script tags point to the Vite dev server, which serves your assets with hot module replacement (HMR) for instant updates.
 
 **Output in production mode:**
 ```html

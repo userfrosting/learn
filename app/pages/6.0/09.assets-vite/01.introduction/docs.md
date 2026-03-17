@@ -1,6 +1,6 @@
 ---
 title: Introduction
-description: Overview of asset management in UserFrosting 6, including the transition from Webpack Encore to Vite.
+description: Overview of asset management in UserFrosting, including the transition from Webpack Encore to Vite.
 ---
 
 UserFrosting uses a modern asset bundling system to compile and manage frontend assets like JavaScript, TypeScript, Vue components, and stylesheets. Think of it as a production line in a factory: raw materials (your source code) come in one end, get processed and refined through various stages, and emerge as finished products (optimized bundles) ready to ship to customers (your users' browsers).
