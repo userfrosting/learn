@@ -1,28 +1,9 @@
 ---
-title: UIkit Introduction
+title: UIkit
 description: Learn the fundamentals of UIkit, UserFrosting's CSS framework for building beautiful user interfaces.
-wip: true
 ---
 
-[UIkit](https://getuikit.com/) is a lightweight, modular front-end framework that provides the CSS foundation for UserFrosting's default theme. This page introduces you to UIkit's core components and how to use them in your UserFrosting application.
-
-<!-- ### UIkit - Modern CSS Framework
-
-[UIkit](https://getuikit.com/) is a lightweight, modular CSS framework that provides the building blocks for UserFrosting's default AdminLTE theme.
-
-**Key features**:
-- **Lightweight**: Smaller bundle size than Bootstrap
-- **Modular**: Import only the components you need
-- **LESS-based**: Easy theme customization with variables
-- **Responsive**: Mobile-first design out of the box
-- **Rich components**: Modals, dropdowns, accordions, and more
-
-**Example** - UIkit button:
-```html
-<button class="uk-button uk-button-primary">
-  Primary Action
-</button>
-``` -->
+[UIkit](https://getuikit.com/) is a lightweight, modular front-end framework that provides the CSS foundation for UserFrosting's default theme. This page introduces you to UIkit's core components.
 
 ## What is UIkit?
 
@@ -38,9 +19,13 @@ Unlike heavier frameworks like Bootstrap, UIkit maintains a smaller footprint wh
 
 ## Core Components
 
+Below are some of the most commonly used UIkit components. For a complete list and detailed documentation, visit the [UIkit documentation](https://getuikit.com/docs/). 
+
+> [!NOTE] UserFrosting also includes custom styles and components built on top of UIkit, so be sure to check out the [UI Frontend & Theming](/javascript-vue/uikit) for more details.
+
 ### Buttons
 
-UIkit provides several button styles:
+UIkit provides several [button](https://getuikit.com/docs/button) styles:
 
 ```html
 <button class="uk-button uk-button-default">Default</button>
@@ -59,7 +44,7 @@ UIkit provides several button styles:
 
 ### Grid System
 
-UIkit uses a flexible grid system based on flexbox:
+UIkit uses a flexible [grid](https://getuikit.com/docs/grid) system based on flexbox:
 
 ```html
 <div class="uk-grid" uk-grid>
@@ -89,7 +74,7 @@ UIkit uses a flexible grid system based on flexbox:
 
 ### Cards
 
-Cards are versatile containers for content:
+[Card](https://getuikit.com/docs/card) are versatile containers for content:
 
 ```html
 <div class="uk-card uk-card-default uk-card-body">
@@ -120,7 +105,7 @@ Cards are versatile containers for content:
 
 ### Modals
 
-UIkit modals are simple to create:
+UIkit [modals](https://getuikit.com/docs/modal) are simple to create:
 
 ```html
 <!-- Modal toggle button -->
@@ -155,7 +140,7 @@ UIkit.modal('#my-modal').hide()
 
 ### Notifications
 
-Display temporary messages to users:
+Display temporary [notifications](https://getuikit.com/docs/notification) to users:
 
 ```typescript
 import UIkit from 'uikit'
@@ -179,7 +164,7 @@ UIkit.notification('Error message', 'danger')
 
 ### Forms
 
-UIkit provides consistent form styling:
+UIkit provides consistent [form](https://getuikit.com/docs/form) styling:
 
 ```html
 <form class="uk-form-stacked">
@@ -218,7 +203,7 @@ UIkit provides consistent form styling:
 
 ### Icons
 
-UIkit includes an icon library:
+UIkit includes an [icon](https://getuikit.com/docs/icon) library:
 
 ```html
 <!-- Using uk-icon attribute -->
@@ -231,9 +216,11 @@ UIkit includes an icon library:
 </button>
 ```
 
+> [!TIP] UserFrosting also include [Font Awesome](https://fontawesome.com/) icons, which you can use alongside UIkit's icons for even more options.
+
 ## Utility Classes
 
-UIkit provides many utility classes for common tasks:
+UIkit provides many [utility](https://getuikit.com/docs/utility) classes for common tasks:
 
 ### Margin and Padding
 
@@ -290,18 +277,3 @@ function handleClick() {
 }
 </script>
 ```
-
-## Next Steps
-
-Now that you understand UIkit basics, explore:
-
-- **[Forms](/ui-theming/forms)**: Build validated forms with UIkit styling
-- **[Tables](/ui-theming/tables)**: Create data tables with UIkit components
-- **[Customizing Themes](/ui-theming/customizing-themes)**: Customize UIkit variables for your brand
-
-## Resources
-
-- [UIkit Documentation](https://getuikit.com/docs/introduction)
-- [UIkit Components](https://getuikit.com/docs/grid)
-- [UIkit Icons](https://getuikit.com/docs/icon)
-- [UIkit GitHub](https://github.com/uikit/uikit)
