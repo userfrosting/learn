@@ -58,6 +58,9 @@ function increment() {
 > [!NOTE]
 > UserFrosting uses Vue 3's [`<script setup>` syntax](https://vuejs.org/api/sfc-script-setup.html), which is more concise than the older Options API. Everything defined in this block is automatically available in your template—no need to explicitly return or export.
 
+> [!TIP]
+> By default `<script setup lang="ts">` is used in UserFrosting to enabled Typescript in components for better type safety and editor support. You can use plain JavaScript by omitting `lang="ts"`, but we recommend TypeScript for a better development experience.
+
 ### 3. Style (Optional)
 The `<style scoped>` section contains CSS that only applies to this component:
 
@@ -184,3 +187,38 @@ function handleUserDeleted(userId: number) {
 
 > [!IMPORTANT]
 > Always follow **unidirectional data flow**: props down, events up. Never mutate props directly in a child component—emit an event to let the parent handle it.
+
+## TypeScript in Vue
+
+To use TypeScript in Vue components, simply add `lang="ts"` to your `<script setup>` block. This enables type checking and better editor support for your component's logic.
+
+Basic TypeScript usage in components:
+
+```vue
+<script setup lang="ts">
+import { ref, Ref } from 'vue'
+
+// Define interfaces for complex types
+interface User {
+  id: number
+  username: string
+  email: string
+}
+
+// Type your props
+const props = defineProps<{
+  user: User
+}>()
+
+// Type your refs
+const count: Ref<number> = ref(0)
+const users: Ref<User[]> = ref([])
+
+// Type your functions
+function selectUser(user: User): void {
+  console.log('Selected:', user.username)
+}
+</script>
+```
+
+Don't worry if TypeScript feels unfamiliar-you can start with basic types and gradually learn more as you go. For deeper language concepts, continue with the [official TypeScript docs](https://www.typescriptlang.org/docs/).
