@@ -1,184 +1,117 @@
 ---
 title: Skeleton Template
-description: Explore the default file structure in the skeleton template and understand how each file contributes to your UserFrosting application.
+description: Map the frontend structure and learn where entry setup, layout, navigation, routes, and theme overrides live.
 ---
 
-When you install UserFrosting, you get a complete starter template—the skeleton—with everything you need to begin building your application. This starter project includes a working Vue 3 single-page application with routing, layouts, example pages, and all the necessary configuration. Understanding these files will help you build on a solid foundation.
+Before you start adding components or customizing styles, it helps to know exactly which files do what. This page gives you the map.
 
-## Template Structure
+## Your UI Files Live in `app/assets/`
 
-The skeleton template's Vue application lives in `app/assets/` with the following structure:
+Your frontend source files are organized inside `app/assets/`:
 
 ```
 app/assets/
-├── App.vue                  # Root component
-├── main.ts                  # Application entry point  
-├── theme.less               # Custom style overrides
-├── router/
-│   └── index.ts             # Route definitions
-├── components/
-│   ├── FooterContent.vue    # Footer content
-│   ├── NavBarContent.vue    # Navigation bar content
-│   └── SideBarContent.vue   # Sidebar menu content
-├── layouts/
-│   ├── LayoutDashboard.vue  # Admin dashboard layout
-│   └── LayoutPage.vue       # Standard page layout
-├── views/
-│   ├── AboutView.vue        # About page
-│   └── HomeView.vue         # Home page
-└── public/
-    └── favicons/            # Favicon assets
+├── main.ts          # Vite frontend entry point
+├── App.vue          # Root Vue component (just renders <RouterView />)
+├── theme.less       # Your project-level theme overrides
+├── layouts/         # General page layout
+├── components/      # Reusable UI components
+├── public/          # Public assets like images and fonts
+├── views/           # Page components
+└── router/          # Vue Router configuration and route definitions
 ```
 
-Each of these files plays a specific role in your application. Let's explore them grouped by purpose.
+This is also where your Sprinkle adds its own files when extending the UI. Each folder has a clear purpose, and keeping that separation makes the codebase much easier to work with as your app grows.
 
-## Application Core
+## Start Here: The Entry File
 
-### main.ts - Entry Point
-
-This is where your application starts. It creates the Vue app instance and configures all the features you'll use throughout your application. Let's break down what each section does:
-
-**Creating the App Instance**
+Everything starts in `main.ts`. The skeleton entry file does a lot more than just load styles — it wires up the complete Vue application:
 
 ```ts
+/** Create App */
 import { createApp } from 'vue'
 import App from './App.vue'
 const app = createApp(App)
-```
 
-This creates the root Vue application instance using [`App.vue`](#appvue---root-component) as the root component.
-
-**State Management with Pinia**
-
-```ts
+/** Setup Pinia with persisted state */
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
-```
 
-[Pinia](https://pinia.vuejs.org/) is Vue's official state management library. The persistence plugin saves state to localStorage so it survives page refreshes—useful for keeping users logged in and remembering their preferences. We'll cover stores in more detail in the [State Management chapter](/javascript-vue/state-management).
-
-**Routing Configuration**
-
-```ts
+/** Setup Router and import routes */
 import router from './router'
 app.use(router)
-```
 
-Configures [Vue Router](https://router.vuejs.org/) for single-page application navigation. The router allows users to navigate between different pages without full page reloads. We'll explore how routes are defined in `router/index.ts` later in this chapter.
-
-**Loading Sprinkles**
-
-```ts
+/** Setup Core Sprinkle */
 import CoreSprinkle from '@userfrosting/sprinkle-core'
 app.use(CoreSprinkle)
 
+/** Setup Account Sprinkle */
 import AccountSprinkle from '@userfrosting/sprinkle-account'
 app.use(AccountSprinkle, { router })
 
+/** Setup Admin Sprinkle */
 import AdminSprinkle from '@userfrosting/sprinkle-admin'
 app.use(AdminSprinkle)
-```
 
-[Sprinkles](/sprinkles) are UserFrosting's modular packages. Each sprinkle can register Vue components, routes, and stores:
-
-- **Core** - Base functionality (alerts, config, translation)
-- **Account** - User authentication and management
-- **Admin** - Administrative interface for users, roles, and permissions
-
-**Theme and Styling**
-
-```ts
+/** Setup Theme */
 import PinkCupcake from '@userfrosting/theme-pink-cupcake'
 app.use(PinkCupcake)
 
+// Import custom theme overrides
 import './theme.less'
-```
 
-Applies the Pink Cupcake theme (UserFrosting's default UI based on UIkit 3) and loads your custom style overrides from [`theme.less`](#theme-less---style-customization).
-
-**Mounting the Application**
-
-```ts
+// Done
 app.mount('#app')
 ```
 
-Finally, this attaches your Vue application to the `<div id="app">` element in your PHP-rendered HTML template. This is when your application becomes visible and interactive.
+Let's break down what each section does:
 
-### App.vue - Root Component
+- **Create App** — Creates the root Vue application instance from `App.vue`, which contains just `<RouterView />`.
+- **Pinia** — Registers the state management store, plus the persistence plugin so selected store values survive page refreshes.
+- **Router** — Registers Vue Router for client-side navigation and defined routes.
+- **CoreSprinkle** — Sets up the UserFrosting core: loads configuration from the API, loads translations, registers `$t` and `$tdate` as global template helpers, and configures CSRF protection.
+- **AccountSprinkle** — Enables authentication-aware behavior: login/logout flows, authentication guards on routes (the router is passed in so guards can be registered).
+- **AdminSprinkle** — Registers the admin panel routes and components.
+- **PinkCupcake** — Installs the complete theme: globally registers all `UF*` components, sets up UIkit and its icon pack, registers FontAwesome, and sets up UIkit notifications.
+- **`theme.less`** — Your theme entry file. Imports your project-level theme, including PinkCupcake's own styles and your variable overrides.
+- **Mount** — Finally mounts the app to the DOM, inside the `#app` div found in the Twig template.
 
-The simplest file in your application, but also the most important. It's the root component that wraps your entire application:
+> [!IMPORTANT]
+> Notice that `theme.less` is imported **after** the PinkCupcake plugin, not before it. The order matters: PinkCupcake registers UIkit internally, and your `theme.less` file imports Pink-Cupcake's LESS source directly, so the overrides need to follow the base import chain.
 
-```vue
-<template>
-    <RouterView />
-</template>
-```
+## The Theme Entry File
 
-This single `<RouterView />` component is where Vue Router displays the currently active page. As users navigate your application, different views get rendered here.
-
-### theme.less - Style Customization
-
-This file is your entry point for customizing the look and feel of your application:
+`app/assets/theme.less` is where you import Pink-Cupcake's LESS source and add your own visual overrides:
 
 ```less
 @import '@userfrosting/theme-pink-cupcake/less/main.less';
 
-// Example: Uncomment to change navbar background color
-// @navbar-background: #009556;
+/* Your project-level variable overrides go below the import */
+@sidebar-width: 300px;
+@alert-primary-title-background: #6ab0de;
 ```
 
-It imports the Pink Cupcake theme and provides a place to override LESS variables or add custom CSS. See the [Theming chapter](/ui-theming/customizing-themes) for more details on style customization.
+This file imports the full Pink-Cupcake LESS source (which itself pulls in UIkit), then your overrides follow. When Vite compiles the LESS, your variable values win because they appear after the defaults. We'll come back to this in detail when we reach [Customizing Themes](/ui-theming/customizing-themes).
 
-## router/index.ts - Route Configuration
+## Layout vs. Content vs. Navigation
 
-The `router/index.ts` file defines all the routes (URLs) in your **frontend** application and which views should display for each. The skeleton includes example routes for the home page and about page, plus it imports routes from the Account and Admin sprinkles:
+Keeping these folder roles separate makes your app easier to navigate and maintain:
 
-```ts
-import AccountRoutes from '@userfrosting/sprinkle-account/routes'
-import AdminRoutes from '@userfrosting/sprinkle-admin/routes'
-import ErrorRoutes from '@userfrosting/sprinkle-core/routes'
-```
+- **`layouts/`** — the outer shell: where the navbar, sidebar, and main content are arranged together. This is where you set up the overall page layout and decide where the content goes. The skeleton includes a `LayoutPage.vue` and `LayoutDashboard.vue` that you can use as a starting point for most pages.
+- **`components/`** — reusable pieces like nav menus, dropdowns, or shared card templates.
+- **`views/`** — route-level pages that fill the content area defined by the layout.
+- **`router/`** — route definitions and their metadata.
+- **`public/`** — public assets like images and fonts. These will be copied to the build output as-is and served directly by the web server.
 
-This modular approach allows each sprinkle to manage its own routes, making it easy to add or remove functionality without modifying your core routing configuration. This file will be where you add new routes for your custom pages as you build out your application.
+## Typical Workflow for New UI
 
-> [!NOTE]
-> This is different from the **backend** routing defined in your PHP controllers. The frontend routes are for navigating between pages in your Vue application, while backend routes handle API requests and server-side rendering.
+Whenever you add a new piece of UI to your app, this is the order that works well:
 
-## Layouts
-
-Layouts define the overall structure of your pages (navigation, sidebar, footer). The skeleton provides two layouts:
-
-1. `LayoutPage.vue` - Standard Layout : Used for public pages and authenticated user pages. Includes a navigation bar, collapsible sidebar (mobile only), and footer.
-2. `LayoutDashboard.vue` - Admin Layout: Used for the administrative interface. Similar to the page layout but with a persistent sidebar. 
- 
-Both layouts use the same content components for the navbar, sidebar, and footer, allowing you to maintain a consistent look while customizing the structure as needed.
-
-## Components
-
-These components customize the content of the layouts:
-
-1. **NavBarContent.vue** - Navigation bar items (links, user menu)  
-2. **SideBarContent.vue** - Sidebar menu items and user card  
-3. **FooterContent.vue** - Footer content (copyright notice)
-
-These are intentionally kept separate from the layouts so you can easily customize what appears in each section without modifying the layout structure itself. They provides a default set of links and content, but you can modify or replace them as needed for your application.
-
-## Views (Pages)
-
-Views are the actual page content that gets displayed. The skeleton includes two example pages:
-
-1. **HomeView.vue** - The home page with a welcome message and demo content  
-2. **AboutView.vue** - A simple about page with placeholder text
-
-Both pages demonstrate best practices: using translation keys, accessing stores for configuration and authentication state, and composing content with UIkit components.
-
-## Static Assets
-
-The `public/favicons/` directory contains favicon files for different devices and browsers. These are copied directly to the `public/assets/` directory during the build process and referenced in your PHP templates.
-
-## What's Next?
-
-Now that you understand the skeleton template's structure, you're ready to start building your own pages and components. The [next page](/javascript-vue/adding-pages) will walk you through creating new views, defining routes, and organizing your application as it grows.
+1. Create the new view under `views/`.
+2. Register a route in `router/` that points to the new view.
+3. Add navigation entries in the navbar or sidebar components in `components/`.
+4. Apply UIkit classes for layout and structure.
+5. Adjust theme variables in `theme.less` if the design needs it.
