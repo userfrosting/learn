@@ -4,7 +4,7 @@ description: Email is essential for many of UserFrosting's account features, inc
 
 ---
 
-#### Chapter 15
+#### Chapter 12
 
 # Mail
 

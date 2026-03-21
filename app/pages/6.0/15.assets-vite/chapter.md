@@ -3,7 +3,7 @@ title: Assets & Vite
 description: Learn how to use Vite to compile, bundle, and optimize frontend assets in UserFrosting.
 ---
 
-#### Chapter 9
+#### Chapter 15
 
 # Assets & Vite
 

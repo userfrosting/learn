@@ -3,7 +3,7 @@ title: Database
 description: UserFrosting uses Laravel's Eloquent component to provide a convenient abstraction layer on top of your database.
 ---
 
-#### Chapter 14
+#### Chapter 11
 
 # The Database and ORM Layer
 

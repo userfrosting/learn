@@ -3,7 +3,7 @@ title: UI Framework and Theming
 description: Build a practical app UI with UserFrosting, Pink-Cupcake, and UIkit from entry file to theme overrides.
 ---
 
-#### Chapter 11
+#### Chapter 17
 
 # UI Framework and Theming
 

@@ -3,7 +3,7 @@ title: JavaScript & Vue
 description: Master Vue 3, TypeScript, and reactive component development in UserFrosting.
 ---
 
-#### Chapter 10
+#### Chapter 16
 
 # JavaScript & Vue
 
