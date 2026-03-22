@@ -50,7 +50,7 @@ $ php bakery assets:build [options]
 > [!NOTE]
 > The `production` option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.
 
-See the [Asset Management](/asset-management) chapter for more information about asset bundles and these options.
+See the [Asset Management](/assets-vite) chapter for more information about asset bundles and these options.
 
 ### assets:install
 
@@ -76,7 +76,7 @@ The `assets:webpack` command is an alias for the **Webpack Encore** scripts used
 > [!NOTE]
 > If both `watch` and `production` options are used, _watch_ will be ignored and assets will be build for production.
 
-See the [Asset Management](/asset-management) chapter for more information about asset bundles and these options.
+See the [Asset Management](/assets-vite) chapter for more information about asset bundles and these options.
 
 ### assets:vite
 
@@ -97,7 +97,7 @@ $ php bakery assets:vite [options]
 > [!NOTE]  
 > This command will skip execution if no `vite.config.js` or `vite.config.ts` file is found in the current directory.
 
-See the [Asset Management](/asset-management) chapter for more information about Vite and asset bundles.
+See the [Asset Management](/assets-vite) chapter for more information about Vite and asset bundles.
 
 ### bake
 
@@ -106,6 +106,9 @@ Bake is the general installation command. It combines `setup:db`, `setup:mail`, 
 ```bash
 $ php bakery bake
 ```
+
+> [!NOTE]
+> Additional commands can be added to `bake` by sprinkles through event listeners. For example, the Account sprinkle adds `create:admin-user` to this list automatically. See [Events](/advanced/events) for more details.
 
 > [!TIP]
 > This command should be executed every time you run `composer update`, change assets, create a new migration, create a new sprinkle or install a [community sprinkle](/sprinkles/community).
@@ -116,7 +119,7 @@ $ php bakery bake
 
 ### clear-cache
 
-The `clear-cache` command takes care of deleting all cached data. See [Chapter 19](/advanced/caching) for more information.
+The `clear-cache` command takes care of deleting all cached data. See [Chapter 18](/advanced/caching) for more information.
 
 ```bash
 $ php bakery clear-cache
@@ -199,7 +202,7 @@ $ php bakery locale:compare [options]
 ```
 
 This command is interactive, which means it will ask for which locales to compare. Options can also be used to automatically compare the two locales without user interaction (See the table below for the list of available options).
-à
+
 This command will display :
  - Comparison between _Right_ and _Left_ locales : Returns a list of all differences in both locales using [`array_diff_assoc`](https://www.php.net/manual/en/function.array-diff-assoc.php). This can be used to compare the two locales.
  - Missing keys from _Right_ found in _Left_ : This can be used to see which keys are missing in the _Right_ locale, but that can be found in the _Left_ locale, so they can be added.
@@ -358,9 +361,7 @@ $ php bakery migrate:refresh [options]
 | -s, --steps=STEPS       | Number of steps to rollback [default: 1]      |
 
 > [!WARNING]
-> Using the `-s` option will rollback that number of steps, but will migrate them back up in a single step.
-> [!IMPORTANT]
-> Unlike other migrate commands, `migrate:refresh` does NOT accept the `-p` or `--pretend` option.
+> Using the `-s` option will rollback that number of steps, but will migrate them back up in a single step. Note that `migrate:refresh` does NOT accept the `-p` or `--pretend` option.
 
 ### migrate:status
 
@@ -422,20 +423,20 @@ Registered Routes
  -------- ------------------------------ ---------- -------------------------------------------------------------------------------
   Method   URI                            Name       Action
  -------- ------------------------------ ---------- -------------------------------------------------------------------------------
-  POST     /account/forgot-password                  UserFrosting\Sprinkle\Account\Controller\AccountController:forgotPassword
-  POST     /account/login                            UserFrosting\Sprinkle\Account\Controller\AccountController:login
-  POST     /account/settings/profile                 UserFrosting\Sprinkle\Account\Controller\AccountController:profile
-  POST     /account/register                         UserFrosting\Sprinkle\Account\Controller\AccountController:register
-  POST     /account/resend-verification              UserFrosting\Sprinkle\Account\Controller\AccountController:resendVerification
-  POST     /account/set-password                     UserFrosting\Sprinkle\Account\Controller\AccountController:setPassword
-  POST     /account/settings              settings   UserFrosting\Sprinkle\Account\Controller\AccountController:settings
+  POST     /account/forgot-password                  UserFrosting\Sprinkle\Account\Controller\ForgetPasswordAction
+  POST     /account/login                            UserFrosting\Sprinkle\Account\Controller\LoginAction
+  POST     /account/settings/profile                 UserFrosting\Sprinkle\Account\Controller\ProfileAction
+  POST     /account/register                         UserFrosting\Sprinkle\Account\Controller\RegisterAction
+  POST     /account/resend-verification              UserFrosting\Sprinkle\Account\Controller\ResendVerificationAction
+  POST     /account/set-password                     UserFrosting\Sprinkle\Account\Controller\SetPasswordAction
+  POST     /account/settings              settings   UserFrosting\Sprinkle\Account\Controller\SettingsAction
  -------- ------------------------------ ---------- -------------------------------------------------------------------------------
 ```
 
 
 ### seed
 
-The `seed` command can be used to run any registered seed classes. See [Chapter 12](/database/seeding) for more info on database seeds.
+The `seed` command can be used to run any registered seed classes. See [Chapter 11](/database/seeding) for more info on database seeds.
 
 ```bash
 $ php bakery seed [options] [--] <class> (<class>)...
@@ -456,7 +457,7 @@ $ php bakery seed Class1 Class2
 
 ### seed:list
 
-The `seed:list` command will list all database seeds available. See [Chapter 12](/database/seeding) for more info on database seeds.
+The `seed:list` command will list all database seeds available. See [Chapter 11](/database/seeding) for more info on database seeds.
 
 ```bash
 $ php bakery seed:list
@@ -592,29 +593,6 @@ Hit `ctrl+c` to quit.
 | Option                            | Description                                             |
 | --------------------------------- | ------------------------------------------------------- |
 | -p, --port=PORT                   | The port to serve the application on [default: "8080"]. |
-
-
-### test
-
-The `test` command is used to execute [PHPUnit](https://phpunit.de/) tests.
-
-Tests from a specific sprinkle can optionally be run using the 'testscope' argument (eg. `php bakery test SprinkleName`). This argument can also run a specific test class (eg. `php bakery test 'UserFrosting\Sprinkle\SprinkleName\Tests\TestClass'`) or a specific test method (eg. `php bakery test 'UserFrosting\Sprinkle\SprinkleName\Tests\TestClass::method'`).
-
-See the [Automated Testing](/testing) section for more information.
-
-```bash
-$ php bakery test [options] [--] [<testscope>]
-```
-
-| Option                            | Description                                                                                          |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| -c, --coverage                    | Enable code coverage report.                                                                         |
-| --coverage-format=COVERAGE-FORMAT | Select test coverage format. Choose from html, clover, crap4j, php, text, xml, etc. Defaults to HTML. |
-| --coverage-path=COVERAGE-PATH     | Code coverage report saving location. Default to `_meta/coverage`.                                   |
-
-> [!WARNING]
-> UserFrosting's built-in integration tests use a temporary in-memory SQLite database.  For testing to run successfully, you must have the `php-sqlite3` package installed and enabled.
-> Alternatively, you can create a separate testing database and override the `test_integration` database settings in `testing.php` [environment mode](/configuration/config-files).
 
 
 ### test:mail

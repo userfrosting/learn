@@ -44,7 +44,7 @@ If your hosting service doesn't have PHP 8.1 or above installed, call them and a
 As for your local development environment ([You _do_ have a local development environment, right ?](/background/develop-locally-serve-globally)), if it's that much of a burden then... I don't know what to tell you. So what are you waiting for? Upgrade!
 
 > [!NOTE]
-> As a reminder, **PHP 8.5** is officially recommended for UserFrosting 6. While you can still use UserFrosting with PHP 8.1, 8.2, 8.3 or 8.4, upgrading to PHP 8.5 is highly recommended for optimal performance and security.
+> As a reminder, **PHP 8.5** is officially recommended for UserFrosting. While you can still use UserFrosting with PHP 8.1, 8.2, 8.3 or 8.4, upgrading to PHP 8.5 is highly recommended for optimal performance and security.
 
 ### PHP Extensions
 
@@ -76,8 +76,8 @@ MySQL and MariaDB are the most popular choice of database provider. However, whe
 > [!TIP]
 > It is not required to develop with the same database provider as the one you'll be using in production. It's totally fine to develop locally using SQLite and use MySQL on your production server. A [testing environment](/testing) can be used to make sure your code runs smoothly on both.
 
-> [!TIP]
-> One additional reason not to use SQLite in production: it does not fully support `ALTER TABLE` operations, and [the official workaround is twelve steps long](https://www.sqlite.org/lang_altertable.html#otheralter).  This is most likely to cause issues when [rolling back a migration](/cli/commands#migrate-rollback), or if you decide to [remove foreign keys or columns (or tables!)](https://www.sqlite.org/lang_altertable.html#altertabdropcol) in a later migration. There is an easier [workaround for dropping entire tables](/database/migrations#running-your-migration), but this is usually not acceptable in production. In development, it's much easier to drop a table if needed, re-run any needed migrations, and restore any missing (test) data.
+> [!CAUTION]
+> SQLite does not fully support `ALTER TABLE` operations — the [official workaround is twelve steps long](https://www.sqlite.org/lang_altertable.html#otheralter). This is most likely to cause issues when [rolling back a migration](/cli/commands#migrate-rollback), or if you decide to [remove foreign keys or columns (or tables!)](https://www.sqlite.org/lang_altertable.html#altertabdropcol) in a later migration. There is an easier [workaround for dropping entire tables](/database/migrations#running-your-migration), but this is usually not acceptable in production. In development, it's much easier to drop a table if needed, re-run any needed migrations, and restore any missing (test) data.
 
 ## SMTP (Mail) Server
 

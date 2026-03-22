@@ -76,7 +76,7 @@ php bakery migrate
 npm run vite:build
 
 # Clear caches
-php bakery cache:clear
+php bakery clear-cache
 ```
 
 The UserFrosting team is committed to making this the best PHP framework for user-centered applications. Thank you for being part of the journey! 🚀

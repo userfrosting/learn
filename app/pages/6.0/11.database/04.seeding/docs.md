@@ -113,7 +113,7 @@ You can also pass the seed fully qualified class name as argument to bypass inte
 $ php bakery seed "UserFrosting\\Sprinkle\\MySprinkle\\Database\\Seeds\\MySeed"
 ```
 
-Multiple seeds can be run at once by listing them all, separated by a space. See [Chapter 8](/cli/commands) for more details.
+Multiple seeds can be run at once by listing them all, separated by a space. See [Chapter 14](/cli/commands) for more details.
 
 ## Writing a seed
 

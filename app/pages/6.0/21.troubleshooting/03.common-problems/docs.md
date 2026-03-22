@@ -9,15 +9,9 @@ description: Commonly encountered issues when setting up, developing, or deployi
 
 If installation of npm dependencies fails, see [npm](/basics/requirements/essential-tools-for-php#npm) to ensure npm is correctly installed and updated. You may need to [change npm permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions).
 
-### An exception has been thrown during the rendering of a template
+### Assets are missing or I get a Twig rendering error
 
-When trying to view your site you get an error similar to this :
-
-> An exception has been thrown during the rendering of a template ("The asset 'vendor/font-awesome/css/font-awesome.css' could not be found. Referenced in '/home/vagrant/userfrosting/app/sprinkles/core/asset-bundles.json [css/main]'.").
-
-<!-- TODO : The above error needs to be updated ! -->
-
-This is an indication that asset build failed or you missed a step in the installation process. Try [running the installer](/installation/environment/native/install#clone-the-userfrosting-repository) again with `php bakery bake` and check for any error messages.
+When trying to view your site you get an error about a missing asset or a Twig rendering exception, this is an indication that the asset build failed or you missed a step in the installation process. Try [running the installer](/installation/environment/native/install#clone-the-userfrosting-repository) again with `php bakery bake` and check for any error messages.
 
 ### Installation went fine, except I don't see any styling on my home page. I am using Apache.
 

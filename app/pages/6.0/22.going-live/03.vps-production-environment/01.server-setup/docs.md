@@ -15,7 +15,7 @@ From here, you can follow DigitalOcean's tutorials to set up your server:
 
 ## Initial Server Setup with Ubuntu
 
-Follow [**this tutorial for Ubuntu 24.04**](hhttps://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu) or [Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04).
+Follow [**this tutorial for Ubuntu 24.04**](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu) or [Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04).
 
 Key configuration steps:
 

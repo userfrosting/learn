@@ -201,7 +201,7 @@ This can be useful for displaying browser-specific messages or logging user info
 
 ## Extending Twig Extensions
 
-The `view` service loads UserFrosting's [Twig extensions](/pages-and-layout/filters-and-functions) to expose additional functions, filters, and variables in our templates. If we want to define more global Twig variables in our site Sprinkle, we can create a new Twig extension and then add it to our `view` service by extending it in our service provider class. An extension which adds globals like this must also implement Twig's `GlobalsInterface`.
+The `view` service loads UserFrosting's Twig extensions to expose additional functions, filters, and variables in our templates. If we want to define more global Twig variables in our site Sprinkle, we can create a new Twig extension and then add it to our `view` service by extending it in our service provider class. An extension which adds globals like this must also implement Twig's `GlobalsInterface`.
 
 First, create your new Twig extension class in `src/Twig/Extension.php`:
 

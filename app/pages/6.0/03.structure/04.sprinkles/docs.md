@@ -21,7 +21,7 @@ Because UserFrosting is modular, you can decide to use these bundled sprinkles o
 > Remove all sprinkles and the [Framework](/structure/framework) can be used by itself to create a very basic Slim/Symfony Console application with no database, template, etc. !
 
 ### Core Sprinkle
-The **Core** contains most of the "heavy lifting" PHP code. It provides all the necessary services for [databases](/database), [templating](/templating-with-twig), [error handling](/advanced/error-handling), [mail](/mail) support, [request throttling](/routes-and-controllers/client-input/throttle), and more.
+The **Core** contains most of the "heavy lifting" PHP code. It provides all the necessary services for [databases](/database), [templating](/pages-and-layout), [error handling](/advanced/error-handling), [mail](/mail) support, [request throttling](/routes-and-controllers/client-input/throttle), and more.
 
 ### Account Sprinkle
 The **Account** sprinkle handles [user modeling and authentication](/users), [user groups](/users/groups), and [roles & access control](/users/access-control). It contains the routes, templates, and controllers needed to implement pages for registration, password resetting, login, and more.
@@ -31,9 +31,9 @@ The Account sprinkle depends on the Core sprinkle.
 ### Admin Sprinkle
 The **Admin** sprinkle contains the routes and controllers to implement the administrative user management interface, as well as the group, role, and permission management interfaces.
 
-The Admin sprinkle depends on the Core, Account and Pink Cupcake sprinkles.
+The Admin sprinkle depends on the Core and Account sprinkles.
 
 ### Pink Cupcake Theme
-The **Pink Cupcake** theme sprinkle contains all the Twig templates and frontend assets built with [UiKit](https://getuikit.com). It provides a modern, responsive interface with Vue 3 components for interactive features.
+The **Pink Cupcake** theme contains all the Twig templates and frontend assets built with [UiKit](https://getuikit.com). It provides a modern, responsive interface with Vue 3 components for interactive features.
 
-The Pink Cupcake sprinkle depends on the Core and Account sprinkles.
+The Pink Cupcake theme depends on the Core and Account sprinkles.

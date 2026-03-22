@@ -52,4 +52,4 @@ $ cp app/.env.example app/.env
 
 Now, you can set values in the `.env` file and UserFrosting will pick them up _as if_ they were actual environment variables.
 
-You may also want to configure your SMTP server settings as well at this point so that you can use features that require mail, such as password reset and email verification. See [Chapter 17](/mail) for more information on the mail service.
+You may also want to configure your SMTP server settings as well at this point so that you can use features that require mail, such as password reset and email verification. See [Chapter 12](/mail) for more information on the mail service.

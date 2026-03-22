@@ -9,7 +9,7 @@ Before you start adding components or customizing styles, it helps to know exact
 
 Your frontend source files are organized inside `app/assets/`:
 
-```
+```text
 app/assets/
 ├── main.ts          # Vite frontend entry point
 ├── App.vue          # Root Vue component (just renders <RouterView />)

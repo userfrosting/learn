@@ -76,7 +76,7 @@ Fortunately, modern browsers support something called AJAX (Asynchronous JavaScr
 ```
 
 > [!NOTE]
-> For more complex interactions, UserFrosting supports **Vue 3** components, which provide a more structured way to build reactive user interfaces. Vue components handle state management, reactive data binding, and component lifecycle automatically, making it easier to build sophisticated client-side features. You'll learn more about Vue integration in the [Asset Management](/asset-management) chapter.
+> For more complex interactions, UserFrosting supports **Vue 3** components, which provide a more structured way to build reactive user interfaces. Vue components handle state management, reactive data binding, and component lifecycle automatically, making it easier to build sophisticated client-side features. You'll learn more about Vue integration in the [Asset Management](/assets-vite) chapter.
 
 ### The Big Picture
 

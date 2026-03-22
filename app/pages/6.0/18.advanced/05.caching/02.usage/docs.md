@@ -5,7 +5,7 @@ description: UserFrosting provides a convenient global caching service for your 
 
 ## The Cache service
 
-The UserFrosting cache service instantiates the [Laravel Cache](https://laravel.com/docs/10.x/cache) component for global caching. The [Laravel documentation](https://laravel.com/docs/10.x/cache#cache-usage) provides excellent examples on how to use the caching API. The only difference is that UserFrosting provides the required setup for you. Plus, instead of using a `Cache` facade, you simply inject the **cache service** using the [The DI Container](/services/the-di-container):
+The UserFrosting cache service instantiates the [Laravel Cache](https://laravel.com/docs/10.x/cache) component for global caching. The [Laravel documentation](https://laravel.com/docs/10.x/cache#cache-usage) provides excellent examples on how to use the caching API. The only difference is that UserFrosting provides the required setup for you. Plus, instead of using a `Cache` facade, you simply inject the **cache service** using the [The DI Container](/dependency-injection/the-di-container):
 
 ```php
 use Illuminate\Cache\Repository as Cache;

@@ -87,7 +87,7 @@ The same command event can be listened by many sprinkles. In this case, dependen
 If you need to place your command at a specific place in the stack, you can use the `getCommands` method to retrieve the current list, modify it, and place it back using `setCommands` method. This method can also be used to **remove** commands.
 
 > [!NOTE]
-> You can learn more about Event Listening in [Chapter 19](/advanced/events).
+> You can learn more about Event Listening in [Chapter 18](/advanced/events).
 
 ## Adding Custom Commands to the `assets:build` command
 

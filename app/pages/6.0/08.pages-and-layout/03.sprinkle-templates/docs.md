@@ -215,8 +215,8 @@ To completely override a template in a Sprinkle, simply redefine it with the sam
 
 Then, if we had the following code in a controller:
 
-```PHP
-return $this->ci->view->render($response, 'pages/about.html.twig');
+```php
+return $this->view->render($response, 'pages/about.html.twig');
 ```
 
 Twig would resolve to the `pages/about.html.twig` file in your App `templates` directory, since it is loaded after the Core Sprinkle in your recipe.

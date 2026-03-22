@@ -1,6 +1,6 @@
 ---
 title: TypeScript
-description: Advanced techniques for asset management including TypeScript, Vue 3, preprocessors, code splitting, and optimization.
+description: Learn how TypeScript adds type safety to your JavaScript code, helping you catch errors early and write more maintainable frontend code in UserFrosting.
 ---
 
 [TypeScript](https://www.typescriptlang.org/) is a strongly typed programming language that builds on JavaScript by adding optional static type definitions. It helps catch errors during development, provides better IDE support with autocomplete and refactoring tools, and makes your code more maintainable and self-documenting.

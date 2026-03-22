@@ -34,7 +34,7 @@ The following streams are defined by default by UserFrosting :
 | sessions  | Core Sprinkle | `./sessions`      |  Yes   |    No    | Shared [sessions](/advanced/sessions#file-driver) directory                      |
 | storage   | Core Sprinkle | `./storage`       |  Yes   |    No    | The [local disk](/advanced/storage#the-local-disk) file storage                  |
 | public    | Core Sprinkle | `/public`         |  Yes   |    No    | Absolute path to the [public directory](/sprinkles/content#-public)              |
-| assets    | Core Sprinkle | `public://assets` |  Yes   |    No    | Path to the public [assets](/asset-management) directory. Sub-stream of *public* |
+| assets    | Core Sprinkle | `public://assets` |  Yes   |    No    | Path to the public [assets](/assets-vite) directory. Sub-stream of *public* |
 
 The paths for non-shared streams are calculated relatively from each [sprinkle path](/sprinkles/recipe#getpath), usually `./app`. The paths for shared streams are relative from the Main Sprinkle path only, unless otherwise noted.
 

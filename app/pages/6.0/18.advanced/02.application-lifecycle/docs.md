@@ -3,12 +3,12 @@ title: Application Lifecycle
 description: Each Sprinkle may define a bootstrapper class that allows it to hook into various stages of the UserFrosting application lifecycle.
 ---
 
-Every time UserFrosting is booted up to handle a request, it goes through its **application lifecycle**. This process includes loading the resources and [services](/services) in your Sprinkles, setting up the [Slim application](https://www.slimframework.com/docs/v3/objects/application.html), registering middleware, and setting up your [routes](/routes-and-controllers/front-controller).
+Every time UserFrosting is booted up to handle a request, it goes through its **application lifecycle**. This process includes loading the resources and [services](/dependency-injection) in your Sprinkles, setting up the [Slim application](https://www.slimframework.com/docs/v4/objects/application.html), registering middleware, and setting up your [routes](/routes-and-controllers/front-controller).
 
 At each stage in this process, some events are triggered that you can hook into via an **[Listener class](/advanced/events)** in your Sprinkle. The overall lifecycle is managed in the [UserFrosting Framework](/structure/framework) and proceeds as follows:
 
 1. Initiate the *SprinkleManager* with the Main Sprinkle identifier.
-2. Create the [dependency injection container](/services/the-di-container).
+2. Create the [dependency injection container](/dependency-injection/the-di-container).
 3. Register basic system services definitions, such as the *event dispatcher* inside the DI Container.
 4. Register each Sprinkle services definitions inside the DI Container.
 5. Build the container.

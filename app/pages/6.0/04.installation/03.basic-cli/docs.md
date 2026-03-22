@@ -38,10 +38,10 @@ The `serve` command starts UserFrosting's built-in development server:
 php bakery serve
 ```
 
-By default, this starts the server at `http://localhost:8080`. You can specify a different host and port:
+By default, this starts the server at `http://localhost:8080`. You can specify a different port:
 
 ```bash
-php bakery serve --host=0.0.0.0 --port=8000
+php bakery serve --port=8000
 ```
 
 > [!WARNING]
@@ -56,10 +56,11 @@ php bakery bake
 ```
 
 This single command runs multiple setup operations:
-- Clears the cache
+- Configures the database connection (skipped if already set up)
+- Configures mail settings (skipped if already set up)
 - Runs database migrations
 - Compiles frontend assets
-- Sets up configuration files (on first run)
+- Clears the cache
 
 For a fresh installation, you can also use the interactive setup wizard:
 
@@ -68,11 +69,9 @@ php bakery setup
 ```
 
 This guides you through:
-1. Environment configuration (.env file)
-2. Database connection
-3. SMTP configuration (optional)
-4. Running migrations
-5. Creating the root user account
+1. Database connection (`setup:db`)
+2. SMTP mail configuration (`setup:mail`)
+3. Environment mode configuration (`setup:env`)
 
 ### Database Migrations
 

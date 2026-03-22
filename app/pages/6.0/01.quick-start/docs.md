@@ -5,11 +5,10 @@ description: The official documentation for UserFrosting, a PHP framework and fu
 
 UserFrosting is a free, open-source jumping-off point for building user-centered web applications with PHP and Javascript. It comes with a sleek, modern interface, basic user account features, and an administrative user management system - all fully functioning out of the box.
 
-> [!NOTE]
-> This quick start guide is aimed at experienced PHP developers who already have a development environment set up. If that's not your case, head over to the [First Chapter](/background) to start your journey.
-
-> [!IMPORTANT] 
+> [!IMPORTANT]
 > This is the documentation for **UserFrosting 6**. If you are looking for documentation for _UserFrosting 5_, [click here](https://learn.userfrosting.com/5.1/).
+
+This quick start guide is aimed at experienced PHP developers who already have a development environment set up. If that's not your case, head over to the [First Chapter](/background) to start your journey.
 
 ## Requirements
 
@@ -18,7 +17,7 @@ UserFrosting is a free, open-source jumping-off point for building user-centered
 
 UserFrosting has a few system requirements. You need to make sure your local UserFrosting development environment meets the following requirements:
 
-- PHP **8.1 or higher** (*8.4* recommended)
+- PHP **8.1 or higher** (*8.5* recommended)
 - [Composer 2](https://getcomposer.org/)
 - [Node.js](https://nodejs.org/en/) **18.0** or higher (*24 LTS* recommended)
 - [npm](https://www.npmjs.com) **9.0** or higher

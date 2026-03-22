@@ -5,7 +5,7 @@ obsolete: true
 ---
 
 > [!NOTE]
-> This recipe assumes that the reader is familiar with [Twig templating](/templating-with-twig).
+> This recipe assumes that the reader is familiar with [Twig templating](/pages-and-layout).
 
 While sprinkles are able to [overwrite an entire Twig template](/pages-and-layout/sprinkle-templates#overriding-sprinkle-templates) defined in another sprinkle, they can also replace part of a template instead of overwriting everything in them.
 

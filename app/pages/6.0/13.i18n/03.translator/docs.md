@@ -31,7 +31,7 @@ The current locale will be automatically defined and the associated dictionary a
 
 ### In Twig
 
-The translator service is also available as a [Twig function](/templating-with-twig). Placeholders can be passed to the Twig function too:
+The translator service is also available as a [Twig function](/pages-and-layout/filters-and-functions). Placeholders can be passed to the Twig function too:
 
 ```
 {{ translate("ACCOUNT_SPECIFY_USERNAME") }}

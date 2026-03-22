@@ -127,7 +127,7 @@ Because of sprinkle dependencies, in all three examples the order will be `Core 
 
 ### Routes
 
-Return an array of routes classes. More details about this will be explored in [Chapter 8 - Routes and Controllers](/routes-and-controllers).
+Return an array of routes classes. More details about this will be explored in [Chapter 7 - Routes and Controllers](/routes-and-controllers).
 
 For example, to register `MyRoutes` class:
 ```php
@@ -141,7 +141,7 @@ public function getRoutes(): array
 
 ### Services
 
-Return an array of services definitions. These will be explored in [Chapter 7 - Dependency Injection](/dependency-injection)
+Return an array of services definitions. These will be explored in [Chapter 6 - Dependency Injection](/dependency-injection)
 
 Example:
 ```php
@@ -337,7 +337,7 @@ In this case, two files need to be edited : `composer.json` and the Sprinkle Rec
 
 1. In **/composer.json**, remove the sprinkle from the Composer requirements :
     ```json
-    "userfrosting/sprinkle-admin": "^5.1",
+    "userfrosting/sprinkle-admin": "^6.0",
     ```
 
 2. Since changes were made to *composer.json*, composer need to be updated (`composer update`).

@@ -129,7 +129,7 @@ Composer version 2.5.4 2023-02-15 13:10:06
 
 ### Node
 
-It's now time to install [Node.js](https://nodejs.org/en/). Any version above **18.0** will work with UserFrosting, however we recommend using the latest LTS version of Node.js (20.x LTS as of 2025).
+It's now time to install [Node.js](https://nodejs.org/en/). Any version above **18.0** will work with UserFrosting, however we recommend using the latest LTS version of Node.js (v24 LTS as of 2026).
 
 #### MacOS
 

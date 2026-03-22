@@ -20,7 +20,7 @@ The **app skeleton** is a bare-bone UserFrosting project. Think of it like a sta
 
 But what makes a UserFrosting application, a UserFrosting application? What does it contain? Well, it's not much different than a normal modern PHP application. Your UserFrosting based project will consist of your code, plus a bunch of **dependencies**. These dependencies are all handled by Composer (which we'll explain later) and are themselves separated into three groups : **The Framework**, **External Libraries**, and **Sprinkles** :
 
-```
+```text
 Your Project
 ├── Your code & content
 └── Dependencies

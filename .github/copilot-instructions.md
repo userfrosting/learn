@@ -42,7 +42,7 @@ You may search the web for relevant external resources to link to, but ensure th
 **CRITICAL: Always check for the `obsolete: true` flag in page frontmatter.**
 
 When reviewing or editing documentation pages:
-1. **Check the frontmatter** for `obsolete: true` - this indicates the page documents outdated features or practices
+1. **Check the frontmatter** for `obsolete: true` - this indicates the page documents obsolete page and needs to be updated for the current version of UserFrosting - or `outdated:true` - this indicates the page is still relevant, but has not been updated recently and my require an update.
 2. **Verify against the monorepo** - Check the actual implementation in [userfrosting/monorepo](https://github.com/userfrosting/monorepo) to see what the current approach is
 3. **Alert the user** if entire chapters or sections are obsolete and need complete rewrites (e.g., Webpack Encore documentation when UF6 uses Vite)
 4. **Cross-reference** with this documentation site's own implementation (e.g., check `vite.config.ts`, `package.json`) to understand what UF6 actually uses

@@ -15,11 +15,11 @@ Third party services are also used directly throughout the code. They can be inj
 
 ### `UserFrosting\Alert\AlertStream`
 
-This service handles the [alert message stream](/advanced/alert-stream), sometimes known as "flash messages". (See Chapter 19 for more information.)
+This service handles the [alert message stream](/advanced/alert-stream), sometimes known as "flash messages". (See Chapter 18 for more information.)
 
 ### `Illuminate\Cache\Repository as Cache`
 
-Creates an instance of a Laravel [Cache](https://laravel.com/docs/8.x/cache). See [Chapter 19](/advanced/caching) for more information.
+Creates an instance of a Laravel [Cache](https://laravel.com/docs/8.x/cache). See [Chapter 18](/advanced/caching) for more information.
 
 ### `UserFrosting\Config\Config`
 
@@ -61,7 +61,7 @@ Monolog `Logger` object for logging successfully completed database queries to `
 
 ### `UserFrosting\Sprinkle\Core\Mail\Mailer`
 
-Creates an instance of `Mailer`, which serves as a UF-compatible wrapper for a [PHPMailer](https://github.com/PHPMailer/PHPMailer) object. See [Chapter 17](/mail) for more information.
+Creates an instance of `Mailer`, which serves as a UF-compatible wrapper for a [PHPMailer](https://github.com/PHPMailer/PHPMailer) object. See [Chapter 12](/mail) for more information.
 
 ### `League\CommonMark\ConverterInterface`
 
@@ -73,7 +73,7 @@ Creates a `Throttler` object, which handles [request throttling](/routes-and-con
 
 ### `UserFrosting\Sprinkle\Core\Util\RouteParserInterface`
 
-See [Chapter 8](/routes-and-controllers) for more information about defining routes, and the [Slim Documentation](https://www.slimframework.com/docs/v4/objects/routing.html#route-names) on how to use the Route Parser.
+See [Chapter 7](/routes-and-controllers) for more information about defining routes, and the [Slim Documentation](https://www.slimframework.com/docs/v4/objects/routing.html#route-names) on how to use the Route Parser.
 
 ### `UserFrosting\Session\Session`
 
@@ -89,16 +89,16 @@ Please note that when using file-based sessions, UserFrosting places sessions in
 Sets up the Twig View object, which is implemented by the [Slim Twig-View](https://github.com/slimphp/Twig-View) project. Turns on caching and/or debugging depending on the settings for `cache.twig` and `debug.twig`, respectively. Also registers the UserFrosting's `CoreExtension`
 extension (`UserFrosting\Sprinkle\Core\Twig\CoreExtension`), which provides some additional functions, filters, and global variables for UserFrosting.
 
-See [Templating with Twig](/templating-with-twig) for more information about Twig and the custom functions, filters, and variables that UserFrosting defines.
+See [Templating with Twig](/pages-and-layout) for more information about Twig and the custom functions, filters, and variables that UserFrosting defines.
 
 ### `UserFrosting\Sprinkle\Core\Twig\CoreExtension`
 UserFrosting's core Twig extensions, which provide additional functions, filters, and global variables.
 
-See [Templating with Twig](/templating-with-twig) for more information about Twig and the custom functions, filters, and variables that UserFrosting defines.
+See [Templating with Twig](/pages-and-layout) for more information about Twig and the custom functions, filters, and variables that UserFrosting defines.
 
 ### `UserFrosting\ViteTwig\ViteManifestInterface`
 
-Provides integration with Vite for frontend asset management. This service reads the Vite manifest file and provides methods to generate asset URLs with proper cache busting. See [Chapter 14](/assets-vite) for more information.
+Provides integration with Vite for frontend asset management. This service reads the Vite manifest file and provides methods to generate asset URLs with proper cache busting. See [Chapter 15](/assets-vite) for more information.
 
 ### `Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface`
 
@@ -107,7 +107,7 @@ Legacy Webpack Encore integration service. If you're using Webpack instead of Vi
 
 ### `UserFrosting\I18n\Translator`
 
-Sets up the `Translator` object (`UserFrosting\I18n\Translator`) for translation, localization, and internationalization of your site's contents. See [Chapter 17](/i18n) for more information.
+Sets up the `Translator` object (`UserFrosting\I18n\Translator`) for translation, localization, and internationalization of your site's contents. See [Chapter 13](/i18n) for more information.
 
 ### `UserFrosting\UniformResourceLocator\ResourceLocatorInterface`
 

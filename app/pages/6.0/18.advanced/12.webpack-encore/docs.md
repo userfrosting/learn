@@ -1,6 +1,7 @@
 ---
 title: Webpack Encore
 description: Asset bundles should be compiled in production to allow for faster and more efficient transfer to the client.
+obsolete: true
 ---
 
 > [!WARNING]

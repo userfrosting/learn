@@ -35,7 +35,7 @@ Check out the [components overview](/ui-theming/components-overview#sprunje-data
 
 ## The Backend Side
 
-Your PHP Sprunje class extends `UserFrosting\Sprunjify\Sprunje`, defines a base query, and registers the fields that can be filtered and sorted. Your API endpoint calls the Sprunje and returns its JSON response. The Pink-Cupcake components consume that response automatically.
+Your PHP Sprunje class extends `UserFrosting\Sprinkle\Core\Sprunje\Sprunje`, defines a base query, and registers the fields that can be filtered and sorted. Your API endpoint calls the Sprunje and returns its JSON response. The Pink-Cupcake components consume that response automatically.
 
 > [!TIP]
 > The backend Sprunje system is covered in the data access and API chapters. This page focuses on the frontend components. If you haven't used Sprunjes on the backend yet, you'll want to read those chapters before building the full stack connection here.

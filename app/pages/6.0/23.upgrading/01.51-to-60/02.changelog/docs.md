@@ -92,7 +92,7 @@ The new user verification system requires changes to the database schema. When y
 The associated models and logic have been updated to reflect this new structure, so if you have custom code that interacts with the old tables, you will need to update it to work with the new `user_verifications` table and the new verification logic.
 
 **Changed models**:
-- `Verification` and `PasswordReset` models are removed, replaced by a single `UserVerification` model that handles all types of verification records.à
+- `Verification` and `PasswordReset` models are removed, replaced by a single `UserVerification` model that handles all types of verification records.
 - `User` model updated to include new fields and methods related to the new verification system, including a new `isPasswordExpired` method. Also adds a new `getApiDataAttribute()` method to return the user data for the frontend API.
 
 #### Dropped Locales
@@ -108,7 +108,7 @@ If you were using a locale that has been removed, you will need to add it back m
 
 The locale data are now cached. This means that the locale files are read and processed once, and then stored in a cache for faster access on subsequent requests. This improves performance by reducing file I/O and processing time for locale data, especially in applications with many locales or large locale files.
 
-When updating a locale file, you may need to clear the cache to see the changes reflected in your application. This can be done by running `php bakery cache:clear` or by manually deleting the cache files.
+When updating a locale file, you may need to clear the cache to see the changes reflected in your application. This can be done by running `php bakery clear-cache` or by manually deleting the cache files.
 
 #### New Feature : Markdown Support
 

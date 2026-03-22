@@ -277,7 +277,7 @@ This class only has one method, `apply`, which takes the base query builder obje
 
 The problem, of course, is that all of the controllers in the Sprinkle that _defined_ the `User` model, are still _using_ the `User` model (this is simply how inheritance works).
 
-Fortunately, the default Sprinkles never directly reference the `User` class. Instead, they **[inject](/dependency-injection)** the `UserInterface`. All we need to do, then, is remap the `UserInterface` to our new class, `Member`. This can be done via [Autowire](/dependency-injection/the-di-container#binding-interfaces) in a [service provider](/services/extending-services).
+Fortunately, the default Sprinkles never directly reference the `User` class. Instead, they **[inject](/dependency-injection)** the `UserInterface`. All we need to do, then, is remap the `UserInterface` to our new class, `Member`. This can be done via [Autowire](/dependency-injection/the-di-container#binding-interfaces) in a [service provider](/dependency-injection/extending-services).
 
 Create a class `src/ServicesProvider/MemberModelService.php` :
 

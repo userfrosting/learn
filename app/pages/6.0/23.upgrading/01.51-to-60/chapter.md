@@ -9,11 +9,10 @@ Welcome to **UserFrosting 6.0**! This major release represents a significant evo
 
 This guide walks you through the upgrade process step-by-step. While the changes are substantial, we've designed the migration path to be as smooth as possible.
 
+Before proceeding, ensure you're running the **latest version of UserFrosting 5.1** and have reviewed its changelog.
+
 > [!WARNING]
 > This is a **major version upgrade** with breaking changes. Allocate appropriate time for testing and migration. Start with a development environment and thoroughly test before deploying to production.
-
-> [!NOTE]
-> Before proceeding, ensure you're running the latest version of UserFrosting 5.1 and have reviewed its changelog.
 
 ## Getting Help
 

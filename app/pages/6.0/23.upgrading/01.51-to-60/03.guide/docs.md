@@ -8,8 +8,7 @@ This guide walks you through upgrading an existing UserFrosting 5.1 application 
 > [!IMPORTANT]
 > **Backup Everything**: Before starting, create backups of your application code, database, and any user-uploaded files. This upgrade includes breaking changes that may require significant testing.
 
-> [!NOTE]
-> While this guide covers the most common upgrade scenarios, your specific application may have unique customizations that require additional steps. Always refer to the official documentation if you encounter issues. As always, consider if upgrading in place is the best option for your project, or if a fresh installation of UserFrosting 6.0 with manual migration of custom code and data might be more efficient in the long run.
+This guide covers the most common upgrade scenarios, but your specific application may have unique customizations that require additional steps. Always refer to the official documentation if you encounter issues. Also consider whether upgrading in place is the best option for your project, or if a fresh installation of UserFrosting 6.0 with manual migration of custom code and data might be more efficient in the long run.
 
 ## Prerequisites
 
@@ -98,7 +97,7 @@ Update all `userfrosting/*` version constraints in `composer.json`:
 
 The key changes are:
 - All `userfrosting/*` packages updated from `~5.1.0` to `^6.0`
-- `userfrosting/theme-adminlte` removed — the AdminLTE theme is replaced by the new [Pink Cupcake theme](/themes), which is bundled within the sprinkle packages
+- `userfrosting/theme-adminlte` removed — the AdminLTE theme is replaced by the new [Pink Cupcake theme](/ui-theming), which is included as part of the default UserFrosting packages
 
 ### Run Composer Update
 
@@ -598,7 +597,7 @@ npm install
 
 After successfully upgrading:
 
-1. **Review Documentation**: Read through the updated [Asset Management](/asset-management) chapter
+1. **Review Documentation**: Read through the updated [Asset Management](/assets-vite) chapter
 2. **Optimize Assets**: Learn about [Vite Configuration](/assets-vite/vite-configuration) for performance tuning
 3. **Modernize Code**: Gradually convert jQuery to Vue 3 components
 4. **Add TypeScript**: Consider adding type safety to your custom code

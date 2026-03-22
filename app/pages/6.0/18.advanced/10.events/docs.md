@@ -46,7 +46,7 @@ class UserLoggedInEvent
 }
 ```
 
-When it's created, the *Emitter* will define a user object as it's contractor argument. Because it's used a *public* property, the *Listeners* can have **read and write access** to it. The *Emitter* can retrieve the mutated version of the object when the dispatcher return the event to it.
+When it's created, the *Emitter* will define a user object as its constructor argument. Because it's used a *public* property, the *Listeners* can have **read and write access** to it. The *Emitter* can retrieve the mutated version of the object when the dispatcher return the event to it.
 
 > [!NOTE]
 > Remember the goal of events are to be a container. It **can** contains other variables and object, but **shouldn't** act on them. As defined in the PSR-14 standard :
@@ -100,7 +100,7 @@ class AssignDefaultRoles
 ```
 
 > [!TIP]
-> An Exception or Error thrown by a Listener WILL block the execution of any further Listeners. An Exception or Error thrown by a Listener will propagate back up to the Emitter. Compared to stoppable event, the exception can (should) be catch by the emitter, making it very useful stop execution of of any further Listeners, but also the emitter code.
+> An Exception or Error thrown by a Listener WILL block the execution of any further Listeners. An Exception or Error thrown by a Listener will propagate back up to the Emitter. Compared to stoppable event, the exception can (should) be caught by the emitter, making it very useful to stop execution of any further Listeners, but also the emitter code.
 
 ### Dispatcher
 

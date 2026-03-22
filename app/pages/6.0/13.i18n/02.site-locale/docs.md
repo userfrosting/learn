@@ -22,7 +22,7 @@ For example, to use _French_ as the default locale :
 
 A user can also use their own language, which they can choose in their profile settings. All available locales the users can choose from are defined in the `site.locales.available` config.
 
-By default, UserFrosting 6 provides two locales:
+By default, UserFrosting provides two locales:
 
 ```php
 'available' => [

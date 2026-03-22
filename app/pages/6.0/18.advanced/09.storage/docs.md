@@ -159,7 +159,7 @@ In order to set up the custom filesystem you will need a Flysystem adapter. Let'
 "nao-pon/flysystem-google-drive": "~1.1"
 ```
 
-Next, you should [decorate the `UserFrosting\Sprinkle\Core\Filesystem\FilesystemManager` service](/services/extending-services#extending-existing-services) in your sprinkle. There you can use the filesystem `extend` method to define the custom driver:
+Next, you should [decorate the `UserFrosting\Sprinkle\Core\Filesystem\FilesystemManager` service](/dependency-injection/extending-services#extending-existing-services) in your sprinkle. There you can use the filesystem `extend` method to define the custom driver:
 
 ```php
 $filesystem->extend('gdrive', function ($config, $diskConfig) {

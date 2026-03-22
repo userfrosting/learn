@@ -62,7 +62,7 @@ Make your image files exactly the size at which you intend to display them (in s
 
 ### Use compiled assets in production
 
-The way UserFrosting [serves assets](/asset-management) is great for development and debugging, but not so much for production. The asset files themselves (JavaScript and CSS) are larger than they need to be to perform their function.
+The way UserFrosting [serves assets](/assets-vite) is great for development and debugging, but not so much for production. The asset files themselves (JavaScript and CSS) are larger than they need to be to perform their function.
 
 Using **Vite** (UserFrosting's build tool) solves all of these problems:
 

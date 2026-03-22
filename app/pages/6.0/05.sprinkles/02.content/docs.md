@@ -63,11 +63,11 @@ $ php bakery bake
 
 ### /vite.config.ts
 
-The `vite.config.ts` file is used for configuring **Vite** and defining how your assets are built and bundled. See [Chapter 13](/asset-management) for more information about asset management with Vite.
+The `vite.config.ts` file is used for configuring **Vite** and defining how your assets are built and bundled. See [Chapter 15](/assets-vite) for more information about asset management with Vite.
 
 ### /app/assets
 
-The `assets` directory contains all of the Javascript, CSS, images, and other static content for your site. See [Chapter 13](/asset-management) for more information about asset management and usage.
+The `assets` directory contains all of the Javascript, CSS, images, and other static content for your site. See [Chapter 15](/assets-vite) for more information about asset management and usage.
 
 ### /app/cache
 
@@ -83,7 +83,7 @@ The `locale` directory contains [translation files](/i18n) for your sprinkle. Li
 
 Just as with configuration files, UserFrosting will recursively merge translation files for the currently selected language(s) from each loaded sprinkle. This means that each subsequently loaded sprinkle can override translations from previous sprinkles, or define new ones entirely.
 
-See [Chapter 18](/i18n) for more information on UserFrosting's internationalization and localization system.
+See [Chapter 13](/i18n) for more information on UserFrosting's internationalization and localization system.
 
 ### /app/logs
 
@@ -95,7 +95,7 @@ The `schema` directory contains the [request schema](/routes-and-controllers/cli
 
 ### /app/src
 
-The `src` directory contains the (preferably) [PSR-4](http://www.php-fig.org/psr/psr-4/) compatible PHP code for your sprinkle. This directory will contain your controllers, database models, [migrations](/database/migrations), [routes](/routes-and-controllers), [service providers](/services), [data sprunjers](/database/data-sprunjing), and any other custom classes that your sprinkle uses. This is where your sprinkle's Recipe will be found.
+The `src` directory contains the (preferably) [PSR-4](http://www.php-fig.org/psr/psr-4/) compatible PHP code for your sprinkle. This directory will contain your controllers, database models, [migrations](/database/migrations), [routes](/routes-and-controllers), [service providers](/dependency-injection/adding-services), [data sprunjers](/database/data-sprunjing), and any other custom classes that your sprinkle uses. This is where your sprinkle's Recipe will be found.
 
 > [!NOTE]
 > The content of `app/src/` can be customized and doesn't need to follow any strict convention.
@@ -106,7 +106,7 @@ The `storage` directory is used to store files managed by Filesystem service. Th
 
 ### /app/templates
 
-To separate content and logic, UserFrosting uses the popular [Twig](http://twig.symfony.com/) templating engine. Since Twig has its own system for [loading templates](http://twig.symfony.com/doc/api.html#built-in-loaders), UserFrosting builds upon this to allow overriding templates in sprinkles. See [Templating with Twig](/templating-with-twig) for more information on how Twig is integrated into UserFrosting.
+To separate content and logic, UserFrosting uses the popular [Twig](http://twig.symfony.com/) templating engine. Since Twig has its own system for [loading templates](http://twig.symfony.com/doc/api.html#built-in-loaders), UserFrosting builds upon this to allow overriding templates in sprinkles. See [Templating with Twig](/pages-and-layout) for more information on how Twig is integrated into UserFrosting.
 
 ### /app/test
 

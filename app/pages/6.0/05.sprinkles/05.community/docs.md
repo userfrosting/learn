@@ -48,7 +48,7 @@ If the sprinkle includes frontend assets like JavaScript, TypeScript, or Vue com
     },
 ```
 
-You may also need to configure Vite to properly handle the sprinkle's assets. See [Chapter 14](/assets-vite) for more information about managing assets with Vite.
+You may also need to configure Vite to properly handle the sprinkle's assets. See [Chapter 15](/assets-vite) for more information about managing assets with Vite.
 
 > [!TIP]
 > In the `package.json` example above, we're loading the Userfrosting core sprinkles from npm, and the Owlery sprinkle from Github. Each community sprinkle decides where it is published, and should include this in their README.

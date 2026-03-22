@@ -209,7 +209,7 @@ To run your migrations simply re-run the Bakery `migrate` from your command line
 $ php bakery migrate
 ```
 
-If you want to do a "fresh install" of your migration or cancel the changes made, you can **rollback** the previous migration. You can also do a dry run of your migrations using the `pretend` option. See [Chapter 8](/cli/commands) for more details.
+If you want to do a "fresh install" of your migration or cancel the changes made, you can **rollback** the previous migration. You can also do a dry run of your migrations using the `pretend` option. See [Chapter 14](/cli/commands) for more details.
 
 > [!TIP]
 > If you have any trouble rolling back migrations under the SQLite driver, you may want to temporarily add this line to your [`.env` file](/configuration/environment-vars):
