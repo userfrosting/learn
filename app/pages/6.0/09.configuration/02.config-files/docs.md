@@ -121,4 +121,37 @@ Alternatively, the [config function](/pages-and-layout/filters-and-functions#con
 
 ### In Vue Templates
 
-TODO
+In Vue components and composables, configuration values are available through the `useConfigStore` Pinia store provided by `@userfrosting/sprinkle-core`. It fetches config from the `/api/config` API endpoint and makes it accessible anywhere in your frontend code.
+
+```ts
+import { useConfigStore } from '@userfrosting/sprinkle-core/stores'
+
+const config = useConfigStore()
+const siteTitle = config.get('site.title')
+```
+
+The `get(key, default?)` method supports dot notation to access nested values, exactly like the PHP `$config->get()` method. An optional second argument provides a fallback if the key doesn't exist:
+
+```ts
+const locale = config.get('locales.current', 'en_US')
+```
+
+Inside a Vue component using the Composition API:
+
+```vue
+<script setup lang="ts">
+import { useConfigStore } from '@userfrosting/sprinkle-core/stores'
+
+const config = useConfigStore()
+const siteTitle = config.get('site.title')
+</script>
+
+<template>
+    <h1>Welcome to {{ siteTitle }}</h1>
+</template>
+```
+
+> [!NOTE]
+> The `/api/config` endpoint only exposes a subset of the PHP configuration: the `site` array, `locales` (available locales and the current locale), and `csrf` settings. Sensitive or server-only values are never sent to the client.
+
+The store is loaded automatically by UserFrosting during app initialization, so you don't need to call `load()` yourself in most cases.
