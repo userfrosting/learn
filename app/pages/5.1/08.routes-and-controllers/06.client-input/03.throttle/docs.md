@@ -1,9 +1,6 @@
 ---
 title: Throttling
-metadata:
-    description: Throttling, also known as rate-limiting, is a technique for slowing down attackers by limiting the frequency with which they can make certain types of requests.
-taxonomy:
-    category: docs
+description: Throttling, also known as rate-limiting, is a technique for slowing down attackers by limiting the frequency with which they can make certain types of requests.
 ---
 
 People tend to be bad at picking strong passwords. [Publicly available lists of passwords](https://github.com/danielmiessler/SecLists/tree/master/Passwords) recovered from hacked databases reveal that, despite efforts to educate, users still pick the same highly predictable passwords over and over. These lists make it easy for brute-force attackers to gain unauthorized access to a large number of your users' accounts.
@@ -39,7 +36,8 @@ For example, consider the throttle rule:
 
 This defines a *throttleable* event `sign_in_attempt`, which throttles based on IP address. Each time this event is attempted, UserFrosting checks the `throttles` database table for any events of the same type from the same IP address in the past 3600 seconds. If fewer than 2 are found, the request is allowed to proceed immediately. Otherwise, the user receives an error with a `429` status code, and is told that they need to wait the specified number of seconds (as defined in `delays`) before they can attempt their request again.
 
-[notice=tip]To disable a throttle, or all throttles completely, simply set the specific event key or the `throttles` key (respectively) to `null`.[/notice]
+> [!TIP]
+> To disable a throttle, or all throttles completely, simply set the specific event key or the `throttles` key (respectively) to `null`.
 
 ## Using throttles in controllers
 
@@ -96,4 +94,5 @@ $this->db->transaction(function () use ($data) {
 
 You'll notice that we first check the `password_reset_request` throttle (the client IP address is automatically retrieved by the `throttler` service) and return an error if the computed delay is greater than 0. We do this *before* the call to `logEvent` - which adds a record of this attempt to the database - so that requests which are rejected because of the throttle rule do not further exacerbate the timeout period.
 
-[notice=warning]IP-based throttling will not protect you as well from distributed attacks. One popular alternative, throttling based on username, opens your application to denial-of-service attacks because an attacker can simply lock users out of their accounts for potentially long periods of time by repeatedly making failed attempts on each account. See the [OWASP guide](https://www.owasp.org/index.php/Blocking_Brute_Force_Attacks) for more information on mitigating brute-force attacks.[/notice]
+> [!WARNING]
+> IP-based throttling will not protect you as well from distributed attacks. One popular alternative, throttling based on username, opens your application to denial-of-service attacks because an attacker can simply lock users out of their accounts for potentially long periods of time by repeatedly making failed attempts on each account. See the [OWASP guide](https://www.owasp.org/index.php/Blocking_Brute_Force_Attacks) for more information on mitigating brute-force attacks.

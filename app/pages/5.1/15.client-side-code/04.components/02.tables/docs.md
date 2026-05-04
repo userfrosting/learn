@@ -1,9 +1,6 @@
 ---
 title: Tables
-metadata:
-    description: ufTable is a wrapper for Mottie's tablesorter plugin that automatically fetches JSON data from a specified API endpoint, and dynamically builds paginated, sorted, filtered views on the fly.
-taxonomy:
-    category: docs
+description: ufTable is a wrapper for Mottie's tablesorter plugin that automatically fetches JSON data from a specified API endpoint, and dynamically builds paginated, sorted, filtered views on the fly.
 ---
 
 A typical application feature is to display a table of entities from a server-side data source (e.g., a database). For example, the `admin` Sprinkle generates client-side tables for admins to view and manage users, groups, roles, activities, and permissions:
@@ -116,7 +113,8 @@ $('#widget-users').ufTable({
 
 These will override any template identifiers specified in the table headers' `data-column-template` attributes. If you map a column name to a string, it will work the same way as `data-column-template`, using it as a selector to find a corresponding `<script>` element that contains a Handlebars template. However if you map a column name to a _callback_, the callback will be used directly to render the corresponding cells for that column. An object containing the `row` object, the `rownum` row number, and the `site` object will be passed into the callback during table rendering.
 
-[notice=tip]Using a callback for rendering a column is useful for example, when the logic needed to properly render the cell is too complex to delegate to Handlebars.[/notice]
+> [!TIP]
+> Using a callback for rendering a column is useful for example, when the logic needed to properly render the cell is too complex to delegate to Handlebars.
 
 ##### `data-priority`
 
@@ -373,7 +371,8 @@ Specify whether to display a loading transition overlay on the table while waiti
 
 Specify the templates used to render the cells of each column, by mapping each column name to either a reference to a `<script>` tag that contains a Handlebars template, or a or callback function. Defaults to using the references in the `data-column-template` attributes of each table column header. See the [column headers section](#data-column-template) for more information on how this works.
 
-[notice=info]Every column must have a corresponding template, defined either in `columnTemplates` or in your table headers' `data-column-template` attributes.[/notice]
+> [!IMPORTANT]
+> Every column must have a corresponding template, defined either in `columnTemplates` or in your table headers' `data-column-template` attributes.
 
 ### rowTemplate
 

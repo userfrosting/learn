@@ -1,9 +1,6 @@
 ---
 title: Client Input
-metadata:
-    description: Retrieving client input (GET, POST, PUT, DELETE, and URL arguments) in your controllers.
-taxonomy:
-    category: docs
+description: Retrieving client input (GET, POST, PUT, DELETE, and URL arguments) in your controllers.
 ---
 
 There is no such thing as a `$_GET` array or a `$_POST` array - at least, not according to the [HTTP specifications](https://en.wikipedia.org/wiki/HTTP#Message_Format). These superglobals are merely constructs offered by PHP to make your life more "convenient".
@@ -37,7 +34,8 @@ $params = $request->getQueryParams();
 echo $params['format'];
 ```
 
-[notice=note]By default, browsers typically send data (from AJAX requests, etc) for `GET` requests through the query string. Again, this does **not** mean that query strings == GET.[/notice]
+> [!NOTE]
+> By default, browsers typically send data (from AJAX requests, etc) for `GET` requests through the query string. Again, this does **not** mean that query strings == GET.
 
 ## Retrieving Body Parameters
 
@@ -56,7 +54,8 @@ $params = $request->getParsedBody();
 echo $params['username'];
 ```
 
-[notice=note]Again, browsers typically send data from `POST` requests through the message body, but this does not mean that message body and POST are equivalent concepts.[/notice]
+> [!NOTE]
+> Again, browsers typically send data from `POST` requests through the message body, but this does not mean that message body and POST are equivalent concepts.
 
 ### Uploaded Files
 

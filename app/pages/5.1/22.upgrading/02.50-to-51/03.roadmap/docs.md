@@ -1,9 +1,5 @@
 ---
 title: Coming up next
-metadata:
-    description: 
-taxonomy:
-    category: docs
 ---
 
 ### UserFrosting 5.2

@@ -1,9 +1,6 @@
 ---
 title: Configuration Files
-metadata:
-    description: Configuration files allow you to customize the default behavior of UserFrosting - for example, to toggle debugging, caching, and logging behaviors and to set other sitewide settings.
-taxonomy:
-    category: docs
+description: Configuration files allow you to customize the default behavior of UserFrosting - for example, to toggle debugging, caching, and logging behaviors and to set other sitewide settings.
 ---
 
 Configuration files allow you to customize the default behavior of UserFrosting - for example, to toggle debugging, caching, and logging behaviors and to set other sitewide settings. Configuration files are found in the `config/` directory of each Sprinkle.
@@ -75,9 +72,10 @@ To summarize, Sprinkle configuration files are loaded using the following algori
 
 If `UF_MODE` is empty or not set, UserFrosting will only load the `default.php` configuration files in each Sprinkle.
 
-[notice=tip]Use environment variables to easily set the appropriate configuration parameters for different environments. In addition to setting the `UF_MODE` environment variable to select different configuration files, you can assign sensitive information like database passwords and API keys directly to environment variables, and then reference them in your configuration files using `env()`.
-
-See [the Twelve-Factor App](https://12factor.net/config) for more information on why this is a good idea.[/notice]
+> [!TIP]
+> Use environment variables to easily set the appropriate configuration parameters for different environments. In addition to setting the `UF_MODE` environment variable to select different configuration files, you can assign sensitive information like database passwords and API keys directly to environment variables, and then reference them in your configuration files using `env()`.
+>
+> See [the Twelve-Factor App](https://12factor.net/config) for more information on why this is a good idea.
 
 The default environment mode includes:
 
@@ -88,7 +86,8 @@ The default environment mode includes:
 |   debug    | Enables all debugging options                                                 |
 |  testing   | Mode used for [automated testing](/testing)                                   |
 
-[notice=tip]The Bakery command `php bakery setup:env` can be used to switch from one environment to the other.[/notice]
+> [!TIP]
+> The Bakery command `php bakery setup:env` can be used to switch from one environment to the other.
 
 ## Accessing Config Values
 

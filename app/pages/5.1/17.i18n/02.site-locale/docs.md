@@ -1,9 +1,6 @@
 ---
 title: Setting up the site language
-metadata:
-    description: Configuration options are available to control the overall language presented by UserFrosting.
-taxonomy:
-    category: docs
+description: Configuration options are available to control the overall language presented by UserFrosting.
 ---
 
 UserFrosting is translated in a variaty of languages provided by our community. While a default locale will be used for new visitors, each user can  choose their prefered language.
@@ -18,7 +15,8 @@ For example, to use _French_ as the default locale :
 'default' => 'fr_FR',
 ```
 
-[notice=note]When returned by the browser, the browser prefered locale will be used as the default locale for guest user.[/notice]
+> [!NOTE]
+> When returned by the browser, the browser prefered locale will be used as the default locale for guest user.
 
 ## The available user locales
 
@@ -41,4 +39,5 @@ To remove one locale from the available ones, simply set the unwanted locale to 
         'th_TH' => false,
     ],
 ```
-[notice=tip]Want to add a new locale to UserFrosting? Feel free to [contribute](/contributing/supporting-userfrosting#contributing-code-and-content) on GitHub ![/notice]
+> [!TIP]
+> Want to add a new locale to UserFrosting? Feel free to [contribute](/contributing/supporting-userfrosting#contributing-code-and-content) on GitHub !

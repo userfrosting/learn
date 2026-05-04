@@ -1,9 +1,6 @@
 ---
 title: Upgrading
-metadata:
-    description: Upgrading to future versions of UserFrosting is easy...
-taxonomy:
-    category: docs
+description: Upgrading to future versions of UserFrosting is easy...
 ---
 
 #### Chapter 22

@@ -1,14 +1,13 @@
 ---
 title: Adding a 3rd party Javascript package
-metadata:
-    description: An example of how to add a 3rd party javascript package using Webpack.
-taxonomy:
-    category: docs
+description: An example of how to add a 3rd party javascript package using Webpack.
 ---
 
-[notice=note]This recipe assumes that you've already setup your own UserFrosting instance from the Skeleton template and you're familiar with the basics of UserFrosting.[/notice]
+> [!NOTE]
+> This recipe assumes that you've already setup your own UserFrosting instance from the Skeleton template and you're familiar with the basics of UserFrosting.
 
-[notice=tip]A complete example of this guide can be found on GitHub : [https://github.com/userfrosting/recipe-js-package](https://github.com/userfrosting/recipe-js-package)[/notice]
+> [!TIP]
+> A complete example of this guide can be found on GitHub : [https://github.com/userfrosting/recipe-js-package](https://github.com/userfrosting/recipe-js-package)
 
 This recipe will guide you on how to add a 3rd party javascript package on a default UserFrosting installation. The process is simple, but can be challenging to understand as most 3rd party package won't provides instructions for UserFrosting Webpack setup.  
 
@@ -125,7 +124,7 @@ For the standard layout, we need to add our custom navbar element in the `main-n
 
 [center]
 ![DarkMode Lightbulb](/images/DarkReader2.png)
-[size=14]The lightbulb icon is added in the standard layout[/size]
+The lightbulb icon is added in the standard layout
 [/center]
 
 For the dashboard layout, we need to add our custom navbar element in the `navbar` from the *Admin Sprinkle*, using the `dashboard_navbar_extra` block. Create a new `app/templates/navigation/navbar.html.twig` file and copy the following code to it.
@@ -143,7 +142,7 @@ For the dashboard layout, we need to add our custom navbar element in the `navba
 
 [center]
 ![DarkMode Lightbulb Admin](/images/DarkReader3.png)
-[size=14]The lightbulb icon now is added in the dashboard layout[/size]
+The lightbulb icon now is added in the dashboard layout
 [/center]
 
 Right now, our button doesn't do anything. Let's change this by adding some JavaScript to our module. This code will set an 'on click' listener on the button mapped to a toggle function. We will also use local storage to remember the state on page reload.

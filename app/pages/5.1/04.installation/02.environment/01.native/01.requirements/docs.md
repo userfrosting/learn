@@ -1,9 +1,6 @@
 ---
 title: Installing Requirements
-metadata:
-    description: Getting UserFrosting up and running in your development environment.
-taxonomy:
-    category: docs
+description: Getting UserFrosting up and running in your development environment.
 ---
 
 If your local development environment doesn't already have the [required stack and tools](/installation/requirements), we'll now set them up. We'll go through the following:
@@ -17,13 +14,35 @@ If your local development environment doesn't already have the [required stack a
 
 If you followed the previous pages, you probably noticed two pieces of software absent from that list: The *web server software* and the *database*. This is on purpose. This guide uses the built-in PHP Server and SQLite, which don't require additional installation. Optionally, you may want to install a web server (e.g.: Apache, Nginx, etc) and a database (MariaDB, MySQL, Postgres or SQL Server). The "optional" part of this guide will cover setup for those.
 
-[notice]Please **make sure** that you have these installed **before** attempting to install UserFrosting![/notice]
+> [!NOTE]
+> Please **make sure** that you have these installed **before** attempting to install UserFrosting!
 
 ## Installing required tools
 
 ### CLI
 
-[plugin:content-inject](/04.installation/_modular/cli)
+The [command line interface](/installation/requirements/essential-tools-for-php#the-command-line-cli) will be required to perform most tasks in this guide. It's usage depends on your OS : 
+
+#### MacOS 
+If you're using MacOS, the **Terminal** is already installed on your computer. You'll find the app in `/System/Applications/Utilities/Terminal`.
+
+#### Linux
+Every Linux distro uses the command line. On Ubuntu for example, you can find a launcher for the terminal by clicking on the Activities item at the top left of the screen, then typing the first few letters of "terminal", "command", "prompt" or "shell".
+
+#### Windows
+The easiest way to setup a local dev environnement on Windows is through *Windows Subsystem for Linux* (WSL2). This is basically running Linux inside Windows. Best of both worlds! This also means most installation instructions for Windows you'll find on the internet won't work, as we're not technically *on* Windows, **we're on Ubuntu**. We'll instead use the Ubuntu installation instructions! 
+
+See this guide for more detail on this process : [Set up a WSL development environment](https://learn.microsoft.com/en-us/windows/wsl/setup/environment). The gist of it is : 
+
+1. Open *Windows Terminal*, which can be found in the [Microsoft Store](https://apps.microsoft.com/detail/9N0DX20HK701?hl=en-us&gl=US).
+2. Open the terminal and install WSL2 distro : `wsl --install`.
+3. During installation, enter a unix user with a password. Remember this password, you'll need it later!
+4. Restart Windows Terminal and open a new ***Ubuntu*** terminal. Each subsequent CLI usage on Windows will be from this Ubuntu terminal.
+
+When using Windows and WSL2, keep in mind your project files will be stored inside the Linux file system. For example, your project files will be in the Linux file system root directory (`\\wsl$\<DistroName>\home\<UserName>\Project`), not the Windows file system root directory (`C:\Users\<UserName>\Project or /mnt/c/Users/<UserName>/Project$`). See [Microsoft guide on file storage](https://learn.microsoft.com/en-us/windows/wsl/setup/environment#file-storage) for more information. 
+
+> [!TIP]
+> Also see the [Get started using Visual Studio Code with Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode) guide if you're using VSCode.
 
 ### PHP
 
@@ -35,7 +54,8 @@ The easiest way to install PHP on MacOS is through Homebrew:
 2. Install [Homebrew](https://brew.sh) using their guide
 3. Install PHP 8.3, from the terminal : `brew install shivammathur/php/php@8.3` 
 
-[notice=tip]It's possible to use multiple versions of PHP on MacOS. See [shivammathur/php documentation](https://github.com/shivammathur/homebrew-php#switch-between-php-versions).[/notice]
+> [!TIP]
+> It's possible to use multiple versions of PHP on MacOS. See [shivammathur/php documentation](https://github.com/shivammathur/homebrew-php#switch-between-php-versions).
 
 #### Linux & Windows WSL2
 Install PHP through the package manager. For example, on Ubuntu : 
@@ -72,9 +92,10 @@ Zend Engine v4.3.0, Copyright (c) Zend Technologies
 
 This is the version of PHP which will be used by Composer. Make sure it meets the minimum required version for UserFrosting!
 
-[notice]If it's a lower version than the version that you **know** your webserver uses, then chances are that your terminal is incorrectly resolving the `php` command. This happens because there is an older version of PHP (often preinstalled with your operating system) in one of the paths specified in your path variable (`$PATH` in *nix systems, `PATH` environment variable in Windows).
-
-To check the value of your `PATH` variable in *nix environments, simply run `echo $PATH`.[/notice]
+> [!NOTE]
+> If it's a lower version than the version that you **know** your webserver uses, then chances are that your terminal is incorrectly resolving the `php` command. This happens because there is an older version of PHP (often preinstalled with your operating system) in one of the paths specified in your path variable (`$PATH` in *nix systems, `PATH` environment variable in Windows).
+>
+> To check the value of your `PATH` variable in *nix environments, simply run `echo $PATH`.
 
 To check if the required extensions are enabled, you can use :
 
@@ -90,7 +111,8 @@ Next step is to install [Composer 2](/installation/requirements/essential-tools-
 mv composer.phar /usr/local/bin/composer
 ```
 
-[notice=warning]Composer has a special installer that you can use for **Windows** - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe). However, since we're using WSL2 (a Linux backend), this installer **won't work** and won't be available in the command line.[/notice]
+> [!WARNING]
+> Composer has a special installer that you can use for **Windows** - [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe). However, since we're using WSL2 (a Linux backend), this installer **won't work** and won't be available in the command line.
 
 #### Preflight checks
 
@@ -147,7 +169,8 @@ This is where email testing tools come in. When an email is sent by UserFrosting
 
 While multiple solutions are available, two are recommended by UserFrosting : **Mailpit** and **Mailtrap**. It's up to you to choose the one you prefer.
 
-[notice]Please note that in production, you _will_ need to have a real, working SMTP service. If you do not already have a mail provider, please see our section on [mail providers](/going-live/mail-providers#choosing-a-mail-service-provider) for our recommendations including both free and paid third-party mail services. While it's not recommended, a real SMTP server *can* also be used in a development environment.[/notice]
+> [!NOTE]
+> Please note that in production, you _will_ need to have a real, working SMTP service. If you do not already have a mail provider, please see our section on [mail providers](/going-live/mail-providers#choosing-a-mail-service-provider) for our recommendations including both free and paid third-party mail services. While it's not recommended, a real SMTP server *can* also be used in a development environment.
 
 #### Mailpit
 
@@ -189,7 +212,8 @@ The next tools are not required in your local development environment to run Use
 
 By default, MacOS and other Linux operating systems should come with git preinstalled. On MacOS, Apple also ships a binary package of Git with Xcode. You may not need to install it manually. If you would like to update your version of git, you can do so with their [installer](https://git-scm.com/downloads).
 
-[notice=tip]If you're looking for a Git GUI and are working with Github, you might be interested in [Github Desktop](https://desktop.github.com).[/notice]
+> [!TIP]
+> If you're looking for a Git GUI and are working with Github, you might be interested in [Github Desktop](https://desktop.github.com).
 
 ### Web Server Config
 
@@ -242,4 +266,5 @@ It's also possible to install each database provider with Docker:
 
 Before installing UserFrosting, you'll need to create a database and database user account. Consult your database documentation for more details. If you use [_phpmyadmin_](https://hub.docker.com/_/phpmyadmin) or a similar tool, you can create your database and database user through their interface. Otherwise, you can do it via the command line.
 
-[notice=note]"Database user account" and "UserFrosting user account" are not the same thing. The "database user account" is independent of UserFrosting. See your database's documentation for information on creating a database user. Make sure that your database user has all read and write permissions for your database.[/notice]
+> [!NOTE]
+> "Database user account" and "UserFrosting user account" are not the same thing. The "database user account" is independent of UserFrosting. See your database's documentation for information on creating a database user. Make sure that your database user has all read and write permissions for your database.

@@ -1,7 +1,5 @@
 ---
 title: Middlewares
-taxonomy:
-    category: docs
 ---
 
 Sometimes it can be useful to run code _before_ or _after_ the the request is handled, to either manipulate the Request and/or the Response objects. This can be done by _middlewares_. Middlewares can be used to add many feature to every page or simple routes, for example to add protection to the website, handle some configuration, inject some variable, etc.
@@ -12,7 +10,7 @@ UserFrosting implement Slim's approach to handle middleware. Slim adds middlewar
 
 When you run your UserFrosting application, the Request object traverses the middleware structure from the outside in. They first enter the outermost middleware, then the next outermost middleware, (and so on), until they ultimately arrive at the Slim application itself. After the Slim application dispatches the appropriate route, the resultant Response object exits the Slim application and traverses the middleware structure from the inside out. Ultimately, a final Response object exits the outermost middleware, is serialized into a raw HTTP response, and is returned to the HTTP client. Here's a diagram that illustrates the middleware process flow:
 
-![Middleware](middleware.png)
+![Middleware](/images/middleware.png)
 [Source](https://www.slimframework.com/docs/v4/concepts/middleware.html)
 
 ## How do I write middleware?
@@ -73,7 +71,8 @@ class ExampleAfterMiddleware implements MiddlewareInterface
 }
 ```
 
-[notice=tip]It's possible to pass variables from middleware via [request's attributes](https://www.slimframework.com/docs/v4/concepts/middleware.html#passing-variables-from-middleware).[/notice]
+> [!TIP]
+> It's possible to pass variables from middleware via [request's attributes](https://www.slimframework.com/docs/v4/concepts/middleware.html#passing-variables-from-middleware).
 
 ## How do I add middleware?
 
@@ -140,4 +139,5 @@ class MyRoutes implements RouteDefinitionInterface
 }
 ```
 
-[notice]This page was inspired by [Slim's documentation](https://www.slimframework.com/docs/v4/concepts/middleware.html). You can find more information on their documentation.[/notice]
+> [!NOTE]
+> This page was inspired by [Slim's documentation](https://www.slimframework.com/docs/v4/concepts/middleware.html). You can find more information on their documentation.

@@ -1,13 +1,11 @@
 ---
 title: Additional Recommendations
-metadata:
-    description: Additional recommended configuration steps to get the most out of your VPS production server.
-taxonomy:
-    category: docs
+description: Additional recommended configuration steps to get the most out of your VPS production server.
+obsolete: true
 ---
-[plugin:content-inject](/modular/_updateRequired)
 
-[notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+> [!NOTE]
+> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
 ## Install and configure Google's Pagespeed module
 

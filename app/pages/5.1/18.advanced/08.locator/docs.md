@@ -1,7 +1,5 @@
 ---
 title: Locator Service
-taxonomy:
-    category: docs
 ---
 
 The locator service goal is to provides an abstraction layer for the different files and folders available across different sprinkles inside UserFrosting. In other words, it is a way of aggregating many search paths together. As you've seen in the previous chapters, each sprinkle can provides multiple resources and sprinkles can have the ability to overwrite a previous sprinkle resources. All of those resources, combined with the overwriting properties of a sprinkle is handled by the locator service. _Templates_ and _config_ files are a good example of those resources.
@@ -36,7 +34,8 @@ The following streams are defined by default by UserFrosting :
 
 The paths for non-shared streams are calculated relatively from each [sprinkle path](/sprinkles/recipe#getpath), usually `./app`. The paths for shared streams are relative from the Main Sprinkle path only, unless otherwise noted.
 
-[notice=tip]The `sprinkles` stream can be used as wildcard to access pretty much anything inside a sprinkle without defining a new [custom stream](#registering-a-custom-stream).[/notice]
+> [!TIP]
+> The `sprinkles` stream can be used as wildcard to access pretty much anything inside a sprinkle without defining a new [custom stream](#registering-a-custom-stream).
 
 ### Debugging locations
 
@@ -218,7 +217,8 @@ class ResourceLocatorInitiated
 }
 ```
 
-[notice=tip]Other service can be injected inside this class[/notice]
+> [!TIP]
+> Other service can be injected inside this class
 
 The listener then need to be registered in the Sprinkle Recipe:
 

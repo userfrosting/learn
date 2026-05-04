@@ -1,9 +1,6 @@
 ---
 title: Internationalization
-metadata:
-    description: Internationalization consists of the translation files used to translate pages of your web application. UserFrosting provides a framework for translating strings and sentences easily and efficiently.
-taxonomy:
-    category: docs
+description: Internationalization consists of the translation files used to translate pages of your web application. UserFrosting provides a framework for translating strings and sentences easily and efficiently.
 ---
 
 #### Chapter 17

@@ -1,9 +1,6 @@
 ---
 title: Integrating the Database
-metadata:
-    description: Customizing our UserFrosting controller to retrieve dynamic data from the database and display it in our page.
-taxonomy:
-    category: docs
+description: Customizing our UserFrosting controller to retrieve dynamic data from the database and display it in our page.
 ---
 
 Now that we have a sprinkle with an empty page to work with, it's time to get started with our database integration. Our data structures for the database table will be straightforward. We'll store pastries in a `pastries` table using the following columns:
@@ -193,7 +190,8 @@ We also need to tell our Recipe that it will be providing migrations and seeds. 
 
 We'll then list our migration in the `getMigrations()` method, and our seed in the `getSeeds()` method. 
 
-[notice=note]Note the seed can still work if it's not registered because we're calling it directly in the migration. However, if the seed is not registered, it won't show up when running `php bakery seed`.[/notice]
+> [!NOTE]
+> Note the seed can still work if it's not registered because we're calling it directly in the migration. However, if the seed is not registered, it won't show up when running `php bakery seed`.
 
 The **MyApp** recipe should now look like this : 
 
@@ -272,7 +270,8 @@ With :
 $pastries = Pastry::all();
 ```
 
-[notice=note]Fetching all the available rows is not an ideal solution since, in production, it can involve an arbitrarily large number of rows. This can clutter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server resource usage). It is recommended to use AJAX and [**Sprunging**](/database/data-sprunjing) to display paginated data in this situation.[/notice]
+> [!NOTE]
+> Fetching all the available rows is not an ideal solution since, in production, it can involve an arbitrarily large number of rows. This can clutter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server resource usage). It is recommended to use AJAX and [**Sprunging**](/database/data-sprunjing) to display paginated data in this situation.
 
 The `$pastries` variable should now contains an [Eloquent Collection](https://laravel.com/docs/8.x/eloquent-collections) of `Pastry` objects. 
 

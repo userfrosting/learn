@@ -1,9 +1,6 @@
 ---
 title: User Accounts
-metadata:
-    description: UserFrosting ships with everything you need to create user accounts, and a rich set of features for users and administrators.
-taxonomy:
-    category: docs
+description: UserFrosting ships with everything you need to create user accounts, and a rich set of features for users and administrators.
 ---
 
 You were probably attracted to UserFrosting because you wanted to "make a site where users can sign in", or you already have a project in progress and your boss asked you to "put it behind a login," or you need to have some "protected pages." These are nontechnical terms. It will be easier for us to communicate if we first establish a common vocabulary, so that we can explain the concepts with more precision.
@@ -116,7 +113,8 @@ The second method is for "regular" sign-ins, to determine how to redirect the us
 
 After the page containing the sign-in form receives a response from the server that authentication has succeeded, it will attempt to perform the redirect. The `redirectOnLogin` Javascript function in `sprinkles/account/assets/local/pages/js/sign-in.js` will first check for a `redirect` query string parameter. If none is present, it will check for the `UF-Redirect` header in the login response. It will then perform a redirect to the appropriate URL by using the `window.location.replace` Javascript function.
 
-[notice=tip]Checkout [this recipe](/recipes/custom-login-page#changing-the-post-login-destination) for an example on how to customize the post login destination.[/notice]
+> [!TIP]
+> Checkout [this recipe](/recipes/custom-login-page#changing-the-post-login-destination) for an example on how to customize the post login destination.
 
 ## Other self-service account features
 

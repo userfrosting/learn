@@ -1,9 +1,6 @@
 ---
 title: Bakery CLI
-metadata:
-    description: Bakery is UserFrosting's very own command line interface (CLI) tool.
-taxonomy:
-    category: docs
+description: Bakery is UserFrosting's very own command line interface (CLI) tool.
 ---
 
 #### Chapter 11

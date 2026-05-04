@@ -1,9 +1,6 @@
 ---
 title: Dev Environment
-metadata:
-    description: Getting UserFrosting up and running in your development environment.
-taxonomy:
-    category: docs
+description: Getting UserFrosting up and running in your development environment.
 ---
 
 The process of setting up UserFrosting so that you can begin work in your [local development environment](/background/develop-locally-serve-globally) is known as **installation**. This is a separate process from [deployment](/going-live), when you push your fully developed application to a live server. Please be sure that you understand this distinction before proceeding further! UserFrosting is not like Wordpress, for example, where you can "install" directly to your production server.
@@ -17,4 +14,5 @@ The links below will guide you to the right installation guide for you, which ca
 - [I have a local environment set up already, I'll do everything myself](/installation/environment/native/install)
 - [I'm familiar with *Docker*, let's use that](/installation/environment/docker#get-userfrosting)
 
-[notice=warning]There are a number of "one-click" installers available, which can set up your machine with a complete web application stack in just a few minutes: **XAMPP**, **MAMP**, **WampServer**, etc. **These are not officially supported by UserFrosting and we do not recommend using them.** For "one-click" dev environment, we recommend **Docker**.[/notice]
+> [!WARNING]
+> There are a number of "one-click" installers available, which can set up your machine with a complete web application stack in just a few minutes: **XAMPP**, **MAMP**, **WampServer**, etc. **These are not officially supported by UserFrosting and we do not recommend using them.** For "one-click" dev environment, we recommend **Docker**.

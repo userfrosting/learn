@@ -1,7 +1,5 @@
 ---
 title: Running Tests
-taxonomy:
-    category: docs
 ---
 
 You can execute tests using [Phpunit](https://phpunit.de) directly : 

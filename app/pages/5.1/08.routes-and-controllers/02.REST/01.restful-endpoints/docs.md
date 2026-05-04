@@ -1,9 +1,6 @@
 ---
 title: RESTful Endpoints
-metadata:
-    description: Together, a specific url and method are commonly referred to as an **endpoint**.  It is important to use a consistent, RESTful approach to the URLs and methods you choose for each endpoint.
-taxonomy:
-    category: docs
+description: Together, a specific url and method are commonly referred to as an **endpoint**.  It is important to use a consistent, RESTful approach to the URLs and methods you choose for each endpoint.
 ---
 
 A RESTful url should represent a _thing_, not an _action_. We want to avoid putting any verbs in the name of the url. Instead, the action should be defined by the HTTP method. For example:
@@ -46,6 +43,8 @@ Here's an example of routes used by UserFrosting :
 | GET    | `/modals/users/edit`     | Get an "edit user" modal HTML fragment                      |
 
 
-[notice=note]Notice that some requests use the exact same url, and only differ in the HTTP method used. For example, `/api/users/u/bob` can be used to retrieve, update, or delete Bob's account depending on which HTTP verb we are using.[/notice]
+> [!NOTE]
+> Notice that some requests use the exact same url, and only differ in the HTTP method used. For example, `/api/users/u/bob` can be used to retrieve, update, or delete Bob's account depending on which HTTP verb we are using.
 
-[notice=tip]The `route:list` [Bakery Command](/cli/commands#route-list) will display the full list of provided routes.[/notice]
+> [!TIP]
+> The `route:list` [Bakery Command](/cli/commands#route-list) will display the full list of provided routes.

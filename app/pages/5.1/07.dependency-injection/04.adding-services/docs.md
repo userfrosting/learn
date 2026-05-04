@@ -1,9 +1,6 @@
 ---
 title: Adding Services
-metadata:
-    description: You may extend UserFrosting's default services for additional functionality, or define completely new services in your Sprinkles.
-taxonomy:
-    category: docs
+description: You may extend UserFrosting's default services for additional functionality, or define completely new services in your Sprinkles.
 ---
 
 You'll probably want to create your own services to modularize certain aspects of your own project. For example, if your application needs to interact with some third-party API like Google Maps, you might create a `MapBuilder` class that encapsulates all of that functionality. This is a cleaner and more manageable alternative to simply stuffing all of your code directly into your controller classes.
@@ -60,7 +57,8 @@ class MapBuilderService implements ServicesProviderInterface
 }
 ```
 
-[notice=tip]You'll notice that we've added `use UserFrosting\Sprinkle\Site\GoogleMaps\MapBuilder;` to the top of the file. This means that we don't have to use the fully qualified class name (with the entire namespace) every time we want to refer to the `MapBuilder` class.[/notice]
+> [!TIP]
+> You'll notice that we've added `use UserFrosting\Sprinkle\Site\GoogleMaps\MapBuilder;` to the top of the file. This means that we don't have to use the fully qualified class name (with the entire namespace) every time we want to refer to the `MapBuilder` class.
 
 If you need to pull in another service, for example the config to retrieve an API key, you can add them as the parameter, and the dependency injector will automatically pick it up.
 
