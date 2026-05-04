@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 
 // Get vite port from env, default to 3000
@@ -45,5 +45,13 @@ export default defineConfig({
     // not to prebundle them.
     optimizeDeps: {
         include: ['uikit', 'uikit/dist/js/uikit-icons']
+    },
+    test: {
+        environment: 'happy-dom',
+        coverage: {
+            provider: 'v8',
+            reporter: ['text', 'json', 'html', 'lcov'],
+            reportsDirectory: '../../_meta/frontend-coverage'
+        }
     }
 })
