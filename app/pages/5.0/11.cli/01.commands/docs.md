@@ -1,9 +1,6 @@
 ---
 title: Built-in Commands
-metadata:
-    description: An overview of the commands available in Bakery.
-taxonomy:
-    category: docs
+description: An overview of the commands available in Bakery.
 ---
 
 UserFrosting's CLI, or [*Command-line Interface*](https://en.wikipedia.org/wiki/Command-line_interface), is called the **Bakery**. It provides a number of helpful commands that can assist you while you build, manage and install your application. To view a list of all available Bakery commands, you may use the `list` command from your UserFrosting root directory:
@@ -24,7 +21,8 @@ General help can also be displayed by running:
 $ php bakery help
 ```
 
-[notice=tip]Always run any bakery command from the project root directory (`/`). Otherwise, you'll receive a `Could not open input file: bakery` error.[/notice]
+> [!TIP]
+> Always run any bakery command from the project root directory (`/`). Otherwise, you'll receive a `Could not open input file: bakery` error.
 
 ## Available commands
 
@@ -36,9 +34,11 @@ Bake is the general installation command. It combines `setup:db`, `setup:mail`, 
 $ php bakery bake
 ```
 
-[notice=tip]This command should be executed every time you run `composer update`, change assets, create a new migration, create a new sprinkle or install a [community sprinkle](/sprinkles/community).[/notice]
+> [!TIP]
+> This command should be executed every time you run `composer update`, change assets, create a new migration, create a new sprinkle or install a [community sprinkle](/sprinkles/community).
 
-[notice=tip]It is possible and easy to add your own command to the `bake` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
+> [!TIP]
+> It is possible and easy to add your own command to the `bake` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.
 
 
 ### clear-cache
@@ -49,7 +49,8 @@ The `clear-cache` command takes care of deleting all the cached data. See [Chapt
 $ php bakery clear-cache
 ```
 
-[notice=note]You might need to run this command as administrator or using `sudo` to avoid file permission issues when using the `file` cache store.[/notice]
+> [!NOTE]
+> You might need to run this command as administrator or using `sudo` to avoid file permission issues when using the `file` cache store.
 
 
 ### create:admin-user
@@ -112,7 +113,8 @@ The debug command is in fact an aggregator of sub-commands, similar to `bake`. I
 
 Some will be only displayed when the verbose mode is active.
 
-[notice=tip]It is also possible (and easy) to add your own command to the `debug` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
+> [!TIP]
+> It is also possible (and easy) to add your own command to the `debug` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.
 
 ### locale:compare
 
@@ -185,7 +187,8 @@ Example output :
 
 ### migrate
 
-[notice=warning]Database migrations have the potential to destroy data. **Always** back up production databases, and databases with important data, before running migrations on them.[/notice]
+> [!WARNING]
+> Database migrations have the potential to destroy data. **Always** back up production databases, and databases with important data, before running migrations on them.
 
 The `migrate` command runs all the pending [database migrations](/database/migrations). Migrations consist of special PHP classes used to manipulate the database structure and data, creating new tables or modifying existing ones. UserFrosting comes with a handful of migrations to create the [default tables](/database/default-tables). The built-in migrations also handle the changes in the database between versions. See the [Migrations](/database/migrations) section for more information about migrations.
 
@@ -240,7 +243,8 @@ $ php bakery migrate:rollback [options]
 
 The `migrate:reset` command is the same as the _rollback_ command, but it will revert **every** migration. Without options, this is the same as wiping the database to a clean state. 
 
-[notice=warning]**Use this command with caution!**[/notice]
+> [!WARNING]
+> **Use this command with caution!**
 
 ```bash
 $ php bakery migrate:reset [options]
@@ -257,7 +261,8 @@ $ php bakery migrate:reset [options]
 
 The `migrate:reset:hard` command is the same as the `migrate:reset` command, but it will bypass all migrations and drop all tables from the database. This can be used as a last resort when a specific migration won't allow you to reset the whole stack.
 
-[notice=warning]**Use this command with _extreme_ caution!**[/notice]
+> [!WARNING]
+> **Use this command with _extreme_ caution!**
 
 ```bash
 $ php bakery migrate:reset:hard [options]
@@ -449,7 +454,8 @@ The `setup` command combines the `setup:db`, `setup:mail` and `setup:env` comman
 $ php bakery setup
 ```
 
-[notice=tip]It is also possible (and easy) to add your own command to the `debug` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.[/notice]
+> [!TIP]
+> It is also possible (and easy) to add your own command to the `debug` command. See [Extending Aggregator Commands](/cli/extending-commands) for more information.
 
 ### sprinkle:list
 
@@ -495,9 +501,10 @@ $ php bakery test [options] [--] [<testscope>]
 | --coverage-format=COVERAGE-FORMAT | Select test coverage format. Choose from html, clover, crap4j, php, text, xml, etc. Default to HTML. |
 | --coverage-path=COVERAGE-PATH     | Code coverage report saving location. Default to `_meta/coverage`.                                   |
 
-[notice=warning]UserFrosting's built-in integration tests use a temporary in-memory SQLite database.  For testing to run successfully, you must have the `php-sqlite3` package installed and enabled.
-
-Alternatively, you can create a separate testing database and override the `test_integration` database settings in the `testing.php` [environment mode](/configuration/config-files).[/notice]
+> [!WARNING]
+> UserFrosting's built-in integration tests use a temporary in-memory SQLite database.  For testing to run successfully, you must have the `php-sqlite3` package installed and enabled.
+>
+> Alternatively, you can create a separate testing database and override the `test_integration` database settings in the `testing.php` [environment mode](/configuration/config-files).
 
 
 ### test:mail

@@ -1,9 +1,6 @@
 ---
 title: Adding custom authorization
-metadata:
-    description: Adding custom authorization rules to control access to our Pastries page.
-taxonomy:
-    category: docs
+description: Adding custom authorization rules to control access to our Pastries page.
 ---
 
 Now it's time to add custom authorization rules to our page. We will use these rules to control two things: visibility of the page itself, and visibility of the `origin` column in the table. Each one will require a new [permission](/users/access-control#permissions).
@@ -16,7 +13,8 @@ UserFrosting doesn't have a UI to create new [Permissions](/users/access-control
 
 To [create a new permission](/users/access-control#creating-new-permissions), we instead have to create a new row in the `permissions` database table. To do this, we'll use a **migration**. We've already explained how to create migration earlier, but we will now create a new migration whose role will be solely to create the new entry into the database table, and drop them on rollback. We could also use that migration to assign our new permission to existing roles, even though this _can_ be done in the admin interface.
 
-[notice=note]A seed can also be used to create permission entries. However, since a seed is only a one way operation (up) and can be run multiple times, it's best to use a migration for permissions entries. This will allow to remove the entries if the sprinkle/permission is not required anymore. Plus, since the permissions cannot be manually removed from the UI (unlike default pastries eventually, for example), there's no benefits of being able to run the seed twice.[/notice]
+> [!NOTE]
+> A seed can also be used to create permission entries. However, since a seed is only a one way operation (up) and can be run multiple times, it's best to use a migration for permissions entries. This will allow to remove the entries if the sprinkle/permission is not required anymore. Plus, since the permissions cannot be manually removed from the UI (unlike default pastries eventually, for example), there's no benefits of being able to run the seed twice.
 
 Let's start by creating our migration class. That class will be located in the same place as our other migration and will be named `PastriesPermissions`.
 
@@ -246,7 +244,8 @@ public function __invoke(
 
 At this point, we haven't yet added the `see_pastries` permission to any role. This means if you navigate to the page (with a non-root user), you'll get an error.
 
-[notice=note]If you see a detailed debugging page, don't worry. In a **production** environment, this will automatically be replaced by a generic "access denied" page.[/notice]
+> [!NOTE]
+> If you see a detailed debugging page, don't worry. In a **production** environment, this will automatically be replaced by a generic "access denied" page.
 
 #### Hide the link from the menu
 

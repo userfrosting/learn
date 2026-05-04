@@ -1,9 +1,6 @@
 ---
 title: Adding the page to the menu
-metadata:
-    description: Adding our custom page to the sidebar menu using a template extension.
-taxonomy:
-    category: docs
+description: Adding our custom page to the sidebar menu using a template extension.
 ---
 
 Now that we have our page, it's time to add it to the sidebar menu. To do so, we will [extend the default menu template](/recipes/extending-template#adding-custom-menu-entries).
@@ -28,4 +25,4 @@ The second key part is `{{ urlFor('pastries') }}`. This uses UserFrosting custom
 
 You should now see the new link in the menu:
 
-![Pastries menu link](/images/pastries/03.png)
+![Pastries menu link](/images/pastries/png)

@@ -1,9 +1,6 @@
 ---
 title: Docker
-metadata:
-  description: Docker is a containerization platform that helps maintain consistent behavior across different development and production environments.
-taxonomy:
-  category: docs
+description: Docker is a containerization platform that helps maintain consistent behavior across different development and production environments.
 ---
 
 If you don't already have a local environment or you're familiar with **Docker**, this page will guide you in installing UserFrosting using Docker.
@@ -14,8 +11,28 @@ If you're familiar with PHP development, or already have PHP installed locally, 
 
 ## Command Line Interface
 
-[plugin:content-inject](/04.installation/_modular/cli)
+The [command line interface](/installation/requirements/essential-tools-for-php#the-command-line-cli) will be required to perform most tasks in this guide. It's usage depends on your OS : 
 
+#### MacOS 
+If you're using MacOS, the **Terminal** is already installed on your computer. You'll find the app in `/System/Applications/Utilities/Terminal`.
+
+#### Linux
+Every Linux distro uses the command line. On Ubuntu for example, you can find a launcher for the terminal by clicking on the Activities item at the top left of the screen, then typing the first few letters of "terminal", "command", "prompt" or "shell".
+
+#### Windows
+The easiest way to setup a local dev environnement on Windows is through *Windows Subsystem for Linux* (WSL2). This is basically running Linux inside Windows. Best of both worlds! This also means most installation instructions for Windows you'll find on the internet won't work, as we're not technically *on* Windows, **we're on Ubuntu**. We'll instead use the Ubuntu installation instructions! 
+
+See this guide for more detail on this process : [Set up a WSL development environment](https://learn.microsoft.com/en-us/windows/wsl/setup/environment). The gist of it is : 
+
+1. Open *Windows Terminal*, which can be found in the [Microsoft Store](https://apps.microsoft.com/detail/9N0DX20HK701?hl=en-us&gl=US).
+2. Open the terminal and install WSL2 distro : `wsl --install`.
+3. During installation, enter a unix user with a password. Remember this password, you'll need it later!
+4. Restart Windows Terminal and open a new ***Ubuntu*** terminal. Each subsequent CLI usage on Windows will be from this Ubuntu terminal.
+
+When using Windows and WSL2, keep in mind your project files will be stored inside the Linux file system. For example, your project files will be in the Linux file system root directory (`\\wsl$\<DistroName>\home\<UserName>\Project`), not the Windows file system root directory (`C:\Users\<UserName>\Project or /mnt/c/Users/<UserName>/Project$`). See [Microsoft guide on file storage](https://learn.microsoft.com/en-us/windows/wsl/setup/environment#file-storage) for more information. 
+
+> [!TIP]
+> Also see the [Get started using Visual Studio Code with Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode) guide if you're using VSCode.
 ## Install Docker
 First, you'll need to install Docker. Just follow the installation instructions from the Docker Website: 
 - [Mac](https://docs.docker.com/desktop/install/mac-install/)
@@ -30,7 +47,8 @@ For the next part, you'll need to use the command line. We'll use Composer (thro
 docker run --rm -it -v "$(pwd):/app" composer create-project userfrosting/userfrosting UserFrosting "^5.0" --no-scripts --no-install --ignore-platform-reqs
 ```
 
-[notice=tip]Note the `UserFrosting` in the command. This means Composer will create a new `UserFrosting/` subdirectory inside the current location. You may change `UserFrosting` to anything you like.[/notice]
+> [!TIP]
+> Note the `UserFrosting` in the command. This means Composer will create a new `UserFrosting/` subdirectory inside the current location. You may change `UserFrosting` to anything you like.
 
 ## Build Containers & Setup UserFrosting
 
@@ -42,7 +60,8 @@ Now it's simply a matter of navigating to the directory containing the source co
    cd UserFrosting
    ```
 
-   [notice=tip]If you customized `UserFrosting` in the previous command, don't forget to change it in the command above.[/notice]
+   > [!TIP]
+> If you customized `UserFrosting` in the previous command, don't forget to change it in the command above.
 
 2. Build each of the Docker Containers (this might take a while):
    
@@ -133,14 +152,16 @@ At the heart of everything is the `docker-compose.yml` file. If you're experienc
 
 The `docker-compose.yml` file also contain the MySQL database and Mail environment variables. Since these variables are defined globally inside the container, they don't need to be redefined inside `.env` file.
 
-[notice=warning]If you have **two** instances of UserFrosting on your computer, **they will share the same config**. This means a couple of things:
+> [!WARNING]
+> If you have **two** instances of UserFrosting on your computer, **they will share the same config**. This means a couple of things:
+>
+> 1. You can't run both Docker instances of UserFrosting *at the same time* with the default config, as ports will overlap.
+> 2. Both instances will share the same database.
+>
+> If you wish to run multiple instances of UserFrosting on the same computer with Docker, you must edit the `docker-compose.yml` of all but one instance and change the default ports and database volumes / database names.
 
-1. You can't run both Docker instances of UserFrosting *at the same time* with the default config, as ports will overlap.
-2. Both instances will share the same database.
-
-If you wish to run multiple instances of UserFrosting on the same computer with Docker, you must edit the `docker-compose.yml` of all but one instance and change the default ports and database volumes / database names.[/notice]
-
-[notice]An "*address already in use*" error can be thrown if a port defined in `docker-compose.yml` is already used on your system. For example, if Mailpit is installed locally and running on the default port, you'll get a "address already in use" error when running Docker. This can be solved by changing the port in `docker-compose.yml`.[/notice]
+> [!NOTE]
+> An "*address already in use*" error can be thrown if a port defined in `docker-compose.yml` is already used on your system. For example, if Mailpit is installed locally and running on the default port, you'll get a "address already in use" error when running Docker. This can be solved by changing the port in `docker-compose.yml`.
 
 ## Production environnement
 

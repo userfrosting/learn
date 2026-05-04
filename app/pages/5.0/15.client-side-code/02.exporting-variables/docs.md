@@ -1,9 +1,6 @@
 ---
 title: Exporting Variables to Javascript
-metadata:
-    description: The server-side variables that UserFrosting automatically exports to your pages as Javascript variables, and suggestions for exporting additional variables in your application.
-taxonomy:
-    category: docs
+description: The server-side variables that UserFrosting automatically exports to your pages as Javascript variables, and suggestions for exporting additional variables in your application.
 ---
 
 We often need to access the value of some server-side variable in our client-side code. For example, we use the value `site.uri.public` throughout our Javascript code when building urls for AJAX requests. The value of this variable is taken directly from UserFrosting's configuration variable of the same name, and embedded into a Javascript variable on every page.
@@ -39,7 +36,8 @@ Alternatively, you can override `config.js.twig` in your Sprinkle. `config.js.tw
 
 ![Extending UserFrosting's client-side site variable](/images/extending-site-variable.png)
 
-[notice=warning]Remember, any data you place in the `site` variable will be visible to the end-user - all they have to do is "View source"! Don't put any sensitive or private information in this variable.[/notice]
+> [!WARNING]
+> Remember, any data you place in the `site` variable will be visible to the end-user - all they have to do is "View source"! Don't put any sensitive or private information in this variable.
 
 ## Page-specific variables
 

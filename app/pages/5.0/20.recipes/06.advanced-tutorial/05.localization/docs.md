@@ -1,9 +1,6 @@
 ---
 title: Adding localizations
-metadata:
-    description: Adding localization to the page, making the page available in multiple languages.
-taxonomy:
-    category: docs
+description: Adding localization to the page, making the page available in multiple languages.
 ---
 
 This section covers situations where you have an internationalized application - i.e., the text will need to be displayed in different languages for different users. We will first need to change the hardcoded English strings to localization keys, which create an extra layer of abstraction by mapping a common identifier to the corresponding English string. Once this is done, we'll add *French* translations for these same identifiers.
@@ -111,4 +108,4 @@ return [
 
 At this point, you can visit the user preferences and change your language to French. Once this is done, go back to the pastries page and _voilà, tout en français_ !
 
-![Pastries in French](/images/pastries/04.png)
+![Pastries in French](/images/pastries/png)

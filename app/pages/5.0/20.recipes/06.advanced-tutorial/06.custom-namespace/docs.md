@@ -1,9 +1,6 @@
 ---
 title: Customizing the Skeleton
-metadata:
-    description: The default skeleton can easily be changed
-taxonomy:
-    category: docs
+description: The default skeleton can easily be changed
 ---
 
 ## Custom Namespace

@@ -1,9 +1,6 @@
 ---
 title: Environment Variables
-metadata:
-    description: The .env file is used to define important values in development such as database credentials, which should be placed directly in environment variables during production.
-taxonomy:
-    category: docs
+description: The .env file is used to define important values in development such as database credentials, which should be placed directly in environment variables during production.
 ---
 
 The basic database settings for UserFrosting can be set through environment variables. By default, UserFrosting looks for the following environment variables:

@@ -1,9 +1,6 @@
 ---
 title: Common Problems
-metadata:
-    description: Commonly encountered issues when setting up, developing, or deploying a UserFrosting project.
-taxonomy:
-    category: docs
+description: Commonly encountered issues when setting up, developing, or deploying a UserFrosting project.
 ---
 
 ## Installation

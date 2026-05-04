@@ -1,9 +1,6 @@
 ---
 title: Extending the User model
-metadata:
-    description: Extend the user model, adding custom fields and views.
-taxonomy:
-    category: docs
+description: Extend the user model, adding custom fields and views.
 ---
 
 One of the most common questions we get from new UserFrosting developers is "how do I add new user fields?"
@@ -15,7 +12,8 @@ Our general constraints are:
 1. We will avoid modifying the `users` table directly. This will make it easier to integrate any future updates to UF that affect the `users` table. It will also help prevent collisions with any community Sprinkles that modify the `users` table. Instead, we will create a separate table, that has a one-to-one relationship with the `users` model.
 2. We will avoid overriding controller methods as much as possible. Controller methods tend to be longer and more complex than methods in our models, so again, it will be more work to integrate changes to controllers in future updates to UserFrosting. It will be much easier if instead we extend the data models whenever possible, implementing new methods that enhance the base models. We can also take advantage of Eloquent's [event handlers](https://laravel.com/docs/8.x/eloquent#events) for model classes to hook in additional functionality.
 
-[notice=tip]Don't forget to check out the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). Some may provide easy ways to add custom profile fields to your users and groups.[/notice]
+> [!TIP]
+> Don't forget to check out the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). Some may provide easy ways to add custom profile fields to your users and groups.
 
 If you haven't already, set up your site Sprinkle. For the purposes of this tutorial, we will call our Sprinkle `extend-user` with `App\ExtendUser` as a base namespace.
 
@@ -344,7 +342,8 @@ public function __construct(UserInterface $user)
 
 The dependency injection container will reference the method or property on the `Member` class instead.
 
-[notice=tip]You might want your _own_ references to be overridable by other Sprinkles that might be loaded later on. In this case, you should inject the `UserInterface` in your own classes as well.[/notice]
+> [!TIP]
+> You might want your _own_ references to be overridable by other Sprinkles that might be loaded later on. In this case, you should inject the `UserInterface` in your own classes as well.
 
 ## Extend the interface layer (controller and views)
 
@@ -427,7 +426,8 @@ class ControllerService implements ServicesProviderInterface
 }
 ```
 
-[notice=note]Don't forget to register this new service class in your Sprinkle Recipe ![/notice]
+> [!NOTE]
+> Don't forget to register this new service class in your Sprinkle Recipe !
 
 ### Override schemas
 
@@ -450,4 +450,5 @@ country:
       message: VALIDATE.LENGTH_RANGE
 ```
 
-[notice]A full implementation of this can be found in the [`extend-user`](https://github.com/userfrosting/extend-user) repository. However, this guide as not been updated yet for UserFrosting 5. Don't hesitate to contribute to this repo![/notice]
+> [!NOTE]
+> A full implementation of this can be found in the [`extend-user`](https://github.com/userfrosting/extend-user) repository. However, this guide as not been updated yet for UserFrosting 5. Don't hesitate to contribute to this repo!

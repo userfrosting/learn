@@ -1,12 +1,10 @@
 ---
 title: Customizing the login page
-metadata:
-    description: An example of how to modify UserFrosting's default login page and behavior.
-taxonomy:
-    category: docs
+description: An example of how to modify UserFrosting's default login page and behavior.
 ---
 
-[notice]This recipe assumes that you've already setup your own sprinkle and you're familiar with the basics of UserFrosting.[/notice]
+> [!NOTE]
+> This recipe assumes that you've already setup your own sprinkle and you're familiar with the basics of UserFrosting.
 
 This recipe will guide you in customizing the UserFrosting login screen. Specifically, we'll explain how to:
 - Disable the registration
@@ -15,7 +13,8 @@ This recipe will guide you in customizing the UserFrosting login screen. Specifi
 
 If you haven't already, set up your site Sprinkle as per the instructions in ["Your First UserFrosting Site"](/sprinkles/first-site). For the purposes of this tutorial, we will call our Sprinkle `site` with `App\Site` as a base namespace..
 
-[notice]This recipe was originally sponsored by [adm.ninja](https://adm.ninja). [Get in touch with the UserFrosting team](https://chat.userfrosting.com) if you want to sponsor a custom recipe for your organization![/notice]
+> [!NOTE]
+> This recipe was originally sponsored by [adm.ninja](https://adm.ninja). [Get in touch with the UserFrosting team](https://chat.userfrosting.com) if you want to sponsor a custom recipe for your organization!
 
 ## Disabling registration
 
@@ -23,7 +22,8 @@ For many reasons, you may want to disable the ability for someone to create a ne
 
 To do this, first we'll need to create a `config/` directory inside your Sprinkle directory structure. Inside this directory, we'll create a PHP file named `default.php`.
 
-[notice=tip]The name of the configuration file is important. The `default` config file will be automatically loaded when your Sprinkle is included by the system. See the [Environment Mode](/configuration/config-files#environment-modes) chapter if you want to edit a configuration value for another environment mode.[/notice]
+> [!TIP]
+> The name of the configuration file is important. The `default` config file will be automatically loaded when your Sprinkle is included by the system. See the [Environment Mode](/configuration/config-files#environment-modes) chapter if you want to edit a configuration value for another environment mode.
 
 Inside your newly created `config/default.php` file, you add any configuration options you want to overwrite or add. In this case, we want to set the `site.registration.enabled` option to `false`:
 
@@ -44,7 +44,8 @@ Save the file, reload the login page and voilà! Not only will the registration 
 
 See the [Configuration Files](/configuration/config-files) chapter for more information about editing configuration.
 
-[notice=tip]If you need to be able to control basic configuration through the web interface, check out the `ConfigManager` Sprinkle from the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). This easy to install Sprinkle provides a graphical UI to manage some of the basic UserFrosting settings, including registration, and provides APIs to add you own custom settings.[/notice]
+> [!TIP]
+> If you need to be able to control basic configuration through the web interface, check out the `ConfigManager` Sprinkle from the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). This easy to install Sprinkle provides a graphical UI to manage some of the basic UserFrosting settings, including registration, and provides APIs to add you own custom settings.
 
 ## Changing the post-login destination
 
@@ -102,7 +103,8 @@ class UserRedirectedToIndex
 }
 ```
 
-[notice=note]Note that we use Slim's route parser `urlFor` method to get the route definition from it's name. This is the same as hardcoding `'/'`. Check out [Slim's documentation](https://www.slimframework.com/docs/objects/router.html#route-names) for more info on named routes.[/notice]
+> [!NOTE]
+> Note that we use Slim's route parser `urlFor` method to get the route definition from it's name. This is the same as hardcoding `'/'`. Check out [Slim's documentation](https://www.slimframework.com/docs/objects/router.html#route-names) for more info on named routes.
 
 The last step is to register the new listener in your Sprinkle Recipe. The recipe itself will also need to implement the `UserFrosting\Event\EventListenerRecipe`.
 
@@ -179,7 +181,8 @@ Did you notice how the `login-logo` div is now inside the `login-box-body` and t
 
 ![Custom login template](/images/custom-login.png)
 
-[notice=tip]You can also use the blocks definition to partially edit a template. See the [Extending Templates and Menus](/recipes/extending-template) recipe for more information.[/notice]
+> [!TIP]
+> You can also use the blocks definition to partially edit a template. See the [Extending Templates and Menus](/recipes/extending-template) recipe for more information.
 
 ### Customizing the CSS
 
@@ -206,7 +209,8 @@ import 'theme-adminlte/app/assets/userfrosting/js/pages/sign-in';
 import './css/login-page.css';
 ```
 
-[notice=note]It could also be possible to define a separate entry, and load both the default entry and our custom entry on the same page[/notice]
+> [!NOTE]
+> It could also be possible to define a separate entry, and load both the default entry and our custom entry on the same page
 
 Next, we need to replace the `page.sign-in` webpack entry. In your Sprinkle's `/webpack.entries.js`, add this entry:
 

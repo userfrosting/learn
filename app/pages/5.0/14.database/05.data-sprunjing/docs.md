@@ -1,9 +1,6 @@
 ---
 title: Data Sprunjing
-metadata:
-    description: Sprunjing is our term for the common task of filtering, sorting, and paginating data from the database.  Data can be sprunjed for JSON or CSV output.
-taxonomy:
-    category: docs
+description: Sprunjing is our term for the common task of filtering, sorting, and paginating data from the database.  Data can be sprunjed for JSON or CSV output.
 ---
 
 Once your users log in, you'll probably want to have them interact with your data models in some way. One very common UI pattern is to present a list or table of data to a user, and allow them to **sort**, **paginate**, and **search/filter** the data. For example, the [tablesorter](https://mottie.github.io/tablesorter/docs/) and [select2](http://select2.github.io/) plugins follow this pattern.
@@ -99,7 +96,8 @@ class OwlSprunje extends Sprunje
 
 This whitelisting is done to prevent consumers of your API from sorting/filtering on arbitrary columns, which could reveal potentially sensitive information. For example, even if you don't return the actual **value** of a column in your result set (e.g., `is_admin`), one could still determine which users are admins, for example, by filtering based on `is_admin=1`. Whitelisting ensures that this cannot happen.
 
-[notice]Both `sorts` and `filters` can accept multiple values separated by `||`, which will cause your Sprunje to return rows that match *any* of the values.[/notice]
+> [!NOTE]
+> Both `sorts` and `filters` can accept multiple values separated by `||`, which will cause your Sprunje to return rows that match *any* of the values.
 
 ## Using your Sprunje
 
@@ -297,7 +295,8 @@ An array mapping each listable field to a list of possible values can be obtaine
 }
 ```
 
-[notice=warning]It is recommended to use strings for both the `value` and `text` for compatibility purposes with the TableSorter plugin. You can cast your value to a string by wrapping it in double quotation marks or with `(string)` prefix of the value. See [this thread](https://github.com/userfrosting/UserFrosting/issues/966#issuecomment-483245033) for an example.[/notice]
+> [!WARNING]
+> It is recommended to use strings for both the `value` and `text` for compatibility purposes with the TableSorter plugin. You can cast your value to a string by wrapping it in double quotation marks or with `(string)` prefix of the value. See [this thread](https://github.com/userfrosting/UserFrosting/issues/966#issuecomment-483245033) for an example.
 
 Of course you can override the default listing behavior for a field by defining a custom method. This method must consist of the field name (converted to StudlyCase) prefixed with `list`:
 

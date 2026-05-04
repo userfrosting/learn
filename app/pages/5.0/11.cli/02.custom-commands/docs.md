@@ -1,9 +1,6 @@
 ---
 title: Custom Commands
-metadata:
-    description: You may extend the UserFrosting\System\Bakery\BaseCommand class to implement your own CLI commands that can be run through Bakery.
-taxonomy:
-    category: docs
+description: You may extend the UserFrosting\System\Bakery\BaseCommand class to implement your own CLI commands that can be run through Bakery.
 ---
 
 While the Bakery CLI tool comes with great built-in commands, your Sprinkles can also take advantage of the Bakery by adding their own cli commands.
@@ -24,15 +21,15 @@ Interacting with the user can be done with the `SymfonyStyle` instance defined i
 
 The UserFrosting service providers can be injected using the PHP-DI `#[Inject]` [PHP Attribute](https://php-di.org/doc/attributes.html#inject) or via the constructor method with Autowiring.
 
-[notice=warning]Because all Bakery commands extend a base class originating from Symfony, don't forget to call the parent constructor when injecting dependency through autowiring in the constructor. For example, to inject `EventDispatcherInterface`:
-```php
-public function __construct(
-    protected EventDispatcherInterface $eventDispatcher
-) {
-    parent::__construct(); // <-- Don't forget to add this !
-}
-```
-[/notice]
+> [!WARNING]
+> Because all Bakery commands extend a base class originating from Symfony, don't forget to call the parent constructor when injecting dependency through autowiring in the constructor. For example, to inject `EventDispatcherInterface`:
+> ```php
+> public function __construct(
+>     protected EventDispatcherInterface $eventDispatcher
+> ) {
+>     parent::__construct(); // <-- Don't forget to add this !
+> }
+> ```
 
 In all cases, Bakery command classes will be instantiated by the DI Container, and all dependency will be properly injected at run time.
 

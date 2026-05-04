@@ -1,9 +1,6 @@
 ---
 title: Referencing static assets
-metadata:
-    description: Referencing statics assets in your Twig templates.
-taxonomy:
-    category: docs
+description: Referencing statics assets in your Twig templates.
 ---
 
 When a user loads a page of your website in their browser, it includes a number of `<link ...>`, `<img ...>`, `<script ...>` and other tags that tell their browser how to fetch these additional resources from the server. Since the client must issue a separate request to retrieve an asset after loading a page, we need a way to generate asset URLs in our templates. To automatically build a url for a single asset in a Twig template, you may use the `asset()` helper. This helper takes a file path to an asset, and generates an appropriate absolute url:
@@ -30,10 +27,9 @@ Encore
 
 See [Encore documentation](https://symfony.com/doc/current/frontend/encore/copy-files.html#referencing-image-files-from-a-template) for more information.
 
-[notice]
-The same method can be used to reference javascript and css files. 
-```
-<script src="{{ asset('assets/js/barn-owl.js') }}">
-```
-However, for Javascript and CSS files, it's generally best to use assets bundling, which we'll see in the next page.
-[/notice]
+> [!NOTE]
+> The same method can be used to reference javascript and css files. 
+> ```
+> <script src="{{ asset('assets/js/barn-owl.js') }}">
+> ```
+> However, for Javascript and CSS files, it's generally best to use assets bundling, which we'll see in the next page.

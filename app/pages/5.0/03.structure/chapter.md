@@ -1,9 +1,6 @@
 ---
 title: App Structure
-metadata:
-    description: UserFrosting is modular application framework built on the shoulders of giants. This chapter describes how UserFrosting is structured.
-taxonomy:
-    category: docs
+description: UserFrosting is modular application framework built on the shoulders of giants. This chapter describes how UserFrosting is structured.
 ---
 
 #### Chapter 3

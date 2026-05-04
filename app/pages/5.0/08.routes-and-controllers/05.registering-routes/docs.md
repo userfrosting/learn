@@ -1,14 +1,12 @@
 ---
 title: Registering Routes
-metadata:
-    description: Once your routes definitions are ready, you have to register them inside your Sprinkle Recipe.
-taxonomy:
-    category: docs
+description: Once your routes definitions are ready, you have to register them inside your Sprinkle Recipe.
 ---
 
 So far we've seen how to [create routes definitions](/routes-and-controllers/front-controller) and [controller classes](/routes-and-controllers/controller-classes). However, there one last step required for our routes to be enabled inside our application. That is registering the route class inside the [Sprinkle Recipe](/sprinkles/recipe#getroutes). 
 
-[notice]Previous version of UserFrosting relied on a naming convention for registering the routes. Routes were expected to be placed in a special directory, and would automatically be registered at runtime. To provide more flexibility, the naming convention has been dropped in UserFrosting 5. You now have to register every class you wish to register, in the order you want them to be registered, inside the Sprinkle Recipe.[/notice]
+> [!NOTE]
+> Previous version of UserFrosting relied on a naming convention for registering the routes. Routes were expected to be placed in a special directory, and would automatically be registered at runtime. To provide more flexibility, the naming convention has been dropped in UserFrosting 5. You now have to register every class you wish to register, in the order you want them to be registered, inside the Sprinkle Recipe.
 
 First step is to create a new class that will returns the Slim route definition. This class **must** implement the `UserFrosting\Routes\RouteDefinitionInterface` interface from the UserFrosting Framework. For example : 
 
@@ -66,9 +64,11 @@ class MyApp implements SprinkleRecipe {
 
 The routes definitions defined un `MyRoutes` will now be served by UserFrosting !
 
-[notice]Controller classes doesn't need to be registered. As seen in the previous pages, the controller classes will be automatically injected by the Dependency Injection Container when the route is resolved.[/notice]
+> [!NOTE]
+> Controller classes doesn't need to be registered. As seen in the previous pages, the controller classes will be automatically injected by the Dependency Injection Container when the route is resolved.
 
-[notice=tip]Routes classes can be located anywhere. Here they are in `/app/src/` directly. But you can definitively store them in other directory or subdirectories. For example : `app/src/Routes/`, `app/src/Routes/Api/`, `app/src/Owls/Routes/`, etc. Don't forget to adapt the namespace accordingly and import the correct class in your recipe ![/notice]
+> [!TIP]
+> Routes classes can be located anywhere. Here they are in `/app/src/` directly. But you can definitively store them in other directory or subdirectories. For example : `app/src/Routes/`, `app/src/Routes/Api/`, `app/src/Owls/Routes/`, etc. Don't forget to adapt the namespace accordingly and import the correct class in your recipe !
 
 ## Overriding Routes
 
@@ -81,4 +81,5 @@ Cannot register two routes matching "/" for method "GET"
 To solve this, it's possible to manually customize a dependency Sprinkle Recipe. Check out the [Advanced Dev Features](/advanced) chapter for more info on this technique.
  <!-- TODO : Update link when page is created -->
 
-[notice=tip]For this reason, if you plan to distribute your Sprinkle as a Community Sprinkle, it can be helpful to split your routes into multiple classes instead of a single big class. It will be easier for dependent sprinkle to cherry pick the routes they need or want to overwrites.[/notice]
+> [!TIP]
+> For this reason, if you plan to distribute your Sprinkle as a Community Sprinkle, it can be helpful to split your routes into multiple classes instead of a single big class. It will be easier for dependent sprinkle to cherry pick the routes they need or want to overwrites.

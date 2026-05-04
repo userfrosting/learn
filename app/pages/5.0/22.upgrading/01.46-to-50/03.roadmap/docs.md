@@ -1,9 +1,5 @@
 ---
 title: Future Roadmap
-metadata:
-    description: 
-taxonomy:
-    category: docs
 ---
 
 ## How will future update be done?

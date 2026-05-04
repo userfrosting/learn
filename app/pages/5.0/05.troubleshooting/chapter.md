@@ -1,9 +1,6 @@
 ---
 title: Troubleshooting
-metadata:
-    description: Troubleshooting installation and your application.
-taxonomy:
-    category: docs
+description: Troubleshooting installation and your application.
 ---
 
 #### Chapter 5

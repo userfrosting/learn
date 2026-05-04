@@ -1,9 +1,6 @@
 ---
 title: Creating a custom locale
-metadata:
-    description: TODO
-taxonomy:
-    category: docs
+description: TODO
 ---
 
 Whether to add an unsupported language (Klingon anyone?), to create a new dialect (eg. French Canadian), or simply to modify the predefined values, a custom locale can help you communicate with your end users.

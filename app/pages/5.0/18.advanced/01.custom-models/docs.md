@@ -1,9 +1,6 @@
 ---
 title: Using Custom Data Models
-metadata:
-    description: The dependency injector makes it easy to override entire data models in your Sprinkle.
-taxonomy:
-    category: docs
+description: The dependency injector makes it easy to override entire data models in your Sprinkle.
 ---
 
 Extending PHP classes is a little different from extending other types of entities. You cannot simply replace a class by redefining it in a custom Sprinkle. In fact, classes with the same name in two different Sprinkles would be treated as two different fully-qualified classes per the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/). For example, if I loaded the Sprinkles `Account` and `Site`, and I had the following structure:
@@ -123,7 +120,8 @@ class ModelsService implements ServicesProviderInterface
 }
 ```
 
-[notice=note]Keep in mind the last Sprinkle to be loaded, via the dependency tree, will be the last one to take effect. For example, if *Site* depends on *Feature* which depend on *Account*, and they each associate a custom model to `UserInterface` interface, the **Site** version will be used.[/notice]
+> [!NOTE]
+> Keep in mind the last Sprinkle to be loaded, via the dependency tree, will be the last one to take effect. For example, if *Site* depends on *Feature* which depend on *Account*, and they each associate a custom model to `UserInterface` interface, the **Site** version will be used.
 
 
 Note that it's not just database models that you can dynamically remap (though they are the most common use case!) Any class references that haven't been hardcoded can be dynamically remapped in another Sprinkle's service. You can learn more about services in [Chapter 15](/services).

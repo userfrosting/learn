@@ -1,9 +1,6 @@
 ---
 title: Debugging
-metadata:
-    description: When your application "doesn't work", it's not always obvious where the problem lies. Modern web browsers come with a built-in tool for identifying problems in client-side code, as well as problems in the communication between your browser and the server.
-taxonomy:
-    category: docs
+description: When your application "doesn't work", it's not always obvious where the problem lies. Modern web browsers come with a built-in tool for identifying problems in client-side code, as well as problems in the communication between your browser and the server.
 ---
 
 As we mentioned in [Chapter 2](/background/the-client-server-conversation), a web application is not a single piece of software. It consists of the server running PHP code, the client (browser) running Javascript and rendering the web page, and the conversation between the two parties. Things can go wrong in any of these three places.
@@ -124,7 +121,8 @@ If a user encounters a runtime error in production (hopefully this will never ha
 
 You can read more about how the error-handling system as a whole works in the [Advanced](/advanced/error-handling) chapter.
 
-[notice=warning]Some runtime errors cannot be caught by the error-handling system - for example, PHP fatal errors, syntax errors or exception in the error handling system itself. If these occur, a plainly formatted error message will be generated. Depending on your settings for PHP's `log_errors` and `display_errors` settings, you can determine whether the fatal error message is displayed and/or logged. Both `display_errors` and `log_errors` are automatically set by UserFrosting under the `php` key in your [configuration files](/configuration/config-files). If UF detects that `display_errors` is disabled, it will display a generic "server error" message instead of the actual error. If `log_errors` is enabled, the actual error message will be logged with PHP's [native error logging](http://php.net/manual/en/book.errorfunc.php). You should make sure that you have specified a path to an error log file (what we will call the **php error log**) with the `error_log` directive.[/notice]
+> [!WARNING]
+> Some runtime errors cannot be caught by the error-handling system - for example, PHP fatal errors, syntax errors or exception in the error handling system itself. If these occur, a plainly formatted error message will be generated. Depending on your settings for PHP's `log_errors` and `display_errors` settings, you can determine whether the fatal error message is displayed and/or logged. Both `display_errors` and `log_errors` are automatically set by UserFrosting under the `php` key in your [configuration files](/configuration/config-files). If UF detects that `display_errors` is disabled, it will display a generic "server error" message instead of the actual error. If `log_errors` is enabled, the actual error message will be logged with PHP's [native error logging](http://php.net/manual/en/book.errorfunc.php). You should make sure that you have specified a path to an error log file (what we will call the **php error log**) with the `error_log` directive.
 
 ### Logic Errors
 
@@ -225,7 +223,8 @@ $this->logger->debug("Fetching owls from database...");
 $this->logger->debug("Owls found:", $owls);
 ```
 
-[notice]`DebugLogger` is a wrapper for a [Monolog](https://github.com/Seldaek/monolog) logger instance, whose `debug` method takes a string as the first parameter and an optional array as a second parameter, and writes them to a log file. Monolog also supports more advanced logging capabilities - check their documentation for more details.[/notice]
+> [!NOTE]
+> `DebugLogger` is a wrapper for a [Monolog](https://github.com/Seldaek/monolog) logger instance, whose `debug` method takes a string as the first parameter and an optional array as a second parameter, and writes them to a log file. Monolog also supports more advanced logging capabilities - check their documentation for more details.
 
 #### Native PHP logging
 

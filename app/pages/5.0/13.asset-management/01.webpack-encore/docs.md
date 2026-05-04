@@ -1,9 +1,6 @@
 ---
 title: Webpack Encore
-metadata:
-    description: Asset bundles should be compiled in production to allow for faster and more efficient transfer to the client.
-taxonomy:
-    category: docs
+description: Asset bundles should be compiled in production to allow for faster and more efficient transfer to the client.
 ---
 
 In a minimalistic setup, asset retrieval is fairly straightforward. We might just keep all of our Javascript files in a `js/` directory directly under our public document root directory. Then the URL is simply `http://example.com/js/whatever.js`, and our webserver matches the _URL path_ `/js/whatever.js` to the _filesystem_ path `/path/to/document/root/js/whatever.js`, and places the contents of that file in the HTTP response. In most web servers this happens so transparently, that a lot of new developers assume that they're somehow giving direct access to the server's file system. In reality the web server is mediating the interaction, and generating an HTTP response using the _contents_ of these files.
@@ -28,9 +25,10 @@ Compiling assets through Webpack Encore basically does :
 
 Webpack Encore, as with most frontend dependencies, is installed by [npm](https://www.npmjs.com). Fortunately for you, you should already have Node.js and npm installed if you completed the UserFrosting installation process successfully!
 
-[notice=note]Why do we use Node.js, anyway, instead of a PHP-based asset management tools?
-
-Because over time, npm imposed itself as the defacto manager for javascript based project. Since most frontend packages relies on Javascript, and with the arrival of more complex framework, it makes sense to use tools for these tasks in a common language. No matter which server-side technology a developer uses, they all have to deal with Javascript sooner or later. Thus, Javascript-based tools are the most popular and actively developed and maintained options.[/notice]
+> [!NOTE]
+> Why do we use Node.js, anyway, instead of a PHP-based asset management tools?
+>
+> Because over time, npm imposed itself as the defacto manager for javascript based project. Since most frontend packages relies on Javascript, and with the arrival of more complex framework, it makes sense to use tools for these tasks in a common language. No matter which server-side technology a developer uses, they all have to deal with Javascript sooner or later. Thus, Javascript-based tools are the most popular and actively developed and maintained options.
 
 Where Composer has it's `composer.json` file to defines the project dependencies, npm has the `package.json` file. The default UserFrosting `package.json` looks like this : 
 
@@ -77,7 +75,8 @@ The same goes for installing you own dependencies, which should be done using np
 npm i bootstrap --save
 ```
 
-[notice]As with Composer, `npm update` should be run after any changes made manually to `package.json`[/notice]
+> [!NOTE]
+> As with Composer, `npm update` should be run after any changes made manually to `package.json`
 
 ## Webpack Encore configuration
 
@@ -187,7 +186,8 @@ The watch option can be used when actively working on a file. It will compile as
 $ php bakery build-assets --watch
 ```
 
-[notice=warning]Whenever you make changes in your `webpack.config.js` file, you must stop and restart encore when using the "watch" option.[/notice]
+> [!WARNING]
+> Whenever you make changes in your `webpack.config.js` file, you must stop and restart encore when using the "watch" option.
 
 To compile assets for a **production** environment, simply use:
 
@@ -195,7 +195,8 @@ To compile assets for a **production** environment, simply use:
 $ php bakery build-assets --production
 ```
 
-[notice=tip]If you have shell access (for example, [using a VPS](/going-live/vps-production-environment)), you can build production assets directly on your host server as part of your deployment process. Otherwise, you can build them locally before transferring your application to the host server. Unlike Composer, frontend dependencies doesn't depend on any server configuration, so it is safe to build locally and upload the resulting build.[/notice]
+> [!TIP]
+> If you have shell access (for example, [using a VPS](/going-live/vps-production-environment)), you can build production assets directly on your host server as part of your deployment process. Otherwise, you can build them locally before transferring your application to the host server. Unlike Composer, frontend dependencies doesn't depend on any server configuration, so it is safe to build locally and upload the resulting build.
 
 Alternatively, the underlying npm scripts can also be executed directly. However, be aware some preflight check are executed by Bakery (e.g.: make sure `webpack.config.js` exist), and won't be executed if running the scripts directly.
 
