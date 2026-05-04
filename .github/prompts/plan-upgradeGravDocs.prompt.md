@@ -31,9 +31,12 @@ description: Description here.
 
 - `metadata.description` → promoted to top-level `description:`
 - `taxonomy:` block → removed entirely
-- Pages with no `metadata.description` → keep only `title:`
+- Pages with no `metadata.description` (empty or missing value) → keep only `title:`, do **not** emit `description:` at all
 - Do not add any other fields
 - If the description value is wrapped in YAML double quotes (e.g. `"Some text."`), strip the surrounding quotes in the output — unless the value contains a colon (`:`), in which case keep the quotes for valid YAML
+- If the description value is **not** quoted but **contains a colon** (`:`) in its text, wrap the entire value in double quotes to produce valid YAML (e.g. `description: "Some text: here."`)
+
+> **Edge case:** When `metadata.description:` is present but empty (no value on the line), the regex must not consume the next YAML line. Always check that the extracted description value is non-empty before promoting it.
 
 ### T2 — Notice Blocks → GitHub Alerts
 
@@ -61,6 +64,10 @@ Line two with **bold** and a [link](/page).
 > Line one.
 > Line two with **bold** and a [link](/page).
 ```
+
+> **Edge cases to handle:**
+> - **Indented notices** (e.g. inside a numbered list): `   [notice=tip]...[/notice]` — match regardless of leading whitespace, not just at line start. Move the converted alert block *outside* the list item (alerts cannot be nested in list items).
+> - **Inline notices** (opening tag mid-sentence): e.g. `Some text. [notice]Warning.[/notice]` — split the sentence before the tag, then output the alert on its own line.
 
 ### T3 — Image `?resize=` Parameters
 
@@ -203,6 +210,13 @@ Convert all `[notice...]` blocks across all files using the T2 mapping table. Ru
 
 Flatten `metadata.description` and remove `taxonomy:` blocks across all files. *Can run in parallel with Phase 2.*
 
+After running, verify no files contain `description: taxonomy:` (sign of empty-description regex bleed) and no unquoted descriptions containing a colon:
+
+```bash
+grep -rn "description: taxonomy:" app/pages/{version}/
+grep -rn '^description:' app/pages/{version}/ | grep ':' | grep -v 'description: "'
+```
+
 ### Phase 4 — Image Path Cleanup (T3)
 
 Remove `?resize=` parameters from all files identified in Phase 0. *Can run in parallel with Phase 2.*
@@ -255,4 +269,10 @@ grep -rEn "\]\([a-z]" app/pages/{version}/ | grep -v "http"
 
 Also verify:
 - Modular folders no longer exist under `app/pages/{version}/`
+- No `description: taxonomy:` values (empty-description regex bleed)
+- No unquoted `description:` values containing a colon — run:
+  ```bash
+  # Descriptions with colons that are not wrapped in double quotes
+  grep -rn '^description:' app/pages/{version}/ | grep ':' | grep -v 'description: "'
+  ```
 - Spot-check 5–6 converted pages for correct frontmatter, alert rendering, and working links in the dev server
