@@ -37,6 +37,8 @@ description: Description here.
 - If the description value is **not** quoted but **contains a colon** (`:`) in its text, wrap the entire value in double quotes to produce valid YAML (e.g. `description: "Some text: here."`)
 
 > **Edge case:** When `metadata.description:` is present but empty (no value on the line), the regex must not consume the next YAML line. Always check that the extracted description value is non-empty before promoting it.
+>
+> **Implementation note:** When extracting the value after `description:`, use `[ \t]*` (spaces/tabs only) — **not** `\s*` — to avoid crossing newline boundaries. `\s*` will consume the newline and capture the next YAML line (e.g. `taxonomy:`) as the description value when the description is empty.
 
 ### T2 — Notice Blocks → GitHub Alerts
 
@@ -68,6 +70,7 @@ Line two with **bold** and a [link](/page).
 > **Edge cases to handle:**
 > - **Indented notices** (e.g. inside a numbered list): `   [notice=tip]...[/notice]` — match regardless of leading whitespace, not just at line start. Move the converted alert block *outside* the list item (alerts cannot be nested in list items).
 > - **Inline notices** (opening tag mid-sentence): e.g. `Some text. [notice]Warning.[/notice]` — split the sentence before the tag, then output the alert on its own line.
+> - **Notices inside HTML comments** (`<!-- ... -->`): do **not** convert them. Some pages use HTML comments to temporarily disable content; converting notices inside them would corrupt the comment. Detect open comment ranges before processing and skip any notice match whose start position falls within a comment range.
 
 ### T3 — Image `?resize=` Parameters
 
@@ -117,6 +120,8 @@ obsolete: true
 (full contents of other-modular/docs.md pasted here)
 ```
 
+> **Implementation note:** Modular files often contain backslash sequences (e.g. `\wsl$`, `\h`). When substituting content via regex, **never pass the modular content as a string replacement template** — regex engines interpret `\n`, `\1`, `\h`, etc. as special sequences and will throw an error or silently corrupt the content. Always use a **literal replacement function** (e.g. a lambda that returns the string directly) so the content is treated as a plain string.
+
 The modular files themselves are deleted after all injections are resolved (see Phase 6).
 
 ### T5 — Misc Grav Syntax
@@ -157,6 +162,17 @@ Rules:
 
 ---
 
+## Implementation Strategy
+
+**Always implement phases 1–5b as a single Python script** that iterates over all `.md` files in one pass. Manual file-by-file editing across 150+ files is error-prone and non-repeatable. A script also guarantees:
+- All transformations are applied atomically and in the correct order within each file
+- The inlining lambda workaround (T4) is easy to apply
+- The run can be reset via `git checkout -- app/pages/{version}/` and rerun after any fix
+
+Save the script alongside the pages (e.g. `_meta/upgrade_grav_{version}.py`) and delete it after the upgrade is verified.
+
+---
+
 ## Execution Phases
 
 ### Phase 0 — Discovery (run before everything else)
@@ -171,24 +187,24 @@ find app/pages/{version}/modular -name "*.md" 2>/dev/null
 # All injection points
 grep -rn "plugin:content-inject" app/pages/{version}/
 
-# All image resize parameters
-grep -rn "?resize=" app/pages/{version}/
+# All image resize parameters (use -F for literal ? matching)
+grep -Frn '?resize=' app/pages/{version}/
 
 # All notice blocks
-grep -rn "\[notice" app/pages/{version}/
+grep -rn '\[notice' app/pages/{version}/
 
 # Any other unknown Grav shortcodes
-grep -rn "\[size=" app/pages/{version}/
-grep -rEn "\[[a-z]+=?" app/pages/{version}/ | grep -v "^\[!" | grep -v "notice\|size\|plugin"
+grep -rn '\[size=' app/pages/{version}/
+grep -rEn '\[[a-z]+=' app/pages/{version}/ | grep -v 'notice\|size\|plugin'
 
-# Relative image paths (missing leading /)
-grep -rEn "!\[.*\]\((\.\.?/)?images/" app/pages/{version}/
+# Relative image paths (missing leading /) — use single quotes to avoid bash ! history expansion
+grep -rEn '!\[.*\]\((\.\./)?images/' app/pages/{version}/
 
 # Internal links with numeric prefixes
-grep -rEn "\]\([^)]*[0-9]+\.[a-z]" app/pages/{version}/ | grep -v "http"
+grep -rEn '\]\([^)]*[0-9]+\.[a-z]' app/pages/{version}/ | grep -v 'http'
 
 # Internal links missing leading /
-grep -rEn "\]\([a-z]" app/pages/{version}/ | grep -v "http"
+grep -rEn '\]\([a-z]' app/pages/{version}/ | grep -v 'http'
 ```
 
 Report findings before proceeding. If any unknown shortcode patterns are found, flag them and wait for instructions.
@@ -202,38 +218,15 @@ For each injection point found in Phase 0:
 4. For all other modular files → read the file's full content and paste it verbatim in place of the inject line
 5. Confirm all injection points are resolved
 
-### Phase 2 — Notice Conversion (T2)
+### Phase 2–5b — Apply All Remaining Transformations (T1–T6)
 
-Convert all `[notice...]` blocks across all files using the T2 mapping table. Run *after* Phase 1 so inlined content is also covered.
+In the same single script pass that processes each file, apply all remaining transformations in this order:
 
-### Phase 3 — Frontmatter Upgrade (T1)
-
-Flatten `metadata.description` and remove `taxonomy:` blocks across all files. *Can run in parallel with Phase 2.*
-
-After running, verify no files contain `description: taxonomy:` (sign of empty-description regex bleed) and no unquoted descriptions containing a colon:
-
-```bash
-grep -rn "description: taxonomy:" app/pages/{version}/
-grep -rn '^description:' app/pages/{version}/ | grep ':' | grep -v 'description: "'
-```
-
-### Phase 4 — Image Path Cleanup (T3)
-
-Remove `?resize=` parameters from all files identified in Phase 0. *Can run in parallel with Phase 2.*
-
-### Phase 5 — Misc Syntax Cleanup (T5)
-
-Strip any remaining Grav-only wrapper tags identified in Phase 0. *Can run in parallel with Phase 2.*
-
-### Phase 5b — Link and Image Path Normalization (T6)
-
-For all files with issues identified in Phase 0:
-1. Fix relative image paths → absolute paths starting with `/images/`
-2. Strip numeric prefixes from internal link path segments
-3. Add leading `/` to internal links that are missing it
-4. Do not touch external links or anchor-only links
-
-*Can run in parallel with Phase 2.*
+1. **T2 — Notice conversion**: Convert all `[notice...]` blocks. Runs after Phase 1 so inlined content is covered.
+2. **T1 — Frontmatter upgrade**: Flatten `metadata.description`, remove `taxonomy:`. Remember `[ \t]*` not `\s*` when parsing the description value.
+3. **T3 — Image resize**: Remove `?resize=` query parameters.
+4. **T5 — Misc syntax**: Strip `[size=N]...[/size]` and any other unknown shortcodes.
+5. **T6 — Link normalization**: Fix relative image paths and internal links (leading `/`, numeric prefixes).
 
 ### Phase 6 — Delete Modular Folders
 
@@ -248,23 +241,25 @@ After Phase 1 is fully complete, delete:
 Run these checks after all phases — each should return no results:
 
 ```bash
-grep -rn "\[notice" app/pages/{version}/
-grep -rn "plugin:content-inject" app/pages/{version}/
-grep -rn "taxonomy:" app/pages/{version}/
-grep -rn "^    description:" app/pages/{version}/   # catches un-flattened metadata.description
-grep -rn "?resize=" app/pages/{version}/
-grep -rn "\[size=" app/pages/{version}/
+grep -rn '\[notice' app/pages/{version}/
+grep -rn 'plugin:content-inject' app/pages/{version}/
+grep -rn 'taxonomy:' app/pages/{version}/
+grep -rn '^    description:' app/pages/{version}/   # catches un-flattened metadata.description
+grep -Frn '?resize=' app/pages/{version}/          # -F for literal ? matching
+grep -rn '\[size=' app/pages/{version}/
 ```
 
+> **Note on the `[notice` check:** Results that appear inside HTML comment blocks (`<!-- ... -->`) are **expected and acceptable** — those notices were intentionally commented out in the source and must not be converted. Confirm any hits are inside `<!--` … `-->` before treating them as failures.
+
 ```bash
-# No relative image paths
-grep -rEn "!\[.*\]\((\.\.?/)?images/" app/pages/{version}/
+# No relative image paths — single quotes avoid bash ! history expansion
+grep -rEn '!\[.*\]\((\.\./)?images/' app/pages/{version}/
 
 # No internal links with numeric prefixes
-grep -rEn "\]\([^)]*[0-9]+\.[a-z]" app/pages/{version}/ | grep -v "http"
+grep -rEn '\]\([^)]*[0-9]+\.[a-z]' app/pages/{version}/ | grep -v 'http'
 
 # No internal links missing leading /
-grep -rEn "\]\([a-z]" app/pages/{version}/ | grep -v "http"
+grep -rEn '\]\([a-z]' app/pages/{version}/ | grep -v 'http'
 ```
 
 Also verify:
@@ -272,7 +267,7 @@ Also verify:
 - No `description: taxonomy:` values (empty-description regex bleed)
 - No unquoted `description:` values containing a colon — run:
   ```bash
-  # Descriptions with colons that are not wrapped in double quotes
-  grep -rn '^description:' app/pages/{version}/ | grep ':' | grep -v 'description: "'
+  # Descriptions whose value (after the key) contains a colon and is not quoted
+  grep -rn '^description: [^"].*:' app/pages/{version}/
   ```
 - Spot-check 5–6 converted pages for correct frontmatter, alert rendering, and working links in the dev server
