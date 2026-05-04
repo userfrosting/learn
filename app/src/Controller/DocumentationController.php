@@ -99,13 +99,13 @@ class DocumentationController
         $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
         $mimeType = match ($extension) {
             'jpg', 'jpeg' => 'image/jpeg',
-            'png'   => 'image/png',
-            'gif'   => 'image/gif',
-            'svg'   => 'image/svg+xml',
-            'webp'  => 'image/webp',
-            'bmp'   => 'image/bmp',
-            'ico'   => 'image/x-icon',
-            default => 'application/octet-stream',
+            'png'         => 'image/png',
+            'gif'         => 'image/gif',
+            'svg'         => 'image/svg+xml',
+            'webp'        => 'image/webp',
+            'bmp'         => 'image/bmp',
+            'ico'         => 'image/x-icon',
+            default       => 'application/octet-stream',
         };
 
         // Write the image content to response body
