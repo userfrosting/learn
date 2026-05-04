@@ -49,7 +49,8 @@ return [
         ],
         'versions' => [
             'available' => [
-                '6.0' => '6.0 Beta'
+                '6.0' => '6.0 Beta',
+                '5.1' => '5.1'
             ],
             'latest' => '6.0',
         ],
