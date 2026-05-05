@@ -1,11 +1,6 @@
 ---
 title: Basic Stack Requirements
-metadata:
-    description: UserFrosting requires a web server, PHP 5.6 or higher, and some sort of database.
-taxonomy:
-    category: docs
-process:
-    twig: true
+description: UserFrosting requires a web server, PHP 5.6 or higher, and some sort of database.
 ---
 
 The basic requirements for running UserFrosting are pretty typical of any web framework or CMS.  You'll need:

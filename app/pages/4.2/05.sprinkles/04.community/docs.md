@@ -1,9 +1,6 @@
 ---
 title: Community Sprinkles
-metadata:
-    description: Sprinkles shared between projects are called Community Sprinkles.
-taxonomy:
-    category: docs
+description: Sprinkles shared between projects are called Community Sprinkles.
 ---
 
 One great thing about the **Sprinkle system** is its ability to wrap complete functionality inside a single package. This makes it a great tool to write your website isolated from the core UserFrosting code. It also means it's super easy to share sprinkles between projects... and with other members of the UserFrosting community! That's what we call a **community sprinkle**.

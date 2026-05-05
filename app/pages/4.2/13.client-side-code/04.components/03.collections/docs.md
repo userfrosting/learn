@@ -1,12 +1,6 @@
 ---
 title: Collections
-metadata:
-    description: The ufCollection widget provides a convenient interface for associating related or child entities with a single parent entity.
-taxonomy:
-    category: docs
-process:
-    twig: true
-never_cache_twig: true
+description: The ufCollection widget provides a convenient interface for associating related or child entities with a single parent entity.
 ---
 
 {% do assets.addCss('theme://css/select2.min.css') %}

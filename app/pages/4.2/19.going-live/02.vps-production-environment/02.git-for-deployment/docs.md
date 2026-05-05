@@ -1,9 +1,6 @@
 ---
 title: Using Git for Deployment
-metadata:
-    description: Once you've set up a remote repository in your production environment, deployment can be as simple as a single `git push` command.
-taxonomy:
-    category: docs
+description: Once you've set up a remote repository in your production environment, deployment can be as simple as a single `git push` command.
 ---
 
 As we explained earlier, `git` is a good tool for deployment because it keeps track of the changes to your codebase between commits.  Once you've set up a remote repository in your production environment, deployment can be as simple as a single `git push` command.  Git will automatically determine which files need to be updated on the live server.

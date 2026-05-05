@@ -1,9 +1,6 @@
 ---
 title: Dynamic Class Mapper
-metadata:
-    description: The class mapper resolves generic class identifiers to specific class names at runtime. This makes it easy to override entire classes in your Sprinkle.
-taxonomy:
-    category: docs
+description: The class mapper resolves generic class identifiers to specific class names at runtime. This makes it easy to override entire classes in your Sprinkle.
 ---
 
 Extending PHP classes is a little different from extending other types of entities. You cannot simply replace a class by redefining it in a custom Sprinkle. In fact, classes with the same name in two different Sprinkles would be treated as two different fully-qualified classes per the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/). For example, if I loaded the Sprinkles `Account` and `Site`, and I had the following structure:

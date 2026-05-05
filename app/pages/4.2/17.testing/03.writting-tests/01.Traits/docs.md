@@ -1,7 +1,5 @@
 ---
 title: Helper Traits
-taxonomy:
-    category: docs
 ---
 
 UserFrosting provides some helper Traits to easily enable features and tools for your tests. Some of those tools make it easier to test your code against a testing database.
