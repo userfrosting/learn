@@ -1,9 +1,6 @@
 ---
 title: Changing user permissions
-metadata:
-    description: An example of how to give access to UserFrosting's default user and group pages to any registered users.  Users are granted additional permissions through their roles.
-taxonomy:
-    category: docs
+description: An example of how to give access to UserFrosting's default user and group pages to any registered users.  Users are granted additional permissions through their roles.
 ---
 
 >>>> This recipe requires UserFrosting version 4.1.12 or newer.

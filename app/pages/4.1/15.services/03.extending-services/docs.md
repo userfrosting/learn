@@ -1,9 +1,6 @@
 ---
 title: Extending Services
-metadata:
-    description: You may extend UserFrosting's default services for additional functionality, or define completely new services in your Sprinkles.
-taxonomy:
-    category: docs
+description: You may extend UserFrosting's default services for additional functionality, or define completely new services in your Sprinkles.
 ---
 
 ## Adding Services

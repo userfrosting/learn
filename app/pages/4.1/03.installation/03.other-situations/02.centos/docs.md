@@ -1,9 +1,6 @@
 ---
 title: Configuring for CentOS 7
-metadata:
-    description: Notes for configuring UserFrosting to work with CentOS 7 and Apache.
-taxonomy:
-    category: docs
+description: Notes for configuring UserFrosting to work with CentOS 7 and Apache.
 ---
 
 >>>>> If you are experiencing errors or unexpected behaviour, temporarily disable SELinux using `sudo setenforce 0` and see if the problem persists. If the error is fixed, you have an SELinux permissions error and will need to add an exception. If the error persists, this is likely not SELinux, so make sure you re-enable with `sudo setenforce 1`.

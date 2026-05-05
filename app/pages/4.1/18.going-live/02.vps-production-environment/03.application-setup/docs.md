@@ -1,9 +1,6 @@
 ---
 title: Application Setup
-metadata:
-    description: This section covers installing and using Composer, running Bakery, and configuring the webserver in the production environment.
-taxonomy:
-    category: docs
+description: This section covers installing and using Composer, running Bakery, and configuring the webserver in the production environment.
 ---
 
 To actually get our application up and running, we need to do a few more things on the remote server:

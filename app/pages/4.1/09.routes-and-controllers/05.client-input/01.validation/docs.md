@@ -1,9 +1,6 @@
 ---
 title: Validation
-metadata:
-    description: Client- and server-side validation are unified into one convenient interface using UserFrosting's Fortress package and a common set of rules defined in a JSON schema file.
-taxonomy:
-    category: docs
+description: Client- and server-side validation are unified into one convenient interface using UserFrosting's Fortress package and a common set of rules defined in a JSON schema file.
 ---
 
 The number one security rule in web development is: **never trust client input!**
@@ -32,7 +29,7 @@ Fortress solves this problem by providing a uniform interface for validating raw
 
 This process is summarized in the following flowchart:
 
-![Flowchart for unified client- and server-side validation.](/images/flowchart-fortress.png?resize=800,600)
+![Flowchart for unified client- and server-side validation.](/images/flowchart-fortress.png)
 
 ### Creating a Schema
 

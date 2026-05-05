@@ -1,9 +1,5 @@
 ---
 title: Deploying with Composer
-metadata:
-    description:
-taxonomy:
-    category: docs
 ---
 
 >NOTE: This guide assumes the reader already have a fully functionnal server with ssh access. It also assume the reader is familiar with git and Github.

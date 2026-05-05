@@ -1,9 +1,6 @@
 ---
 title: The Cache Service
-description:
-    metadata: UserFrosting provides a convenient global caching service for your application, as well as user-specific caches for user data.
-taxonomy:
-    category: docs
+description: UserFrosting provides a convenient global caching service for your application, as well as user-specific caches for user data.
 ---
 
 ## The Cache service

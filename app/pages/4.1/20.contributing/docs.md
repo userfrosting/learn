@@ -1,9 +1,6 @@
 ---
 title: Contributing
-metadata:
-    description: Help out by providing support in our chat and forums, translating content, fixing bugs, and implementing new features.
-taxonomy:
-    category: docs
+description: Help out by providing support in our chat and forums, translating content, fixing bugs, and implementing new features.
 ---
 
 ## Providing support

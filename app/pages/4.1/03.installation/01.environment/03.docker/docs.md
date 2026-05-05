@@ -1,9 +1,6 @@
 ---
 title: Docker
-metadata:
-    description: Docker is a containerization platform that helps maintain consistent behavior across different development and production environments.
-taxonomy:
-    category: docs
+description: Docker is a containerization platform that helps maintain consistent behavior across different development and production environments.
 ---
 
 >>> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).

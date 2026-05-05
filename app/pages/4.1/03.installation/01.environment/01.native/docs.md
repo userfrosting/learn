@@ -1,9 +1,6 @@
 ---
 title: Native Installation
-metadata:
-    description: Getting UserFrosting up and running in your development environment.
-taxonomy:
-    category: docs
+description: Getting UserFrosting up and running in your development environment.
 ---
 
 If you already have a local environment and you're familiar with tools like **composer**, this page will guide you in installing UserFrosting on your existing local environment. If you're don't already have a local environment set up, or you don't want to install the required software natively, you may instead want to consider setting up [Homestead](/installation/environment/homestead) as a pre-configured virtual environment.
