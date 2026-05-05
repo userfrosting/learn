@@ -1,9 +1,6 @@
 ---
 title: The DI Container
-metadata:
-    description: The Dependency Injection (DI) container provides an elegant and loosely coupled way to make various services available globally in your application.
-taxonomy:
-    category: docs
+description: The Dependency Injection (DI) container provides an elegant and loosely coupled way to make various services available globally in your application.
 ---
 
 ### Dependency Injection
@@ -106,7 +103,8 @@ $logger = $container->logger; // Pimple returns the same Logger it created earli
 
 Taken together, this means we can define our services without needing to worry about when and where their dependencies are created in our application's lifecycle.
 
-[notice=note]When we talk about services, this might bring to mind an anti-pattern called the **Service Locator Pattern**. It is true that the DIC _can_ be used as a service locator, especially if you inject the entire container into your objects. With the exception of controllers and a few other types of classes that have a very large number of dependencies, we try to avoid implementing the Service Locator Pattern whenever possible.[/notice]
+> [!NOTE]
+> When we talk about services, this might bring to mind an anti-pattern called the **Service Locator Pattern**. It is true that the DIC _can_ be used as a service locator, especially if you inject the entire container into your objects. With the exception of controllers and a few other types of classes that have a very large number of dependencies, we try to avoid implementing the Service Locator Pattern whenever possible.
 
 ### Service Providers
 

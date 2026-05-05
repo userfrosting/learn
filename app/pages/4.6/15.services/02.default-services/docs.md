@@ -1,9 +1,6 @@
 ---
 title: Default Services
-metadata:
-    description: UserFrosting's default services provide most of the tools needed to build a basic web application.
-taxonomy:
-    category: docs
+description: UserFrosting's default services provide most of the tools needed to build a basic web application.
 ---
 
 As mentioned in the last section, each Sprinkle can set up its own services through a **service provider** class. The default `core` and `account` Sprinkles set up many services that are essential to UserFrosting's functionality. These classes can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory.
@@ -118,7 +115,8 @@ Sets up UserFrosting's `Session` object (`UserFrosting\Session\Session`), which 
 
 Please note that when using file-based sessions, UserFrosting places sessions in its own `/app/sessions` directory instead of PHP's default session directory.
 
-[notice=warning]Use UserFrosting's `session` service (`$container->session`) instead of PHP's `$_SESSION` superglobal in your code for proper functionality.[/notice]
+> [!WARNING]
+> Use UserFrosting's `session` service (`$container->session`) instead of PHP's `$_SESSION` superglobal in your code for proper functionality.
 
 ### throttler
 

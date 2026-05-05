@@ -1,12 +1,10 @@
 ---
 title: Configuring for IIS
-metadata:
-    description: Additional steps needed to configure IIS to work with UserFrosting.
-taxonomy:
-    category: docs
+description: Additional steps needed to configure IIS to work with UserFrosting.
 ---
 
-[notice=note]This recipe assumes that the reader is familiar with IIS7 or greater, and that the `web.config` file has been placed in `public`.[/notice]
+> [!NOTE]
+> This recipe assumes that the reader is familiar with IIS7 or greater, and that the `web.config` file has been placed in `public`.
 
 In order for UserFrosting to work as expected under IIS, additional action may be required.
 

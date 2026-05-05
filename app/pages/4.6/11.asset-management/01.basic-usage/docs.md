@@ -1,9 +1,6 @@
 ---
 title: Basic usage
-metadata:
-    description: Referencing assets in your Twig templates.
-taxonomy:
-    category: docs
+description: Referencing assets in your Twig templates.
 ---
 
 When a user loads a page of your website in their browser, it includes a number of `<link ...>`, `<img ...>`, `<script ...>` and other tags that tell their browser how to fetch these additional resources from the server.
@@ -49,7 +46,8 @@ site
 
 Assuming we've loaded the `account` and `site` Sprinkles (in that order), we can now use the uri `assets://userfrosting/images/barn-owl.jpg` in our code, and UserFrosting will correctly resolve it to `/site/assets/userfrosting/images/barn-owl.jpg`.
 
-[notice=note]Notice the directory pattern used to organise the assets. Generally speaking, the basic assets that come with UserFrosting go in a `userfrosting/` subdirectory in each Sprinkle's main assets directory. You should put your own custom assets in a separate subdirectory at the same level, unless you actually need to override one of assets that ship with UserFrosting. This will avoid collision as you load more sprinkles.[/notice]
+> [!NOTE]
+> Notice the directory pattern used to organise the assets. Generally speaking, the basic assets that come with UserFrosting go in a `userfrosting/` subdirectory in each Sprinkle's main assets directory. You should put your own custom assets in a separate subdirectory at the same level, unless you actually need to override one of assets that ship with UserFrosting. This will avoid collision as you load more sprinkles.
 
 ### Public asset URLs
 
@@ -61,4 +59,5 @@ The question is, how does this URL get correctly resolved by the server when it 
 
 For example, `http://owlfancy.com/myUserFrostingProject/public/assets-raw/core/assets/vendor/bootstrap-3.3.6/css/bootstrap.css` will be resolved to the `core` Sprinkle, and respond with the contents of `vendor/bootstrap-3.3.6/css/bootstrap.css` (if it exists).
 
-[notice=info]The `assetLoader` service will automatically try to determine the MIME type of the asset based on the file extension, and set the appropriate `Content-Type` header in the response.[/notice]
+> [!IMPORTANT]
+> The `assetLoader` service will automatically try to determine the MIME type of the asset based on the file extension, and set the appropriate `Content-Type` header in the response.

@@ -1,12 +1,9 @@
 ---
 title: Deploying with Composer
-metadata:
-    description:
-taxonomy:
-    category: docs
 ---
 
-[notice=note]This guide assumes the reader already have a fully functionnal server with ssh access. It also assume the reader is familiar with git and Github.[/notice]
+> [!NOTE]
+> This guide assumes the reader already have a fully functionnal server with ssh access. It also assume the reader is familiar with git and Github.
 
 This recipe will guide you to create a git repository for your own Sprinkle and how you can deploy it on your production environment using Composer. This can be viewed as an alternate method of _going live_ on a server where you have the necessary tools to install UserFrosting (git, Composer, npm, node, etc.). One advantage of this method is easy setup and _super easy updates_ !
 
@@ -18,7 +15,8 @@ For this guide, we will be using **Github** as our git provider. We'll first cre
 
 First thing is to do is create a new Github repository for our Sprinkle, if you don't already have one. Note that only your sprinkle's code should be in that repository. You don't need to add the core UserFrosting code in that repository. Just your code is enough. You can look at the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories) on Github if you want an example of what a sprinkle repository looks like. Note that your repository can be public or private. Just remember that private repository can't be added to Packagist (more on this later).
 
-[notice=note]For this example, we'll name our repository `userfrosting/pastries`. The name you give your sprinkle here doesn't matter and will be prefixed with your username. Just make sure to change the references to that name later when we use it ![/notice]
+> [!NOTE]
+> For this example, we'll name our repository `userfrosting/pastries`. The name you give your sprinkle here doesn't matter and will be prefixed with your username. Just make sure to change the references to that name later when we use it !
 
 Once you have your sprinkle repository sprinkle ready and committed your code to it, you'll be ready to configure your sprinkle and start deploying !
 
@@ -96,7 +94,8 @@ That file usually contains a list of all the sprinkles we want to load on our in
 }
 ```
 
-[notice]If you want to load multiple repository using this method, simply list all of your repository in each section.[/notice]
+> [!NOTE]
+> If you want to load multiple repository using this method, simply list all of your repository in each section.
 
 #### require
 
@@ -106,7 +105,8 @@ That file usually contains a list of all the sprinkles we want to load on our in
 
 `repository` tells Composer where to find your package. Each repository here is defined using a `type` and `url`. The `type` instruct Composer on how to download to the repository and the `url` is the url of your repository. See Composer Documentation for more info on this. If your repository is on Github, just change the `userfrosting/pastries` part of the url to your repository full name.
 
-[notice=note]This is not required if you add your (public) repository to [Packagist](https://packagist.org). But at this point, it's not required. If you plan on distributing your Sprinkle, it may however be a good idea to do so.[/notice]
+> [!NOTE]
+> This is not required if you add your (public) repository to [Packagist](https://packagist.org). But at this point, it's not required. If you plan on distributing your Sprinkle, it may however be a good idea to do so.
 
 #### base
 
@@ -135,7 +135,8 @@ This will run the installation process:
 
 That's it! Your UserFrosting installation with your sprinkle should now be done!
 
-[notice=tip]This method can also be used with existing installation. Simply edit your `sprinkles.json` file and run `composer update` and `php bakery bake` to install your sprinkle.[/notice]
+> [!TIP]
+> This method can also be used with existing installation. Simply edit your `sprinkles.json` file and run `composer update` and `php bakery bake` to install your sprinkle.
 
 ## Updating
 
@@ -147,4 +148,5 @@ To update an instance of UserFrosting installed with those instructions, simply 
 
 To update your sprinkles installed using Composer, simply commit your changes to your Github repository and run `composer update`. Don't forget to run `php bakery bake` afterward too !
 
-[notice]This recipe was spronsored by @jy and [USOR](https://usorgames.com). Get in touch with the UserFrosting team if you want to sponsor your own receipe ![/notice]
+> [!NOTE]
+> This recipe was spronsored by @jy and [USOR](https://usorgames.com). Get in touch with the UserFrosting team if you want to sponsor your own receipe !

@@ -1,9 +1,5 @@
 ---
 title: 4.1.x to 4.2.x
-metadata:
-    description:
-taxonomy:
-    category: docs
 ---
 
 ## Overview
@@ -82,7 +78,8 @@ Finally, frontend dependencies are now located at `app/assets/bower_components` 
 
 As of UserFrosting 4.2.0, support for PHP version 5.6 and 7.0 is officially deprecated. While you can still use UserFrosting 4.2.x with PHP 7.0 or earlier, upgrading to PHP 7.2 or above is highly recommended as both PHP 5.6 and 7.0 have reached [End Of Life](http://php.net/supported-versions.php) since Jan. 1st 2019.
 
-[notice=warning]**The next major version of UserFrosting (4.3.x) won't support PHP 5.6 or 7.0**[/notice]
+> [!WARNING]
+> **The next major version of UserFrosting (4.3.x) won't support PHP 5.6 or 7.0**
 
 ### Complete change Log
 

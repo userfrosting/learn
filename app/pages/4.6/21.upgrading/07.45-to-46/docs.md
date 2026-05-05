@@ -1,12 +1,10 @@
 ---
 title: 4.5.x to 4.6.x
-metadata:
-    description: Upgrade guide from version 4.5.x to 4.6.x
-taxonomy:
-    category: docs
+description: Upgrade guide from version 4.5.x to 4.6.x
 ---
 
-[notice=warning]As of 4.6.3, `site.uri.public` must be explicitly set in your [`production` configuration](https://github.com/userfrosting/UserFrosting/blob/15d713a1fa2e9a67000b2a9a9413473f5c51da4d/app/sprinkles/core/config/production.php#L56) to avoid security issues. If not set, some links and emails will not work properly. See [Going Live](/going-live/vps-production-environment/application-setup#set-the-base-url) for more info.[/notice]
+> [!WARNING]
+> As of 4.6.3, `site.uri.public` must be explicitly set in your [`production` configuration](https://github.com/userfrosting/UserFrosting/blob/15d713a1fa2e9a67000b2a9a9413473f5c51da4d/app/sprinkles/core/config/production.php#L56) to avoid security issues. If not set, some links and emails will not work properly. See [Going Live](/going-live/vps-production-environment/application-setup#set-the-base-url) for more info.
 
 ## Overview
 

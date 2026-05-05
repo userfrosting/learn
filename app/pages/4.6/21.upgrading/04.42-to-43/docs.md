@@ -1,9 +1,5 @@
 ---
 title: 4.2.x to 4.3.x
-metadata:
-    description:
-taxonomy:
-    category: docs
 ---
 
 ## Overview

@@ -1,14 +1,12 @@
 ---
 title: Homestead
-metadata:
-    description: Homestead is a virtual environment, managed by Vagrant, that comes with everything you need to run UserFrosting preinstalled. It's a great way to develop in a Ubuntu environment, if you'll be running your production site in a similar environment.
-taxonomy:
-    category: docs
+description: Homestead is a virtual environment, managed by Vagrant, that comes with everything you need to run UserFrosting preinstalled. It's a great way to develop in a Ubuntu environment, if you'll be running your production site in a similar environment.
 ---
 
-[notice=note]If this is your first time installing UserFrosting or if you're not already familiar with setting up a local environment, this page will guide you in setting up your first local environment using **Homestead**.
-
-If you already have a local environment (e.g., LAMP or LEMP) and you're already familiar with **composer**, the [Native Installation](/installation/environment/native) guide is for you.[/notice]
+> [!NOTE]
+> If this is your first time installing UserFrosting or if you're not already familiar with setting up a local environment, this page will guide you in setting up your first local environment using **Homestead**.
+>
+> If you already have a local environment (e.g., LAMP or LEMP) and you're already familiar with **composer**, the [Native Installation](/installation/environment/native) guide is for you.
 
 ## Why you need a development environment
 
@@ -137,7 +135,8 @@ Once your virtual machine is up and running, you'll be able to log into it:
 vagrant ssh
 ```
 
-[notice=warning]It would appear that Git-Bash functions poorly as an SSH client in Windows.  For Windows users, you may want to use the native "command prompt" application instead.[/notice]
+> [!WARNING]
+> It would appear that Git-Bash functions poorly as an SSH client in Windows.  For Windows users, you may want to use the native "command prompt" application instead.
 
 If it connects successfully, you will see a welcome message for Ubuntu:
 
@@ -188,7 +187,8 @@ To delete and remove your server:
 vagrant destroy
 ```
 
-[notice=warning]Destroying the vagrant server will remove all traces of the VM from your computer, reclaiming any disk space used by it. However, it also means the next time you vagrant up, you will be creating a brand new VM with a fresh install of UserFrosting and a new database.[/notice]
+> [!WARNING]
+> Destroying the vagrant server will remove all traces of the VM from your computer, reclaiming any disk space used by it. However, it also means the next time you vagrant up, you will be creating a brand new VM with a fresh install of UserFrosting and a new database.
 
 ### Access phpmyadmin
 

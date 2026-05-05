@@ -1,9 +1,6 @@
 ---
 title: Dynamic Class Mapper
-metadata:
-    description: The class mapper resolves generic class identifiers to specific class names at runtime. This makes it easy to override entire classes in your Sprinkle.
-taxonomy:
-    category: docs
+description: The class mapper resolves generic class identifiers to specific class names at runtime. This makes it easy to override entire classes in your Sprinkle.
 ---
 
 Extending PHP classes is a little different from extending other types of entities. You cannot simply replace a class by redefining it in a custom Sprinkle. In fact, classes with the same name in two different Sprinkles would be treated as two different fully-qualified classes per the [PSR-4 standard](http://www.php-fig.org/psr/psr-4/). For example, if I loaded the Sprinkles `Account` and `Site`, and I had the following structure:
@@ -50,7 +47,8 @@ Of course, the limitations of object-oriented inheritance becomes clear when you
 
 To allow this sort of "_retroactive extendability_", UserFrosting introduces another layer of abstraction - the **class mapper**. The class mapper resolves generic class identifiers to specific class names at runtime. Rather than hardcoding references to `Account\Database\Models\User`, Sprinkles can generically reference `user` through the class mapper, and it will find the most recently mapped version of that class.
 
-[notice=info]Unless you plan to distribute your sprinkle or have another sprinkle extending it's functionalities, it's generally not necessary to define a new class mapping for your own classes (eg. `\UserFrosting\Sprinkle\Site\Database\Models\MyAwesomeModel`). In such cases, the hardcoding your class reference can be done safely. This of course doesn't apply for classes already registered by the default sprinkles.[/notice]
+> [!IMPORTANT]
+> Unless you plan to distribute your sprinkle or have another sprinkle extending it's functionalities, it's generally not necessary to define a new class mapping for your own classes (eg. `\UserFrosting\Sprinkle\Site\Database\Models\MyAwesomeModel`). In such cases, the hardcoding your class reference can be done safely. This of course doesn't apply for classes already registered by the default sprinkles.
 
 
 For example, a controller in the account Sprinkle could do something like:

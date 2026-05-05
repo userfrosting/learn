@@ -1,9 +1,6 @@
 ---
 title: Integrating the database
-metadata:
-    description: Customizing our UserFrosting controller to retrieve dynamic data from the database and display it in our page.
-taxonomy:
-    category: docs
+description: Customizing our UserFrosting controller to retrieve dynamic data from the database and display it in our page.
 ---
 
 Now that we have a sprinkle with an empty page to work with, it's time to get started with our database integration. Our data structures for the database table will be straightforward. We'll store pastries in a `pastries` table using the following columns:
@@ -210,7 +207,8 @@ Now that we've defined this convenient alias for our model, it's time to interac
 $pastries = Pastry::all();
 ```
 
-[notice=note]Fetching all the available rows is not an ideal solution since in production, it can involve an arbitrarily large number of rows. This can clutter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server resource usage). It is recommended to use AJAX and [**Sprunging**](/database/data-sprunjing) to display paginated data in this situation.[/notice]
+> [!NOTE]
+> Fetching all the available rows is not an ideal solution since in production, it can involve an arbitrarily large number of rows. This can clutter the UI, providing poor user experience, and can also result in poor performance (slow page generation, high server resource usage). It is recommended to use AJAX and [**Sprunging**](/database/data-sprunjing) to display paginated data in this situation.
 
 The `$pastries` variable should now contains an [Eloquent Collection](https://laravel.com/docs/8.x/eloquent-collections) of `Pastry` objects. At this point, it's a good idea to use [**debugging**](/troubleshooting/debugging#debug-statements) to make sure everything works as it should. We'll use the `Debug` facade to do so. Start by adding the facade class to the usage declaration of your class:
 

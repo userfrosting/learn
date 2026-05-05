@@ -1,9 +1,6 @@
 ---
 title: Extending Existing Services
-metadata:
-    description: You may extend UserFrosting's default services for additional functionality, or define completely new services in your Sprinkles.
-taxonomy:
-    category: docs
+description: You may extend UserFrosting's default services for additional functionality, or define completely new services in your Sprinkles.
 ---
 
 Pimple also allows us to extend services that were defined previously, for example in another Sprinkle.
@@ -40,7 +37,8 @@ public function register(ContainerInterface $container)
 }
 ```
 
-[notice=note]When extending a service, UserFrosting will always apply the extension **on top** of the previously defined service. Since each sprinkle is run in the same order they are defined in `sprinkles.json`, it's important to keep in mind you might not aways received the `core` sprinkle definition, for example, and that your own extension can be overwritten down the road by a subsequent sprinkle.[/notice]
+> [!NOTE]
+> When extending a service, UserFrosting will always apply the extension **on top** of the previously defined service. Since each sprinkle is run in the same order they are defined in `sprinkles.json`, it's important to keep in mind you might not aways received the `core` sprinkle definition, for example, and that your own extension can be overwritten down the road by a subsequent sprinkle.
 
 <!--## Overwriting existing service class
 

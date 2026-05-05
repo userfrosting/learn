@@ -1,11 +1,6 @@
 ---
 title: Basic Stack Requirements
-metadata:
-    description: UserFrosting requires a web server, PHP 7.3 or higher, and some sort of database.
-taxonomy:
-    category: docs
-process:
-    twig: true
+description: UserFrosting requires a web server, PHP 7.3 or higher, and some sort of database.
 ---
 
 The basic requirements for running UserFrosting are pretty typical of any web framework or CMS. You'll need:
@@ -14,7 +9,8 @@ The basic requirements for running UserFrosting are pretty typical of any web fr
 - **PHP 7.3** or higher (**8.0** or higher recommended)
 - Database (MariaDB, MySQL, Postgres, SQLite, or SQL Server)
 
-[notice=tip]MariaDB is just an open-source fork of MySQL. The reason it exists is because of [numerous concerns](http://www.computerworld.com.au/article/457551/dead_database_walking_mysql_creator_why_future_belongs_mariadb/) that Oracle would not do a good job honoring the open-source nature of the MySQL community. For all technical purposes, MariaDB and MySQL are more or less perfectly interoperable.[/notice]
+> [!TIP]
+> MariaDB is just an open-source fork of MySQL. The reason it exists is because of [numerous concerns](http://www.computerworld.com.au/article/457551/dead_database_walking_mysql_creator_why_future_belongs_mariadb/) that Oracle would not do a good job honoring the open-source nature of the MySQL community. For all technical purposes, MariaDB and MySQL are more or less perfectly interoperable.
 
 ### Web Server Requirements
 
@@ -83,7 +79,8 @@ Once you know the user, you can determine the group(s) to which the web server u
 
 For all other directories, you should make sure that they are *not* writable by the webserver. We also recommend keeping the `/app` directory out of your web server's document root entirely, to prevent it from inadvertently serving any files in that directory. Only the contents of `/public` need to be in the document root.
 
-[notice=tip]For detailed help with file permissions in Unix/Linux environments, please see our [Unix Primer for Ubuntu](https://learn.userfrosting.com/going-live/unix-primer-ubuntu#Filepermissions).[/notice]
+> [!TIP]
+> For detailed help with file permissions in Unix/Linux environments, please see our [Unix Primer for Ubuntu](https://learn.userfrosting.com/going-live/unix-primer-ubuntu#Filepermissions).
 
 ### Other software (local development environment only)
 
@@ -106,7 +103,8 @@ If your hosting service doesn't have PHP 7.3 or higher installed, call them and 
 
 As for your local development environment ([You _do_ have a local development environment, right ?](/background/develop-locally-serve-globally)), if it's that much of a burden then...I don't know what to tell you. So what are you waiting for? Upgrade!
 
-[notice=warning]As of UserFrosting 4.6.0, PHP 8.0 is officially recommended. While you can still use UserFrosting 4.6.x with PHP 7.3 and 7.4, upgrading to PHP 8.0 (or above) is highly recommended as both PHP 7.3 and 7.4 support will be removed the future.[/notice]
+> [!WARNING]
+> As of UserFrosting 4.6.0, PHP 8.0 is officially recommended. While you can still use UserFrosting 4.6.x with PHP 7.3 and 7.4, upgrading to PHP 8.0 (or above) is highly recommended as both PHP 7.3 and 7.4 support will be removed the future.
 
 ## Third-party components? Why don't you write all your own code?
 

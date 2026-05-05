@@ -1,9 +1,6 @@
 ---
 title: Database Seeding
-metadata:
-    description: Seeding is a simple way to populate the database with default data.
-taxonomy:
-    category: docs
+description: Seeding is a simple way to populate the database with default data.
 ---
 
 Seeding can be used to populate the database. A seed is perfect to add test or default data to the database at any moment.
@@ -14,7 +11,8 @@ While migrations acts on the structure of the database, seeds acts on the data i
 
 A seed is actually the most versatile yet simple way to interact with the database as well as many other aspect of UserFrosting. And while a seed don't have build in dependencies and has no direct way to be reverted, this can still be done manually !
 
-[notice=note]Seeds can't interact with the user through the command line and can't accept any arguments. This is because seeds can also be run outside of the Bakery. If you want to interact with the user through the console, you should write a [custom Bakery command](/cli/custom-commands).[/notice]
+> [!NOTE]
+> Seeds can't interact with the user through the command line and can't accept any arguments. This is because seeds can also be run outside of the Bakery. If you want to interact with the user through the console, you should write a [custom Bakery command](/cli/custom-commands).
 
 ## Seed structure
 
@@ -22,7 +20,8 @@ First of all, to be picked up by the `seed` bakery command, a seed class files m
 
 Each seed class needs to implement the `\UserFrosting\Sprinkle\Core\Database\Seeder\SeedInterface` interface and must at least contains the `run` method. This method will be the one ran by the `seed` Bakery command. Of course your class may contains other helper methods, but they need to be called by the `run` one. A seed can also extends the base `UserFrosting\Sprinkle\Core\Database\Seeder\BaseSeed` class, which will provide access to the service providers and [the DI Container](/services/the-di-container) (`$this->ci`) in your seed class.
 
-[notice=note]Extending the `BaseSeed` class is not required if you don't need the DI Container, but you'll still need to implement the `SeedInterface` interface.[/notice]
+> [!NOTE]
+> Extending the `BaseSeed` class is not required if you don't need the DI Container, but you'll still need to implement the `SeedInterface` interface.
 
 The basic seed class looks like this :
 
@@ -59,7 +58,8 @@ Note that seeds respects the Sprinkle priority. Let's say those two seeds are de
 
 Running the `php bakery seed Foo` command will run the class from the `MyOtherSprinkle` sprinkle. This means two sprinkles can't have the same class name for two different seeds. It does means however the sprinkle with higher priority can actually **overwrite** a seed defined by another sprinkle, just like assets or templates. This can also be used to extends a seed class defined in another sprinkle, and add more code to an existing seed.
 
-[notice=tip]Default seeds from the `core` and `account` sprinkles can be replaced with your own data by overwriting them in your own sprinkle. By doing so, initial setup of a UserFrosting instance using your sprinkle and the **bake** command won't create the default group or permissions for instance, but the one defined in your sprinkle.[/notice]
+> [!TIP]
+> Default seeds from the `core` and `account` sprinkles can be replaced with your own data by overwriting them in your own sprinkle. By doing so, initial setup of a UserFrosting instance using your sprinkle and the **bake** command won't create the default group or permissions for instance, but the one defined in your sprinkle.
 
 ## Writing a seed
 

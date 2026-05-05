@@ -1,16 +1,15 @@
 ---
 title: Unix Primer for Ubuntu
-metadata:
-    description: This chapter covers the most common commands and files that web developers might encounter when working with Ubuntu.
-taxonomy:
-    category: docs
+description: This chapter covers the most common commands and files that web developers might encounter when working with Ubuntu.
 ---
 
-[notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+> [!NOTE]
+> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
 ## Basic commands
 
-[notice=tip]When you precede a path with `/`, this indicates an **absolute** file path.  For example, `cd /` changes into the root directory, and `cd /var/log` changes into the log directory - no matter what directory you're currently in.[/notice]
+> [!TIP]
+> When you precede a path with `/`, this indicates an **absolute** file path.  For example, `cd /` changes into the root directory, and `cd /var/log` changes into the log directory - no matter what directory you're currently in.
 
 ### Files
 
@@ -110,7 +109,8 @@ Then we have the following permissions:
 - **Group**: `r-x`.  The owning group (`alex`) has read and execute permissions for this file.
 - **Other**: `r--`.  Other users only have read permissions for this file.
 
-[notice]"User" in this context refers to the _operating system's_ users.  User accounts in your UserFrosting application are **not** users on the operating system.  Visitors to your website can only interact with the files on your machine through the webserver and your application.[/notice]
+> [!NOTE]
+> "User" in this context refers to the _operating system's_ users.  User accounts in your UserFrosting application are **not** users on the operating system.  Visitors to your website can only interact with the files on your machine through the webserver and your application.
 
 #### Changing the owning user/group for a file
 

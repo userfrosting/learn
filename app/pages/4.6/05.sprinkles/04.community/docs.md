@@ -1,9 +1,6 @@
 ---
 title: Community Sprinkles
-metadata:
-    description: Sprinkles shared between projects are called Community Sprinkles.
-taxonomy:
-    category: docs
+description: Sprinkles shared between projects are called Community Sprinkles.
 ---
 
 One great thing about the **Sprinkle system** is its ability to wrap complete functionality inside a single package. This makes it a great tool to write your website isolated from the core UserFrosting code. It also means it's super easy to share sprinkles between projects... and with other members of the UserFrosting community! That's what we call a **community sprinkle**.
@@ -38,7 +35,8 @@ When sharing a community sprinkle, we highly recommend publishing it on GitHub a
 
 When executing `composer update` with the above example, composer will automatically load `foo/bar` (version 1.0.2 or above) into your `/app/sprinkles` directory, as long as `foo/bar` is defined as `userfrosting-sprinkle` type in its own `composer.json` file. That's where the magic happens! This works just like any normal Composer dependency. You can also add non-Packagist sprinkles the same way you would do with any Composer dependencies, as long as the type is set to `userfrosting-sprinkle` in the repo `composer.json`. Otherwise, composer will load the package to `app/vendor` as usual. And don't forget to add `bar` to the list of sprinkle after!
 
-[notice=tip]Other sprinkles can also be defined as your sprinkle's dependencies in your own `composer.json`.[/notice]
+> [!TIP]
+> Other sprinkles can also be defined as your sprinkle's dependencies in your own `composer.json`.
 
 By default, Composer will load into `app/sprinkles/` every dependency marked as a type `userfrosting-sprinkle` in a folder with the same name as the Packagist or GitHub repository inside `app/sprinkles`. In the above example, the `foo/bar` package would be downloaded to the `app/sprinkles/bar` directory. If you want to install your sprinkle in a different directory, you can use the `installer-name` key in your `composer.json` file.
 

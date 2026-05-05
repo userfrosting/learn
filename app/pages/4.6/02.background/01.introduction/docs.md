@@ -1,9 +1,6 @@
 ---
 title: Introduction
-metadata:
-    description: The PHP community has evolved considerably over the past decade, and this breakneck pace has caused a lot of people to get left behind.  UserFrosting aims to help new and legacy developers navigate the overwhelming ocean of tools, packages, and concepts in PHP and the modern web development community as a whole.
-taxonomy:
-    category: docs
+description: The PHP community has evolved considerably over the past decade, and this breakneck pace has caused a lot of people to get left behind.  UserFrosting aims to help new and legacy developers navigate the overwhelming ocean of tools, packages, and concepts in PHP and the modern web development community as a whole.
 ---
 
 ## Motivation
@@ -12,7 +9,7 @@ The PHP community has evolved considerably over the past decade, beginning with 
 
 This breakneck pace has caused a lot of people to get left behind.  For someone who hasn't been doing web development continuously for the past ten years, it can feel like a hopeless task to try and get acquainted with all of the new tools and frameworks that seem to be coming out every day.  Relevant comic from [Abstruse Goose](http://abstrusegoose.com/503):
 
-![BlooP and FlooP and GlooP](/images/theoretical_mathematics_however_never_goes_out_of_fashion.png?resize=500)
+![BlooP and FlooP and GlooP](/images/theoretical_mathematics_however_never_goes_out_of_fashion.png)
 
 The problem is that when you're a busy developer with a lot of Real-Life (tm) projects to work on, it's very difficult to set aside time to read a book about technology X - especially when you're not even sure that you really _need_ to learn X!
 

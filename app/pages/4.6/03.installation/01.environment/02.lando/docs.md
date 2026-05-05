@@ -1,14 +1,12 @@
 ---
 title: Lando
-metadata:
-  description: Lando is a wrapper around Docker that simplifies the process for PHP applications to run on Docker.
-taxonomy:
-  category: docs
+description: Lando is a wrapper around Docker that simplifies the process for PHP applications to run on Docker.
 ---
 
 [Lando](https://lando.dev/) provides a stable, easy-to-use, and portable local development environment. It allows you to integrate [phpMyAdmin](https://www.phpmyadmin.net/) (among [other services](https://docs.lando.dev/config/services.html)) and simplifies setting up [XDebug](https://xdebug.org/).
 
-[notice=warning]**This is a development tool!** Note that while you can run Lando in production, it is highly discouraged, not recommended and 100% not supported! DON'T DO IT![/notice]
+> [!WARNING]
+> **This is a development tool!** Note that while you can run Lando in production, it is highly discouraged, not recommended and 100% not supported! DON'T DO IT!
 
 UserFrosting ships with a default landofile in `.lando.dist.yml`, using the dist format. This enables conflict free overrides, which means you can overwrite this in your own project by creating a `.lando.yml` landofile to customized it to your needs. 
 
@@ -82,7 +80,8 @@ Next, we need to install UserFrosting.
 
 Now that you have your application running, you can access it at <http://userfrosting.lndo.site> or any other url displayed in `APPSERVER URLS` from the previous steps. 
 
-[notice=tip]Lando supports SSL as well, but if you get SSL certificate errors follow the guidance listed at [Lando Security](https://docs.lando.dev/config/security.html).[/notice]
+> [!TIP]
+> Lando supports SSL as well, but if you get SSL certificate errors follow the guidance listed at [Lando Security](https://docs.lando.dev/config/security.html).
 
 Additional tooling and services can be accessed via;
 

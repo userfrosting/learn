@@ -1,9 +1,6 @@
 ---
 title: Essential Tools for Modern PHP
-metadata:
-    description: A minimal set of tools that every PHP developer should have installed in their development environment.
-taxonomy:
-    category: docs
+description: A minimal set of tools that every PHP developer should have installed in their development environment.
 ---
 
 ## Git
@@ -49,9 +46,10 @@ The full instructions for installing Composer can be found at their [website](ht
 1. Download and run the installer as per the instructions on the [downloads page](https://getcomposer.org/download/).
 2. Run `mv composer.phar /usr/local/bin/composer` to make `composer` available as a shell command.
 
-[notice=tip]You may need to run the above command(s) with `sudo`.
-
-On some versions of MacOS the `/usr` directory does not exist by default. If you receive the error "/usr/local/bin/composer: No such file or directory" then you must create the directory manually before proceeding: `mkdir -p /usr/local/bin`.[/notice]
+> [!TIP]
+> You may need to run the above command(s) with `sudo`.
+>
+> On some versions of MacOS the `/usr` directory does not exist by default. If you receive the error "/usr/local/bin/composer: No such file or directory" then you must create the directory manually before proceeding: `mkdir -p /usr/local/bin`.
 
 ### Installing Composer (Windows)
 
@@ -72,7 +70,8 @@ $ node -v
 v12.14.1
 ```
 
-[notice]Even though we'll be using these tools to get our application ready for deployment, you don't actually need to install Node.js on your live server. You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.[/notice]
+> [!NOTE]
+> Even though we'll be using these tools to get our application ready for deployment, you don't actually need to install Node.js on your live server. You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.
 
 ### Installing Node.js (MacOS and Windows)
 

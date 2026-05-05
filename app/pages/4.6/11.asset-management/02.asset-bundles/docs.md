@@ -1,9 +1,6 @@
 ---
 title: Asset Bundles
-metadata:
-    description: Asset bundles allow you to group one or more asset references for reuse throughout your application.
-taxonomy:
-    category: docs
+description: Asset bundles allow you to group one or more asset references for reuse throughout your application.
 ---
 
 Most CSS and Javascript resources should be integrated into your pages through **asset bundles**. Asset bundles are groups of assets for which UserFrosting can automatically render `<link>` or `<script>` tags in your pages, using the `assets` Twig helper. Each Sprinkle can define asset bundles in its `asset-bundles.json` file.
@@ -62,7 +59,8 @@ By convention, Javascript bundles should be named with the `js/` prefix. The ass
 
 By convention, CSS bundles should be named with the `css/` prefix. The assets for a CSS bundle must be defined under the `styles` key in your bundle.
 
-[notice=note]Generally speaking, it is a good idea to define your Javascript and CSS resources in separate bundles. The `options` key in both types of bundles is required, and it tells [gulp-bundle-assets](https://github.com/dowjones/gulp-bundle-assets) how to construct the schema file for linking to [compiled assets](/asset-management/compiled-assets).[/notice]
+> [!NOTE]
+> Generally speaking, it is a good idea to define your Javascript and CSS resources in separate bundles. The `options` key in both types of bundles is required, and it tells [gulp-bundle-assets](https://github.com/dowjones/gulp-bundle-assets) how to construct the schema file for linking to [compiled assets](/asset-management/compiled-assets).
 
 ## Rendering bundles
 
@@ -174,7 +172,8 @@ The complete list collision rules that exist is:
 | `ignore`  | If there is a previous definition, leave it as is. |
 | `error`   | If there is a previous definition, show an error.  |
 
-[notice=note]These collision rules will only affect bundles earlier in the Sprinkle load order. So for instance, if `error` where used as the collision rule for a bundle, it can still be affected by any bundle definitions loaded after it.[/notice]
+> [!NOTE]
+> These collision rules will only affect bundles earlier in the Sprinkle load order. So for instance, if `error` where used as the collision rule for a bundle, it can still be affected by any bundle definitions loaded after it.
 
 ## Template blocks for bundles
 
@@ -226,4 +225,5 @@ Similarly, for Javascript assets, we have:
 
 The main idea is for each page to include no more than three different bundles of each type - a **sitewide bundle**, containing assets that every page on your site uses; a **page group bundle**, to share assets among sets of similar pages; and a **page-specific bundle**, for assets that are specific enough to only be needed on one page.
 
-[notice=tip]You may want to create a child abstract that extends `pages/abstract/base.html.twig` for pages that share a common asset bundle. In your child template, you can inject page group asset bundles by defining the `stylesheets_page_group` and `scripts_page_group` bundles.[/notice]
+> [!TIP]
+> You may want to create a child abstract that extends `pages/abstract/base.html.twig` for pages that share a common asset bundle. In your child template, you can inject page group asset bundles by defining the `stylesheets_page_group` and `scripts_page_group` bundles.
