@@ -9,6 +9,16 @@ const minLength: number = 3
 const dataUrl: string = '/api/search'
 
 /**
+ * Extract the current documentation version from the URL path.
+ * URL structure: /{version}/{path} (e.g., /6.0/quick-start)
+ * Returns null if no version is found (falls back to latest on the server).
+ */
+function getVersionFromUrl(): string | null {
+    const match = window.location.pathname.match(/^\/(\d+\.\d+)(?:\/|$)/)
+    return match ? match[1] : null
+}
+
+/**
  * Reactive Variables
  */
 const searchQuery = ref<string>('')
@@ -30,10 +40,12 @@ async function fetch() {
     }
 
     loading.value = true
+    const version = getVersionFromUrl()
     axios
         .get<ResultData>(dataUrl, {
             params: {
-                q: searchQuery.value
+                q: searchQuery.value,
+                ...(version !== null && { version })
             }
         })
         .then((response) => {

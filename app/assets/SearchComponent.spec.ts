@@ -8,6 +8,11 @@ vi.mock('axios')
 describe('SearchComponent', () => {
     beforeEach(() => {
         vi.resetAllMocks()
+        // Reset location to default
+        Object.defineProperty(window, 'location', {
+            value: { pathname: '/' },
+            writable: true
+        })
     })
 
     it('renders the search trigger input', () => {
@@ -61,6 +66,28 @@ describe('SearchComponent', () => {
         await wrapper.vm.$nextTick()
 
         expect(axios.get).toHaveBeenCalledWith('/api/search', { params: { q: 'test' } })
+    })
+
+    it('includes version in search params when browsing a versioned page', async () => {
+        Object.defineProperty(window, 'location', {
+            value: { pathname: '/5.1/quick-start' },
+            writable: true
+        })
+
+        vi.mocked(axios.get).mockResolvedValue({
+            data: { count: 0, size: 10, page: 1, rows: [] }
+        })
+
+        const wrapper = mount(SearchComponent)
+        const searchInput = wrapper.find('input[autofocus]')
+        await searchInput.setValue('test')
+
+        await new Promise((resolve) => setTimeout(resolve, 0))
+        await wrapper.vm.$nextTick()
+
+        expect(axios.get).toHaveBeenCalledWith('/api/search', {
+            params: { q: 'test', version: '5.1' }
+        })
     })
 
     it('shows no results message when query is long enough but no results returned', async () => {
