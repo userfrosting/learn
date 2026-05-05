@@ -1,12 +1,10 @@
 ---
 title: Server Setup
-metadata:
-    description: No matter which VPS option you choose, you'll need to make sure that you have the required software installed and properly configured for UserFrosting.
-taxonomy:
-    category: docs
+description: No matter which VPS option you choose, you'll need to make sure that you have the required software installed and properly configured for UserFrosting.
 ---
 
-[notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+> [!NOTE]
+> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
 We recommend that you start with a $5/month Droplet and install a LEMP stack (Ubuntu 16.04, nginx, MariaDB, and PHP 7). If you prefer you may install Apache instead, but nginx offers superior performance and requires less configuration.
 

@@ -1,9 +1,6 @@
 ---
 title: Adding custom authorization
-metadata:
-    description: Adding custom authorization rules to control access to our Pastries page.
-taxonomy:
-    category: docs
+description: Adding custom authorization rules to control access to our Pastries page.
 ---
 
 Now it's time to add custom authorization rules to our page. We will use these rules to control two things: visibility of the page itself, and visibility of the `origin` column in the table. Each one will require a new [permission](/users/access-control#permissions).
@@ -213,7 +210,8 @@ public function pageList(Request $request, Response $response, $args)
 
 At this point, we haven't yet added the `see_pastries` permission to any role. This means if you navigate to the page (with a non-root user), you'll get an error.
 
-[notice=note]If you see a detailed debugging page, don't worry. In a **production** environment, this will automatically be replaced by a generic "access denied" page.[/notice]
+> [!NOTE]
+> If you see a detailed debugging page, don't worry. In a **production** environment, this will automatically be replaced by a generic "access denied" page.
 
 #### Removing the link From the menu
 
@@ -233,7 +231,8 @@ Now that non-root users don't have access to the page, it would be nice to hide 
 {% endblock %}
 ```
 
-[notice=note]We don't need to tell `checkAccess` to use the current user here as it is done by default.[/notice]
+> [!NOTE]
+> We don't need to tell `checkAccess` to use the current user here as it is done by default.
 
 The link should now be hidden from the menu when you refresh the page.
 

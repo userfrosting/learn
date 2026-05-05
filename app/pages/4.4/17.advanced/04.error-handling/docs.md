@@ -1,9 +1,6 @@
 ---
 title: Exceptions and Error Handling
-metadata:
-    description: UserFrosting provides a rich set of features for catching errors and exceptions, logging or displaying detailed error information, and providing appropriate responses to the client.
-taxonomy:
-    category: docs
+description: UserFrosting provides a rich set of features for catching errors and exceptions, logging or displaying detailed error information, and providing appropriate responses to the client.
 ---
 
 Things don't always go the way they were intended in your application. Sometimes this is the client's fault, and sometimes it is the server's (i.e. _your_) fault. When this happens, it is important that your application:
@@ -107,7 +104,8 @@ Our `AuthExpiredExceptionHandler` has overridden the default `handle()` method t
 
 Notice that, no matter what, we never display a debugging page when handling an `AuthExpiredException`. This is because `AuthExpiredException` is not an error at all, but rather an exception that can be thrown during production when the application itself is functioning perfectly normally.
 
-[notice=note]You should always have your custom exception handlers extend either the base `ExceptionHandler` class, or one of its child classes (`HttpExceptionHandler`, etc).[/notice]
+> [!NOTE]
+> You should always have your custom exception handlers extend either the base `ExceptionHandler` class, or one of its child classes (`HttpExceptionHandler`, etc).
 
 ### Registering custom exception handlers
 
@@ -178,7 +176,8 @@ if ((typeof site !== "undefined") && site.debug.ajax && data.responseText) {
 
 This lets you display an error report when an exception is thrown during the AJAX request to the `/alerts` route.
 
-[notice=warning]By default, both `settings.displayErrorDetails` and `site.debug.ajax` are disabled in the production configuration environment. Do not change this! Displaying detailed exception traces in production is an extreme security risk and could leak sensitive passwords to your users and/or the public.[/notice]
+> [!WARNING]
+> By default, both `settings.displayErrorDetails` and `site.debug.ajax` are disabled in the production configuration environment. Do not change this! Displaying detailed exception traces in production is an extreme security risk and could leak sensitive passwords to your users and/or the public.
 
 ## Custom exceptions
 

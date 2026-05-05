@@ -1,9 +1,6 @@
 ---
 title: Introduction
-metadata:
-    description: A Sprinkle can contain assets, configuration files, translations, routes, PHP classes, and Twig templates.
-taxonomy:
-    category: docs
+description: A Sprinkle can contain assets, configuration files, translations, routes, PHP classes, and Twig templates.
 ---
 
 In previous versions of UserFrosting, you had to directly modify the files that come with the default installation in order to add your own functionality. For example, if you wanted to add a field to the user registration page, you had to actually modify `register.twig`. Or, if you wanted to add a new relation on the `User` class, you had to modify the actual `User.php` class that comes with UserFrosting.
@@ -58,7 +55,8 @@ UserFrosting will load the Sprinkles specified under the `base` key during the a
 
 By default, the UserFrosting repository is set to ignore the `sprinkles.json` file. You may wish to commit this to your own personal repository, though. In this case, simply remove it from your `.gitignore` file.
 
-[notice=warning]The order in which we load our Sprinkles is important. Files in one Sprinkle may override files with the same name and path in previously loaded Sprinkles. For example, if we created `site/templates/pages/about.html.twig`, this would override `core/templates/pages/about.html.twig` because we load the `site` Sprinkle *after* the `core` Sprinkle.[/notice]
+> [!WARNING]
+> The order in which we load our Sprinkles is important. Files in one Sprinkle may override files with the same name and path in previously loaded Sprinkles. For example, if we created `site/templates/pages/about.html.twig`, this would override `core/templates/pages/about.html.twig` because we load the `site` Sprinkle *after* the `core` Sprinkle.
 
 ### Default Sprinkles
 

@@ -1,7 +1,5 @@
 ---
 title: Locator Service
-taxonomy:
-    category: docs
 ---
 
 The locator service goal is to provides an abstraction layer for the different files and folders available across different sprinkles inside UserFrosting. In other words, it is a way of aggregating many search paths together. As you've seen in the previous chapters, each sprinkle can provides multiple resources and sprinkles can have the ability to overwrite a previous sprinkle resources. All of those resources, combined with the overwriting properties of a sprinkle is handled by the locator service. _Templates_ and _config_ files are a good example of those resources.
@@ -41,7 +39,8 @@ Stream       | Sprinkle      | Path                                             
 
 Note that the `assets` streams will register different paths depending of the current [Environment Mode](/configuration/config-files#environment-modes). When in production mode, the [compiled assets](/asset-management/compiled-assets) will be returned. Otherwise, the shared assets as well as the one from each sprinkles will be returned.
 
-[notice=tip]The `sprinkles` stream can be used as wildcard to access pretty much anything inside a sprinkle without defining a new [custom stream](#registering-a-custom-stream).[/notice]
+> [!TIP]
+> The `sprinkles` stream can be used as wildcard to access pretty much anything inside a sprinkle without defining a new [custom stream](#registering-a-custom-stream).
 
 
 ## Using the locator

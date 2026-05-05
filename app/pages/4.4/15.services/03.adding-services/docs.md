@@ -1,9 +1,6 @@
 ---
 title: Adding Services
-metadata:
-    description: You may extend UserFrosting's default services for additional functionality, or define completely new services in your Sprinkles.
-taxonomy:
-    category: docs
+description: You may extend UserFrosting's default services for additional functionality, or define completely new services in your Sprinkles.
 ---
 
 You'll probably want to create your own services to modularize certain aspects of your own project. For example, if your application needs to interact with some third-party API like Google Maps, you might create a `MapBuilder` class that encapsulates all of that functionality. This is a cleaner and more manageable alternative to simply stuffing all of your code directly into your controller classes.
@@ -153,7 +150,8 @@ public function register(ContainerInterface $container)
 }
 ```
 
-[notice=warning]It is very important that your class be named `ServicesProvider`, and be in the `ServicesProvider` namespace of your Sprinkle. Otherwise, UserFrosting will be unable to find and automatically register your services![/notice]
+> [!WARNING]
+> It is very important that your class be named `ServicesProvider`, and be in the `ServicesProvider` namespace of your Sprinkle. Otherwise, UserFrosting will be unable to find and automatically register your services!
 
 ## In an independent services class
 
@@ -172,7 +170,8 @@ app
                 └── FooService.php
 ```
 
-[notice=tip]This method will eventually be the default method in future version of UserFrosting. You're encouraged to use this method now to avoid necessary code upgrade later.[/notice]
+> [!TIP]
+> This method will eventually be the default method in future version of UserFrosting. You're encouraged to use this method now to avoid necessary code upgrade later.
 
 ### Create your service
 
@@ -252,4 +251,5 @@ class Site extends Sprinkle
 }
 ```
 
-[notice=note]Note in the previous example how both `MapBuilderService` and `FooService` are registered as the `Site` service provider.[/notice]
+> [!NOTE]
+> Note in the previous example how both `MapBuilderService` and `FooService` are registered as the `Site` service provider.

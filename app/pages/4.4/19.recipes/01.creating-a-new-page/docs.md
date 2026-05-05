@@ -1,9 +1,6 @@
 ---
 title: Creating a new page
-metadata:
-    description: A very basic walkthrough for setting up a new page in your application. The purpose of this recipe is to get you familiar with adding routes, controller classes, and Twig templates to your Sprinkle.
-taxonomy:
-    category: docs
+description: A very basic walkthrough for setting up a new page in your application. The purpose of this recipe is to get you familiar with adding routes, controller classes, and Twig templates to your Sprinkle.
 ---
 
 Before we begin this tutorial, it is important that you understand what a web page really is. Unfortunately, many "classic" approaches to building a website give developers the mistaken impression that a web page "is" either a static `.html` page or a scripted `.php` page. Neither of these approaches are conceptually correct.
@@ -96,7 +93,8 @@ Notice how we've defined the [namespace](http://php.net/manual/en/language.names
 
 Any subdirectories in `src/` correspond to sub-namespaces in `UserFrosting\Sprinkle\Site`. Since our `PageController` class is in the `Controller/` subdirectory, its full namespace would be `UserFrosting\Sprinkle\Site\Controller`.
 
-[notice=info]This convention of mapping directories to namespaces is not our invention! It comes from the [PSR-4 specifications](http://www.php-fig.org/psr/psr-4/).[/notice]
+> [!IMPORTANT]
+> This convention of mapping directories to namespaces is not our invention! It comes from the [PSR-4 specifications](http://www.php-fig.org/psr/psr-4/).
 
 Since `SimpleController` is in a different namespace, we need to use the `use` keyword to tell PHP where to find it. Otherwise, PHP will try to look in the same namespace that we defined with the `namespace` keyword by default. In this case, it would cause an error, because `SimpleController` is in `UserFrosting\Sprinkle\Core\Controller` while `PageController` is in `UserFrosting\Sprinkle\Site\Controller`.
 
@@ -142,7 +140,8 @@ Notice that we extend the `default.html.twig` abstract template, which is the sa
 
 Then, we simply have to fill in some of the [blocks](https://twig.sensiolabs.org/doc/2.x/tags/extends.html) defined in the abstract template with our page content. As a simple example of using Twig to produce dynamic content, we reference the `current_user` global Twig variable to get and display the user's first name.
 
-[notice=tip]The default UserFrosting theme is based on [AdminLTE](https://adminlte.io). Check it out while building your pages. It comes with pretty cool features and widgets you can use in your own pages ![/notice]
+> [!TIP]
+> The default UserFrosting theme is based on [AdminLTE](https://adminlte.io). Check it out while building your pages. It comes with pretty cool features and widgets you can use in your own pages !
 
 ## Next steps
 

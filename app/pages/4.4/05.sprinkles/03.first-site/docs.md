@@ -1,9 +1,6 @@
 ---
 title: Your First UserFrosting Site
-metadata:
-    description: This guide walks you though the process of setting up your application by implementing a new Sprinkle.
-taxonomy:
-    category: docs
+description: This guide walks you though the process of setting up your application by implementing a new Sprinkle.
 ---
 
 This guide assumes that you've already completed the [installation guide](/installation) and successfully managed to get UserFrosting working in your [local development environment](/background/develop-locally-serve-globally). If not, please do that now - feel free to [ask for help](/troubleshooting/getting-help) if you're running into trouble!
@@ -86,7 +83,8 @@ This customizes some basic properties for our application - set your site title,
 
 This is because the template for this page is dynamically pulling that particular piece of text from your new configuration file. Note that your value for `site.title` overrides the value of `site.title` in the core Sprinkle's configuration file.
 
-[notice=tip]You can [override configuration values](/configuration/config-files) from any previously loaded Sprinkles, including the default Sprinkles that ship with UserFrosting. Check `/app/sprinkles/core/config/default.php` and `/app/sprinkles/account/config/default.php` for a complete list.[/notice]
+> [!TIP]
+> You can [override configuration values](/configuration/config-files) from any previously loaded Sprinkles, including the default Sprinkles that ship with UserFrosting. Check `/app/sprinkles/core/config/default.php` and `/app/sprinkles/account/config/default.php` for a complete list.
 
 ### composer.json
 
@@ -118,7 +116,8 @@ The important part here is the `autoload.psr-4` key. This tells Composer to map 
 
 If you're not familiar with PSR-4, it is a standard that says we should map a base directory to a base namespace, and then the relative namespaces of classes in that directory should correspond to the relative paths of their class files. For example, the directory `/app/sprinkles/mysprinkle/src/Controller/OwlController.php` would be mapped to the fully qualified class name `\UserFrosting\Sprinkle\MySprinkle\Controller\OwlController`.
 
-[notice]As mentioned in [Sprinkle Contents](/sprinkles/contents), UserFrosting uses a master `composer.json` file to automatically merge the `composer.json` files in each Sprinkle. If you define additional third-party package dependencies in your Sprinkle's `composer.json`, these will be installed to the shared `app/vendor` directory when you run `composer update`.[/notice]
+> [!NOTE]
+> As mentioned in [Sprinkle Contents](/sprinkles/contents), UserFrosting uses a master `composer.json` file to automatically merge the `composer.json` files in each Sprinkle. If you define additional third-party package dependencies in your Sprinkle's `composer.json`, these will be installed to the shared `app/vendor` directory when you run `composer update`.
 
 Go ahead and actually create a `src/` directory in your Sprinkle now. At this point, your Sprinkle should look like:
 
@@ -136,6 +135,8 @@ The last step is to run Composer from your **root project directory**, so that i
 $ composer update
 ```
 
-[notice=note]If after running these steps, UserFrosting fails to find new classes that you add to `src/`, make sure that that the user running Composer had read permissions for your Sprinkle. You can check that the path to your Sprinkle's `src/` directory was actually added in `app/vendor/composer/autoload_psr4.php` You can also try running Composer with the `-vvv` flag for more detailed reporting.[/notice]
+> [!NOTE]
+> If after running these steps, UserFrosting fails to find new classes that you add to `src/`, make sure that that the user running Composer had read permissions for your Sprinkle. You can check that the path to your Sprinkle's `src/` directory was actually added in `app/vendor/composer/autoload_psr4.php` You can also try running Composer with the `-vvv` flag for more detailed reporting.
 
-[notice=tip]Always run any composer command from the project root directory (`/`).[/notice]
+> [!TIP]
+> Always run any composer command from the project root directory (`/`).

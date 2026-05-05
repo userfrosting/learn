@@ -1,12 +1,10 @@
 ---
 title: Hosting Your Site
-description:
-    metadata: UserFrosting can easily be deployed to any server with PHP 7.1 or higher, a compatible database, and a webserver application (nginx, Apache, or IIS).
-taxonomy:
-    category: docs
+description: UserFrosting can easily be deployed to any server with PHP 7.1 or higher, a compatible database, and a webserver application (nginx, Apache, or IIS).
 ---
 
-[notice]This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+> [!NOTE]
+> This page needs updating. To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
 Nowadays, there is little reason not to use a VPS (virtual private server) for hosting your application. Prices have fallen considerably, to the point where they are as affordable as shared hosting.
 

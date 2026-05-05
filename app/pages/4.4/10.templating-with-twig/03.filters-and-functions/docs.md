@@ -1,9 +1,5 @@
 ---
 title: Twig Filters and Functions
-metadata:
-    description:
-taxonomy:
-    category: docs
 ---
 
 ### checkAccess

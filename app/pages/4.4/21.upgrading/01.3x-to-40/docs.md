@@ -1,9 +1,6 @@
 ---
 title: 0.3.x to 4.1.x
-metadata:
-    description: Learn about the major changes in UserFrosting 4, and the tools available to help you cleanly migrate your code and data from UserFrosting 0.3.x.
-taxonomy:
-    category: docs
+description: Learn about the major changes in UserFrosting 4, and the tools available to help you cleanly migrate your code and data from UserFrosting 0.3.x.
 ---
 
 UserFrosting 4 represents a significant rewrite and redesign of the core codebase from previous versions.
@@ -49,7 +46,8 @@ Finally, you will need to gradually extract and refactor your code from your Use
 
 We now have an [upgrade Sprinkle](https://github.com/userfrosting/upgrade), which will help you migrate your users, groups, permissions, and event logs from a production UF3.1 database, to the UF4 database structure. It will do this as an "in place" migration, which means that your legacy UF 0.3.x tables will be renamed, and the new UF4 tables will be created in the same database. It will then attempt to create new records in the `users`, `roles`, `role_users`, `permissions`, `permission_roles`, and `activities` tables from the data in the legacy tables.
 
-[notice=warning]It is strongly recommended that you make a backup copy of your database, especially live production databases, before attempting the database upgrade.[/notice]
+> [!WARNING]
+> It is strongly recommended that you make a backup copy of your database, especially live production databases, before attempting the database upgrade.
 
 #### Set up UserFrosting 4 and install the `upgrade` Sprinkle
 

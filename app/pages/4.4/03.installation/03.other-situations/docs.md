@@ -1,9 +1,6 @@
 ---
 title: Other Situations
-metadata:
-    description: This section covers configuring UserFrosting for other less common development and production environment situations.
-taxonomy:
-    category: docs
+description: This section covers configuring UserFrosting for other less common development and production environment situations.
 ---
 
 This section covers configuring UserFrosting for other less common development and production environment situations.

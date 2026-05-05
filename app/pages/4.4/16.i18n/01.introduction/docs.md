@@ -1,9 +1,6 @@
 ---
 title: Introduction
-metadata:
-    description: An introduction to UserFrosting i18n system
-taxonomy:
-    category: docs
+description: An introduction to UserFrosting i18n system
 ---
 
 UserFrosting provides a complete framework for translating strings and sentences easily and efficiently. UserFrosting allows you to [define the default locale](/i18n/site-locale#the-default-locale) your UI should be presented to guest users, while allowing resgistered users to [choose their prefered locale](/i18n/site-locale#the-available-user-locales).
@@ -79,7 +76,8 @@ return [
 
 Some locale have a parent locale and each locale languages files will be loaded on top of the parents one. So for example, since the Spanish version above don't have any value for the `ACCOUNT_SPECIFY_AGE` key, the English value would be returned for that key if `en_ES` has `en_US` for parent.
 
-[notice=tip]Some Bakery commands can help you view and compare locale Dictionaries. See the [Built-in Commands](/cli/commands#locale-compare) page for more info.[/notice]
+> [!TIP]
+> Some Bakery commands can help you view and compare locale Dictionaries. See the [Built-in Commands](/cli/commands#locale-compare) page for more info.
 
 Just like [routes](/routes-and-controllers/front-controller), the name of the files don't matter as they won't overwrite each others. This means two sprinkles can have a `locale/en_US/messages.php` file and **both** will be loaded and **merged** togeter. This means that each subsequently loaded Sprinkle can override translations from previous Sprinkles, or define new ones entirely.
 

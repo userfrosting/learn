@@ -1,9 +1,6 @@
 ---
 title: Dev Environment
-metadata:
-    description: Getting UserFrosting up and running in your development environment.
-taxonomy:
-    category: docs
+description: Getting UserFrosting up and running in your development environment.
 ---
 
 The process of setting up UserFrosting so that you can begin work in your [local development environment](/background/develop-locally-serve-globally) is known as **installation**.  This is a separate process from [deployment](/going-live), which is when you actually push your fully developed application to a live server.  Please be sure that you understand this distinction before proceeding further!  UserFrosting is not like, for example, Wordpress, where you can "install" directly to your production server.

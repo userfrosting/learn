@@ -1,9 +1,6 @@
 ---
 title: User Accounts
-metadata:
-    description: UserFrosting ships with everything you need to create user accounts, and a rich set of features for users and administrators.
-taxonomy:
-    category: docs
+description: UserFrosting ships with everything you need to create user accounts, and a rich set of features for users and administrators.
 ---
 
 You were probably attracted to UserFrosting because you wanted to "make a site where users can sign in", or you already have a project in progress and your boss asked you to "put it behind a login," or you need to have some "protected pages." These are nontechnical terms. It will be easier for us to communicate if we first establish a common vocabulary, so that we can explain the concepts with more precision.
@@ -57,7 +54,8 @@ User passwords are salted and hashed using PHP's [`password_hash`](http://php.ne
 
 **Partially implemented**. You may specify the name of a Sprinkle to be dynamically loaded for this user on each request. This can effectively be used to provide per-user theming options.
 
-[notice=tip]The preferred way to add additional user fields is by creating a separate table that is linked to the `users` table as a one-to-one relationship. See the recipe ["extending the user model"](/recipes/extending-the-user-model) for a guide on how to do this in your Sprinkle.[/notice]
+> [!TIP]
+> The preferred way to add additional user fields is by creating a separate table that is linked to the `users` table as a one-to-one relationship. See the recipe ["extending the user model"](/recipes/extending-the-user-model) for a guide on how to do this in your Sprinkle.
 
 ## Account creation
 

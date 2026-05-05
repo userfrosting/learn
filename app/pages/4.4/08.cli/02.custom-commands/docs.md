@@ -1,9 +1,6 @@
 ---
 title: Custom Commands
-metadata:
-    description: You may extend the UserFrosting\System\Bakery\BaseCommand class to implement your own CLI commands that can be run through Bakery.
-taxonomy:
-    category: docs
+description: You may extend the UserFrosting\System\Bakery\BaseCommand class to implement your own CLI commands that can be run through Bakery.
 ---
 
 While the Bakery CLI tool comes with great built-in commands, your Sprinkles can also take advantage of the Bakery by adding their own cli commands.
@@ -89,7 +86,8 @@ class BakeCommand extends AccountBakeCommand
 }
 ```
 
-[notice=note]Because of PHP class inheritance, you must extend the last class in the chain. Since the `Account` sprinkle extend the class from the `Core` sprinkle, your sprinkle should typically extend the class from the `account` sprinkle, aka `UserFrosting\Sprinkle\Account\Bakery\BakeCommand`.[/notice]
+> [!NOTE]
+> Because of PHP class inheritance, you must extend the last class in the chain. Since the `Account` sprinkle extend the class from the `Core` sprinkle, your sprinkle should typically extend the class from the `account` sprinkle, aka `UserFrosting\Sprinkle\Account\Bakery\BakeCommand`.
 
 The main `BakeCommand` class contains many methods you can use to insert your command in the right place in the _baking_ process.
 
