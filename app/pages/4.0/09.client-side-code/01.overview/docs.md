@@ -1,9 +1,6 @@
 ---
 title: Overview
-metadata:
-    description: An overview of the client-side components that ship with UserFrosting.
-taxonomy:
-    category: docs
+description: An overview of the client-side components that ship with UserFrosting.
 ---
 
 UserFrosting uses jQuery and Bootstrap to provide a rich, intuitive, and modern user interface.

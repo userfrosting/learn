@@ -1,9 +1,6 @@
 ---
 title: Background
-metadata:
-    description: Many developers do not really understand the basics of how HTTP and web applications work.  This guide attempts to clarify some common misconceptions.
-taxonomy:
-    category: docs
+description: Many developers do not really understand the basics of how HTTP and web applications work.  This guide attempts to clarify some common misconceptions.
 ---
 
 ### Chapter 3

@@ -1,9 +1,6 @@
 ---
 title: Essential Tools for Modern PHP
-metadata:
-    description: A minimal set of tools that every PHP developer should have installed in their development environment.
-taxonomy:
-    category: docs
+description: A minimal set of tools that every PHP developer should have installed in their development environment.
 ---
 
 ## Git

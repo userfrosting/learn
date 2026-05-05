@@ -1,9 +1,6 @@
 ---
 title: Overview
-metadata:
-    description: UserFrosting uses Eloquent, Laravel's powerful ORM, to provide a fluent query builder and active record layer on top of your database.
-taxonomy:
-    category: docs
+description: UserFrosting uses Eloquent, Laravel's powerful ORM, to provide a fluent query builder and active record layer on top of your database.
 ---
 
 Even in relatively simple applications, writing out the same types of database queries over and over can get tedious.  To make things easier and your code [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself)er, UserFrosting takes advantage of Laravel's excellent object-relation mapper, [Eloquent](https://laravel.com/docs/5.3/eloquent#introduction).

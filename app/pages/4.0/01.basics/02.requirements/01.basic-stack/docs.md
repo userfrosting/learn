@@ -1,11 +1,6 @@
 ---
 title: Basic Stack Requirements
-metadata:
-    description: UserFrosting requires a web server, PHP 5.6 or higher, and some sort of database.
-taxonomy:
-    category: docs
-process:
-    twig: true
+description: UserFrosting requires a web server, PHP 5.6 or higher, and some sort of database.
 ---
 
 The basic requirements for running UserFrosting are pretty typical of any web framework or CMS.  You'll need:
@@ -117,7 +112,7 @@ As for your local development environment ([You _do_ have a local development en
 
 I think that for a lot of developers - novices and professionals alike - building on top of others' work can seem like a betrayal of our trade.  We're not "real" developers unless we built everything with our bare hands from scratch, and know firsthand the nitty-gritty details of how our code works.  With third-party components, we have to take time to actually *learn* how to use them, and follow *their* rules.  I get it.  It all feels so antithetical to the DIY spirit that got so many of us into coding in the first place.  Trust me, as someone who built a cold frame out of some doors and framing I found in the dumpster, I know:
 
-![DIY cold frame](/images/cold-frame.jpg?resize=500)
+![DIY cold frame](/images/cold-frame.jpg)
 
 However unlike me with with my cold frame, software developers aren't limited by the contents of their local dumpster.  With the advent of Composer, the PHP community abounds with free, high-quality third-party packages for pretty much every task imaginable.  The trick is to know *which* packages to use, and to avoid getting overwhelmed.
 

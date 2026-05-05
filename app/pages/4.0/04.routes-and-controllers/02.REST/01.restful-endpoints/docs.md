@@ -1,9 +1,6 @@
 ---
 title: RESTful Endpoints
-metadata:
-    description: Together, a specific url and method are commonly referred to as an **endpoint**.  It is important to use a consistent, RESTful approach to the URLs and methods you choose for each endpoint.
-taxonomy:
-    category: docs
+description: Together, a specific url and method are commonly referred to as an **endpoint**.  It is important to use a consistent, RESTful approach to the URLs and methods you choose for each endpoint.
 ---
 
 ## RESTful Endpoints

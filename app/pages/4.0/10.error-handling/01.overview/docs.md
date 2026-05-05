@@ -1,9 +1,6 @@
 ---
 title: Overview
-metadata:
-    description: UserFrosting's powerful error handling system allows you to generate custom exceptions for various error conditions, and then handle those exceptions using custom error handlers.
-taxonomy:
-    category: docs
+description: UserFrosting's powerful error handling system allows you to generate custom exceptions for various error conditions, and then handle those exceptions using custom error handlers.
 ---
 
 Things don't always go the way they were intended in your application.  Sometimes this is the client's fault, and sometimes it is the server's (i.e. _your_) fault.  When this happens, it is important that your application:

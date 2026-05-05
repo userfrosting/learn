@@ -1,9 +1,6 @@
 ---
 title: Client Input
-metadata:
-    description: Retrieving client input (GET, POST, PUT, DELETE, and URL arguments) in your controllers.
-taxonomy:
-    category: docs
+description: Retrieving client input (GET, POST, PUT, DELETE, and URL arguments) in your controllers.
 ---
 
 There is no such thing as a `$_GET` array or a `$_POST` array - at least, not according to the [HTTP specifications](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Message_Format).  These superglobals are merely constructs offered by PHP to make your life more "convenient".

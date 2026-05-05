@@ -1,9 +1,6 @@
 ---
 title: Overview
-metadata:
-    description: UserFrosting is a free, open-source jumping-off point for building user-centered web applications with PHP and Javascript.
-taxonomy:
-    category: docs
+description: UserFrosting is a free, open-source jumping-off point for building user-centered web applications with PHP and Javascript.
 ---
 
 UserFrosting is a free, open-source jumping-off point for building user-centered web applications with PHP and Javascript.  It comes with a sleek, modern interface, basic user account features, and an administrative user management system - all fully functioning out of the box.
@@ -12,7 +9,7 @@ UserFrosting also has a not-so-secret ulterior motive: to get you to become a be
 
 This breakneck pace has caused a lot of people to get left behind.  For someone who hasn't been doing web development continuously for the past ten years, it can feel like a hopeless task to try and get acquainted with all of the new tools and frameworks that seem to be coming out every day.  Relevant comic from [Abstruse Goose](http://abstrusegoose.com/503):
 
-![BlooP and FlooP and GlooP](/images/theoretical_mathematics_however_never_goes_out_of_fashion.png?resize=500)
+![BlooP and FlooP and GlooP](/images/theoretical_mathematics_however_never_goes_out_of_fashion.png)
 
 The problem is that when you're a busy developer with a lot of Real-Life (tm) projects to work on, it's very difficult to set aside time to read a book about technology X - especially when you're not even sure that you really _need_ to learn X!
 

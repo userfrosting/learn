@@ -1,9 +1,6 @@
 ---
 title: Contents
-metadata:
-    description: Detailed breakdown of a Sprinkle's contents.
-taxonomy:
-    category: docs
+description: Detailed breakdown of a Sprinkle's contents.
 ---
 
 Within each sprinkle, you will find any or all of the following directories and files:

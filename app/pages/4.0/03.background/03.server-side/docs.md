@@ -1,9 +1,6 @@
 ---
 title: Server-side Debugging
-metadata:
-    description: UserFrosting provides a number of tools for debugging issues that can be traced back to server-side code.
-taxonomy:
-    category: docs
+description: UserFrosting provides a number of tools for debugging issues that can be traced back to server-side code.
 ---
 
 So far, we've seen some basic techniques for debugging problems in client-side code (Javascript), and problems in the way that data is being passed back in forth between the client and the server.  But what happens when the problem is in the server-side code, i.e., in the PHP?

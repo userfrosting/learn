@@ -1,9 +1,6 @@
 ---
 title: Basic usage
-metadata:
-    description: Referencing assets in your Twig templates.
-taxonomy:
-    category: docs
+description: Referencing assets in your Twig templates.
 ---
 
 ## Referencing assets

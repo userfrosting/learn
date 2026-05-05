@@ -1,9 +1,6 @@
 ---
 title: Client-side Debugging
-metadata:
-    description: When your application "doesn't work", it's not always obvious where the problem lies.  Modern web browsers come with a built-in tool for identifying problems in client-side code, as well as problems in the communication between your browser and the server.
-taxonomy:
-    category: docs
+description: When your application "doesn't work", it's not always obvious where the problem lies.  Modern web browsers come with a built-in tool for identifying problems in client-side code, as well as problems in the communication between your browser and the server.
 ---
 
 Now that we understand how a modern web application actually works, we can talk about what to do when something goes wrong.

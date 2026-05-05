@@ -1,9 +1,6 @@
 ---
 title: Hosting with IIS
-metadata:
-    description: Additional steps needed to host UserFrosting sites on IIS.
-taxonomy:
-    category: docs
+description: Additional steps needed to host UserFrosting sites on IIS.
 ---
 
 >NOTE: This recipe assumes that the reader is familiar with IIS7 or greater, and that the `web.config` file has been placed in `public`.

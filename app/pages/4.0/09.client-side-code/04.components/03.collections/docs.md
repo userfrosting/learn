@@ -1,9 +1,6 @@
 ---
 title: Collections
-metadata:
-    description: The ufCollection widget provides a convenient interface for associating related or child entities with a single parent entity.
-taxonomy:
-    category: docs
+description: The ufCollection widget provides a convenient interface for associating related or child entities with a single parent entity.
 ---
 
 The `ufCollection` widget provides a convenient interface for associating related or child entities with a single parent entity.  For example, you might want to associate a user account with one or more roles, or add multiple phone numbers or addresses to an employee.

@@ -1,9 +1,6 @@
 ---
 title: Default Services
-metadata:
-    description: UserFrosting's default services provide most of the tools needed to build a basic web application.
-taxonomy:
-    category: docs
+description: UserFrosting's default services provide most of the tools needed to build a basic web application.
 ---
 
 As mentioned in the last section, each Sprinkle can set up its own services through a **service provider** class.  The default `core` and `account` Sprinkles set up their services through `CoreServicesProvider` and `AccountServicesProvider`, respectively.  These classes can be found in the `src/ServicesProvider/` subdirectories in each Sprinkle's directory.

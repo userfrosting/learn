@@ -1,9 +1,6 @@
 ---
 title: The Client-Server Conversation
-metadata:
-    description: Web applications can be thought of as a conversation between a client and a server.
-taxonomy:
-    category: docs
+description: Web applications can be thought of as a conversation between a client and a server.
 ---
 
 One of the most common misconceptions is that web applications are coherent pieces of software that sit on a server somewhere, and that the client "runs" this application in their browser.  This is actually an illusion, carefully crafted to provide a smooth experience for the end user.

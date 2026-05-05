@@ -1,9 +1,6 @@
 ---
 title: Your First UserFrosting Site
-metadata:
-    description: This guide walks you though the process of setting up your application by implementing a new Sprinkle.
-taxonomy:
-    category: docs
+description: This guide walks you though the process of setting up your application by implementing a new Sprinkle.
 ---
 
 This guide assumes that you've already completed the [installation guide](/basics/installation) and successfully managed to get UserFrosting working in your [local development environment](/basics/requirements/develop-locally-serve-globally).  If not, please do that now - feel free to [ask for help](/basics/getting-help) if you're running into trouble!

@@ -1,9 +1,6 @@
 ---
 title: Extending the User Model
-metadata:
-    description: Extend the user model, adding custom fields and views.
-taxonomy:
-    category: docs
+description: Extend the user model, adding custom fields and views.
 ---
 
 One of the most common questions we get from new UserFrosting developers is "how do I add new user fields?"

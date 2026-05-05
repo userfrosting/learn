@@ -1,9 +1,6 @@
 ---
 title: Develop Locally, Serve Globally
-metadata:
-    description: The right way to approach development.
-taxonomy:
-    category: docs
+description: The right way to approach development.
 ---
 
 Just about every week, we see someone wander into [chat](https://chat.userfrosting.com) and ask:
