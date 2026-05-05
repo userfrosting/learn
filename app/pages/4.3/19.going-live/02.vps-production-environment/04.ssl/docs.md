@@ -1,9 +1,6 @@
 ---
 title: SSL/HTTPS
-metadata:
-    description: It is extremely important to use an SSL certificate when you go live.  Using SSL will prevent malicious agents on unsecured networks from intercepting your users' passwords when they log in to your application, as well as other sensitive information.
-taxonomy:
-    category: docs
+description: It is extremely important to use an SSL certificate when you go live.  Using SSL will prevent malicious agents on unsecured networks from intercepting your users' passwords when they log in to your application, as well as other sensitive information.
 ---
 
 >>> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).

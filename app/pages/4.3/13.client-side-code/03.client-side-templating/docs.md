@@ -1,9 +1,6 @@
 ---
 title: Client-side Templating
-metadata:
-    description: An overview of how UserFrosting uses Handlebars.js for client-side templating.
-taxonomy:
-    category: docs
+description: An overview of how UserFrosting uses Handlebars.js for client-side templating.
 ---
 
 In [Templating with Twig](/templating-with-twig), we learned how Twig helps you separate the logic of your server-side application from the layout of the pages it generates.  Handlebars.js plays a similar role on the client side of your application, in Javascript.  The main difference is that with Twig we are often generating complete pages, whereas with Handlebars we typical only generate smaller snippets of HTML to be inserted into the DOM.

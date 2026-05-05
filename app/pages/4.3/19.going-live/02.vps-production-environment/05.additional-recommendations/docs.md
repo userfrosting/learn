@@ -1,9 +1,6 @@
 ---
 title: Additional Recommendations
-metadata:
-    description: Additional recommended configuration steps to get the most out of your VPS production server.
-taxonomy:
-    category: docs
+description: Additional recommended configuration steps to get the most out of your VPS production server.
 ---
 
 ## Install and configure Google's Pagespeed module

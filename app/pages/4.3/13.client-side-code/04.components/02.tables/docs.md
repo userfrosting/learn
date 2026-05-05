@@ -1,9 +1,6 @@
 ---
 title: Tables
-metadata:
-    description: ufTable is a wrapper for Mottie's tablesorter plugin that automatically fetches JSON data from a specified API endpoint, and dynamically builds paginated, sorted, filtered views on the fly.
-taxonomy:
-    category: docs
+description: ufTable is a wrapper for Mottie's tablesorter plugin that automatically fetches JSON data from a specified API endpoint, and dynamically builds paginated, sorted, filtered views on the fly.
 ---
 
 A typical application feature is to display a table of entities from a server-side data source (e.g., a database).  For example, the `admin` Sprinkle generates client-side tables for admins to view and manage users, groups, roles, activities, and permissions:

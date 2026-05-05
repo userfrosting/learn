@@ -1,9 +1,6 @@
 ---
 title: Built-in Commands
-metadata:
-    description: An overview of the commands available in Bakery.
-taxonomy:
-    category: docs
+description: An overview of the commands available in Bakery.
 ---
 
 UserFrosting's CLI, or [*Command-line Interface*](https://en.wikipedia.org/wiki/Command-line_interface), is called the **Bakery**. It provides a number of helpful commands that can assist you while you build, manage and install your application. To view a list of all available Bakery commands, you may use the `list` command from your UserFrosting root directory:

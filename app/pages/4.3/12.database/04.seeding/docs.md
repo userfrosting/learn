@@ -1,9 +1,6 @@
 ---
 title: Database Seeding
-metadata:
-    description: Seeding is a simple way to populate the database with default data.
-taxonomy:
-    category: docs
+description: Seeding is a simple way to populate the database with default data.
 ---
 
 Seeding can be used to populate the database. A seed is perfect to add test or default data to the database at any moment.

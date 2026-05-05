@@ -1,9 +1,6 @@
 ---
 title: Homestead
-metadata:
-    description: Homestead is a virtual environment, managed by Vagrant, that comes with everything you need to run UserFrosting preinstalled.  It's a great way to develop in a Ubuntu environment, if you'll be running your production site in a similar environment.
-taxonomy:
-    category: docs
+description: Homestead is a virtual environment, managed by Vagrant, that comes with everything you need to run UserFrosting preinstalled.  It's a great way to develop in a Ubuntu environment, if you'll be running your production site in a similar environment.
 ---
 
 >>> If this is your first time installing UserFrosting or if you're not already familiar with setting up a local environment, this page will guide you in setting up your first local environment using Homestead. If you already have a local environment (e.g., LAMP or LEMP) and you're already familiar with **composer**, the [Native Installation](/installation/environment/native) guide is for you.

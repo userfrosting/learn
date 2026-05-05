@@ -1,9 +1,6 @@
 ---
 title: Customizing the login page
-metadata:
-    description: An example of how to modify UserFrosting's default login page and behavior.
-taxonomy:
-    category: docs
+description: An example of how to modify UserFrosting's default login page and behavior.
 ---
 
 >>> This recipe assumes that the reader already setup their own sprinkle and is familiar with the basics of UserFrosting.

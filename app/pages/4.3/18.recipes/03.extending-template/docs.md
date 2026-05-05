@@ -1,9 +1,6 @@
 ---
 title: Extending templates and menus
-metadata:
-    description: Steps to extend a template defined in another sprinkle.
-taxonomy:
-    category: docs
+description: Steps to extend a template defined in another sprinkle.
 ---
 
 >>> This recipe assumes that the reader is familiar with [Twig templating](/templating-with-twig).

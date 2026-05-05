@@ -1,9 +1,6 @@
 ---
 title: Quick Start Guide
-metadata:
-    description: The official documentation for UserFrosting, a PHP framework and full-featured user management application.
-taxonomy:
-    category: docs
+description: The official documentation for UserFrosting, a PHP framework and full-featured user management application.
 ---
 
 >>>>> This quick start guide is aimed at experienced PHP developers who already have a development environment set up. Head over to the [Installation Chapter](/installation) for the complete guide.

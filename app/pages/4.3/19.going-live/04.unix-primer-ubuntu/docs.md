@@ -1,9 +1,6 @@
 ---
 title: Unix Primer for Ubuntu
-metadata:
-    description: This chapter covers the most common commands and files that web developers might encounter when working with Ubuntu.
-taxonomy:
-    category: docs
+description: This chapter covers the most common commands and files that web developers might encounter when working with Ubuntu.
 ---
 
 >>> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
