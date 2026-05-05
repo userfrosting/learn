@@ -1,12 +1,6 @@
 ---
 title: Collections
-metadata:
-    description: The ufCollection widget provides a convenient interface for associating related or child entities with a single parent entity.
-taxonomy:
-    category: docs
-process:
-    twig: true
-never_cache_twig: true
+description: The ufCollection widget provides a convenient interface for associating related or child entities with a single parent entity.
 ---
 
 {% do assets.addCss('theme://css/select2.min.css') %}
@@ -718,7 +712,8 @@ transformDropdownSelection: function (item) {
 }
 ```
 
-[notice=warning]Notice that we use `$.extend(true, {}, item)` to [clone the object](https://stackoverflow.com/a/122704/2970321). If you instead were to manipulate the `item` object directly, it will change the actual object as it exists in the dropdown control, and likely break the dropdown in the process.[/notice]
+> [!WARNING]
+> Notice that we use `$.extend(true, {}, item)` to [clone the object](https://stackoverflow.com/a/122704/2970321). If you instead were to manipulate the `item` object directly, it will change the actual object as it exists in the dropdown control, and likely break the dropdown in the process.
 
 #### DEBUG
 

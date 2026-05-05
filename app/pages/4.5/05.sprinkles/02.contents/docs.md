@@ -1,9 +1,6 @@
 ---
 title: Contents
-metadata:
-    description: Detailed breakdown of a Sprinkle's contents.
-taxonomy:
-    category: docs
+description: Detailed breakdown of a Sprinkle's contents.
 ---
 
 Within each sprinkle, you will find any or all of the following directories and files:
@@ -33,9 +30,11 @@ The master `composer.json` file in the project root directory (`/`) will automat
 $ composer update
 ```
 
-[notice=warning]The master `composer.json` file will load **all** child `composer.json` files, even in Sprinkles that haven't been loaded in your site's `sprinkles.json`. To change this behavior, you will need to modify the master `composer.json` file.[/notice]
+> [!WARNING]
+> The master `composer.json` file will load **all** child `composer.json` files, even in Sprinkles that haven't been loaded in your site's `sprinkles.json`. To change this behavior, you will need to modify the master `composer.json` file.
 
-[notice=tip]Always run any composer command from the project root directory (`/`).[/notice]
+> [!TIP]
+> Always run any composer command from the project root directory (`/`).
 
 ### /package.json
 
@@ -79,7 +78,8 @@ As with configuration and translation files, route files can override routes fro
 
 Learn more about routes and controllers in [Chapter 9](/routes-and-controllers).
 
-[notice]You may have as many route files as you'd like in a Sprinkle. Within each Sprinkle, route files are loaded in alphabetical order, so in general it is not a good idea to override a route in the same Sprinkle in which it was originally defined.[/notice]
+> [!NOTE]
+> You may have as many route files as you'd like in a Sprinkle. Within each Sprinkle, route files are loaded in alphabetical order, so in general it is not a good idea to override a route in the same Sprinkle in which it was originally defined.
 
 ### /schema
 

@@ -1,9 +1,6 @@
 ---
 title: Authorization
-metadata:
-    description: Authorization is sometimes referred to as "access control" or "protecting pages". UserFrosting implements an extended version of role-based access control that supports procedural conditions on user permissions.
-taxonomy:
-    category: docs
+description: Authorization is sometimes referred to as "access control" or "protecting pages". UserFrosting implements an extended version of role-based access control that supports procedural conditions on user permissions.
 ---
 
 ## Roles
@@ -91,7 +88,8 @@ Then, the `equals_num` condition will be used to compare the current user's `id`
 !has_role(user.id,2) && !is_master(user.id)
 ```
 
-[notice]In access conditions, the special keyword `self` is used to refer to the current user. This avoids the need to explicitly pass in the current user's object.[/notice]
+> [!NOTE]
+> In access conditions, the special keyword `self` is used to refer to the current user. This avoids the need to explicitly pass in the current user's object.
 
 ### Callbacks
 

@@ -1,16 +1,15 @@
 ---
 title: Quick Start Guide
-metadata:
-    description: The official documentation for UserFrosting, a PHP framework and full-featured user management application.
-taxonomy:
-    category: docs
+description: The official documentation for UserFrosting, a PHP framework and full-featured user management application.
 ---
 
-[notice=note]This quick start guide is aimed at experienced PHP developers who already have a development environment set up. Head over to the [Installation Chapter](/installation) for the complete guide.[/notice]
+> [!NOTE]
+> This quick start guide is aimed at experienced PHP developers who already have a development environment set up. Head over to the [Installation Chapter](/installation) for the complete guide.
 
 UserFrosting is a free, open-source jumping-off point for building user-centered web applications with PHP and Javascript. It comes with a sleek, modern interface, basic user account features, and an administrative user management system - all fully functioning out of the box.
 
-[notice]This is the documentation for UserFrosting 4. If you are looking for documentation for previous versions of UserFrosting, please see [here](https://legacy.userfrosting.com).[/notice]
+> [!NOTE]
+> This is the documentation for UserFrosting 4. If you are looking for documentation for previous versions of UserFrosting, please see [here](https://legacy.userfrosting.com).
 
 ## Server Requirements
 

@@ -1,9 +1,6 @@
 ---
 title: Native Installation
-metadata:
-    description: Getting UserFrosting up and running in your development environment.
-taxonomy:
-    category: docs
+description: Getting UserFrosting up and running in your development environment.
 ---
 
 If you already have a local environment and you're familiar with tools like **composer**, this page will guide you in installing UserFrosting on your existing local environment. If you're don't already have a local environment set up, or you don't want to install the required software natively, you may instead want to consider setting up [Homestead](/installation/environment/homestead) as a pre-configured virtual environment.
@@ -39,7 +36,8 @@ Use git to clone the userfrosting repo into a new folder. In your development di
 $ git clone https://github.com/userfrosting/UserFrosting.git UserFrosting
 ```
 
-[notice=tip]Note the `UserFrosting` at the end of the command. This means `git` will create new `UserFrosting` subdirectory inside the current location. You can change `UserFrosting` to whatever you like.[/notice]
+> [!TIP]
+> Note the `UserFrosting` at the end of the command. This means `git` will create new `UserFrosting` subdirectory inside the current location. You can change `UserFrosting` to whatever you like.
 
 ### Set directory permissions
 
@@ -85,7 +83,8 @@ If you're using a distribution like XAMPP or WAMP, you'll want to update your `P
 3. Restart your terminal.
 4. Run the command `which php` to ensure that the `php` command is now resolving to the correct directory. If not, double-check steps 1-3.
 
-[notice=tip]To check the value of your `PATH` variable in *nix environments, simply run `echo $PATH`.[/notice]
+> [!TIP]
+> To check the value of your `PATH` variable in *nix environments, simply run `echo $PATH`.
 
 ### Running Composer
 
@@ -103,7 +102,8 @@ If you only see `composer` and `wikimedia` subdirectories after running `compose
 
 Before installing, you'll need to create a database and database user account. Consult your database documentation for more details. If you use _phpmyadmin_ or a similar tool, you can create your database and database user through their interface. Otherwise, you can do it via the command line.
 
-[notice=note]"Database user account" and "UserFrosting user account" are not the same thing. The "database user account" is independent of UserFrosting. See your database technology's documentation for information on creating a database user. Make sure that your database user has all read and write permissions for your database.[/notice]
+> [!NOTE]
+> "Database user account" and "UserFrosting user account" are not the same thing. The "database user account" is independent of UserFrosting. See your database technology's documentation for information on creating a database user. Make sure that your database user has all read and write permissions for your database.
 
 ## Run the installer
 

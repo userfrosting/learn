@@ -1,12 +1,10 @@
 ---
 title: Advanced Homestead Setup
-metadata:
-    description: Homestead is a virtual environment, managed by Vagrant, that comes with everything you need to run UserFrosting preinstalled. It's a great way to develop in a Ubuntu environment, if you'll be running your production site in a similar environment.
-taxonomy:
-    category: docs
+description: Homestead is a virtual environment, managed by Vagrant, that comes with everything you need to run UserFrosting preinstalled. It's a great way to develop in a Ubuntu environment, if you'll be running your production site in a similar environment.
 ---
 
-[notice]This guide is intended for advanced users who are familiar with Vagrant and Virtual Machines. For basic Homestead installation, see the [Homestead Dev Environment](/installation/environment/homestead) guide.[/notice]
+> [!NOTE]
+> This guide is intended for advanced users who are familiar with Vagrant and Virtual Machines. For basic Homestead installation, see the [Homestead Dev Environment](/installation/environment/homestead) guide.
 
 ## Install Homestead Manually
 
@@ -152,7 +150,8 @@ folders:
       to: /home/vagrant/userfrosting   # This is the corresponding directory in the virtual machine
 ```
 
-[notice]For Windows users, you should use the use the full, absolute path including the drive letter in your `map` value. For example, `C:/Users/alexweissman/dev/userfrosting`.[/notice]
+> [!NOTE]
+> For Windows users, you should use the use the full, absolute path including the drive letter in your `map` value. For example, `C:/Users/alexweissman/dev/userfrosting`.
 
 If `folders` maps directories to directories, then `sites` maps URLs to our **document root** (similar to what VirtualHosts do in Apache). In the case of UserFrosting, we want our document root on the virtual machine to be `/home/vagrant/userfrosting/public`. We'll map this to a `userfrosting.test` URL, which we'll use to access our website in the browser. Change the defaults to look like:
 
@@ -198,7 +197,8 @@ This will take a little bit of time to provision the virtual machine.
 
 If you get an error like "did not find expected key while parsing a block mapping", this means that Vagrant could not properly parse your `Homestead.yaml` file. To find syntax errors in YAML files, try pasting them into [YAML Lint](http://www.yamllint.com/).
 
-[notice=tip]Make sure that the directories you map in `Homestead.yaml` exist _before_ you run `vagrant up`. Otherwise, you will need to reload your virtual machine using `vagrant reload --provision` so that Homestead has a chance to find your directories.[/notice]
+> [!TIP]
+> Make sure that the directories you map in `Homestead.yaml` exist _before_ you run `vagrant up`. Otherwise, you will need to reload your virtual machine using `vagrant reload --provision` so that Homestead has a chance to find your directories.
 
 Once it's done, you'll be able to log into your virtual machine:
 
@@ -206,7 +206,8 @@ Once it's done, you'll be able to log into your virtual machine:
 vagrant ssh
 ```
 
-[notice=warning]It would appear that Git-Bash functions poorly as an SSH client in Windows. For Windows users, you may want to use the native "command prompt" application instead.[/notice]
+> [!WARNING]
+> It would appear that Git-Bash functions poorly as an SSH client in Windows. For Windows users, you may want to use the native "command prompt" application instead.
 
 If it connects successfully, you will see a welcome message for Ubuntu:
 

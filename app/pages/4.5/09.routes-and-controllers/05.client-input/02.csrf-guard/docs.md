@@ -1,9 +1,6 @@
 ---
 title: CSRF Protection
-metadata:
-    description: Cross-site request forgeries (CSRF) are a type of social engineering attack in which a malicious agent tricks a user into submitting a valid, but unintended request to your server. UserFrosting mitigates this risk with a secret token embedded into all forms on your website.
-taxonomy:
-    category: docs
+description: Cross-site request forgeries (CSRF) are a type of social engineering attack in which a malicious agent tricks a user into submitting a valid, but unintended request to your server. UserFrosting mitigates this risk with a secret token embedded into all forms on your website.
 ---
 
 Cross-site request forgeries (CSRF) are a type of social engineering attack in which a malicious agent tricks a user into submitting a valid, but unintended request to your server. This can happen, for example, when a user opens a malicious email or website while they are still signed in to your website.
@@ -55,7 +52,8 @@ $.ajax({
 });
 ```
 
-[notice=note]The Javascript `site` variable is declared in the `pages/partials/config.js.twig` template.[/notice]
+> [!NOTE]
+> The Javascript `site` variable is declared in the `pages/partials/config.js.twig` template.
 
 ### Blacklisting Routes
 
@@ -77,7 +75,8 @@ To bypass CSRF protection, you can map regular expressions to arrays of HTTP met
 ],
 ```
 
-[notice=warning]Please note we require that you explicitly add the leading `/` to your blacklisted routes, to be consistent with the way the route definitions themselves are declared.[/notice]
+> [!WARNING]
+> Please note we require that you explicitly add the leading `/` to your blacklisted routes, to be consistent with the way the route definitions themselves are declared.
 
 Any requests whose URL matches one of these regular expressions, and whose method matches one of the mapped methods, will be automatically exempted from loading the CSRF middleware. This means that the CSRF token will not be retrieved (for `GET` requests) or checked (for `POST`, `PUT`, `DELETE`, and `PATCH` requests).
 

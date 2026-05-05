@@ -1,9 +1,6 @@
 ---
 title: Setting up the basics
-metadata:
-    description: Setting up the basic sprinkle
-taxonomy:
-    category: docs
+description: Setting up the basic sprinkle
 ---
 
 ## The sprinkle
@@ -26,7 +23,8 @@ First thing to do is to create an empty sprinkle for our code to live in. We'll 
 
 Next we need to add our `Pastries` sprinkle to the `sprinkles.json` list and update **Composer** so our new [PSR4 mapping](http://www.php-fig.org/psr/psr-4/#3-examples) is picked up. From the command line, run `composer update` in the **root directory** of your UserFrosting project.
 
-[notice=tip]Don't forget to always run any composer command from the project root directory (`/`).[/notice]
+> [!TIP]
+> Don't forget to always run any composer command from the project root directory (`/`).
 
 ## The route
 
@@ -74,7 +72,8 @@ class PastriesController extends SimpleController
 }
 ```
 
-[notice=tip]Later on, we can add methods for other pastry-related pages to this same class as a way to logically organize our code.[/notice]
+> [!TIP]
+> Later on, we can add methods for other pastry-related pages to this same class as a way to logically organize our code.
 
 ## The template file
 

@@ -1,14 +1,12 @@
 ---
 title: Docker
-metadata:
-  description: Docker is a containerization platform that helps maintain consistent behavior across different development and production environments.
-taxonomy:
-  category: docs
+description: Docker is a containerization platform that helps maintain consistent behavior across different development and production environments.
 ---
 
-[notice=warning]Docker support is currently at **experimental** stability. Expect quirks and documentation gaps.
-
-To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).[/notice]
+> [!WARNING]
+> Docker support is currently at **experimental** stability. Expect quirks and documentation gaps.
+>
+> To contribute to this documentation, please submit a pull request to our [learn repository](https://github.com/userfrosting/learn/tree/master/pages).
 
 The relevant files for installing UserFrosting with Docker are `docker-compose.yml`, and the contents of `docker/`.
 

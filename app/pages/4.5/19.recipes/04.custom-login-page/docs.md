@@ -1,12 +1,10 @@
 ---
 title: Customizing the login page
-metadata:
-    description: An example of how to modify UserFrosting's default login page and behavior.
-taxonomy:
-    category: docs
+description: An example of how to modify UserFrosting's default login page and behavior.
 ---
 
-[notice]This recipe assumes that you've already setup your own sprinkle and you're familiar with the basics of UserFrosting.[/notice]
+> [!NOTE]
+> This recipe assumes that you've already setup your own sprinkle and you're familiar with the basics of UserFrosting.
 
 This recipe will guide you in customizing the UserFrosting login screen. Specifically, we'll explain how to:
 - Disable the registration
@@ -15,7 +13,8 @@ This recipe will guide you in customizing the UserFrosting login screen. Specifi
 
 If you haven't already, set up your site Sprinkle as per the instructions in ["Your First UserFrosting Site"](/sprinkles/first-site). For the purposes of this tutorial, we will call our Sprinkle `site`.
 
-[notice]This recipe was sponsored by [adm.ninja](https://adm.ninja). [Get in touch with the UserFrosting team](https://chat.userfrosting.com) if you want to sponsor a custom recipe for your organization![/notice]
+> [!NOTE]
+> This recipe was sponsored by [adm.ninja](https://adm.ninja). [Get in touch with the UserFrosting team](https://chat.userfrosting.com) if you want to sponsor a custom recipe for your organization!
 
 ## Disabling registration
 
@@ -23,7 +22,8 @@ For many reasons, you may want to disable the ability for someone to create a ne
 
 To do this, first we'll need to create a `config/` directory inside your Sprinkle directory structure. Inside this directory, we'll create a PHP file named `default.php`.
 
-[notice=tip]The name of the configuration file is important. The `default` config file will be automatically loaded when your Sprinkle is included by the system. See the [Environment Mode](/configuration/config-files#environment-modes) chapter if you want to edit a configuration value for another environment mode.[/notice]
+> [!TIP]
+> The name of the configuration file is important. The `default` config file will be automatically loaded when your Sprinkle is included by the system. See the [Environment Mode](/configuration/config-files#environment-modes) chapter if you want to edit a configuration value for another environment mode.
 
 Inside your newly created `config/default.php` file, you add any configuration options you want to overwrite or add. In this case, we want to set the `site.registration.enabled` option to `false`:
 
@@ -44,7 +44,8 @@ Save the file, reload the login page and voilà! Not only will the registration 
 
 See the [Configuration Files](/configuration/config-files) chapter for more information about editing configuration.
 
-[notice=tip]If you need to be able to control basic configuration through the web interface, check out the `ConfigManager` Sprinkle from the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). This easy to install Sprinkle provides a graphical UI to manage some of the basic UserFrosting settings, including registration, and provides APIs to add you own custom settings.[/notice]
+> [!TIP]
+> If you need to be able to control basic configuration through the web interface, check out the `ConfigManager` Sprinkle from the [Community Sprinkles](https://github.com/search?q=topic%3Auserfrosting-sprinkle&type=Repositories). This easy to install Sprinkle provides a graphical UI to manage some of the basic UserFrosting settings, including registration, and provides APIs to add you own custom settings.
 
 ## Changing the post-login destination
 
@@ -78,7 +79,8 @@ class ServicesProvider
 }
 ```
 
-[notice]Don't forget to change `Site` for your sprinkle name in the namespace definition![/notice]
+> [!NOTE]
+> Don't forget to change `Site` for your sprinkle name in the namespace definition!
 
 Your sprinkle now has a basic service provider. Now it's time to override the default service. The process here is the same as [adding a service](/services/extending-services#adding-services). First, let's copy to our service provider the service we want to overwrite. You'll find the `redirect.onLogin` service in `app/sprinkles/admin/src/ServicesProvider/ServicesProvider.php` and it should look similar to this:
 
@@ -140,7 +142,8 @@ This uses the [authorizer](/users/access-control) to decide where to redirect th
 return $response->withHeader('UF-Redirect', $c->router->pathFor('index'));
 ```
 
-[notice=note]Note that we use the Slim router's `pathFor` method here to get the route definition from it's name. This is the same as doing `return $response->withHeader('UF-Redirect', '/');`. Check out [Slim's documentation](https://www.slimframework.com/docs/objects/router.html#route-names) for more info on named routes.[/notice]
+> [!NOTE]
+> Note that we use the Slim router's `pathFor` method here to get the route definition from it's name. This is the same as doing `return $response->withHeader('UF-Redirect', '/');`. Check out [Slim's documentation](https://www.slimframework.com/docs/objects/router.html#route-names) for more info on named routes.
 
 
 Our complete `src/ServicesProvider/ServicesProvider.php` file should now look like this:
@@ -189,7 +192,8 @@ class ServicesProvider
 }
 ```
 
-[notice=note]Since we don't need them anymore, the portion of the code for backwards-compatibility with `determineRedirectOnLogin` doesn't need to be included in our service definition. The same goes for the `$authorizer` and `$currentUser` references.[/notice]
+> [!NOTE]
+> Since we don't need them anymore, the portion of the code for backwards-compatibility with `determineRedirectOnLogin` doesn't need to be included in our service definition. The same goes for the `$authorizer` and `$currentUser` references.
 
 From now on, when a user logs in, they will be taken to the index page (`/` route). From there, you can change the redirect value to any route you want. You can also use other services, like [authorizer](/users/access-control) in the default behaviour, to add more logic to your redirect strategy.
 
@@ -235,7 +239,8 @@ Did you notice how the `login-logo` div is now inside the `login-box-body` and t
 
 ![Custom login template](/images/custom-login.png)
 
-[notice=tip]You can also use the blocks definition to partially edit a template. See the [Extending Templates and Menus](/recipes/extending-template) recipe for more information.[/notice]
+> [!TIP]
+> You can also use the blocks definition to partially edit a template. See the [Extending Templates and Menus](/recipes/extending-template) recipe for more information.
 
 ### Customizing the CSS
 
@@ -277,7 +282,8 @@ We now need to add our new `login-page.css` file to the `css/main` bundle. In th
 }
 ```
 
-[notice=note]See [Extending and overriding bundles](/asset-management/asset-bundles#extending-and-overriding-bundles) for more information on how asset bundles work.[/notice]
+> [!NOTE]
+> See [Extending and overriding bundles](/asset-management/asset-bundles#extending-and-overriding-bundles) for more information on how asset bundles work.
 
 Your new CSS file should be loaded when you refresh the page and you should see the result:
 

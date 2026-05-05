@@ -1,9 +1,5 @@
 ---
 title: 4.3.x to 4.4.x
-metadata:
-    description:
-taxonomy:
-    category: docs
 ---
 
 ## Overview
@@ -70,7 +66,8 @@ $ php bakery bake
 
 Search for `use Interop\Container\ContainerInterface;` and replace all instances with `use Psr\Container\ContainerInterface;`.
 
-[notice]You can alternatively require `container-interop/container-interop` in your sprinkle `composer.json` to quickly reenable `Interop` container interface. However, since `container-interop/container-interop` is now deprecated, using Psr container is preferable.[/notice]
+> [!NOTE]
+> You can alternatively require `container-interop/container-interop` in your sprinkle `composer.json` to quickly reenable `Interop` container interface. However, since `container-interop/container-interop` is now deprecated, using Psr container is preferable.
 
 #### The default locale
 
@@ -88,7 +85,8 @@ Starting with **4.4.0**, the fallback locale is now defined in the [locale metad
 'default' => 'fr_FR',
 ```
 
-[notice]If this setting is not updated, you will get a similar error message : `The repository file 'locale://en_US,fr_FR/locale.yaml' could not be found.`[/notice]
+> [!NOTE]
+> If this setting is not updated, you will get a similar error message : `The repository file 'locale://en_US,fr_FR/locale.yaml' could not be found.`
 
 #### Available locales configuration
 
