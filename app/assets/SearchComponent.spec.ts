@@ -142,4 +142,17 @@ describe('SearchComponent', () => {
         expect(wrapper.text()).toContain('Getting Started')
         expect(wrapper.text()).toContain('Installation')
     })
+
+    it('shows error message when the API call fails', async () => {
+        vi.mocked(axios.get).mockRejectedValue({ response: { data: 'Server error' } })
+
+        const wrapper = mount(SearchComponent)
+        const searchInput = wrapper.find('input[autofocus]')
+        await searchInput.setValue('test')
+
+        await new Promise((resolve) => setTimeout(resolve, 0))
+        await wrapper.vm.$nextTick()
+
+        expect(wrapper.find('.uk-alert-danger').exists()).toBe(true)
+    })
 })

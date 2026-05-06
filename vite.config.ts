@@ -51,7 +51,13 @@ export default defineConfig({
         coverage: {
             provider: 'v8',
             reporter: ['text', 'json', 'html', 'lcov'],
-            reportsDirectory: '../../_meta/frontend-coverage'
+            reportsDirectory: '../../_meta/frontend-coverage',
+            exclude: [
+                'main.ts',
+                'highlight.js',
+                'search.ts',
+                '**/*.spec.ts',
+            ],
         }
     }
 })

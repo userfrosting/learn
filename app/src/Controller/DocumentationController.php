@@ -87,13 +87,15 @@ class DocumentationController
         $imageResource = $this->pagesDirectory->getVersionedImage($version, $path);
 
         // Get the image content
-        $imageContent = file_get_contents($imageResource->getAbsolutePath());
-
-        if ($imageContent === false) {
+        $absolutePath = $imageResource->getAbsolutePath();
+        if (!is_readable($absolutePath)) {
             $response->getBody()->write('Image not found');
 
             return $response->withStatus(404);
         }
+
+        /** @var string $imageContent */
+        $imageContent = file_get_contents($absolutePath);
 
         // Determine MIME type based on file extension
         $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
