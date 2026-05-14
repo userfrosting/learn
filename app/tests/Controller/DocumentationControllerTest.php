@@ -194,6 +194,39 @@ class DocumentationControllerTest extends TestCase
     }
 
     /**
+     * Test that page responses include Cache-Control header when caching is enabled.
+     */
+    public function testPageCacheControlHeaderWhenEnabled(): void
+    {
+        /** @var Config $config */
+        $config = $this->ci->get(Config::class);
+        $config->set('learn.cache.enabled', true);
+        $config->set('learn.cache.ttl', 3600);
+
+        $request = $this->createRequest('GET', '/first');
+        $response = $this->handleRequest($request);
+
+        $this->assertResponseStatus(200, $response);
+        $this->assertSame('public, max-age=3600', $response->getHeaderLine('Cache-Control'));
+    }
+
+    /**
+     * Test that page responses do not include Cache-Control header when caching is disabled.
+     */
+    public function testPageCacheControlHeaderWhenDisabled(): void
+    {
+        /** @var Config $config */
+        $config = $this->ci->get(Config::class);
+        $config->set('learn.cache.enabled', false);
+
+        $request = $this->createRequest('GET', '/first');
+        $response = $this->handleRequest($request);
+
+        $this->assertResponseStatus(200, $response);
+        $this->assertSame('', $response->getHeaderLine('Cache-Control'));
+    }
+
+    /**
      * Test that a versioned URL with a trailing slash is redirected (301).
      */
     public function testTrailingSlashRedirectVersioned(): void

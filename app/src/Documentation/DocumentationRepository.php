@@ -195,34 +195,40 @@ class DocumentationRepository
      */
     public function getBreadcrumbsForPage(PageResource $page): array
     {
-        $breadcrumbs = [];
-        $current = $page;
+        return $this->remember(
+            'breadcrumbs',
+            $page->getSlug() . $page->getVersion()->id,
+            function () use ($page) {
+                $breadcrumbs = [];
+                $current = $page;
 
-        // Build breadcrumbs from current page up to root
-        while ($current !== null) {
-            array_unshift($breadcrumbs, [
-                'label' => $current->getTitle(),
-                'url'   => $current->getRoute(),
-            ]);
+                // Build breadcrumbs from current page up to root
+                while ($current !== null) {
+                    array_unshift($breadcrumbs, [
+                        'label' => $current->getTitle(),
+                        'url'   => $current->getRoute(),
+                    ]);
 
-            $parentSlug = $current->getParentSlug();
-            $current = $parentSlug === '' ? null : $this->getPage($parentSlug, $current->getVersion()->id);
-        }
+                    $parentSlug = $current->getParentSlug();
+                    $current = $parentSlug === '' ? null : $this->getPage($parentSlug, $current->getVersion()->id);
+                }
 
-        // Add home link at the start
-        array_unshift($breadcrumbs, [
-            'label' => 'Home',
-            'url'   => $page->getVersion()->latest ?
-                $this->router->urlFor('documentation', [
-                    'path'    => ''
-                ]) :
-                $this->router->urlFor('documentation.versioned', [
-                    'path'    => '',
-                    'version' => $page->getVersion()->id,
-                ]),
-        ]);
+                // Add home link at the start
+                array_unshift($breadcrumbs, [
+                    'label' => 'Home',
+                    'url'   => $page->getVersion()->latest ?
+                        $this->router->urlFor('documentation', [
+                            'path'    => ''
+                        ]) :
+                        $this->router->urlFor('documentation.versioned', [
+                            'path'    => '',
+                            'version' => $page->getVersion()->id,
+                        ]),
+                ]);
 
-        return $breadcrumbs;
+                return $breadcrumbs;
+            }
+        );
     }
 
     /**
@@ -286,21 +292,42 @@ class DocumentationRepository
      */
     public function getFlattenedTree(?string $version = null): array
     {
-        $tree = $this->getTree($version);
-        $flat = [];
+        return $this->remember(
+            'flat-tree',
+            $version ?? 'latest',
+            function () use ($version) {
+                $tree = $this->getTree($version);
+                $flat = [];
 
-        $flatten = function (array $pages) use (&$flatten, &$flat) {
-            foreach ($pages as $page) {
-                $flat[$page->getSlug()] = $page;
-                if ($page->getChildren()) {
-                    $flatten($page->getChildren());
-                }
+                $flatten = function (array $pages) use (&$flatten, &$flat) {
+                    foreach ($pages as $page) {
+                        $flat[$page->getSlug()] = $page;
+                        if ($page->getChildren()) {
+                            $flatten($page->getChildren());
+                        }
+                    }
+                };
+
+                $flatten($tree);
+
+                return $flat;
             }
-        };
+        );
+    }
 
-        $flatten($tree);
+    /**
+     * Get the HTTP cache max-age in seconds, based on the documentation cache
+     * configuration. Returns 0 when caching is disabled (e.g. in development).
+     *
+     * @return int
+     */
+    public function getHttpCacheMaxAge(): int
+    {
+        if (!$this->isCacheEnabled()) {
+            return 0;
+        }
 
-        return $flat;
+        return $this->getCacheTtl();
     }
 
     /**

@@ -509,6 +509,88 @@ class DocumentationRepositoryTest extends TestCase
         }
     }
 
+    public function testBreadcrumbsCacheUsedWhenEnabled(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        /** @var Config $config */
+        $config = $this->ci->get(Config::class);
+        $config->set('learn.cache.enabled', true);
+
+        // Get the page before injecting the mock, so getPage() doesn't pollute the count
+        $page = $pagesManager->getPage('first');
+
+        $mockCache = $this->getMockBuilder(\Illuminate\Cache\Repository::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['remember'])
+            ->getMock();
+
+        // 'first' is a top-level page with no parents, so the callback only calls
+        // remember() once (for 'breadcrumbs') without any additional ancestor lookups.
+        $mockCache->expects($this->once())
+            ->method('remember')
+            ->willReturnCallback(fn ($key, $ttl, $callback) => $callback());
+
+        $reflection = new \ReflectionClass($pagesManager);
+        $cacheProperty = $reflection->getProperty('cache');
+        $cacheProperty->setValue($pagesManager, $mockCache);
+
+        $breadcrumbs = $pagesManager->getBreadcrumbsForPage($page);
+
+        $this->assertNotEmpty($breadcrumbs);
+    }
+
+    public function testFlattenedTreeCacheUsedWhenEnabled(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        /** @var Config $config */
+        $config = $this->ci->get(Config::class);
+        $config->set('learn.cache.enabled', true);
+
+        $mockCache = $this->getMockBuilder(\Illuminate\Cache\Repository::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['remember'])
+            ->getMock();
+
+        // getFlattenedTree() calls remember() once for 'flat-tree', and its cache-miss
+        // callback calls getTree() which calls remember() once more for 'tree'.
+        $mockCache->expects($this->exactly(2))
+            ->method('remember')
+            ->willReturnCallback(fn ($key, $ttl, $callback) => $callback());
+
+        $reflection = new \ReflectionClass($pagesManager);
+        $cacheProperty = $reflection->getProperty('cache');
+        $cacheProperty->setValue($pagesManager, $mockCache);
+
+        $flatPages = $pagesManager->getFlattenedTree('6.0');
+
+        $this->assertNotEmpty($flatPages);
+    }
+
+    public function testGetHttpCacheMaxAgeWhenEnabled(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        /** @var Config $config */
+        $config = $this->ci->get(Config::class);
+        $config->set('learn.cache.enabled', true);
+        $config->set('learn.cache.ttl', 3600);
+
+        $this->assertSame(3600, $pagesManager->getHttpCacheMaxAge());
+    }
+
+    public function testGetHttpCacheMaxAgeWhenDisabled(): void
+    {
+        $pagesManager = $this->ci->get(DocumentationRepository::class);
+
+        /** @var Config $config */
+        $config = $this->ci->get(Config::class);
+        $config->set('learn.cache.enabled', false);
+
+        $this->assertSame(0, $pagesManager->getHttpCacheMaxAge());
+    }
+
     public function testNavigationSequence(): void
     {
         $pagesManager = $this->ci->get(DocumentationRepository::class);

@@ -51,12 +51,19 @@ class DocumentationController
         $page = $this->pagesDirectory->getPage($path, $version);
         $template = sprintf('pages/%s.html.twig', $page->getTemplate());
 
-        return $twig->render($response, $template, [
+        $response = $twig->render($response, $template, [
             'page'         => $page,
             'breadcrumbs'  => $this->pagesDirectory->getBreadcrumbsForPage($page),
             'previousPage' => $this->pagesDirectory->getPreviousPageForPage($page),
             'nextPage'     => $this->pagesDirectory->getNextPageForPage($page),
         ]);
+
+        $maxAge = $this->pagesDirectory->getHttpCacheMaxAge();
+        if ($maxAge > 0) {
+            $response = $response->withHeader('Cache-Control', "public, max-age={$maxAge}");
+        }
+
+        return $response;
     }
 
     /**
