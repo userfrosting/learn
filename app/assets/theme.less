@@ -14,6 +14,16 @@
 @import 'css/pager.less';
 
 /**
+ * Sticky header — replaces uk-sticky to avoid FOUC from JS-driven placeholder insertion.
+ * UIkit's z-index for sticky elements is 980; match it here.
+ */
+.uf-sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 980;
+}
+
+/**
  * Override Pink Cupcake default variables
  */
 @sidebar-width: 300px;
