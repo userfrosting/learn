@@ -25,6 +25,11 @@ services:
     networks:
       - frontend
       - backend
+  memcached:
+    image: memcached:alpine
+    restart: unless-stopped
+    networks:
+      - backend
   vue-frontend:
     restart: unless-stopped
     tty: true
