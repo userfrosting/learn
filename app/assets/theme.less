@@ -24,6 +24,17 @@
 }
 
 /**
+ * Hide navbar dropdowns before UIkit JS initializes.
+ * UIkit only adds .uk-drop (which has display:none) after JS runs. Without this,
+ * the raw dropdown markup renders as a visible block inside the navbar, making the
+ * header flash too tall for a frame until JS kicks in.
+ * Once UIkit runs, .uk-drop and its open states take over at higher specificity.
+ */
+.uk-navbar-dropdown {
+    display: none;
+}
+
+/**
  * Override Pink Cupcake default variables
  */
 @sidebar-width: 300px;
