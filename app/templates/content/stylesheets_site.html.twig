@@ -1,6 +1,8 @@
 {# This file should contain the list of css to include site wide. It will be injected into the base template headers #}
 {# The `app` entry from Webpack config is loaded here #}
 {% block stylesheets_site %}
+    {{ vite_css_preload('main.ts') }}
+    {{ vite_css_preload('search.ts') }}
     {{ vite_css('main.ts') }}
     {{ vite_css('search.ts') }}
     {{ vite_preload('main.ts') }}
