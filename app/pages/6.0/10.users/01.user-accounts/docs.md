@@ -16,7 +16,7 @@ To do this, the client tells the server their **identity** (email or username) a
 When the server receives a subsequent request, it simply needs to check that the client's session is associated with a valid user identity. In UserFrosting, this can be easily handled by applying the `AuthGuard` middleware to the protected route:
 
 ```php
-use use UserFrosting\Sprinkle\Account\Authenticate\AuthGuard;
+use UserFrosting\Sprinkle\Account\Authenticate\AuthGuard;
 
 // ...
 
@@ -141,7 +141,7 @@ Sometimes, a user registers but then loses the verification email or fails to ve
 
 Verification requests expire after a period of time specified in `verification.timeout`. The default is 10800 seconds (3 hours).
 
-For the precise implementation of the password reset and account verification resend features, see `sprinkles/account/src/Repository/TokenRepository`.
+For the precise implementation of the password reset and account verification resend features, see the `UserFrosting\Sprinkle\Account\Controller\` namespace in the Account sprinkle.
 
 ### Account settings and profile page
 
@@ -175,7 +175,7 @@ $this->logger->info("User {$currentUser->user_name} updated their profile settin
 ]);
 ```
 
-Every logged event includes the user's id, IP address, timestamp, an event type (e.g., `update_profile_settings`), and a description of the event. You may add additional logging directly in your controllers, or you can attach them to Laravel [model events](https://laravel.com/docs/8.x/eloquent#events) so that they occur automatically when the model is created/saved/updated/deleted.
+Every logged event includes the user's id, IP address, timestamp, an event type (e.g., `update_profile_settings`), and a description of the event. You may add additional logging directly in your controllers, or you can attach them to Laravel [model events](https://laravel.com/docs/11.x/eloquent#events) so that they occur automatically when the model is created/saved/updated/deleted.
 
 ## Account administration
 
@@ -183,7 +183,7 @@ Depending on the permissions you have assigned, users with the "Administrator" r
 
 ### View a list of users
 
-The user listing page is available at `/users` (`UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction`). The actual table of users is implemented through a combination of the page itself, which generates the "skeleton" of the table, and AJAX calls to the `/api/users` route, which fetches the actual data as a JSON object (`UserFrosting\Sprinkle\Admin\Controller\User\UserPageAction::sprunje`). This allows the page to efficiently retrieve paginated, filtered, sorted results without needing to reload the page.
+The user listing page is available at `/admin/users`. The actual table of users is implemented through a combination of the Vue.js frontend, which generates the page and table skeleton, and AJAX calls to the `/api/users` route, which fetches the actual data as a JSON object (`UserFrosting\Sprinkle\Admin\Controller\User\UsersSprunjeAction`). This allows the page to efficiently retrieve paginated, filtered, sorted results without needing to reload the page.
 
 See [Data Sprunjing](/database/data-sprunjing) for more details on how this works.
 
@@ -223,7 +223,7 @@ The administrator can later re-enable the account, if desired.
 
 User accounts can be deleted from the user profile page, or the user dropdown menu in the users table.
 
-Deleting user accounts presents a problem because the user may have related data in the database that would become orphaned, potentially breaking other functionality in your site. For this reason, UserFrosting performs [soft deletes](https://laravel.com/docs/8.x/eloquent#soft-deleting) by default. The user record is not actually deleted, but instead a `deleted_at` timestamp is added to the record and the user is no longer able to sign in. Deleted users are also excluded from all queries unless the `withTrashed` method is added to the Eloquent query. Related entities (activities, roles, etc) are left alone.
+Deleting user accounts presents a problem because the user may have related data in the database that would become orphaned, potentially breaking other functionality in your site. For this reason, UserFrosting performs [soft deletes](https://laravel.com/docs/11.x/eloquent#soft-deleting) by default. The user record is not actually deleted, but instead a `deleted_at` timestamp is added to the record and the user is no longer able to sign in. Deleted users are also excluded from all queries unless the `withTrashed` method is added to the Eloquent query. Related entities (activities, roles, etc) are left alone.
 
 If you really want to completely remove the user from the database, you can call the `User::forceDelete` method in your controller logic. 
 

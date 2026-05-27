@@ -41,13 +41,14 @@ The following activity types are logged by the core UserFrosting features:
 In your controller methods, simply call the `info` method on the `userActivityLogger` service to log additional activities:
 
 ```php
-/** @var \UserFrosting\Sprinkle\Account\Log\UserActivityLogger $userActivityLogger */
-$userActivityLogger->info("User {$currentUser->user_name} adopted a new owl '{$owl->name}'.", [
-    'type' => 'adopt_owl'
+/** @var \UserFrosting\Sprinkle\Account\Log\UserActivityLoggerInterface $logger */
+$logger->info("User {$currentUser->user_name} adopted a new owl '{$owl->name}'.", [
+    'type'    => 'adopt_owl',
+    'user_id' => $currentUser->id,
 ]);
 ```
 
-The first parameter is the activity description. The second parameter contains an array, which should have a `type` key defined. The value of this key decides the activity type that will be logged. Note that these activity types are not defined anywhere explicitly - they are stored in the database as plain text and you may create new types on the fly when you log an activity.
+The first parameter is the activity description. The second parameter contains an array with two required keys: `type` (which determines the activity type stored in the database) and `user_id` (the ID of the user performing the activity). Note that activity types are stored as plain text — you may create new types on the fly when you log an activity.
 
 > [!NOTE]
 > In general, you will probably want to log user activities at the end of the controller method, after the user's activity has completed successfully. However, you may choose to write to this log at any point in your code.
@@ -73,18 +74,18 @@ $lastActivity = $user->lastActivity;
 ```
 
 > [!NOTE]
-> Notice that we reference this as an model _property_, rather than calling it as a method. If we called `$user->lastActivity()` (with parentheses) instead, it would return the _relationship_ rather than the model itself.
+> Notice that we reference this as a model _property_, rather than calling it as a method. If we called `$user->lastActivity()` (with parentheses) instead, it would return an `?Activity` result directly (without the Eloquent attribute accessor), which behaves the same way but bypasses Laravel's magic property caching.
 
 ### Getting a user's last activity by type
 
 If you want to get the last activity _of a specific type_, use the `lastActivity` method, with the type as argument:
 
 ```php
-$lastSignIn = $user->lastActivity('sign_in')->get();
+$lastSignIn = $user->lastActivity('sign_in');
 ```
 
 > [!NOTE]
-> Since `lastActivity(...)` returns a `Builder` object, we need to call `get` to return the actual result.
+> `lastActivity($type)` returns a single `?Activity` model (or `null` if no matching activity exists), not a query Builder. No further chaining is needed.
 
 ### Getting the time of a user's last activity
 
@@ -114,15 +115,26 @@ $usersWithActivities = User::joinLastActivity()->get();
 
 By default, UserFrosting implements a [custom Monolog handler](https://github.com/Seldaek/monolog/blob/master/doc/04-extending.md), `UserFrosting\Sprinkle\Account\Log\UserActivityDatabaseHandler`, that sends user activity logs to the `activities` database table.
 
-This is all assembled in the `LoggersService` service. If you'd prefer, you can [extend or override](/dependency-injection/extending-services) the `\UserFrosting\Sprinkle\Account\Log\UserActivityLogger` class reference in the DI Container to add additional handlers, or even completely replace the custom handler altogether. For example, to replace the `UserActivityDatabaseHandler` with `StreamHandler` :
+This is all assembled in the `LoggersService` service. If you'd prefer, you can [extend or override](/dependency-injection/extending-services) the `UserActivityLoggerInterface` binding in the DI Container to add additional handlers, or even completely replace the default handler. For example, to log to a file instead of the database, create a custom logger class and bind it:
 
 ```php
-UserActivityLogger::class => function () {
-    $handler = new StreamHandler('log://activities.log');
-    $logger = new UserActivityLogger('userActivity', [$handler]);
+use Monolog\Handler\StreamHandler;
+use UserFrosting\Sprinkle\Account\Log\UserActivityLoggerInterface;
+use UserFrosting\Sprinkle\Core\Log\Logger;
 
-    return $logger;
-},
+final class FileActivityLogger extends Logger implements UserActivityLoggerInterface
+{
+    public function __construct()
+    {
+        parent::__construct(new StreamHandler('/path/to/activities.log'), 'userActivity');
+    }
+}
+```
+
+Then register it in a service provider:
+
+```php
+UserActivityLoggerInterface::class => \DI\autowire(FileActivityLogger::class),
 ```
 
 See the [Monolog documentation](https://seldaek.github.io/monolog/) for more details.

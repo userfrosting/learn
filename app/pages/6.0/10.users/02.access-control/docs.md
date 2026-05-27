@@ -46,10 +46,10 @@ This can be done by calling the `checkAccess` method of the `AuthorizationManage
 
 ```php
 #[\DI\Attribute\Inject]
-protected Authenticator $authenticator
+protected Authenticator $authenticator;
 
 #[\DI\Attribute\Inject]
-protected AuthorizationManager $authorizer
+protected AuthorizationManager $authorizer;
 
 // ...
 
@@ -64,7 +64,7 @@ Or simply use the `checkAccess` method of the `Authenticator` service, which is 
 
 ```php
 #[\DI\Attribute\Inject]
-protected Authenticator $authenticator
+protected Authenticator $authenticator;
 
 // ...
 if (!$this->authenticator->checkAccess('uri_users')) {
@@ -120,6 +120,7 @@ UserFrosting ships with a number of predefined access condition callbacks, which
 | Callback                          | Description                                                                                  |
 | --------------------------------- | -------------------------------------------------------------------------------------------- |
 | `always()`                        | Unconditionally grant permission - use carefully!                                            |
+| `never()`                         | Unconditionally deny permission.                                                             |
 | `equals($val1, $val2)`            | Check if the specified values are identical to one another (strict comparison).              |
 | `equals_num($val1, $val2)`        | Check if the specified values are numeric, and if so, if they are equal to each other.       |
 | `has_role($user_id, $role_id)`    | Check if the specified user (by `$user_id`) has a particular role.                           |
