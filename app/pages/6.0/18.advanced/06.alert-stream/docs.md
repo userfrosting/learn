@@ -3,6 +3,9 @@ title: The Alert Stream
 description: The alert stream is UserFrosting's implementation of a flash messaging system, and is used to display error or success notifications to the end user.
 ---
 
+> [!WARNING]
+> The server-side PHP alert stream is deprecated and will be removed in a future version of UserFrosting. For new projects, consider handling alerts client-side by returning data directly in your API responses. See [UI Theming - Alerts](/ui-theming/alerts) for the recommended approach.
+
 The **alert stream** is UserFrosting's implementation of a flash messaging system, and is used to display error or success notifications to the end user.
 
 Rather than including alerts directly in a request's response, they are persisted through a separate `AlertStream` interface. They can then be retrieved by making a separate request to `/alerts`, which will return a JSON object containing each alert message and its corresponding type:

@@ -81,9 +81,9 @@ Some locales have a parent locale, and each locale's language files will be load
 
 Just like [routes](/routes-and-controllers/front-controller), the names of the files don't matter as they won't overwrite each other. This means two sprinkles can have a `locale/en_US/messages.php` file and **both** will be loaded and **merged** togeter. This means that each subsequently loaded Sprinkle can override translations from previous Sprinkles, or define new ones entirely.
 
-For example, if you want your sprinkle to overwrite a value in the core, you can redefine the same key in your sprinkle :
+For example, if you want your sprinkle to overwrite a value defined in the [Core sprinkle](/structure/sprinkles#core-sprinkle), you can redefine the same key in your sprinkle :
 
-**app/locale/en_US/example.php**
+**Core Sprinkle - app/locale/en_US/example.php**
 
 ```php
 return[
