@@ -37,7 +37,7 @@ This is where the **dependency injection container (DIC)** comes into play. The 
 > 
 > You don't need a container to do dependency injection. However, a container can make injections easier.
 
-UserFrosting uses [_PHP-DI 7_](https://php-di.org) as it's DIC implementation since it provides many powerful features that we rely on:
+UserFrosting uses [_PHP-DI 7_](https://php-di.org) as its DIC implementation since it provides many powerful features that we rely on:
 
 1. It creates dependencies lazily ("on demand"). Any service (and its dependencies) won't be created until the first time we access them.
 2. Once an object has been created in the container, the same object is returned in each subsequent call to the container.

@@ -1,6 +1,7 @@
 ---
 title: Entrypoints
 description: Entrypoints bundles allow you to group one or more asset references for reuse throughout your application.
+obsolete: true
 ---
 
 > [!WARNING]

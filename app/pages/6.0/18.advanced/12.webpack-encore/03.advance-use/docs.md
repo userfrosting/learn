@@ -1,6 +1,7 @@
 ---
 title: Enabling Sass, Less, Vue and React
 description: ""
+obsolete: true
 ---
 
 > [!WARNING]

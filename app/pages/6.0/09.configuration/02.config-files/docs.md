@@ -46,11 +46,13 @@ And I load it after the `mysite` Sprinkle, the resulting configuration array cre
 
 ```php
     [
-        'timezone' => 'America/New_York',
         'site' => [
             'title'     =>      'Save the Kakapo',
             'author'    =>      'David Attenborough',
             'twitter'   =>      '@savethekakapo'
+        ],
+        'php' => [
+            'timezone' => 'America/New_York'
         ]
     ]
 ```
@@ -94,11 +96,13 @@ To access values from the final, merged configuration array during runtime, use 
 
 ```php
     [
-        'timezone' => 'America/New_York',
         'site' => [
             'title'     =>      'Save the Kakapo',
             'author'    =>      'David Attenborough',
             'twitter'   =>      '@savethekakapo'
+        ],
+        'php' => [
+            'timezone' => 'America/New_York'
         ]
     ]
 ```

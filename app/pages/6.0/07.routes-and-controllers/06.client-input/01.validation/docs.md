@@ -176,7 +176,7 @@ if (count($errors) !== 0) {
 }
 ```
 
-The `validate` method will return `false` if any fields fail any of their validation rules. Notice that we throw an exception to handle any error messages that we wish to display to the client, and stop the execution of the controller code.
+The `validate` method will return an array of error messages (keyed by field name) if any fields fail their validation rules, or an empty array if all fields are valid. Notice that we throw an exception to handle any error messages that we wish to display to the client, and stop the execution of the controller code.
 
 > [!IMPORTANT]
 > Internally, UserFrosting uses the [Valitron](https://github.com/vlucas/valitron) validation package to perform server-side validation.

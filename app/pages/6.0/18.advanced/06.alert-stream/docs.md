@@ -3,9 +3,6 @@ title: The Alert Stream
 description: The alert stream is UserFrosting's implementation of a flash messaging system, and is used to display error or success notifications to the end user.
 ---
 
-> [!WARNING]  
-> The Alert Stream is **deprecated** and will be removed in a future version of UserFrosting. Consider using alternative flash messaging approaches for new projects.
-
 The **alert stream** is UserFrosting's implementation of a flash messaging system, and is used to display error or success notifications to the end user.
 
 Rather than including alerts directly in a request's response, they are persisted through a separate `AlertStream` interface. They can then be retrieved by making a separate request to `/alerts`, which will return a JSON object containing each alert message and its corresponding type:
@@ -89,6 +86,9 @@ Alternatively, you may choose to store alerts in the [user cache](/advanced/cach
 > If you are having issues with alerts not being properly cleared from the alert stream after retrieval, try using the `cache` option for alert persistence. See [this issue](https://github.com/userfrosting/UserFrosting/issues/633) for an explanation of the problem.
 
 ## Client-side
+
+> [!NOTE]
+> The following client-side section is specific to legacy UF4/5 themes. For the Pink Cupcake theme, see [UI Theming](/ui-theming/alerts).
 
 In your client-side code, alerts are primarily handled by the `ufAlerts` jQuery plugin. The `/core/assets/userfrosting/js/uf-init.js` Javascript asset, which is loaded as part of the `js/main` [asset bundle](/assets-vite), will look for an element with an `id` of `alerts-page` and automatically fetch and render any alerts into this element when a page is first loaded.
 

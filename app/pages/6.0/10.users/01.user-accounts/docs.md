@@ -175,7 +175,7 @@ $this->logger->info("User {$currentUser->user_name} updated their profile settin
 ]);
 ```
 
-Every logged event includes the user's id, IP address, timestamp, an event type (e.g., `update_profile_settings`), and a description of the event. You may add additional logging directly in your controllers, or you can attach them to Laravel [model events](https://laravel.com/docs/11.x/eloquent#events) so that they occur automatically when the model is created/saved/updated/deleted.
+Every logged event includes the user's id, IP address, timestamp, an event type (e.g., `update_profile_settings`), and a description of the event. You may add additional logging directly in your controllers, or you can attach them to Laravel [model events](https://laravel.com/docs/eloquent#events) so that they occur automatically when the model is created/saved/updated/deleted.
 
 ## Account administration
 
@@ -223,7 +223,7 @@ The administrator can later re-enable the account, if desired.
 
 User accounts can be deleted from the user profile page, or the user dropdown menu in the users table.
 
-Deleting user accounts presents a problem because the user may have related data in the database that would become orphaned, potentially breaking other functionality in your site. For this reason, UserFrosting performs [soft deletes](https://laravel.com/docs/11.x/eloquent#soft-deleting) by default. The user record is not actually deleted, but instead a `deleted_at` timestamp is added to the record and the user is no longer able to sign in. Deleted users are also excluded from all queries unless the `withTrashed` method is added to the Eloquent query. Related entities (activities, roles, etc) are left alone.
+Deleting user accounts presents a problem because the user may have related data in the database that would become orphaned, potentially breaking other functionality in your site. For this reason, UserFrosting performs [soft deletes](https://laravel.com/docs/eloquent#soft-deleting) by default. The user record is not actually deleted, but instead a `deleted_at` timestamp is added to the record and the user is no longer able to sign in. Deleted users are also excluded from all queries unless the `withTrashed` method is added to the Eloquent query. Related entities (activities, roles, etc) are left alone.
 
 If you really want to completely remove the user from the database, you can call the `User::forceDelete` method in your controller logic. 
 

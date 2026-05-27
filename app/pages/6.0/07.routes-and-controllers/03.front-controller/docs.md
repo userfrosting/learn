@@ -10,7 +10,7 @@ Sprinkles define their routes in classes and register them in their Recipe. Ther
 The following is an example of a `GET` route:
 
 ```php
-$app->get('/api/users/u/{username}', function (string $username, Request $request, Response $response, array $args)
+$app->get('/api/users/u/{username}', function (string $username, Request $request, Response $response)
 {
     $getParams = $request->getQueryParams();
 
@@ -20,8 +20,10 @@ $app->get('/api/users/u/{username}', function (string $username, Request $reques
         $payload = json_encode($result, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
         $response->getBody()->write($payload);
     } else {
-        return $response->getBody()->write("No format specified");
+        $response->getBody()->write("No format specified");
     }
+
+    return $response;
 });
 ```
 

@@ -41,9 +41,9 @@ First, you'll need to install Docker. Just follow the installation instructions 
 
 For the next part, you'll need to use the command line. We'll use Composer (through a Docker image) to create an empty project, with the latest version of the UserFrosting skeleton, into a new `UserFrosting` subdirectory:
 
-<!-- TODO : UPDATE FOR OFFICIAL RELEASE -->
+
 ```bash
-docker run --rm -it -v "$(pwd):/app" composer create-project userfrosting/userfrosting UserFrosting "^6.0-beta" --no-scripts --no-install --ignore-platform-reqs
+docker run --rm -it -v "$(pwd):/app" composer create-project userfrosting/userfrosting UserFrosting "^6.0" --no-scripts --no-install --ignore-platform-reqs
 ```
 
 > [!TIP]
@@ -65,7 +65,7 @@ Now it's simply a matter of navigating to the directory containing the source co
 2. Build each of the Docker Containers (this might take a while):
 
    ```bash
-   docker-compose build --no-cache
+   docker compose build --no-cache
    ```
 
 3. Copy the `.env` template
@@ -76,7 +76,7 @@ Now it's simply a matter of navigating to the directory containing the source co
 4. Start each Docker Container:
 
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 5. Set some directory permissions (you may have to enter your root password):
@@ -90,13 +90,13 @@ Now it's simply a matter of navigating to the directory containing the source co
 6. Install PHP dependencies:
 
    ```bash
-   docker-compose exec app composer update
+   docker compose exec app composer install
    ```
 
 7. Install UserFrosting (database configuration and migrations, creation of admin user, etc.). You'll need to provide info to create the admin user:
 
    ```bash
-   docker-compose exec app php bakery bake
+   docker compose exec app php bakery bake
    ```
 
 Now visit [http://localhost:8080](http://localhost:8080) to see your UserFrosting homepage!
@@ -108,12 +108,12 @@ You should see the default UserFrosting pages and be able to log in with the new
 To stop the containers, run:
 
 ```bash
-docker-compose stop
+docker compose stop
 ```
 
 ## Mailpit
 
-UserFrosting's default `docker-compose.yml` file contains a service entry for [Mailpit](https://github.com/axllent/mailpit). Mailpit intercepts emails sent by your application during local development and provides a convenient web interface so that you can preview your email messages in your browser.
+UserFrosting's default `compose.yaml` file contains a service entry for [Mailpit](https://github.com/axllent/mailpit). Mailpit intercepts emails sent by your application during local development and provides a convenient web interface so that you can preview your email messages in your browser.
 
 While UserFrosting is running, you may access the Mailpit web interface at: [http://localhost:8025](http://localhost:8025).
 
@@ -124,7 +124,7 @@ Every Bakery command needs to be wrapped in Docker Compose syntax, since you nee
 For example:
 
 ```bash
-docker-compose exec app php bakery ...
+docker compose exec app php bakery ...
 ```
 
 ## Working with the Containers
@@ -132,38 +132,38 @@ docker-compose exec app php bakery ...
 If you need to stop the UserFrosting Docker containers, change to your UserFrosting directory and run:
 
 ```bash
-docker-compose stop
+docker compose stop
 ```
 
 To start the containers again, change to your UserFrosting directory and run:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 If you need to purge your Docker containers (this will not delete any source files or sprinkles, but will empty the database), run:
 
 ```bash
-docker-compose down --remove-orphans
+docker compose down --remove-orphans
 ```
 
 And then start the installation process again.
 
 ## Advanced configuration
 
-At the heart of everything is the `docker-compose.yml` file. If you're experienced with Docker and Docker Compose, this is where you can customize your Docker experience. For example, you can customize the port each service runs on. Since the file is located in *your sprinkle* (your app), it's possible to save this file in your repository.
+At the heart of everything is the `compose.yaml` file. If you're experienced with Docker and Docker Compose, this is where you can customize your Docker experience. For example, you can customize the port each service runs on. Since the file is located in *your sprinkle* (your app), it's possible to save this file in your repository.
 
-The `docker-compose.yml` file also contains the MySQL database and Mail environment variables. Since these variables are defined globally inside the container, they don't need to be redefined inside the `.env` file.
+The `compose.yaml` file also contains the MySQL database and Mail environment variables. Since these variables are defined globally inside the container, they don't need to be redefined inside the `.env` file.
 
 > [!WARNING]
 > If you have **multiple** instances of UserFrosting on your computer, **they will share the same configuration by default**. This means:
 > 1. You can't run multiple Docker instances of UserFrosting *simultaneously* with the default configuration, as ports will conflict.
 > 2. Both instances will share the same database.
 >
-> If you wish to run multiple instances of UserFrosting on the same computer with Docker, you must edit the `docker-compose.yml` for each instance and change the ports and database volumes/database names.
+> If you wish to run multiple instances of UserFrosting on the same computer with Docker, you must edit the `compose.yaml` for each instance and change the ports and database volumes/database names.
 
 > [!NOTE]
-> An "*address already in use*" error can be thrown if a port defined in `docker-compose.yml` is already used on your system. For example, if Mailpit is installed locally and running on the default port, you'll get an "address already in use" error when running Docker. This can be solved by changing the port in `docker-compose.yml`.
+> An "*address already in use*" error can be thrown if a port defined in `compose.yaml` is already used on your system. For example, if Mailpit is installed locally and running on the default port, you'll get an "address already in use" error when running Docker. This can be solved by changing the port in `compose.yaml`.
 
 ## Production Environment
 
@@ -171,7 +171,7 @@ The `docker-compose.yml` file also contains the MySQL database and Mail environm
 
 You may be tempted to use this configuration in production, but it has not been security-hardened. For example:
 
-- The database is exposed on port 8593 so you can access MySQL using your favorite client at `localhost:8593`. However, the way Docker exposes ports bypasses common firewalls like `ufw`. This should not be exposed in production.
+- The database is exposed on port 8503 so you can access MySQL using your favorite client at `localhost:8503`. However, the way Docker exposes ports bypasses common firewalls like `ufw`. This should not be exposed in production.
 - Database credentials are hard-coded, which is not secure.
 - File permissions may be more permissive than necessary.
 - HTTPS is not implemented.

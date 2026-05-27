@@ -199,6 +199,7 @@ The available sub-recipes includes:
 | [MiddlewareRecipe](#middlewarerecipe)       | Registering [Middlewares](/advanced/middlewares)                                                     |
 | [EventListenerRecipe](#eventlistenerrecipe) | Registering [Event Listeners](/advanced/events)                                                     |
 | [TwigExtensionRecipe](#twigextensionrecipe) | Registering [Twig Extension](/pages-and-layout/filters-and-functions#extending-twig-extensions) |
+| [MarkdownExtensionRecipe](#markdownextensionrecipe) | Register custom CommonMark extensions |
 
 Your recipe simply needs to implement the corresponding interface. Classes may implement more than one interface if desired by separating each interface with a comma. For example :
 
@@ -325,6 +326,22 @@ Methods to implement :
         return [
             CoreExtension::class,
             AlertsExtension::class,
+        ];
+    }
+    ```
+
+### MarkdownExtensionRecipe
+Interface : `UserFrosting\Sprinkle\Core\Sprinkle\Recipe\MarkdownExtensionRecipe`
+
+Methods to implement :
+- `getMarkdownExtensions` : Return a list of custom [CommonMark](https://commonmark.thephpleague.com/) extension classes
+
+    **Example:**
+    ```php
+    public function getMarkdownExtensions(): array
+    {
+        return [
+            MyCustomMarkdownExtension::class,
         ];
     }
     ```

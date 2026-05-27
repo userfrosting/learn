@@ -138,7 +138,7 @@ Sometimes, we want to reuse a snippet across multiple different templates - for 
         ...
 ```
 
-The last line `{% include "pages/partials/favicons.html.twig" %}` tells Twig to insert the contents of the `pages/partials/favicons.html.twig` template.  Additional parameters can be passed to `include`, which will override any variables of the same name that were passed to the main template:
+The last line `{% include "content/favicons.html.twig" %}` tells Twig to insert the contents of the `content/favicons.html.twig` template.  Additional parameters can be passed to `include`, which will override any variables of the same name that were passed to the main template:
 
 ```twig
 <div class="box-body">

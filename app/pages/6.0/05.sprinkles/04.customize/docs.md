@@ -142,7 +142,7 @@ $ composer update
 ```
 
 > [!NOTE]
-> If after running these steps, UserFrosting fails to find new classes that you add to `src/`, make sure that that the user running Composer had read permissions for your sprinkle. You can check that the path to your sprinkle's `src/` directory was actually added in `app/vendor/composer/autoload_psr4.php` You can also try running Composer with the `-vvv` flag for more detailed reporting.
+> If after running these steps, UserFrosting fails to find new classes that you add to `src/`, make sure that that the user running Composer had read permissions for your sprinkle. You can check that the path to your sprinkle's `src/` directory was actually added in `vendor/composer/autoload_psr4.php` You can also try running Composer with the `-vvv` flag for more detailed reporting.
 
 ### The recipe
 

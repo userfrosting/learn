@@ -215,11 +215,11 @@ class ResourceLocatorInitiated
         $event->locator->addStream($stream);
 
         // Shared Stream with custom path
-        $stream = new ResourceStream('bar', path: 'foobar', shared: true),
+        $stream = new ResourceStream('bar', path: 'foobar', shared: true);
         $event->locator->addStream($stream);
 
         // Readonly Stream
-        $stream = new ResourceStream('baz', path: 'readonly', readonly: true),
+        $stream = new ResourceStream('baz', path: 'readonly', readonly: true);
         $event->locator->addStream($stream);
     }
 }

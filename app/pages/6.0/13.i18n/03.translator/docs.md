@@ -27,13 +27,13 @@ echo $this->translator->translate("ACCOUNT_SPECIFY_USERNAME");
 The current locale will be automatically defined and the associated dictionary automatically loaded by UserFrosting.
 
 > [!TIP]
-> The translator service contains others public methods that can be useful for you. For example, you can use it to retrieve the associated dictionary and locale. See the [i18n API documentation](https://github.com/userfrosting/framework/tree/main/packages/framework/src/I18n) for more information.
+> The translator service contains others public methods that can be useful for you. For example, you can use it to retrieve the associated dictionary and locale. See the [i18n API documentation](https://github.com/userfrosting/monorepo/tree/main/packages/framework/src/I18n) for more information.
 
 ### In Twig
 
 The translator service is also available as a [Twig function](/pages-and-layout/filters-and-functions). Placeholders can be passed to the Twig function too:
 
-```
+```twig
 {{ translate("ACCOUNT_SPECIFY_USERNAME") }}
 ```
 
@@ -101,6 +101,10 @@ See the [Luxon documentation](https://moment.github.io/luxon/#/formatting) for m
 The translator functions are also available as global properties in all Vue templates. The `$t` function is an alias for `translate()`, and `$tdate` is an alias for `translateDate()`:
 
 ```vue
+<script setup lang="ts">
+import { DateTime } from 'luxon'
+</script>
+
 <template>
     <h1>{{ $t('WELCOME_TO', { title: 'UserFrosting' }) }}</h1>
     <p>{{ $t('X_CARS', 5) }}</p>

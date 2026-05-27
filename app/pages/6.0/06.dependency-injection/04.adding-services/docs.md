@@ -75,7 +75,7 @@ MapBuilder::class => function (Config $config) {
 
 ### Register your service
 
-The next step is to tell UserFrosting to load your service in your [Sprinkle Recipe](/sprinkles/recipe#getservices). To do so, you only need to list all the service providers you want to automatically register inside the `$getServices` property of your sprinkle class:
+The next step is to tell UserFrosting to load your service in your [Sprinkle Recipe](/sprinkles/recipe#getservices). To do so, you only need to list all the service providers you want to automatically register inside the `getServices()` method of your sprinkle class:
 
 **app/src/MyApp.php**
 
