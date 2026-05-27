@@ -53,10 +53,12 @@ This launches Vite in development mode with:
 
 When running, your browser loads assets directly from Vite's dev server for the fastest possible feedback loop.
 
-**`npm run vite:build`** - Creates an optimized production build
+**`npm run vite:build`** - Type-checks TypeScript then creates an optimized production build
 ```json
-"vite:build": "vite build"
+"vite:build": "vue-tsc && vite build"
 ```
+
+The `vue-tsc` prefix runs a full TypeScript type-check before building. If there are any type errors, the build will abort. This ensures type safety is enforced in CI as well as locally.
 
 This generates production-ready assets with:
 - **Code minification** - Removes whitespace and shortens variable names
@@ -96,7 +98,7 @@ Executes your test suite using [Vitest](https://vitest.dev/), a fast testing fra
 
 **`npm run coverage`** - Generates a test coverage report
 ```json
-"coverage": "vitest --coverage"
+"coverage": "vitest run --coverage"
 ```
 
 Creates a detailed report showing which parts of your code are tested.

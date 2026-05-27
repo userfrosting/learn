@@ -5,7 +5,7 @@ description: UserFrosting's installer creates a number of tables by default.  He
 
 When you install UserFrosting with the [Bakery CLI](/cli), a number of tables will automatically added to your database. These tables are required for UserFrosting's built-in features, such as user accounts, request throttling, persistent sessions, and access control.
 
-The [migrations](/database/migrations) for most tables can be found in the `src/Database/Migrations` directory of the Sprinkle that depends on it. The exceptions are the system tables, which are located in `app/system/Database/Migrations`.
+The [migrations](/database/migrations) for most tables can be found in the `src/Database/Migrations` directory of the Sprinkle that depends on it. The exceptions are the system tables, which are located in the [Core sprinkle](/structure/sprinkles#core-sprinkle).
 
 ## System tables
 
@@ -62,7 +62,7 @@ This table contains records for each user.
 
 | Column              | Type           | Description                                                                                                                                               |
 | ------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`                | `string`       | The unique identifier for the user.                                                                                                                       |
+| `id`                | `int` (auto-increment) | The unique identifier for the user.                                                                                                                       |
 | `user_name`         | `string(50)`   | A unique text identifier for the user. Only `[a-zA-Z0-9_-]` characters are allowed.                                                                       |
 | `email`             | `string(255)`  | The email address of the user. Must be unique.                                                                                                            |
 | `first_name`        | `string(20)`   | The user's first name. Optional.                                                                                                                          |
