@@ -78,6 +78,21 @@ Preloads assets for better performance by telling the browser to fetch them earl
 
 This generates `<link rel="modulepreload">` tags for JavaScript modules and `<link rel="preload">` tags for other assets, allowing the browser to fetch them in parallel with the page load.
 
+#### vite_css_preload
+
+Emits `<link rel="preload" as="style">` hints specifically for CSS files associated with an entry point:
+
+```twig
+{{ vite_css_preload('main.ts') }}
+```
+
+This tells the browser to start fetching your stylesheets as early as possible, before the CSS `<link>` tags are processed. It's typically called just before `vite_css()` in your layout template to improve perceived load performance:
+
+```twig
+{{ vite_css_preload('main.ts') }}
+{{ vite_css('main.ts') }}
+```
+
 > [!NOTE]
 > Further information on how to use these functions and how they work under the hood will be covered in the [Assets and Vite](/assets-vite) chapter.
 

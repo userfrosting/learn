@@ -169,14 +169,14 @@ Replace the contents of your `package.json` to match the 6.0 structure. The chan
         "@modyfi/vite-plugin-yaml": "^1.1.1",
         "@types/uikit": "^3.14.5",
         "@vitejs/plugin-vue": "^5.0.4",
-        "@vitest/coverage-v8": "^3.1.1",
+        "@vitest/coverage-v8": "^4.1.0",
         "@vue/test-utils": "^2.4.6",
         "happy-dom": "^20.0.2",
         "less": "^4.2.0",
         "typescript": "^5.4.5",
         "vite": "^6.4.1",
         "vite-plugin-vue-devtools": "^7.5.4",
-        "vitest": "^3.1.1",
+        "vitest": "^4.1.0",
         "vue-tsc": "^2.1.10"
     },
     "scripts": {
