@@ -16,7 +16,7 @@ If your local development environment doesn't already have the [required stack a
 - [Command Line Interface](#cli)
 - [PHP 8.1 or higher](#php)
 - [Composer 2](#composer)
-- [Node.js 18.0 or higher](#node)
+- [Node.js 20.0 or higher](#node)
 - [Npm 9 or higher](#npm)
 - [Mail Server](#mail)
 
@@ -129,7 +129,7 @@ Composer version 2.5.4 2023-02-15 13:10:06
 
 ### Node
 
-It's now time to install [Node.js](https://nodejs.org/en/). Any version above **18.0** will work with UserFrosting, however we recommend using the latest LTS version of Node.js (v24 LTS as of 2026).
+It's now time to install [Node.js](https://nodejs.org/en/). Any version above **20.0** will work with UserFrosting, however we recommend using the latest LTS version of Node.js (v24 LTS as of 2026).
 
 #### MacOS
 

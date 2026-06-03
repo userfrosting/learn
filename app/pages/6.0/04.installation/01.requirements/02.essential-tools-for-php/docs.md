@@ -54,7 +54,7 @@ Although UserFrosting does not _run_ on Node.js, it does use several Node-based 
 > Even though we'll be using these tools to get our application ready for deployment, you don't need to install Node.js on your live server. You can install it locally, perform your installation and build tasks, and then push the built application to the live server afterwards.
 
 > [!NOTE]
-> UserFrosting requires **Node 18** or above.
+> UserFrosting requires **Node 20** or above.
 
 ## npm
 

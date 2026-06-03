@@ -65,7 +65,7 @@ This change requires database migrations, which will be handled automatically wh
 
 While the minimum **required PHP version is still 8.1**, the recommended PHP version is now 8.4. PHP 8.5 is also supported but not required, giving you flexibility in your hosting environment.
 
-On the frontend, **Node.js 18.0 or higher** is still required to use Vite and the new build tools. Node.js 24 (LTS) is recommended for the best performance and compatibility with the latest features.
+On the frontend, **Node.js 20.0 or higher** is now required to use Vite and the new build tools. Node.js 24 (LTS) is recommended for the best performance and compatibility with the latest features.
 
 ## What's the same ?
 

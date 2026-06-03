@@ -45,7 +45,7 @@ UserFrosting 6.0 brings several major improvements:
 ### Base Requirements
 - **Minimum PHP version**: 8.1 (up from 8.0)
 - **Recommended PHP version**: 8.4
-- **Node.js requirement**: 18.0+ (LTS 24 recommended)
+- **Node.js requirement**: 20.0+ (LTS 24 recommended)
 
 ## Should You Upgrade?
 

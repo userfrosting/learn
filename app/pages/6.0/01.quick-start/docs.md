@@ -19,7 +19,7 @@ UserFrosting has a few system requirements. You need to make sure your local Use
 
 - PHP **8.1 or higher** (*8.5* recommended)
 - [Composer 2](https://getcomposer.org/)
-- [Node.js](https://nodejs.org/en/) **18.0** or higher (*24 LTS* recommended)
+- [Node.js](https://nodejs.org/en/) **20.0** or higher (*24 LTS* recommended)
 - [npm](https://www.npmjs.com) **9.0** or higher
 
 ## Installing UserFrosting

@@ -17,7 +17,7 @@ Before beginning the upgrade:
 - [ ] Running latest UserFrosting 5.1.x
 - [ ] PHP 8.1 or higher installed (8.4 recommended)
 - [ ] Composer 2 installed
-- [ ] Node.js 18.0+ installed (LTS 24 recommended)
+- [ ] Node.js 20.0+ installed (LTS 24 recommended)
 - [ ] npm 9.0+ installed
 - [ ] Backed up database and application files
 - [ ] Development environment ready for testing
@@ -35,7 +35,7 @@ php -v
 # Check Composer version (must be 2.x)
 composer --version
 
-# Check Node.js version (must be 18+)
+# Check Node.js version (must be 20+)
 node --version
 
 # Check npm version (must be 9+)
@@ -152,7 +152,7 @@ Replace the contents of your `package.json` to match the 6.0 structure. The chan
 {
     "type": "module",
     "engines": {
-        "node": ">= 18"
+        "node": ">= 20"
     },
     "dependencies": {
         "@userfrosting/sprinkle-account": "^6.0.0",
