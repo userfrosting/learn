@@ -1,0 +1,14 @@
+{% if site.analytics.google.code and site.analytics.google.enabled %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.analytics.google.code }}"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '{{ site.analytics.google.code }}');
+    </script>
+{% elseif site.debug.info %}
+    <script>
+        console.log("Google Analytics is disabled or code has not been set.");
+    </script>
+{% endif %}

@@ -27,4 +27,12 @@ return [
             ],
         ],
     ],
+    'site' => [
+        'analytics' => [
+            'google' => [
+                'code'    => 'G-JLM4TB5D6Y',
+                'enabled' => true,
+            ],
+        ],
+    ],
 ];
