@@ -17,7 +17,7 @@ In UserFrosting apps, you have two practical ways to communicate feedback to use
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Severity, type AlertInterface } from '@userfrosting/sprinkle-core'
+import { Severity, type AlertInterface } from '@userfrosting/sprinkle-core/interfaces'
 
 const alert = ref<AlertInterface | null>(null)
 

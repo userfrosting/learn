@@ -29,9 +29,9 @@ use UserFrosting\Sprinkle\Core\Exceptions\NotFoundException;
 
 class UserController
 {
-    public function getUser(Request $request, Response $response, array $args): Response
+    public function getUser(int $id, Request $request, Response $response): Response
     {
-        $userId = $args['id'];
+        $userId = $id;
         
         // Fetch user from database
         $user = User::find($userId);

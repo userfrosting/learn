@@ -281,6 +281,6 @@ Your browser is a great way to make and check the response of `GET` requests, bu
 
 Here are some popular options:
 
-- [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop), a plugin for Chrome and standalone app
+- **[Postman](https://www.postman.com)** is a standalone application (available for Mac, Windows, and Linux) that provides a convenient interface for making HTTP requests.
 - [Fiddler](https://www.telerik.com/download/fiddler), the free web debugging proxy (desktop app)
 - [RESTClient](http://restclient.net/), a plugin for Firefox

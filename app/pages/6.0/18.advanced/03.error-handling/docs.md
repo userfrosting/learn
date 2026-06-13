@@ -59,7 +59,7 @@ It's worth noting at this point that some Exception are *user facing*, while oth
 | AuthExpiredException          | Used when the user needs to authenticate/reauthenticate.                                 |
 | AuthGuardException            | Used when a page requires the user to be logged-in.                                      |
 | DefaultGroupException         | Used when the default group is not found.                                                |
-| EmailNotUniqueException       | Used when an the username is not unique.                                                 |
+| EmailNotUniqueException       | Used when an email address is not unique.                                                |
 | FailedVerificationException   | Used when two-factor verification fails.                                                 |
 | ForbiddenException            | Used when an account doesn't have access to a resource.                                  |
 | InvalidCredentialsException   | Used when an account fails authentication for some reason.                               |
@@ -386,7 +386,7 @@ Your custom renderer now need to be registered using one of three methods:
 
 To use your renderer in your handler, replace the `$errorRenderers` and/or `$logFormatter` property of the base `ExceptionHandler`:
 ```php
-class MyExceptionHandler implements ExceptionHandler
+class MyExceptionHandler extends ExceptionHandler
 {
     protected array $errorRenderers = [
         'application/json' => JsonRenderer::class,

@@ -211,6 +211,9 @@ To do this, you can define custom methods in your Sprunje:
     }
 ```
 
+> [!NOTE]
+> `->like()` and `->orLike()` are UserFrosting-specific query builder methods defined in `UserFrosting\Sprinkle\Core\Database\Builder`. They generate `LIKE '%value%'` clauses. You can alternatively use standard Eloquent syntax: `$query->where('genus', 'LIKE', "%{$value}%")->orWhere('species', 'LIKE', "%{$value}%")`.
+
 The method name should consist of the field name (converted to StudlyCase), prefixed with `filter` or `sort`.
 
 Thus, in this example a request parameter of `filters[scientific_name]=mega` will invoke the `filterScientificName` method in your Sprunje.

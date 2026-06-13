@@ -14,6 +14,6 @@ The documentation for each part is embedded in the next chapters, but you can st
  - [Cache](https://github.com/userfrosting/framework/tree/main/src/Cache) : Wrapper function for Laravel cache system for easier integration of the cache system in standalone projects.
  - [Config](https://github.com/userfrosting/framework/tree/main/src/Config) : Configuration files aggregator
  - [Fortress](https://github.com/userfrosting/framework/tree/main/src/Fortress) : A schema-driven system for elegant whitelisting, transformation and validation of user input, on both the client and server sides, from a unified set of rules.
- - [i81n](https://github.com/userfrosting/framework/tree/main/src/I18n) : The I18n module handles translation tasks.
+ - [I18n](https://github.com/userfrosting/framework/tree/main/src/I18n) : The I18n module handles translation tasks.
  - [Session](https://github.com/userfrosting/framework/tree/main/src/Session) : PHP Session wrapper
  - [UniformResourceLocator](https://github.com/userfrosting/framework/tree/main/src/UniformResourceLocator) : The Uniform Resource Locator module handles resource aggregation and stream wrapper

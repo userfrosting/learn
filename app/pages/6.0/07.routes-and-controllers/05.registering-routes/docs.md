@@ -6,7 +6,7 @@ description: Once your routes definitions are ready, you have to register them i
 So far we've seen how to [create route definitions](/routes-and-controllers/front-controller) and [controller classes](/routes-and-controllers/controller-classes). However, there one last step required for our routes to be enabled inside our application. That is registering the route class inside the [Sprinkle Recipe](/sprinkles/recipe#routes).
 
 > [!NOTE]
-> Previous versions of UserFrosting relied on a naming convention for registering routes. Routes were expected to be placed in a special directory, and would automatically be registered at runtime. To provide more flexibility, the naming convention has been dropped in UserFrosting 5. You now have to register every class you wish to register, in the order you want them to be registered, inside the Sprinkle Recipe.
+> Previous versions of UserFrosting relied on a naming convention for registering routes. Routes were expected to be placed in a special directory, and would automatically be registered at runtime. To provide more flexibility, the naming convention has been dropped in a previous version of UserFrosting. You now have to register every class you wish to register, in the order you want them to be registered, inside the Sprinkle Recipe.
 
 The first step is to create a new class that will return the Slim route definition. This class **must** implement the `UserFrosting\Routes\RouteDefinitionInterface` interface from the UserFrosting Framework. For example :
 
@@ -51,7 +51,7 @@ class MyApp implements SprinkleRecipe {
     /**
      * Returns a list of routes definition in PHP files.
      *
-     * @return string[]
+     * @return class-string<RouteDefinitionInterface>[]
      */
     public function getRoutes(): array
     {
@@ -79,7 +79,6 @@ Cannot register two routes matching "/" for method "GET"
 ```
 
 To solve this, it's possible to manually customize a dependent Sprinkle Recipe. Check out the [Advanced Dev Features](/advanced) chapter for more info on this technique.
- <!-- TODO : Update link when page is created -->
 
 Another workaround is to [override](/advanced/custom-models#overwriting-existing-map) the Action class called in the dependent Sprinkle's route.
 

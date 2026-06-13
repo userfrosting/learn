@@ -180,9 +180,9 @@ namespace UserFrosting\Sprinkle\MySprinkle\Database\Migrations;
 
 use Illuminate\Database\Schema\Blueprint;
 use UserFrosting\Sprinkle\Core\Database\Migration;
-use UserFrosting\Sprinkle\Account\Database\Migrations\V400\UsersTable;
-use UserFrosting\Sprinkle\Account\Database\Migrations\V400\RolesTable;
-use UserFrosting\Sprinkle\Account\Database\Migrations\V400\RoleUsersTable;
+use UserFrosting\Sprinkle\Account\Database\Migrations\v400\UsersTable;
+use UserFrosting\Sprinkle\Account\Database\Migrations\v400\RolesTable;
+use UserFrosting\Sprinkle\Account\Database\Migrations\v400\RoleUsersTable;
 
 class MembersTable extends Migration
 {

@@ -108,9 +108,9 @@ The `storage` directory is used to store files managed by Filesystem service. Th
 
 To separate content and logic, UserFrosting uses the popular [Twig](http://twig.symfony.com/) templating engine. Since Twig has its own system for [loading templates](http://twig.symfony.com/doc/api.html#built-in-loaders), UserFrosting builds upon this to allow overriding templates in sprinkles. See [Templating with Twig](/pages-and-layout) for more information on how Twig is integrated into UserFrosting.
 
-### /app/test
+### /app/tests
 
-The `test` directory is similar to `/src`, but for your [Tests](/testing).
+The `tests` directory is similar to `/src`, but for your [Tests](/testing).
 
 ### /app/.env
 

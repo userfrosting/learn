@@ -36,7 +36,7 @@ $ php bakery help
 
 ### assets:build
 
-The `assets:build` (alias : `webpack` & `build-assets`) command is the general assets building command. It combines `assets:install` and `assets:webpack` into a single command:
+The `assets:build` command is the general assets building command. It installs frontend dependencies and triggers a production build. The exact commands run depend on your configured bundler. For Vite (the default), it runs `assets:install` and `assets:vite` depending on the environment:
 
 ```bash
 $ php bakery assets:build [options]
@@ -54,21 +54,22 @@ See the [Asset Management](/assets-vite) chapter for more information about asse
 
 ### assets:install
 
-The `assets:install` command is an alias for the **NPM** scripts used to install all required frontend dependencies locally, based on `packages.lock`. The versions defined in the lock file will be downloaded. Behind the scene, it's an alias for the `npm install` npm command.
+The `assets:install` command is an alias for the **NPM** scripts used to install all required frontend dependencies locally, based on `package-lock.json`. The versions defined in the lock file will be downloaded. Behind the scene, it's an alias for the `npm install` npm command.
 
 ### assets:update
 
-The `assets:update` command is an alias for the **NPM** scripts used to update all frontend dependencies, ignoring the versions defined in `packages.lock`. Behind the scenes, it's an alias for the `npm update` npm command.
+The `assets:update` command is an alias for the **NPM** scripts used to update all frontend dependencies, ignoring the versions defined in `package-lock.json`. Behind the scenes, it's an alias for the `npm update` npm command.
 
 ### assets:webpack
 
-The `assets:webpack` command is an alias for the **Webpack Encore** scripts used to compile frontend dependencies to `/public/assets`. Behind the scenes, it's an alias for the npm commands `npm run dev`, `npm run build` and `npm run watch`. See the table below for more information.
+The `assets:webpack` command is an alias for the **Webpack Encore** scripts used to compile frontend dependencies to `/public/assets`. Behind the scenes, it's an alias for the npm commands `npm run webpack:dev`, `npm run webpack:build` and `npm run webpack:watch`. See the table below for more information.
 
-| Option           | Description                                                                               | Alias of        |
-|------------------|-------------------------------------------------------------------------------------------|-----------------|
-| _no options_     | Compile the assets for development environment                                            | `npm run dev`   |
-| -p, --production | Compile the assets for production environment                                             | `npm run build` |
-| -w, --watch      | Watch for changes and recompile automatically. Only available in development environment. | `npm run watch` |
+| Option           | Description                                                                               | Alias of                 |
+|------------------|-------------------------------------------------------------------------------------------|--------------------------|
+| _no options_     | Compile the assets for development environment                                            | `npm run webpack:dev`    |
+| -p, --production | Compile the assets for production environment                                             | `npm run webpack:build`  |
+| -w, --watch      | Watch for changes and recompile automatically. Only available in development environment. | `npm run webpack:watch`  |
+| -s, --server     | Start the HMR development server.                                                         | `npm run webpack:server` |
 
 > [!NOTE]
 > The `production` option is automatically applied when the [environment mode](/configuration/config-files#environment-modes) is set to `production`.
@@ -101,7 +102,7 @@ See the [Asset Management](/assets-vite) chapter for more information about Vite
 
 ### bake
 
-Bake is the general installation command. It combines `setup:db`, `setup:mail`, `debug`, `migrate`, `create:admin-user`, `assets:build` and `clear-cache` into a single command:
+Bake is the general installation command. It combines `setup:db`, `setup:mail`, `debug`, `migrate`, `assets:build` and `clear-cache` into a single command:
 
 ```bash
 $ php bakery bake

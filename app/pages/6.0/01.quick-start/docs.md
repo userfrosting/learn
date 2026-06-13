@@ -1,6 +1,6 @@
 ---
 title: Quick Start Guide
-description: The official documentation for UserFrosting, a PHP framework and full-featured user management application.
+description: Get UserFrosting up and running quickly. This guide walks you through installing and launching UserFrosting on your local machine.
 ---
 
 UserFrosting is a free, open-source jumping-off point for building user-centered web applications with PHP and Javascript. It comes with a sleek, modern interface, basic user account features, and an administrative user management system - all fully functioning out of the box.
@@ -27,7 +27,7 @@ UserFrosting has a few system requirements. You need to make sure your local Use
 Use Composer to create a new project with the latest version of UserFrosting into a `UserFrosting` folder. This will clone the skeleton repository and run the installation process.
 
 ```bash
-composer create-project userfrosting/userfrosting UserFrosting "^6.0-beta"
+composer create-project userfrosting/userfrosting UserFrosting "^6.0"
 ```
 
 > [!TIP]

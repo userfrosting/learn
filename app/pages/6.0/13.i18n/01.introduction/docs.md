@@ -23,7 +23,7 @@ Finaly, it can also makes it easier for non-coders to review your content. Wheth
 
 To better understand how to support multiple locales within your site, we need to start by looking at how UserFrosting handles translation of text.
 
-UserFrosting [i18n module](https://github.com/userfrosting/framework/tree/main/packages/framework/src/I18n) is composed of three objects that work together to handle translation duties. Those objects are:
+UserFrosting [i18n module](https://github.com/userfrosting/monorepo/tree/main/packages/framework/src/I18n) is composed of three objects that work together to handle translation duties. Those objects are:
 
 1. Locale
 2. Dictionary
@@ -53,7 +53,7 @@ return [
 ];
 ```
 
-This information is stored in **languages files**. These are normal PHP files typically located in `app/sprinkles/{sprinkleName}/locale/{locale}/messages.php` and grouped into folders named after the locale code, as pictured below. Each locale can have as many files as needed (eg. `messages.php`, `foo.php`, `bar.php`, etc.) for easier maintenance. Those files will be merged together at runtime to create a **compiled dictionary** of all the keys available for the translator to use.
+This information is stored in **languages files**. These are normal PHP files typically located in `app/locale/{locale}/messages.php` within the sprinkle package and grouped into folders named after the locale code, as pictured below. Each locale can have as many files as needed (eg. `messages.php`, `foo.php`, `bar.php`, etc.) for easier maintenance. Those files will be merged together at runtime to create a **compiled dictionary** of all the keys available for the translator to use.
 
 **locale/es_ES/example.php**
 
@@ -74,16 +74,16 @@ return [
 ];
 ```
 
-Some locales have a parent locale, and each locale's language files will be loaded on top of the parent's one. So for example, since the Spanish version above doesn't have any value for the `ACCOUNT_SPECIFY_AGE` key, the English value would be returned for that key if `en_ES` has `en_US` for parent.
+Some locales have a parent locale, and each locale's language files will be loaded on top of the parent's one. So for example, since the Spanish version above doesn't have any value for the `ACCOUNT_SPECIFY_AGE` key, the English value would be returned for that key if `es_ES` has `en_US` for parent.
 
 > [!TIP]
 > Bakery provides locale management commands: `locale:info` lists all available locales, `locale:dictionary` displays the compiled dictionary for a locale, and `locale:compare` compares two locales to find missing keys and untranslated values. See the [Built-in Commands](/cli/commands) page for complete documentation.
 
 Just like [routes](/routes-and-controllers/front-controller), the names of the files don't matter as they won't overwrite each other. This means two sprinkles can have a `locale/en_US/messages.php` file and **both** will be loaded and **merged** togeter. This means that each subsequently loaded Sprinkle can override translations from previous Sprinkles, or define new ones entirely.
 
-For example, if you want your sprinkle to overwrite a value in the core, you can redefine the same key in your sprinkle :
+For example, if you want your sprinkle to overwrite a value defined in the [Core sprinkle](/structure/sprinkles#core-sprinkle), you can redefine the same key in your sprinkle :
 
-**app/sprinkles/core/locale/en_US/example.php**
+**Core Sprinkle - app/locale/en_US/example.php**
 
 ```php
 return[
@@ -93,7 +93,7 @@ return[
 ];
 ```
 
-**app/sprinkles/MySite/locale/en_US/MyCustomLanguage.php**
+**app/locale/en_US/MyCustomLanguage.php**
 
 ```php
 return [
@@ -104,7 +104,7 @@ return [
 When processed using the English locale, `ACCOUNT_SPECIFY_USERNAME` will be linked to the phrase `Enter your name!`.
 
 > [!NOTE]
-> After updating your language files, you need to clear the dictionary cache using the ```php bakery clear-cache``` command from the CLI for the changes to be visible.
+> After updating your language files, you need to clear the dictionary cache using the `php bakery clear-cache` command from the CLI for the changes to be visible.
 
 ### The Translator
 

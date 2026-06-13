@@ -9,9 +9,8 @@ Now that your local development environment is setup and ready to go, it's final
 
 Use Composer to create an empty project with the latest version of UserFrosting skeleton into a new `UserFrosting` folder:
 
-<!-- TODO : UPDATE FOR OFFICIAL RELEASE -->
 ```bash
-composer create-project userfrosting/userfrosting UserFrosting "^6.0" --stability=beta
+composer create-project userfrosting/userfrosting UserFrosting "^6.0"
 ```
 
 > [!TIP]
@@ -52,7 +51,7 @@ This starts the backend on [http://localhost:8080](http://localhost:8080).
 **Terminal 2 - Start the Vite dev server:**
 
 ```bash
-npm run dev
+npm run vite:dev
 ```
 
 This starts the Vite development server with Hot Module Replacement (HMR) for instant frontend updates.

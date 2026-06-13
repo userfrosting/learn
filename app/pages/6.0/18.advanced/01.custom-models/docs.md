@@ -31,7 +31,7 @@ We could, for example, define our `User` class in the `app` Sprinkle to inherit 
 ```php
 <?php
 
-namespace \UserFrosting\Sprinkle\App\Database\Models;
+namespace UserFrosting\Sprinkle\App\Database\Models;
 
 class User extends \UserFrosting\Sprinkle\Account\Database\Models\User
 {
@@ -94,7 +94,7 @@ The following interface-model association are defined by default in the *Account
 
 It is possible for any sprinkle to overwrite the default mapping in a service provider. Then every time `UserInterface` is referenced for example, your model will actually be injected instead of the default `User` Model.
 
-**app/src/ServicesProvider/ModelsServices.php**:
+**app/src/ServicesProvider/ModelsService.php**:
 ```php
 namespace UserFrosting\Sprinkle\MySprinkle\ServicesProvider;
 

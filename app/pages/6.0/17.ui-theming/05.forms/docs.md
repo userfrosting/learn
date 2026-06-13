@@ -33,7 +33,7 @@ Once you have `r$`, three things become available per field:
 |---|---|---|
 | `r$.fieldName.$error` | `boolean` | `true` if the field has failed validation after `$validate()` was called |
 | `r$.$errors.fieldName` | `string[]` | Array of error message strings for that field |
-| `r$.$validate()` | `Promise<{ valid: boolean }>` | Trigger full validation and return whether everything passed |
+| `r$.$validate()` | `Promise<false \| SafeOutput>` | Trigger full validation; returns a truthy `SafeOutput` on success or `false` on failure |
 | `r$.$error` | `boolean` | `true` if any field has an error — useful for disabling the submit button |
 
 ## Displaying Errors
@@ -117,8 +117,8 @@ const { r$ } = useRegle(formData, {
 })
 
 async function submit() {
-    const { valid } = await r$.$validate()
-    if (!valid) return
+    const result = await r$.$validate()
+    if (!result) return
 
     isSaving.value = true
     try {

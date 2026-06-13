@@ -16,12 +16,15 @@ You can access any [configuration value](/configuration/config-files) directly i
 
 ### checkAccess
 
+> [!NOTE]
+> `checkAccess` and `current_user` are provided by the **Account sprinkle**. They are not available unless your application depends on `UserFrosting\Sprinkle\Account\Account`.
+
 You can perform permission checks in your Twig templates using the `checkAccess` helper function. This is useful when you want to render a portion of a page's content conditioned on whether or not a user has a certain permission. For example, this can be used to hide a navigation menu item for pages that the current user does not have access to:
 
 ```twig
 {% if checkAccess('uri_users') %}
 <li>
-    <a href="{% urlFor('uri_users') %}"><i class="fa fa-user fa-fw"></i> {{ translate("USER", 2) }}</a>
+    <a href="{{ urlFor('uri_users') }}"><i class="fa fa-user fa-fw"></i> {{ translate("USER", 2) }}</a>
 </li>
 {% endif %}
 ```
@@ -267,7 +270,7 @@ use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\TwigExtensionRecipe; // <-- Add t
 use UserFrosting\Sprinkle\Site\Twig\Extension; // <-- Add this
 // ...
 
-class Core implements
+class MyApp implements
     SprinkleRecipe,
     TwigExtensionRecipe, // <-- Add this
 {

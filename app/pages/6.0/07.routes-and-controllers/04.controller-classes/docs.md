@@ -35,8 +35,10 @@ class OwlController
             $payload = json_encode($result, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
             $response->getBody()->write($payload);
         } else {
-            return $response->getBody()->write("No format specified");
+            $response->getBody()->write("No format specified");
         }
+
+        return $response;
     }
 }
 ```
@@ -100,6 +102,7 @@ namespace UserFrosting\Sprinkle\Site\Controller;
 
 use UserFrosting\Sprinkle\Site\Model\Owl;
 use UserFrosting\Sprinkle\Site\Finder\VoleFinder;
+use Slim\Views\Twig;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

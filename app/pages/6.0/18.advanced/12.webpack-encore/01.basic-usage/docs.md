@@ -1,6 +1,7 @@
 ---
 title: Referencing static assets
 description: Referencing statics assets in your Twig templates.
+obsolete: true
 ---
 
 > [!WARNING]
