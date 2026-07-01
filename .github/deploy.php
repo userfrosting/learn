@@ -10,6 +10,9 @@ set('application', 'UF Learn 6');
 set('repository', 'https://github.com/userfrosting/learn.git');
 set('branch', 'main');
 
+// Limits number of kept releases
+set('keep_releases', 5);
+
 // Writable dirs by web server 
 set('writable_dirs', [
     'app/cache',
