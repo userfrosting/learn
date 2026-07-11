@@ -5,11 +5,11 @@ description: Future roadmap and plans for UserFrosting beyond version 6.0
 
 UserFrosting 6.0 represents a major milestone in the framework's evolution, but it's not the end of the journey. This page outlines what you can expect in terms of updates, maintenance, and future development.
 
-When UserFrosting 5.0 was released, the path was clear : Finish the features that missed the release in 5.1, then move on to 6.0 for the complete frontend rewrite. Now that 6.0 is here, the focus shift once again, but in a different way. Both 5.1 and 6.0 where the necessary steps to get to the new architecture, but now that it's in place, the focus will be on improving and expanding it in a big way : **Add new features**.
+When UserFrosting 5.0 was released, the path was clear : Finish the features that missed the release in 5.1, then move on to 6.0 for the complete frontend rewrite. Now that 6.0 is here, the focus shifts once again. Both 5.1 and 6.0 were necessary steps to get to the new architecture. Now that's in place, the focus will be on improving and expanding it in a big way : **Add new features**.
 
-These new features where blocked by the unorganized backend and the dated frontend, But now that we have a solid foundation, we can finally start building the features that were planned for years, as well as many new ones that were not even on the roadmap yet. The next few months will see a lot of new features being added to UserFrosting 6.0, and the pace of development will be much faster than it was during the last development cycles. And with Copilot and AI tools, the development process will be more efficient than ever, allowing us to deliver new features and improvements at a much faster pace.
+These new features were blocked by the unorganized backend and the dated frontend. With our new, solid foundation, we can finally start building features that were planned for years, as well as many new ones that were not even on the roadmap yet. The next few months will see a lot of new features being added to UserFrosting 6.0, and the pace of development will be much faster than it was during the last development cycles. With Copilot and AI tools, the development process will be more efficient than ever, allowing us to deliver new features and improvements at a much faster pace.
 
-These features are planned to be added in minor versions (6.1, 6.2, etc.) and will be fully backward compatible with 6.0, so you can upgrade to them as soon as they are released without worrying about breaking changes. No new major versions (e.g. 7.0) is planned on the short term.
+These features are planned to be added in minor versions (6.1, 6.2, etc.) and will be fully backward compatible with 6.0, so you can upgrade to them as soon as they are released without worrying about breaking changes. No new major versions (e.g. 7.0) are planned on the short term.
 
 ## Planned Features & Improvements
 
