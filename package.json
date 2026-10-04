@@ -8,7 +8,7 @@
     },
     "dependencies": {
         "@userfrosting/theme-pink-cupcake": "^6.0.0-beta",
-        "axios": "^1.12.0",
+        "axios": "^1.20.0",
         "highlight.js": "^11.11.1",
         "highlightjs-copy": "^1.0.6",
         "vue": "^3.3.4"
