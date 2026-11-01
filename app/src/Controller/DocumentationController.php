@@ -28,13 +28,13 @@ class DocumentationController
      * Render the documentation page.
      * Request type: GET.
      *
-     * @param string   $path
      * @param Response $response
      * @param Twig     $view
+     * @param string   $path
      */
-    public function page(string $path, Response $response, Twig $view): Response
+    public function page(Response $response, Twig $view, string $path = ''): Response
     {
-        return $this->pageVersioned('', $path, $response, $view);
+        return $this->pageVersioned('', $response, $view, $path);
     }
 
     /**
@@ -42,11 +42,11 @@ class DocumentationController
      * Request type: GET.
      *
      * @param string   $version
-     * @param string   $path
      * @param Response $response
      * @param Twig     $twig
+     * @param string   $path
      */
-    public function pageVersioned(string $version, string $path, Response $response, Twig $twig): Response
+    public function pageVersioned(string $version, Response $response, Twig $twig, string $path = ''): Response
     {
         $page = $this->pagesDirectory->getPage($path, $version);
         $template = sprintf('pages/%s.html.twig', $page->getTemplate());
