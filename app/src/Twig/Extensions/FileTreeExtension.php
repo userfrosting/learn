@@ -48,7 +48,7 @@ class FileTreeExtension extends AbstractExtension
         }
 
         foreach ($children as $child) {
-            if ($currentPage->getSlug() == $child->getSlug()) {
+            if ($currentPage->getSlug() === $child->getSlug()) {
                 return true;
             }
             if (!is_null($child->getChildren()) && $child->getChildren() !== [] && $this->isChildActive($child->getChildren(), $currentPage)) {

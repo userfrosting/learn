@@ -99,18 +99,33 @@ class SearchIndex
 
         $index = $this->cache->get($cacheKey);
 
-        // If cache is empty, try to build the index first
-        if (!is_array($index)) {
+        // If the cache is empty or invalid, try to build the index first.
+        if (!$this->isValidIndex($index)) {
             $this->buildIndex($version);
             $index = $this->cache->get($cacheKey);
         }
 
-        // Ensure we return an array even if cache returns null or unexpected type
-        if (!is_array($index)) {
-            return [];
+        return $this->isValidIndex($index) ? $index : [];
+    }
+
+    /**
+     * Check that a cached index contains only indexed pages and is a list.
+     *
+     * @phpstan-assert-if-true list<IndexedPage> $index
+     */
+    protected function isValidIndex(mixed $index): bool
+    {
+        if (!is_array($index) || !array_is_list($index)) {
+            return false;
         }
 
-        return $index;
+        foreach ($index as $page) {
+            if (!$page instanceof IndexedPage) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

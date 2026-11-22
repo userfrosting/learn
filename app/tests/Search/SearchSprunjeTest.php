@@ -31,7 +31,7 @@ class SearchSprunjeTest extends TestCase
 
         // Load test config
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.versions.latest', '6.0');
         $config->set('learn.versions.available', [
             '6.0' => '6.0 Beta',
@@ -39,18 +39,18 @@ class SearchSprunjeTest extends TestCase
 
         // Use the test pages directory
         /** @var ResourceLocatorInterface $locator */
-        $locator = $this->ci->get(ResourceLocatorInterface::class);
+        $locator = $this->getService(ResourceLocatorInterface::class);
         $locator->removeStream('pages');
         $locator->addStream(new ResourceStream('pages', shared: true, readonly: true, path: __DIR__ . '/../pages'));
 
         // Build index for testing
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
         $searchIndex->buildIndex('6.0');
     }
 
     public function testSearchPagination(): void
     {
-        $searchSprunje = $this->ci->get(SearchSprunje::class);
+        $searchSprunje = $this->getService(SearchSprunje::class);
 
         // Search with pagination via Sprunje
         $searchSprunje
@@ -71,7 +71,7 @@ class SearchSprunjeTest extends TestCase
 
     public function testForDefaultSizePageAndVersion(): void
     {
-        $searchSprunje = $this->ci->get(SearchSprunje::class);
+        $searchSprunje = $this->getService(SearchSprunje::class);
 
         // Search with all default parameters via Sprunje
         $searchSprunje->setQuery('page');
@@ -87,9 +87,9 @@ class SearchSprunjeTest extends TestCase
 
     public function testSearchSprunjeWithEmptyIndex(): void
     {
-        $searchSprunje = $this->ci->get(SearchSprunje::class);
-        $searchIndex = $this->ci->get(SearchIndex::class);
-        $cache = $this->ci->get(\Illuminate\Cache\Repository::class);
+        $searchSprunje = $this->getService(SearchSprunje::class);
+        $searchIndex = $this->getService(SearchIndex::class);
+        $cache = $this->getService(\Illuminate\Cache\Repository::class);
 
         // Mock the SearchIndex to return empty array
         $reflection = new \ReflectionClass($searchIndex);
@@ -107,17 +107,16 @@ class SearchSprunjeTest extends TestCase
         // getItems should return empty collection when index is empty
         $items = $searchSprunje->getItems();
 
-        $this->assertInstanceOf(\Illuminate\Support\Collection::class, $items);
         $this->assertSame(0, $items->count(), 'Should return empty collection when index is empty');
     }
 
     public function testSearchSprunjeWithNullVersion(): void
     {
         // Version can be null if not defined in config
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.versions.latest', null);
 
-        $searchSprunje = $this->ci->get(SearchSprunje::class);
+        $searchSprunje = $this->getService(SearchSprunje::class);
 
         // Search with all default parameters via Sprunje
         $searchSprunje->setQuery('page');
@@ -132,7 +131,7 @@ class SearchSprunjeTest extends TestCase
 
     public function testSearchSprunjeGetVersionDefault(): void
     {
-        $searchSprunje = $this->ci->get(SearchSprunje::class);
+        $searchSprunje = $this->getService(SearchSprunje::class);
 
         // getVersion should be default before setting
         $this->assertSame('6.0', $searchSprunje->getVersion());
@@ -140,7 +139,7 @@ class SearchSprunjeTest extends TestCase
 
     public function testSearchSprunjeGetVersionAfterSet(): void
     {
-        $searchSprunje = $this->ci->get(SearchSprunje::class);
+        $searchSprunje = $this->getService(SearchSprunje::class);
 
         // Set version and verify getVersion returns it
         $searchSprunje->setVersion('5.92');
@@ -149,7 +148,7 @@ class SearchSprunjeTest extends TestCase
 
     public function testSearchSprunjeGetVersionAfterSetNull(): void
     {
-        $searchSprunje = $this->ci->get(SearchSprunje::class);
+        $searchSprunje = $this->getService(SearchSprunje::class);
 
         // Set version to null, should default to latest from config
         $searchSprunje->setVersion(null);

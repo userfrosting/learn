@@ -28,12 +28,12 @@ class DocumentationControllerTest extends TestCase
         parent::setUp();
 
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.versions.latest', '6.0');
         $config->set('learn.versions.available', ['6.0' => '6.0 Beta']);
 
         /** @var ResourceLocatorInterface $locator */
-        $locator = $this->ci->get(ResourceLocatorInterface::class);
+        $locator = $this->getService(ResourceLocatorInterface::class);
         $locator->removeStream('pages');
         $locator->addStream(new ResourceStream('pages', shared: true, readonly: true, path: __DIR__ . '/../pages'));
     }
@@ -199,7 +199,7 @@ class DocumentationControllerTest extends TestCase
     public function testPageCacheControlHeaderWhenEnabled(): void
     {
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.cache.enabled', true);
         $config->set('learn.cache.ttl', 3600);
 
@@ -216,7 +216,7 @@ class DocumentationControllerTest extends TestCase
     public function testPageCacheControlHeaderWhenDisabled(): void
     {
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.cache.enabled', false);
 
         $request = $this->createRequest('GET', '/first');

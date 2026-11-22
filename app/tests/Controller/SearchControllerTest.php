@@ -30,7 +30,7 @@ class SearchControllerTest extends TestCase
 
         // Load test config
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.versions.latest', '6.0');
         $config->set('learn.versions.available', [
             '6.0' => '6.0 Beta',
@@ -38,12 +38,12 @@ class SearchControllerTest extends TestCase
 
         // Use the test pages directory
         /** @var ResourceLocatorInterface $locator */
-        $locator = $this->ci->get(ResourceLocatorInterface::class);
+        $locator = $this->getService(ResourceLocatorInterface::class);
         $locator->removeStream('pages');
         $locator->addStream(new ResourceStream('pages', shared: true, readonly: true, path: __DIR__ . '/../pages'));
 
         // Build index for testing
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
         $searchIndex->buildIndex('6.0');
     }
 

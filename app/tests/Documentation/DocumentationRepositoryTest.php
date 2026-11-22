@@ -32,7 +32,7 @@ class DocumentationRepositoryTest extends TestCase
 
         // Load test config to force the default version
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.versions.latest', '6.0');
         $config->set('learn.versions.available', [
             '6.0' => '6.0 Beta',
@@ -41,7 +41,7 @@ class DocumentationRepositoryTest extends TestCase
 
         // Use the test pages directory
         /** @var ResourceLocatorInterface $locator */
-        $locator = $this->ci->get(ResourceLocatorInterface::class);
+        $locator = $this->getService(ResourceLocatorInterface::class);
         $locator->removeStream('pages');
         $locator->addStream(new ResourceStream('pages', shared: true, readonly: true, path: __DIR__ . '/../pages'));
 
@@ -51,7 +51,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetTree(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
         $files = $pagesManager->getTree();
 
         // Assert tree structure contains 3 top level files
@@ -60,40 +60,54 @@ class DocumentationRepositoryTest extends TestCase
             'first',
             'second',
             'third'
-        ], array_values(array_map(fn ($p) => $p->getSlug(), (array) $files)));
-        $this->assertSame(['', '', ''], array_values(array_map(fn ($p) => $p->getParentSlug(), (array) $files)));
+        ], array_values(array_map(fn ($p) => $p->getSlug(), $files)));
+        $this->assertSame(['', '', ''], array_values(array_map(fn ($p) => $p->getParentSlug(), $files)));
 
         // Assert children count of each top-level file
-        $this->assertCount(0, $files[0]->getChildren());
-        $this->assertCount(2, $files[1]->getChildren());
-        $this->assertCount(2, $files[2]->getChildren());
+        foreach ($files as $index => $file) {
+            $children = $file->getChildren();
+            $this->assertNotNull($children);
+            $this->assertCount($index === 0 ? 0 : 2, $children);
+        }
 
         // Check children of "second"
         // It has two children: "second/child1" and "second/child2", that don't
         // have children of their own
         $secondChildren = $files[1]->getChildren();
+        $this->assertNotNull($secondChildren);
         $this->assertCount(2, $secondChildren);
-        $this->assertCount(0, $secondChildren[0]->getChildren());
-        $this->assertCount(0, $secondChildren[1]->getChildren());
-        $this->assertSame('second/alpha', $secondChildren[0]->getSlug());
-        $this->assertSame('second/beta', $secondChildren[1]->getSlug());
+        $this->assertSame(['second/alpha', 'second/beta'], array_map(fn ($p) => $p->getSlug(), $secondChildren));
+        foreach ($secondChildren as $child) {
+            $children = $child->getChildren();
+            $this->assertNotNull($children);
+            $this->assertCount(0, $children);
+        }
 
         // Check children of "third"
         // It has two children: "third/foo" and "third/bar". foo has two children
         // of its own: "third/foo/grandchild1" and "third/foo/grandchild2"
         $thirdChildren = $files[2]->getChildren();
+        $this->assertNotNull($thirdChildren);
         $this->assertCount(2, $thirdChildren);
-        $this->assertSame('third/foo', $thirdChildren[0]->getSlug());
-        $this->assertSame('third/bar', $thirdChildren[1]->getSlug());
-        $this->assertCount(2, $thirdChildren[0]->getChildren());
-        $this->assertCount(0, $thirdChildren[1]->getChildren());
-        $this->assertSame('third/foo/grandchild1', $thirdChildren[0]->getChildren()[0]->getSlug());
-        $this->assertSame('third/foo/grandchild2', $thirdChildren[0]->getChildren()[1]->getSlug());
+        $this->assertSame(['third/foo', 'third/bar'], array_map(fn ($p) => $p->getSlug(), $thirdChildren));
+        foreach ($thirdChildren as $child) {
+            $children = $child->getChildren();
+            $this->assertNotNull($children);
+
+            if ($child->getSlug() === 'third/foo') {
+                $this->assertSame(
+                    ['third/foo/grandchild1', 'third/foo/grandchild2'],
+                    array_map(fn ($p) => $p->getSlug(), $children)
+                );
+            } else {
+                $this->assertCount(0, $children);
+            }
+        }
     }
 
     public function testGetPage(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Test getting various pages by slug
         $page = $pagesManager->getPage('first');
@@ -112,7 +126,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetPageForNotFound(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Test getting a non-existing page
         $this->expectException(PageNotFoundException::class);
@@ -122,7 +136,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetPageForNotFoundAndHomePage(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Test getting a non-existing page
         $this->expectException(PageNotFoundException::class);
@@ -132,7 +146,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetAlternateVersions(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
         $page = $pagesManager->getPage('first');
 
         // Test getting alternate versions for a page that exists in multiple versions
@@ -146,7 +160,7 @@ class DocumentationRepositoryTest extends TestCase
     /** Use the real file to test the getTemplate */
     public function testGetTemplate(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Uses the file name 'docs'
         $page = $pagesManager->getPage('first');
@@ -163,7 +177,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetBreadcrumbsForPage(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Test breadcrumbs for a top-level page
         $page = $pagesManager->getPage('first');
@@ -191,27 +205,25 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetVersionedImage(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Test successful image retrieval
         $resource = $pagesManager->getVersionedImage('6.0', 'test.jpg');
-        $this->assertNotNull($resource);
         $this->assertSame('test.jpg', $resource->getBasename());
     }
 
     public function testGetVersionedImageWithEmptyVersion(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Test with empty version string (should use latest)
         $resource = $pagesManager->getVersionedImage('', 'test.jpg');
-        $this->assertNotNull($resource);
         $this->assertSame('test.jpg', $resource->getBasename());
     }
 
     public function testGetVersionedImageNotFound(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage('Image not found: nonexistent.png (version: 6.0)');
@@ -220,7 +232,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testCacheKeyGeneration(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Use reflection to test protected method
         $reflection = new \ReflectionClass($pagesManager);
@@ -235,7 +247,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testCacheTtlConfiguration(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Use reflection to test protected method
         $reflection = new \ReflectionClass($pagesManager);
@@ -248,10 +260,10 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testCacheBypassesWhenDisabled(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.cache.enabled', false);
 
         $mockCache = $this->getMockBuilder(\Illuminate\Cache\Repository::class)
@@ -273,10 +285,10 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testCacheUsedWhenEnabled(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.cache.enabled', true);
 
         $mockCache = $this->getMockBuilder(\Illuminate\Cache\Repository::class)
@@ -300,22 +312,21 @@ class DocumentationRepositoryTest extends TestCase
     public function testGetTreeWithEmptyPages(): void
     {
         /** @var ResourceLocatorInterface $locator */
-        $locator = $this->ci->get(ResourceLocatorInterface::class);
+        $locator = $this->getService(ResourceLocatorInterface::class);
 
         // Remove the test pages stream and add an empty one
         $locator->removeStream('pages');
         $locator->addStream(new ResourceStream('pages', shared: true, readonly: true, path: __DIR__ . '/empty-pages'));
 
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
         $files = $pagesManager->getTree();
 
-        $this->assertIsArray($files);
         $this->assertCount(0, $files);
     }
 
     public function testGetPageWithSpecificVersion(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Test getting page with explicit version
         $page = $pagesManager->getPage('second', '6.0');
@@ -330,26 +341,24 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetAlternateVersionsWithPath(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Test alternate versions for a specific path
         $alternates = $pagesManager->getAlternateVersions('first');
 
-        $this->assertIsArray($alternates);
         $this->assertCount(2, $alternates);
         $this->assertArrayHasKey('6.0 Beta', $alternates);
         $this->assertArrayHasKey('5.0', $alternates);
 
         // Verify URLs are generated for each version
         foreach ($alternates as $url) {
-            $this->assertIsString($url);
             $this->assertNotEmpty($url);
         }
     }
 
     public function testGetTreeSorting(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
         $files = $pagesManager->getTree();
 
         // Verify the files are sorted correctly (first, second, third)
@@ -360,6 +369,7 @@ class DocumentationRepositoryTest extends TestCase
 
         // Test children are also sorted
         $secondChildren = $files[1]->getChildren();
+        $this->assertNotNull($secondChildren);
         $childSlugs = array_map(fn ($p) => $p->getSlug(), $secondChildren);
         $expectedChildOrder = ['second/alpha', 'second/beta'];
 
@@ -368,7 +378,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetPagesChildren(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Use reflection to test protected method
         $reflection = new \ReflectionClass($pagesManager);
@@ -378,7 +388,7 @@ class DocumentationRepositoryTest extends TestCase
         $getPages = $reflection->getMethod('getPages');
 
         /** @var \UserFrosting\Learn\Documentation\VersionValidator $versionValidator */
-        $versionValidator = $this->ci->get(\UserFrosting\Learn\Documentation\VersionValidator::class);
+        $versionValidator = $this->getService(\UserFrosting\Learn\Documentation\VersionValidator::class);
         $version = $versionValidator->getVersion('6.0');
 
         $allPages = $getPages->invoke($pagesManager, $version);
@@ -397,7 +407,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetNextPageForPage(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Test navigation from first page
         $page = $pagesManager->getPage('first');
@@ -426,7 +436,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetNextPageForLastPage(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // The last page in the tree should return null
         $page = $pagesManager->getPage('third/bar');
@@ -436,7 +446,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetPreviousPageForPage(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Test navigation from second page back to first
         $page = $pagesManager->getPage('second');
@@ -465,7 +475,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetPreviousPageForFirstPage(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // The first page in the tree should return null
         $page = $pagesManager->getPage('first');
@@ -475,7 +485,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetFlattenedTree(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Use reflection to test protected method
         $reflection = new \ReflectionClass($pagesManager);
@@ -511,10 +521,10 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testBreadcrumbsCacheUsedWhenEnabled(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.cache.enabled', true);
 
         // Get the page before injecting the mock, so getPage() doesn't pollute the count
@@ -542,10 +552,10 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testFlattenedTreeCacheUsedWhenEnabled(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.cache.enabled', true);
 
         $mockCache = $this->getMockBuilder(\Illuminate\Cache\Repository::class)
@@ -570,10 +580,10 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetHttpCacheMaxAgeWhenEnabled(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.cache.enabled', true);
         $config->set('learn.cache.ttl', 3600);
 
@@ -582,10 +592,10 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testGetHttpCacheMaxAgeWhenDisabled(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.cache.enabled', false);
 
         $this->assertSame(0, $pagesManager->getHttpCacheMaxAge());
@@ -593,7 +603,7 @@ class DocumentationRepositoryTest extends TestCase
 
     public function testNavigationSequence(): void
     {
-        $pagesManager = $this->ci->get(DocumentationRepository::class);
+        $pagesManager = $this->getService(DocumentationRepository::class);
 
         // Test complete forward navigation through the tree
         $page = $pagesManager->getPage('first');

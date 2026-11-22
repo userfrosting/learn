@@ -36,15 +36,11 @@ class PageResourceTest extends TestCase
         string $expectedRoute,
         bool $isLatest = true
     ): void {
-        /** @var ResourceStreamInterface */
-        $stream = Mockery::mock(ResourceStreamInterface::class)
-            ->shouldReceive('getPath')->andReturn('pages')->times(2)
-            ->getMock();
+        $stream = Mockery::mock(ResourceStreamInterface::class);
+        $stream->shouldReceive('getPath')->andReturn('pages')->times(2);
 
-        /** @var ResourceLocationInterface */
-        $location = Mockery::mock(ResourceLocationInterface::class)
-            ->shouldReceive('getPath')->andReturn('')->times(2)
-            ->getMock();
+        $location = Mockery::mock(ResourceLocationInterface::class);
+        $location->shouldReceive('getPath')->andReturn('')->times(2);
 
         $version = new Version('6.0', '6.0 Beta', $isLatest);
         $markdown = new MarkdownFile('foo bar', ['title' => 'Foo Bar']);

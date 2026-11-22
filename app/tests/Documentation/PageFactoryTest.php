@@ -32,12 +32,12 @@ class PageFactoryTest extends TestCase
 
         // Load test config to force the default version
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.documentation.default_version', '6.0');
 
         // Use the test pages directory
         /** @var ResourceLocatorInterface $locator */
-        $locator = $this->ci->get(ResourceLocatorInterface::class);
+        $locator = $this->getService(ResourceLocatorInterface::class);
         $locator->removeStream('pages');
         $locator->addStream(new ResourceStream('pages', shared: true, readonly: true, path: __DIR__ . '/../pages'));
 
@@ -49,11 +49,11 @@ class PageFactoryTest extends TestCase
     {
         // Get the factory from CI
         /** @var PageFactory $pageFactory */
-        $pageFactory = $this->ci->get(PageFactory::class);
+        $pageFactory = $this->getService(PageFactory::class);
 
         // Get Locator
         /** @var ResourceLocatorInterface $locator */
-        $locator = $this->ci->get(ResourceLocatorInterface::class);
+        $locator = $this->getService(ResourceLocatorInterface::class);
 
         // Setup version and resource to create a page for
         $version = new Version('6.0', '6.0', true);
@@ -74,11 +74,11 @@ class PageFactoryTest extends TestCase
     {
         // Get the factory from CI
         /** @var PageFactory $pageFactory */
-        $pageFactory = $this->ci->get(PageFactory::class);
+        $pageFactory = $this->getService(PageFactory::class);
 
         // Get Locator
         /** @var ResourceLocatorInterface $locator */
-        $locator = $this->ci->get(ResourceLocatorInterface::class);
+        $locator = $this->getService(ResourceLocatorInterface::class);
 
         // Setup version and resource to create a page for
         $version = new Version('6.0', '6.0', false);
@@ -99,11 +99,11 @@ class PageFactoryTest extends TestCase
     {
         // Get the factory from CI
         /** @var PageFactory $pageFactory */
-        $pageFactory = $this->ci->get(PageFactory::class);
+        $pageFactory = $this->getService(PageFactory::class);
 
         // Get Locator
         /** @var ResourceLocatorInterface $locator */
-        $locator = $this->ci->get(ResourceLocatorInterface::class);
+        $locator = $this->getService(ResourceLocatorInterface::class);
 
         // Setup version and resource to create a page for
         $version = new Version('6.0', '6.0', true);
@@ -124,11 +124,11 @@ class PageFactoryTest extends TestCase
     {
         // Get the factory from CI
         /** @var PageFactory $pageFactory */
-        $pageFactory = $this->ci->get(PageFactory::class);
+        $pageFactory = $this->getService(PageFactory::class);
 
         // Get Locator
         /** @var ResourceLocatorInterface $locator */
-        $locator = $this->ci->get(ResourceLocatorInterface::class);
+        $locator = $this->getService(ResourceLocatorInterface::class);
 
         // Setup version and resource to create a page for
         $version = new Version('6.0', '6.0', true);

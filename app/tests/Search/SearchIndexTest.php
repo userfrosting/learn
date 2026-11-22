@@ -32,7 +32,7 @@ class SearchIndexTest extends TestCase
 
         // Load test config to force the default version
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.versions.latest', '6.0');
         $config->set('learn.versions.available', [
             '6.0' => '6.0 Beta',
@@ -40,14 +40,14 @@ class SearchIndexTest extends TestCase
 
         // Use the test pages directory
         /** @var ResourceLocatorInterface $locator */
-        $locator = $this->ci->get(ResourceLocatorInterface::class);
+        $locator = $this->getService(ResourceLocatorInterface::class);
         $locator->removeStream('pages');
         $locator->addStream(new ResourceStream('pages', shared: true, readonly: true, path: __DIR__ . '/../pages'));
     }
 
     public function testBuildIndexForVersion(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         // Build index for version 6.0
         $count = $searchIndex->buildIndex('6.0');
@@ -57,7 +57,7 @@ class SearchIndexTest extends TestCase
 
         // Verify it matches the number of test pages
         /** @var DocumentationRepository $repository */
-        $repository = $this->ci->get(DocumentationRepository::class);
+        $repository = $this->getService(DocumentationRepository::class);
         $flatPages = $repository->getFlattenedTree('6.0');
 
         $this->assertSame(count($flatPages), $count, 'Index count should match actual page count');
@@ -65,14 +65,14 @@ class SearchIndexTest extends TestCase
 
     public function testBuildIndexForAllVersions(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         // Build index for all versions
         $count = $searchIndex->buildIndex(null);
 
         // Verify it matches the number of test pages
         /** @var DocumentationRepository $repository */
-        $repository = $this->ci->get(DocumentationRepository::class);
+        $repository = $this->getService(DocumentationRepository::class);
         $flatPages = $repository->getFlattenedTree('6.0');
 
         // Should have indexed pages (at least some)
@@ -84,7 +84,7 @@ class SearchIndexTest extends TestCase
 
     public function testIndexPageContent(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         // Build index
         $searchIndex->buildIndex('6.0');
@@ -97,7 +97,7 @@ class SearchIndexTest extends TestCase
         $cacheKey = $getCacheKeyMethod->invoke($searchIndex, '6.0');
 
         /** @var \Illuminate\Cache\Repository $cache */
-        $cache = $this->ci->get(\Illuminate\Cache\Repository::class);
+        $cache = $this->getService(\Illuminate\Cache\Repository::class);
         $index = $cache->get($cacheKey);
 
         $this->assertIsArray($index);
@@ -119,7 +119,7 @@ class SearchIndexTest extends TestCase
 
     public function testStripHtmlTags(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         // Use reflection to test protected method
         $reflection = new \ReflectionClass($searchIndex);
@@ -139,7 +139,7 @@ class SearchIndexTest extends TestCase
 
     public function testClearIndex(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         // Get cache key
         $reflection = new \ReflectionClass($searchIndex);
@@ -147,7 +147,7 @@ class SearchIndexTest extends TestCase
         $cacheKey = $getCacheKeyMethod->invoke($searchIndex, '6.0');
 
         /** @var \Illuminate\Cache\Repository $cache */
-        $cache = $this->ci->get(\Illuminate\Cache\Repository::class);
+        $cache = $this->getService(\Illuminate\Cache\Repository::class);
 
         // Build index
         $searchIndex->buildIndex('6.0');
@@ -167,7 +167,7 @@ class SearchIndexTest extends TestCase
 
     public function testClearAllIndexes(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         // Get cache key
         $reflection = new \ReflectionClass($searchIndex);
@@ -179,7 +179,7 @@ class SearchIndexTest extends TestCase
 
         // Make sure index exists
         /** @var \Illuminate\Cache\Repository $cache */
-        $cache = $this->ci->get(\Illuminate\Cache\Repository::class);
+        $cache = $this->getService(\Illuminate\Cache\Repository::class);
         $index = $cache->get($cacheKey);
         $this->assertIsArray($index);
         $this->assertNotEmpty($index);
@@ -192,10 +192,10 @@ class SearchIndexTest extends TestCase
 
     public function testClearIndexBypassesCacheWhenDisabled(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.search.index.enabled', false);
 
         $mockCache = $this->getMockBuilder(\Illuminate\Cache\Repository::class)
@@ -215,26 +215,25 @@ class SearchIndexTest extends TestCase
 
     public function testGetIndex(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         // Build index for version 6.0 so we can retrieve it
         $searchIndex->buildIndex('6.0');
 
         // Verify it matches the number of test pages
         /** @var DocumentationRepository $repository */
-        $repository = $this->ci->get(DocumentationRepository::class);
+        $repository = $this->getService(DocumentationRepository::class);
         $flatPages = $repository->getFlattenedTree('6.0');
 
         // Retrieve index
         $index = $searchIndex->getIndex('6.0');
-        $this->assertIsArray($index);
         $this->assertNotEmpty($index);
         $this->assertSame(count($flatPages), count($index), 'Index should contain the right number of pages');
     }
 
     public function testGetIndexRebuildsWhenCacheEmpty(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         // Make sure cache is cleared
         $searchIndex->clearIndex('6.0');
@@ -242,18 +241,17 @@ class SearchIndexTest extends TestCase
         // getIndex should automatically rebuild when cache is empty
         $index = $searchIndex->getIndex('6.0');
 
-        $this->assertIsArray($index);
         $this->assertNotEmpty($index, 'Should rebuild index when cache is empty');
         $this->assertContainsOnlyInstancesOf(IndexedPage::class, $index);
     }
 
     public function testExtractMetadataSkipsEmptyFields(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         // Set metadata fields in config
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.search.metadata_fields', ['description', 'tags', 'category', 'author']);
 
         // Use reflection to test protected method
@@ -276,11 +274,11 @@ class SearchIndexTest extends TestCase
 
     public function testExtractMetadataWithAllEmptyFields(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         // Set metadata fields in config
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.search.metadata_fields', ['description', 'tags']);
 
         // Use reflection to test protected method
@@ -301,11 +299,11 @@ class SearchIndexTest extends TestCase
 
     public function testExtractMetadataWithArrayFields(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         // Set metadata fields in config
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.search.metadata_fields', ['tags', 'keywords']);
 
         // Use reflection to test protected method
@@ -327,18 +325,18 @@ class SearchIndexTest extends TestCase
 
     public function testGetIndexReturnsEmptyArrayWhenCacheCorrupted(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         /** @var \Illuminate\Cache\Repository $cache */
-        $cache = $this->ci->get(\Illuminate\Cache\Repository::class);
+        $cache = $this->getService(\Illuminate\Cache\Repository::class);
 
-        // Mock cache to always return non-array value, even after rebuild attempt
+        // Mock cache to always return invalid index data, even after rebuild attempt
         // Use reflection to get cache key
         $reflection = new \ReflectionClass($searchIndex);
         $getCacheKeyMethod = $reflection->getMethod('getCacheKey');
         $cacheKey = $getCacheKeyMethod->invoke($searchIndex, '6.0');
 
-        // Create a mock cache that always returns corrupted data
+        // Create a mock cache that always returns an invalid index
         $mockCache = $this->getMockBuilder(\Illuminate\Cache\Repository::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['get', 'put', 'forget'])
@@ -346,7 +344,7 @@ class SearchIndexTest extends TestCase
 
         $mockCache->method('get')
             ->with($cacheKey)
-            ->willReturn('corrupted-data'); // Always return non-array
+            ->willReturn(['corrupted-data']);
 
         $mockCache->method('put')
             ->willReturn(true);
@@ -355,19 +353,18 @@ class SearchIndexTest extends TestCase
         $cacheProperty = $reflection->getProperty('cache');
         $cacheProperty->setValue($searchIndex, $mockCache);
 
-        // getIndex should return empty array when cache consistently returns non-array
+        // getIndex should return empty array when cache consistently returns invalid data
         $index = $searchIndex->getIndex('6.0');
 
-        $this->assertIsArray($index);
         $this->assertEmpty($index, 'Should return empty array when cache persistently returns non-array data');
     }
 
     public function testGetIndexBypassesCacheWhenDisabled(): void
     {
-        $searchIndex = $this->ci->get(SearchIndex::class);
+        $searchIndex = $this->getService(SearchIndex::class);
 
         /** @var Config $config */
-        $config = $this->ci->get(Config::class);
+        $config = $this->getService(Config::class);
         $config->set('learn.search.index.enabled', false);
 
         $mockCache = $this->getMockBuilder(\Illuminate\Cache\Repository::class)
