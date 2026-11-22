@@ -4,111 +4,133 @@
     "version": "2.0.0",
     "tasks": [
         /**
-         * Main task - Serve the UserFrosting instance for development
+         * Main task - Serve the UserFrosting instance
          */
         {
             "label": "==> Serve",
             "dependsOn": [
-                "Bakery - Serve",
-                "Frontend - Vite Dev"
+                "Bakery Serve",
+                "Vite Dev"
             ],
             "problemMatcher": []
         },
 
         /**
-         * NPM Tasks
+         * Workspace NPM Tasks
          */
         {
-            "label": "Frontend - npm install",
+            "label": "npm install",
             "type": "shell",
             "command": "npm install"
         },
         {
-            "label": "Frontend - npm update",
+            "label": "npm update",
             "type": "shell",
             "command": "npm update"
         },
         {
-            "label": "Frontend - Vite Dev",
+            "label": "Format",
+            "type": "shell",
+            "command": "npm run format"
+        },
+        {
+            "label": "Type Check",
+            "type": "shell",
+            "command": "npm run typecheck"
+        },
+        {
+            "label": "Eslint",
+            "type": "shell",
+            "command": "npm run lint"
+        },
+        {
+            "label": "Tests",
+            "type": "shell",
+            "command": "npm run test"
+        },
+        {
+            "label": "Coverage",
+            "type": "shell",
+            "command": "npm run coverage"
+        },
+        {
+            "label": "Vite Dev",
             "type": "shell",
             "command": "npm run vite:dev",
             "isBackground": true
         },
         {
-            "label": "Frontend - Vite Build",
+            "label": "Build",
             "type": "shell",
-            "command": "npm run vite:build"
+            "command": "npm run build"
         },
         {
-            "label": "Frontend - Format Code",
+            "label": "Build - Skeleton",
             "type": "shell",
-            "command": "npm run format"
+            "command": "npm run --workspace=userfrosting vite:build"
         },
-        {
-            "label": "Frontend - Type Check",
-            "type": "shell",
-            "command": "npm run typecheck"
-        },
-        {
-            "label": "Frontend - Eslint",
-            "type": "shell",
-            "command": "npm run lint"
-        },
-        {
-            "label": "Frontend - Tests",
-            "type": "shell",
-            "command": "npm run test"
-        },
-        {
-            "label": "Frontend - Coverage",
-            "type": "shell",
-            "command": "npm run coverage"
-        }
 
         /**
-         * PHP Tasks
+         * Workspace PHP Tasks
          */
         {
-            "label": "Bakery - Bake",
-            "type": "shell",
-            "command": "php bakery bake",
-            "problemMatcher": []
-        },
-        {
-            "label": "Bakery - Serve",
+            "label": "Bakery Serve",
             "type": "shell",
             "command": "php bakery serve",
-            "problemMatcher": [],
             "isBackground": true
         },
         {
-            "label": "Backend - Composer Update",
+            "label": "Composer Update",
             "type": "shell",
             "command": "composer update"
         },
         {
-            "label": "Backend - PHPUnit",
+            "label": "Merge composer.json",
+            "type": "shell",
+            "command": "vendor/bin/monorepo-builder merge"
+        },
+        {
+            "label": "Composer Validate",
+            "type": "shell",
+            "command": "vendor/bin/monorepo-builder validate"
+        },
+        {
+            "label": "PHPUnit",
             "type": "shell",
             "options": {
                 "env": {
                     "XDEBUG_CONFIG": "idekey=VSCODE"
                 }
             },
-            "command": "printf '\\33c\\e[3J' && vendor/bin/phpunit",
+            "command": "vendor/bin/phpunit --stop-on-failure --stop-on-error",
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                "clear": true,
+                "panel": "dedicated"
             }
         },
         {
-            "label": "Backend - PHP CS Fixer",
+            "label": "PHP CS Fixer",
             "type": "shell",
             "command": "vendor/bin/php-cs-fixer fix"
         },
         {
-            "label": "Backend - PHPStan",
+            "label": "PHPStan",
             "type": "shell",
-            "command": "vendor/bin/phpstan analyse"
+            "command": "printf '\\33c\\e[3J' && vendor/bin/phpstan analyse"
+        },
+        {
+            "label": "Update PHP Headers",
+            "type": "shell",
+            "command": [
+                "vendor/bin/php-cs-fixer fix --config packages/framework/.php-cs-fixer.php &&",
+                "vendor/bin/php-cs-fixer fix --config packages/sprinkle-account/.php-cs-fixer.php &&",
+                "vendor/bin/php-cs-fixer fix --config packages/sprinkle-admin/.php-cs-fixer.php &&",
+                "vendor/bin/php-cs-fixer fix --config packages/sprinkle-core/.php-cs-fixer.php"
+            ],
         },
 
         /**
@@ -117,47 +139,85 @@
         {
             "label": "Docker - Build",
             "type": "shell",
-            "command": "docker-compose build --no-cache"
+            "command": "docker compose build --no-cache"
         },
         {
             "label": "Docker - Up",
             "type": "shell",
-            "command": "docker-compose up -d"
+            "command": "docker compose up -d"
+        },
+        {
+            "label": "Docker - Open Mailpit",
+            "type": "shell",
+            "command": "open",
+            "args": [
+                "http://localhost:8025"
+            ],
+            "linux": {
+                "command": "xdg-open"
+            },
+            "windows": {
+                "command": "cmd",
+                "args": [
+                    "/c",
+                    "start",
+                    "",
+                    "http://localhost:8025"
+                ]
+            }
         },
         {
             "label": "Docker - Stop",
             "type": "shell",
-            "command": "docker-compose stop"
+            "command": "docker compose stop"
         },
         {
             "label": "Docker - Composer Update",
             "type": "shell",
-            "command": "docker-compose exec app composer update"
+            "command": "docker compose exec app composer update"
         },
         {
             "label": "Docker - Bakery Bake",
             "type": "shell",
-            "command": "docker-compose exec app php bakery bake"
+            "command": "docker compose exec app php bakery bake"
         },
         {
             "label": "Docker - PHPUnit",
             "type": "shell",
-            "command": "docker-compose exec app vendor/bin/phpunit"
+            "command": "docker compose exec app vendor/bin/phpunit",
+            "presentation": {
+                "clear": true,
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Docker - Compose Config Test",
+            "type": "shell",
+            "command": "vendor/bin/phpunit --no-coverage --no-logging docker/tests/ComposeConfigTest.php"
         },
         {
             "label": "Docker - PHP CS Fixer",
             "type": "shell",
-            "command": "docker-compose exec app vendor/bin/php-cs-fixer fix"
+            "command": "docker compose exec app vendor/bin/php-cs-fixer fix"
         },
         {
             "label": "Docker - PHPStan",
             "type": "shell",
-            "command": "docker-compose exec app vendor/bin/phpstan analyse"
+            "command": "docker compose exec app vendor/bin/phpstan analyse"
         },
         {
             "label": "Docker - Shell (App)",
             "type": "shell",
-            "command": "docker-compose exec app bash"
+            "command": "docker compose exec app bash",
+            "isBackground": true,
+            "runOptions": {
+                "instanceLimit": 99
+            },
+            "presentation": {
+                "panel": "new",
+                "close": true,
+                "showReuseMessage": false
+            }
         }
     ]
 }

@@ -1,0 +1,14 @@
+# Development-only Docker Compose configuration.
+include:
+  - ./docker/compose.development.app.yaml
+  - ./docker/compose.development.nginx.yaml
+  - ./docker/compose.development.vue-frontend.yaml
+  - ./docker/compose.development.memcached.yaml
+  - ./docker/compose.development.redis.yaml
+volumes:
+  node-modules:
+    driver: local
+networks:
+  frontend:
+  backend:
+    driver: bridge

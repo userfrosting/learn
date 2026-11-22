@@ -1,5 +1,8 @@
 FROM node:24-bookworm
 
+ARG NODE_UID=1000
+ARG NODE_GID=1000
+
 # Set working directory
 WORKDIR /app
 
@@ -11,11 +14,12 @@ RUN apt-get update && apt-get install -y \
   make \
   && rm -rf /var/lib/apt/lists/*
 
-# Copy package files first to leverage Docker cache
-COPY package*.json ./
+RUN groupmod --non-unique --gid "${NODE_GID}" node \
+  && usermod --non-unique --uid "${NODE_UID}" --gid "${NODE_GID}" node \
+  && mkdir -p /app/node_modules \
+  && chown node:node /app/node_modules
 
-# Install dependencies locally
-RUN npm install
+USER node
 
 # Expose Vite dev port
 EXPOSE 5173
@@ -23,5 +27,7 @@ EXPOSE 5173
 # Add node_modules/.bin to PATH
 ENV PATH=/app/node_modules/.bin:$PATH
 
-# Default command: run Vite dev server
-CMD ["npx", "vite"]
+# Bakery in the app container installs dependencies into the shared node_modules volume.
+CMD echo "Waiting for Bakery to install frontend dependencies..."; \
+    until [ -x /app/node_modules/.bin/vite ] && [ -f /app/node_modules/.package-lock.json ]; do sleep 5; done; \
+    exec npm run vite:dev

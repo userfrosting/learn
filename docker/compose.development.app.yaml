@@ -1,0 +1,27 @@
+services:
+  app:
+    restart: unless-stopped
+    tty: true
+    build:
+      context: ./app
+      args:
+        PHP_VERSION: ${DOCKER_PHP_VERSION:-8.5}
+        APP_UID: ${DOCKER_UID:-1000}
+        APP_GID: ${DOCKER_GID:-1000}
+    depends_on:
+      memcached:
+        condition: service_healthy
+        required: false
+      redis:
+        condition: service_healthy
+        required: false
+    environment:
+      CACHE_DRIVER: ${DOCKER_CACHE_DRIVER:-file}
+      MEMCACHED_HOST: memcached
+      REDIS_HOST: redis
+    volumes:
+      - ..:/app
+      - node-modules:/app/node_modules
+      - ./app/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+    networks:
+      - backend

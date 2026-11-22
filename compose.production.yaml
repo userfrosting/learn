@@ -1,0 +1,24 @@
+# Production-only Docker Compose configuration.
+include:
+  - ./docker/compose.production.app.yaml
+  - ./docker/compose.production.nginx.yaml
+  - ./docker/compose.production.mysql.yaml
+  - ./docker/compose.production.mariadb.yaml
+  - ./docker/compose.production.pgsql.yaml
+  - ./docker/compose.production.memcached.yaml
+  - ./docker/compose.production.redis.yaml
+volumes:
+  userfrosting-db:
+    driver: local
+  userfrosting-mariadb:
+    driver: local
+  userfrosting-pgsql:
+    driver: local
+  app-cache:
+  app-logs:
+  app-sessions:
+  app-storage:
+networks:
+  web:
+  backend:
+    driver: bridge

@@ -1,0 +1,34 @@
+services:
+  app:
+    restart: unless-stopped
+    build:
+      context: ..
+      dockerfile: docker/production.Dockerfile
+      target: app
+      args:
+        PHP_VERSION: ${DOCKER_PHP_VERSION:-8.5}
+        APP_UID: ${DOCKER_UID:-1000}
+        APP_GID: ${DOCKER_GID:-1000}
+    depends_on:
+      memcached:
+        condition: service_healthy
+        required: false
+      redis:
+        condition: service_healthy
+        required: false
+    environment:
+      UF_MODE: production
+      VITE_DEV_ENABLED: "false"
+      CACHE_DRIVER: ${DOCKER_CACHE_DRIVER:-memcached}
+      MEMCACHED_HOST: memcached
+      REDIS_HOST: redis
+    command: ["sh", "-c", "php bakery clean:cache && exec php-fpm"]
+    volumes:
+      - ../app/.env:/app/app/.env:ro
+      - app-cache:/app/app/cache
+      - app-logs:/app/app/logs
+      - app-sessions:/app/app/sessions
+      - app-storage:/app/app/storage
+    networks:
+      - web
+      - backend
