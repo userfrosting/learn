@@ -9,7 +9,13 @@ UserFrosting 6.1 focus on [TODO].
 
 TODO...
 
-### Frontend Modernization
+
+## Changed Requirements
+
+- The minimum PHP version is now 8.3 from 8.1
+
+## Upgraded Dependencies
+
 
 
 ### Before You Begin
@@ -28,3 +34,17 @@ TODO...
 5. **Custom code**: Updating your sprinkles for API changes
 
 This chapter walks you through each of these steps systematically. -->
+
+## Complete change Log
+
+See the changelog of each component for the complete list of changes included in this release.
+- [Skeleton](https://github.com/userfrosting/UserFrosting/blob/5.1/CHANGELOG.md#510)
+- [Framework](https://github.com/userfrosting/framework/blob/5.1/CHANGELOG.md#510)
+- [Core sprinkle](https://github.com/userfrosting/sprinkle-core/blob/5.1/CHANGELOG.md#510)
+- [Account sprinkle](https://github.com/userfrosting/sprinkle-account/blob/5.1/CHANGELOG.md#510)
+- [Admin sprinkle](https://github.com/userfrosting/sprinkle-admin/blob/5.1/CHANGELOG.md#510)
+- [AdminLTE sprinkle](https://github.com/userfrosting/theme-adminlte/blob/5.1/CHANGELOG.md#510)
+
+## Migrating
+
+Now that we've cover the basics changes, follow on to the next pages to the steps required to bring your app up to date with UserFrosting 6.1.
