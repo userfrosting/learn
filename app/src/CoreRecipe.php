@@ -22,6 +22,8 @@ use UserFrosting\Sprinkle\Core\Bakery\AssetsUpdateCommand;
 use UserFrosting\Sprinkle\Core\Bakery\AssetsViteCommand;
 use UserFrosting\Sprinkle\Core\Bakery\AssetsWebpackCommand;
 use UserFrosting\Sprinkle\Core\Bakery\BakeCommand;
+use UserFrosting\Sprinkle\Core\Bakery\CleanCommand;
+use UserFrosting\Sprinkle\Core\Bakery\CleanDatabaseCommand;
 use UserFrosting\Sprinkle\Core\Bakery\ClearCacheCommand;
 use UserFrosting\Sprinkle\Core\Bakery\DebugCommand;
 use UserFrosting\Sprinkle\Core\Bakery\DebugConfigCommand;
@@ -46,23 +48,23 @@ use UserFrosting\Sprinkle\Core\Bakery\SeedCommand;
 use UserFrosting\Sprinkle\Core\Bakery\SeedListCommand;
 use UserFrosting\Sprinkle\Core\Bakery\ServeCommand;
 use UserFrosting\Sprinkle\Core\Bakery\SetupCommand;
+use UserFrosting\Sprinkle\Core\Bakery\SetupCsrfSecretCommand;
 use UserFrosting\Sprinkle\Core\Bakery\SetupDbCommand;
 use UserFrosting\Sprinkle\Core\Bakery\SetupEnvCommand;
 use UserFrosting\Sprinkle\Core\Bakery\SetupMailCommand;
 use UserFrosting\Sprinkle\Core\Bakery\SprinkleListCommand;
 use UserFrosting\Sprinkle\Core\Bakery\TestMailCommand;
 use UserFrosting\Sprinkle\Core\Core;
-use UserFrosting\Sprinkle\Core\Csrf\CsrfGuardMiddleware;
+use UserFrosting\Sprinkle\Core\Csrf\CsrfGuard;
 use UserFrosting\Sprinkle\Core\Error\ExceptionHandlerMiddleware;
 use UserFrosting\Sprinkle\Core\Middlewares\FilePermissionMiddleware;
 use UserFrosting\Sprinkle\Core\Middlewares\ServerRequestMiddleware;
 use UserFrosting\Sprinkle\Core\Middlewares\SessionMiddleware;
 use UserFrosting\Sprinkle\Core\Middlewares\URIMiddleware;
-use UserFrosting\Sprinkle\Core\Routes\AlertsRoutes;
 use UserFrosting\Sprinkle\Core\Routes\ApiRoutes;
 use UserFrosting\Sprinkle\Core\Routes\ContentRoutes;
-use UserFrosting\Sprinkle\Core\ServicesProvider\AlertStreamService;
 use UserFrosting\Sprinkle\Core\ServicesProvider\CacheService;
+use UserFrosting\Sprinkle\Core\ServicesProvider\CaptchaService;
 use UserFrosting\Sprinkle\Core\ServicesProvider\ConfigService;
 use UserFrosting\Sprinkle\Core\ServicesProvider\DatabaseService;
 use UserFrosting\Sprinkle\Core\ServicesProvider\ErrorHandlerService;
@@ -82,7 +84,6 @@ use UserFrosting\Sprinkle\Core\ServicesProvider\ViteService;
 use UserFrosting\Sprinkle\Core\ServicesProvider\WebpackService;
 use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\MigrationRecipe;
 use UserFrosting\Sprinkle\Core\Sprinkle\Recipe\TwigExtensionRecipe;
-use UserFrosting\Sprinkle\Core\Twig\Extensions\AlertsExtension;
 use UserFrosting\Sprinkle\Core\Twig\Extensions\ConfigExtension;
 use UserFrosting\Sprinkle\Core\Twig\Extensions\CoreExtension;
 use UserFrosting\Sprinkle\Core\Twig\Extensions\CsrfExtension;
@@ -121,6 +122,8 @@ class CoreRecipe extends Core implements
             AssetsWebpackCommand::class,
             AssetsViteCommand::class,
             BakeCommand::class,
+            CleanCommand::class,
+            // CleanDatabaseCommand::class,
             ClearCacheCommand::class,
             DebugCommand::class,
             DebugConfigCommand::class,
@@ -146,6 +149,7 @@ class CoreRecipe extends Core implements
             ServeCommand::class,
             SetupCommand::class,
             // SetupDbCommand::class,
+            // SetupCsrfSecretCommand::class,
             SetupEnvCommand::class,
             // SetupMailCommand::class,
             SprinkleListCommand::class,
@@ -161,7 +165,6 @@ class CoreRecipe extends Core implements
     public function getRoutes(): array
     {
         return [
-            // AlertsRoutes::class,
             // ApiRoutes::class,
             // ContentRoutes::class,
         ];
@@ -175,8 +178,8 @@ class CoreRecipe extends Core implements
     public function getServices(): array
     {
         return [
-            // AlertStreamService::class,
             CacheService::class,
+            // CaptchaService::class,
             ConfigService::class,
             // DatabaseService::class,
             ErrorHandlerService::class,
@@ -206,7 +209,7 @@ class CoreRecipe extends Core implements
     {
         return [
             ServerRequestMiddleware::class,
-            // CsrfGuardMiddleware::class,
+            // CsrfGuard::class,
             SessionMiddleware::class,
             URIMiddleware::class,
             FilePermissionMiddleware::class,
@@ -226,7 +229,6 @@ class CoreRecipe extends Core implements
             ConfigExtension::class,
             // CsrfExtension::class,
             I18nExtension::class,
-            // AlertsExtension::class,
             RoutesExtension::class,
             EntrypointsTwigExtension::class,
             UserAgentExtension::class,
